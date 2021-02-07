@@ -222,13 +222,43 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 checkLoginDialog.show();
 
             } else {
+                String message;
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
+
+                if(limit==0){
+
+                    if (count + 1 <= stock) {
+                        addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
+
+                    }
+                    else {
+                        message = getString(R.string.stock_empty);
+                        Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+
+                    }
+                }
+                else {
+
+                    if (count + 1 <= stock && (count + 1 <= limit)) {
+                        addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
+
+                    }
+                    else {
+                        message = getString(R.string.limit) + "" + limit;
+                        Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+
+                    }
+
+                }
+
+
 
             }
 
@@ -236,6 +266,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         });
 
         binding.plusCartBtn.setOnClickListener(v -> {
+            String message="";
 
             int count = Integer.parseInt(binding.productCartQTY.getText().toString());
             int stock = productModel.getProductBarcodes().get(0).getStockQty();
@@ -244,16 +275,37 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int productId = productModel.getId();
             int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
             int cartId = productModel.getProductBarcodes().get(0).getCartId();
+            int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-            if (count + 1 < stock) {
-                updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
-            } else {
+            if(limit==0){
 
-                Toasty.warning(getActiviy(), R.string.stock_empty, Toast.LENGTH_SHORT, true).show();
+                if (count + 1 <= stock) {
+                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
+                }
+                else {
+                    message = getString(R.string.stock_empty);
+                    Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+
+                }
+            }
+            else {
+
+                if (count + 1 <= stock && (count + 1 <= limit)) {
+                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
+
+                }
+                else {
+                    message = getString(R.string.limit) + "" + limit;
+                    Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+
+                }
 
             }
+
+
+
 
 
         });
@@ -612,7 +664,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                    binding.deleteCartBtn.setVisibility(View.GONE);
                 }
 
-                initSnackBar(getString(R.string.success_added_to_cart), v);
+//                initSnackBar(getString(R.string.success_added_to_cart), v);
                 UtilityApp.updateCart(1,productList.size());
 
 
@@ -656,7 +708,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
 
-                initSnackBar(getString(R.string.success_to_update_cart), v);
+               // initSnackBar(getString(R.string.success_to_update_cart), v);
 
 
                 if (quantity > 0) {

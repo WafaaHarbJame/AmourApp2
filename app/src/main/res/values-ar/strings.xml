@@ -293,7 +293,7 @@
     <string name="no_offers">لا يوجد عروض </string>
     <string name="my_location">موقعي </string>
     <string name="open_gps">فتح GPS </string>
-    <string name="enable">مفعل </string>
+    <string name="enable">تفعيل GPS  </string>
     <string name="map_str">الخريطة </string>
     <string name="bh_973">البحرين (973)</string>
     <string name="add_cart">اضف للسلة</string>
@@ -321,5 +321,13 @@
     <string name="processing">تجهيز</string>
     <string name="delivery">توصيل</string>
     <string name="Completed">تم الاستلام</string>
-
+    <string name="app_share_text">استمتع بالتسوق مع رامز اضغط على الرابط لتحميل التطبيق  </string>
+    <string name="app_share_text1">‏‎شراء المقاضي لم يكن يوماً بهذه السهولة. سهولة استخدام تطبيقنا تمكنكم من شراء المقاضي بضغطة زر. وفروا أوقاتكم من خلال طلب المواد الغذائية والمنزلية أون لاين من من رامز وفي أي وقت وسيقوم متسوقكم الخاص بجمعها لكم وتوصيلها من السوبرماركت الى باب بيتك .
+    </string>
+    <string name="android">للأندرويد </string>
+    <string name="ios">للايفون </string>
+    <string name="limit">الكمية المسموحة من هذا المنتج هي  : </string>
+    <string name="Add_more"> اضف منتجات بقيمة </string>
+    <string name="get_Free">  لتحصل على توصيل مجاني  </string>
+    <string name="cancel_tex">الغاء</string>
 </resources>

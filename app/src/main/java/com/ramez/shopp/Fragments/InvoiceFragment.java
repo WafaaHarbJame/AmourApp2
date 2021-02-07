@@ -433,6 +433,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             
             binding.totalTv.setText(total.concat(" " + currency));
             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+            if(Double.parseDouble(total)>=minimum_order_amount){
+                deliveryFees=0.0;
+            }
 
 
         }

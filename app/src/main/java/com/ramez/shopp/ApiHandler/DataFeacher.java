@@ -12,6 +12,7 @@ import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
@@ -961,9 +962,19 @@ public class DataFeacher {
     public void getSetting() {
 
         Log.i(TAG, "Log getSetting");
-        Log.i(TAG, "Log getSetting");
 
-        Call call = apiService.getSetting(headerMap);
+        lang = UtilityApp.getLanguage();
+        if (lang != null) {
+           lang=UtilityApp.getLanguage();
+        } else {
+            lang=Locale.getDefault().getLanguage();
+
+        }
+
+        Log.i(TAG, "Log lang "+lang);
+
+
+        Call call = apiService.getSetting(headerMap,lang);
         call.enqueue(callbackApi);
     }
 

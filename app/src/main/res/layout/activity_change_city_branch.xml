@@ -39,7 +39,6 @@
                 android:id="@+id/countryLY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/spinner_style"
                 android:orientation="vertical">
 

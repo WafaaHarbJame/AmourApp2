@@ -72,6 +72,9 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
         cityAdapter = new CityAdapter(getActiviy(), list, this, 0);
         binding.recycler.setAdapter(cityAdapter);
+        binding.cityContainer.setVisibility(View.VISIBLE);
+        binding.chooseCityTv.setVisibility(View.GONE);
+
     }
 
 

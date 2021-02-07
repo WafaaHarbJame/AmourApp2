@@ -216,12 +216,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
 
-
-            Picasso.get()
-                    .load(productModel.getImages().get(0))
-                    .placeholder(R.drawable.holder_image)
-                    .error(R.drawable.holder_image)
-                    .into(holder.binding.productImg);
+            Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
 //            Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
@@ -451,7 +446,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
                 } else {
-
+                    String message;
                     ProductModel productModel = productModels.get(getAdapterPosition());
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
 
@@ -460,16 +455,40 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
                     int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
                     addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
+
+                    if (count + 1 <= stock && limit == 0) {
+                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+
+                    } else if (count + 1 <= stock && (count + 1) <= limit) {
+
+                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                    } else {
+
+                        if (count + 1 > limit) {
+                            message = context.getString(R.string.limit) + "" + limit;
+
+
+                        } else {
+                            message = context.getString(R.string.stock_empty);
+
+                        }
+
+                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+                    }
 
                 }
 
             });
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
-
+                String message;
                 ProductModel productModel = productModels.get(getAdapterPosition());
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
@@ -481,13 +500,34 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int stock = productModel.getProductBarcodes().get(0).getStockQty();
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                if (count + 1 < stock) {
 
-                    updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+                if(limit==0){
 
-                } else {
-                    initSnackBar(context.getString(R.string.stock_empty), view1);
+                    if (count + 1 <= stock) {
+                        updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                    }
+                    else {
+                        message = context.getString(R.string.stock_empty);
+                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                    }
+                }
+                else {
+
+                    if (count + 1 <= stock && (count + 1 <= limit)) {
+                        updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                    }
+                    else {
+                        message = context.getString(R.string.limit) + "" + limit;
+                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                    }
+
+
                 }
 
 
@@ -539,10 +579,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
+//                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
-                    UtilityApp.updateCart(1,productModels.size());
+                    UtilityApp.updateCart(1, productModels.size());
 
 
                 } else {
@@ -559,7 +599,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart), view);
+                    //initSnackBar(context.getString(R.string.success_to_update_cart), view);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
@@ -580,8 +620,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
-                    UtilityApp.updateCart(2,productModels.size());
-
+                    UtilityApp.updateCart(2, productModels.size());
 
 
                 } else {

@@ -87,7 +87,7 @@ public class ActivityHandler {
 
     }
 
-    public static void shareTextUrl(Context context, String title, String url, String shareChannel) {
+    public static void shareTextUrl(Context context, String title, String url, String IphoneUrl,String shareChannel) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         if (shareChannel != null && !shareChannel.equals(""))
@@ -103,7 +103,7 @@ public class ActivityHandler {
             body += title;
         }
         if (url != null && !url.isEmpty()) {
-            body += "\n" + url;
+            body += "\n\n"+context.getString(R.string.android)+" \n"+ url +"\n"+ context.getString(R.string.ios)+"\n"+IphoneUrl;
         }
         share.putExtra(Intent.EXTRA_TEXT, body /*+ "\n\n" + appStr*/);
 

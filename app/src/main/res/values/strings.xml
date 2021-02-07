@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>
+    <!--    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>-->
+    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyCGhao5aYDhzVLZHHx49BGQWoeqGjuVP1c</string>
 
     <string name="app_name">Ramez</string>
     <string name="message_yes">Yes</string>
@@ -322,7 +323,7 @@
     <string name="no_offers">No Offers</string>
     <string name="my_location">my_location</string>
     <string name="open_gps">open gps</string>
-    <string name="enable">enable</string>
+    <string name="enable">enable Gps </string>
     <string name="map_str">Map</string>
     <string name="bh_973">Bahrain (973)</string>
     <string name="add_cart">Add to Cart</string>
@@ -351,5 +352,15 @@
     <string name="processing">Processing</string>
     <string name="Completed">Completed</string>
     <string name="delivery">Shipped</string>
+    <string name="app_share_text">Enjoy Shopping with Ramez App Click here to download app </string>
+    <string name="app_share_text1">
+‏Grocery shopping has never been easier. With our user friendly mobile app, you can now shop your home essentials with a click. Save time by ordering groceries and your home essentials from RAMEZ , any time, and a personal shopper will deliver from store, to your door.
+ </string>
+    <string name="android">Android App</string>
+    <string name="ios">Ios App</string>
+    <string name="limit">The Limit of product is</string>
+    <string name="Add_more"> Add more product with </string>
+    <string name="get_Free"> to get Free Delivery </string>
+    <string name="cancel_tex">Cancle</string>
 
 </resources>

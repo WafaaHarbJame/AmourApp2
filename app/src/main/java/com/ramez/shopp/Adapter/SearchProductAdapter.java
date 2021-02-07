@@ -212,11 +212,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
 
 
-            Picasso.get()
-                    .load(productModel.getImages().get(0))
-                    .placeholder(R.drawable.holder_image)
-                    .error(R.drawable.holder_image)
-                    .into(holder.binding.productImg);
+            Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
 //
@@ -248,7 +244,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-     return productModels.size();
+        return productModels.size();
 
 
     }
@@ -266,7 +262,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_add),v);
+                    initSnackBar(context.getString(R.string.success_add), v);
                     productModels.get(position).setFavourite(true);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
@@ -296,7 +292,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 if (IsSuccess) {
                     productModels.get(position).setFavourite(false);
-                    initSnackBar(context.getString(R.string.success_delete),view);
+                    initSnackBar(context.getString(R.string.success_delete), view);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
 
@@ -364,8 +360,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
 
-            if (productModels.size()>0)
-            productModels.remove(productModels.size() - 1);
+            if (productModels.size() > 0) productModels.remove(productModels.size() - 1);
             notifyItemRemoved(productModels.size());
 
             if (IsSuccess) {
@@ -461,14 +456,44 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     ProductModel productModel = productModels.get(getAdapterPosition());
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-
+                    String message = "";
                     int position = getAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
                     int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+
+                    if(limit==0){
+
+                        if (count + 1 <= stock) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                        }
+                        else {
+                            message = context.getString(R.string.stock_empty);
+                            Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                        }
+                    }
+                    else {
+
+                        if (count + 1 <= stock && (count + 1 <= limit)) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                        }
+                        else {
+                            message = context.getString(R.string.limit) + "" + limit;
+                            Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                        }
+
+
+
+                    }
+
 
 
                 }
@@ -476,9 +501,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
+                String message;
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-               // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
                 int position = getAdapterPosition();
@@ -489,14 +515,29 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 int stock = productModel.getProductBarcodes().get(0).getStockQty();
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
-                if (count + 1 < stock) {
+                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+
+
+                if (count + 1 <= stock && limit == 0) {
+                    updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+
+                } else if (count + 1 <= stock && (count + 1) <= limit) {
 
                     updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                 } else {
 
-                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+                    if (count + 1 > limit) {
+                        message = context.getString(R.string.limit) + "" + limit;
 
+
+                    } else {
+                        message = context.getString(R.string.stock_empty);
+
+                    }
+
+                    Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
                 }
 
 
@@ -505,7 +546,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-              //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
@@ -549,10 +590,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
+                  //  initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
-                    UtilityApp.updateCart(1,productModels.size());
+                    UtilityApp.updateCart(1, productModels.size());
 
 
                 } else {
@@ -569,7 +610,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart), view);
+                   // initSnackBar(context.getString(R.string.success_to_update_cart), view);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
@@ -590,8 +631,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyItemChanged(position);
 
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
-                    UtilityApp.updateCart(2,productModels.size());
-
+                    UtilityApp.updateCart(2, productModels.size());
 
 
                 } else {

@@ -70,9 +70,13 @@ public class AddNewAddressActivity extends ActivityBase {
         localModel=UtilityApp.getLocalData();
 
         if(UtilityApp.getLocalData()!=null){
-            binding.codeSpinner.setText(localModel.getCountryName().concat( " " +"("+localModel.getPhonecode()+")"));
-            CountryCode= "+".concat(String.valueOf(localModel.getPhonecode()));
-            phonePrefix= String.valueOf(localModel.getPhonecode());
+
+            if(localModel.getCountryName()!=null&&localModel.getPhonecode()!=null){
+                binding.codeSpinner.setText(localModel.getCountryName().concat( " " +"("+localModel.getPhonecode()+")"));
+                CountryCode= "+".concat(String.valueOf(localModel.getPhonecode()));
+                phonePrefix= String.valueOf(localModel.getPhonecode());
+            }
+
 
         }
 
@@ -127,9 +131,12 @@ public class AddNewAddressActivity extends ActivityBase {
         binding.codeSpinner.setOnClickListener(view1 -> {
             CountryCodeDialog countryCodeDialog=new CountryCodeDialog(getActiviy(), 17, (obj, func, IsSuccess) -> {
                 CountryModel countryModel= (CountryModel) obj;
-                CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
-                phonePrefix= String.valueOf(countryModel.getPhonecode());
-                binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
+                if(countryModel!=null){
+                    CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
+                    phonePrefix= String.valueOf(countryModel.getPhonecode());
+                    binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
+
+                }
 
             });
             countryCodeDialog.show();

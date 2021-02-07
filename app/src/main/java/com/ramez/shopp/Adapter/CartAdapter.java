@@ -91,33 +91,26 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
         holder.binding.tvName.setText(cartDM.getName());
+        holder.binding.currencyPriceTv.setText(currency);
 
 
         if (cartDM.getSpecialPrice() > 0) {
 
-          //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
-            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context,R.drawable.itlatic_line));
-                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
-                holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
-
+            //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_line));
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
+            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
 
 
         } else {
 
             holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
-            holder.binding.currencyPriceTv.setText(currency);
 
 
         }
 
-       // Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
-
-        Picasso.get()
-                .load(cartDM.getImage())
-                .placeholder(R.drawable.holder_image)
-                .error(R.drawable.holder_image)
-                .into(holder.binding.imageView1);
+        Picasso.get().load(cartDM.getImage()).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.imageView1);
 
 
         calculateSubTotalPrice();
@@ -168,22 +161,20 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         });
 
 
-
     }
 
     public double calculateSubTotalPrice() {
         double subTotal = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
-            double price=0;
+            double price = 0;
             if (cartDMS.get(i).getProductPrice() > 0) {
 
 
-                if(cartDMS.get(i).getSpecialPrice() >0){
-                    price=cartDMS.get(i).getSpecialPrice();
+                if (cartDMS.get(i).getSpecialPrice() > 0) {
+                    price = cartDMS.get(i).getSpecialPrice();
 
-                }
-                else {
-                    price=cartDMS.get(i).getProductPrice();
+                } else {
+                    price = cartDMS.get(i).getProductPrice();
 
                 }
 
@@ -235,6 +226,59 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }).updateRemarkCartHandle(cart_id, remark);
     }
+
+    private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (func.equals(Constants.ERROR)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else {
+                if (IsSuccess) {
+
+                    Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
+                    // cartDMS.get(position).setFavourite(true);
+                    notifyItemChanged(position);
+                    notifyDataSetChanged();
+
+                } else {
+                    Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+                }
+            }
+
+        }).addToFavoriteHandle(userId, storeId, productId);
+    }
+
+    private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (func.equals(Constants.ERROR)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+            } else if (func.equals(Constants.FAIL)) {
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else {
+                if (IsSuccess) {
+                    // cartDMS.get(position).setFavourite(false);
+                    Toasty.success(context, context.getString(R.string.success_delete), Toast.LENGTH_SHORT, true).show();
+                    notifyItemChanged(position);
+                    notifyDataSetChanged();
+
+
+                } else {
+
+                    Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+                }
+            }
+
+        }).deleteFromFavoriteHandle(userId, storeId, productId);
+    }
+
 
     public interface OnCartItemClicked {
         void onCartItemClicked(CartModel cartDM);
@@ -350,23 +394,46 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.plusCartBtn.setOnClickListener(v -> {
+                String message;
 
                 CartModel productModel = cartDMS.get(getAdapterPosition());
                 int count = productModel.getQuantity();
                 int stock = productModel.getProductQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                if (count + 1 < stock) {
-                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
-                } else {
-                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+                int limit = productModel.getLimitQty();
+
+
+                if(limit==0){
+
+                    if (count + 1 <= stock) {
+                        updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+
+                    }
+                    else {
+                        message = context.getString(R.string.stock_empty);
+                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                    }
+                }
+                else {
+
+                    if (count + 1 <= stock && (count + 1 <= limit)) {
+                        updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+
+                    }
+                    else {
+                        message = context.getString(R.string.limit) + "" + limit;
+                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+
+                    }
 
                 }
+
 
 
             });
@@ -427,8 +494,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                     calculateSubTotalPrice();
                     getItemCount();
+                    //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                    //initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
 
@@ -489,59 +557,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
-    }
-
-
-    private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (func.equals(Constants.ERROR)) {
-
-                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
-
-            } else {
-                if (IsSuccess) {
-
-                    Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
-                   // cartDMS.get(position).setFavourite(true);
-                    notifyItemChanged(position);
-                    notifyDataSetChanged();
-
-                } else {
-                    Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
-
-                }
-            }
-
-        }).addToFavoriteHandle(userId, storeId, productId);
-    }
-
-    private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (func.equals(Constants.ERROR)) {
-
-                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
-            } else if (func.equals(Constants.FAIL)) {
-                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
-
-            } else {
-                if (IsSuccess) {
-                   // cartDMS.get(position).setFavourite(false);
-                    Toasty.success(context, context.getString(R.string.success_delete), Toast.LENGTH_SHORT, true).show();
-                    notifyItemChanged(position);
-                    notifyDataSetChanged();
-
-
-                } else {
-
-                    Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
-                }
-            }
-
-        }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
 
 

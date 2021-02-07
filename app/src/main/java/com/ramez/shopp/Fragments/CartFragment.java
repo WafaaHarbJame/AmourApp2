@@ -1,5 +1,6 @@
 package com.ramez.shopp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,12 +58,12 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     boolean isLogin = false;
     int productsSize;
     String total;
-    int  productSize;
+    int productSize;
     private FragmentCartBinding binding;
     private CartAdapter cartAdapter;
     private EmptyCartDialog emptyCartDialog;
     private CheckLoginDialog checkLoginDialog;
-    private int minimum_order_amount=0;
+    private int minimum_order_amount = 0;
     private Double delivery_charges = 0.0;
     private CartResultModel cartResultModel;
     private Activity activity;
@@ -100,23 +101,16 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             binding.contBut.setOnClickListener(view1 -> {
 
-                if (cartAdapter.calculateSubTotalPrice() < minimum_order_amount) {
-                    Snackbar snackbar = Snackbar.make(view1, getString(R.string.minimum_order_amount) + minimum_order_amount, Snackbar.LENGTH_LONG);
-                    snackbar.show();
-
-                } else {
-                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    InvoiceFragment invoiceFragment = new InvoiceFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
-                    bundle.putString(Constants.CART_SUM, total);
-                    bundle.putDouble(Constants.delivery_charges, delivery_charges);
-                    bundle.putSerializable(Constants.CART_MODEL, cartResultModel);
-                    invoiceFragment.setArguments(bundle);
-                    fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
-
-                }
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
+                FragmentManager fragmentManager = getParentFragmentManager();
+                InvoiceFragment invoiceFragment = new InvoiceFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
+                bundle.putString(Constants.CART_SUM, total);
+                bundle.putDouble(Constants.delivery_charges, delivery_charges);
+                bundle.putSerializable(Constants.CART_MODEL, cartResultModel);
+                invoiceFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
 
             });
@@ -141,21 +135,32 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void initAdapter() {
         cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
             CartProcessModel cartProcessModel = (CartProcessModel) obj;
             productSize = cartProcessModel.getCartCount();
 
-            if(cartProcessModel.getCartCount()==0){
-                getCarts(storeId,userId);
+            if (cartProcessModel.getCartCount() == 0) {
+                getCarts(storeId, userId);
 
-            }
-            else {
+            } else {
                 total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
 
-            }
+                if (cartProcessModel.getTotal() >= minimum_order_amount) {
 
+                    binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
+
+
+                } else {
+
+                    double total_price = minimum_order_amount - cartProcessModel.getTotal();
+                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+
+                }
+
+            }
 
 
         });
@@ -184,6 +189,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         startActivity(intent);
     }
 
+    @SuppressLint("SetTextI18n")
     public void getCarts(int storeId, int userId) {
 
         cartList.clear();
@@ -200,70 +206,82 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             cartResultModel = (CartResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            if (isVisible()){
+            if (isVisible()) {
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (cartResultModel != null) {
-                    message = cartResultModel.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        cartList = cartResultModel.getData().getCartData();
-                        binding.contBut.setVisibility(View.VISIBLE);
-                        minimum_order_amount = cartResultModel.getMinimumOrderAmount();
-                        localModel.setMinimum_order_amount(minimum_order_amount);
-                        UtilityApp.setLocalData(localModel);
-
-                        delivery_charges = cartResultModel.getDeliveryCharges();
-                        Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
-                        UtilityApp.setCartCount(cartResultModel.getCartCount());
-                        initAdapter();
-                        cartAdapter.notifyDataSetChanged();
-
-
-                    } else {
-                        binding.contBut.setVisibility(View.GONE);
-                        binding.dataLY.setVisibility(View.GONE);
-                        showEmptyCartDialog();
+                    if (cartResultModel != null) {
+                        message = cartResultModel.getMessage();
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
-
-                } else {
+                } else if (func.equals(Constants.FAIL)) {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
 
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
 
+                } else {
+                    if (IsSuccess) {
+                        if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            cartList = cartResultModel.getData().getCartData();
+                            binding.contBut.setVisibility(View.VISIBLE);
+                            minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+                            localModel.setMinimum_order_amount(minimum_order_amount);
+                            UtilityApp.setLocalData(localModel);
+
+                            delivery_charges = cartResultModel.getDeliveryCharges();
+                            Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
+                            UtilityApp.setCartCount(cartResultModel.getCartCount());
+                            initAdapter();
+                            cartAdapter.notifyDataSetChanged();
+
+                            if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
+
+                                binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
+
+
+                            } else {
+
+                                double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
+                                binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+
+                            }
+
+
+                        } else {
+                            binding.contBut.setVisibility(View.GONE);
+                            binding.dataLY.setVisibility(View.GONE);
+                            showEmptyCartDialog();
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
                 }
             }
-        }
 
         }).GetCarts(storeId, userId);
     }
@@ -294,9 +312,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
     }
-
-
-
 
 
 }

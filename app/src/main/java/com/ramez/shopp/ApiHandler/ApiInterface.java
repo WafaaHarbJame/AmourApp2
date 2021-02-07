@@ -145,7 +145,7 @@ ApiInterface {
 
 
     @GET("v3/Company/AboutAs")
-    Call<ResultAPIModel<SettingModel>>getSetting(@HeaderMap() Map<String, Object> headerParams);
+    Call<ResultAPIModel<SettingModel>>getSetting(@HeaderMap() Map<String, Object> headerParams,@Query("lng") String lng);
 
     @POST("v3/Favourite/addFavouriteProduct")
     Call<GeneralModel> addFavouriteProduct(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);

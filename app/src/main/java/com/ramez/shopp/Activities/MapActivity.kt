@@ -269,7 +269,7 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
                     dialog.cancel()
                 }
         alertDialogBuilder.setNegativeButton(
-                getString(R.string.cancel)
+                getString(R.string.cancel_tex)
         ) { dialog, id -> dialog.cancel() }
         val alert: AlertDialog = alertDialogBuilder.create()
         alert.show()

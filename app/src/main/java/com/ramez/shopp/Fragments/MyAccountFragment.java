@@ -1,6 +1,7 @@
 package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class MyAccountFragment extends FragmentBase {
         View view = binding.getRoot();
         isLogin = UtilityApp.isLogin();
 
+        binding.SupportBtn.setVisibility(View.GONE);
 
         if (UtilityApp.isLogin()) {
 
@@ -103,7 +105,14 @@ public class MyAccountFragment extends FragmentBase {
 
 
         binding.shareBtn.setOnClickListener(view1 -> {
-            ActivityHandler.shareTextUrl(getActivityy(), getString(R.string.app_name), "", "");
+
+            final String appPackageName = getActivityy().getPackageName();
+            // getPackageName() from Context or Activity object
+            ActivityHandler.shareTextUrl(getActivityy(),
+                    getString(R.string.app_share_text1),
+                    String.valueOf(Uri.parse("https://play.google.com/store/apps/details?id="
+                            + appPackageName)), "https://apps.apple.com/bh/app/ramez-%D8%B1%D8%A7%D9%85%D8%B2/id1509927576",
+                    "");
 
         });
 

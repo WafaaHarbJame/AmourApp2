@@ -130,11 +130,15 @@ public class SplashScreenActivity extends ActivityBase {
 
             } else if (IsSuccess) {
                 MemberModel memberModel = UtilityApp.getUserData();
-                memberModel.setName(result.data.getName());
-                memberModel.setEmail(result.data.getEmail());
-                memberModel.setProfilePicture(result.data.getProfilePicture());
-                UtilityApp.setUserData(memberModel);
-                getCarts(storeId, userId);
+                if(result!=null&&result.data!=null){
+                    memberModel.setName(result.data.getName());
+                    memberModel.setEmail(result.data.getEmail());
+                    memberModel.setProfilePicture(result.data.getProfilePicture());
+                    UtilityApp.setUserData(memberModel);
+                    getCarts(storeId, userId);
+
+                }
+
 
             } else {
                 Intent intent = new Intent(getActiviy(), MainActivity.class);

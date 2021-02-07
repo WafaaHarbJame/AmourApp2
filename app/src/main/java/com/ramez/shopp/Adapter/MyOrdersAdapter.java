@@ -120,7 +120,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea
 
 
-            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Checkout Area") || ordersDM.getDeliveryStatus().equals("PendingPayment") || ordersDM.getDeliveryStatus().equals("OnHold") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
+            if (ordersDM.getDeliveryStatus().equals("Processing") ||
+                    ordersDM.getDeliveryStatus().equals("Received") ||
+                    ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open")
+                    || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Checkout Area") ||
+                    ordersDM.getDeliveryStatus().equals("PendingPayment") || ordersDM.getDeliveryStatus().equals("OnHold") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
 
                 holder.binding.completeOrderLy.setVisibility(View.GONE);
                 holder.binding.currentLY.setVisibility(View.VISIBLE);
@@ -150,21 +154,46 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             holder.binding.TvDeliveryTime.setText(ordersDM.getDeliveryTime());
 
-            Log.i("tag", "Log getOrderStatus" + ordersDM.getOrderStatus());
+            Log.i("tag", "Log getDeliveryStatus" + ordersDM.getDeliveryStatus());
 
+            /*
+            PN : Pending
+ RC : Received
+ IP : Processing
+ CA : Checkout Area
+ PP : Pending Payment
+ OH : On Hold
+ OP : Open
+ CM : Complete
+ CL : Canceled
+ DV : Delivered
+             */
 
-            if (ordersDM.getOrderStatus().equals("PN") || ordersDM.getOrderStatus().equals("RC") || ordersDM.getOrderStatus().equals("IP") || ordersDM.getOrderStatus().equals("CA")) {
+            if (ordersDM.getDeliveryStatus().equals("Not Defined") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Received")) {
+
+                holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
+
+            }
+
+             if (ordersDM.getDeliveryStatus().equals("Processing")||ordersDM.getDeliveryStatus().equals("Checkout Area")||
+                     ordersDM.getDeliveryStatus().equals("On Hold")||ordersDM.getDeliveryStatus().equals("Open")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            } else if (ordersDM.getOrderStatus().equals("PP") || ordersDM.getOrderStatus().equals("OP") || ordersDM.getOrderStatus().equals("OH")) {
+            }
+
+             if (ordersDM.getDeliveryStatus().equals("Pending Payment") ) {
+                holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
+                holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
-                holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
-                holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            } else if (ordersDM.getOrderStatus().equals("CM") || ordersDM.getOrderStatus().equals("CL") || ordersDM.getOrderStatus().equals("DV")) {
+            }
+
+             if (ordersDM.getDeliveryStatus().equals("Delivered") ||
+                     ordersDM.getDeliveryStatus().equals("Canceled")||
+                     ordersDM.getDeliveryStatus().equals("Complete")) {
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
