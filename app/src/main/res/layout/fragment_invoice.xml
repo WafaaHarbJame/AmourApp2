@@ -238,6 +238,7 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/round_corner_next"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:paddingStart="@dimen/_16sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_16sdp"

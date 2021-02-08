@@ -112,6 +112,7 @@
     <string name="address_in_map">Address In Map</string>
     <string name="region">Region</string>
     <string name="block">block Number </string>
+    <string name="block_kw">block Number </string>
     <string name="street_num">Street Number</string>
     <string name="building">Building Number</string>
     <string name="flat">Flat</string>

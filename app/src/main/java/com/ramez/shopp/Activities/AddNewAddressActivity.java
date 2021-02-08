@@ -93,6 +93,11 @@ public class AddNewAddressActivity extends ActivityBase {
 
         getIntentData();
 
+        if(localModel!=null&& localModel.getShortname().equals("KW")){
+            String code=localModel.getShortname();
+            binding.blockEt.setHint(getString(R.string.block_kw));
+        }
+
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
             if (isValidForm() && area_id != 0) {
@@ -276,22 +281,8 @@ public class AddNewAddressActivity extends ActivityBase {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
         return formValidator
-                .addField(binding.latTv, new NonEmptyRule(R.string.choose_address)).
-                addField(binding.longTv, new NonEmptyRule(getString(R.string.choose_address)))
-                .addField(binding.addressTv,
-                        new NonEmptyRule(R.string.choose_address))
                 .addField(binding.nameEt,
-                        new NonEmptyRule(R.string.enter_name)
-                ).addField(binding.blockEt,
-                        new NonEmptyRule(R.string.enter_block))
-                .addField(binding.streetEt,
-                        new NonEmptyRule(R.string.enter_street))
-                .addField(binding.buildingEt,
-                        new NonEmptyRule(R.string.enter_building))
-                .addField(binding.flatEt,
-                        new NonEmptyRule(R.string.enter_flat)).
-                        addField(binding.phoneTv,
-                                new NonEmptyRule(R.string.enter_phone_number)).validate();
+                        new NonEmptyRule(R.string.enter_name)).validate();
 
     }
 

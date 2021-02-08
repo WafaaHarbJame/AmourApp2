@@ -44,10 +44,10 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
 
     var isGrantPermission = false
 
-    lateinit var myLocationBtn:TextView
-    lateinit var confirmBtn:TextView
-    lateinit var tvPhysicalAddress:TextView
-    lateinit var loadingLocationLY:AVLoadingIndicatorView
+    lateinit var myLocationBtn: TextView
+    lateinit var confirmBtn: TextView
+    lateinit var tvPhysicalAddress: TextView
+    lateinit var loadingLocationLY: AVLoadingIndicatorView
 
 
     companion object {
@@ -60,10 +60,10 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map2)
-        myLocationBtn=findViewById(R.id.myLocationBtn)
-        confirmBtn=findViewById(R.id.confirmBtn)
-        tvPhysicalAddress=findViewById(R.id.tvPhysicalAddress)
-        loadingLocationLY=findViewById(R.id.loadingLocationLY)
+        myLocationBtn = findViewById(R.id.myLocationBtn)
+        confirmBtn = findViewById(R.id.confirmBtn)
+        tvPhysicalAddress = findViewById(R.id.tvPhysicalAddress)
+        loadingLocationLY = findViewById(R.id.loadingLocationLY)
 
         latLng = LatLng(selectedLat, selectedLng)
 
@@ -171,9 +171,6 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
         }
 
 
-
-
-
     }
 
     private fun checkLocationPermission() {
@@ -215,14 +212,13 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
                     .start { location ->
                         loadingLocationLY.visibility = View.GONE
 
-                        val lat: Double = location.latitude
-                        val lng: Double = location.longitude
+                        selectedLat = location.latitude
+                        selectedLng = location.longitude
+                        val latLn = LatLng(selectedLat, selectedLng)
                         map?.clear()
                         map?.addMarker(
                                 MarkerOptions()
-                                        .position(
-                                                LatLng(lat, lng)
-                                        )
+                                        .position(latLn)
                                         .icon(
                                                 BitmapDescriptorFactory.fromBitmap(
                                                         ImageHandler.getBitmap(
@@ -232,9 +228,9 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
                                         )
                                         .title(getString(R.string.my_location))
                         )
-                        tvPhysicalAddress.text = MapHandler.getPhysicalLocation(applicationContext, lat.toString(), lng.toString())
+                        tvPhysicalAddress.text = MapHandler.getPhysicalLocation(applicationContext, selectedLat.toString(), selectedLng.toString())
 
-                        val latLn = LatLng(lat, lng)
+
                         val cameraUpdate =
                                 CameraUpdateFactory.newCameraPosition(
                                         CameraPosition.fromLatLngZoom(
@@ -308,7 +304,7 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
                                                     )
                                             )
                                     )
-                                    .title( MapHandler.getPhysicalLocation(applicationContext, selectedLat.toString() + "", selectedLng.toString() + ""))
+                                    .title(MapHandler.getPhysicalLocation(applicationContext, selectedLat.toString() + "", selectedLng.toString() + ""))
 
                     )
 

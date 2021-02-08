@@ -109,6 +109,7 @@
     <string name="lng_line">خط العرض</string>
     <string name="region">المنطقة </string>
     <string name="block">مجمع</string>
+    <string name="block_kw">قطعة  </string>
     <string name="street_num">رقم الشارع</string>
     <string name="building">البناية</string>
     <string name="flat">الشقة</string>
