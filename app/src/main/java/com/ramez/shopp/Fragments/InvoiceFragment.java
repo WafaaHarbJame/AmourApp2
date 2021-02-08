@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
@@ -140,17 +139,19 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         if (deliveryFees == 0) {
             binding.deliveryFees.setText(getString(R.string.free));
+            binding.freeDelivery.setText(getString(R.string.over1));
 
 
         } else {
 
-            binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+            binding.deliveryFees.setText(NumberHandler.
+                    formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+            binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
 
         }
 
-        binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency+"."));
-      //  binding.freeDelivery.setText(getString(R.string.over).concat(" " +NumberHandler.formatDouble(minimum_order_amount, localModel.getFractional()).concat("" + currency)));
 
+        //  binding.freeDelivery.setText(getString(R.string.over).concat(" " +NumberHandler.formatDouble(minimum_order_amount, localModel.getFractional()).concat("" + currency)));
 
 
         return view;
@@ -161,8 +162,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             addressId = UtilityApp.getUserData().lastSelectedAddress;
             GetUserAddress(addressId);
 
-        }
-        else {
+        } else {
             binding.acceptBtu.setText(R.string.select_address);
         }
 
@@ -178,64 +178,53 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         binding.sendOrder.setOnClickListener(view1 -> {
 
-            if (NumberHandler.getDouble(total) < minimum_order_amount) {
+            OrderCall orderCall = new OrderCall();
+            orderCall.user_id = userId;
+            orderCall.store_ID = storeId;
+            orderCall.address_id = addressId;
+            orderCall.payment_method = paymentMethod;
+            orderCall.coupon_code_id = couponCodeId;
+            orderCall.delivery_date_id = deliveryDateId;
+            orderCall.expressDelivery = expressDelivery;
 
-                Toasty.warning(getActivityy(), getString(R.string.minimum_order_amount) + minimum_order_amount, Toast.LENGTH_SHORT, true).show();
+            Log.i(TAG, "Log makeOrder");
+            Log.i(TAG, "Log user_id " + userId);
+            Log.i(TAG, "Log store_ID " + storeId);
+            Log.i(TAG, "Log addressId " + addressId);
+            Log.i(TAG, "Log payment_method " + paymentMethod);
+            Log.i(TAG, "Log coupon_code_id " + couponCodeId);
+            Log.i(TAG, "Log delivery_date_id " + deliveryDateId);
+            Log.i(TAG, "Log expressDelivery " + expressDelivery);
+
+
+            if (deliveryTimesList.size() == 0) {
+
+                GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
 
             } else {
-                OrderCall orderCall = new OrderCall();
-                orderCall.user_id = userId;
-                orderCall.store_ID = storeId;
-                orderCall.address_id = addressId;
-                orderCall.payment_method = paymentMethod;
-                orderCall.coupon_code_id = couponCodeId;
-                orderCall.delivery_date_id = deliveryDateId;
-                orderCall.expressDelivery = expressDelivery;
 
-                Log.i(TAG, "Log makeOrder");
-                Log.i(TAG, "Log user_id " + userId);
-                Log.i(TAG, "Log store_ID " + storeId);
-                Log.i(TAG, "Log addressId " + addressId);
-                Log.i(TAG, "Log payment_method " + paymentMethod);
-                Log.i(TAG, "Log coupon_code_id " + couponCodeId);
-                Log.i(TAG, "Log delivery_date_id " + deliveryDateId);
-                Log.i(TAG, "Log expressDelivery " + expressDelivery);
+                if (paymentMethod.equals("CC")) {
+                    binding.chooseDelivery.setVisibility(View.GONE);
 
+                    sendOrder(orderCall);
 
-                if (deliveryTimesList.size() == 0) {
-
-                    GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
 
                 } else {
-
-                    if (paymentMethod.equals("CC")) {
-                        binding.chooseDelivery.setVisibility(View.GONE);
+                    if (addressId == 0) {
+                        Toast(R.string.choose_address);
+                        binding.tvFullAddress.setFocusable(true);
+                        binding.tvFullAddress.setError(getString(R.string.choose_address));
+                    } else {
 
                         sendOrder(orderCall);
-
-
-                    } else {
-                        if (addressId == 0) {
-
-                            Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
-                            binding.tvFullAddress.setFocusable(true);
-                            binding.tvFullAddress.setError(getString(R.string.choose_address));
-                        } else {
-
-                            sendOrder(orderCall);
-                        }
-
                     }
 
                 }
-
 
             }
 
 
         });
-
-
 
 
         binding.acceptBtu.setOnClickListener(view12 -> {
@@ -246,7 +235,25 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         });
 
-        binding.freeBut.setOnClickListener(view -> Toasty.success(getActivityy(), getString(R.string.getFreeDelivery), Toast.LENGTH_SHORT, true).show());
+        binding.freeBut.setOnClickListener(view -> {
+            if (deliveryFees > 0) {
+                if (Double.parseDouble(total) >= minimum_order_amount) {
+                    Toast(getString(R.string.getFreeDelivery));
+
+                } else {
+
+                    double total_price = minimum_order_amount - Double.parseDouble(total);
+                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+
+
+                }
+            } else {
+                Toast(getString(R.string.getFreeDelivery));
+
+            }
+
+
+        });
     }
 
     private void initSearchTimesList() {
@@ -261,7 +268,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             timeId++;
         }
 
-        initTimeAdapter();
+        initTimeAdapter(deliveryFees);
 
 
     }
@@ -294,12 +301,21 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 if (paymentMethod.equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
                     expressDelivery = true;
+                    initTimeAdapter(0.0);
+                    binding.deliveryFees.setText(getString(R.string.free));
+                    binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(NumberHandler.formatDouble(Double.parseDouble(total) , fraction)) + 0.0, fraction).concat(" " + currency));
+
 
                 } else {
                     binding.chooseDelivery.setVisibility(View.VISIBLE);
                     expressDelivery = false;
+                    initTimeAdapter(deliveryFees);
+                    binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+                    binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
                 }
+
+
 
             }
         });
@@ -426,15 +442,16 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             total = bundle.getString(Constants.CART_SUM);
             productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0);
             cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
-            deliveryFees =bundle.getDouble(Constants.delivery_charges);
+            deliveryFees = bundle.getDouble(Constants.delivery_charges);
             productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(total.concat(" " + currency));
-            total = NumberHandler.formatDouble( Double.parseDouble(total)+deliveryFees, fraction);
-            
-            binding.totalTv.setText(total.concat(" " + currency));
+            binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
-            if(Double.parseDouble(total)>=minimum_order_amount){
-                deliveryFees=0.0;
+
+            if (deliveryFees > 0) {
+                if (Double.parseDouble(total) >= minimum_order_amount) {
+                    deliveryFees = 0.0;
+                }
             }
 
 
@@ -459,15 +476,14 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 GlobalData.errorDialog(getActivityy(), R.string.make_order, message);
             } else {
                 if (IsSuccess) {
-                    if(result.getStatus()==200){
+                    if (result.getStatus() == 200) {
                         UtilityApp.setCartCount(0);
                         AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
                         successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
                             startMain();
                         });
                         successDialog.show();
-                    }
-                    else {
+                    } else {
                         String message = getString(R.string.fail_to_send_order);
                         if (result != null && result.getMessage() != null) {
                             message = result.getMessage();
@@ -475,8 +491,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         GlobalData.errorDialog(getActivityy(), R.string.make_order, message);
 
                     }
-
-
 
 
                 } else {
@@ -543,8 +557,12 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
 
-    private void initTimeAdapter() {
-        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), searchTimeList, deliveryFees, (obj, func, IsSuccess) -> {
+    private void initTimeAdapter(Double deliveryFee) {
+        if (paymentMethod.equals("CC")) {
+            deliveryFee=0.0;
+            }
+
+            deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), searchTimeList, deliveryFee, (obj, func, IsSuccess) -> {
 
             DeliveryTime searchListItem = (DeliveryTime) obj;
             deliveryDateId = searchListItem.getId();

@@ -3,29 +3,18 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -45,8 +34,6 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -256,10 +243,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                        context.getString(R.string.fail_to_add_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
-
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                        context.getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
                     Toast.makeText(context, "" + context.getString(R.string.success_add), Toast.LENGTH_SHORT).show();
@@ -268,8 +256,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     notifyDataSetChanged();
 
                 } else {
-                    Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
-                }
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                            context.getString(R.string.fail_to_add_favorite));                }
             }
 
         }).addToFavoriteHandle(userId, storeId, productId);
@@ -279,9 +267,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                        context.getString(R.string.fail_to_remove_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                        context.getString(R.string.fail_to_remove_favorite));
 
             } else {
                 if (IsSuccess) {
@@ -293,7 +283,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                            context.getString(R.string.fail_to_remove_favorite));
                 }
             }
 
@@ -310,7 +301,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -480,7 +471,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                         }
 
-                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                context.getString(R.string.fail_to_update_cart));
+
                     }
 
                 }
@@ -503,28 +496,32 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
 
-                if(limit==0){
+                if (limit == 0) {
 
                     if (count + 1 <= stock) {
                         updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
-                    }
-                    else {
+                    } else {
                         message = context.getString(R.string.stock_empty);
-                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
-
+                        GlobalData.errorDialogWithButton(context, message,
+                                context.getString(R.string.fail_to_delete_cart));
                     }
-                }
-                else {
+                } else {
 
                     if (count + 1 <= stock && (count + 1 <= limit)) {
                         updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
-                    }
-                    else {
-                        message = context.getString(R.string.limit) + "" + limit;
-                        Toasty.warning(context, message, Toast.LENGTH_SHORT, true).show();
+                    } else {
 
+                        if(count+1 > stock){
+                            message = context.getString(R.string.stock_empty);
+                        }
+                        else {
+                            message = context.getString(R.string.limit) + "" + limit;
+
+                        }
+                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                                message);
                     }
 
 
@@ -587,7 +584,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
+                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_add_cart),
+                            context.getString(R.string.fail_to_delete_cart));
 
                 }
 
@@ -605,8 +603,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
-
+                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_update_cart),
+                            context.getString(R.string.fail_to_delete_cart));
 
                 }
 
@@ -625,7 +623,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    Toasty.error(context, context.getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_update_cart),
+                            context.getString(R.string.fail_to_delete_cart));
+
 
                 }
 

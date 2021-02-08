@@ -10,6 +10,7 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ramez.shopp.R;
@@ -74,6 +75,24 @@ public class GlobalData {
         errorDialog.setMessage(msg);
         errorDialog.setColoredCircle(R.color.dialogErrorBackgroundColor).setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
                 .setCancelable(true).setButtonBackgroundColor(R.color.dialogErrorBackgroundColor);
+        errorDialog.show();
+
+    }
+
+
+
+    public static void errorDialogWithButton(Context c, String title, String msg) {
+        errorDialog = new AwesomeErrorDialog(c);
+        errorDialog.setTitle(title);
+        errorDialog.setMessage(msg);
+        errorDialog.setColoredCircle(R.color.dialogErrorBackgroundColor).
+                setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                .setCancelable(true).
+                setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                .setButtonText(c.getString(R.string.ok))
+                .setErrorButtonClick(() -> errorDialog.hide())
+
+        ;
         errorDialog.show();
 
     }

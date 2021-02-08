@@ -115,7 +115,7 @@
     <string name="choose_address_gps"> تحديد العنوان عن طريق GPS   </string>
     <string name="loading">تحميل</string>
     <string name="phonePermissionExplain">لقد رفضت للتو الحصول على إذن مكالمة هاتفية ، لا يمكنك إجراء أي اتصال حتى تقبل الإذن</string>
-    <string name="ok">نعم</string>
+    <string name="ok">حسناً</string>
     <string name="no_internet_connection">لا يوجد اتصال بالانترنت </string>
     <string name="take_pic">التقاط صورة</string>
     <string name="open_gallery">فتح المعرض</string>
@@ -330,4 +330,8 @@
     <string name="Add_more"> اضف منتجات بقيمة </string>
     <string name="get_Free">  لتحصل على توصيل مجاني  </string>
     <string name="cancel_tex">الغاء</string>
+    <string name="over1">توصيل مجاني لجميع الطلبات  </string>
+    <string name="Error">Erorr</string>
+    <string name="error">خطأ </string>
+
 </resources>

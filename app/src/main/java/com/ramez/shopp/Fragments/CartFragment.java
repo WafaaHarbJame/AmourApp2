@@ -250,18 +250,25 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             UtilityApp.setCartCount(cartResultModel.getCartCount());
                             initAdapter();
                             cartAdapter.notifyDataSetChanged();
+                            if(delivery_charges>0){
+                                if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
 
-                            if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
+                                    binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
 
+
+                                } else {
+
+                                    double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
+                                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+
+                                }
+                            }
+                            else {
                                 binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
 
-
-                            } else {
-
-                                double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
-                                binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
-
                             }
+
+
 
 
                         } else {

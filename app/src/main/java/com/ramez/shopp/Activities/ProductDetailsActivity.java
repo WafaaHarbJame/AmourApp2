@@ -230,6 +230,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int stock = productModel.getProductBarcodes().get(0).getStockQty();
                 int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                Log.i("limit","Log limit  "+limit);
+                Log.i("stock","Log stock  "+stock);
 
 
                 if(limit==0){
@@ -240,19 +242,21 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     }
                     else {
                         message = getString(R.string.stock_empty);
-                        Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                message);
 
                     }
                 }
                 else {
 
-                    if (count + 1 <= stock && (count + 1 <= limit)) {
+                    if (count + 1 <= stock && (count + 1) <= limit) {
                         addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
 
                     }
                     else {
                         message = getString(R.string.limit) + "" + limit;
-                        Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            message);
 
                     }
 
@@ -276,6 +280,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
             int cartId = productModel.getProductBarcodes().get(0).getCartId();
             int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+            Log.i("limit","Log limit  "+limit);
+            Log.i("stock","Log stock  "+stock);
 
 
             if(limit==0){
@@ -286,20 +292,20 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
                 else {
                     message = getString(R.string.stock_empty);
-                    Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
-
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            message);
                 }
             }
             else {
 
-                if (count + 1 <= stock && (count + 1 <= limit)) {
+                if (count + 1 <= stock && (count + 1) <= limit) {
                     updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
                 }
                 else {
                     message = getString(R.string.limit) + "" + limit;
-                    Toasty.warning(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
-
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            message);
                 }
 
             }
@@ -532,13 +538,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
-
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_add_favorite));
             } else if (func.equals(Constants.FAIL)) {
 
-                Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
-
-
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
                     binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.favorite_icon));
@@ -548,8 +553,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     isFavorite = true;
 
                 } else {
-
-                    Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            getString(R.string.fail_to_add_favorite));
 
                 }
             }
@@ -561,11 +566,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private void removeFromFavorite(View view, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_remove_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_remove_favorite));
 
 
             } else {
@@ -576,7 +583,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
                 } else {
-                    Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            getString(R.string.fail_to_remove_favorite));
 
                 }
             }
@@ -670,7 +678,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             } else {
 
-                Toasty.error(getActiviy(), getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
+
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_add_cart));
 
             }
 
@@ -694,7 +704,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
             } else {
-                Toasty.error(getActiviy(), getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_delete_cart));
 
             }
 
@@ -732,8 +743,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
             } else {
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        getString(R.string.fail_to_update_cart));
 
-                Toasty.error(getActiviy(), getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
 
 
             }

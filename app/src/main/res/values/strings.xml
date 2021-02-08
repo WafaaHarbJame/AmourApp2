@@ -362,5 +362,8 @@
     <string name="Add_more"> Add more product with </string>
     <string name="get_Free"> to get Free Delivery </string>
     <string name="cancel_tex">Cancle</string>
+    <string name="over1">Free delivery on any Order  </string>
+    <string name="Error">Erorr</string>
+    <string name="error">Error</string>
 
 </resources>
