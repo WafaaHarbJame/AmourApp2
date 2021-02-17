@@ -27,6 +27,7 @@ import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
@@ -43,6 +44,12 @@ public class MyAccountFragment extends FragmentBase {
     int user_id = 0;
     private FragmentMyAccountBinding binding;
     private CheckLoginDialog checkLoginDialog;
+    private SoicalLink soicalLink;
+    private String whats_link="";
+    private String facebook_link="";
+    private String instagram_links ="";
+    private String twitter_links="";
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
@@ -50,6 +57,108 @@ public class MyAccountFragment extends FragmentBase {
         isLogin = UtilityApp.isLogin();
 
         binding.SupportBtn.setVisibility(View.GONE);
+
+
+        if(UtilityApp.getLinks()!=null){
+            soicalLink=UtilityApp.getLinks();
+            twitter_links=soicalLink.getTwitterLink();
+            facebook_link=soicalLink.getFacebookLink();
+            instagram_links=soicalLink.getInstagramLink();
+            whats_link=soicalLink.getWhatsappLink();
+
+        }
+        else {
+            if(UtilityApp.getLocalData().getShortname()!=null) {
+                getLinks(UtilityApp.getLocalData().getShortname());
+            }
+
+            }
+
+
+
+
+
+
+        binding.facebookBut.setOnClickListener(view1 -> {
+            if(facebook_link!=null){
+//                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.facebook.katana");
+//                if(installed) {
+//
+//                    System.out.println("App is already installed on your phone");
+//                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
+//                    startActivity(intent);
+//                } else {
+//                    Toast(getString(R.string.please_install_facebook));
+//                    System.out.println("App is not currently installed on your phone");
+//                }
+
+                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
+                startActivity(intent);
+            }
+
+
+        });
+
+
+        binding.whatsBut.setOnClickListener(view1 -> {
+            if(whats_link!=null){
+                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.whatsapp");
+                if(installed) {
+
+                    System.out.println("App is already installed on your phone");
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+                    startActivity(intent);
+                } else {
+                    Toast(getString(R.string.please_install_whats));
+                    System.out.println("App is not currently installed on your phone");
+                }
+
+
+            }
+
+        });
+
+
+        binding.twitterBut.setOnClickListener(view1 -> {
+
+            if(twitter_links!=null){
+                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.twitter.android");
+                if(installed) {
+
+                    System.out.println("App is already installed on your phone");
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_links));
+                    startActivity(intent);
+                } else {
+                    Toast(getString(R.string.please_twitter));
+                    System.out.println("App is not currently installed on your phone");
+                }
+
+            }
+
+        });
+
+        binding.instBut.setOnClickListener(view1 -> {
+            if(instagram_links !=null){
+                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.instagram.android");
+                if(installed) {
+
+                    System.out.println("App is already installed on your phone");
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(instagram_links));
+                    startActivity(intent);
+                } else {
+                    Toast(getString(R.string.please_install_instagram));
+                    System.out.println("App is not currently installed on your phone");
+                }
+
+            }
+
+
+
+
+
+        });
+
+
 
         if (UtilityApp.isLogin()) {
 
@@ -59,14 +168,17 @@ public class MyAccountFragment extends FragmentBase {
             if (UtilityApp.getUserData() != null) {
 
                 memberModel = UtilityApp.getUserData();
-                initData(memberModel);
+                if(memberModel!=null){
+                    initData(memberModel);
+
+                }
 //                if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
 //                    binding.changePassBtn.setVisibility(View.GONE);
 //                }
 
 
             } else {
-                if(memberModel.getId()!=null){
+                if(memberModel!=null&&memberModel.getId()!=null){
                 getUserData(memberModel.getId());
 
                 }
@@ -293,12 +405,8 @@ public class MyAccountFragment extends FragmentBase {
 
                         if (IsSuccess) {
 
-//                            if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
-//                                FirebaseAuth.getInstance().signOut();
-//                            }
                             UtilityApp.logOut();
                             GlobalData.Position = 0;
-
                             Intent intent = new Intent(getActivityy(), SplashScreenActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -329,6 +437,7 @@ public class MyAccountFragment extends FragmentBase {
                     MemberModel memberModel = UtilityApp.getUserData();
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
+                    memberModel.setId(result.data.getId());
                     memberModel.setProfilePicture(result.data.getProfilePicture());
                     initData(memberModel);
                     UtilityApp.setUserData(memberModel);
@@ -350,4 +459,45 @@ public class MyAccountFragment extends FragmentBase {
 
         super.onResume();
     }
+
+
+    public void getLinks(String shortName) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<SoicalLink> result = (ResultAPIModel<SoicalLink>) obj;
+
+            if (isVisible()) {
+
+                if (IsSuccess) {
+                     if(result.data!=null){
+                         soicalLink=result.data;
+                         UtilityApp.SetLinks(soicalLink);
+                         if(soicalLink.getTwitterLink()!=null){
+                             twitter_links=soicalLink.getTwitterLink();
+
+                         }
+                         if(soicalLink.getFacebookLink()!=null){
+                             facebook_link=soicalLink.getFacebookLink();
+
+                         }
+
+                         if(soicalLink.getInstagramLink()!=null){
+                             instagram_links=soicalLink.getInstagramLink();
+
+                         }
+
+                         if(soicalLink.getWhatsappLink()!=null){
+                             whats_link=soicalLink.getWhatsappLink();
+
+                         }
+
+                     }
+
+                }
+            }
+
+
+        }).getLinks(shortName);
+    }
+
 }

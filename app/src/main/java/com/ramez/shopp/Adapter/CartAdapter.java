@@ -383,15 +383,18 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.menuBut.setOnClickListener(view1 -> {
+                if(getAdapterPosition()!=-1){
+                    CartModel cartModel = cartDMS.get(getAdapterPosition());
+                    Intent intent = new Intent(context, ProductDetailsActivity.class);
+                    ProductModel productModel = new ProductModel();
+                    productModel.setId(cartModel.getProductId());
+                    productModel.setHName(cartModel.getHProductName());
+                    productModel.setName(cartModel.getHProductName());
+                    intent.putExtra(Constants.DB_productModel, productModel);
+                    context.startActivity(intent);
+                }
 
-                CartModel cartModel = cartDMS.get(getAdapterPosition());
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                ProductModel productModel = new ProductModel();
-                productModel.setId(cartModel.getProductId());
-                productModel.setHName(cartModel.getHProductName());
-                productModel.setName(cartModel.getHProductName());
-                intent.putExtra(Constants.DB_productModel, productModel);
-                context.startActivity(intent);
+
 
             });
 
@@ -460,17 +463,20 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
+                if(getAdapterPosition()!=-1&&cartDMS.size()>0){
+                    CartModel productModel = cartDMS.get(getAdapterPosition());
+                    int count = productModel.getQuantity();
+                    int product_barcode_id = productModel.getProductBarcodeId();
+                    int position = getAdapterPosition();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int productId = productModel.getProductId();
+                    int cart_id = 0;
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
-                int count = productModel.getQuantity();
-                int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModel.getProductId();
-                int cart_id = 0;
+                    deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
-                deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
+                }
+
 
             });
 
@@ -532,7 +538,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-
 
                     cartDMS.remove(position);
                     notifyItemRemoved(position);

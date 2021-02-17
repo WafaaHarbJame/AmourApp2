@@ -203,24 +203,13 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
 
-            Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+            if (productModel!=null&&productModel.getImages()!=null&&productModel.getImages().get(0)!= null) {
+                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+            }
 
 
-//            Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
-//                @Override
-//                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                    holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                    holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                    return false;
-//                }
-//            }).into(holder.binding.productImg);
+
 
         } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;
@@ -343,9 +332,12 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
+            if(productModels.size()>0){
+                productModels.remove(productModels.size() - 1);
+                notifyItemRemoved(productModels.size());
 
-            productModels.remove(productModels.size() - 1);
-            notifyItemRemoved(productModels.size());
+            }
+
 
             if (IsSuccess) {
                 if (result.getData() != null && result.getData().size() > 0) {
@@ -355,7 +347,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     if (products != null && products.size() > 0) {
                         productModels.addAll(products);
-                        notifyItemRangeInserted(pos, productModels.size());
+//                        notمكifyItemRangeInserted(pos, productModels.size());
+                        rv.post(() -> {
+                            notifyItemRangeInserted(pos, productModels.size());
+                        });
                         nextPage++;
                     } else {
                         show_loading = false;
@@ -438,43 +433,49 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     checkLoginDialog.show();
                 } else {
                     String message;
-                    ProductModel productModel = productModels.get(getAdapterPosition());
-                    int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-
-                    int position = getAdapterPosition();
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                    int productId = productModel.getId();
-                    int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
-
-                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                    if(productModels.size()>0){
+                        ProductModel productModel = productModels.get(getAdapterPosition());
+                        int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                        int position = getAdapterPosition();
+                        int userId = UtilityApp.getUserData().getId();
+                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int productId = productModel.getId();
+                        int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                        int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                        int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
 
-                    if (count + 1 <= stock && limit == 0) {
-                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                        if(limit==0){
 
-
-                    } else if (count + 1 <= stock && (count + 1) <= limit) {
-
-                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                    } else {
-
-                        if (count + 1 > limit) {
-                            message = context.getString(R.string.limit) + "" + limit;
-
-
+                            if (count + 1 <= stock) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                            } else {
+                                message = context.getString(R.string.stock_empty);
+                                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                                        message);
+                            }
                         } else {
-                            message = context.getString(R.string.stock_empty);
+
+                            if (count + 1 <= stock && (count + 1 )<= limit) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                            } else {
+
+                                if(count+1 > stock){
+                                    message = context.getString(R.string.stock_empty);
+                                }
+                                else {
+                                    message = context.getString(R.string.limit) + "" + limit;
+
+                                }
+                                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                                        message);
+
+                            }
 
                         }
-
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                context.getString(R.string.fail_to_update_cart));
-
                     }
+
+
 
                 }
 

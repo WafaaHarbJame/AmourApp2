@@ -10,6 +10,7 @@
     <color name="text_color">#6D727B</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#EDECEC</color>
+    <color name="light_gray">#e9e9e9</color>
     <color name="gray10">#F8F8F8</color>
     <color name="gray1">#C6C6C6</color>
     <color name="gray3">#787878</color>

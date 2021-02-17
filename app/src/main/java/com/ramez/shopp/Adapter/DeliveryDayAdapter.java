@@ -24,7 +24,7 @@ public class DeliveryDayAdapter extends RecyclerView.Adapter<DeliveryDayAdapter.
     Context context;
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryDayList;
-    private int lastIndex = 0;
+    public int lastIndex = 0;
 
 
     public DeliveryDayAdapter(Context context, List<DeliveryTime> deliveryDayList, DataCallback dataCallback) {

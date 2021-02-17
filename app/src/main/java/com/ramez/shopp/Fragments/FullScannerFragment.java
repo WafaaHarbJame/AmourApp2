@@ -30,7 +30,7 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
     private static final String CAMERA_ID = "CAMERA_ID";
     private ZBarScannerView mScannerView;
-    private boolean mFlash;
+    private boolean mFlash=true;
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
     private int mCameraId = -1;
@@ -72,7 +72,13 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(FLASH_STATE, mFlash);
+        try{
+            outState.putBoolean(FLASH_STATE, mFlash);
+
+        }
+        catch (Exception e){
+            System.out.println("The 'try catch' is finished.");
+        }
         outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
         outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
         outState.putInt(CAMERA_ID, mCameraId);

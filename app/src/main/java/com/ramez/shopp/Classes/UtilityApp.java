@@ -160,6 +160,18 @@ public class UtilityApp {
     }
 
 
+    public static SoicalLink getLinks() {
+        String JsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_SOCIAL);
+        SoicalLink linkData = new Gson().fromJson(JsonData, SoicalLink.class);
+        return linkData;
+    }
+
+    public static void SetLinks(SoicalLink soicalLink) {
+        String linkData = new Gson().toJson(soicalLink);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SOCIAL, linkData);
+    }
+
+
     public static ArrayList<CategoryModel> getCategories() {
         String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_CATEGORIES);
         return new Gson().fromJson(dataString, new TypeToken<List<CategoryModel>>() {
@@ -222,21 +234,21 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, cartNumber);
     }
 
-    public static void updateCart(int type,int cartListSize) {
+    public static void updateCart(int type, int cartListSize) {
         int cartNumber = getCartCount();
 
         if (type == 1) {
             // add
-            cartNumber = cartNumber + 1;
-           setCartCount(cartNumber);
+            cartNumber += 1;
+            setCartCount(cartNumber);
 
         } else if (type == 2) {
             // delete
-            cartNumber = cartNumber - 1;
-          setCartCount(cartNumber);
+            cartNumber -= 1;
+            setCartCount(cartNumber);
 
-            if(cartListSize==0){
-                Log.i("tag","Log cartListSize"+cartListSize);
+            if (cartListSize == 0) {
+                Log.i("tag", "Log cartListSize" + cartListSize);
                 setCartCount(0);
             }
 

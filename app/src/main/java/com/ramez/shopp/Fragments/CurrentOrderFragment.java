@@ -42,7 +42,7 @@ public class CurrentOrderFragment extends FragmentBase {
         currentOrdersList = new ArrayList<>();
 
         user_id = UtilityApp.getUserData().getId();
-        activity=getActivity();
+        activity = getActivity();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
@@ -81,7 +81,7 @@ public class CurrentOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (isVisible()){
+            if (isVisible()) {
                 OrdersResultModel result = (OrdersResultModel) obj;
                 String message = activity.getString(R.string.fail_to_get_data);
 
@@ -105,17 +105,13 @@ public class CurrentOrderFragment extends FragmentBase {
                     binding.failGetDataLY.failTxt.setText(message);
 
 
-                }
-
-                else if (func.equals(Constants.NO_CONNECTION)) {
+                } else if (func.equals(Constants.NO_CONNECTION)) {
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                     binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                     binding.dataLY.setVisibility(View.GONE);
 
-                }
-
-                else {
+                } else {
                     if (IsSuccess) {
                         if (result.getData() != null && result.getData().size() > 0) {
 
@@ -124,12 +120,14 @@ public class CurrentOrderFragment extends FragmentBase {
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
                             currentOrdersList = result.getData();
+                            Log.i("TAG", "Log list  before  " + result.getData().size());
 
-                            List<OrderModel> list= initOrderList();
+
+                            List<OrderModel> list = initOrderList();
 
                             initOrdersAdapters(list);
 
-                            Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
+                            Log.i("TAG", "Log upcoming " + list.size());
 
 
                         } else {
@@ -153,33 +151,34 @@ public class CurrentOrderFragment extends FragmentBase {
             }
 
 
-
         }).getUpcomingOrders(user_id);
     }
 
+
     private List<OrderModel> initOrderList() {
-        List<OrderModel> orderList=new ArrayList<>();
+        List<OrderModel> orderList = new ArrayList<>();
 
-        for (int i = 0; i < currentOrdersList.size(); i++) {
-            OrderProductModel currentProduct = currentOrdersList.get(i);
+        while (currentOrdersList.size() > 0) {
+            OrderProductModel currentProduct = currentOrdersList.get(0);
 
-            OrderModel orderModel=new OrderModel();
-            orderModel.setCartId( currentProduct.getCartId());
-            orderModel.setOrderCode( currentProduct.getOrderCode());
-            orderModel.setAddressName( currentProduct.getAddressName());
-            orderModel.setFullAddress( currentProduct.getFullAddress());
-            orderModel.setDeliveryDate( currentProduct.getDeliveryDate());
-            orderModel.setDeliveryStatus( currentProduct.getDeliveryStatus());
-            orderModel.setOrderStatus( currentProduct.getOrderStatus());
-            orderModel.setFromDate( currentProduct.getFromDate());
-            orderModel.setDeliveryTime( currentProduct.getDeliveryTime());
-            orderModel.setToDate( currentProduct.getToDate());
+            OrderModel orderModel = new OrderModel();
+            orderModel.setCartId(currentProduct.getCartId());
+            orderModel.setOrderCode(currentProduct.getOrderCode());
+            orderModel.setAddressName(currentProduct.getAddressName());
+            orderModel.setFullAddress(currentProduct.getFullAddress());
+            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
+            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
+            orderModel.setOrderStatus(currentProduct.getOrderStatus());
+            orderModel.setFromDate(currentProduct.getFromDate());
+            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
+            orderModel.setToDate(currentProduct.getToDate());
             orderModel.setOrderTotal(currentProduct.getOrderTotal());
             orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
             orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
             orderModel.setCreatedAt(currentProduct.getCreatedAt());
 
             List<OrderProductModel> productsList = new ArrayList<>();
+
             for (int j = 0; j < currentOrdersList.size(); j++) {
 
                 OrderProductModel orderProductModel = currentOrdersList.get(j);
@@ -192,6 +191,9 @@ public class CurrentOrderFragment extends FragmentBase {
             orderModel.setOrderProductsDMS(productsList);
             orderList.add(orderModel);
         }
+//        for (int i = 0; i < currentOrdersList.size(); i++) {
+//
+//        }
 
         Log.i("TAG", "Log currentOrdersList" + orderList.size());
 
@@ -199,8 +201,8 @@ public class CurrentOrderFragment extends FragmentBase {
 
     }
 
-
     private void initOrdersAdapters(List<OrderModel> list) {
+        Log.i("TAG", "Log upcoming adapter  " + list.size());
 
         myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
         binding.myOrderRecycler.setAdapter(myOrdersAdapter);

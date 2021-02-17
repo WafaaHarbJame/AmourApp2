@@ -270,9 +270,12 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                                 memberModel.setLastSelectedAddress(0);
                                 UtilityApp.setUserData(memberModel);
                             }
-                            addressList.remove(position);
-                           addressAdapter.notifyDataSetChanged();
-                            addressAdapter.notifyItemRemoved(position);
+                            if(addressList.size()>0){
+                                addressList.remove(position);
+                                addressAdapter.notifyDataSetChanged();
+                                addressAdapter.notifyItemRemoved(position);
+
+                            }
 
                             if(addressList.size()==0){
 

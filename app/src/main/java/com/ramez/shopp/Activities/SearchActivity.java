@@ -162,14 +162,30 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
             if (toggleButton) {
                 numColumn = 1;
-                initAdapter();
                 gridLayoutManager.setSpanCount(numColumn);
+                gridLayoutManager.requestLayout();
+                initAdapter();
+//                final int spanSize =gridLayoutManager.getSpanCount();
+//                if (spanSize > numColumn) {
+//                    throw new IllegalArgumentException("Item at position "  + " requires " +
+//                            spanSize + " spans but GridLayoutManager has only " + numColumn
+//                            + " spans.");
+//                }
                 binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view1));
 
             } else {
                 numColumn = 2;
                 gridLayoutManager.setSpanCount(numColumn);
+                gridLayoutManager.requestLayout();
                 initAdapter();
+
+//                final int spanSize =gridLayoutManager.getSpanCount();
+//                if (spanSize > numColumn) {
+//                    throw new IllegalArgumentException("Item at position "  + " requires " +
+//                            spanSize + " spans but GridLayoutManager has only " + numColumn
+//                            + " spans.");
+//                }
+
                 binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view2));
 
             }

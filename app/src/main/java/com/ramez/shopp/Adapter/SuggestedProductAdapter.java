@@ -284,28 +284,29 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                         if (count + 1 <= stock) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.stock_empty);
                             GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
                                     message);
-
                         }
-                    }
-                    else {
+                    } else {
 
                         if (count + 1 <= stock && (count + 1 )<= limit) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
                         }
                         else {
-                            message = context.getString(R.string.limit) + "" + limit;
+
+                            if(count+1 > stock){
+                                message = context.getString(R.string.stock_empty);
+                            }
+                            else {
+                                message = context.getString(R.string.limit) + "" + limit;
+
+                            }
                             GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
                                     message);
+
                         }
-
-
 
                     }
 
@@ -408,12 +409,14 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
 
             if (onItemClick != null) {
-
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
-                ProductModel productModel = productModels.get(getAdapterPosition());
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.putExtra(Constants.DB_productModel, productModel);
-                context.startActivity(intent);
+                if(productModels.size()>0){
+                    ProductModel productModel = productModels.get(getAdapterPosition());
+                    Intent intent = new Intent(context, ProductDetailsActivity.class);
+                    intent.putExtra(Constants.DB_productModel, productModel);
+                    context.startActivity(intent);
+                }
+
 
 
             }
@@ -428,8 +431,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 //                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
+                    System.out.println("Log suggest addToCart");
                     UtilityApp.updateCart(1, productModels.size());
-
 
                 } else {
                     GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
@@ -437,7 +440,6 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
                 }
-
 
             }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
         }

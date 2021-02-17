@@ -334,5 +334,11 @@
     <string name="over1">توصيل مجاني لجميع الطلبات  </string>
     <string name="Error">Erorr</string>
     <string name="error">خطأ </string>
+    <string name="QuickDelivery">توصيل سريع</string>
+    <string name="please_install_whats">الرجاء تنزيل تطبيق الواتس اب </string>
+    <string name="please_twitter">الرجاء تنزيل تطبيق التوتير </string>
+    <string name="please_install_facebook">الرجاء تنزيل تطبيق الفيس بوك</string>
+    <string name="please_install_instagram">الرجاء تنزيل تطبيق الانستجرام  </string>
+
 
 </resources>

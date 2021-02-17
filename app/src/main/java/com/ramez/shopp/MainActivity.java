@@ -55,7 +55,7 @@ import ru.nikartm.support.BadgePosition;
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
-   int  cartCount=0;
+    int cartCount = 0;
     int storeId;
     LocalModel localModel;
     private ActivityMainBinding binding;
@@ -75,7 +75,7 @@ public class MainActivity extends ActivityBase {
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
 
-        //getValidation();
+      //  getValidation();
 
         getIntentExtra();
 
@@ -83,7 +83,7 @@ public class MainActivity extends ActivityBase {
 
         storeId = Integer.parseInt(localModel.getCityId());
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
             getCartsCount();
         }
 
@@ -98,7 +98,7 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-            if(UtilityApp.isLogin()){
+            if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
 
@@ -113,7 +113,7 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commit();
-            if(UtilityApp.isLogin()){
+            if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
         });
@@ -141,7 +141,7 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_clicked));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
-            if(UtilityApp.isLogin()){
+            if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
         });
@@ -155,7 +155,7 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.my_account_clciked));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
-            if(UtilityApp.isLogin()){
+            if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
 
@@ -166,7 +166,8 @@ public class MainActivity extends ActivityBase {
 
 
     private void getCartsCount() {
-        cartCount=UtilityApp.getCartCount();
+        cartCount = UtilityApp.getCartCount();
+//        System.out.println("Log cart count " + cartCount);
         putBadge(cartCount);
     }
 
@@ -227,13 +228,10 @@ public class MainActivity extends ActivityBase {
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commitAllowingStateLoss();
 
-        }
-        else if (event.type.equals(MessageEvent.TYPE_UPDATE_CART)) {
+        } else if (event.type.equals(MessageEvent.TYPE_UPDATE_CART)) {
             getCartsCount();
 
-        }
-
-        else {
+        } else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
         }
@@ -311,13 +309,7 @@ public class MainActivity extends ActivityBase {
     public void putBadge(int cartCount) {
 
         Typeface typeface = Typeface.createFromAsset(getActiviy().getAssets(), Constants.NORMAL_FONT);
-        binding.cartBut.setBadgeValue(cartCount)
-                .setBadgeOvalAfterFirst(true)
-                .setBadgeTextSize(16)
-                .setBadgeBackground(ContextCompat.getDrawable(getActiviy(),R.drawable.badge))
-                .setMaxBadgeValue(999)
-                .setBadgeTextFont(typeface).setBadgePosition(BadgePosition.TOP_RIGHT)
-                .setBadgeTextStyle(Typeface.NORMAL).setShowCounter(true).setBadgePadding(4);
+        binding.cartBut.setBadgeValue(cartCount).setBadgeOvalAfterFirst(true).setBadgeTextSize(16).setBadgeBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.badge)).setMaxBadgeValue(999).setBadgeTextFont(typeface).setBadgePosition(BadgePosition.TOP_RIGHT).setBadgeTextStyle(Typeface.NORMAL).setShowCounter(true).setBadgePadding(4);
 
     }
 
@@ -326,7 +318,7 @@ public class MainActivity extends ActivityBase {
     protected void onResume() {
         super.onResume();
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
             getCartsCount();
 
         }
@@ -337,48 +329,42 @@ public class MainActivity extends ActivityBase {
     private final void openPicker() {
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
-            builder.addPermissions(new String[]{
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            builder.addPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
             builder.addPermissionRationale(getString(R.string.should_allow_permission));
 
             builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
                 public void onGrant() {
 
-                    File folder = new File(Environment.getExternalStorageDirectory().toString()+"/PSI/Images");
+                    File folder = new File(Environment.getExternalStorageDirectory().toString() + "/PSI/Images");
                     folder.mkdirs();
 
 
-                    AndroidNetworking.download("https://saudipsi.com/files/level/level-705771019210.jpg",folder.getPath(),"PSI1")
-                            .setTag("downloadTest")
-                            .setPriority(Priority.MEDIUM)
-                            .build()
-                            .setAnalyticsListener(new AnalyticsListener() {
-                                @Override
-                                public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
-                                    Log.d(TAG, " timeTakenInMillis : " + timeTakenInMillis);
-                                    Log.d(TAG, " bytesSent : " + bytesSent);
-                                    Log.d(TAG, " bytesReceived : " + bytesReceived);
-                                    Log.d(TAG, " isFromCache : " + isFromCache);
-                                }
-                            })
-                            .setDownloadProgressListener(new DownloadProgressListener() {
-                                @Override
-                                public void onProgress(long bytesDownloaded, long totalBytes) {
-                                    // do anything with progress
-                                }
-                            })
-                            .startDownload(new DownloadListener() {
-                                @Override
-                                public void onDownloadComplete() {
-                                    // do anything after completion
-                                    Log.d(TAG, "Log onDownloadComplete : " );
+                    AndroidNetworking.download("https://saudipsi.com/files/level/level-705771019210.jpg", folder.getPath(), "PSI1").setTag("downloadTest").setPriority(Priority.MEDIUM).build().setAnalyticsListener(new AnalyticsListener() {
+                        @Override
+                        public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
+                            Log.d(TAG, " timeTakenInMillis : " + timeTakenInMillis);
+                            Log.d(TAG, " bytesSent : " + bytesSent);
+                            Log.d(TAG, " bytesReceived : " + bytesReceived);
+                            Log.d(TAG, " isFromCache : " + isFromCache);
+                        }
+                    }).setDownloadProgressListener(new DownloadProgressListener() {
+                        @Override
+                        public void onProgress(long bytesDownloaded, long totalBytes) {
+                            // do anything with progress
+                        }
+                    }).startDownload(new DownloadListener() {
+                        @Override
+                        public void onDownloadComplete() {
+                            // do anything after completion
+                            Log.d(TAG, "Log onDownloadComplete : ");
 
-                                }
-                                @Override
-                                public void onError(ANError error) {
-                                    Log.d(TAG, "Log error : " );
-                                }
-                            });
+                        }
+
+                        @Override
+                        public void onError(ANError error) {
+                            Log.d(TAG, "Log error : ");
+                        }
+                    });
                 }
 
                 public void onDenied(@NotNull String permission) {

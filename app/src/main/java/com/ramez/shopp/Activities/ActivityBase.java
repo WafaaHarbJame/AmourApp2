@@ -1,6 +1,8 @@
 package com.ramez.shopp.Activities;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +44,7 @@ public class ActivityBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Window window =getWindow();
 
+
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
@@ -50,6 +53,10 @@ public class ActivityBase extends AppCompatActivity {
 
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_color));
+
+        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
     }
 

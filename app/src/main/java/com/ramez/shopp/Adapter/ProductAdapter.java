@@ -270,33 +270,34 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     Log.i("limit", "Log limit" + limit);
                     Log.i("stock", "Log stock" + stock);
 
-                    if (count + 1 <= stock && limit == 0) {
+                    if(limit==0){
 
-                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-
-                    } else if (count + 1 <= stock && (count + 1) <= limit) {
-
-                        addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                    } else {
-                        if (count + 1 > limit) {
-                            message = context.getString(R.string.limit) + "" + limit;
-
-
+                        if (count + 1 <= stock) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                         } else {
                             message = context.getString(R.string.stock_empty);
+                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                                    message);
+                        }
+                    } else {
+
+                        if (count + 1 <= stock && (count + 1 )<= limit) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                        } else {
+
+                            if(count+1 > stock){
+                                message = context.getString(R.string.stock_empty);
+                            }
+                            else {
+                                message = context.getString(R.string.limit) + "" + limit;
+
+                            }
+                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                                    message);
 
                         }
 
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),message
-                               );
                     }
-
-
-                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-
                 }
 
             });
@@ -407,12 +408,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
+                    Log.i("tag","Log "+UtilityApp.getCartCount());
+                    UtilityApp.updateCart(1, productModels.size());
                     binding.cartBut.setVisibility(View.GONE);
-//                    initSnackBar(context.getString(R.string.success_added_to_cart));
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
-                    UtilityApp.updateCart(1, productModels.size());
-
 
                 } else {
 
@@ -448,10 +448,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
+                    UtilityApp.updateCart(2, productModels.size());
+                    Log.i("tag","Log "+UtilityApp.getCartCount());
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
-                    UtilityApp.updateCart(2, productModels.size());
 
 
                 } else {

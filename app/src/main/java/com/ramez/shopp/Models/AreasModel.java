@@ -3,7 +3,9 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AreasModel {
+import java.io.Serializable;
+
+public class AreasModel  implements Comparable<AreasModel>, Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -43,4 +45,11 @@ public class AreasModel {
         this.nameEn = nameEn;
         this.nameAe = nameAe;
     }
+
+    @Override
+
+    public int compareTo(AreasModel areasModel) {
+        return getId().compareTo(areasModel.getId());
+    }
+
 }

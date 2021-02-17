@@ -234,30 +234,34 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 Log.i("stock","Log stock  "+stock);
 
 
-                if(limit==0){
+
+
+                if (limit == 0) {
 
                     if (count + 1 <= stock) {
                         addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
 
-                    }
-                    else {
+                    } else {
                         message = getString(R.string.stock_empty);
                         GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
                                 message);
-
                     }
-                }
-                else {
+                } else {
 
                     if (count + 1 <= stock && (count + 1) <= limit) {
                         addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
 
-                    }
-                    else {
-                        message = getString(R.string.limit) + "" + limit;
-                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                            message);
+                    } else {
 
+                        if(count+1 > stock){
+                            message = getString(R.string.stock_empty);
+                        }
+                        else {
+                            message = getString(R.string.limit) + "" + limit;
+
+                        }
+                        GlobalData.errorDialogWithButton(getActiviy(),getString(R.string.error),
+                                message);
                     }
 
                 }
@@ -284,33 +288,35 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             Log.i("stock","Log stock  "+stock);
 
 
-            if(limit==0){
+            if (limit == 0) {
 
                 if (count + 1 <= stock) {
                     updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
-                }
-                else {
+                } else {
                     message = getString(R.string.stock_empty);
                     GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
                             message);
                 }
-            }
-            else {
+            } else {
 
-                if (count + 1 <= stock && (count + 1) <= limit) {
+                if (count + 1 <= stock && (count + 1 )<= limit) {
                     updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
-                }
-                else {
-                    message = getString(R.string.limit) + "" + limit;
-                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                } else {
+
+                    if(count+1 > stock){
+                        message = getString(R.string.stock_empty);
+                    }
+                    else {
+                        message = getString(R.string.limit) + "" + limit;
+
+                    }
+                    GlobalData.errorDialogWithButton(getActiviy(),getString(R.string.error),
                             message);
                 }
 
             }
-
-
 
 
 
@@ -360,8 +366,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 productName = productModel.getName();
 
             }
-            binding.productNameTv.setText(productName);
 
+            binding.productNameTv.setText(productName);
             binding.mainTitleTxt.setText(productName);
 
 
@@ -439,7 +445,18 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         binding.cartBut.setVisibility(View.VISIBLE);
                         productModel = result.getData().get(0);
-                        binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
+                        if(productModel.getDescription()!=null&&productModel.getHDescription()!=null){
+
+                            if(UtilityApp.getLanguage().equals(Constants.Arabic)){
+                                binding.productDescTv.setText(Html.fromHtml(productModel.getHDescription().toString()));
+
+                            }
+                            else {
+                                binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
+
+                            }
+
+                        }
 
                         ProductBarcode productBarcode = productModel.getProductBarcodes().get(0);
 

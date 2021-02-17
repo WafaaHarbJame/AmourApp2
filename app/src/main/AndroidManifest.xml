@@ -12,16 +12,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".RootApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_lunch_512"
         android:label="@string/app_name"
+        android:hardwareAccelerated="true"
         android:largeHeap="true"
-        tools:replace="android:allowBackup"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <activity
             android:name=".Activities.MapActivity"
             android:launchMode="singleTask"
@@ -58,8 +60,7 @@
             android:name=".Activities.WelcomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/welcomeStyle"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:launchMode="singleTask"
@@ -132,7 +133,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/mapKey" />
 
-        <meta-data android:name="com.onesignal.NotificationAccentColor.DEFAULT" android:value="@color/colorPrimaryDark" />
+        <meta-data
+            android:name="com.onesignal.NotificationAccentColor.DEFAULT"
+            android:value="@color/colorPrimaryDark" />
 
 
         <activity

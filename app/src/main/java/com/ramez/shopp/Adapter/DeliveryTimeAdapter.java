@@ -22,19 +22,22 @@ import java.util.List;
 public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapter.ViewHolder> {
 
     private static final String TAG = "DeliveryTimeAdapter";
-    public int lastIndex = 0;
+//    public int lastIndex = 0;
     public String currency = "BHD";
     Context context;
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryTimesList;
     private  Double deliveryFees;
+    public int selectedPosition;
 
+    private boolean isSelected = false;
 
-    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees, DataCallback dataCallback) {
+    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees,int selectedPosition, DataCallback dataCallback) {
         this.deliveryTimesList = deliveryTimesList;
         this.context = context;
         this.dataCallback = dataCallback;
         this.deliveryFees=deliveryFees;
+        this.selectedPosition=selectedPosition;
 
     }
 
@@ -69,7 +72,18 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
 
 
 
-        if (lastIndex == position) {
+//        if (lastIndex == position) {
+//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
+//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+//
+//        } else {
+//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
+//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
+//
+//        }
+
+
+        if (deliveryTimes.getId() == selectedPosition) {
             viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
@@ -100,8 +114,10 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
             binding = view;
             itemView.setOnClickListener(view1 -> {
                 DeliveryTime deliveryTime = deliveryTimesList.get(getAdapterPosition());
-                lastIndex = getAdapterPosition();
+//                lastIndex = getAdapterPosition();
                 notifyDataSetChanged();
+                selectedPosition = deliveryTime.getId();
+
 
                 if (dataCallback != null) {
                     dataCallback.dataResult(deliveryTime, "result", true);
@@ -109,7 +125,16 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
             });
 
 
+
         }
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
 

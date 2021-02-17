@@ -140,10 +140,10 @@ public class PastOrderFragment extends FragmentBase {
                         completedOrdersList = result.getData();
 
                         List<OrderModel> list = initOrderList();
+                        Log.i("TAG", "Log list size " + list.size());
 
                         initOrdersAdapters(list);
 
-                        Log.i("TAG", "Log ordersDMS" + completedOrdersList.size());
 
 
                     } else {
@@ -181,11 +181,55 @@ public class PastOrderFragment extends FragmentBase {
 
     }
 
+//    private List<OrderModel> initOrderList() {
+//        List<OrderModel> orderList = new ArrayList<>();
+//
+//        for (int i = 0; i < completedOrdersList.size(); i++) {
+//            OrderProductModel currentProduct = completedOrdersList.get(i);
+//
+//            OrderModel orderModel = new OrderModel();
+//            orderModel.setCartId(currentProduct.getCartId());
+//            orderModel.setOrderCode(currentProduct.getOrderCode());
+//            orderModel.setAddressName(currentProduct.getAddressName());
+//            orderModel.setFullAddress(currentProduct.getFullAddress());
+//            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
+//            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
+//            orderModel.setOrderStatus(currentProduct.getOrderStatus());
+//            orderModel.setFromDate(currentProduct.getFromDate());
+//            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
+//            orderModel.setToDate(currentProduct.getToDate());
+//            orderModel.setOrderTotal(currentProduct.getOrderTotal());
+//            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
+//            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
+//            orderModel.setCreatedAt(currentProduct.getCreatedAt());
+//
+//            List<OrderProductModel> productsList = new ArrayList<>();
+//
+//            for (int j = 0; j < completedOrdersList.size(); j++) {
+//
+//                OrderProductModel orderProductModel = completedOrdersList.get(j);
+//                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
+//                    productsList.add(orderProductModel);
+//                    completedOrdersList.remove(j);
+//                    j--;
+//                }
+//            }
+//            orderModel.setOrderProductsDMS(productsList);
+//            orderList.add(orderModel);
+//        }
+//
+//        Log.i("TAG", "Log currentOrdersList" + orderList.size());
+//
+//        return orderList;
+//
+//    }
+
+
     private List<OrderModel> initOrderList() {
         List<OrderModel> orderList = new ArrayList<>();
 
-        for (int i = 0; i < completedOrdersList.size(); i++) {
-            OrderProductModel currentProduct = completedOrdersList.get(i);
+        while (completedOrdersList.size() > 0) {
+            OrderProductModel currentProduct = completedOrdersList.get(0);
 
             OrderModel orderModel = new OrderModel();
             orderModel.setCartId(currentProduct.getCartId());
@@ -218,14 +262,12 @@ public class PastOrderFragment extends FragmentBase {
             orderList.add(orderModel);
         }
 
+
         Log.i("TAG", "Log currentOrdersList" + orderList.size());
 
         return orderList;
 
     }
-
-
-
     public void getOrders(int user_id,String type,String filter) {
 
         completedOrdersList.clear();

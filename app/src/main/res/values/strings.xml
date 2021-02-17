@@ -366,5 +366,10 @@
     <string name="over1">Free delivery on any Order  </string>
     <string name="Error">Erorr</string>
     <string name="error">Error</string>
+    <string name="QuickDelivery">Quick Delivery</string>
+    <string name="please_install_whats">Please Install whatsUp app </string>
+    <string name="please_install_instagram">Please Install instagram app </string>
+    <string name="please_twitter">Please Install Twitter app </string>
+    <string name="please_install_facebook">Please Install Facebook app </string>
 
 </resources>

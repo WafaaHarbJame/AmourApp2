@@ -46,6 +46,7 @@ import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentLoginBinding;
@@ -303,11 +304,11 @@ public class LoginFragment extends FragmentBase {
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
-            GeneralModel result = (GeneralModel) obj;
+            ResultAPIModel<String> result = (ResultAPIModel) obj;
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_signin);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
+                if (result != null && result.message != null) {
+                    message = result.message;
                 }
                 Toast(message);
 
@@ -556,6 +557,8 @@ public class LoginFragment extends FragmentBase {
 
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            GlobalData.hideProgressDialog();
             CartResultModel cartResultModel = (CartResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

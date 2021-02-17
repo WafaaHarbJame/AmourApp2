@@ -16,6 +16,7 @@ import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
+import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 
@@ -869,6 +870,20 @@ public class DataFeacher {
     }
 
 
+    public void getQuickDelivery(QuickCall quickCall) {
+        QuickCall quickCall1 = new QuickCall();
+        quickCall1.store_id = quickCall.store_id;
+        quickCall1.country_id = quickCall.country_id;
+
+        Log.i(TAG, "Log getQuickDelivery");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_id " + quickCall1.store_id);
+        Log.i(TAG, "Log country_id " + quickCall1.country_id);
+
+        Call call = apiService.getQuickDelivery(headerMap, quickCall1);
+        call.enqueue(callbackApi);
+    }
+
     public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log getProductList");
@@ -988,6 +1003,18 @@ public class DataFeacher {
         Log.i(TAG, "Log app_build " + app_build);
 
         Call call = apiService.getValidate(headerMap, device_type,app_version,app_build);
+        call.enqueue(callbackApi);
+    }
+
+
+
+    public void getLinks(String country_shortname) {
+
+        Log.i(TAG, "Log getLinks");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_shortname " + country_shortname);
+
+        Call call = apiService.getSocialLink(headerMap,country_shortname);
         call.enqueue(callbackApi);
     }
 

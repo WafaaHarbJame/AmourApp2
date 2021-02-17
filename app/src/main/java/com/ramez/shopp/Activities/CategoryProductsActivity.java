@@ -255,7 +255,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result!=null&&result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);

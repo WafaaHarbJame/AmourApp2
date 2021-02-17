@@ -1,6 +1,7 @@
 package com.ramez.shopp.Adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.ramez.shopp.Models.WelcomeModel;
@@ -49,7 +51,13 @@ public class WelcomeSliderAdapter extends PagerAdapter {
             WelcomeModel welcomeSliderModel=welcomeSliderModels.get(position);
 
             textInfoTitle.setText(welcomeSliderModel.getInfoTxtTitle());
-            IvWelcome.setImageResource(welcomeSliderModel.getImage());
+
+            try {
+                IvWelcome.setImageDrawable(ContextCompat.getDrawable(context, welcomeSliderModel.getImage()));
+            } catch (Resources.NotFoundException e) {
+                IvWelcome.setImageResource(welcomeSliderModel.getImage());
+            }
+
             textInfoTv2.setText(welcomeSliderModel.getInfoTxt2());
             container.addView(view);
         } catch (Exception e) {

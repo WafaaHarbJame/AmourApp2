@@ -4,6 +4,7 @@ package com.ramez.shopp.ApiHandler;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.SettingModel;
+import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
@@ -28,6 +29,8 @@ import com.ramez.shopp.Models.PaymentModel;
 import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProfileData;
+import com.ramez.shopp.Models.QuickCall;
+import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 
@@ -74,26 +77,31 @@ ApiInterface {
     Call<OtpModel> changePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
-
     @POST("v3/Account/updatePassword")
     Call<GeneralModel> updatePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Account/updateDeviceToken")
-    Call<GeneralModel> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<ResultAPIModel<String>> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Account/otpVerify")
-    Call<GeneralModel> otpVerifyUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body OtpModel param );
+    Call<GeneralModel> otpVerifyUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body OtpModel param);
 
     /* ------------------------- Address Handle ------------------------- */
     @POST("v3/Locations/countryList")
     Call<CountryModelResult> GetCountry(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
+    @GET("v3/Locations/getSocialLink")
+    Call<ResultAPIModel<SoicalLink>> getSocialLink(@HeaderMap() Map<String, Object> headerParams, @Query("country_shortname") String country_shortname);
 
     @GET("v3/Locations/getValidate")
-    Call<GeneralModel> getValidate(@HeaderMap() Map<String, Object> headerParams,@Query("device_type") String device_type,
-                                       @Query("app_version") String app_version,  @Query("app_build") int app_build);
+    Call<GeneralModel> getValidate(@HeaderMap() Map<String, Object> headerParams, @Query("device_type") String device_type, @Query("app_version") String app_version, @Query("app_build") int app_build);
+
+    @POST("v3/Locations/storedetails")
+     Call<ResultAPIModel<QuickDeliveryRespond>> getQuickDelivery
+            (@HeaderMap() Map<String, Object> headerParams, @Body QuickCall param);
+
     @POST
     Call<CityModelResult> GetCity(@Url String url, @HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
@@ -130,14 +138,14 @@ ApiInterface {
     Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
     @POST("v3/Products/setrate")
-    Call<ResultAPIModel<ReviewModel>>setRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<ResultAPIModel<ReviewModel>> setRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Products/GetRates")
     Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Company/setrate")
-    Call<ResultAPIModel<ReviewModel>>setAppRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<ResultAPIModel<ReviewModel>> setAppRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Company/GetRates")
@@ -145,7 +153,7 @@ ApiInterface {
 
 
     @GET("v3/Company/AboutAs")
-    Call<ResultAPIModel<SettingModel>>getSetting(@HeaderMap() Map<String, Object> headerParams,@Query("lng") String lng);
+    Call<ResultAPIModel<SettingModel>> getSetting(@HeaderMap() Map<String, Object> headerParams, @Query("lng") String lng);
 
     @POST("v3/Favourite/addFavouriteProduct")
     Call<GeneralModel> addFavouriteProduct(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);

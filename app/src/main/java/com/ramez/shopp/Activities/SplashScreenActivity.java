@@ -14,6 +14,7 @@ import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.SettingModel;
+import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
@@ -56,8 +57,9 @@ public class SplashScreenActivity extends ActivityBase {
 
         localModel = UtilityApp.getLocalData();
 
-        if (UtilityApp.getLocalData() != null) {
+        if (localModel != null && localModel.getCityId() != null) {
             getCategories(Integer.parseInt(localModel.getCityId()));
+
 
         }
         initData();
@@ -74,8 +76,6 @@ public class SplashScreenActivity extends ActivityBase {
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user.getId();
-                    Log.i(TAG, "Log user_id " + userId);
-                    Log.i(TAG, "Log storeId " + storeId);
                     getUserData(userId);
 
 
@@ -130,7 +130,7 @@ public class SplashScreenActivity extends ActivityBase {
 
             } else if (IsSuccess) {
                 MemberModel memberModel = UtilityApp.getUserData();
-                if(result!=null&&result.data!=null){
+                if (result != null && result.data != null) {
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
                     memberModel.setProfilePicture(result.data.getProfilePicture());
@@ -220,7 +220,7 @@ public class SplashScreenActivity extends ActivityBase {
                     if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
                         cartNumber = cartResultModel.getCartCount();
                         UtilityApp.setCartCount(cartNumber);
-                       int minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+                        int minimum_order_amount = cartResultModel.getMinimumOrderAmount();
                         localModel.setMinimum_order_amount(minimum_order_amount);
                         UtilityApp.setLocalData(localModel);
 
@@ -247,6 +247,24 @@ public class SplashScreenActivity extends ActivityBase {
             }
 
         }).GetCarts(storeId, userId);
+    }
+
+
+    public void getLinks(String shortName) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<SoicalLink> result = (ResultAPIModel<SoicalLink>) obj;
+
+
+                if (IsSuccess) {
+                    SoicalLink soicalLink=result.data;
+                    UtilityApp.SetLinks(soicalLink);
+
+                }
+
+
+
+        }).getLinks(shortName);
     }
 
 }

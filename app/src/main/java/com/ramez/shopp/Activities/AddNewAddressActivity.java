@@ -30,16 +30,18 @@ import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class AddNewAddressActivity extends ActivityBase {
     //
-    public ArrayList<AreasModel> stateModelList;
+    public List<AreasModel> stateModelList;
     ActivityAddNewAddressBinding binding;
     Boolean isEdit = false;
     int addressId;
     AddressModel addressModel;
-    int area_id = 0, state_id = 0;
+    int state_id = 0;
     List<String> stateNames;
     String state_name;
     ArrayAdapter<String> adapter;
@@ -100,7 +102,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
-            if (isValidForm() && area_id != 0) {
+            if (isValidForm() && selectedCityId > 0) {
                 CreateNewAddress();
             } else {
                 YoYo.with(Techniques.Shake).playOn(binding.stateSpinner);
@@ -162,7 +164,7 @@ public class AddNewAddressActivity extends ActivityBase {
         int userId=UtilityApp.getUserData().getId();
         AddressModel addressModel = new AddressModel();
         addressModel.setName(binding.nameEt.getText().toString());
-        addressModel.setAreaId(area_id);
+        addressModel.setAreaId(selectedCityId);
         addressModel.setState(state_id);
         addressModel.setBlock(binding.blockEt.getText().toString());
         addressModel.setStreetDetails(binding.streetEt.getText().toString());
@@ -251,9 +253,11 @@ public class AddNewAddressActivity extends ActivityBase {
                         addressModel = result.getData().get(0);
                         binding.addressTv.setText(addressModel.getAddressNickname());
                         // binding.areaEt.setText(addressModel.getAreaDetails());
-                        binding.latTv.setText(addressModel.getLatitude().toString());
-                        binding.longTv.setText(addressModel.getLongitude().toString());
-                        binding.nameEt.setText(addressModel.getName());
+                        if(addressModel.getLatitude()!=null&&addressModel.getLongitude()!=null){
+                            binding.latTv.setText(addressModel.getLatitude().toString());
+                            binding.longTv.setText(addressModel.getLongitude().toString());
+                        }
+                         binding.nameEt.setText(addressModel.getName());
                         binding.streetEt.setText(addressModel.getStreetDetails());
 //                        binding.codeTv.setText(addressModel.getCountry());
                         binding.phoneTv.setText(addressModel.getMobileNumber());
@@ -328,8 +332,6 @@ public class AddNewAddressActivity extends ActivityBase {
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-                        //addressList= result.getData();
-                        // initAdapter();
                         ArrayList<AreasModel> list = result.getData();
                         initStateSpinner(list);
 
@@ -352,7 +354,7 @@ public class AddNewAddressActivity extends ActivityBase {
         stateModelList = data;
         stateModelList.add(new AreasModel(0, getString(R.string.select_area), getString(R.string.select_area)));
 
-        // Collections.sort(stateModelList);
+         Collections.sort(stateModelList);
 
         for (int i = 0; i < data.size(); i++) {
             stateNames.add(UtilityApp.getLanguage().equalsIgnoreCase(Constants.Arabic) ? data.get(i).getNameAe() : data.get(i).getNameEn());
@@ -363,42 +365,26 @@ public class AddNewAddressActivity extends ActivityBase {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stateNames);
         binding.stateSpinner.setAdapter(adapter);
 
-        if (stateModelList != null) {
-            int pos = 0;
-            for (int i1 = 0; i1 < stateModelList.size(); i1++) {
-
-//                if (addressesDM.getAddressNote().equals(stateModelList.get(i1).getArea_ar()) || addressesDM.getAddressNote().equals(stateModelList.get(i1).getArea_en()))
-                //    pos = i1;
-
-            }
-
-            //  binding.stateSpinner.setSelection(pos);
-        }
 
 
         binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
-                // On selecting a spinner item
-
-//                ((TextView) adapter.getChildAt(0)).setTextColor(Color.BLACK);
 
                 if (position > 0) {
-                    state_name = UtilityApp.getLanguage().equalsIgnoreCase(Constants.Arabic) ? stateModelList.get(position).getNameAe() : stateModelList.get(position).getNameEn();
-                    // binding.etInputAddressNote.setText(state_name);
+                    state_name = Locale.getDefault().getLanguage().equalsIgnoreCase("ar") ? stateModelList.
+                            get(position).getNameAe() : stateModelList.get(position).getNameEn();
                     selectedCityId = stateModelList.get(position).getId();
-                    Log.i("tag", "selectedCityId" + selectedCityId);
-                    area_id=selectedCityId;
+
 
                 } else {
                     state_name = stateNames.get(position);
-                    //  binding.etInputAddressNote.setText(state_name);
                     selectedCityId = 0;
-                    Log.i("tag", "selectedCityId" + selectedCityId);
 
 
                 }
+                Log.i("tag", "Log selectedCityId" + selectedCityId);
 
             }
 

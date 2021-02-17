@@ -16,6 +16,7 @@ import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityConfirmBinding;
@@ -218,11 +219,11 @@ public class ConfirmActivity extends ActivityBase {
             GlobalData.hideProgressDialog();
 
             GlobalData.hideProgressDialog();
-            GeneralModel result = (GeneralModel) obj;
+            ResultAPIModel<String> result = (ResultAPIModel) obj;
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_signin);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
+                if (result != null && result.message != null) {
+                    message = result.message;
                 }
                 Toast(message);
 

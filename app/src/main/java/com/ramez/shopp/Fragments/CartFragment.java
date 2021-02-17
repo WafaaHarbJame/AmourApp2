@@ -89,8 +89,12 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             binding.contBut.setVisibility(View.GONE);
             showLoginDialog();
         } else {
+
             storeId = Integer.parseInt(localModel.getCityId());
-            userId = user.getId();
+            if (user != null) {
+                userId = user.getId();
+
+            }
 
             linearLayoutManager = new LinearLayoutManager(getActivityy());
             binding.cartRecycler.setLayoutManager(linearLayoutManager);
@@ -202,11 +206,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            cartResultModel = (CartResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
-
             if (isVisible()) {
+                cartResultModel = (CartResultModel) obj;
+                String message = getString(R.string.fail_to_get_data);
+
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
                 if (func.equals(Constants.ERROR)) {
@@ -250,7 +253,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             UtilityApp.setCartCount(cartResultModel.getCartCount());
                             initAdapter();
                             cartAdapter.notifyDataSetChanged();
-                            if(delivery_charges>0){
+                            if (delivery_charges > 0) {
                                 if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
 
                                     binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
@@ -262,13 +265,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                                     binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
 
                                 }
-                            }
-                            else {
+                            } else {
                                 binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
 
                             }
-
-
 
 
                         } else {
