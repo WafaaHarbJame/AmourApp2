@@ -202,15 +202,14 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 }
             }
+            String photoUrl = "";
 
-
-            if (productModel.getImages() != null && productModel.getImages().get(0) != null) {
-                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image)
-                        .error(R.drawable.holder_image).into(holder.binding.productImg);
-
+            if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+                photoUrl = productModel.getImages().get(0);
+            } else {
+                photoUrl = "http";
             }
-
-
+            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {
@@ -234,11 +233,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_add_favorite));
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_add_favorite));
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
                     Toast.makeText(context, "" + context.getString(R.string.success_add), Toast.LENGTH_SHORT).show();
@@ -247,8 +244,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     notifyDataSetChanged();
 
                 } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_add_favorite));                }
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                }
             }
 
         }).addToFavoriteHandle(userId, storeId, productId);
@@ -258,11 +255,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
 
             } else {
                 if (IsSuccess) {
@@ -274,8 +269,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_remove_favorite));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
                 }
             }
 
@@ -335,7 +329,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
 
-            if(productModels.size()>0){
+            if (productModels.size() > 0) {
                 productModels.remove(productModels.size() - 1);
                 notifyItemRemoved(productModels.size());
 
@@ -433,7 +427,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     checkLoginDialog.show();
                 } else {
                     String message;
-                    if(productModels.size()>0){
+                    if (productModels.size() > 0) {
                         ProductModel productModel = productModels.get(getAdapterPosition());
                         int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                         int position = getAdapterPosition();
@@ -445,36 +439,32 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
 
-                        if(limit==0){
+                        if (limit == 0) {
 
                             if (count + 1 <= stock) {
                                 addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                             } else {
                                 message = context.getString(R.string.stock_empty);
-                                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                        message);
+                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                             }
                         } else {
 
-                            if (count + 1 <= stock && (count + 1 )<= limit) {
+                            if (count + 1 <= stock && (count + 1) <= limit) {
                                 addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                             } else {
 
-                                if(count+1 > stock){
+                                if (count + 1 > stock) {
                                     message = context.getString(R.string.stock_empty);
-                                }
-                                else {
+                                } else {
                                     message = context.getString(R.string.limit) + "" + limit;
 
                                 }
-                                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                        message);
+                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                             }
 
                         }
                     }
-
 
 
                 }
@@ -504,8 +494,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, message,
-                                context.getString(R.string.fail_to_delete_cart));
+                        GlobalData.errorDialogWithButton(context, message, context.getString(R.string.fail_to_delete_cart));
                     }
                 } else {
 
@@ -514,15 +503,13 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     } else {
 
-                        if(count+1 > stock){
+                        if (count + 1 > stock) {
                             message = context.getString(R.string.stock_empty);
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                message);
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
 
 
@@ -585,8 +572,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_add_cart),
-                            context.getString(R.string.fail_to_delete_cart));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart), context.getString(R.string.fail_to_delete_cart));
 
                 }
 
@@ -604,8 +590,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_update_cart),
-                            context.getString(R.string.fail_to_delete_cart));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
 
                 }
 
@@ -624,8 +609,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,  context.getString(R.string.fail_to_update_cart),
-                            context.getString(R.string.fail_to_delete_cart));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
 
 
                 }

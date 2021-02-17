@@ -59,6 +59,15 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     private Handler handler;
     private boolean toggleButton = false;
 
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +149,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                 searchQuery = s.toString();
                 handler.postDelayed(runnable, 500);
 
-
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -152,8 +160,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
             }
         });
-
-
 
 
         binding.view2But.setOnClickListener(view1 -> {
@@ -171,7 +177,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 //                            spanSize + " spans but GridLayoutManager has only " + numColumn
 //                            + " spans.");
 //                }
-                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view1));
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view1));
 
             } else {
                 numColumn = 2;
@@ -186,15 +192,13 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 //                            + " spans.");
 //                }
 
-                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view2));
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view2));
 
             }
             adapter.notifyDataSetChanged();
 
 
         });
-
-
 
 
         binding.priceBut.setOnClickListener(view1 -> {
@@ -222,11 +226,17 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
     public void initAdapter() {
 
-        adapter = new SearchProductAdapter(getActiviy(), productList, country_id,city_id,user_id,binding.recycler, binding.searchEt.getText().toString(),this, numColumn);
+        adapter = new SearchProductAdapter(getActiviy(), productList, country_id, city_id, user_id, binding.recycler, binding.searchEt.getText().toString(), this, numColumn);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
         binding.offerCountTv.setText(String.valueOf(offerList.size()));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (searchCall != null && searchCall.isExecuted()) searchCall.isExecuted();
     }
 
     @Override
@@ -270,16 +280,13 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                 binding.failGetDataLY.failTxt.setText(message);
 
 
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                 binding.dataLY.setVisibility(View.GONE);
 
-            }
-            else {
+            } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 
@@ -345,16 +352,13 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                 binding.failGetDataLY.failTxt.setText(message);
 
 
-            }
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                 binding.dataLY.setVisibility(View.GONE);
 
-            }
-
-            else {
+            } else {
                 if (IsSuccess) {
                     Log.i(TAG, "Log productList Search " + result.getData());
 
@@ -451,7 +455,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
     }
 
-
     private int getOffersProducts(ArrayList<ProductModel> productList) {
         int size = 0;
         if (productList != null) {
@@ -473,15 +476,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         return size;
 
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
