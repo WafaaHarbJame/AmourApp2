@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,8 +204,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
 
-            if (productModel!=null&&productModel.getImages()!=null&&productModel.getImages().get(0)!= null) {
-                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+            if (productModel.getImages() != null && productModel.getImages().get(0) != null) {
+                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image)
+                        .error(R.drawable.holder_image).into(holder.binding.productImg);
 
             }
 
@@ -332,6 +334,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
+
             if(productModels.size()>0){
                 productModels.remove(productModels.size() - 1);
                 notifyItemRemoved(productModels.size());
@@ -347,19 +350,16 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     if (products != null && products.size() > 0) {
                         productModels.addAll(products);
-//                        notمكifyItemRangeInserted(pos, productModels.size());
-                        rv.post(() -> {
-                            notifyItemRangeInserted(pos, productModels.size());
-                        });
+                        notifyItemRangeInserted(pos, productModels.size());
                         nextPage++;
                     } else {
                         show_loading = false;
                     }
-                    setLoaded();
+
                 } else {
                     show_loading = false;
-                    setLoaded();
                 }
+                setLoaded();
 
 
             }

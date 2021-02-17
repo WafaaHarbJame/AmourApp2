@@ -113,24 +113,6 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
-
-//
-//        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                return false;
-//            }
-//        }).into(holder.binding.productImg);
-
     }
 
     @Override

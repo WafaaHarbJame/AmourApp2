@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.R;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -51,7 +52,11 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
 
         holder.buttonCategory.setText(mainMainCategoryDM.getCatName());
 
-        Glide.with(context).load(mainMainCategoryDM.getImage()).thumbnail(0.05f).into(holder.catImage);
+        Picasso.get()
+                .load(mainMainCategoryDM.getImage())
+                .placeholder(R.drawable.holder_image)
+                .error(R.drawable.holder_image)
+                .into(holder.catImage);
 
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {

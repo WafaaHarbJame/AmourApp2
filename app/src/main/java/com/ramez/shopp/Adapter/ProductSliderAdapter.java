@@ -46,7 +46,6 @@ public class ProductSliderAdapter extends PagerAdapter {
         try {
 
             ImageView productImg =  view.findViewById(R.id.productImg);
-//            Glide.with(context).asBitmap().load(sliderList.get(position)).placeholder(R.drawable.holder_image).into(productImg);
 
             Picasso.get().load(sliderList.get(position)).placeholder(R.drawable.holder_image)
                     .error(R.drawable.holder_image).into(productImg);

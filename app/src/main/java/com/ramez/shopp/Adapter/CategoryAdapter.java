@@ -21,6 +21,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCategoryBinding;
 import com.ramez.shopp.databinding.RowProductsItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -53,19 +54,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
         holder.binding.tvCatTitle.setText(categoryModel.getCatName());
 
-        Glide.with(context).asBitmap().load(categoryModel.getImage()).addListener(new RequestListener<Bitmap>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.VISIBLE);
-                return false;
-            }
 
-            @Override
-            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
-                return false;
-            }
-        }).into(holder.binding.ivCatImage);
+        Picasso.get()
+                .load(categoryModel.getImage())
+                .placeholder(R.drawable.holder_image)
+                .error(R.drawable.holder_image)
+                .into(holder.binding.ivCatImage);
+
+
+//
+//        Glide.with(context).asBitmap().load(categoryModel.getImage()).addListener(new RequestListener<Bitmap>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.VISIBLE);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.GONE);
+//                return false;
+//            }
+//        }).into(holder.binding.ivCatImage);
 
         holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,categoryModel));
 

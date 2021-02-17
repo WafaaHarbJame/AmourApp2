@@ -358,11 +358,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     } else {
                         show_loading = false;
                     }
-                    setLoaded();
+
                 } else {
                     show_loading = false;
-                    setLoaded();
                 }
+                setLoaded();
 
 
             }
