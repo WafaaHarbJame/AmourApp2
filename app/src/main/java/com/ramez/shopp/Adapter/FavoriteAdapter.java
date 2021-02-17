@@ -353,7 +353,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     if (products != null && products.size() > 0) {
                         productModels.addAll(products);
-                        notifyItemRangeInserted(pos, productModels.size());
+                        notifyItemRangeInserted(pos, products.size());
                         nextPage++;
                     } else {
                         show_loading = false;

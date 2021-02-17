@@ -332,9 +332,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (productModels.size() > 0) {
                 productModels.remove(productModels.size() - 1);
                 notifyItemRemoved(productModels.size());
-
             }
-
 
             if (IsSuccess) {
                 if (result.getData() != null && result.getData().size() > 0) {
@@ -344,7 +342,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     if (products != null && products.size() > 0) {
                         productModels.addAll(products);
-                        notifyItemRangeInserted(pos, productModels.size());
+                        notifyItemRangeInserted(pos, products.size());
                         nextPage++;
                     } else {
                         show_loading = false;
