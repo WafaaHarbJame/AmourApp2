@@ -21,6 +21,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
+import com.ramez.shopp.BuildConfig
 import com.ramez.shopp.Classes.Constants
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.ImageHandler
@@ -276,7 +277,9 @@ class MapActivity : ActivityBase(), OnMapReadyCallback {
         Places.initialize(applicationContext, getString(R.string.mapKey), Locale.US)
         autocompleteFragment = supportFragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as AutocompleteSupportFragment?
         autocompleteFragment!!.setHint(getString(R.string.searchaddress))
-        assert(autocompleteFragment != null)
+        if (BuildConfig.DEBUG && autocompleteFragment == null) {
+            error("Assertion failed")
+        }
         autocompleteFragment!!.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
         autocompleteFragment!!.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {

@@ -208,77 +208,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             } else {
                 addCommentDialog.dismiss();
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_update_cart));
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_update_cart));
 
             }
 
 
         }).updateRemarkCartHandle(cart_id, remark);
-    }
-
-    private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (func.equals(Constants.ERROR)) {
-
-
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_add_favorite));
-
-
-            } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_add_favorite));
-
-            } else {
-                if (IsSuccess) {
-
-                    Toast.makeText(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT).show();
-                    // cartDMS.get(position).setFavourite(true);
-                    notifyItemChanged(position);
-                    notifyDataSetChanged();
-
-                } else {
-
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_add_favorite));
-
-
-                }
-            }
-
-        }).addToFavoriteHandle(userId, storeId, productId);
-    }
-
-    private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (func.equals(Constants.ERROR)) {
-
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_remove_favorite));
-
-            } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                        context.getString(R.string.fail_to_remove_favorite));
-
-
-            } else {
-                if (IsSuccess) {
-                    // cartDMS.get(position).setFavourite(false);
-                    Toast.makeText(context, context.getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
-                    notifyItemChanged(position);
-                    notifyDataSetChanged();
-
-
-                } else {
-
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_remove_favorite));
-
-                }
-            }
-
-        }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
 
 
@@ -383,7 +318,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.menuBut.setOnClickListener(view1 -> {
-                if(getAdapterPosition()!=-1){
+                if (getAdapterPosition() != -1) {
                     CartModel cartModel = cartDMS.get(getAdapterPosition());
                     Intent intent = new Intent(context, ProductDetailsActivity.class);
                     ProductModel productModel = new ProductModel();
@@ -393,7 +328,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     intent.putExtra(Constants.DB_productModel, productModel);
                     context.startActivity(intent);
                 }
-
 
 
             });
@@ -420,8 +354,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                message);
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
                 } else {
 
@@ -430,15 +363,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                     } else {
 
-                        if(count+1 > stock){
+                        if (count + 1 > stock) {
                             message = context.getString(R.string.stock_empty);
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                message);
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
 
                 }
@@ -463,7 +394,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                if(getAdapterPosition()!=-1&&cartDMS.size()>0){
+                if (getAdapterPosition() != -1 && cartDMS.size() > 0) {
                     CartModel productModel = cartDMS.get(getAdapterPosition());
                     int count = productModel.getQuantity();
                     int product_barcode_id = productModel.getProductBarcodeId();
@@ -502,7 +433,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
-
                     calculateSubTotalPrice();
                     getItemCount();
                     //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
@@ -524,9 +454,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_update_cart));
-
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_update_cart));
 
 
                 }
@@ -538,11 +466,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
+                    if (cartDMS.size() > 0) {
+                        cartDMS.remove(position);
+                        notifyItemRemoved(position);
 
-                    cartDMS.remove(position);
-                    notifyItemRemoved(position);
+                    }
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
-
                     calculateSubTotalPrice();
                     getItemCount();
 
@@ -560,8 +489,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_delete_cart));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_delete_cart));
 
                 }
 

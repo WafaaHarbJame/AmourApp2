@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 
@@ -45,6 +47,19 @@ public class AreasModel  implements Comparable<AreasModel>, Serializable {
         this.nameEn = nameEn;
         this.nameAe = nameAe;
     }
+
+
+
+    public String getStateName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return nameEn;
+
+        }
+        else {
+            return nameAe;
+        }
+    }
+
 
     @Override
 

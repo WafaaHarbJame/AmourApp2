@@ -370,6 +370,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     } else {
                         show_loading = false;
                     }
+
                 } else {
                     show_loading = false;
                 }

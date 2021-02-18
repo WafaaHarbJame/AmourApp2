@@ -19,6 +19,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CountryCodeDialog;
+import com.ramez.shopp.Dialogs.StateDialog;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasModel;
@@ -33,9 +34,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddNewAddressActivity extends ActivityBase {
-    //
     public List<AreasModel> stateModelList;
     ActivityAddNewAddressBinding binding;
     Boolean isEdit = false;
@@ -43,19 +44,17 @@ public class AddNewAddressActivity extends ActivityBase {
     AddressModel addressModel;
     int state_id = 0;
     List<String> stateNames;
-    String state_name;
-    ArrayAdapter<String> adapter;
+    String state_name="";
     int selectedCityId = 0;
-    // Address Phone
     String CountryCode = "+973";
-    boolean select_country = false;
     private Double longitude = 0.0;
     private Double latitude = 0.0;
     private String google_address = "";
     private String phonePrefix = "973";
     private int CHOOSE_LOCATION = 3000;
-    private int countryId;
+    private int countryId=17;
     private LocalModel localModel;
+    private boolean isShowing=false;
 
 
     @Override
@@ -69,20 +68,18 @@ public class AddNewAddressActivity extends ActivityBase {
         stateNames = new ArrayList<>();
 
         setTitle(R.string.new_address);
-        localModel=UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData();
 
-        if(UtilityApp.getLocalData()!=null){
+        if (UtilityApp.getLocalData() != null) {
 
-            if(localModel.getCountryName()!=null&&localModel.getPhonecode()!=null){
-                binding.codeSpinner.setText(localModel.getCountryName().concat( " " +"("+localModel.getPhonecode()+")"));
-                CountryCode= "+".concat(String.valueOf(localModel.getPhonecode()));
-                phonePrefix= String.valueOf(localModel.getPhonecode());
+            if (localModel.getCountryName() != null && localModel.getPhonecode() != null) {
+                binding.codeSpinner.setText(localModel.getCountryName().concat(" " + "(" + localModel.getPhonecode() + ")"));
+                CountryCode = "+".concat(String.valueOf(localModel.getPhonecode()));
+                phonePrefix = String.valueOf(localModel.getPhonecode());
             }
 
 
         }
-
-
 
 
         binding.locationBut.setOnClickListener(view1 -> {
@@ -95,18 +92,26 @@ public class AddNewAddressActivity extends ActivityBase {
 
         getIntentData();
 
-        if(localModel!=null&& localModel.getShortname().equals("KW")){
-            String code=localModel.getShortname();
+        if (localModel != null && localModel.getShortname().equals("KW")) {
+            String code = localModel.getShortname();
             binding.blockEt.setHint(getString(R.string.block_kw));
         }
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
-            if (isValidForm() && selectedCityId > 0) {
+            if (isValidForm() && selectedCityId > 0&&isShowing) {
                 CreateNewAddress();
             } else {
-                YoYo.with(Techniques.Shake).playOn(binding.stateSpinner);
-                Toast(R.string.select_area);
+                if(Objects.requireNonNull(binding.nameEt.getText()).toString().isEmpty()){
+                    Toast(R.string.enter_name);
+                    binding.nameEt.requestFocus();
+
+                }
+                else {
+                    YoYo.with(Techniques.Shake).playOn(binding.stateSpinner1);
+                    Toast(R.string.select_area);
+                }
+
             }
 
         });
@@ -123,25 +128,23 @@ public class AddNewAddressActivity extends ActivityBase {
             binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
             binding.addNewTv.setVisibility(View.GONE);
 
-        }
-
-        else {
+        } else {
             binding.addNewAddressBut.setVisibility(View.VISIBLE);
             binding.editAddressBut.setVisibility(View.GONE);
 
         }
 
         countryId = UtilityApp.getLocalData().getCountryId();
-        
-        GetAreas(countryId);
+
+          GetAreas(countryId);
 
         binding.codeSpinner.setOnClickListener(view1 -> {
-            CountryCodeDialog countryCodeDialog=new CountryCodeDialog(getActiviy(), 17, (obj, func, IsSuccess) -> {
-                CountryModel countryModel= (CountryModel) obj;
-                if(countryModel!=null){
-                    CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
-                    phonePrefix= String.valueOf(countryModel.getPhonecode());
-                    binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
+            CountryCodeDialog countryCodeDialog = new CountryCodeDialog(getActiviy(), countryId, (obj, func, IsSuccess) -> {
+                CountryModel countryModel = (CountryModel) obj;
+                if (countryModel != null) {
+                    CountryCode = "+".concat(String.valueOf(countryModel.getPhonecode()));
+                    phonePrefix = String.valueOf(countryModel.getPhonecode());
+                    binding.codeSpinner.setText(countryModel.getName().concat(" " + "(" + countryModel.getPhonecode() + ")"));
 
                 }
 
@@ -156,12 +159,32 @@ public class AddNewAddressActivity extends ActivityBase {
         });
 
 
+        binding.stateSpinner1.setOnClickListener(view1 -> {
+            StateDialog stateDialog = new StateDialog(getActiviy(), selectedCityId, (obj, func, IsSuccess) -> {
+                AreasModel areasModel = (AreasModel) obj;
+                if (areasModel != null) {
+                    binding.stateSpinner1.setText(areasModel.getStateName());
+                    state_name = areasModel.getStateName();
+                    selectedCityId = areasModel.getId();
+
+                }
+                else {
+                    binding.stateSpinner1.setText(state_name);
+
+                }
+
+            });
+            stateDialog.show();
+            isShowing=true;
+
+
+        });
+
     }
 
-
     private void CreateNewAddress() {
-        state_id= Integer.parseInt(UtilityApp.getLocalData().getCityId());
-        int userId=UtilityApp.getUserData().getId();
+        state_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        int userId = UtilityApp.getUserData().getId();
         AddressModel addressModel = new AddressModel();
         addressModel.setName(binding.nameEt.getText().toString());
         addressModel.setAreaId(selectedCityId);
@@ -190,19 +213,14 @@ public class AddNewAddressActivity extends ActivityBase {
 
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_get_data);
-            }
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), getString(R.string.no_internet_connection));
 
-            else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActiviy(),getString(R.string.no_internet_connection));
-
-            }
-
-            else {
+            } else {
                 if (IsSuccess) {
 
                     Intent intent = new Intent(getActiviy(), AddressActivity.class);
-                    intent.putExtra(Constants.KEY_ADD_NEW,true);
-                    Log.i("TAG","Log addNewAddress intent  "+true);
+                    intent.putExtra(Constants.KEY_ADD_NEW, true);
                     setResult(RESULT_OK, intent);
                     finish();
 
@@ -217,6 +235,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
     }
 
+
     private void getIntentData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -226,6 +245,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     public void GetUserAddress(int addressId) {
@@ -253,11 +273,11 @@ public class AddNewAddressActivity extends ActivityBase {
                         addressModel = result.getData().get(0);
                         binding.addressTv.setText(addressModel.getAddressNickname());
                         // binding.areaEt.setText(addressModel.getAreaDetails());
-                        if(addressModel.getLatitude()!=null&&addressModel.getLongitude()!=null){
+                        if (addressModel.getLatitude() != null && addressModel.getLongitude() != null) {
                             binding.latTv.setText(addressModel.getLatitude().toString());
                             binding.longTv.setText(addressModel.getLongitude().toString());
                         }
-                         binding.nameEt.setText(addressModel.getName());
+                        binding.nameEt.setText(addressModel.getName());
                         binding.streetEt.setText(addressModel.getStreetDetails());
 //                        binding.codeTv.setText(addressModel.getCountry());
                         binding.phoneTv.setText(addressModel.getMobileNumber());
@@ -281,14 +301,14 @@ public class AddNewAddressActivity extends ActivityBase {
         }).GetAddressByIdHandle(addressId);
     }
 
+
     private final boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator
-                .addField(binding.nameEt,
-                        new NonEmptyRule(R.string.enter_name)).validate();
+        return formValidator.addField(binding.nameEt, new NonEmptyRule(R.string.enter_name)).validate();
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -310,91 +330,24 @@ public class AddNewAddressActivity extends ActivityBase {
             }
 
 
-
-
         }
     }
 
 
     public void GetAreas(int country_id) {
-
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
             AreasResultModel result = (AreasResultModel) obj;
-
-            if (func.equals(Constants.ERROR)) {
-
-                Toast(R.string.error_in_data);
-
-            } else if (func.equals(Constants.FAIL)) {
-                Toast(R.string.fail_to_get_data);
-
-
-            } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-                        ArrayList<AreasModel> list = result.getData();
-                        initStateSpinner(list);
 
+                        selectedCityId=result.getData().get(0).getId();
+                        state_name=result.getData().get(0).getStateName();
                     }
-
-
-                } else {
-                    Toast(R.string.fail_to_get_data);
-
                 }
-            }
+
 
         }).GetAreasHandle(country_id);
-    }
-
-    private void initStateSpinner(ArrayList<AreasModel> data) {
-        binding.stateSpinner.setTitle(getString(R.string.select_area));
-        binding.stateSpinner.setPositiveButton(getString(R.string.close));
-        stateModelList.clear();
-        stateModelList = data;
-        stateModelList.add(new AreasModel(0, getString(R.string.select_area), getString(R.string.select_area)));
-
-         Collections.sort(stateModelList);
-
-        for (int i = 0; i < data.size(); i++) {
-            stateNames.add(UtilityApp.getLanguage().equalsIgnoreCase(Constants.Arabic) ? data.get(i).getNameAe() : data.get(i).getNameEn());
-
-        }
-
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stateNames);
-        binding.stateSpinner.setAdapter(adapter);
-
-
-
-        binding.stateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
-
-                if (position > 0) {
-                    state_name = Locale.getDefault().getLanguage().equalsIgnoreCase("ar") ? stateModelList.
-                            get(position).getNameAe() : stateModelList.get(position).getNameEn();
-                    selectedCityId = stateModelList.get(position).getId();
-
-
-                } else {
-                    state_name = stateNames.get(position);
-                    selectedCityId = 0;
-
-
-                }
-                Log.i("tag", "Log selectedCityId" + selectedCityId);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-
     }
 
 

@@ -63,7 +63,7 @@ public class CountryCodeDialog extends Dialog {
 
         setContentView(R.layout.dialog_country_code);
         setCancelable(false);
-        countries=new ArrayList<>();
+        countries = new ArrayList<>();
         rv = findViewById(R.id.rv);
         okBtn = findViewById(R.id.okBtn);
         closeBut = findViewById(R.id.closeBtn);
@@ -72,22 +72,6 @@ public class CountryCodeDialog extends Dialog {
         rv.setLayoutManager(linearLayoutManager);
         rv.hasFixedSize();
 
-
-
-//        if (UtilityApp.getCountriesData().size() > 0) {
-//            countries = UtilityApp.getCountriesData();
-//
-//
-//        } else {
-//
-//            countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
-//            countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
-//            countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
-//            countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
-//            countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
-//            countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
-//
-//        }
 
         countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", Constants.three, R.drawable.ic_flag_oman));
         countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", Constants.three, R.drawable.ic_flag_behrain));
@@ -108,9 +92,9 @@ public class CountryCodeDialog extends Dialog {
 
         okBtn.setOnClickListener(view -> {
 
-                if (dataFetcherCallBack != null) {
-                    dataFetcherCallBack.Result(selectedCountryModel, Constants.success, true);
-                }
+            if (dataFetcherCallBack != null) {
+                dataFetcherCallBack.Result(selectedCountryModel, Constants.success, true);
+            }
             dismiss();
 
         });
@@ -157,8 +141,8 @@ public class CountryCodeDialog extends Dialog {
         countriesAdapter = new CountryCodeAdapter(activity, countries, countryCode, new DataFetcherCallBack() {
             @Override
             public void Result(Object obj, String func, boolean IsSuccess) {
-                selectedCountryModel= (CountryModel) obj;
-                selectedCountry=selectedCountryModel.getId();
+                selectedCountryModel = (CountryModel) obj;
+                selectedCountry = selectedCountryModel.getId();
             }
         });
         rv.setAdapter(countriesAdapter);

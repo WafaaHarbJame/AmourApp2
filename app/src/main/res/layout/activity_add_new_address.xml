@@ -124,12 +124,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/stateSpinner"
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/stateSpinner1"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
-                    app:hintText="@string/enter_area"
+                    android:text="@string/enter_area"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/bottom_arrow"
                     android:layout_height="40dp" />
+
 
                 <View
                     android:layout_width="match_parent"

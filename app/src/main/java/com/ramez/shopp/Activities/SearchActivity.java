@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -451,6 +452,8 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActiviy(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         binding.searchEt.setAdapter(adapter);
 
+
+//        new Handler().postDelayed(() -> binding.searchEt.showDropDown(), 500);
         binding.searchEt.showDropDown();
 
     }

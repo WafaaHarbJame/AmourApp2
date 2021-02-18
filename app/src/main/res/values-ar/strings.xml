@@ -189,6 +189,7 @@
     <string name="upload_date">تحميل البيانات </string>
     <string name="select_country_code">اختر الدولة</string>
     <string name="enter_country_name_to_search">ادخل اسم الدولة او الرمز للبحث</string>
+    <string name="enter_city_name_to_search">ادخل اسم المدينة للبحث</string>
     <string name="title">العنوان</string>
     <string name="fail_to_sen_otp">فشل ارسال الكود </string>
     <string name="please_wait_sending">الرجاء الانتظار يتم الارسال</string>
@@ -339,6 +340,8 @@
     <string name="please_twitter">الرجاء تنزيل تطبيق التوتير </string>
     <string name="please_install_facebook">الرجاء تنزيل تطبيق الفيس بوك</string>
     <string name="please_install_instagram">الرجاء تنزيل تطبيق الانستجرام  </string>
+    <string name="search_city">ابحث عن المدينة من هنا </string>
+    <string name="agree">موافق</string>
 
 
 </resources>

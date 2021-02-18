@@ -339,33 +339,37 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         binding.loadingLYPay.setVisibility(View.VISIBLE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            String message = getString(R.string.fail_to_get_data);
-            binding.loadingLYPay.setVisibility(View.GONE);
-            PaymentResultModel result = (PaymentResultModel) obj;
-            if (func.equals(Constants.ERROR)) {
-
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.Toast(getActivityy(), message);
+            if (isVisible()) {
 
 
-            } else if (func.equals(Constants.FAIL)) {
-                GlobalData.Toast(getActivityy(), message);
+                String message = getString(R.string.fail_to_get_data);
+                binding.loadingLYPay.setVisibility(View.GONE);
+                PaymentResultModel result = (PaymentResultModel) obj;
+                if (func.equals(Constants.ERROR)) {
 
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-                        paymentList = result.getData();
-                        paymentMethod = result.getData().get(0).getShortname();
-                        initAdapter();
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
+                    }
+                    GlobalData.Toast(getActivityy(), message);
+
+
+                } else if (func.equals(Constants.FAIL)) {
+                    GlobalData.Toast(getActivityy(), message);
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+                            paymentList = result.getData();
+                            paymentMethod = result.getData().get(0).getShortname();
+                            initAdapter();
+
+
+                        }
 
 
                     }
-
-
                 }
             }
 
@@ -382,62 +386,65 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         binding.loadingDelivery.setVisibility(View.VISIBLE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            binding.loadingDelivery.setVisibility(View.GONE);
-            String message = getString(R.string.fail_to_get_data);
-            DeliveryResultModel result = (DeliveryResultModel) obj;
+            if (isVisible()) {
+
+                binding.loadingDelivery.setVisibility(View.GONE);
+                String message = getString(R.string.fail_to_get_data);
+                DeliveryResultModel result = (DeliveryResultModel) obj;
 
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.Toast(getActivityy(), message);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
+                    }
+                    GlobalData.Toast(getActivityy(), message);
 
 
-            } else if (func.equals(Constants.FAIL)) {
-                GlobalData.Toast(getActivityy(), message);
+                } else if (func.equals(Constants.FAIL)) {
+                    GlobalData.Toast(getActivityy(), message);
 
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-                        List<DeliveryTime> datesList = result.getData();
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+                            List<DeliveryTime> datesList = result.getData();
 
-                        DeliveryTime firstTime = datesList.get(0);
-                        deliveryDateId = firstTime.getId();
+                            DeliveryTime firstTime = datesList.get(0);
+                            deliveryDateId = firstTime.getId();
 
-                        String currentDate = firstTime.getDate();
-                        List<DeliveryTime> timesList = new ArrayList<>();
+                            String currentDate = firstTime.getDate();
+                            List<DeliveryTime> timesList = new ArrayList<>();
 
-                        while (datesList.size() > 0) {
-                            DeliveryTime deliveryTime = datesList.get(0);
+                            while (datesList.size() > 0) {
+                                DeliveryTime deliveryTime = datesList.get(0);
 
-                            if (deliveryTime.getDate().equals(currentDate)) {
-                                timesList.add(deliveryTime);
-                                datesList.remove(0);
-                                if (datesList.isEmpty()) {
-                                    datesMap.put(deliveryTime.getDate(), timesList);
+                                if (deliveryTime.getDate().equals(currentDate)) {
+                                    timesList.add(deliveryTime);
+                                    datesList.remove(0);
+                                    if (datesList.isEmpty()) {
+                                        datesMap.put(deliveryTime.getDate(), timesList);
+                                    }
+                                } else {
+                                    datesMap.put(currentDate, timesList);
+                                    currentDate = deliveryTime.getDate();
+                                    timesList = new ArrayList<>();
                                 }
-                            } else {
-                                datesMap.put(currentDate, timesList);
-                                currentDate = deliveryTime.getDate();
-                                timesList = new ArrayList<>();
                             }
+
+
+                            deliveryTimesList = datesMap.get(firstTime.getDate());
+
+
+                            initDaysAdapter();
+
+
+                        } else {
+                            binding.noDeliveryTv.setVisibility(View.VISIBLE);
                         }
 
-
-                        deliveryTimesList = datesMap.get(firstTime.getDate());
-
-
-                        initDaysAdapter();
-
-
-                    } else {
-                        binding.noDeliveryTv.setVisibility(View.VISIBLE);
                     }
-
                 }
             }
 

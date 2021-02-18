@@ -201,6 +201,7 @@
     <string name="upload_date">Get Data</string>
     <string name="select_country_code">Select Country Code</string>
     <string name="enter_country_name_to_search">Enter country name or code to search</string>
+    <string name="enter_city_name_to_search">Enter City name to search</string>
     <string name="title">title</string>
     <string name="fail_to_sen_otp">fail to sent otp</string>
     <string name="confirm_code">Confrim Code</string>
@@ -371,5 +372,7 @@
     <string name="please_install_instagram">Please Install instagram app </string>
     <string name="please_twitter">Please Install Twitter app </string>
     <string name="please_install_facebook">Please Install Facebook app </string>
+    <string name="search_city">Search for city From Here</string>
+    <string name="agree">Ok</string>
 
 </resources>
