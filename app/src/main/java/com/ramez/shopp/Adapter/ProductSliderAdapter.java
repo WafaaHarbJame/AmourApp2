@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.ajithvgiri.searchdialog.SearchListItem;
 import com.bumptech.glide.Glide;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Dialogs.ShowImageDialog;
 import com.ramez.shopp.Models.SliderModel;
 import com.ramez.shopp.R;
@@ -47,12 +49,18 @@ public class ProductSliderAdapter extends PagerAdapter {
 
             ImageView productImg =  view.findViewById(R.id.productImg);
 
-            Picasso.get().load(sliderList.get(position)).placeholder(R.drawable.holder_image)
-                    .error(R.drawable.holder_image).into(productImg);
+            GlobalData.PicassoImg(sliderList.get(position)
+                    ,R.drawable.holder_image,productImg);
+//            Picasso.get().load(sliderList.get(position)).placeholder(R.drawable.holder_image)
+//                    .error(R.drawable.holder_image).into(productImg);
 
             container.addView(view);
 
-            Picasso.get().load(sliderList.get(position)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(productImg);
+            GlobalData.PicassoImg(sliderList.get(position)
+                    ,R.drawable.holder_image,productImg);
+//            Picasso.get().load(sliderList.get(position))
+//                    .placeholder(R.drawable.holder_image)
+//                    .error(R.drawable.holder_image).into(productImg);
 
             productImg.setOnClickListener(view1 -> {
                 ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context,sliderList.get(position));

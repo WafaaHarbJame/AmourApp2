@@ -16,7 +16,7 @@ public class CategoryModel implements Serializable {
     private String hName;
     @SerializedName("image")
     @Expose
-    private String image;
+    private String image = "http";
     @SerializedName("name")
     @Expose
     private String name;
@@ -75,12 +75,11 @@ public class CategoryModel implements Serializable {
         this.childCat = childCat;
     }
 
-    public String getCatName(){
-        if(UtilityApp.getLanguage().equals(Constants.English)){
+    public String getCatName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
             return name;
 
-        }
-        else {
+        } else {
             return hName;
         }
     }

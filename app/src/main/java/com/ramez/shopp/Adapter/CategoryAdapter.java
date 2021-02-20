@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCategoryBinding;
@@ -54,12 +55,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
         holder.binding.tvCatTitle.setText(categoryModel.getCatName());
 
-
-        Picasso.get()
-                .load(categoryModel.getImage())
-                .placeholder(R.drawable.holder_image)
-                .error(R.drawable.holder_image)
-                .into(holder.binding.ivCatImage);
+        GlobalData.PicassoImg(categoryModel.getImage()
+                ,R.drawable.holder_image,holder.binding.ivCatImage);
+//        Picasso.get()
+//                .load(categoryModel.getImage())
+//                .placeholder(R.drawable.holder_image)
+//                .error(R.drawable.holder_image)
+//                .into(holder.binding.ivCatImage);
 
 
 //

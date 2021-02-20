@@ -48,6 +48,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     GridLayoutManager gridLayoutManager;
     boolean searchByCode = false;
     int numColumn = 2;
+    boolean isVisible;
     private ArrayList<AutoCompleteModel> data = null;
     private ArrayList<String> autoCompleteList;
     private SearchProductAdapter adapter;
@@ -235,9 +236,21 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        isVisible = true;
+    }
+
+    @Override
+    protected void onPause() {
+        isVisible = false;
+        super.onPause();
+    }
+
+    @Override
     protected void onStop() {
-        super.onStop();
         if (searchCall != null && searchCall.isExecuted()) searchCall.isExecuted();
+        super.onStop();
     }
 
     @Override
@@ -429,7 +442,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                     data = result.getData();
                     getAutoNames();
-                    Log.i(TAG, "Log autoComplete list " + productList.size());
 
                 } else {
 
@@ -444,6 +456,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
     }
 
+
     private void getAutoNames() {
         autoCompleteList.clear();
         for (int i = 0; i < data.size(); i++) {
@@ -452,9 +465,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActiviy(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         binding.searchEt.setAdapter(adapter);
 
-
-//        new Handler().postDelayed(() -> binding.searchEt.showDropDown(), 500);
-        binding.searchEt.showDropDown();
+        if (isVisible) binding.searchEt.showDropDown();
 
     }
 

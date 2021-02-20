@@ -193,32 +193,22 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             orderCall.delivery_date_id = deliveryDateId;
             orderCall.expressDelivery = expressDelivery;
 
-            if (deliveryTimesList.size() == 0) {
-
-                GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
-
-            } else {
-
+            if (deliveryTimesList != null && deliveryTimesList.size() > 0) {
                 if (paymentMethod.equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
-
                     sendOrder(orderCall);
-
-
                 } else {
                     if (addressId == 0) {
                         Toast(R.string.choose_address);
                         binding.tvFullAddress.setFocusable(true);
                         binding.tvFullAddress.setError(getString(R.string.choose_address));
                     } else {
-
                         sendOrder(orderCall);
                     }
-
                 }
-
+            } else {
+                GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
             }
-
 
         });
 
@@ -340,7 +330,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
-
 
                 String message = getString(R.string.fail_to_get_data);
                 binding.loadingLYPay.setVisibility(View.GONE);

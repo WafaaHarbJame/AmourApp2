@@ -104,6 +104,7 @@ public class Constants {
     public static final String KEY_NOTIFY_TYPE = "key_notify_type";
     public static final String KEY_NOTIFICATION_TYPE = "key_notification_type";
     public static final String FROM_REGISTER = "FROM_REGISTER";
+    public static final String FROM_BROSHER = "FROM_BROSHER";
     public static final String success = "success";
     public static final String KEY_USERNAME = "key_username";
     public static final String KEY_USER_ID = "key_user_id";
@@ -244,6 +245,7 @@ public class Constants {
     public static final String position = "position";
     public static final String CAT_LIST = "CAT_LIST";
     public static final String CAT_MODEL = "CAT_MODEL";
+    public static final String bookletsModel = "bookletsModel";
     public static final String delivery_choose = "delivery_choose";
     public static final String ADDRESS_ID = "ADDRESS_ID";
     public static final String ADDRESS_TITLE = "ADDRESS_TITLE";
@@ -260,6 +262,7 @@ public class Constants {
     public static final String PARAMS_EMAIL = "email";
     public static final String PARAMS_NAME = "name";
     public static final String PARAMS_ID = "id";
+    public static final String product_id = "product_id";
     public static final int twoRow =2;
     public static final int oneRow =1;
     public static final int OK_STATUS =200;

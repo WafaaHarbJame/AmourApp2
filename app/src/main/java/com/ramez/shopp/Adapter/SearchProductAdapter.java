@@ -199,25 +199,15 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
 
 
-            Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+            String photoUrl = "";
 
+            if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+                photoUrl = productModel.getImages().get(0);
+            } else {
+                photoUrl = "http";
+            }
+            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
-//
-//            Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
-//                @Override
-//                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                    holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                    holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                    return false;
-//                }
-//            }).into(holder.binding.productImg);
 
         } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;

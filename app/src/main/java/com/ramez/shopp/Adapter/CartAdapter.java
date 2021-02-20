@@ -101,7 +101,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-        Picasso.get().load(cartDM.getImage()).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.imageView1);
+        GlobalData.PicassoImg(cartDM.getImage()
+                ,R.drawable.holder_image,holder.binding.imageView1);
+
+//        Picasso.get().load(cartDM.getImage()).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.imageView1);
 
 
         calculateSubTotalPrice();

@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:lines="2"
                 android:maxLines="2"
-                android:text="@string/product_name"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible" />
@@ -137,7 +137,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/product_name"
+                        android:text=""
                         android:textAlignment="viewStart"
                         android:textColor="@color/black" />
 

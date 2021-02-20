@@ -29,26 +29,27 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
     private static final String CAMERA_ID = "CAMERA_ID";
+
     private ZBarScannerView mScannerView;
-    private boolean mFlash=true;
-    private boolean mAutoFocus;
+    //    private boolean mFlash=true;
+//    private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
-    private int mCameraId = -1;
+//    private final int mCameraId = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         mScannerView = new ZBarScannerView(getActivity());
-        if (state != null) {
-            mFlash = state.getBoolean(FLASH_STATE, false);
-            mAutoFocus = state.getBoolean(AUTO_FOCUS_STATE, true);
-            mSelectedIndices = state.getIntegerArrayList(SELECTED_FORMATS);
-            mCameraId = state.getInt(CAMERA_ID, -1);
-        } else {
-            mFlash = false;
-            mAutoFocus = true;
-            mSelectedIndices = null;
-            mCameraId = -1;
-        }
+//        if (state != null) {
+//            mFlash = state.getBoolean(FLASH_STATE, false);
+//            mAutoFocus = state.getBoolean(AUTO_FOCUS_STATE, true);
+//            mSelectedIndices = state.getIntegerArrayList(SELECTED_FORMATS);
+//            mCameraId = state.getInt(CAMERA_ID, -1);
+//        } else {
+//            mFlash = false;
+//            mAutoFocus = true;
+//            mSelectedIndices = null;
+//            mCameraId = -1;
+//        }
         setupFormats();
         return mScannerView;
     }
@@ -64,25 +65,24 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this);
-        mScannerView.startCamera(mCameraId);
-        mScannerView.setFlash(mFlash);
-        mScannerView.setAutoFocus(mAutoFocus);
+        mScannerView.setAutoFocus(true);
+//        mScannerView.setFlash(mFlash);
+        mScannerView.startCamera();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try{
-            outState.putBoolean(FLASH_STATE, mFlash);
-
-        }
-        catch (Exception e){
-            System.out.println("The 'try catch' is finished.");
-        }
-        outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
-        outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
-        outState.putInt(CAMERA_ID, mCameraId);
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        try {
+//            outState.putBoolean(FLASH_STATE, mFlash);
+//
+//        } catch (Exception e) {
+//            System.out.println("The 'try catch' is finished.");
+//        }
+//        outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
+//        outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
+//        outState.putInt(CAMERA_ID, mCameraId);
+//    }
 
     @Override
     public void handleResult(Result rawResult) {

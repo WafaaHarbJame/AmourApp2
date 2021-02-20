@@ -111,7 +111,16 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             }
         }
 
-        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+        String photoUrl = "";
+
+        if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+            photoUrl = productModel.getImages().get(0);
+        } else {
+            photoUrl = "http";
+        }
+        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+//        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
     }
 

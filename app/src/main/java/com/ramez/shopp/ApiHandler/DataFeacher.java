@@ -918,6 +918,33 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+
+    public void getBrochuresList(int store_id,int booklet_id) {
+
+        Log.i(TAG, "Log getBrochuresList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+
+        Log.i(TAG, "Log store_ID " + store_id);
+        Log.i(TAG, "Log booklet_id " + booklet_id);
+
+
+        Call call = apiService.getBrochuresList(headerMap, store_id,booklet_id);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getBookletsList(int store_id) {
+
+
+        Log.i(TAG, "Log getBookletsList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_ID " + store_id);
+
+
+        Call call = apiService.getBookletsList(headerMap, store_id);
+        call.enqueue(callbackApi);
+    }
+
     public void getAppRate() {
 
         Map<String, Object> params = new HashMap<>();

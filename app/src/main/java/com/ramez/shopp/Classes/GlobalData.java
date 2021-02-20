@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
+import com.squareup.picasso.Picasso;
 
 
 public class GlobalData {
@@ -25,7 +26,6 @@ public class GlobalData {
     //public static final String ApiURL = BaseURL + "api/";
     public static final String Api = "api/";
     public static final String COUNTRY = "BH";
-
 
 
     public static int Position = 0;
@@ -44,22 +44,22 @@ public class GlobalData {
 
     //============================================================================
 
-    public static void GlideImg(Object image, int placeholder, ImageView imageView) {
+    public static void PicassoImg(String image, int placeholder, ImageView imageView) {
+        String photoUrl = "";
 
-//        Log.i("Global", "Log url " + image);
-        Glide.with(RootApplication.getInstance()).asBitmap().load(image).apply(new RequestOptions().placeholder(placeholder))
-
-                .into(imageView);
+        if (image != null && !image.isEmpty()) {
+            photoUrl = image;
+        } else {
+            photoUrl = "http";
+        }
+        Picasso.get().load(photoUrl).placeholder(placeholder).error(R.drawable.holder_image).into(imageView);
 
     }
 
 
     public static void progressDialog(Context c, int title, int msg) {
         progressDialog = new AwesomeProgressDialog(c);
-        progressDialog.setTitle(title).setMessage(msg)
-                .setColoredCircle(R.color.colorPrimaryDark)
-                .setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white)
-                .setCancelable(false);
+        progressDialog.setTitle(title).setMessage(msg).setColoredCircle(R.color.colorPrimaryDark).setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white).setCancelable(false);
         progressDialog.show();
 
     }
@@ -73,12 +73,10 @@ public class GlobalData {
         errorDialog = new AwesomeErrorDialog(c);
         errorDialog.setTitle(title);
         errorDialog.setMessage(msg);
-        errorDialog.setColoredCircle(R.color.dialogErrorBackgroundColor).setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                .setCancelable(true).setButtonBackgroundColor(R.color.dialogErrorBackgroundColor);
+        errorDialog.setColoredCircle(R.color.dialogErrorBackgroundColor).setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white).setCancelable(true).setButtonBackgroundColor(R.color.dialogErrorBackgroundColor);
         errorDialog.show();
 
     }
-
 
 
     public static void errorDialogWithButton(Context c, String title, String msg) {
@@ -86,11 +84,8 @@ public class GlobalData {
         errorDialog.setTitle(title);
         errorDialog.setMessage(msg);
         errorDialog.setColoredCircle(R.color.dialogErrorBackgroundColor).
-                setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                .setCancelable(true).
-                setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                .setButtonText(c.getString(R.string.ok))
-                .setErrorButtonClick(() -> errorDialog.hide())
+                setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white).setCancelable(true).
+                setButtonBackgroundColor(R.color.dialogErrorBackgroundColor).setButtonText(c.getString(R.string.ok)).setErrorButtonClick(() -> errorDialog.hide())
 
         ;
         errorDialog.show();

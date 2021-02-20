@@ -9,6 +9,8 @@ import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
+import com.ramez.shopp.Models.BookletsModel;
+import com.ramez.shopp.Models.BrochuresModel;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
@@ -99,8 +101,7 @@ ApiInterface {
     Call<GeneralModel> getValidate(@HeaderMap() Map<String, Object> headerParams, @Query("device_type") String device_type, @Query("app_version") String app_version, @Query("app_build") int app_build);
 
     @POST("v3/Locations/storedetails")
-     Call<ResultAPIModel<QuickDeliveryRespond>> getQuickDelivery
-            (@HeaderMap() Map<String, Object> headerParams, @Body QuickCall param);
+    Call<ResultAPIModel<QuickDeliveryRespond>> getQuickDelivery(@HeaderMap() Map<String, Object> headerParams, @Body QuickCall param);
 
     @POST
     Call<CityModelResult> GetCity(@Url String url, @HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -142,6 +143,17 @@ ApiInterface {
 
     @POST("v3/Products/GetRates")
     Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
+    @POST("v3/Booklets/BookletsList")
+    Call<ResultAPIModel<ArrayList<BookletsModel>>> getBookletsList(@HeaderMap() Map<String, Object> headerParams,
+                                                                   @Query("store_id") int store_id);
+
+
+    @POST("v3/Booklets/BrochuresList")
+    Call<ResultAPIModel<ArrayList<BrochuresModel>>> getBrochuresList(@HeaderMap() Map<String, Object> headerParams,
+                                                                     @Query("store_id")
+                                                                             int sotre_id, @Query("booklet_id") int booklet_id);
 
 
     @POST("v3/Company/setrate")

@@ -33,31 +33,37 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllListActivity;
+import com.ramez.shopp.Activities.BrousherActivity;
 import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SearchActivity;
+import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick,
+        ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick , BookletAdapter.OnBookletClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -85,13 +91,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private ArrayList<Integer> mSelectedIndices;
     private int mCameraId = -1;
     private CategoryAdapter categoryAdapter;
+    private BookletAdapter bookletAdapter;
     private Activity activity;
+    private List<BookletsModel> bookletsList;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         productBestList = new ArrayList<>();
+        bookletsList = new ArrayList<>();
         categoryModelList = new ArrayList<>();
         productSellerList = new ArrayList<>();
         productOffersList = new ArrayList<>();
@@ -114,22 +124,28 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager bookletManger=new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
 
 
         binding.offerRecycler.setItemAnimator(null);
         binding.bestProductRecycler.setItemAnimator(null);
         binding.bestSellerRecycler.setItemAnimator(null);
+        binding.BookletRecycler.setItemAnimator(null);
 
 
         binding.bestSellerRecycler.setLayoutManager(bestSellerLayoutManager);
         binding.bestProductRecycler.setLayoutManager(bestProductGridLayoutManager);
         binding.offerRecycler.setLayoutManager(bestOfferGridLayoutManager);
+        binding.BookletRecycler.setLayoutManager(bookletManger);
 
         binding.offerRecycler.setHasFixedSize(true);
         binding.bestProductRecycler.setHasFixedSize(true);
         binding.bestSellerRecycler.setHasFixedSize(true);
+        binding.BookletRecycler.setHasFixedSize(true);
 
         GetHomePage();
+
+
 
 
         binding.searchBut.setOnClickListener(view1 -> {
@@ -142,6 +158,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
             GetHomePage();
+            getBooklets(city_id);
 
         });
 
@@ -260,6 +277,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
             } else {
                 if (IsSuccess) {
+
+                    getBooklets(city_id);
+
                     if (result.getFeatured() != null && result.getFeatured().size() > 0
                             || result.getQuickProducts() != null && result.getQuickProducts().size()>0
                             || result.getOfferedProducts() != null && result.getOfferedProducts().size()>0) {
@@ -521,6 +541,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
+
+
+    private void initBookletAdapter() {
+
+        bookletAdapter = new BookletAdapter(getActivityy(), bookletsList, this);
+        binding.BookletRecycler.setAdapter(bookletAdapter);
+
+    }
+
     @Override
     public void onItemClicked(int position, CategoryModel categoryModel) {
 
@@ -529,6 +558,45 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
         intent.putExtra(Constants.position, position);
         intent.putExtra(Constants.CAT_MODEL, categoryModel);
+        startActivity(intent);
+
+    }
+
+
+    public void getBooklets(int storeId) {
+        bookletsList.clear();
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ArrayList<BookletsModel>> result = (ResultAPIModel<ArrayList<BookletsModel>>) obj;
+
+            if (IsSuccess) {
+                if (result.data != null && result.data.size() > 0) {
+                    Log.i(TAG, "Log getBooklets" + result.data.size());
+
+                    binding.BookletRecycler.setVisibility(View.VISIBLE);
+
+                    bookletsList = result.data;
+                    initBookletAdapter();
+
+
+                } else {
+
+                    binding.noBookletsTv.setVisibility(View.VISIBLE);
+                    binding.BookletRecycler.setVisibility(View.GONE);
+
+                }
+
+
+            }
+
+
+        }).getBookletsList(storeId);
+    }
+
+    @Override
+    public void onBookletClicked(int position, BookletsModel bookletsModel) {
+        Intent intent = new Intent(getActivityy(), BrousherActivity.class);
+        intent.putExtra(Constants.bookletsModel, bookletsModel);
         startActivity(intent);
 
     }

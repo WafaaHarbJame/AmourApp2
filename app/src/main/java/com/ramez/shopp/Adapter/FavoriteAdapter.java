@@ -202,11 +202,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             }
 
+            String photoUrl = "";
 
-            if(productModel.getImages().get(0)!=null){
-                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
-
+            if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+                photoUrl = productModel.getImages().get(0);
+            } else {
+                photoUrl = "http";
             }
+            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+
+//            if(productModel.getImages().get(0)!=null){
+//                Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+//            }
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {

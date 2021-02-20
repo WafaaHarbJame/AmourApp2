@@ -66,6 +66,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private LinearLayoutManager reviewManger;
     private int storeId;
     private boolean isFavorite;
+    private boolean FROM_BROSHER=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -356,19 +357,28 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         if (bundle != null) {
 
-            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            product_id = productModel.getId();
+            FROM_BROSHER=bundle.getBoolean(Constants.FROM_BROSHER);
+            if(FROM_BROSHER){
+                product_id=bundle.getInt(Constants.product_id);
 
-            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                productName = productModel.getHName();
+            }
+            else {
+                ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
+                product_id = productModel.getId();
 
-            } else {
-                productName = productModel.getName();
+                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                    productName = productModel.getHName();
+
+                } else {
+                    productName = productModel.getName();
+
+                }
+
+                binding.productNameTv.setText(productName);
+                binding.mainTitleTxt.setText(productName);
 
             }
 
-            binding.productNameTv.setText(productName);
-            binding.mainTitleTxt.setText(productName);
 
 
         }
@@ -445,6 +455,18 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         binding.cartBut.setVisibility(View.VISIBLE);
                         productModel = result.getData().get(0);
+
+                        if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                            productName = productModel.getHName();
+
+                        } else {
+                            productName = productModel.getName();
+
+                        }
+
+                        binding.productNameTv.setText(productName);
+                        binding.mainTitleTxt.setText(productName);
+
                         if(productModel.getDescription()!=null&&productModel.getHDescription()!=null){
 
                             if(UtilityApp.getLanguage().equals(Constants.Arabic)){

@@ -17,13 +17,14 @@
     <application
         android:name=".RootApplication"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_lunch_512"
         android:label="@string/app_name"
-        android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+        <activity android:name=".Activities.BrousherActivity"></activity>
         <activity
             android:name=".Activities.MapActivity"
             android:launchMode="singleTask"
@@ -132,11 +133,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/mapKey" />
-
         <meta-data
             android:name="com.onesignal.NotificationAccentColor.DEFAULT"
             android:value="@color/colorPrimaryDark" />
-
 
         <activity
             android:name=".Activities.AddNewAddressActivity"

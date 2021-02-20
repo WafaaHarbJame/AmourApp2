@@ -342,6 +342,9 @@
     <string name="please_install_instagram">الرجاء تنزيل تطبيق الانستجرام  </string>
     <string name="search_city">ابحث عن المدينة من هنا </string>
     <string name="agree">موافق</string>
+    <string name="textErrorMessage">حدث خطأ ما حاول مرة أخرى</string>
+    <string name="share_brousher">مشاركة البروشور</string>
+    <string name="no_booklets">لا يوجد بروشور</string>
 
 
 </resources>

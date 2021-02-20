@@ -367,6 +367,7 @@
     <string name="over1">Free delivery on any Order  </string>
     <string name="Error">Erorr</string>
     <string name="error">Error</string>
+    <string name="textErrorMessage">Something went wrong, try again</string>
     <string name="QuickDelivery">Quick Delivery</string>
     <string name="please_install_whats">Please Install whatsUp app </string>
     <string name="please_install_instagram">Please Install instagram app </string>
@@ -374,5 +375,7 @@
     <string name="please_install_facebook">Please Install Facebook app </string>
     <string name="search_city">Search for city From Here</string>
     <string name="agree">Ok</string>
+    <string name="share_brousher">Share Brochures</string>
+    <string name="no_booklets">No Brochures</string>
 
 </resources>

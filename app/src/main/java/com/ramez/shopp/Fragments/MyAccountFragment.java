@@ -45,10 +45,10 @@ public class MyAccountFragment extends FragmentBase {
     private FragmentMyAccountBinding binding;
     private CheckLoginDialog checkLoginDialog;
     private SoicalLink soicalLink;
-    private String whats_link="";
-    private String facebook_link="";
-    private String instagram_links ="";
-    private String twitter_links="";
+    private String whats_link = "";
+    private String facebook_link = "";
+    private String instagram_links = "";
+    private String twitter_links = "";
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,28 +59,25 @@ public class MyAccountFragment extends FragmentBase {
         binding.SupportBtn.setVisibility(View.GONE);
 
 
-        if(UtilityApp.getLinks()!=null){
-            soicalLink=UtilityApp.getLinks();
-            twitter_links=soicalLink.getTwitterLink();
-            facebook_link=soicalLink.getFacebookLink();
-            instagram_links=soicalLink.getInstagramLink();
-            whats_link=soicalLink.getWhatsappLink();
+        if (UtilityApp.getLinks() != null) {
+            soicalLink = UtilityApp.getLinks();
+            twitter_links = soicalLink.getTwitterLink();
+            facebook_link = soicalLink.getFacebookLink();
+            instagram_links = soicalLink.getInstagramLink();
+            whats_link = soicalLink.getWhatsappLink();
 
-        }
-        else {
-            if(UtilityApp.getLocalData().getShortname()!=null) {
+        } else {
+            if (UtilityApp.getLocalData().getShortname() != null) {
                 getLinks(UtilityApp.getLocalData().getShortname());
             }
 
-            }
-
-
-
-
+        }
 
 
         binding.facebookBut.setOnClickListener(view1 -> {
-            if(facebook_link!=null){
+
+            try {
+                if (facebook_link != null) {
 //                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.facebook.katana");
 //                if(installed) {
 //
@@ -92,8 +89,13 @@ public class MyAccountFragment extends FragmentBase {
 //                    System.out.println("App is not currently installed on your phone");
 //                }
 
-                Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
-                startActivity(intent);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
+                    startActivity(intent);
+                }
+
+            } catch (Exception e) {
+                // This will catch any exception, because they are all descended from Exception
+                System.out.println("Error " + e.getMessage());
             }
 
 
@@ -101,63 +103,80 @@ public class MyAccountFragment extends FragmentBase {
 
 
         binding.whatsBut.setOnClickListener(view1 -> {
-            if(whats_link!=null){
-                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.whatsapp");
-                if(installed) {
 
-                    System.out.println("App is already installed on your phone");
-                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
-                    startActivity(intent);
-                } else {
-                    Toast(getString(R.string.please_install_whats));
-                    System.out.println("App is not currently installed on your phone");
+            try {
+                if (whats_link != null) {
+                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp");
+                    if (installed) {
+
+                        System.out.println("App is already installed on your phone");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+                        startActivity(intent);
+                    } else {
+                        Toast(getString(R.string.please_install_whats));
+                        System.out.println("App is not currently installed on your phone");
+                    }
+
+
                 }
 
-
+            } catch (Exception e) {
+                // This will catch any exception, because they are all descended from Exception
+                System.out.println("Error " + e.getMessage());
             }
+
 
         });
 
 
         binding.twitterBut.setOnClickListener(view1 -> {
+            try {
 
-            if(twitter_links!=null){
-                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.twitter.android");
-                if(installed) {
+                if (twitter_links != null) {
+                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.twitter.android");
+                    if (installed) {
 
-                    System.out.println("App is already installed on your phone");
-                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_links));
-                    startActivity(intent);
-                } else {
-                    Toast(getString(R.string.please_twitter));
-                    System.out.println("App is not currently installed on your phone");
+                        System.out.println("App is already installed on your phone");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_links));
+                        startActivity(intent);
+                    } else {
+                        Toast(getString(R.string.please_twitter));
+                        System.out.println("App is not currently installed on your phone");
+                    }
+
                 }
-
+            } catch (Exception e) {
+                // This will catch any exception, because they are all descended from Exception
+                System.out.println("Error " + e.getMessage());
             }
+
 
         });
 
         binding.instBut.setOnClickListener(view1 -> {
-            if(instagram_links !=null){
-                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.instagram.android");
-                if(installed) {
+            try {
 
-                    System.out.println("App is already installed on your phone");
-                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(instagram_links));
-                    startActivity(intent);
-                } else {
-                    Toast(getString(R.string.please_install_instagram));
-                    System.out.println("App is not currently installed on your phone");
+                if (instagram_links != null) {
+                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.instagram.android");
+                    if (installed) {
+
+                        System.out.println("App is already installed on your phone");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram_links));
+                        startActivity(intent);
+                    } else {
+                        Toast(getString(R.string.please_install_instagram));
+                        System.out.println("App is not currently installed on your phone");
+                    }
+
                 }
 
+            } catch (Exception e) {
+                // This will catch any exception, because they are all descended from Exception
+                System.out.println("Error " + e.getMessage());
             }
 
 
-
-
-
         });
-
 
 
         if (UtilityApp.isLogin()) {
@@ -168,7 +187,7 @@ public class MyAccountFragment extends FragmentBase {
             if (UtilityApp.getUserData() != null) {
 
                 memberModel = UtilityApp.getUserData();
-                if(memberModel!=null){
+                if (memberModel != null) {
                     initData(memberModel);
 
                 }
@@ -178,8 +197,8 @@ public class MyAccountFragment extends FragmentBase {
 
 
             } else {
-                if(memberModel!=null&&memberModel.getId()!=null){
-                getUserData(memberModel.getId());
+                if (memberModel != null && memberModel.getId() != null) {
+                    getUserData(memberModel.getId());
 
                 }
             }
@@ -220,11 +239,7 @@ public class MyAccountFragment extends FragmentBase {
 
             final String appPackageName = getActivityy().getPackageName();
             // getPackageName() from Context or Activity object
-            ActivityHandler.shareTextUrl(getActivityy(),
-                    getString(R.string.app_share_text1),
-                    String.valueOf(Uri.parse("https://play.google.com/store/apps/details?id="
-                            + appPackageName)), "https://apps.apple.com/bh/app/ramez-%D8%B1%D8%A7%D9%85%D8%B2/id1509927576",
-                    "");
+            ActivityHandler.shareTextUrl(getActivityy(), getString(R.string.app_share_text1), String.valueOf(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)), "https://apps.apple.com/bh/app/ramez-%D8%B1%D8%A7%D9%85%D8%B2/id1509927576", "");
 
         });
 
@@ -277,7 +292,6 @@ public class MyAccountFragment extends FragmentBase {
         binding.changeCityBtn.setOnClickListener(view1 -> {
 
             startChangeBranch();
-
 
 
         });
@@ -469,29 +483,29 @@ public class MyAccountFragment extends FragmentBase {
             if (isVisible()) {
 
                 if (IsSuccess) {
-                     if(result.data!=null){
-                         soicalLink=result.data;
-                         UtilityApp.SetLinks(soicalLink);
-                         if(soicalLink.getTwitterLink()!=null){
-                             twitter_links=soicalLink.getTwitterLink();
+                    if (result.data != null) {
+                        soicalLink = result.data;
+                        UtilityApp.SetLinks(soicalLink);
+                        if (soicalLink.getTwitterLink() != null) {
+                            twitter_links = soicalLink.getTwitterLink();
 
-                         }
-                         if(soicalLink.getFacebookLink()!=null){
-                             facebook_link=soicalLink.getFacebookLink();
+                        }
+                        if (soicalLink.getFacebookLink() != null) {
+                            facebook_link = soicalLink.getFacebookLink();
 
-                         }
+                        }
 
-                         if(soicalLink.getInstagramLink()!=null){
-                             instagram_links=soicalLink.getInstagramLink();
+                        if (soicalLink.getInstagramLink() != null) {
+                            instagram_links = soicalLink.getInstagramLink();
 
-                         }
+                        }
 
-                         if(soicalLink.getWhatsappLink()!=null){
-                             whats_link=soicalLink.getWhatsappLink();
+                        if (soicalLink.getWhatsappLink() != null) {
+                            whats_link = soicalLink.getWhatsappLink();
 
-                         }
+                        }
 
-                     }
+                    }
 
                 }
             }

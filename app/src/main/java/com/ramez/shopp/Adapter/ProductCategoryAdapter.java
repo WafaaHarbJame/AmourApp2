@@ -202,6 +202,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 }
             }
+
             String photoUrl = "";
 
             if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {

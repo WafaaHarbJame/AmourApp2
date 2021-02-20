@@ -58,11 +58,14 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getTotalWithTax() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getTotalWithTax() + " " + currency);
 
-        Picasso.get()
-                .load(orderProductsDM.getImage())
-                .placeholder(R.drawable.holder_image)
-                .error(R.drawable.holder_image)
-                .into(holder.productImage);
+        GlobalData.PicassoImg(orderProductsDM.getImage()
+                ,R.drawable.holder_image,holder.productImage);
+
+        //        Picasso.get()
+//                .load(orderProductsDM.getImage())
+//                .placeholder(R.drawable.holder_image)
+//                .error(R.drawable.holder_image)
+//                .into(holder.productImage);
 
 
     }
