@@ -4,21 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray5"
     android:orientation="vertical">
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/back1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
-            android:background="@drawable/toolbar_back1"
-            android:orientation="vertical" />
-    </FrameLayout>
 
     <include
         android:id="@+id/loadingProgressLY"
@@ -36,6 +24,7 @@
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
         android:visibility="visible"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_height="match_parent">
 
     <LinearLayout
@@ -47,9 +36,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/offerRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/row_products_item"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/row_search_product_item"
             app:spanCount="2"
+            tools:itemCount="4"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
          />
     </LinearLayout>

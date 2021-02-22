@@ -53,7 +53,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
         CategoryModel categoryModel = categoryDMS.get(position);
 
-        holder.binding.tvCatTitle.setText(categoryModel.getCatName());
+       // holder.binding.tvCatTitle.setText(categoryModel.getCatName());
 
         GlobalData.PicassoImg(categoryModel.getImage()
                 ,R.drawable.holder_image,holder.binding.ivCatImage);

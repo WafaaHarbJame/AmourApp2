@@ -125,7 +125,7 @@ public class AddNewAddressActivity extends ActivityBase {
             binding.addNewAddressBut.setVisibility(View.GONE);
             binding.editAddressBut.setVisibility(View.GONE);
             binding.cancelBtu.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
+           // binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
             binding.addNewTv.setVisibility(View.GONE);
 
         } else {

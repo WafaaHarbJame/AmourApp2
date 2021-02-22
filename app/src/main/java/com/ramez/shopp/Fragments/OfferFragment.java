@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.FavoriteAdapter;
+import com.ramez.shopp.Adapter.OfferProductAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
@@ -29,9 +30,9 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class OfferFragment extends FragmentBase implements FavoriteAdapter.OnItemClick {
+public class OfferFragment extends FragmentBase implements OfferProductAdapter.OnItemClick {
     private FragmentOfferBinding binding;
-    private FavoriteAdapter productOfferAdapter;
+    private OfferProductAdapter productOfferAdapter;
     ArrayList<ProductModel> productOffersList;
     GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
@@ -59,6 +60,7 @@ public class OfferFragment extends FragmentBase implements FavoriteAdapter.OnIte
         binding.offerRecycler.setHasFixedSize(true);
         binding.offerRecycler.setItemAnimator(null);
 
+
         getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
 
         binding.dataLY.setOnRefreshListener(() -> {
@@ -79,7 +81,7 @@ public class OfferFragment extends FragmentBase implements FavoriteAdapter.OnIte
     public void initAdapter(){
 
 //        productOfferAdapter = new FavoriteAdapter(getActivityy(), productOffersList,this,productOffersList.size());
-        productOfferAdapter = new FavoriteAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
+        productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
                 productOffersList.size(), binding.offerRecycler, Constants.offered_filter, this, new DataCallback() {
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {

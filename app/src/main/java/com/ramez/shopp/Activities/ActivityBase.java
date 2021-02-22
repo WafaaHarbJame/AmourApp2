@@ -30,7 +30,7 @@ public class ActivityBase extends AppCompatActivity {
 
     int onStartCount = 0;
 
-    protected TextView mainTitle;
+    protected ImageView mainTitle;
     protected ImageView home;
     protected LinearLayout toolbar;
 
@@ -69,7 +69,7 @@ public class ActivityBase extends AppCompatActivity {
         mainTitle = toolbar.findViewById(R.id.mainTitleTxt);
 
 
-        mainTitle.setText(title);
+//        mainTitle.setText(title);
 
         if (!isMainActivity) {
             home.setVisibility(View.VISIBLE);

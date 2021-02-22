@@ -4,33 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray5"
     android:orientation="vertical">
+
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/back1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
-            android:background="@drawable/toolbar_back1"
-            android:orientation="vertical" />
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/searchLY"
+            android:background="@drawable/round_white_fill"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_34sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -41,7 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/round_corner_grey"
+                    android:drawableStart="@drawable/search_icon"
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="start|center_vertical"
                     android:hint="@string/search_product"
@@ -49,21 +40,22 @@
                     android:padding="@dimen/_10sdp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:textSize="@dimen/_12ssp"
-                    app:drawableEndCompat="@drawable/search_product" />
+                    />
 
 
                 <ImageView
                     android:id="@+id/barcodeBut"
                     android:layout_width="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/cat_icon"
-                    android:textSize="@dimen/_18ssp" />
+                    android:src="@drawable/cat_icon" />
 
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
     <include
         android:id="@+id/loadingProgressLY"
         layout="@layout/layout_pre_loading" />
@@ -116,7 +108,7 @@
                             android:layout_marginEnd="@dimen/_4sdp"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                             app:spanCount="3"
-                            tools:itemCount="3"
+                            tools:itemCount="9"
                             tools:listitem="@layout/row_category" />
 
                     </LinearLayout>

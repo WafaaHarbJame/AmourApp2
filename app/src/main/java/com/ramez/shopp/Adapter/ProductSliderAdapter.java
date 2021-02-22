@@ -51,16 +51,12 @@ public class ProductSliderAdapter extends PagerAdapter {
 
             GlobalData.PicassoImg(sliderList.get(position)
                     ,R.drawable.holder_image,productImg);
-//            Picasso.get().load(sliderList.get(position)).placeholder(R.drawable.holder_image)
-//                    .error(R.drawable.holder_image).into(productImg);
 
             container.addView(view);
+//
+//            GlobalData.PicassoImg(sliderList.get(position)
+//                    ,R.drawable.holder_image,productImg);
 
-            GlobalData.PicassoImg(sliderList.get(position)
-                    ,R.drawable.holder_image,productImg);
-//            Picasso.get().load(sliderList.get(position))
-//                    .placeholder(R.drawable.holder_image)
-//                    .error(R.drawable.holder_image).into(productImg);
 
             productImg.setOnClickListener(view1 -> {
                 ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context,sliderList.get(position));

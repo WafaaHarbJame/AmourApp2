@@ -53,9 +53,9 @@
     <string name="confirm_phone">Confirm Phone Number </string>
     <string name="search_product">Search Product Here</string>
     <string name="view_all">View All</string>
-    <string name="best_products">Best Product</string>
-    <string name="best_sell">Best Seller</string>
-    <string name="offers">Products Offer</string>
+    <string name="best_products">Featured Product</string>
+    <string name="best_sell">Quick Grabs</string>
+    <string name="offers">Offered Products </string>
     <string name="product_name">product name product name product name</string>
     <string name="_10220_aed">1.935</string>
     <string name="_50_off">50 % OFF</string>
@@ -316,5 +316,7 @@
     <string name="agree">Ok</string>
     <string name="share_brousher">Share Brochures</string>
     <string name="no_booklets">No Brochures</string>
+    <string name="special_offer">Special Offers</string>
+    <string name="Brands">Brands</string>
 
 </resources>

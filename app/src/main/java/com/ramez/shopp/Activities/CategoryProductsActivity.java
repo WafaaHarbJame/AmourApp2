@@ -81,6 +81,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
+        setTitle("");
 
 
         binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
@@ -121,10 +122,6 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         });
 
-
-        binding.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
 
 
         binding.view2But.setOnClickListener(view1 -> {
@@ -374,6 +371,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
+        binding.searchLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
@@ -411,6 +409,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
                     if (IsSuccess) {
                         if (result.getData() != null && result.getData().size() > 0) {
 
+                            binding.searchLY.setVisibility(View.VISIBLE);
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);

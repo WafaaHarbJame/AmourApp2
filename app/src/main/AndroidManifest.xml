@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activities.BrousherActivity"></activity>
+        <activity android:name=".Activities.AllBookleteActivity"></activity>
+        <activity android:name=".Activities.BrousherActivity" />
         <activity
             android:name=".Activities.MapActivity"
             android:launchMode="singleTask"

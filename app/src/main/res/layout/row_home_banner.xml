@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/loadingLY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:visibility="gone"
+            app:indicatorColor="@color/colorPrimary"
+            app:indicatorName="BallClipRotateMultipleIndicator" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/_4sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivCatImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/round_corner_white"
+                android:scaleType="fitXY"
+                android:src="@drawable/holder_image"
+                app:riv_corner_radius="@dimen/_10sdp" />
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/tvCatTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="3"
+        android:textColor="@color/black" />
+
+</LinearLayout>
+

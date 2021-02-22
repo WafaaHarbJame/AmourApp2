@@ -69,12 +69,12 @@ public class MainActivity extends ActivityBase {
         setContentView(view);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+      //  binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
-        getValidation();
+       // getValidation();
 
         getIntentExtra();
 
@@ -88,14 +88,19 @@ public class MainActivity extends ActivityBase {
 
         //openPicker();
 
-        binding.homeButn.setOnClickListener(view1 -> {
+        binding.homeButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+           // binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
             if (UtilityApp.isLogin()) {
                 getCartsCount();
@@ -103,56 +108,85 @@ public class MainActivity extends ActivityBase {
 
         });
 
-        binding.categoryBut.setOnClickListener(view1 -> {
+        binding.categoryButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.category));
+          //  binding.toolBar.mainTitleTxt.setText(getString(R.string.category));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_click));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+
+
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commit();
             if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
         });
 
-        binding.cartBut.setOnClickListener(view1 -> {
+        binding.cartButton.setOnClickListener(view1 -> {
 
             binding.cartBut.clearBadge();
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
+           // binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+
+
+
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
         });
 
-        binding.offerBut.setOnClickListener(view1 -> {
+        binding.offerButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.offer_text));
+           // binding.toolBar.mainTitleTxt.setText(getString(R.string.offer_text));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_clicked));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+
+
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
             if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
         });
 
-        binding.myAccountBut.setOnClickListener(view1 -> {
+        binding.myAccountButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.myaccount));
+          //  binding.toolBar.mainTitleTxt.setText(getString(R.string.myaccount));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.my_account_clciked));
+            binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
             if (UtilityApp.isLogin()) {
                 getCartsCount();
@@ -192,13 +226,13 @@ public class MainActivity extends ActivityBase {
 
         if (event.type.equals(MessageEvent.TYPE_invoice)) {
 
-            binding.toolBar.mainTitleTxt.setText(R.string.checkout);
+           // binding.toolBar.mainTitleTxt.setText(R.string.checkout);
 
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
 
             binding.toolBar.backBtn.setOnClickListener(view -> {
 
-                binding.toolBar.mainTitleTxt.setText(R.string.cart);
+               // binding.toolBar.mainTitleTxt.setText(R.string.cart);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
                 binding.toolBar.backBtn.setVisibility(View.GONE);
@@ -208,7 +242,7 @@ public class MainActivity extends ActivityBase {
 
         } else if (event.type.equals(MessageEvent.TYPE_main)) {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+          //  binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -219,7 +253,7 @@ public class MainActivity extends ActivityBase {
 
         } else if (event.type.equals(MessageEvent.TYPE_cart)) {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
+           // binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
@@ -245,7 +279,7 @@ public class MainActivity extends ActivityBase {
             boolean TO_CART = getIntent().getBooleanExtra(Constants.CART, false);
 
             if (TO_CART) {
-                binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+               // binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
                 binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
                 binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
                 binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -308,7 +342,16 @@ public class MainActivity extends ActivityBase {
     public void putBadge(int cartCount) {
 
         Typeface typeface = Typeface.createFromAsset(getActiviy().getAssets(), Constants.NORMAL_FONT);
-        binding.cartBut.setBadgeValue(cartCount).setBadgeOvalAfterFirst(true).setBadgeTextSize(16).setBadgeBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.badge)).setMaxBadgeValue(999).setBadgeTextFont(typeface).setBadgePosition(BadgePosition.TOP_RIGHT).setBadgeTextStyle(Typeface.NORMAL).setShowCounter(true).setBadgePadding(4);
+        binding.cartBut.setBadgeValue(cartCount)
+                .setBadgeOvalAfterFirst(true)
+                .setBadgeTextSize(14)
+                .setBadgeBackground(ContextCompat.getDrawable(getActiviy()
+                        , R.drawable.badge))
+                .setMaxBadgeValue(999).
+                setBadgeTextFont(typeface)
+                .setBadgePosition(BadgePosition.TOP_RIGHT)
+                .setBadgeTextStyle(Typeface.NORMAL)
+                .setShowCounter(true).setBadgePadding(1);
 
     }
 

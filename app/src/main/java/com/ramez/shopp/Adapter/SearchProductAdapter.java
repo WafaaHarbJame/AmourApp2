@@ -178,7 +178,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
             if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-                holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
                 if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
                     holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                     holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
@@ -192,8 +192,8 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 if (productModel.getProductBarcodes().get(0).getPrice() != null) {
                     holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                    holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
-                    holder.binding.discountTv.setVisibility(View.GONE);
+                    holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
+                    holder.binding.discountTv.setVisibility(View.INVISIBLE);
 
                 }
             }

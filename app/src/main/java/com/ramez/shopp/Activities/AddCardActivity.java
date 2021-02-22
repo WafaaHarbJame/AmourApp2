@@ -28,7 +28,7 @@ public class AddCardActivity extends ActivityBase  implements  CardTypesAdapter.
         list.add(new CardModel(1,"فيزا","visa"));
         list.add(new CardModel(1,"ماستر","master"));
 
-        binding.toolBar.mainTitleTxt.setText(R.string.add_card);
+       // binding.toolBar.mainTitleTxt.setText(R.string.add_card);
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });

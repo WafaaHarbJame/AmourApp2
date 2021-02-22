@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    android:background="@color/gray5"
     android:orientation="vertical">
 
 
@@ -13,24 +13,15 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/back1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
-            android:background="@drawable/toolbar_back1"
-            android:orientation="vertical" />
-
-
-        <LinearLayout
+            android:id="@+id/searchLY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/round_white_fill"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_34sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -41,8 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/round_corner_grey"
-                    android:drawableEnd="@drawable/search_product"
+                    android:drawableStart="@drawable/search_icon"
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="start|center_vertical"
                     android:hint="@string/search_product"
@@ -50,14 +40,16 @@
                     android:padding="@dimen/_10sdp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    app:drawableEndCompat="@drawable/search_product" />
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/_12ssp" />
 
 
                 <ImageView
                     android:id="@+id/barcodeBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:src="@drawable/cat_icon" />
 
             </LinearLayout>
@@ -80,49 +72,53 @@
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:id="@+id/bookletLyLy"
-                android:layout_height="wrap_content">
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                android:visibility="visible">
+
+                <com.duolingo.open.rtlviewpager.RtlViewPager
+                    android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:id="@+id/noBookletsTv"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/no_booklets"
-                    android:textSize="@dimen/_12ssp" />
+                    android:layout_height="@dimen/_140sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:overScrollMode="never" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/BookletRecycler"
+                    android:id="@+id/bannersRv"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp" />
 
+                <!--                <com.rd.PageIndicatorView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:layout_marginBottom="@dimen/_5sdp"-->
+                <!--                    app:piv_animationType="color"-->
+                <!--                    app:piv_radius="3dp"-->
+                <!--                    app:piv_selectedColor="@color/green"-->
+                <!--                    app:piv_unselectedColor="@color/gray1"-->
+                <!--                    app:piv_viewPager="@id/viewPager" />-->
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
                 android:id="@+id/bestProductLy"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
@@ -140,6 +136,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/best_products"
+                    android:textColor="@color/black"
                     android:textAlignment="viewStart"
                     android:textSize="@dimen/_12ssp" />
 
@@ -163,13 +160,44 @@
                 android:id="@+id/bestProductRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:itemCount="3"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_products_item"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_4sdp" />
 
-            <LinearLayout
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/categories"
+                android:textAlignment="viewStart"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/catRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_category" />
+
+
+            <LinearLayout
                 android:id="@+id/bestSellerLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
@@ -179,6 +207,7 @@
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="start|center_vertical"
+                    android:textColor="@color/black"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
@@ -210,10 +239,81 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_4sdp" />
 
+
             <LinearLayout
+                android:id="@+id/bookletLyLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/speOfferTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/special_offer"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/moreBooklett"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/view_all"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/noBookletsTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/no_booklets"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/BookletRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_4sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/offerLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
@@ -223,6 +323,7 @@
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="start|center_vertical"
                     android:maxLines="1"
+                    android:textColor="@color/black"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
@@ -248,18 +349,18 @@
             </LinearLayout>
 
             <com.ramez.shopp.SpichalViews.STextViewBold
-                android:layout_width="match_parent"
                 android:id="@+id/no_offers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_8sdp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:visibility="gone"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/no_offers"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/offerRecycler"
@@ -268,37 +369,49 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_4sdp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:id="@+id/catView"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/gray_view" />
-
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <LinearLayout
+                android:id="@+id/brandLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_8sdp"
-                android:gravity="start|center_vertical"
-                android:maxLines="1"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/categories"
-                android:textAlignment="viewStart"
-                android:textSize="@dimen/_12ssp" />
+                android:orientation="horizontal">
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/Brands"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/moreBrandBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/view_all"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/catRecycler"
+                android:id="@+id/brandsRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="3"
-                tools:itemCount="3"
-                tools:listitem="@layout/row_category" />
-
+                android:layout_marginEnd="@dimen/_4sdp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

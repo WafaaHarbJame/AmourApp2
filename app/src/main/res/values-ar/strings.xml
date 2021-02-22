@@ -293,6 +293,8 @@
     <string name="textErrorMessage">حدث خطأ ما حاول مرة أخرى</string>
     <string name="share_brousher">مشاركة البروشور</string>
     <string name="no_booklets">لا يوجد بروشور</string>
+    <string name="special_offer">عروض خاصة </string>
+    <string name="Brands">علامات تجارية </string>
 
 
 </resources>

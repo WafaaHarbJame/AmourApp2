@@ -27,13 +27,14 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
     private List<BookletsModel> bookletsList;
     private OnBookletClick onItemClick;
     private RequestOptions requestOptions;
+    private int limit = 4;
 
 
-    public BookletAdapter(Context context, List<BookletsModel> bookletsList, OnBookletClick onItemClick) {
+    public BookletAdapter(Context context, List<BookletsModel> bookletsList, int limit, OnBookletClick onItemClick) {
         this.context = context;
         this.bookletsList = bookletsList;
         this.onItemClick = onItemClick;
-
+        this.limit=limit;
         requestOptions = new RequestOptions();
 
     }
@@ -74,7 +75,9 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
 
     @Override
     public int getItemCount() {
-        return bookletsList.size();
+        if (limit == 4) return Math.min(bookletsList.size(), limit);
+        else return bookletsList.size();
+
     }
 
     public interface OnBookletClick {

@@ -88,9 +88,6 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <include
-                    android:id="@+id/noDataLY"
-                    layout="@layout/layout_no_data" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,9 +151,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_3sdp"
                         android:gravity="center"
                         android:text="@string/_10220_aed"
-                        android:layout_marginStart="@dimen/_3sdp"
                         android:textColor="@color/gray3"
                         android:textSize="@dimen/_10ssp" />
 
@@ -191,18 +188,19 @@
                         android:id="@+id/favBut"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:minHeight="@dimen/_15sdp"
-                        android:minWidth="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
+                        android:minWidth="@dimen/_15sdp"
+                        android:minHeight="@dimen/_15sdp"
                         android:src="@drawable/favorite_menu_icon"
                         app:tint="@color/colorAppRed" />
+
                     <ImageView
                         android:id="@+id/rateBtn"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:minHeight="@dimen/_15sdp"
-                        android:minWidth="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_4sdp"
+                        android:minWidth="@dimen/_15sdp"
+                        android:minHeight="@dimen/_15sdp"
                         android:src="@drawable/ic_add_comment"
                         app:tint="@color/colorAppRed" />
                 </LinearLayout>
@@ -223,20 +221,19 @@
                     android:textColor="@color/gray3" />
 
 
-
                 <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:layout_width="match_parent"
                     android:id="@+id/no_offers"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:visibility="gone"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/no_offers"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/offerRecycler"
@@ -274,12 +271,13 @@
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/productDescTv"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:layout_weight="1"
                         android:maxLines="2"
+                        android:text=""
                         android:textAlignment="viewStart"
                         android:textColor="@color/gray3" />
+
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:id="@+id/weight_unitTv"
                         android:layout_width="wrap_content"
@@ -293,11 +291,11 @@
                 </LinearLayout>
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/productReviewTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:id="@+id/productReviewTv"
                     android:text="@string/product_review"
                     android:textColor="@color/gray3"
                     android:visibility="gone" />
@@ -311,9 +309,13 @@
                     android:visibility="gone" />
 
             </LinearLayout>
+
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
 
     <com.ramez.shopp.SpichalViews.STextViewBold
         android:id="@+id/cartBut"
@@ -334,15 +336,15 @@
         android:id="@+id/CartLy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/round_corner_gray_fill2"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingStart="@dimen/_6sdp"
         android:paddingTop="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
-        android:background="@drawable/round_corner_gray_fill2"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_4sdp"
         android:paddingBottom="@dimen/_6sdp"
         android:visibility="gone">
 
@@ -402,5 +404,6 @@
             android:visibility="visible"
             app:srcCompat="@drawable/delete_icon" />
     </LinearLayout>
+
 </LinearLayout>
 

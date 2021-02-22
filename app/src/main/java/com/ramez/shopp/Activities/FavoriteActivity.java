@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ramez.shopp.Adapter.FavoriteAdapter;
+import com.ramez.shopp.Adapter.OfferProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
@@ -23,10 +24,10 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.OnItemClick {
+public class FavoriteActivity extends ActivityBase implements OfferProductAdapter.OnItemClick {
     ActivityFavoriteBinding binding;
     ArrayList<ProductModel> productList;
-    private FavoriteAdapter productFavAdapter;
+    private OfferProductAdapter productFavAdapter;
     private GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
     private String user_id, filter;
@@ -83,7 +84,7 @@ public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.On
 
     public void initAdapter() {
 
-        productFavAdapter = new FavoriteAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(), binding.favoriteRecycler, filter, this, new DataCallback() {
+        productFavAdapter = new OfferProductAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(), binding.favoriteRecycler, filter, this, new DataCallback() {
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
                 int size = (int) obj;

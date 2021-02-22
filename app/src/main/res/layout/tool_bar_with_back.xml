@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/tool_bar"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:visibility="visible"
             tools:targetApi="m" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <ImageView
             android:id="@+id/mainTitleTxt"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
@@ -33,18 +33,12 @@
             android:maxWidth="@dimen/_160sdp"
             android:maxLines="1"
             android:text=""
+            android:src="@drawable/toolbar_logo"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:visibility="visible" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/background"
-        android:background="@drawable/toolbar_back1"
-        android:visibility="visible"
-        android:layout_height="@dimen/_60sdp">
 
-    </RelativeLayout>
 
 
 </LinearLayout>

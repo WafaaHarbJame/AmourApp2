@@ -1,5 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="round_corner_thin">@dimen/_4sdp</dimen>
+    <dimen name="bottom_nav_padding">@dimen/_6sdp</dimen>
+    <dimen name="bottom_nav_text">@dimen/_10ssp</dimen>
 
 </resources>
