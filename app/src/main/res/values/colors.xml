@@ -35,5 +35,6 @@
     <color name="blue1">#303473</color>
     <color name="black_trans3">#51000000</color>
     <color name="font_gray">#707070</color>
+    <color name="gray_dark">#6A6A6E</color>
 
 </resources>

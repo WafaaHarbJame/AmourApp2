@@ -112,6 +112,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private SliderAdapter sliderAdapter;
     private BannersAdapter bannerAdapter;
     private BrandsAdapter brandsAdapter;
+    GridLayoutManager bookletManger;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -144,7 +145,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
-        GridLayoutManager bookletManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
+         bookletManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         GridLayoutManager brandManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager bannersManger = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         GridLayoutManager categoryManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
@@ -612,6 +613,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
     private void initBookletAdapter() {
+        if(bookletsList.size()>=3){
+            bookletManger.setOrientation(RecyclerView.HORIZONTAL);
+        }
+        else {
+            bookletManger.setOrientation(RecyclerView.VERTICAL);
+
+        }
         bookletAdapter = new BookletAdapter(getActivityy(), bookletsList, 4, this);
         binding.BookletRecycler.setAdapter(bookletAdapter);
 

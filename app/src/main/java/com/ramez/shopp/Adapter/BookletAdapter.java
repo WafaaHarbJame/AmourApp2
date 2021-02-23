@@ -75,8 +75,15 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
 
     @Override
     public int getItemCount() {
-        if (limit == 4) return Math.min(bookletsList.size(), limit);
-        else return bookletsList.size();
+//        if(bookletsList.size()>4){
+//            if (limit == 4) return Math.min(bookletsList.size(), limit);
+//            else return bookletsList.size();
+//        }
+//        else {
+//            return bookletsList.size();
+//        }
+
+        return bookletsList.size();
 
     }
 

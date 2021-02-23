@@ -37,10 +37,10 @@
                     android:gravity="start|center_vertical"
                     android:hint="@string/search_product"
                     android:maxLines="1"
+                    android:textColorHint="@color/gray_dark"
+                    android:textColor="@color/gray_dark"
                     android:padding="@dimen/_10sdp"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
                     android:textSize="@dimen/_12ssp"
                     />
 

@@ -39,8 +39,8 @@
                     android:maxLines="1"
                     android:padding="@dimen/_10sdp"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
+                    android:textColorHint="@color/gray_dark"
+                    android:textColor="@color/gray_dark"
                     android:textSize="@dimen/_12ssp" />
 
 
