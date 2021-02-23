@@ -90,19 +90,33 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_160sdp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="@color/colorPrimaryDark"
+                    app:sliderIndicatorUnselectedColor="@color/white"
+                    app:sliderScrollTimeInSec="5"
+                    app:sliderStartAutoCycle="true" />
+
                 <com.duolingo.open.rtlviewpager.RtlViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="@dimen/_140sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:overScrollMode="never" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/bannersRv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp" />
+
 
                 <!--                <com.rd.PageIndicatorView-->
                 <!--                    android:layout_width="wrap_content"-->
@@ -115,6 +129,14 @@
                 <!--                    app:piv_unselectedColor="@color/gray1"-->
                 <!--                    app:piv_viewPager="@id/viewPager" />-->
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bannersRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
 
             <LinearLayout
                 android:id="@+id/bestProductLy"
@@ -133,7 +155,7 @@
                     android:gravity="start|center_vertical"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/best_products"
                     android:textColor="@color/black"
@@ -148,7 +170,7 @@
                     android:gravity="start|center_vertical"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/view_all"
                     android:textAlignment="viewStart"
@@ -168,19 +190,45 @@
                 android:layout_marginEnd="@dimen/_4sdp" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+
+
+            <LinearLayout
+                android:id="@+id/categoryLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/_8sdp"
-                android:gravity="start|center_vertical"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/categories"
-                android:textAlignment="viewStart"
-                android:textSize="@dimen/_12ssp" />
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/categories"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp" />
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/moreCategoryBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/view_all"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/catRecycler"

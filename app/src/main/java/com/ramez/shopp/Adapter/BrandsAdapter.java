@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.R;
+import com.ramez.shopp.databinding.RowBandItemBinding;
 import com.ramez.shopp.databinding.RowBannersItemBinding;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowBannersItemBinding itemView = RowBannersItemBinding.inflate(LayoutInflater.from(context), parent, false);
+        RowBandItemBinding itemView = RowBandItemBinding.inflate(LayoutInflater.from(context), parent, false);
 
         return new Holder(itemView);
     }
@@ -43,8 +44,10 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
 
-        holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,null));
-
+        holder.binding.container.setOnClickListener(v ->
+        {
+            //onItemClick.onItemClicked(position,null);
+        });
     }
 
     public void setCategoriesList(List<String> list) {
@@ -63,9 +66,9 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
 
     static class Holder extends RecyclerView.ViewHolder {
 
-        RowBannersItemBinding binding;
+        RowBandItemBinding binding;
 
-        Holder(RowBannersItemBinding view) {
+        Holder(RowBandItemBinding view) {
             super(view.getRoot());
             binding = view;
         }

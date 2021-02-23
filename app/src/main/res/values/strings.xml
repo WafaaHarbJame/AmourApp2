@@ -218,7 +218,7 @@
     <string name="update_profile">"Update Profile "</string>
     <string name="success_update">Success Update</string>
     <string name="please_wait_to_upload_photo">Please wait to upload Photo</string>
-    <string name="categories">categories</string>
+    <string name="categories">Categories</string>
     <string name="all">All</string>
     <string name="make_order">Make Order</string>
     <string name="fail_to_send_order">Fail To send Order</string>

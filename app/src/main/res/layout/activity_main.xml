@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/string_menu_home"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/font_gray"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/bottom_nav_text" />
 
             </LinearLayout>

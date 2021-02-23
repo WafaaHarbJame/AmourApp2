@@ -243,6 +243,12 @@ public class MainActivity extends ActivityBase {
         } else if (event.type.equals(MessageEvent.TYPE_main)) {
             binding.toolBar.backBtn.setVisibility(View.GONE);
           //  binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -255,13 +261,37 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
            // binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commitAllowingStateLoss();
 
-        } else if (event.type.equals(MessageEvent.TYPE_UPDATE_CART)) {
+        }
+
+        else if (event.type.equals(MessageEvent.TYPE_CATEGORY)) {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
+            //  binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+            binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
+            binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_click));
+            binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
+            binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
+            binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+
+
+        }
+        else if (event.type.equals(MessageEvent.TYPE_UPDATE_CART)) {
             getCartsCount();
 
         } else {

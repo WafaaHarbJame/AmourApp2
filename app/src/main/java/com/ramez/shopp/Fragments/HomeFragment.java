@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,7 @@ import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SearchActivity;
+import com.ramez.shopp.Adapter.AutomateSlider;
 import com.ramez.shopp.Adapter.BannersAdapter;
 import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.BrandsAdapter;
@@ -50,6 +52,7 @@ import com.ramez.shopp.Adapter.SliderAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.CategoryResultModel;
@@ -59,6 +62,10 @@ import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,18 +187,23 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bannersList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
         bannersList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
 
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        brandsList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
+         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
 
         initSliderAdapter();
         initBannersAdapter();
         initBrandsAdapter();
 
         AllListener();
+
+        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(),sliderList));
+        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        binding.imageSlider.startAutoCycle();
 
 
         if (savedInstanceState != null) {
@@ -240,6 +252,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             intent.putExtra(Constants.FILTER_NAME, Constants.featured_filter);
             startActivity(intent);
 
+
+        });
+
+        binding.moreCategoryBut.setOnClickListener(view -> {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            CategoryFragment categoryFragment = new CategoryFragment();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryFragment, "categoryFragment").commit();
 
         });
 
@@ -333,6 +353,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
                     if (IsSuccess) {
+                        binding.searchLY.setVisibility(View.VISIBLE);
 
                         getBooklets(city_id);
 
@@ -584,18 +605,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     private void initCatAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, this);
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList,categoryModelList.size(), this);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
 
 
     private void initBookletAdapter() {
-        bookletsList.add(new BookletsModel());
-        bookletsList.add(new BookletsModel());
-        bookletsList.add(new BookletsModel());
-        bookletsList.add(new BookletsModel());
-
         bookletAdapter = new BookletAdapter(getActivityy(), bookletsList, 4, this);
         binding.BookletRecycler.setAdapter(bookletAdapter);
 

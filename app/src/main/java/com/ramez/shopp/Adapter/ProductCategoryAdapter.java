@@ -197,8 +197,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 if (productModel.getProductBarcodes().get(0).getPrice() != null) {
                     holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                    holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
-                    holder.binding.discountTv.setVisibility(View.GONE);
+                    holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
+                    holder.binding.discountTv.setVisibility(View.INVISIBLE);
 
                 }
             }

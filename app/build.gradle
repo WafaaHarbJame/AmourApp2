@@ -166,6 +166,7 @@ dependencies {
     implementation 'com.github.nikartm:image-support:1.1.0'
     implementation 'com.onesignal:OneSignal:3.15.4'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
 
 }

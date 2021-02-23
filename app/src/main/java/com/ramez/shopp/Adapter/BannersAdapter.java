@@ -43,7 +43,9 @@ public class BannersAdapter extends RecyclerView.Adapter<BannersAdapter.Holder> 
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
 
-        holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,null));
+        holder.binding.container.setOnClickListener(v -> {
+          //  onItemClick.onItemClicked(position,null);
+        });
 
     }
 

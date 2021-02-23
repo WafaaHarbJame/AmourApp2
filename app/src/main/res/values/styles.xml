@@ -19,7 +19,7 @@
     </style>
 
     <style name="RatingBarStyle2" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/gray6</item>
+        <item name="colorControlNormal">@color/gray13</item>
         <item name="colorControlActivated">@color/quantum_yellowA700</item>
     </style>
 

@@ -453,6 +453,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.productsSizeTv.setText(total.concat(" " + currency));
             binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+            Log.i("tag","Log minimum_order_amount "+minimum_order_amount);
+            Log.i("tag","Log deliveryFees "+deliveryFees);
+            Log.i("tag","Log total "+total);
 
             if (deliveryFees > 0) {
                 if (Double.parseDouble(total) >= minimum_order_amount) {
@@ -649,64 +652,66 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         quickCall1.country_id = countryId;
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            String message = getString(R.string.fail_to_get_data);
-            binding.loadingLYPay.setVisibility(View.GONE);
-            ResultAPIModel<QuickDeliveryRespond> result = (ResultAPIModel<QuickDeliveryRespond>) obj;
-            if (func.equals(Constants.ERROR)) {
+            if (isVisible()) {
 
-                if (result != null && result.message != null) {
-                    message = result.message;
-                }
-                GlobalData.Toast(getActivityy(), message);
+                String message = getString(R.string.fail_to_get_data);
+                binding.loadingLYPay.setVisibility(View.GONE);
+                ResultAPIModel<QuickDeliveryRespond> result = (ResultAPIModel<QuickDeliveryRespond>) obj;
+                if (func.equals(Constants.ERROR)) {
+
+                    if (result != null && result.message != null) {
+                        message = result.message;
+                    }
+                    GlobalData.Toast(getActivityy(), message);
 
 
-            } else if (func.equals(Constants.FAIL)) {
-                GlobalData.Toast(getActivityy(), message);
+                } else if (func.equals(Constants.FAIL)) {
+                    GlobalData.Toast(getActivityy(), message);
 
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            } else {
-                if (IsSuccess) {
-                    if (result.data != null) {
-                        Log.i("tag", "Log result" + result.data);
-                        QuickDeliveryRespond quickDeliveryRespond = result.data;
-                        if (quickDeliveryRespond.isHasExpressDelivery()) {
-                            binding.quickLy.setVisibility(View.VISIBLE);
-                        } else {
-                            binding.quickLy.setVisibility(View.GONE);
-                            deliveryFees = quickDeliveryRespond.getExpressDeliveryCharge();
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                } else {
+                    if (IsSuccess) {
+                        if (result.data != null) {
+                            Log.i("tag", "Log result" + result.data);
+                            QuickDeliveryRespond quickDeliveryRespond = result.data;
+                            if (quickDeliveryRespond.isHasExpressDelivery()) {
+                                binding.quickLy.setVisibility(View.VISIBLE);
+                                deliveryFees = quickDeliveryRespond.getExpressDeliveryCharge();
 
-                            if (deliveryFees == 0) {
-                                binding.deliveryFees.setText(getString(R.string.free));
-                                binding.freeDelivery.setText(getString(R.string.over1));
-                                binding.deliveryPrice.setText(getString(R.string.free));
+                                if (deliveryFees == 0) {
+                                    binding.deliveryFees.setText(getString(R.string.free));
+                                    binding.freeDelivery.setText(getString(R.string.over1));
+                                    binding.deliveryPrice.setText(getString(R.string.free));
+
+
+                                } else {
+
+                                    binding.deliveryFees.setText(NumberHandler.
+                                            formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+                                    binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
+
+                                    binding.deliveryPrice.setText(quickDeliveryRespond.
+                                            getExpressDeliveryCharge() + " ".concat(localModel.getCurrencyCode()));
+
+
+                                }
+
+                                binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
 
                             } else {
-
-                                binding.deliveryFees.setText(NumberHandler.
-                                        formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
-                                binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
-
-                                binding.deliveryPrice.setText(quickDeliveryRespond.
-                                        getExpressDeliveryCharge() + " ".concat(localModel.getCurrencyCode()));
-
-
+                                binding.quickLy.setVisibility(View.GONE);
                             }
-
-                            binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
 
                         }
 
 
                     }
-
-
                 }
+
             }
-
-
         }).getQuickDelivery(quickCall1);
     }
 

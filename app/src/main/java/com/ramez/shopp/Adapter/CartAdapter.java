@@ -95,7 +95,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         } else {
 
-            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
+            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())),
+                    UtilityApp.getLocalData().getFractional()));
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
 
 

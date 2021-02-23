@@ -31,11 +31,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     private Context context;
     private List<CategoryModel> categoryDMS;
     private OnItemClick onItemClick;
+    private int limit = 6;
 
-    public CategoryAdapter(Context context, List<CategoryModel> categoryDMS, OnItemClick onItemClick) {
+
+    public CategoryAdapter(Context context, List<CategoryModel> categoryDMS,int limit, OnItemClick onItemClick) {
         this.context = context;
         this.categoryDMS = categoryDMS;
         this.onItemClick = onItemClick;
+        this.limit = limit;
+
         ;
     }
 
@@ -90,7 +94,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
     @Override
     public int getItemCount() {
-        return categoryDMS.size();
+
+        if (limit == 6) return Math.min(categoryDMS.size(), limit);
+        else return categoryDMS.size();
     }
 
     public interface OnItemClick {

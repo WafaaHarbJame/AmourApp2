@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/favBut"
-            android:layout_width="@dimen/_10sdp"
-            android:layout_height="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_6sdp"
@@ -165,15 +165,16 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_4sdp"
             android:gravity="center"
+            android:visibility="gone"
             app:srcCompat="@drawable/cart_icons" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.shopp.SpichalViews.STextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/add_cart"
             android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold" />
 
     </LinearLayout>

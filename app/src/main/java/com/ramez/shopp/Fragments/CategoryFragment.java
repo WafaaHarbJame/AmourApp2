@@ -104,7 +104,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     private void initAdapter() {
 
-        categoryAdapter = new CategoryAdapter(activity, categoryModelList, this);
+        categoryAdapter = new CategoryAdapter(activity, categoryModelList,categoryModelList.size(), this);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
