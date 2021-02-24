@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content"
-
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:clipToPadding="true"
-        android:elevation="@dimen/_2sdp"
+        app:cardBackgroundColor="@color/gray15"
+        app:cardElevation="@dimen/_2sdp"
         app:cardCornerRadius="@dimen/_8sdp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
             android:orientation="vertical"
             android:padding="@dimen/_8sdp">
 
@@ -87,7 +87,6 @@
                 android:id="@+id/tvShopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_8sdp"
                 android:text="كارفور"
                 android:textSize="@dimen/_11ssp" />
 
@@ -96,8 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:orientation="horizontal">
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -131,8 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:orientation="horizontal">
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/noteCurrentTv"
@@ -148,10 +145,11 @@
                 <com.ramez.shopp.SpichalViews.SButton
                     android:id="@+id/orderDetailsBut"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/round_corner_primary_small"
                     android:backgroundTint="@color/green"
                     android:padding="@dimen/_4sdp"
+                    android:minHeight="@dimen/_25sdp"
                     android:text="@string/orderDetails"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -210,7 +208,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="@dimen/_50sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -347,7 +345,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:id="@+id/divider"
         android:background="@color/gray_view" />
 
 </LinearLayout>
