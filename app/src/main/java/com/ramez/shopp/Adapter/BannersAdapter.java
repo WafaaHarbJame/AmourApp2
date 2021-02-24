@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.CategoryModel;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowBannersItemBinding;
 
@@ -16,13 +18,13 @@ import java.util.List;
 public class BannersAdapter extends RecyclerView.Adapter<BannersAdapter.Holder> {
 
     private Context context;
-    private List<String> list;
-    private OnItemClick onItemClick;
+    private List<Slider> list;
+    private OnBannersClick onBannersClick;
 
-    public BannersAdapter(Context context, List<String> categoryDMS, OnItemClick onItemClick) {
+    public BannersAdapter(Context context, List<Slider> list, OnBannersClick onBannersClick) {
         this.context = context;
-        this.list = categoryDMS;
-        this.onItemClick = onItemClick;
+        this.list = list;
+        this.onBannersClick = onBannersClick;
         ;
     }
 
@@ -39,28 +41,34 @@ public class BannersAdapter extends RecyclerView.Adapter<BannersAdapter.Holder> 
     public void onBindViewHolder(final Holder holder, int position) {
 
 
-        GlobalData.PicassoImg(list.get(position)
-                ,R.drawable.holder_image,holder.binding.ivCatImage);
+        Slider slider = list.get(position);
+        String imageUrl;
 
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            imageUrl = slider.getImage();
+
+        } else {
+            imageUrl = slider.getImage2();
+
+        }
+
+
+        GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, holder.binding.ivCatImage);
 
         holder.binding.container.setOnClickListener(v -> {
-          //  onItemClick.onItemClicked(position,null);
+            onBannersClick.onBannersClicked(position, slider);
         });
 
     }
 
-    public void setCategoriesList(List<String> list) {
-        this.list = list;
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    public interface OnItemClick {
-        void onItemClicked(int position,CategoryModel categoryModel);
+    public interface OnBannersClick {
+        void onBannersClicked(int position, Slider slider);
     }
 
     static class Holder extends RecyclerView.ViewHolder {

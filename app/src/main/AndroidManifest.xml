@@ -17,15 +17,24 @@
     <application
         android:name=".RootApplication"
         android:allowBackup="false"
-        android:hardwareAccelerated="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/ic_lunch_512"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activities.AllBookleteActivity"></activity>
-        <activity android:name=".Activities.BrousherActivity" />
+        <activity
+            android:name=".Activities.AllBookleteActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".Activities.BrousherActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Activities.MapActivity"
             android:launchMode="singleTask"

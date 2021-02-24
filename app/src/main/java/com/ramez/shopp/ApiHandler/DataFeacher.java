@@ -38,7 +38,7 @@ import retrofit2.http.Query;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/"+ GlobalData.COUNTRY+ "/GroceryStoreApi/api/v3/Account/login";
+    final String LOGIN_URL = "/"+ GlobalData.COUNTRY+ "/GroceryStoreApi/api/v4/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -347,7 +347,7 @@ public class DataFeacher {
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode =GlobalData.COUNTRY;
 
-        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v3/Locations/citiesByCountry";
+        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v4/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -515,13 +515,25 @@ public class DataFeacher {
 
     public void GetAllCategories(int sotre_id) {
 
-        Log.i(TAG, "Log GetSingleProduct");
+        Log.i(TAG, "Log GetAllCategories");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + sotre_id);
 
         Call call = apiService.GetAllCategories(headerMap, sotre_id);
         call.enqueue(callbackApi);
     }
+
+
+    public void GetAllBrands(int sotre_id) {
+
+        Log.i(TAG, "Log GetAllBrands");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_id " + sotre_id);
+
+        Call call = apiService.GetAllBrands(headerMap, sotre_id);
+        call.enqueue(callbackApi);
+    }
+
 
     public void addToFavoriteHandle(int user_id, int store_ID, int product_id) {
 
@@ -664,11 +676,12 @@ public class DataFeacher {
     }
 
 
-    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log category_id " + category_id);
+        Log.i(TAG, "Log brand_id " + brand_id);
         Log.i(TAG, "Log country_id " + country_id);
         Log.i(TAG, "Log city_id " + city_id);
         Log.i(TAG, "Log user_id " + user_id);
@@ -676,7 +689,7 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
         call.enqueue(callbackApi);
     }
 

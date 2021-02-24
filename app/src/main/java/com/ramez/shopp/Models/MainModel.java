@@ -5,29 +5,31 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainModel implements Serializable {
+
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
     @SerializedName("fav_count")
     @Expose
-    private Integer favCount;
+    private int favCount;
     @SerializedName("cart_count")
     @Expose
-    private Integer cartCount;
+    private int cartCount;
     @SerializedName("delivery_charges")
     @Expose
-    private Integer deliveryCharges;
+    private int deliveryCharges;
     @SerializedName("minimum_order_amount")
     @Expose
-    private Integer minimumOrderAmount;
+    private int minimumOrderAmount;
     @SerializedName("data")
     @Expose
-    private ArrayList<MainDatum> data = null;
+    private ArrayList<Object> data = null;
     @SerializedName("sliders")
     @Expose
     private ArrayList<Slider> sliders = null;
@@ -41,11 +43,11 @@ public class MainModel implements Serializable {
     @Expose
     private ArrayList<ProductModel> offeredProducts = null;
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -57,43 +59,43 @@ public class MainModel implements Serializable {
         this.message = message;
     }
 
-    public Integer getFavCount() {
+    public int getFavCount() {
         return favCount;
     }
 
-    public void setFavCount(Integer favCount) {
+    public void setFavCount(int favCount) {
         this.favCount = favCount;
     }
 
-    public Integer getCartCount() {
+    public int getCartCount() {
         return cartCount;
     }
 
-    public void setCartCount(Integer cartCount) {
+    public void setCartCount(int cartCount) {
         this.cartCount = cartCount;
     }
 
-    public Integer getDeliveryCharges() {
+    public int getDeliveryCharges() {
         return deliveryCharges;
     }
 
-    public void setDeliveryCharges(Integer deliveryCharges) {
+    public void setDeliveryCharges(int deliveryCharges) {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public Integer getMinimumOrderAmount() {
+    public int getMinimumOrderAmount() {
         return minimumOrderAmount;
     }
 
-    public void setMinimumOrderAmount(Integer minimumOrderAmount) {
+    public void setMinimumOrderAmount(int minimumOrderAmount) {
         this.minimumOrderAmount = minimumOrderAmount;
     }
 
-    public ArrayList<MainDatum> getData() {
+    public ArrayList<Object> getData() {
         return data;
     }
 
-    public void setData(ArrayList<MainDatum> data) {
+    public void setData(ArrayList<Object> data) {
         this.data = data;
     }
 
@@ -128,6 +130,5 @@ public class MainModel implements Serializable {
     public void setOfferedProducts(ArrayList<ProductModel> offeredProducts) {
         this.offeredProducts = offeredProducts;
     }
-
 }
 

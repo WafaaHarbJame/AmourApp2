@@ -263,7 +263,7 @@ public class EditProfileActivity extends ActivityBase {
         }
 
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v3/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+                GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key).build().
                 setUploadProgressListener((bytesUploaded, totalBytes) -> {

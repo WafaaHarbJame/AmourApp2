@@ -23,7 +23,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.impl.constraints.ConstraintListener;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.Result;
@@ -55,12 +54,15 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.BookletsModel;
+import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -75,7 +77,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -89,9 +91,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     LinearLayoutManager bestOfferGridLayoutManager;
     String user_id = "0";
     ArrayList<CategoryModel> categoryModelList;
-    ArrayList<String> sliderList;
-    ArrayList<String> bannersList;
-    ArrayList<String> brandsList;
+    ArrayList<Slider> sliderList;
+    ArrayList<Slider> bannersList;
+    ArrayList<BrandModel> brandsList;
+    GridLayoutManager bookletManger;
+    GridLayoutManager brandManger;
     private FragmentHomeBinding binding;
     private ProductAdapter productBestAdapter;
     private ProductAdapter productSellerAdapter;
@@ -112,7 +116,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private SliderAdapter sliderAdapter;
     private BannersAdapter bannerAdapter;
     private BrandsAdapter brandsAdapter;
-    GridLayoutManager bookletManger;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -145,8 +148,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
-         bookletManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
-        GridLayoutManager brandManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
+        bookletManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
+        brandManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager bannersManger = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         GridLayoutManager categoryManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
 
@@ -179,32 +182,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         GetHomePage();
 
-        sliderList.add("https://www.familyfreshmeals.com/wp-content/uploads/2019/06/Big-Mac-Sliders-Family-Fresh-Meals-Recipe.jpg");
-        sliderList.add("https://www.familyfreshmeals.com/wp-content/uploads/2019/06/Big-Mac-Sliders-Family-Fresh-Meals-Recipe.jpg");
-        sliderList.add("https://www.familyfreshmeals.com/wp-content/uploads/2019/06/Big-Mac-Sliders-Family-Fresh-Meals-Recipe.jpg");
-        sliderList.add("https://www.familyfreshmeals.com/wp-content/uploads/2019/06/Big-Mac-Sliders-Family-Fresh-Meals-Recipe.jpg");
-
-
-        bannersList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-        bannersList.add("https://previews.123rf.com/images/dawool/dawool1803/dawool180300184/97784852-horizontal-shopping-banners-with-cosmetics-vector-illustration-.jpg");
-
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-         brandsList.add("https://fontmeme.com/images/MM%E2%80%99s-Logo.jpg");
-
-        initSliderAdapter();
-        initBannersAdapter();
-        initBrandsAdapter();
-
         AllListener();
-
-        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(),sliderList));
-        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        binding.imageSlider.startAutoCycle();
 
 
         if (savedInstanceState != null) {
@@ -285,8 +263,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         binding.moreBooklett.setOnClickListener(view -> {
             Intent intent = new Intent(getActivityy(), AllBookleteActivity.class);
+            intent.putExtra(Constants.Activity_type, Constants.BOOKLETS);
             startActivity(intent);
 
+        });
+
+        binding.moreBrandBut.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivityy(), AllBookleteActivity.class);
+            intent.putExtra(Constants.Activity_type, Constants.BRANDS);
+            startActivity(intent);
         });
     }
 
@@ -357,6 +342,28 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                         binding.searchLY.setVisibility(View.VISIBLE);
 
                         getBooklets(city_id);
+                        GetAllBrands(city_id);
+                        if (result.getSliders().size() > 0) {
+
+                            for (int i = 0; i < result.getSliders().size(); i++) {
+                                Slider slider = result.getSliders().get(i);
+                                if (slider.getType() == 0) {
+                                    sliderList.add(slider);
+
+                                } else {
+                                    bannersList.add(slider);
+
+                                }
+
+                            }
+
+
+                        }
+
+
+                        initSliderAdapter();
+                        initBannersAdapter();
+
 
                         if (result.getFeatured() != null && result.getFeatured().size() > 0 || result.getQuickProducts() != null && result.getQuickProducts().size() > 0 || result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 
@@ -604,36 +611,90 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         }).GetAllCategories(storeId);
     }
 
+    public void GetAllBrands(int storeId) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (isVisible()) {
+
+                ResultAPIModel<ArrayList<BrandModel>> result = (ResultAPIModel<ArrayList<BrandModel>>) obj;
+                String message = getString(R.string.fail_to_get_data);
+
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+                if (func.equals(Constants.ERROR)) {
+
+                    if (result != null) {
+                        message = result.message;
+                    }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        if (result.data != null && result.data.size() > 0) {
+                            Log.i(TAG, "Log getBrands" + result.data.size());
+                            brandsList = result.data;
+                            initBrandsAdapter();
+
+                        } else {
+
+//
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
+                }
+            }
+
+        }).GetAllBrands(storeId);
+    }
+
     private void initCatAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList,categoryModelList.size(), this);
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, categoryModelList.size(), this);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
 
 
     private void initBookletAdapter() {
-        if(bookletsList.size()>=3){
+        if (bookletsList.size() >= 3) {
             bookletManger.setOrientation(RecyclerView.HORIZONTAL);
-        }
-        else {
+        } else {
             bookletManger.setOrientation(RecyclerView.VERTICAL);
 
         }
         bookletAdapter = new BookletAdapter(getActivityy(), bookletsList, 4, this);
         binding.BookletRecycler.setAdapter(bookletAdapter);
-
-    }
-
-    @Override
-    public void onItemClicked(int position, CategoryModel categoryModel) {
-
-        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-        intent.putExtra(Constants.CAT_LIST, categoryModelList);
-        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-        intent.putExtra(Constants.position, position);
-        intent.putExtra(Constants.CAT_MODEL, categoryModel);
-        startActivity(intent);
 
     }
 
@@ -679,21 +740,92 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initSliderAdapter() {
 
-        sliderAdapter = new SliderAdapter(getActivityy(), sliderList);
-        binding.viewPager.setAdapter(sliderAdapter);
+//        sliderAdapter = new SliderAdapter(getActivityy(), sliderList);
+//        binding.viewPager.setAdapter(sliderAdapter);
+        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));
+        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        binding.imageSlider.startAutoCycle();
     }
 
     public void initBannersAdapter() {
-        bannerAdapter = new BannersAdapter(getActivityy(), bannersList, null);
+        bannerAdapter = new BannersAdapter(getActivityy(), bannersList, this);
         binding.bannersRv.setAdapter(bannerAdapter);
 
     }
 
 
     public void initBrandsAdapter() {
-
-        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, null);
+        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this);
         binding.brandsRecycler.setAdapter(brandsAdapter);
+
+    }
+
+    @Override
+    public void onBrandClicked(int position, BrandModel brandModel) {
+        Intent intent = new Intent(getActivityy(), AllListActivity.class);
+        intent.putExtra(Constants.LIST_MODEL_NAME, activity.getString(R.string.Brands));
+        intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
+        intent.putExtra(Constants.brand_id, brandModel.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemClicked(int position, CategoryModel categoryModel) {
+        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+        intent.putExtra(Constants.CAT_LIST, categoryModelList);
+        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        intent.putExtra(Constants.position, position);
+        intent.putExtra(Constants.CAT_MODEL, categoryModel);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onSliderClicked(int position, Slider slider) {
+        Toast("kk");
+        if (slider.getReffrenceType() == 1) {
+            Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
+            intent.putExtra(Constants.product_id, slider);
+            intent.putExtra(Constants.FROM_BROSHER, true);
+            startActivity(intent);
+        } else if (slider.getReffrenceType() == 2) {
+            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+            intent.putExtra(Constants.CAT_LIST, categoryModelList);
+            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            intent.putExtra(Constants.position, position);
+//            intent.putExtra(Constants.CAT_MODEL, categoryModel);
+            startActivity(intent);
+        } else if (slider.getReffrenceType() == 3) {
+            // String url = sliderDM.getSlider_content();
+            ActivityHandler.OpenBrowser(getActivityy(), "HTTP://");
+
+        }
+
+
+    }
+
+    @Override
+    public void onBannersClicked(int position, Slider slider) {
+
+        if (slider.getReffrenceType() == 1) {
+            Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
+            intent.putExtra(Constants.product_id, slider);
+            intent.putExtra(Constants.FROM_BROSHER, true);
+            startActivity(intent);
+        } else if (slider.getReffrenceType() == 2) {
+            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+            intent.putExtra(Constants.CAT_LIST, categoryModelList);
+            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            intent.putExtra(Constants.position, position);
+//            intent.putExtra(Constants.CAT_MODEL, categoryModel);
+            startActivity(intent);
+        } else if (slider.getReffrenceType() == 3) {
+            // String url = sliderDM.getSlider_content();
+            ActivityHandler.OpenBrowser(getActivityy(), "HTTP://");
+
+        }
+
 
     }
 }

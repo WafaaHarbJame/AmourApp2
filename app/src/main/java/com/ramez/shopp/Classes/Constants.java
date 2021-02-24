@@ -194,6 +194,10 @@ public class Constants {
     public static final String LIST_MODEL = "LIST_MODEL";
     public static final String LIST_MODEL_NAME = "LIST_MODEL_NAME";
     public static final String FILTER_NAME = "FILTER_NAME";
+    public static final String Activity_type = "Activity_type";
+    public static final String BRANDS = "BRANDS";
+    public static final String BOOKLETS = "BOOKLETS";
+    public static final String brand_id = "brand_id";
     public static final String DB_Salary = "25";
     public static final String DB_Education = "26";
     public static final String DB_NumberOfChildren = "27";
@@ -239,6 +243,7 @@ public class Constants {
     public static final String offered_filter  = "offered";
     public static final String featured_filter = "featured";
     public static final String quick_filter = "quick";
+    public static final String brand_filter = "";
     public static final String SEARCH_BY_CODE_byCode = "SEARCH_BY_CODE_byCode";
     public static final String CODE = "CODE";
     public static final String SELECTED_POSITION = "SELECTED_POSITION";

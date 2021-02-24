@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_margin="@dimen/_1sdp"
+    android:layout_margin="@dimen/_4sdp"
     android:orientation="vertical">
 
     <FrameLayout
@@ -23,23 +23,24 @@
             app:indicatorColor="@color/colorPrimary"
             app:indicatorName="BallClipRotateMultipleIndicator" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="@dimen/_4sdp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="10dp"
-            app:cardUseCompatPadding="true">
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:elevation="@dimen/_4sdp"-->
+<!--            app:cardBackgroundColor="@color/white"-->
+<!--            app:cardCornerRadius="10dp"-->
+<!--            app:cardUseCompatPadding="true">-->
 
-            <com.makeramen.roundedimageview.RoundedImageView
+<!--        android:background="@drawable/round_corner_white"-->
+
+        <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivCatImage"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:background="@drawable/round_corner_white"
                 android:scaleType="fitXY"
                 android:src="@drawable/holder_image"
                 app:riv_corner_radius="@dimen/_10sdp" />
-        </androidx.cardview.widget.CardView>
+<!--        </androidx.cardview.widget.CardView>-->
 
     </FrameLayout>
 </LinearLayout>

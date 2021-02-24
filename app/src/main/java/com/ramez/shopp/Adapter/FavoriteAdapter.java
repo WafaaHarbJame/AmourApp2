@@ -62,6 +62,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private RecyclerView rv;
     private String filter_text;
     private DataCallback dataCallback;
+    private int brand_id;
 
 
     public FavoriteAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, DataCallback dataCallback) {
@@ -325,14 +326,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 notifyItemInserted(productModels.size() - 1);
 
-                LoadAllData(category_id, country_id, city_id, user_id, filter_text, nextPage, 10);
+                LoadAllData(category_id, country_id, city_id, user_id, filter_text,brand_id, nextPage, 10);
             }
 
         });
 
     }
 
-    private void LoadAllData(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    private void LoadAllData(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
 
         System.out.println("Log category_id: " + category_id);
         System.out.println("Log LoadAllData  page " + nextPage);
@@ -367,7 +368,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
     }
 
     @Override

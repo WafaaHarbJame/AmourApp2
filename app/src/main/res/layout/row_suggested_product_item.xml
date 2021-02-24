@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:src="@drawable/empty_fav" />
 
     </FrameLayout>
@@ -160,7 +160,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productNameTv">
 
-
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
@@ -186,7 +185,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

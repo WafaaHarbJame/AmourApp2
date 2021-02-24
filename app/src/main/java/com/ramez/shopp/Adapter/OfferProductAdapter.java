@@ -51,6 +51,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int lastVisibleItem;
     private int totalItemCount;
     private OnLoadMoreListener mOnLoadMoreListener;
+    private int brand_id;
+
 
     private Context context;
     private OnItemClick onItemClick;
@@ -380,7 +382,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
     }
 
     @Override

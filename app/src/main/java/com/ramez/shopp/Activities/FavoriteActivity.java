@@ -33,6 +33,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
     private String user_id, filter;
     private MemberModel user;
     private LocalModel localModel;
+    private int brand_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +63,11 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
         binding.favoriteRecycler.setHasFixedSize(true);
         binding.favoriteRecycler.setItemAnimator(null);
-        getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
+        getFavoriteProducts(category_id, country_id, city_id, user_id, filter, brand_id,0, 10);
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-            getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
+            getFavoriteProducts(category_id, country_id, city_id, user_id, filter,brand_id, 0, 10);
 
         });
 
@@ -102,7 +103,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
     }
 
 
-    public void getFavoriteProducts(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    public void getFavoriteProducts(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -168,6 +169,6 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
                 }
             }
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
     }
 }

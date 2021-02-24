@@ -37,6 +37,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
     String user_id=" ";
+    private int brand_id;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOfferBinding.inflate(inflater, container, false);
@@ -61,17 +62,17 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
         binding.offerRecycler.setItemAnimator(null);
 
 
-        getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
+        getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,brand_id,0, 10);
 
         binding.dataLY.setOnRefreshListener(() -> {
           binding.dataLY.setRefreshing(false);
-          getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
+          getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,brand_id,0, 10);
 
 
       });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
+            getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,brand_id,0, 10);
         });
 
 
@@ -100,7 +101,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
 
     }
-    public void getOfferList(int category_id,int country_id,int city_id,String user_id,String filter, int page_number, int page_size) {
+    public void getOfferList(int category_id,int country_id,int city_id,String user_id,String filter,int brand_id, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -169,7 +170,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
         }
 
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
     }
 
 

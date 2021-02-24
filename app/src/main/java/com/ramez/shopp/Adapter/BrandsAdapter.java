@@ -7,23 +7,25 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.CategoryModel;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowBandItemBinding;
-import com.ramez.shopp.databinding.RowBannersItemBinding;
 
 import java.util.List;
 
 public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
 
     private Context context;
-    private List<String> list;
-    private OnItemClick onItemClick;
+    private List<BrandModel> list;
+    private OnBrandClick onBrandClick;
 
-    public BrandsAdapter(Context context, List<String> categoryDMS, OnItemClick onItemClick) {
+    public BrandsAdapter(Context context, List<BrandModel> categoryDMS, OnBrandClick onBrandClick) {
         this.context = context;
         this.list = categoryDMS;
-        this.onItemClick = onItemClick;
+        this.onBrandClick = onBrandClick;
         ;
     }
 
@@ -38,19 +40,29 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
+        BrandModel brandModel=list.get(position);
+        String imageUrl="";
 
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            imageUrl=brandModel.getImage();
 
-        GlobalData.PicassoImg(list.get(position)
+        }
+        else {
+            imageUrl=brandModel.getImage2();
+
+        }
+
+        GlobalData.PicassoImg(imageUrl
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
 
         holder.binding.container.setOnClickListener(v ->
         {
-            //onItemClick.onItemClicked(position,null);
+            onBrandClick.onBrandClicked(position,brandModel);
         });
     }
 
-    public void setCategoriesList(List<String> list) {
+    public void setCategoriesList(List<BrandModel> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -60,8 +72,8 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
         return list.size();
     }
 
-    public interface OnItemClick {
-        void onItemClicked(int position,CategoryModel categoryModel);
+    public interface OnBrandClick {
+        void onBrandClicked(int position, BrandModel brandModel);
     }
 
     static class Holder extends RecyclerView.ViewHolder {
