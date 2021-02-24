@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:id="@+id/dataLY"
+            android:layout_marginTop="@dimen/_8sdp"
             android:visibility="visible"
             android:orientation="vertical">
 
