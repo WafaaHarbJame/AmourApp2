@@ -172,11 +172,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.RateProductActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <activity
             android:name=".Activities.RatingActivity"
             android:launchMode="singleTask"

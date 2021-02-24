@@ -81,6 +81,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         offerList = new ArrayList<>();
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
+        setTitle("");
 
 
         binding.searchEt.requestFocus();
@@ -112,9 +113,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         getIntentExtra();
 
-        binding.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {

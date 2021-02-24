@@ -783,22 +783,26 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     @Override
     public void onSliderClicked(int position, Slider slider) {
-        Toast("kk");
+
         if (slider.getReffrenceType() == 1) {
             Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
-            intent.putExtra(Constants.product_id, slider);
+            intent.putExtra(Constants.product_id, slider.getReffrence());
             intent.putExtra(Constants.FROM_BROSHER, true);
             startActivity(intent);
+
         } else if (slider.getReffrenceType() == 2) {
             Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
             intent.putExtra(Constants.CAT_LIST, categoryModelList);
             intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
             intent.putExtra(Constants.position, position);
-//            intent.putExtra(Constants.CAT_MODEL, categoryModel);
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            intent.putExtra(Constants.CAT_MODEL, categoryModel);
             startActivity(intent);
+
         } else if (slider.getReffrenceType() == 3) {
-            // String url = sliderDM.getSlider_content();
-            ActivityHandler.OpenBrowser(getActivityy(), "HTTP://");
+            String url = slider.getReffrence();
+            ActivityHandler.OpenBrowser(getActivityy(), url);
 
         }
 
@@ -810,19 +814,23 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         if (slider.getReffrenceType() == 1) {
             Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
-            intent.putExtra(Constants.product_id, slider);
+            intent.putExtra(Constants.product_id, slider.getReffrence());
             intent.putExtra(Constants.FROM_BROSHER, true);
             startActivity(intent);
+
         } else if (slider.getReffrenceType() == 2) {
             Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
             intent.putExtra(Constants.CAT_LIST, categoryModelList);
             intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
             intent.putExtra(Constants.position, position);
-//            intent.putExtra(Constants.CAT_MODEL, categoryModel);
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            intent.putExtra(Constants.CAT_MODEL, categoryModel);
             startActivity(intent);
+
         } else if (slider.getReffrenceType() == 3) {
-            // String url = sliderDM.getSlider_content();
-            ActivityHandler.OpenBrowser(getActivityy(), "HTTP://");
+            String url = slider.getReffrence();
+            ActivityHandler.OpenBrowser(getActivityy(), url);
 
         }
 

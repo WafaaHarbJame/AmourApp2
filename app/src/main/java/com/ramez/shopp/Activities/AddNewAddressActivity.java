@@ -271,7 +271,8 @@ public class AddNewAddressActivity extends ActivityBase {
                     binding.dataLY.setVisibility(View.VISIBLE);
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
-                        binding.addressTv.setText(addressModel.getAddressNickname());
+                        Log.i("tag","Log Block "+addressModel.getBlock());
+                        binding.addressTv.setText(addressModel.getFullAddress());
                         // binding.areaEt.setText(addressModel.getAreaDetails());
                         if (addressModel.getLatitude() != null && addressModel.getLongitude() != null) {
                             binding.latTv.setText(addressModel.getLatitude().toString());
@@ -284,7 +285,7 @@ public class AddNewAddressActivity extends ActivityBase {
                         binding.addressTv.setText(addressModel.getFullAddress());
                         binding.flatEt.setText(addressModel.getHouseNo());
                         binding.blockEt.setText(addressModel.getBlock());
-                        binding.blockEt.setText(addressModel.getCountry());
+                        binding.buildingEt.setText(addressModel.getHouseNo());
 
                     } else {
                         binding.dataLY.setVisibility(View.GONE);

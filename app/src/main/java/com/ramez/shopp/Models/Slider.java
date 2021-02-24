@@ -18,7 +18,7 @@ public class Slider implements Serializable {
     private String image2;
     @SerializedName("reffrence")
     @Expose
-    private Object reffrence;
+    private String reffrence;
     @SerializedName("reffrenceType")
     @Expose
     private int reffrenceType;
@@ -50,11 +50,11 @@ public class Slider implements Serializable {
         this.image2 = image2;
     }
 
-    public Object getReffrence() {
+    public String getReffrence() {
         return reffrence;
     }
 
-    public void setReffrence(Object reffrence) {
+    public void setReffrence(String reffrence) {
         this.reffrence = reffrence;
     }
 
@@ -74,7 +74,10 @@ public class Slider implements Serializable {
         this.type = type;
     }
 
-    public Slider(int id, String image, String image2, Object reffrence, int reffrenceType, int type) {
+    public Slider() {
+    }
+
+    public Slider(int id, String image, String image2, String reffrence, int reffrenceType, int type) {
         this.id = id;
         this.image = image;
         this.image2 = image2;
@@ -83,3 +86,4 @@ public class Slider implements Serializable {
         this.type = type;
     }
 }
+

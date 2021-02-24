@@ -144,12 +144,12 @@ public class StateDialog extends Dialog {
 
 
     public void GetAreas(int country_id) {
-        loadingProgressLY.setVisibility(View.VISIBLE);
-        dataLY.setVisibility(View.GONE);
+//        loadingProgressLY.setVisibility(View.VISIBLE);
+//        dataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            dataLY.setVisibility(View.VISIBLE);
-            loadingProgressLY.setVisibility(View.GONE);
+//            dataLY.setVisibility(View.VISIBLE);
+//            loadingProgressLY.setVisibility(View.GONE);
 
             AreasResultModel result = (AreasResultModel) obj;
 
