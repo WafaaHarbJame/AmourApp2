@@ -2,6 +2,7 @@ package com.ramez.shopp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +12,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.BuildConfig;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.AnalyticsListener;
@@ -21,6 +23,7 @@ import com.google.android.material.badge.BadgeUtils;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.Activities.ActivityBase;
+import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
@@ -74,7 +77,7 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
-       // getValidation();
+//        getValidation();
 
         getIntentExtra();
 
@@ -101,6 +104,8 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.toolBar.addExtra.setVisibility(View.GONE);
+
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
             if (UtilityApp.isLogin()) {
                 getCartsCount();
@@ -122,6 +127,7 @@ public class MainActivity extends ActivityBase {
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
 
+            binding.toolBar.addExtra.setVisibility(View.GONE);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commit();
             if (UtilityApp.isLogin()) {
@@ -144,6 +150,7 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.toolBar.addExtra.setVisibility(View.VISIBLE);
 
 
 
@@ -164,6 +171,7 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
+            binding.toolBar.addExtra.setVisibility(View.GONE);
 
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
@@ -186,6 +194,7 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
+            binding.toolBar.addExtra.setVisibility(View.GONE);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
             if (UtilityApp.isLogin()) {
@@ -194,6 +203,11 @@ public class MainActivity extends ActivityBase {
 
         });
 
+
+        binding.toolBar.addExtra.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActiviy(), ExtraRequestActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -374,12 +388,12 @@ public class MainActivity extends ActivityBase {
         Typeface typeface = Typeface.createFromAsset(getActiviy().getAssets(), Constants.NORMAL_FONT);
         binding.cartBut.setBadgeValue(cartCount)
                 .setBadgeOvalAfterFirst(true)
-                .setBadgeTextSize(14)
+                .setBadgeTextSize(12)
                 .setBadgeBackground(ContextCompat.getDrawable(getActiviy()
                         , R.drawable.badge))
                 .setMaxBadgeValue(999).
                 setBadgeTextFont(typeface)
-                .setBadgePosition(BadgePosition.TOP_RIGHT)
+                .setBadgePosition(BadgePosition.TOP_LEFT)
                 .setBadgeTextStyle(Typeface.NORMAL)
                 .setShowCounter(true).setBadgePadding(1);
 

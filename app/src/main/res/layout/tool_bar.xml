@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_100sdp"
@@ -38,6 +39,21 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
             android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/addExtra"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:gravity="center"
+            android:maxWidth="@dimen/_160sdp"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_add_circle"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

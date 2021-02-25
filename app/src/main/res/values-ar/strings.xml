@@ -50,7 +50,6 @@
     <string name="forget_pass">نسيت كلمة المرور</string>
     <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
     <string name="enter_code1">الرجاء ادخال الكود    </string>
-    <string name="confirm_phone">تأكيد رقم الجوال </string>
     <string name="search_product">  ابحث عن منتج  من هنا</string>
     <string name="view_all">عرض الكل</string>
     <string name="best_products">المنتجات المتميزة</string>
@@ -82,7 +81,6 @@
     <string name="app_version">رقم الاصدار</string>
     <string name="accept">موافق</string>
     <string name="add_rate">الرجاء إضافة تقييم لخدمات التطبيق</string>
-    <string name="add_rate_product">الرجاء إضافة تقييم على المنتج</string>
     <string name="rate_product">تقييم المنتج</string>
     <string name="Edit">تعديل</string>
     <string name="complete_request">الطلبات المكتملة</string>
@@ -125,7 +123,6 @@
     <string name="price">السعر :</string>
     <string name="pieces">الكمية : </string>
     <string name="textContinuePurchaseBtn">أكمل عملية الشراء </string>
-    <string name="add_card">اضافة بطاقة </string>
     <string name="text_card_name">اسم حامل البطاقة</string>
     <string name="text_card_num">رقم البطاقة</string>
     <string name="text_card_date">تاريخ انتهاء البطاقة</string>
@@ -177,7 +174,6 @@
     <string name="Saudi_Arabia">السعودية</string>
     <string name="United_Arab_Emirates">الامارات</string>
     <string name="address_default">تم تعيين هذا العنوان كعنوان افتراضي</string>
-    <string name="edit_address">تفاصيل العنوان </string>
     <string name="choose_address">اختر العنوان</string>
     <string name="enter_area">اختر المدينة </string>
     <string name="select_area">اختر المنطقة </string>
@@ -264,7 +260,6 @@
     <string name="over">توصيل مجاني للطلبات التي تزيد عن  </string>
     <string name="Get_FREE_Delivery">احصل على توصيل مجاني </string>
     <string name="today">اليوم</string>
-    <string name="checkout">ارسال الطلب </string>
     <string name="change_address">تغير العنوان </string>
     <string name="select_address">اختر العنوان </string>
     <string name="getFreeDelivery">مبروك لقد حصلت على التوصيل المجاني</string>
@@ -295,6 +290,9 @@
     <string name="no_booklets">لا يوجد بروشور</string>
     <string name="special_offer">عروض خاصة </string>
     <string name="Brands">علامات تجارية </string>
-
+    <string name="details_title">اكتب تفاصيل المنتج هنا</string>
+    <string name="add_photo">اضف صورة للمنتج (اختياري )</string>
+    <string name="know_price">يمكنك معرفة السعر المنتج عند توصيل الطلب </string>
+    <string name="add_specail_order">اضافة طلب خاص </string>
 
 </resources>

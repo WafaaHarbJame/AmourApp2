@@ -81,6 +81,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
+        if(cartDM.isExtra()){
+            holder.binding.priceTv.setVisibility(View.GONE);
+            holder.binding.currencyPriceTv.setVisibility(View.GONE);
+            holder.binding.weightUnitTv.setVisibility(View.GONE);
+        }
+
+
         holder.binding.tvName.setText(cartDM.getName());
         holder.binding.currencyPriceTv.setText(currency);
 
@@ -349,34 +356,43 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int productId = productModel.getProductId();
 
                 int limit = productModel.getLimitQty();
+                boolean isExtra=productModel.isExtra();
+                if(!isExtra){
 
+                    if (limit == 0) {
 
-                if (limit == 0) {
+                        if (count + 1 <= stock) {
+                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
-                    if (count + 1 <= stock) {
-                        updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
-
-                    } else {
-                        message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
-                    }
-                } else {
-
-                    if (count + 1 <= stock && (count + 1 <= limit)) {
-                        updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
-
-                    } else {
-
-                        if (count + 1 > stock) {
-                            message = context.getString(R.string.stock_empty);
                         } else {
-                            message = context.getString(R.string.limit) + "" + limit;
-
+                            message = context.getString(R.string.stock_empty);
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                         }
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                    } else {
+
+                        if (count + 1 <= stock && (count + 1 <= limit)) {
+                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, productModel.getId(), "quantity");
+
+                        } else {
+
+                            if (count + 1 > stock) {
+                                message = context.getString(R.string.stock_empty);
+                            } else {
+                                message = context.getString(R.string.limit) + "" + limit;
+
+                            }
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                        }
+
                     }
+                }
+                else {
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
                 }
+
+
+
 
 
             });

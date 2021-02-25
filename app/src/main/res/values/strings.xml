@@ -50,7 +50,6 @@
     <string name="forget_pass">Forget Password</string>
     <string name="enter_code1">Please enter the code</string>
     <string name="enter_phone">Please enter the registered mobile number To retrieve the password</string>
-    <string name="confirm_phone">Confirm Phone Number </string>
     <string name="search_product">Search Product Here</string>
     <string name="view_all">View All</string>
     <string name="best_products">Featured Product</string>
@@ -82,7 +81,6 @@
     <string name="app_version">App Version</string>
     <string name="accept">Accept</string>
     <string name="add_rate">Please add a rating for the application services</string>
-    <string name="add_rate_product">Please add a review to the product</string>
     <string name="rate_product">Rating Product</string>
     <string name="Edit">Edit</string>
     <string name="complete_request">Complete Order</string>
@@ -128,7 +126,6 @@
     <string name="price">price</string>
     <string name="pieces">Pieces</string>
     <string name="textContinuePurchaseBtn">Pay Now</string>
-    <string name="add_card">Add Card</string>
     <string name="text_card_name">Card Holder Name</string>
     <string name="text_card_num">Card Number</string>
     <string name="text_card_date">Card Expire Date</string>
@@ -187,7 +184,6 @@
     <string name="United_Arab_Emirates">United Arab Emirates</string>
     <string name="Kuwait">Kuwait</string>
     <string name="address_default">This address is set as the default address</string>
-    <string name="edit_address"> Address Details </string>
     <string name="choose_address">Select Address</string>
     <string name="enter_area">Enter Area</string>
     <string name="select_area">Select Area</string>
@@ -286,7 +282,6 @@
     <string name="over">Free delivery on orders over</string>
     <string name="Get_FREE_Delivery">Get Free Delivery</string>
     <string name="today">Today</string>
-    <string name="checkout">Checkout</string>
     <string name="change_address">Change Address</string>
     <string name="select_address">Select Address</string>
     <string name="getFreeDelivery">Congratulations you got free delivery</string>
@@ -318,5 +313,8 @@
     <string name="no_booklets">No Brochures</string>
     <string name="special_offer">Special Offers</string>
     <string name="Brands">Brands</string>
-
+    <string name="details_title">Enter Product Details Hers</string>
+    <string name="add_photo">Add photo For Product (optionally)</string>
+    <string name="know_price">You can know the price of product when Delivery Order</string>
+    <string name="add_specail_order">Add Specail Order</string>
 </resources>

@@ -528,8 +528,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
-                updateCart(view1, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                updateCart(view1, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
 
             });

@@ -11,6 +11,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Classes.orderListCall;
+import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -38,7 +39,7 @@ import retrofit2.http.Query;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/"+ GlobalData.COUNTRY+ "/GroceryStoreApi/api/v4/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v4/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -290,7 +291,7 @@ public class DataFeacher {
 
         Log.i(TAG, "Log UpdatePasswordHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log mobile_number " +memberModel.getMobileNumber());
+        Log.i(TAG, "Log mobile_number " + memberModel.getMobileNumber());
         Log.i(TAG, "Log password " + memberModel.getPassword());
         Log.i(TAG, "Log re_password " + memberModel.getNew_password());
 
@@ -299,7 +300,6 @@ public class DataFeacher {
         call.enqueue(callbackApi);
 
     }
-
 
 
     public void UpdateTokenHandle(MemberModel memberModel) {
@@ -345,7 +345,7 @@ public class DataFeacher {
         String countryCode = "";
         if (UtilityApp.getLocalData().getShortname() != null)
             countryCode = UtilityApp.getLocalData().getShortname();
-        else countryCode =GlobalData.COUNTRY;
+        else countryCode = GlobalData.COUNTRY;
 
         String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v4/Locations/citiesByCountry";
 
@@ -383,7 +383,7 @@ public class DataFeacher {
         Log.i(TAG, "Log mobile_number " + mobile_number);
         Log.i(TAG, "Log otp " + otp);
 
-        OtpModel otpModel=new OtpModel();
+        OtpModel otpModel = new OtpModel();
         otpModel.setMobileNumber(mobile_number);
         otpModel.setOtp(otp);
 
@@ -402,7 +402,7 @@ public class DataFeacher {
     }
 
 
-    public void setDefaultAddress(int user_id,int address_id) {
+    public void setDefaultAddress(int user_id, int address_id) {
 
         Log.i(TAG, "Log setDefaultAddress");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -410,7 +410,7 @@ public class DataFeacher {
         Log.i(TAG, "Log addressId " + address_id);
 
 
-        Call call = apiService.setDefaultAddress(headerMap, user_id,address_id);
+        Call call = apiService.setDefaultAddress(headerMap, user_id, address_id);
         call.enqueue(callbackApi);
     }
 
@@ -497,7 +497,7 @@ public class DataFeacher {
         Log.i(TAG, "Log city_id " + city_id);
 
         Call call = apiService.GetMainPage(headerMap, category_id, country_id, city_id, user_id);
-        call.enqueue( callbackApi);
+        call.enqueue(callbackApi);
     }
 
     public void GetSingleProduct(int country_id, int city_id, int product_id, String user_id) {
@@ -649,7 +649,6 @@ public class DataFeacher {
         params.put("remark", remark);
 
 
-
         Log.i(TAG, "Log updateRemarkCartHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log remark " + remark);
@@ -676,7 +675,7 @@ public class DataFeacher {
     }
 
 
-    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
+    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -689,7 +688,7 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
+        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
         call.enqueue(callbackApi);
     }
 
@@ -882,6 +881,30 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+    public void AddExtrat(AddExtraCall addExtraCall, File photo) {
+        Log.i(TAG, "Log AddExtrat");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + addExtraCall.userId);
+        Log.i(TAG, "Log store_ID " + addExtraCall.storeId);
+        Log.i(TAG, "Log qty " + addExtraCall.qty);
+        Log.i(TAG, "Log barcode " + addExtraCall.barcode);
+        Log.i(TAG, "Log description " + addExtraCall.description);
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+        if (photo != null) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), photo);
+            builder.addFormDataPart("file", photo.lastModified() + ".png", requestBody);
+        }
+
+        MultipartBody requestBody = builder.build();
+
+
+        Call call = apiService.AddExtrat(headerMap, addExtraCall.qty,
+                addExtraCall.barcode, addExtraCall.description, addExtraCall.userId, addExtraCall.storeId, requestBody);
+        call.enqueue(callbackApi);
+    }
+
 
     public void getQuickDelivery(QuickCall quickCall) {
         QuickCall quickCall1 = new QuickCall();
@@ -914,7 +937,6 @@ public class DataFeacher {
     }
 
 
-
     public void getRate(int productId, int store_id) {
 
         Map<String, Object> params = new HashMap<>();
@@ -932,7 +954,7 @@ public class DataFeacher {
     }
 
 
-    public void getBrochuresList(int store_id,int booklet_id) {
+    public void getBrochuresList(int store_id, int booklet_id) {
 
         Log.i(TAG, "Log getBrochuresList");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -941,7 +963,7 @@ public class DataFeacher {
         Log.i(TAG, "Log booklet_id " + booklet_id);
 
 
-        Call call = apiService.getBrochuresList(headerMap, store_id,booklet_id);
+        Call call = apiService.getBrochuresList(headerMap, store_id, booklet_id);
         call.enqueue(callbackApi);
     }
 
@@ -969,7 +991,6 @@ public class DataFeacher {
         Call call = apiService.getAppRate(headerMap, params);
         call.enqueue(callbackApi);
     }
-
 
 
     public void setRate(ReviewModel reviewModel) {
@@ -1020,32 +1041,30 @@ public class DataFeacher {
 
         lang = UtilityApp.getLanguage();
         if (lang != null) {
-           lang=UtilityApp.getLanguage();
+            lang = UtilityApp.getLanguage();
         } else {
-            lang=Locale.getDefault().getLanguage();
+            lang = Locale.getDefault().getLanguage();
 
         }
 
-        Log.i(TAG, "Log lang "+lang);
+        Log.i(TAG, "Log lang " + lang);
 
 
-        Call call = apiService.getSetting(headerMap,lang);
+        Call call = apiService.getSetting(headerMap, lang);
         call.enqueue(callbackApi);
     }
 
 
-
-    public void getValidate(String device_type, String  app_version, int app_build) {
+    public void getValidate(String device_type, String app_version, int app_build) {
 
         Log.i(TAG, "Log getValidate");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log app_version " + app_version);
         Log.i(TAG, "Log app_build " + app_build);
 
-        Call call = apiService.getValidate(headerMap, device_type,app_version,app_build);
+        Call call = apiService.getValidate(headerMap, device_type, app_version, app_build);
         call.enqueue(callbackApi);
     }
-
 
 
     public void getLinks(String country_shortname) {
@@ -1054,18 +1073,18 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_shortname " + country_shortname);
 
-        Call call = apiService.getSocialLink(headerMap,country_shortname);
+        Call call = apiService.getSocialLink(headerMap, country_shortname);
         call.enqueue(callbackApi);
     }
 
 
-    public void getOrders(int user_id,String type,String filter) {
+    public void getOrders(int user_id, String type, String filter) {
 
         Log.i(TAG, "Log getOrders");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log type " + type);
         Log.i(TAG, "Log filter " + filter);
-        orderListCall orderListCall=new orderListCall();
+        orderListCall orderListCall = new orderListCall();
         orderListCall.setUserId(user_id);
         orderListCall.setType(type);
         orderListCall.setFilter(filter);
@@ -1074,7 +1093,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void getOrderDetails(int order_id,int user_id,int store_id,String type) {
+    public void getOrderDetails(int order_id, int user_id, int store_id, String type) {
 
         Log.i(TAG, "Log getOrderDetails");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -1083,7 +1102,7 @@ public class DataFeacher {
         Log.i(TAG, "Log store_id " + order_id);
         Log.i(TAG, "Log user_id " + user_id);
 
-        orderListCall orderListCall=new orderListCall();
+        orderListCall orderListCall = new orderListCall();
         orderListCall.setOrderId(order_id);
         orderListCall.setUserId(user_id);
         orderListCall.setStoreId(store_id);

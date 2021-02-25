@@ -112,6 +112,19 @@
                     android:textSize="@dimen/bottom_nav_text" />
 
             </LinearLayout>
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/BadgeTxt"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:text="100"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/counter_back_style"
+                android:textColor="@color/white"
+                android:textSize="@dimen/bottom_nav_text" />
+
             <LinearLayout
                 android:id="@+id/cartButton"
                 android:layout_width="0dp"

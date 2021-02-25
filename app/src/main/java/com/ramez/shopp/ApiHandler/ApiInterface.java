@@ -1,11 +1,13 @@
 package com.ramez.shopp.ApiHandler;
 
 
+import com.ramez.shopp.Classes.AddExtraResponse;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.orderListCall;
+import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
@@ -55,7 +57,6 @@ import retrofit2.http.Url;
 public interface
 
 ApiInterface {
-
 
     @POST("v4/Account/userRegister")
     Call<LoginResultModel> registerUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -147,8 +148,7 @@ ApiInterface {
 
 
     @GET("v4/Products/allbrands")
-    Call<ResultAPIModel<ArrayList<BrandModel>>> GetAllBrands(@HeaderMap() Map<String, Object> headerParams,
-                                                             @Query("sotre_id") int sotre_id);
+    Call<ResultAPIModel<ArrayList<BrandModel>>> GetAllBrands(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
 
     @POST("v4/Booklets/BookletsList")
@@ -179,6 +179,10 @@ ApiInterface {
     @POST("v4/Carts/addToCart")
     Call<CartProcessModel> addToCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
+    @POST("v4/Carts/AddExtrat")
+    Call<AddExtraResponse> AddExtrat(@HeaderMap() Map<String, Object> headerParams, @Query("qty") int qty, @Query("barcode") String barcode, @Query("description") String description, @Query("user_id") int user_id, @Query("store_id") int store_id, @Body RequestBody params);
+
+
     @POST("v4/Carts/deleteCartItems")
     Call<CartProcessModel> deleteCartItems(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
@@ -193,11 +197,7 @@ ApiInterface {
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
     @GET("v4/Products/productList")
-    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id")
-            int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id,
-                                                   @Query("user_id") String user_id, @Query("filter")
-                                                           String filter,@Query("brand_id") int brand_id, @Query("page_number") int page_number, @Query("page_size")
-                                                           int page_size);
+    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("brand_id") int brand_id, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
     @POST("v4/Account/updateProfile")
     Call<LoginResultModel> updateProfile(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -231,7 +231,6 @@ ApiInterface {
     @POST("v4/Orders/GetOrderDetails")
     Call<ResultAPIModel<OrderItemDetail>> GetOrderDetails(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
 
-
     @GET("v4/Orders/GetOrderDelivery")
     Call<OrdersResultModel> getOrderDelivery(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
@@ -248,137 +247,6 @@ ApiInterface {
     @GET("v4/Products/productList")
     Call<FavouriteResultModel> getProductList(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
-
-    Call<ResultAPIModel<MemberModel>> updateProfilePost(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
-
-    @POST("v4/Account/uploadFile")
-    Call<ResultAPIModel<GeneralModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
-
-
-    @POST("v4/me/update")
-    Call<ResultAPIModel<MemberModel>> changePassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/addRemove/{id}/FromFavorite")
-    Call<ResultAPIModel> addToFavorite(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
-
-    @POST("v4/delete/realEstate")
-    Call<ResultAPIModel> deleteAdv(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/sendMsg")
-    Call<ResultAPIModel> sendMessage(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/mobile/TestSmsSend")
-    Call<ResultAPIModel<MemberModel>> sendConfirmCode(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/confirm")
-    Call<ResultAPIModel<MemberModel>> confirmRegister(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/confirm")
-    Call<ResultAPIModel<MemberModel>> confirmRegisterFirebase(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/otpVerify")
-    Call<ResultAPIModel> sendResetPassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/forgotPassword")
-    Call<ResultAPIModel> confirmResetPassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/createPassword")
-    Call<ResultAPIModel> ResetPassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/changePassword")
-    Call<ResultAPIModel> ChangePassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    @POST("v4/Account/updatePassword")
-    Call<ResultAPIModel> UpdatePassword(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-//    @POST("v4/RealEstate/{id}/show")
-//    Call<ResultAPIModel<PlaceModel>> getRealEstateDetails(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
-
-    @POST("v4/createRealEstate")
-    Call<ResultAPIModel<Integer>> createRealEstate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-//    @POST("v4/update/{id}/RealEstate")
-//    Call<ResultAPIModel> updateRealEstate(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id, @Body Map<String, Object> params);
-//
-//    @POST("v4/deleteImg")
-//    Call<ResultAPIModel> deletePhoto(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-//
-//    @POST("v4/addImg")
-//    Call<ResultAPIModel<PhotoModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
-//
-//    @POST("v4/contact/us")
-//    Call<ResultAPIModel> sendContactUs(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-//
-//    @POST("v4/sendReport")
-//    Call<ResultAPIModel> reportAdv(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-//
-//    /* ------------------------- GET Handle ------------------------- */
-//
-//    @GET("v4/getCities")
-//    Call<ResultAPIModel<List<CityModel>>> getCities(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v4/getRealEstateType")
-//    Call<ResultAPIModel<List<PlaceTypeModel>>> getRealEstateType(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v4/getRealEstateOperation")
-//    Call<ResultAPIModel<List<PlaceOperationModel>>> getRealEstateOperation(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("getMainSection")
-//    Call<ResultAPIModel<AllPlacesModel>> getMainSection(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v4/me/favourites")
-//    Call<ResultAPIModel<AllPlacesModel>> getFavorite(@HeaderMap() Map<String, Object> headerParams, @Query("page") int page);
-//
-//    @GET("v4/getRealEstates")
-//    Call<ResultAPIModel<AllPlacesModel>> getRealEstates(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParam);
-//
-//    @GET("v4/myRealEstate")
-//    Call<ResultAPIModel<AllPlacesModel>> getMyRealEstates(@HeaderMap() Map<String, Object> headerParams, @Query("page") int page);
-//
-//    @GET("v4/myMsg")
-//    Call<ResultAPIModel<AllChatsModel>> getChats(@HeaderMap() Map<String, Object> headerParams, @Query("page") int page);
-//
-//    @GET("v4/MsgDetails")
-//    Call<ResultAPIModel<AllMessagesModel>> getChatMessages(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int userId, @Query("page") int page);
-//
-//    @GET("v4/searchRealEstates")
-//    Call<ResultAPIModel<AllPlacesModel>> searchPlaces(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParam);
-//
-//    @GET("v4/me")
-//    Call<ResultAPIModel<MemberModel>> getMyProfile(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v1/pages")
-//    Call<ResultAPIModel<List<PageModel>>> getPages(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v4/terms_and_conditions")
-//    Call<ResultAPIModel<PageModel>> getTerms(@HeaderMap() Map<String, Object> headerParams);
-//
-//    @GET("v1/pages/{slug}")
-//    Call<ResultAPIModel<PageModel>> getPageBySlug(@HeaderMap() Map<String, Object> headerParams, @Path("slug") String slug);
-
-    /* ------------------------- PUT Handle ------------------------- */
-
-//    @PUT("v1/me/notifications/{notification_id}/mark-as-read/")
-//    Call<ResultAPIModel> readNotification(@HeaderMap() Map<String, Object> headerParams, @Path("notification_id") Object id);
-
-    /* ------------------------- PATCH Handle ------------------------- */
-
-//    @PATCH("v1/me")
-//    Call<ResultAPIModel<MemberModel>> updateProfilePatch(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
-
-    /* ------------------------- DELETE Handle ------------------------- */
-
-//    @DELETE("v1/bookings/{id}/cancel")
-//    Call<ResultAPIModel> cancelReservation(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
-
-//    @DELETE("v1/me/favorites/{id}")
-//    Call<ResultAPIModel> removeUserFromWishlist(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
-//
-//    @DELETE("v1/me/ignored-list/{id}")
-//    Call<ResultAPIModel> removeUserFromIgnore(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
-
-//    @DELETE("v1/chats/{id}")
-//    Call<ResultAPIModel> deleteChat(@HeaderMap() Map<String, Object> headerParams, @Path("id") int id);
 
 }
 

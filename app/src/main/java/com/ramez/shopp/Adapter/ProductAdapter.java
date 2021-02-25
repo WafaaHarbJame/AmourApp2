@@ -336,6 +336,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 Log.i("limit", "Log limit" + limit);
                 Log.i("stock", "Log stock" + stock);
 
+
+
                 if (limit == 0) {
 
                     if (count + 1 <= stock) {
@@ -383,8 +385,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
-                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
 
             });

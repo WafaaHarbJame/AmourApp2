@@ -96,6 +96,49 @@ public class CartModel implements Serializable {
     @SerializedName("minimumDate")
     @Expose
     private Object minimumDate;
+    @SerializedName("isExtra")
+    @Expose
+    private boolean isExtra;
+
+    public Boolean getSpecialPriceVisible() {
+        return isSpecialPriceVisible;
+    }
+
+    public void setSpecialPriceVisible(Boolean specialPriceVisible) {
+        isSpecialPriceVisible = specialPriceVisible;
+    }
+
+    public Boolean getPriceVisible() {
+        return isPriceVisible;
+    }
+
+    public void setPriceVisible(Boolean priceVisible) {
+        isPriceVisible = priceVisible;
+    }
+
+    public String gethProductName() {
+        return hProductName;
+    }
+
+    public void sethProductName(String hProductName) {
+        this.hProductName = hProductName;
+    }
+
+    public String gethUnitName() {
+        return hUnitName;
+    }
+
+    public void sethUnitName(String hUnitName) {
+        this.hUnitName = hUnitName;
+    }
+
+    public boolean isExtra() {
+        return isExtra;
+    }
+
+    public void setExtra(boolean extra) {
+        isExtra = extra;
+    }
 
     public Integer getId() {
         return id;

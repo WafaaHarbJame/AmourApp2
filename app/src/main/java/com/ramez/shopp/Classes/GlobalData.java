@@ -41,9 +41,6 @@ public class GlobalData {
 
     //============================================================================
 
-
-    //============================================================================
-
     public static void PicassoImg(String image, int placeholder, ImageView imageView) {
         String photoUrl = "";
 

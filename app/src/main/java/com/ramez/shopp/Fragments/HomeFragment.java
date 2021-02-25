@@ -740,12 +740,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initSliderAdapter() {
 
-//        sliderAdapter = new SliderAdapter(getActivityy(), sliderList);
-//        binding.viewPager.setAdapter(sliderAdapter);
-        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));
-        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        binding.imageSlider.startAutoCycle();
+        sliderAdapter = new SliderAdapter(getActivityy(), sliderList);
+        binding.viewPager.setAdapter(sliderAdapter);
+//        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));
+//        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+//        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+//        binding.imageSlider.startAutoCycle();
     }
 
     public void initBannersAdapter() {

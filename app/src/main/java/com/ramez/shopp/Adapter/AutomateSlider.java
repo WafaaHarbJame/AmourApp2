@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
@@ -51,7 +52,9 @@ public class AutomateSlider extends SliderViewAdapter<AutomateSlider.sliderAdapt
         }
 
 
-        Glide.with(viewHolder.itemView).load(imageUrl).error(R.drawable.slider_image).placeholder(R.drawable.slider_image).fitCenter().into(viewHolder.imageViewBackground);
+        GlobalData.PicassoImg(imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
+
+//        Glide.with(viewHolder.itemView).load(imageUrl).error(R.drawable.holder_image).placeholder(R.drawable.holder_image).fitCenter().into(viewHolder.imageViewBackground);
 
         viewHolder.itemView.setOnClickListener(view -> onSliderClick.onSliderClicked(position, slider));
 
