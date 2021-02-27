@@ -1,42 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_2sdp"
+    android:layout_margin="@dimen/_4sdp"
+    android:background="@drawable/round_corner_white_small8"
     android:gravity="center"
+
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
         android:layout_height="wrap_content">
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/loadingLY"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:visibility="visible"
-            app:indicatorColor="@color/colorPrimaryDark"
-            app:indicatorName="BallClipRotateMultipleIndicator" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <ImageView
             android:id="@+id/ivCatImage"
-            android:layout_width="@dimen/_95sdp"
-            android:layout_height="@dimen/_90sdp"
-            android:background="@drawable/round_corner_white_small"
-            android:scaleType="fitXY"
-            app:riv_border_color="@color/gray"
-            android:src="@drawable/brand_image"
-            app:riv_border_width="@dimen/_2sdp"
-            android:visibility="visible"
-            app:riv_corner_radius="@dimen/_6sdp" />
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:padding="@dimen/_10sdp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:src="@drawable/holder_image" />
 
     </FrameLayout>
-
-
 </LinearLayout>
 

@@ -317,4 +317,12 @@
     <string name="add_photo">Add photo For Product (optionally)</string>
     <string name="know_price">You can know the price of product when Delivery Order</string>
     <string name="add_specail_order">Add Specail Order</string>
+    <string name="ramezKitchen">Ramez Kitchen</string>
+    <string name="serving_for_4_people">Serving for 4 people</string>
+    <string name="cooking_time">Cooking Time</string>
+    <string name="recipe">Recipe</string>
+    <string name="ShowAll">Show All</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="add_all">ADD All TO CART</string>
+    <string name="proceed_to_checkout">Proceed to check out</string>
 </resources>

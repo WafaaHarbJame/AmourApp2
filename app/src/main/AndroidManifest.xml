@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activities.ExtraRequestActivity"></activity>
+        <activity android:name=".Activities.RamezKitchenActivity"></activity>
+        <activity android:name=".Activities.ExtraRequestActivity" />
         <activity
             android:name=".Activities.AllBookleteActivity"
             android:launchMode="singleTask"

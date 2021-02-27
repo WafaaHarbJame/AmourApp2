@@ -37,7 +37,6 @@ import java.util.List;
 
 public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
     public static final int VIEW_TYPE_ITEM = 1;
     public static final int VIEW_TYPE_LOADING = 0;
     public static final int VIEW_TYPE_EMPTY = 2;

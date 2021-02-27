@@ -77,7 +77,7 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
-//        getValidation();
+        getValidation();
 
         getIntentExtra();
 
@@ -393,7 +393,7 @@ public class MainActivity extends ActivityBase {
                         , R.drawable.badge))
                 .setMaxBadgeValue(999).
                 setBadgeTextFont(typeface)
-                .setBadgePosition(BadgePosition.TOP_LEFT)
+                .setBadgePosition(BadgePosition.TOP_RIGHT)
                 .setBadgeTextStyle(Typeface.NORMAL)
                 .setShowCounter(true).setBadgePadding(1);
 

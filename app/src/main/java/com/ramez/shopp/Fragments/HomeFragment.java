@@ -46,6 +46,7 @@ import com.ramez.shopp.Adapter.BannersAdapter;
 import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.BrandsAdapter;
 import com.ramez.shopp.Adapter.CategoryAdapter;
+import com.ramez.shopp.Adapter.MainSliderAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.Adapter.SliderAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -77,7 +78,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick, MainSliderAdapter.OnSliderClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -113,7 +114,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private BookletAdapter bookletAdapter;
     private Activity activity;
     private List<BookletsModel> bookletsList;
-    private SliderAdapter sliderAdapter;
+    private MainSliderAdapter sliderAdapter;
     private BannersAdapter bannerAdapter;
     private BrandsAdapter brandsAdapter;
 
@@ -654,14 +655,22 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                     if (IsSuccess) {
                         if (result.data != null && result.data.size() > 0) {
                             Log.i(TAG, "Log getBrands" + result.data.size());
-                            brandsList = result.data;
+                            ArrayList<BrandModel> allBrandList = result.data;
+//                            while (allBrandList.size() > 0) {
+//
+//                            }
+                            for (int i = 0; i < allBrandList.size(); i++) {
+                                BrandModel brandModel = result.data.get(i);
+                                if (brandModel.getImage() != null && brandModel.getImage2() != null) {
+                                    brandsList.add(brandModel);
+                                    allBrandList.remove(i);
+                                    i--;
+                                }
+
+                            }
                             initBrandsAdapter();
 
-                        } else {
-
-//
                         }
-
 
                     } else {
 
@@ -740,7 +749,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initSliderAdapter() {
 
-        sliderAdapter = new SliderAdapter(getActivityy(), sliderList);
+        sliderAdapter = new MainSliderAdapter(getActivityy(), sliderList, this);
         binding.viewPager.setAdapter(sliderAdapter);
 //        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));
 //        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
@@ -756,6 +765,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
     public void initBrandsAdapter() {
+
+        if (brandsList.size() >= 4) {
+
+            brandManger.setSpanCount(2);
+        } else {
+            brandManger.setSpanCount(1);
+
+        }
         brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this);
         binding.brandsRecycler.setAdapter(brandsAdapter);
 
@@ -781,33 +798,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-    @Override
-    public void onSliderClicked(int position, Slider slider) {
-
-        if (slider.getReffrenceType() == 1) {
-            Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
-            intent.putExtra(Constants.product_id, slider.getReffrence());
-            intent.putExtra(Constants.FROM_BROSHER, true);
-            startActivity(intent);
-
-        } else if (slider.getReffrenceType() == 2) {
-            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-            intent.putExtra(Constants.CAT_LIST, categoryModelList);
-            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            intent.putExtra(Constants.position, position);
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
-            intent.putExtra(Constants.CAT_MODEL, categoryModel);
-            startActivity(intent);
-
-        } else if (slider.getReffrenceType() == 3) {
-            String url = slider.getReffrence();
-            ActivityHandler.OpenBrowser(getActivityy(), url);
-
-        }
-
-
-    }
 
     @Override
     public void onBannersClicked(int position, Slider slider) {
@@ -834,6 +824,32 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
+
+    }
+
+    @Override
+    public void onSliderClicked(int position, Slider slider) {
+        if (slider.getReffrenceType() == 1) {
+            Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
+            intent.putExtra(Constants.product_id, slider.getReffrence());
+            intent.putExtra(Constants.FROM_BROSHER, true);
+            startActivity(intent);
+
+        } else if (slider.getReffrenceType() == 2) {
+            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+            intent.putExtra(Constants.CAT_LIST, categoryModelList);
+            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            intent.putExtra(Constants.position, position);
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            intent.putExtra(Constants.CAT_MODEL, categoryModel);
+            startActivity(intent);
+
+        } else if (slider.getReffrenceType() == 3) {
+            String url = slider.getReffrence();
+            ActivityHandler.OpenBrowser(getActivityy(), url);
+
+        }
 
     }
 }

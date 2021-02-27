@@ -213,7 +213,20 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        brandsList = result.data;
+                        ArrayList<BrandModel> allBrandList = result.data;
+//                            while (allBrandList.size() > 0) {
+//
+//                            }
+                        for (int i = 0; i < allBrandList.size(); i++) {
+                            BrandModel brandModel = result.data.get(i);
+                            if (brandModel.getImage() != null && brandModel.getImage2() != null) {
+                                brandsList.add(brandModel);
+                                allBrandList.remove(i);
+                                i--;
+                            }
+
+                        }
+
                         initBrandsAdapter();
 
                     } else {

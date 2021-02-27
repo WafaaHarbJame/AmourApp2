@@ -122,6 +122,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         } else {
             photoUrl = "http";
         }
+
+
         Picasso.get().load(photoUrl)
                 .placeholder(R.drawable.holder_image)
                 .error(R.drawable.holder_image)

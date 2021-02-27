@@ -108,7 +108,6 @@ public class MyAccountFragment extends FragmentBase {
                 if (whats_link != null) {
                     boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp");
                     if (installed) {
-
                         System.out.println("App is already installed on your phone");
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
                         startActivity(intent);

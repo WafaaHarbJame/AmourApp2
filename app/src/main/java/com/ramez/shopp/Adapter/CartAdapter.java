@@ -414,9 +414,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                if (getAdapterPosition() != -1 && cartDMS.size() > 0) {
+                if (cartDMS!=null && cartDMS.size() > 0& getAdapterPosition() != -1) {
                     CartModel productModel = cartDMS.get(getAdapterPosition());
-                    int count = productModel.getQuantity();
                     int product_barcode_id = productModel.getProductBarcodeId();
                     int position = getAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();

@@ -441,7 +441,6 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
-
 //                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);

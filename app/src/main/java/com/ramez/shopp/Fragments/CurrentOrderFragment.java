@@ -191,9 +191,7 @@ public class CurrentOrderFragment extends FragmentBase {
             orderModel.setOrderProductsDMS(productsList);
             orderList.add(orderModel);
         }
-//        for (int i = 0; i < currentOrdersList.size(); i++) {
-//
-//        }
+
 
         Log.i("TAG", "Log currentOrdersList" + orderList.size());
 
