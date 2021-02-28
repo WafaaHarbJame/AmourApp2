@@ -77,7 +77,7 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
-        getValidation();
+        //getValidation();
 
         getIntentExtra();
 

@@ -1,35 +1,57 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="@dimen/round_corner_thin"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    android:layout_margin="@dimen/_8sdp">
 
-
-    <FrameLayout
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/slideImg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/slideImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/slider_image" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/square_bottom_black_gradient_fill" />
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:siRadius="@dimen/_8sdp"
+        app:riv_border_width="@dimen/_1sdp"
+        app:riv_border_color="@color/transparent"
+        android:src="@drawable/slider_image" />
+</LinearLayout>
 
 
 
+<!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/cardView"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    app:cardBackgroundColor="@color/white"-->
+<!--    app:cardCornerRadius="@dimen/round_corner_thin"-->
+<!--    app:cardElevation="5dp"-->
+<!--    app:cardUseCompatPadding="true">-->
 
-</androidx.cardview.widget.CardView>
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/slideImg"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/slider_image" />-->
+
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/square_bottom_black_gradient_fill" />-->
+
+<!--    </FrameLayout>-->
+
+
+
+
+<!--</androidx.cardview.widget.CardView>-->
 
