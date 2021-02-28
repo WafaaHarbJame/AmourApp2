@@ -136,7 +136,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_140sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:clipToPadding="false"
                         android:overScrollMode="never"
+                        android:paddingLeft="@dimen/card_padding"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/card_padding"
+                        android:paddingRight="@dimen/card_padding"
                         android:paddingBottom="@dimen/_5sdp" />
 
                     <com.rd.PageIndicatorView
