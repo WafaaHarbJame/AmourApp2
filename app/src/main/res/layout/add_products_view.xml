@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:srcCompat="@drawable/cart_icon_bottom"
-         />
+        app:tint="@color/white" />
 
 </FrameLayout>

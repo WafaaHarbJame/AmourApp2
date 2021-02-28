@@ -3,16 +3,11 @@ package com.ramez.shopp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.transition.Visibility;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
@@ -23,16 +18,12 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.AnalyticsListener;
 import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.badge.BadgeUtils;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
@@ -41,12 +32,9 @@ import com.ramez.shopp.Fragments.CategoryFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
 import com.ramez.shopp.Fragments.MyAccountFragment;
 import com.ramez.shopp.Fragments.OfferFragment;
-import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Utils.ActivityHandler;
-import com.ramez.shopp.Utils.BottomNavigationViewHelper;
 import com.ramez.shopp.databinding.ActivityMainBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,11 +43,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
 
 import ru.nikartm.support.BadgePosition;
-import ru.nikartm.support.ImageBadgeView;
 
 import static android.content.ContentValues.TAG;
 
@@ -67,7 +52,6 @@ public class MainActivity extends ActivityBase {
     int cartCount = 0;
     int storeId;
     LocalModel localModel;
-    BadgeDrawable badgeDrawable;
     private ActivityMainBinding binding;
 
     @SuppressLint("UnsafeExperimentalUsageError")
@@ -77,10 +61,8 @@ public class MainActivity extends ActivityBase {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        badgeDrawable = BadgeDrawable.create(getActiviy());
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-        //  binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
@@ -97,11 +79,8 @@ public class MainActivity extends ActivityBase {
             getCartsCount();
         }
 
-        //openPicker();
-
         binding.homeButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            // binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -112,6 +91,7 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.font_gray));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.font_gray));
+
             binding.toolBar.addExtra.setVisibility(View.GONE);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
@@ -146,9 +126,7 @@ public class MainActivity extends ActivityBase {
         binding.cartButton.setOnClickListener(view1 -> {
 
             binding.cartBut.clearBadge();
-//            badgeDrawable.setVisible(false);
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            // binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
@@ -159,7 +137,15 @@ public class MainActivity extends ActivityBase {
             binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
             binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.font_gray));
             binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.font_gray));
-            binding.toolBar.addExtra.setVisibility(View.VISIBLE);
+
+            if (UtilityApp.isLogin()) {
+                binding.toolBar.addExtra.setVisibility(View.VISIBLE);
+
+            } else {
+                binding.toolBar.addExtra.setVisibility(View.GONE);
+
+
+            }
 
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
@@ -168,7 +154,6 @@ public class MainActivity extends ActivityBase {
 
         binding.offerButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            // binding.toolBar.mainTitleTxt.setText(getString(R.string.offer_text));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -190,7 +175,6 @@ public class MainActivity extends ActivityBase {
 
         binding.myAccountButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            //  binding.toolBar.mainTitleTxt.setText(getString(R.string.myaccount));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -390,44 +374,9 @@ public class MainActivity extends ActivityBase {
 
     @SuppressLint("UnsafeExperimentalUsageError")
     public void putBadge(int cartCount) {
-
-
-//        FrameLayout frameLayout = findViewById(R.id.framelayout);
-//
-//        ImageView imageView = findViewById(R.id.cartBut);
-
-        //core code
-//        frameLayout.setForeground(badgeDrawable);
-//        frameLayout.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-//
-//
-//            //either of the following two lines of code  work
-//            //badgeDrawable.updateBadgeCoordinates(imageView, frameLayout);
-//            BadgeUtils.attachBadgeDrawable(badgeDrawable, imageView, frameLayout);
-//            badgeDrawable.setVisible(true);
-//            badgeDrawable.setBadgeGravity(BadgeDrawable.TOP_START);
-//            badgeDrawable.setBackgroundColor(ContextCompat.getColor(getActiviy(),R.color.colorPrimaryDark));
-//            badgeDrawable.setNumber(cartCount);
-//        });
-
-
-//        BadgeUtils.attachBadgeDrawable(badgeDrawable, binding.cartBut);
-//        badgeDrawable.setNumber(cartCount);
-//        badgeDrawable.setBackgroundColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
-//        badgeDrawable.setVisible(true);
-
-
         Typeface typeface = Typeface.createFromAsset(getActiviy().getAssets(), Constants.NORMAL_FONT);
-        binding.cartBut.setBadgeValue(cartCount)
-                .setBadgeOvalAfterFirst(true)
-                .setBadgeTextSize(12)
-//                .setBadgeBackground(ContextCompat.getDrawable(getActiviy()
-//                        , R.drawable.badge))
-                .setMaxBadgeValue(999).
-                setBadgeTextFont(typeface)
-                .setBadgePosition(BadgePosition.TOP_RIGHT)
-                .setBadgeTextStyle(Typeface.NORMAL)
-                .setShowCounter(true).setBadgePadding(2);
+        binding.cartBut.setBadgeValue(cartCount).setBadgeOvalAfterFirst(true).setBadgeTextSize(12).setMaxBadgeValue(999).
+                setBadgeTextFont(typeface).setBadgePosition(BadgePosition.TOP_RIGHT).setBadgeTextStyle(Typeface.NORMAL).setShowCounter(true).setBadgePadding(2);
 
     }
 

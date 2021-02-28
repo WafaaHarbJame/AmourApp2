@@ -21,10 +21,9 @@
             <ImageView
                 android:id="@+id/backBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/_5sdp"
+                android:layout_centerVertical="true"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:scaleX="@integer/scaleXInv"
@@ -36,12 +35,11 @@
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/mainTitleTv"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/backBtn"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignEnd="@+id/backBtn"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="2"
@@ -66,7 +64,7 @@
             <LinearLayout
                 android:id="@+id/back1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
+                android:layout_height="@dimen/_60sdp"
                 android:background="@drawable/toolbar_back1"
                 android:orientation="vertical" />
 
@@ -93,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8ssp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
@@ -262,7 +260,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp">

@@ -10,11 +10,11 @@
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/ivCatImage"
-        android:layout_width="@dimen/_140sdp"
+        android:layout_width="@dimen/_145sdp"
         android:layout_height="@dimen/_50sdp"
-        android:src="@drawable/slider_image"
+        android:src="@drawable/banner_image"
         app:siBorderColor="@color/gray5"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:siBorderWidth="@dimen/_1sdp"
         app:siRadius="@dimen/_6sdp" />
 

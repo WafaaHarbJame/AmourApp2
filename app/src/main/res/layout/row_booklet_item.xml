@@ -29,7 +29,7 @@
             android:layout_height="@dimen/_100sdp"
             android:background="@drawable/round_corner_white_small"
             android:scaleType="fitXY"
-            app:riv_border_color="@color/gray"
+            app:riv_border_color="@color/gray5"
             android:src="@drawable/holder_image"
             app:riv_border_width="@dimen/_2sdp"
             android:visibility="visible"

@@ -10,7 +10,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp">
+        android:layout_height="wrap_content">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/loadingLY"

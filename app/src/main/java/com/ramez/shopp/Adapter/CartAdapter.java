@@ -321,7 +321,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id = 0;
+                int cart_id = productModel.getId();
 
                 deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -421,7 +421,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getProductId();
-                    int cart_id = 0;
+                    int cart_id = productModel.getId();
 
                     deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -439,7 +439,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id = 0;
+                int cart_id = productModel.getId();
 
                 deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
 
