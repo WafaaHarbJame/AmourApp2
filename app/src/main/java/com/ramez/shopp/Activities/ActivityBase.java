@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -66,7 +65,7 @@ public class ActivityBase extends AppCompatActivity {
 
         toolbar = findViewById(R.id.tool_bar);
         home = toolbar.findViewById(R.id.backBtn);
-        mainTitle = toolbar.findViewById(R.id.mainTitleTxt);
+        mainTitle = toolbar.findViewById(R.id.logoImg);
 
 
 //        mainTitle.setText(title);

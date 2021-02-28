@@ -134,13 +134,36 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/bottom_nav_padding">
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/framelayout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:clipChildren="false"-->
+<!--                    android:clipToPadding="false">-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/cartBut"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="@dimen/_4sdp"-->
+<!--                        android:src="@drawable/cart_icon_before" />-->
+
+
+<!--                </FrameLayout>-->
 
 
                 <ru.nikartm.support.ImageBadgeView
                     android:id="@+id/cartBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    app:ibv_badgeValue="100"
+                    app:ibv_badgeTextSize="@dimen/_8ssp"
+                    app:ibv_fixedBadgeRadius="@dimen/_8ssp"
+                    app:ibv_badgeTextStyle="bold"
+                    app:ibv_badgeTextColor="#ffffff"
+                    app:ibv_badgeColor="@color/colorPrimaryDark"
+                    app:ibv_badgeLimitValue="false"
                     android:src="@drawable/cart_icon_before" />
 
                 <com.ramez.shopp.SpichalViews.STextView

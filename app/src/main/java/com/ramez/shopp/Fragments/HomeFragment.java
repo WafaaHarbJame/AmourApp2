@@ -748,7 +748,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
     public void initSliderAdapter() {
-
         sliderAdapter = new MainSliderAdapter(getActivityy(), sliderList, this);
         binding.viewPager.setAdapter(sliderAdapter);
 //        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));

@@ -34,7 +34,7 @@
                 tools:targetApi="m" />
 
             <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/mainTitleTxt"
+                android:id="@+id/mainTitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentTop="true"

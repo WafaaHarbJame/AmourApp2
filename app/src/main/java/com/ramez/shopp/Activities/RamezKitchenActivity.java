@@ -264,7 +264,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
                 }
 
                 binding.productNameTv.setText(productName);
-                binding.mainTitleTxt.setText(productName);
+                binding.mainTitleTv.setText(productName);
 
             }
 
@@ -352,7 +352,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
                         }
 
                         binding.productNameTv.setText(productName);
-                        binding.mainTitleTxt.setText(productName);
+                        binding.mainTitleTv.setText(productName);
 
                         if (productModel.getDescription() != null && productModel.getHDescription() != null) {
 
@@ -661,7 +661,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
 
             binding.productNameTv.setText(productName);
 
-            binding.mainTitleTxt.setText(productName);
+            binding.mainTitleTv.setText(productName);
 
 
         }

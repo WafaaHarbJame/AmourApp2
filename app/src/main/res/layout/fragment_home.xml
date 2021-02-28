@@ -83,9 +83,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:visibility="visible">
@@ -112,30 +110,36 @@
                 <com.duolingo.open.rtlviewpager.RtlViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_140sdp"
+                    android:layout_height="@dimen/_160sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
+                    android:clipToPadding="false"
                     android:overScrollMode="never"
+                    android:paddingLeft="@dimen/card_padding"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/card_padding"
+                    android:paddingRight="@dimen/card_padding"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:visibility="visible" />
 
 
-                <!--                <com.rd.PageIndicatorView-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center_horizontal"-->
-                <!--                    android:layout_marginBottom="@dimen/_5sdp"-->
-                <!--                    app:piv_animationType="color"-->
-                <!--                    app:piv_radius="3dp"-->
-                <!--                    app:piv_selectedColor="@color/green"-->
-                <!--                    app:piv_unselectedColor="@color/gray1"-->
-                <!--                    app:piv_viewPager="@id/viewPager" />-->
+                <com.rd.PageIndicatorView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    app:piv_animationType="color"
+                    app:piv_radius="3dp"
+                    app:piv_selectedColor="@color/colorPrimaryDark"
+                    app:piv_unselectedColor="@color/gray1"
+                    app:piv_viewPager="@id/viewPager" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bannersRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp" />
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp" />
 
 
             <LinearLayout
@@ -509,13 +513,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/brandsRecycler"
                 android:layout_width="match_parent"
-                tools:listitem="@layout/row_band_item"
-                tools:itemCount="3"
-                app:spanCount="2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp" />
+                android:layout_marginEnd="@dimen/_4sdp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_band_item" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -375,7 +375,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
 
                 binding.productNameTv.setText(productName);
-                binding.mainTitleTxt.setText(productName);
+                binding.mainTitleTv.setText(productName);
 
             }
 
@@ -465,7 +465,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
                         binding.productNameTv.setText(productName);
-                        binding.mainTitleTxt.setText(productName);
+                        binding.mainTitleTv.setText(productName);
 
                         if(productModel.getDescription()!=null&&productModel.getHDescription()!=null){
 
@@ -865,7 +865,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             binding.productNameTv.setText(productName);
 
-            binding.mainTitleTxt.setText(productName);
+            binding.mainTitleTv.setText(productName);
 
 
         }

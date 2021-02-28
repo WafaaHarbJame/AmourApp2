@@ -24,7 +24,7 @@
             tools:targetApi="m" />
 
         <ImageView
-            android:id="@+id/mainTitleTxt"
+            android:id="@+id/logoImg"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
             android:layout_centerHorizontal="true"
