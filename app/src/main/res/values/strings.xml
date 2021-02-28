@@ -325,4 +325,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="add_all">ADD All TO CART</string>
     <string name="proceed_to_checkout">Proceed to check out</string>
+    <string name="popular">popular</string>
+    <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">Use Add \' ADD All TO CART \' to add all popular ingredients</string>
+    <string name="calories">CALORIES</string>
 </resources>

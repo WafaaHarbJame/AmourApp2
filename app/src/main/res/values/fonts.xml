@@ -15,7 +15,6 @@
     <string name="fal_times" translatable="false">&#xf00d;</string>
     <string name="fal_search" translatable="false">&#xf002;</string>
     <string name="fal_location" translatable="false">&#xf601;</string>
-    <string name="fa_angle_up" translatable="false">&#xf106;</string>
     <string name="fa_angle_down" translatable="false">&#xf107;</string>
 
 </resources>

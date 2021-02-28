@@ -141,7 +141,7 @@
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
-                    app:ibv_badgeValue="100"
+                    app:ibv_badgeValue="0"
                     app:ibv_badgeTextSize="@dimen/_8ssp"
                     app:ibv_fixedBadgeRadius="@dimen/_8ssp"
                     app:ibv_badgeTextStyle="bold"

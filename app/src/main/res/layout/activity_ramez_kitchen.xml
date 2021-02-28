@@ -184,7 +184,7 @@
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_photo_camera_black_24dp"
+                    android:drawableStart="@drawable/serve_number"
                     android:drawablePadding="@dimen/_4sdp"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
@@ -210,7 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_8sdp"
-                        android:src="@drawable/ic_flag_kuwait" />
+                        android:src="@drawable/cook_time" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -236,7 +236,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_flag_kuwait" />
+                        android:src="@drawable/calories" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -248,7 +248,7 @@
                         <com.ramez.shopp.SpichalViews.STextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CALORIES"
+                            android:text="@string/calories"
                             android:textAlignment="viewStart"
                             android:textColor="@color/gray3" />
 
@@ -265,7 +265,7 @@
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_photo_camera_black_24dp"
+                    android:drawableStart="@drawable/receipe"
                     android:drawablePadding="@dimen/_4sdp"
                     android:maxLines="2"
                     android:paddingStart="@dimen/_8sdp"
@@ -306,7 +306,7 @@
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_photo_camera_black_24dp"
+                    android:drawableStart="@drawable/ingredients"
                     android:drawablePadding="@dimen/_4sdp"
                     android:maxLines="2"
                     android:paddingStart="@dimen/_8sdp"
@@ -329,20 +329,38 @@
                     android:orientation="horizontal"
                    >
 
-                    <ImageView
+
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:orientation="horizontal"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_flag_kuwait" />
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:background="@drawable/popular_shape"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_8sdp"
+                            android:src="@drawable/poular_icon" />
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ingredients"
+                            android:text="@string/popular"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
 
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Use Add ' ADD All TO CART ' to add all popular ingredients "
+                        android:text="@string/use_add_add_all_to_cart_to_add_all_popular_ingredients"
                         android:textAlignment="viewStart"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:textColor="@color/black" />
 
 

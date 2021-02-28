@@ -10,8 +10,8 @@
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/ivCatImage"
-        android:layout_width="@dimen/_145sdp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_width="@dimen/_135sdp"
+        android:layout_height="@dimen/_40sdp"
         android:src="@drawable/banner_image"
         app:siBorderColor="@color/gray5"
         android:scaleType="centerCrop"
