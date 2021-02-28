@@ -60,7 +60,7 @@
     <string name="_50_off">50 % OFF</string>
     <string name="category">Categories</string>
     <string name="cart">Cart</string>
-    <string name="myaccount">My Account</string>
+    <string name="myaccount">Profile</string>
     <string name="offer_text">Offers </string>
     <string name="fail_to_get_data">Fail to get data</string>
     <string name="reload">Reload</string>

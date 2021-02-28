@@ -59,9 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:paddingTop="@dimen/bottom_nav_padding"
                 android:orientation="vertical">
 
 
@@ -69,7 +67,9 @@
                     android:id="@+id/homeButn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_6sdp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
                     android:src="@drawable/home_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -89,17 +89,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/bottom_nav_padding">
+                android:orientation="vertical">
 
 
                 <ImageView
                     android:id="@+id/categoryBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_6sdp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
                     android:src="@drawable/category_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -130,18 +130,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/bottom_nav_padding">
+                android:orientation="vertical">
 
                 <ru.nikartm.support.ImageBadgeView
                     android:id="@+id/cartBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="@dimen/_6sdp"
-                    app:ibv_badgeValue="0"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    app:ibv_badgeValue="100"
                     app:ibv_badgeTextSize="@dimen/_8ssp"
                     app:ibv_fixedBadgeRadius="@dimen/_8ssp"
                     app:ibv_badgeTextStyle="bold"
@@ -167,17 +167,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/bottom_nav_padding">
+                android:orientation="vertical">
 
 
                 <ImageView
                     android:id="@+id/offerBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
                     android:src="@drawable/offer_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -196,17 +196,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/bottom_nav_padding">
+                android:orientation="vertical">
 
 
                 <ImageView
                     android:id="@+id/myAccountBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_6sdp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
                     android:src="@drawable/myaccount_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -219,16 +219,6 @@
                     android:textSize="@dimen/bottom_nav_text" />
 
             </LinearLayout>
-
-
-<!--            <ru.nikartm.support.ImageBadgeView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:src="@drawable/cart_icon_before" />-->
-
-
-
 
 
         </LinearLayout>
