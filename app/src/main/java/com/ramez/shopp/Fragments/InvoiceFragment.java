@@ -179,7 +179,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         binding.saveBut.setOnClickListener(view1 -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_cart));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,2));
+
         });
 
         binding.sendOrder.setOnClickListener(view1 -> {

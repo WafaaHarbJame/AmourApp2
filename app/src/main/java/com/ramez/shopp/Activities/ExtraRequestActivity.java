@@ -339,7 +339,7 @@ public class ExtraRequestActivity extends ActivityBase {
     }
 
     private void navigateToCartScreen() {
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_cart));
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,2));
         Intent intent = new Intent(getActiviy(), MainActivity.class);
         intent.putExtra(Constants.CART, true);
         startActivity(intent);

@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar_with_back" />
+        layout="@layout/tool_bar" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"

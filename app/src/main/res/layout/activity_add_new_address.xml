@@ -2,17 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar_with_back" />
-
+        layout="@layout/tool_bar" />
 
     <include android:id="@+id/loadingProgressLY"
         layout="@layout/layout_pre_loading" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/_600sdp"-->
+<!--            android:background="@color/white">-->
+
+
+<!--        <fragment-->
+<!--            android:id="@+id/map"-->
+<!--            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--            class="com.google.android.gms.maps.SupportMapFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/_500sdp" />-->
+
+<!--        </FrameLayout>-->
+
+
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
@@ -46,31 +75,46 @@
                     android:drawableStart="@drawable/location_icons"
                     android:text="@string/add_new_address"
                     android:textColor="@color/colorPrimary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/addressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/address_in_map"
+                        android:padding="@dimen/_16sdp"
+                        android:textAlignment="viewStart"
+                        android:background="@drawable/round_corner_grey_border_small"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+
+
+                </LinearLayout>
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/longTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/lng_line"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
+                    android:padding="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorLoginText"
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/latTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/lat_line"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
@@ -81,34 +125,14 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/addressTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/address_in_map"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorLoginText"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
+
                 <com.ramez.shopp.SpichalViews.SEditText
                     android:id="@+id/nameEt"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/name"
                     android:inputType="text"
                     android:paddingStart="@dimen/_8sdp"
@@ -120,10 +144,6 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/stateSpinner1"
@@ -136,15 +156,11 @@
                     android:layout_height="wrap_content" />
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
                 <com.ramez.shopp.SpichalViews.SEditText
                     android:id="@+id/blockEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/block"
                     android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
@@ -155,15 +171,12 @@
                     android:textColor="@color/colorLoginText"
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
                 <com.ramez.shopp.SpichalViews.SEditText
                     android:id="@+id/streetEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/street_num"
                     android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
@@ -175,15 +188,12 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
                 <com.ramez.shopp.SpichalViews.SEditText
                     android:id="@+id/buildingEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/building"
                     android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
@@ -195,16 +205,13 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
 
                 <com.ramez.shopp.SpichalViews.SEditText
                     android:id="@+id/flatEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/flat"
                     android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
@@ -216,10 +223,7 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_view" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
@@ -263,7 +267,7 @@
                     android:id="@+id/locationBut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:background="@drawable/round_corner_grey_border_small"
                     android:hint="@string/choose_address_gps"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"

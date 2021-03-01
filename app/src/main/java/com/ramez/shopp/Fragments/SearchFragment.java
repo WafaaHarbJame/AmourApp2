@@ -1,26 +1,44 @@
-package com.ramez.shopp.Activities;
+package com.ramez.shopp.Fragments;
 
-
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.ramez.shopp.Activities.FullScannerActivity;
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.AutoCompeteResult;
@@ -30,7 +48,14 @@ import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.ActivitySearchBinding;
+import com.ramez.shopp.Utils.ActivityHandler;
+import com.ramez.shopp.databinding.FragmentCategoryProductsBinding;
+import com.ramez.shopp.databinding.SearchFagmentBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,12 +64,12 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchActivity extends ActivityBase implements SearchProductAdapter.OnItemClick {
+public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick {
 
-    ActivitySearchBinding binding;
+    private static final int ZBAR_CAMERA_PERMISSION = 1;
+    SearchFagmentBinding binding;
     ArrayList<ProductModel> productList;
     ArrayList<ProductModel> offerList;
-
     GridLayoutManager gridLayoutManager;
     boolean searchByCode = false;
     int numColumn = 2;
@@ -61,31 +86,21 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     private Handler handler;
     private boolean toggleButton = false;
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivitySearchBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = SearchFagmentBinding.inflate(inflater, container, false);
+        View view=binding.getRoot();
 
         productList = new ArrayList<>();
         offerList = new ArrayList<>();
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
-        setTitle("");
 
 
         binding.searchEt.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(binding.searchEt, InputMethodManager.SHOW_IMPLICIT);
 
         binding.searchEt.setFocusable(true);
@@ -93,7 +108,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         binding.searchEt.setThreshold(1);
 
 
-        gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
+        gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
 
         binding.recycler.setHasFixedSize(true);
@@ -114,10 +129,16 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         getIntentExtra();
 
 
-
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
             String text = binding.searchEt.getText().toString();
             searchTxt(country_id, city_id, user_id, text, 0, 10);
+
+        });
+
+
+        binding.barcodeBut.setOnClickListener(view1 -> {
+            hideSoftKeyboard(getActivity());
+            checkCameraPermission();
 
         });
 
@@ -128,7 +149,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
                 String text = v.getText().toString();
                 searchTxt(country_id, city_id, user_id, text, 0, 10);
-                hideKeyboard(getActiviy());
+                ActivityHandler.hideKeyboard(getActivity());
 
                 return true;
 
@@ -162,53 +183,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         });
 
 
-        binding.view2But.setOnClickListener(view1 -> {
-
-            toggleButton = !toggleButton;
-
-            if (toggleButton) {
-                numColumn = 1;
-                gridLayoutManager.setSpanCount(numColumn);
-                gridLayoutManager.requestLayout();
-                initAdapter();
-//                final int spanSize =gridLayoutManager.getSpanCount();
-//                if (spanSize > numColumn) {
-//                    throw new IllegalArgumentException("Item at position "  + " requires " +
-//                            spanSize + " spans but GridLayoutManager has only " + numColumn
-//                            + " spans.");
-//                }
-                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view1));
-
-            } else {
-                numColumn = 2;
-                gridLayoutManager.setSpanCount(numColumn);
-                gridLayoutManager.requestLayout();
-                initAdapter();
-
-//                final int spanSize =gridLayoutManager.getSpanCount();
-//                if (spanSize > numColumn) {
-//                    throw new IllegalArgumentException("Item at position "  + " requires " +
-//                            spanSize + " spans but GridLayoutManager has only " + numColumn
-//                            + " spans.");
-//                }
-
-                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view2));
-
-            }
-            adapter.notifyDataSetChanged();
-
-
-        });
-
-
-        binding.priceBut.setOnClickListener(view1 -> {
-
-            // Collections.sort(productList);
-            Collections.sort(productList, Collections.reverseOrder());
-
-        });
-
-
         binding.searchEt.setOnItemClickListener((adapterView, view12, position, l) -> {
             String text = autoCompleteList.get(position).toString();
             searchTxt(country_id, city_id, user_id, text, 0, 10);
@@ -220,40 +194,46 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
             binding.searchEt.setText("");
 
         });
+        return view;
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        binding.searchEt.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(binding.searchEt, InputMethodManager.SHOW_IMPLICIT);
 
     }
 
     public void initAdapter() {
 
-        adapter = new SearchProductAdapter(getActiviy(), productList, country_id, city_id, user_id, binding.recycler, binding.searchEt.getText().toString(), this, numColumn);
+        adapter = new SearchProductAdapter(getActivityy(), productList, country_id, city_id, user_id, binding.recycler, binding.searchEt.getText().toString(), this, numColumn);
         binding.recycler.setAdapter(adapter);
-
-        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-        binding.offerCountTv.setText(String.valueOf(offerList.size()));
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         isVisible = true;
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         isVisible = false;
         super.onPause();
     }
 
     @Override
-    protected void onStop() {
-        if (searchCall != null && searchCall.isExecuted()) searchCall.isExecuted();
+    public void onStop() {
         super.onStop();
+        EventBus.getDefault().unregister(this);
+        if (searchCall != null && searchCall.isExecuted()) searchCall.isExecuted();
     }
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-        Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+        Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
         intent.putExtra(Constants.DB_productModel, productModel);
         startActivity(intent);
 
@@ -270,7 +250,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActiviy().getString(R.string.fail_to_get_data);
+            String message = getActivityy().getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
@@ -342,7 +322,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActiviy().getString(R.string.fail_to_get_data);
+            String message = getActivityy().getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
@@ -381,9 +361,8 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
                         Log.i(TAG, "Log productList Search " + productList.size());
-                        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-                        getOffersProducts(productList);
-                        //initAdapter();
+//                        getOffersProducts(productList);
+                        initAdapter();
 
 
                     } else {
@@ -410,16 +389,16 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     }
 
     private void showLoginDialog() {
-        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
     }
 
     private void getIntentExtra() {
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundle = getArguments();
 
         if (bundle != null) {
-            result = getIntent().getStringExtra(Constants.CODE);
-            searchByCode = getIntent().getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+            result = bundle.getString(Constants.CODE);
+            searchByCode = bundle.getBoolean(Constants.SEARCH_BY_CODE_byCode, false);
             searchBarcode(country_id, city_id, user_id, result, 0, 10);
 
 
@@ -454,13 +433,12 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
     }
 
-
     private void getAutoNames() {
         autoCompleteList.clear();
         for (int i = 0; i < data.size(); i++) {
             autoCompleteList.add(data.get(i).getDataName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActiviy(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         binding.searchEt.setAdapter(adapter);
 
         if (isVisible) binding.searchEt.showDropDown();
@@ -482,13 +460,76 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
             size = offerList.size();
         }
 
-        binding.offerCountTv.setText(String.valueOf(offerList.size()));
-
         initAdapter();
 
         return size;
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
 
+        if (event.type.equals(MessageEvent.TYPE_view)) {
+            numColumn = (int) event.data;
+            initAdapter();
+            gridLayoutManager.setSpanCount(numColumn);
+            adapter.notifyDataSetChanged();
+
+
+        }
+
+        if (event.type.equals(MessageEvent.TYPE_SORT)) {
+
+            Collections.sort(productList, Collections.reverseOrder());
+
+        }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    private void checkCameraPermission() {
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                startScan();
+
+
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+
+            }
+        }).withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError error) {
+                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+
+            }
+        }).onSameThread().check();
+    }
+
+    private void startScan() {
+
+        if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+        } else {
+            Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
+            startActivity(intent);
+        }
+
+    }
 }

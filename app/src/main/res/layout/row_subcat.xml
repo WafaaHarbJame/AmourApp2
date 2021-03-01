@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
 
-    <com.ramez.shopp.SpichalViews.SButton
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginStart="@dimen/_8sdp"
+    android:layout_marginEnd="@dimen/_8sdp"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:orientation="vertical">
+
+    <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/btnCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/_30sdp"
-        android:layout_margin="8dp"
-        android:background="@drawable/shape_selected_category"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:paddingStart="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_2sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:textAllCaps="true"
         android:gravity="center"
-        android:lines="1"
-        android:maxHeight="@dimen/_35sdp"
-        android:padding="@dimen/_4sdp"
-        android:text="@string/app_name"
-        android:textSize="@dimen/_10ssp"
-        android:textColor="@color/white" />
+        android:text="@string/app_name" />
 
-
-
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/white"
+        android:visibility="visible" />
 </LinearLayout>
-

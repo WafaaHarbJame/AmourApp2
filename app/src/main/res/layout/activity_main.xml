@@ -68,8 +68,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/home_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -98,8 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/category_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -112,54 +112,83 @@
                     android:textSize="@dimen/bottom_nav_text" />
 
             </LinearLayout>
+
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/BadgeTxt"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                android:text="100"
-                android:visibility="gone"
-                android:gravity="center"
                 android:layout_gravity="top"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:background="@drawable/counter_back_style"
+                android:gravity="center"
+                android:text="100"
                 android:textColor="@color/white"
-                android:textSize="@dimen/bottom_nav_text" />
+                android:textSize="@dimen/bottom_nav_text"
+                android:visibility="gone" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/cartButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
 
-                <ru.nikartm.support.ImageBadgeView
+                <ImageView
                     android:id="@+id/cartBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
-                    app:ibv_badgeValue="0"
-                    app:ibv_badgeTextSize="@dimen/_8ssp"
-                    app:ibv_fixedBadgeRadius="@dimen/_8ssp"
-                    app:ibv_badgeTextStyle="bold"
-                    app:ibv_badgeTextColor="#ffffff"
-                    app:ibv_badgeColor="@color/colorPrimaryDark"
-                    app:ibv_badgeLimitValue="false"
+                    android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/cart_icon_before" />
+
+                <!--                <ru.nikartm.support.ImageBadgeView-->
+                <!--                    android:id="@+id/cartBut"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_gravity="center"-->
+                <!--                    android:paddingStart="@dimen/_6sdp"-->
+                <!--                    android:paddingTop="@dimen/_4sdp"-->
+                <!--                    android:paddingEnd="@dimen/_6sdp"-->
+                <!--                    android:src="@drawable/cart_icon_before"-->
+                <!--                    app:ibv_badgeColor="@color/colorPrimaryDark"-->
+                <!--                    app:ibv_badgeLimitValue="false"-->
+                <!--                    app:ibv_badgeTextColor="#ffffff"-->
+                <!--                    app:ibv_badgeTextSize="@dimen/_8ssp"-->
+                <!--                    app:ibv_badgeTextStyle="bold"-->
+                <!--                    app:ibv_badgeValue="0"-->
+                <!--                    app:ibv_fixedBadgeRadius="@dimen/_8ssp" />-->
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/tab3Txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/cartBut"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/cart"
-                    android:textAlignment="viewStart"
                     android:textColor="@color/font_gray"
                     android:textSize="@dimen/bottom_nav_text" />
 
-            </LinearLayout>
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/cartCountTv"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/circle_corner_primary"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:minWidth="@dimen/_12sdp"
+                    android:minHeight="@dimen/_12sdp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_7ssp" />
+
+
+            </RelativeLayout>
 
 
             <LinearLayout
@@ -176,8 +205,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/offer_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -205,8 +234,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/myaccount_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView

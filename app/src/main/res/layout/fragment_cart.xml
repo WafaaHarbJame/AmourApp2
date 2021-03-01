@@ -8,7 +8,6 @@
     android:orientation="vertical">
 
 
-
     <include
         android:id="@+id/loadingProgressLY"
         layout="@layout/layout_pre_loading" />
@@ -27,21 +26,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
-            android:id="@+id/tvFreeDelivery"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:paddingStart="@dimen/_8sdp"
-            android:lines="1"
-            android:visibility="visible"
-            android:paddingEnd="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_8sdp"
             android:paddingTop="@dimen/_8sdp"
-            android:textSize="@dimen/_10ssp"
-            android:textAlignment="viewStart"
-            android:text="555555" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/free_delivery" />
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/tvFreeDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="@string/Get_FREE_Delivery"
+                android:textColor="@color/green1"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -55,57 +66,54 @@
             tools:listitem="@layout/row_cart_item" />
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/contBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_4sdp"
+            android:layout_marginStart="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_50sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/round_corner_next"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/payTv"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                android:id="@+id/contBut"
-                android:background="@drawable/round_corner_next"
-                android:orientation="horizontal"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_6sdp"
-                android:paddingTop="@dimen/_6sdp">
-
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:gravity="center"
-                    android:id="@+id/payTv"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:text="@string/textContinuePurchaseBtn"
-                    android:layout_centerInParent="true"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/white" />
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:gravity="center"
+                android:text="@string/textContinuePurchaseBtn"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp" />
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/totalTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_alignParentEnd="true"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_4sdp"
-                    android:lines="1"
-                    android:gravity="center"
-                    android:layout_toEndOf="@+id/payTv"
-                    android:background="@drawable/round_corner_total"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/_12ssp" />
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/totalTv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:background="@drawable/round_corner_total"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text=""
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12ssp" />
 
-            </RelativeLayout>
-
-
-
+        </LinearLayout>
 
 
     </LinearLayout>

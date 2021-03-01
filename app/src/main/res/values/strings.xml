@@ -125,7 +125,7 @@
     <string name="reorder_product">Re Order Product</string>
     <string name="price">price</string>
     <string name="pieces">Pieces</string>
-    <string name="textContinuePurchaseBtn">Pay Now</string>
+    <string name="textContinuePurchaseBtn">CheckOut</string>
     <string name="text_card_name">Card Holder Name</string>
     <string name="text_card_num">Card Number</string>
     <string name="text_card_date">Card Expire Date</string>
@@ -328,4 +328,6 @@
     <string name="popular">popular</string>
     <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">Use Add \' ADD All TO CART \' to add all popular ingredients</string>
     <string name="calories">CALORIES</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

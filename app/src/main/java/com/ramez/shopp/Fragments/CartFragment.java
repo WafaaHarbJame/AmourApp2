@@ -297,7 +297,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         EmptyCartDialog.Click okClick = new EmptyCartDialog.Click() {
             @Override
             public void click() {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,0));
 
             }
         };
@@ -306,7 +306,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         EmptyCartDialog.Click cancelClick = new EmptyCartDialog.Click() {
             @Override
             public void click() {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,0));
 
             }
         };

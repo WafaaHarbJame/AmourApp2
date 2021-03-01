@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4sdp"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:gravity="center"
-        android:orientation="vertical">
 
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/ivCatImage"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            app:siBorderColor="@color/white"
-            android:src="@drawable/avatar"
-            app:siBorderWidth="1dp" />
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/catImage"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:scaleType="fitXY"
+        app:riv_border_width="@dimen/_2sdp"
+        app:riv_border_color="@color/transparent"
+        android:src="@drawable/holder_image"
+        app:riv_corner_radius="@dimen/_10sdp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
-            android:id="@+id/btnCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name" />
+</LinearLayout>
 
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark"
-            android:visibility="gone" />
-    </LinearLayout>

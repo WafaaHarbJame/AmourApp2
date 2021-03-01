@@ -37,10 +37,8 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllBookleteActivity;
 import com.ramez.shopp.Activities.AllListActivity;
 import com.ramez.shopp.Activities.BrousherActivity;
-import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
-import com.ramez.shopp.Activities.SearchActivity;
 import com.ramez.shopp.Adapter.AutomateSlider;
 import com.ramez.shopp.Adapter.BannersAdapter;
 import com.ramez.shopp.Adapter.BookletAdapter;
@@ -48,7 +46,6 @@ import com.ramez.shopp.Adapter.BrandsAdapter;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.Adapter.MainSliderAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
-import com.ramez.shopp.Adapter.SliderAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
@@ -65,8 +62,6 @@ import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.SliderAnimations;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -203,9 +198,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
     private void AllListener() {
+
         binding.searchBut.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivityy(), SearchActivity.class);
-            startActivity(intent);
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            SearchFragment searchFragment = new SearchFragment();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
+
 
         });
 
@@ -236,7 +236,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         });
 
         binding.moreCategoryBut.setOnClickListener(view -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 1));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryFragment categoryFragment = new CategoryFragment();
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryFragment, "categoryFragment").commit();
@@ -497,11 +497,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
             r.play();
             result = rawResult.getText();
-            Intent intent = new Intent(getActivityy(), SearchActivity.class);
-            //  intent.putExtra(Constants.CODE, "2700093");
-            intent.putExtra(Constants.CODE, "2700093");
-            intent.putExtra(Constants.SEARCH_BY_CODE_byCode, true);
-            startActivity(intent);
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            SearchFragment searchFragment = new SearchFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.CODE, result);
+            bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, true);
+            searchFragment.setArguments(bundle);
+
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
 
 
         } catch (Exception e) {
@@ -788,12 +792,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     @Override
     public void onItemClicked(int position, CategoryModel categoryModel) {
-        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-        intent.putExtra(Constants.CAT_LIST, categoryModelList);
-        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-        intent.putExtra(Constants.position, position);
-        intent.putExtra(Constants.CAT_MODEL, categoryModel);
-        startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+        FragmentManager fragmentManager = getParentFragmentManager();
+        CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        bundle.putInt(Constants.position, position);
+        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+        categoryProductsFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
 
     }
 
@@ -808,14 +817,19 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             startActivity(intent);
 
         } else if (slider.getReffrenceType() == 2) {
-            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-            intent.putExtra(Constants.CAT_LIST, categoryModelList);
-            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            intent.putExtra(Constants.position, position);
             CategoryModel categoryModel = new CategoryModel();
             categoryModel.setId(Integer.valueOf(slider.getReffrence()));
-            intent.putExtra(Constants.CAT_MODEL, categoryModel);
-            startActivity(intent);
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            bundle.putInt(Constants.position, position);
+            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            categoryProductsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
 
         } else if (slider.getReffrenceType() == 3) {
             String url = slider.getReffrence();
@@ -835,14 +849,21 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             startActivity(intent);
 
         } else if (slider.getReffrenceType() == 2) {
-            Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-            intent.putExtra(Constants.CAT_LIST, categoryModelList);
-            intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            intent.putExtra(Constants.position, position);
+
             CategoryModel categoryModel = new CategoryModel();
             categoryModel.setId(Integer.valueOf(slider.getReffrence()));
-            intent.putExtra(Constants.CAT_MODEL, categoryModel);
-            startActivity(intent);
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            bundle.putInt(Constants.position, position);
+            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            categoryProductsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
 
         } else if (slider.getReffrenceType() == 3) {
             String url = slider.getReffrence();

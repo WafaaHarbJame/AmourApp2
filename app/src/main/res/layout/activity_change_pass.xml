@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar_with_back" />
+        layout="@layout/tool_bar" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

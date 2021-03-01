@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar_with_back" />
+        layout="@layout/tool_bar" />
     <include
         android:id="@+id/loadingProgressLY"
         layout="@layout/layout_pre_loading" />

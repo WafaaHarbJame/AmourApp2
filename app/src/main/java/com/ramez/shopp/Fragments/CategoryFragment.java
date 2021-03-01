@@ -16,28 +16,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
-import com.ramez.shopp.Activities.SearchActivity;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCategoryBinding;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -80,8 +80,11 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
 
         binding.searchBut.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivityy(), SearchActivity.class);
-            startActivity(intent);
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            SearchFragment searchFragment = new SearchFragment();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
 
         });
 
@@ -112,12 +115,17 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     @Override
     public void onItemClicked(int position, CategoryModel categoryModel) {
-        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
-        intent.putExtra(Constants.CAT_LIST, categoryModelList);
-        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-        intent.putExtra(Constants.position, position);
-        intent.putExtra(Constants.CAT_MODEL, categoryModel);
-        startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+        FragmentManager fragmentManager = getParentFragmentManager();
+        CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        bundle.putInt(Constants.position, position);
+        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+        categoryProductsFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
 
 
     }

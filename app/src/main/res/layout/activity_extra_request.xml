@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar_with_back" />
+        layout="@layout/tool_bar" />
     <include
         android:id="@+id/failGetDataLY"
         layout="@layout/layout_fail_get_data" />

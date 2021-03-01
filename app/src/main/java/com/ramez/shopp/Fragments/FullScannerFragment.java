@@ -1,6 +1,5 @@
 package com.ramez.shopp.Fragments;
 
-import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -14,8 +13,11 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.ramez.shopp.Activities.SearchActivity;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,12 +98,16 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
 
         }
 
-        Intent intent = new Intent(getActivity(), SearchActivity.class);
-        intent.putExtra(Constants.CODE, rawResult.getContents());
-//        intent.putExtra(Constants.CODE, "6221155068897");
-        intent.putExtra(Constants.SEARCH_BY_CODE_byCode, true);
-        startActivity(intent);
-        getActivity().finish();
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+        FragmentManager fragmentManager = getParentFragmentManager();
+        SearchFragment searchFragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.CODE, rawResult.getContents());
+        bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, true);
+        searchFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+
+
         Log.i("tag", "Log " + "Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
 
 

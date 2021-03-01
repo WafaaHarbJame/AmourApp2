@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="wrap_content"
     android:id="@+id/tool_bar"
     android:orientation="vertical">
     <RelativeLayout
@@ -13,15 +12,29 @@
         <ImageView
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_40sdp"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:scaleX="@integer/scaleXInv"
             android:src="@drawable/back_icon"
-            android:textSize="@dimen/_15ssp"
-            android:visibility="visible"
+            android:visibility="gone"
+            tools:targetApi="m" />
+
+        <ImageView
+            android:id="@+id/addExtra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_40sdp"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:scaleX="@integer/scaleXInv"
+            android:src="@drawable/plus_toolbar"
+            android:visibility="gone"
             tools:targetApi="m" />
 
         <ImageView
@@ -40,20 +53,48 @@
             android:textSize="@dimen/_13ssp"
             android:visibility="visible" />
 
+
         <ImageView
-            android:id="@+id/addExtra"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:id="@+id/deleteBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_40sdp"
             android:gravity="center"
-            android:maxWidth="@dimen/_160sdp"
-            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_baseline_add_circle"
+            android:src="@drawable/delete_toolbar"
             android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
+        <ImageView
+            android:id="@+id/sortBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_40sdp"
+            android:layout_toStartOf="@id/view2But"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:src="@drawable/sort_icon"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/view2But"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_40sdp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/filter_view_white"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
