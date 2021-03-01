@@ -1,13 +1,17 @@
 package com.ramez.shopp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.R;
@@ -51,24 +55,17 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     public void onBindViewHolder(final Holder holder, int position) {
         CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
-        holder.buttonCategory.setText(mainMainCategoryDM.getCatName());
-
         GlobalData.PicassoImg(mainMainCategoryDM.getImage()
         ,R.drawable.holder_image,holder.catImage);
-//        Picasso.get()
-//                .load(mainMainCategoryDM.getImage())
-//                .placeholder(R.drawable.holder_image)
-//                .error(R.drawable.holder_image)
-//                .into(holder.catImage);
-
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {
-            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.blue1));
-            holder.line.setVisibility(View.VISIBLE);
+            holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
+            holder.catImage.setBorderColor(ContextCompat.getColor(context,R.color.green));
 
         } else {
-            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.very_dark_gray));
-            holder.line.setVisibility(View.GONE);
+
+            holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
+            holder.catImage.setBorderColor(ContextCompat.getColor(context,R.color.transparent));
 
         }
 
@@ -81,15 +78,11 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     }
 
     class Holder extends RecyclerView.ViewHolder {
-        TextView buttonCategory;
-        ImageView catImage;
-        View line;
+        RoundedImageView catImage;
 
         Holder(View view) {
             super(view);
-            buttonCategory = view.findViewById(R.id.btnCategory);
-            line = view.findViewById(R.id.view_line);
-            catImage = view.findViewById(R.id.ivCatImage);
+            catImage = view.findViewById(R.id.catImage);
 
 
             view.setOnClickListener(v -> {

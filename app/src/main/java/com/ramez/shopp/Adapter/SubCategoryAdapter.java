@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -24,8 +25,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     private OnSubCategoryItemClicked onSubCategoryItemClicked;
     private int selectedPosition;
 
-    public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS,
-                              OnSubCategoryItemClicked onSubCategoryItemClicked, int selectedPosition) {
+    public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS, OnSubCategoryItemClicked onSubCategoryItemClicked, int selectedPosition) {
         this.context = context;
         this.mainCategoryDMS = mainCategoryDMS;
         this.onSubCategoryItemClicked = onSubCategoryItemClicked;
@@ -35,8 +35,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_subcat, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_subcat, parent, false);
 
         return new Holder(itemView);
     }
@@ -49,17 +48,11 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
 
         if (subCategoryDM.getId() == selectedPosition) {
-            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.white));
-            holder.buttonCategory.setBackgroundResource(R.drawable.shape_selected_category);
+            holder.view_line.setVisibility(View.VISIBLE);
 
+        } else {
+            holder.view_line.setVisibility(View.GONE);
         }
-
-
-        else {
-            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.blue1));
-            holder.buttonCategory.setBackgroundResource(R.drawable.shape_unselected_category);
-        }
-
 
 
     }
@@ -69,28 +62,28 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         return mainCategoryDMS.size();
     }
 
+    public interface OnSubCategoryItemClicked {
+        void onItemClicked(ChildCat subCategoryDM);
+    }
+
     class Holder extends RecyclerView.ViewHolder {
-        Button buttonCategory;
+        TextView buttonCategory;
+        View view_line;
 
         Holder(View itemView) {
             super(itemView);
             buttonCategory = itemView.findViewById(R.id.btnCategory);
+            view_line = itemView.findViewById(R.id.view_line);
 
             buttonCategory.setOnClickListener(v -> {
-                int position=getAdapterPosition();
+                int position = getAdapterPosition();
                 ChildCat subCategoryDM = mainCategoryDMS.get(position);
                 onSubCategoryItemClicked.onItemClicked(subCategoryDM);
                 notifyDataSetChanged();
                 selectedPosition = subCategoryDM.getId();
 
 
-
-
             });
         }
-    }
-
-    public interface OnSubCategoryItemClicked {
-        void onItemClicked( ChildCat subCategoryDM );
     }
 }

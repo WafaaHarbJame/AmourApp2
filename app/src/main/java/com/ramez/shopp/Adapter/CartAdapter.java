@@ -95,8 +95,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         if (cartDM.getSpecialPrice() > 0) {
 
             //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
-            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_line));
-            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional())+" "+currency);
             holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
 
 
@@ -248,37 +248,37 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
 
-            binding.editBut.setOnClickListener(view1 -> {
-
-                int position = getAdapterPosition();
-                CartModel cartModel = cartDMS.get(position);
-
-                AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
-                    @Override
-                    public void click() {
-                        String remark = ((EditText) addCommentDialog.findViewById(R.id.remarkET)).getText().toString();
-
-                        updateMark(view1, position, cartModel.getId(), remark);
-
-
-                    }
-                };
-
-                AddCommentDialog.Click cancelBut = new AddCommentDialog.Click() {
-                    @Override
-                    public void click() {
-                        addCommentDialog.dismiss();
-
-
-                    }
-                };
-
-                addCommentDialog = new AddCommentDialog(context, cartModel.getRemark(), R.string.add_comment, R.string.add_comment, okBut, cancelBut);
-
-                addCommentDialog.show();
-
-
-            });
+//            binding.editBut.setOnClickListener(view1 -> {
+//
+//                int position = getAdapterPosition();
+//                CartModel cartModel = cartDMS.get(position);
+//
+//                AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
+//                    @Override
+//                    public void click() {
+//                        String remark = ((EditText) addCommentDialog.findViewById(R.id.remarkET)).getText().toString();
+//
+//                        updateMark(view1, position, cartModel.getId(), remark);
+//
+//
+//                    }
+//                };
+//
+//                AddCommentDialog.Click cancelBut = new AddCommentDialog.Click() {
+//                    @Override
+//                    public void click() {
+//                        addCommentDialog.dismiss();
+//
+//
+//                    }
+//                };
+//
+//                addCommentDialog = new AddCommentDialog(context, cartModel.getRemark(), R.string.add_comment, R.string.add_comment, okBut, cancelBut);
+//
+//                addCommentDialog.show();
+//
+//
+//            });
 
             binding.markTv.setOnClickListener(view1 -> {
 
@@ -328,20 +328,20 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
-            binding.menuBut.setOnClickListener(view1 -> {
-                if (getAdapterPosition() != -1) {
-                    CartModel cartModel = cartDMS.get(getAdapterPosition());
-                    Intent intent = new Intent(context, ProductDetailsActivity.class);
-                    ProductModel productModel = new ProductModel();
-                    productModel.setId(cartModel.getProductId());
-                    productModel.setHName(cartModel.getHProductName());
-                    productModel.setName(cartModel.getHProductName());
-                    intent.putExtra(Constants.DB_productModel, productModel);
-                    context.startActivity(intent);
-                }
-
-
-            });
+//            binding.menuBut.setOnClickListener(view1 -> {
+//                if (getAdapterPosition() != -1) {
+//                    CartModel cartModel = cartDMS.get(getAdapterPosition());
+//                    Intent intent = new Intent(context, ProductDetailsActivity.class);
+//                    ProductModel productModel = new ProductModel();
+//                    productModel.setId(cartModel.getProductId());
+//                    productModel.setHName(cartModel.getHProductName());
+//                    productModel.setName(cartModel.getHProductName());
+//                    intent.putExtra(Constants.DB_productModel, productModel);
+//                    context.startActivity(intent);
+//                }
+//
+//
+//            });
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
@@ -431,19 +431,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
 
-            binding.deleteItemBut.setOnClickListener(view1 -> {
-                CartModel productModel = cartDMS.get(getAdapterPosition());
-                int count = productModel.getQuantity();
-                int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModel.getProductId();
-                int cart_id = productModel.getId();
 
-                deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
-
-            });
 
 
         }
