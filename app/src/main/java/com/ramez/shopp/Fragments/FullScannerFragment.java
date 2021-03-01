@@ -95,7 +95,7 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
 
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));

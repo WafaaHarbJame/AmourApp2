@@ -18,6 +18,24 @@
         <item name="colorControlActivated">@color/green</item>
     </style>
 
+    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <item name="boxBackgroundMode">outline</item>
+        <item name="hintTextColor">@color/colorPrimaryDark</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/round_corner_thin</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/round_corner_thin</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/round_corner_thin</item>
+        <item name="boxCornerRadiusTopStart">@dimen/round_corner_thin</item>
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextAppearance">@style/hintTextColor</item>
+
+    </style>
+    <style name="hintTextColor" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/_11ssp</item>
+    </style>
+
     <style name="RatingBarStyle2" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/gray13</item>
         <item name="colorControlActivated">@color/quantum_yellowA700</item>

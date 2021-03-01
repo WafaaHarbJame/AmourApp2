@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -70,10 +71,11 @@ import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick, MainSliderAdapter.OnSliderClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick, MainSliderAdapter.OnSliderClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -92,6 +94,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     ArrayList<BrandModel> brandsList;
     GridLayoutManager bookletManger;
     GridLayoutManager brandManger;
+    private int SEARCH_CODE = 2000;
     private FragmentHomeBinding binding;
     private ProductAdapter productBestAdapter;
     private ProductAdapter productSellerAdapter;
@@ -461,13 +464,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 token.continuePermissionRequest();
 
             }
-        }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
-
-            }
-        }).onSameThread().check();
+        }).withErrorListener(error -> Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
     }
 
     private void startScan() {
@@ -476,11 +473,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
         } else {
             Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, SEARCH_CODE);
+
         }
 
     }
-
 
     @Override
     public void onDestroy() {
@@ -489,56 +486,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-
-    @Override
-    public void handleResult(Result rawResult) {
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
-            r.play();
-            result = rawResult.getText();
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
-            FragmentManager fragmentManager = getParentFragmentManager();
-            SearchFragment searchFragment = new SearchFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(Constants.CODE, result);
-            bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, true);
-            searchFragment.setArguments(bundle);
-
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
-
-
-        } catch (Exception e) {
-        }
-
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera(mCameraId);
-        mScannerView.setFlash(mFlash);
-        mScannerView.setAutoFocus(mAutoFocus);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(FLASH_STATE, mFlash);
-        outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
-        outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
-        outState.putInt(CAMERA_ID, mCameraId);
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();
-
-    }
 
 
     public void getCategories(int storeId) {
@@ -872,4 +819,32 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         }
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SEARCH_CODE) {
+
+                if (data != null) {
+                    boolean SEARCH_BY_CODE_byCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+                    String CODE = data.getStringExtra(Constants.CODE);
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.CODE, CODE);
+                    bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
+                    searchFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+
+                }
+
+
+            }
+
+        }
+    }
+
+
 }

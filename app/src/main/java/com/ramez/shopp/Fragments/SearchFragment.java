@@ -478,9 +478,18 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
         }
 
-        if (event.type.equals(MessageEvent.TYPE_SORT)) {
+        else if (event.type.equals(MessageEvent.TYPE_SORT)) {
 
             Collections.sort(productList, Collections.reverseOrder());
+
+        }
+
+       else if (event.type.equals(MessageEvent.TYPE_search)) {
+            searchByCode = true;
+            result= (String) event.data;
+            searchBarcode(country_id, city_id, user_id, result, 0, 10);
+
+
 
         }
 

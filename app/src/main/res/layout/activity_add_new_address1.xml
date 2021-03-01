@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <!--        <FrameLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/_600sdp"-->
+        <!--            android:background="@color/white">-->
+
+
+        <!--        <fragment-->
+        <!--            android:id="@+id/map"-->
+        <!--            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+        <!--            class="com.google.android.gms.maps.SupportMapFragment"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/_500sdp" />-->
+
+        <!--        </FrameLayout>-->
+
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/dataLY"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/_8sdp">
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/addNewTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:drawableStart="@drawable/location_icons"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:padding="@dimen/_12sdp"
+                    android:text="@string/add_new_address"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:orientation="horizontal">
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/addressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_grey_border_small"
+                        android:hint="@string/address_in_map"
+                        android:padding="@dimen/_16sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+
+
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordInput"
+                    style="@style/TextInputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:hint="@string/address_default">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordTxt"
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/longTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/lng_line"
+                    android:padding="@dimen/_16sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/latTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/lat_line"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/nameEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/stateSpinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableEnd="@drawable/bottom_arrow"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_4sdp"
+                    android:text="@string/enter_area" />
+
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/blockEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/block"
+                    android:inputType="number"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/streetEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/street_num"
+                    android:inputType="number"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/buildingEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/building"
+                    android:inputType="number"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/flatEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:hint="@string/flat"
+                    android:inputType="number"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/phoneTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/textlines"
+                        android:hint="@string/text_profile_phone_number"
+                        android:inputType="number"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLoginText"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/codeSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@drawable/textlines"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/bh_973" />
+
+                </LinearLayout>
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/locationBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_corner_grey_border_small"
+                    android:drawableStart="@drawable/gps_icon"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:hint="@string/choose_address_gps"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/addNewAddressBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/round_corner_next"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="@string/add_new_address"
+                    android:textColor="@android:color/white" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/editAddressBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/round_corner_next"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="@string/Edit"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/cancelBtu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:background="@drawable/round_corner_next"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="@string/cancel_label"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
