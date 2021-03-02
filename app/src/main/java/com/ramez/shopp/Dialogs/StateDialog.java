@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,9 +38,9 @@ public class StateDialog extends Dialog {
 
     List<AreasModel> areasModels;
     RecyclerView rv;
-    Button okBtn;
+    TextView okBtn;
     TextView closeBut;
-    EditText searchTxt;
+    TextView searchTxt;
     Activity activity;
     int countryId;
     private int selectedPos;
@@ -49,7 +51,6 @@ public class StateDialog extends Dialog {
     private StatesAdapter statesAdapter;
     private DataFetcherCallBack dataFetcherCallBack;
     private LinearLayout loadingProgressLY;
-    private LinearLayout dataLY;
 
     public StateDialog(Context context, int countryCode, final DataFetcherCallBack dataFetcherCallBack) {
         super(context);
@@ -59,8 +60,11 @@ public class StateDialog extends Dialog {
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.dialog_state);
+
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//        getWindow().setGravity(Gravity.BOTTOM);
+
         setCancelable(false);
         areasModels = new ArrayList<>();
         rv = findViewById(R.id.rv);
@@ -73,7 +77,6 @@ public class StateDialog extends Dialog {
         LocalModel localModel = UtilityApp.getLocalData();
         countryId = localModel.getCountryId();
         loadingProgressLY = findViewById(R.id.loadingLY);
-        dataLY = findViewById(R.id.dataLY);
 
         GetAreas(countryId);
 
@@ -144,12 +147,12 @@ public class StateDialog extends Dialog {
 
 
     public void GetAreas(int country_id) {
-//        loadingProgressLY.setVisibility(View.VISIBLE);
-//        dataLY.setVisibility(View.GONE);
+        loadingProgressLY.setVisibility(View.VISIBLE);
+        rv.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-//            dataLY.setVisibility(View.VISIBLE);
-//            loadingProgressLY.setVisibility(View.GONE);
+            rv.setVisibility(View.VISIBLE);
+            loadingProgressLY.setVisibility(View.GONE);
 
             AreasResultModel result = (AreasResultModel) obj;
 

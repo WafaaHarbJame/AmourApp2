@@ -181,6 +181,7 @@
                     android:gravity="center"
                     android:paddingStart="@dimen/_3sdp"
                     android:paddingEnd="@dimen/_3sdp"
+                    android:visibility="gone"
                     android:minWidth="@dimen/_12sdp"
                     android:minHeight="@dimen/_12sdp"
                     android:text="0"

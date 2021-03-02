@@ -121,6 +121,7 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.addExtra.setVisibility(View.VISIBLE);
                 binding.toolBar.deleteBut.setVisibility(View.VISIBLE);
 
+
             } else {
                 binding.toolBar.addExtra.setVisibility(View.GONE);
                 binding.toolBar.deleteBut.setVisibility(View.GONE);
@@ -324,16 +325,12 @@ public class MainActivity extends ActivityBase {
             });
 
 
-        }
-
-        else if (event.type.equals(MessageEvent.TYPE_SORT)) {
+        } else if (event.type.equals(MessageEvent.TYPE_SORT)) {
 
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
             binding.toolBar.view2But.setVisibility(View.VISIBLE);
             binding.toolBar.sortBut.setVisibility(View.VISIBLE);
-        }
-
-        else {
+        } else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.deleteBut.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
@@ -410,11 +407,19 @@ public class MainActivity extends ActivityBase {
 
     @SuppressLint("UnsafeExperimentalUsageError")
     public void putBadge(int cartCount) {
+
         if (cartCount == 0) {
-//            binding.toolBar.addExtra.setVisibility(View.VISIBLE);
+
             binding.toolBar.deleteBut.setVisibility(View.GONE);
+            binding.cartCountTv.setVisibility(View.GONE);
+
         }
-        binding.cartCountTv.setText(String.valueOf(cartCount));
+        else {
+            binding.cartCountTv.setVisibility(View.VISIBLE);
+            binding.cartCountTv.setText(String.valueOf(cartCount));
+
+        }
+
     }
 
 

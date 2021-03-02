@@ -70,7 +70,7 @@
     <string name="add_to_cart">Add Product To Cart</string>
     <string name="fav_products"> Favorite Products</string>
     <string name="my_order">My Orders</string>
-    <string name="address">My Address</string>
+    <string name="address"> Address</string>
     <string name="customer_service">Customer support</string>
     <string name="lang_setting">Language setting </string>
     <string name="change_city_branch">Change Branch</string>
@@ -103,7 +103,7 @@
     <string name="block_kw">block Number </string>
     <string name="street_num">Street Number</string>
     <string name="building">Building Number</string>
-    <string name="flat">Flat</string>
+    <string name="flat">Flat Number</string>
     <string name="choose_address_gps">Choose Location Using GPS</string>
     <string name="phonePermissionExplain">You have just denied phone call permission,
         You can\'t make any call until you accept the permission</string>
@@ -329,5 +329,11 @@
     <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">Use Add \' ADD All TO CART \' to add all popular ingredients</string>
     <string name="calories">CALORIES</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="choose_city">Choose Area</string>
+    <string name="Done">Done</string>
+    <string name="Address_Name">Address Name</string>
+    <string name="block_no">Block Number</string>
+    <string name="code">code</string>
+    <string name="area">Area</string>
 </resources>

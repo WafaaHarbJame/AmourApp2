@@ -1,20 +1,47 @@
 package com.ramez.shopp.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
+import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -27,16 +54,25 @@ import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.ImageHandler;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class AddNewAddressActivity extends ActivityBase {
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+import kotlin.jvm.internal.Intrinsics;
+
+public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCallback {
     public List<AreasModel> stateModelList;
     ActivityAddNewAddressBinding binding;
     Boolean isEdit = false;
@@ -44,18 +80,24 @@ public class AddNewAddressActivity extends ActivityBase {
     AddressModel addressModel;
     int state_id = 0;
     List<String> stateNames;
-    String state_name="";
+    String state_name = "";
     int selectedCityId = 0;
     String CountryCode = "+973";
+    private GoogleMap map;
     private Double longitude = 0.0;
     private Double latitude = 0.0;
-    private String google_address = "";
     private String phonePrefix = "973";
-    private int CHOOSE_LOCATION = 3000;
-    private int countryId=17;
+    private int countryId = 17;
     private LocalModel localModel;
-    private boolean isShowing=false;
-
+    private boolean isShowing = false;
+    private SupportMapFragment fragment;
+    private CameraUpdate cameraUpdate;
+    private float zoomLevel = 12.0F;
+    private LatLng latLng;
+    private double selectedLat = 26.05177032598081;
+    private double selectedLng = 50.50513866994304;
+    private AutocompleteSupportFragment autocompleteFragment;
+    private boolean isGrantPermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +106,17 @@ public class AddNewAddressActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
+        Log.i("TAG", "Log create  Location: "
+                + MapHandler.getPhysicalLocation(this, String.valueOf(selectedLat), String.valueOf(selectedLng)));
+
+
         stateModelList = new ArrayList<>();
         stateNames = new ArrayList<>();
 
-        setTitle(R.string.new_address);
+        latLng = new LatLng(selectedLat, selectedLng);
+
+          setTitle(R.string.new_address);
+
         localModel = UtilityApp.getLocalData();
 
         if (UtilityApp.getLocalData() != null) {
@@ -81,13 +130,12 @@ public class AddNewAddressActivity extends ActivityBase {
 
         }
 
+        checkLocationPermission();
+        initPlaceAutoComplete();
 
-        binding.locationBut.setOnClickListener(view1 -> {
-
-            Intent intent = new Intent(getActiviy(), MapActivity.class);
-            startActivityForResult(intent, CHOOSE_LOCATION);
-
-        });
+        FragmentManager fm = getSupportFragmentManager();
+        fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
+        fragment.getMapAsync(this);
 
 
         getIntentData();
@@ -97,18 +145,22 @@ public class AddNewAddressActivity extends ActivityBase {
             binding.blockEt.setHint(getString(R.string.block_kw));
         }
 
+        binding.myLocationBtn.setOnClickListener(view1 -> {
+            checkLocationPermission();
+
+        });
+
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
-            if (isValidForm() && selectedCityId > 0&&isShowing) {
+            if (isValidForm() && selectedCityId > 0 && isShowing) {
                 CreateNewAddress();
             } else {
-                if(Objects.requireNonNull(binding.nameEt.getText()).toString().isEmpty()){
+                if (Objects.requireNonNull(binding.nameEt.getText()).toString().isEmpty()) {
                     Toast(R.string.enter_name);
                     binding.nameEt.requestFocus();
 
-                }
-                else {
-                    YoYo.with(Techniques.Shake).playOn(binding.stateSpinner1);
+                } else {
+                    YoYo.with(Techniques.Shake).playOn(binding.stateSpinner1Input);
                     Toast(R.string.select_area);
                 }
 
@@ -116,27 +168,18 @@ public class AddNewAddressActivity extends ActivityBase {
 
         });
 
-        binding.cancelBtu.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
-
 
         if (isEdit) {
             binding.addNewAddressBut.setVisibility(View.GONE);
-            binding.editAddressBut.setVisibility(View.GONE);
-            binding.cancelBtu.setVisibility(View.GONE);
-           // binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
-            binding.addNewTv.setVisibility(View.GONE);
 
         } else {
             binding.addNewAddressBut.setVisibility(View.VISIBLE);
-            binding.editAddressBut.setVisibility(View.GONE);
 
         }
 
         countryId = UtilityApp.getLocalData().getCountryId();
 
-          GetAreas(countryId);
+        GetAreas(countryId);
 
         binding.codeSpinner.setOnClickListener(view1 -> {
             CountryCodeDialog countryCodeDialog = new CountryCodeDialog(getActiviy(), countryId, (obj, func, IsSuccess) -> {
@@ -152,30 +195,23 @@ public class AddNewAddressActivity extends ActivityBase {
             countryCodeDialog.show();
         });
 
-        binding.addNewTv.setOnClickListener(view1 -> {
 
-            Intent intent = new Intent(getActiviy(), MapActivity.class);
-            startActivityForResult(intent, CHOOSE_LOCATION);
-        });
-
-
-        binding.stateSpinner1.setOnClickListener(view1 -> {
+        binding.stateSpinner1Input.setOnClickListener(view1 -> {
             StateDialog stateDialog = new StateDialog(getActiviy(), selectedCityId, (obj, func, IsSuccess) -> {
                 AreasModel areasModel = (AreasModel) obj;
                 if (areasModel != null) {
-                    binding.stateSpinner1.setText(areasModel.getStateName());
+                    binding.stateSpinnerTv.setText(areasModel.getStateName());
                     state_name = areasModel.getStateName();
                     selectedCityId = areasModel.getId();
 
-                }
-                else {
-                    binding.stateSpinner1.setText(state_name);
+                } else {
+                    binding.stateSpinnerTv.setText(state_name);
 
                 }
 
             });
             stateDialog.show();
-            isShowing=true;
+            isShowing = true;
 
 
         });
@@ -198,7 +234,7 @@ public class AddNewAddressActivity extends ActivityBase {
         addressModel.setLatitude(latitude);
         addressModel.setLongitude(longitude);
         addressModel.setUserId(userId);
-        addressModel.setGoogleAddress(binding.addressTv.getText().toString());
+        addressModel.setGoogleAddress(binding.addressTV.getText().toString());
 
         GlobalData.progressDialog(getActiviy(), R.string.add_new_address, R.string.please_wait_creat);
 
@@ -235,7 +271,6 @@ public class AddNewAddressActivity extends ActivityBase {
 
     }
 
-
     private void getIntentData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -245,7 +280,6 @@ public class AddNewAddressActivity extends ActivityBase {
 
         }
     }
-
 
     @SuppressLint("SetTextI18n")
     public void GetUserAddress(int addressId) {
@@ -271,18 +305,12 @@ public class AddNewAddressActivity extends ActivityBase {
                     binding.dataLY.setVisibility(View.VISIBLE);
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
-                        Log.i("tag","Log Block "+addressModel.getBlock());
-                        binding.addressTv.setText(addressModel.getFullAddress());
-                        // binding.areaEt.setText(addressModel.getAreaDetails());
-                        if (addressModel.getLatitude() != null && addressModel.getLongitude() != null) {
-                            binding.latTv.setText(addressModel.getLatitude().toString());
-                            binding.longTv.setText(addressModel.getLongitude().toString());
-                        }
+                        Log.i("tag", "Log Block " + addressModel.getBlock());
+                        binding.addressTV.setText(addressModel.getFullAddress());
                         binding.nameEt.setText(addressModel.getName());
                         binding.streetEt.setText(addressModel.getStreetDetails());
 //                        binding.codeTv.setText(addressModel.getCountry());
                         binding.phoneTv.setText(addressModel.getMobileNumber());
-                        binding.addressTv.setText(addressModel.getFullAddress());
                         binding.flatEt.setText(addressModel.getHouseNo());
                         binding.blockEt.setText(addressModel.getBlock());
                         binding.buildingEt.setText(addressModel.getHouseNo());
@@ -302,7 +330,6 @@ public class AddNewAddressActivity extends ActivityBase {
         }).GetAddressByIdHandle(addressId);
     }
 
-
     private final boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
@@ -311,45 +338,185 @@ public class AddNewAddressActivity extends ActivityBase {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == CHOOSE_LOCATION) {
-                if (data != null) {
-                    String lat = data.getStringExtra(Constants.KEY_LAT);
-                    String lng = data.getStringExtra(Constants.KEY_LNG);
-                    latitude = Double.valueOf(lat);
-                    longitude = Double.valueOf(lng);
-                    google_address = MapHandler.getGpsAddress(getActiviy(), latitude, longitude);
-                    binding.addressTv.setText(google_address);
-                    binding.latTv.setText(lat);
-                    binding.longTv.setText(lng);
-
-                }
-
-            }
-
-
-        }
-    }
-
-
     public void GetAreas(int country_id) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             AreasResultModel result = (AreasResultModel) obj;
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
+            if (IsSuccess) {
+                if (result.getData() != null && result.getData().size() > 0) {
 
-                        selectedCityId=result.getData().get(0).getId();
-                        state_name=result.getData().get(0).getStateName();
-                    }
+                    selectedCityId = result.getData().get(0).getId();
+                    state_name = result.getData().get(0).getStateName();
                 }
+            }
 
 
         }).GetAreasHandle(country_id);
     }
 
+    private final void checkLocationPermission() {
+        try {
+            PermissionCompat.Builder builder = new PermissionCompat.Builder((Context) this.getActiviy());
+
+            builder.addPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+            builder.addPermissionRationale((getString(R.string.app_name)));
+
+            builder.addRequestPermissionsCallBack((OnRequestPermissionsCallBack) (new OnRequestPermissionsCallBack() {
+                public void onGrant() {
+                    isGrantPermission = true;
+                    if (map != null) {
+                        getMyLocation();
+                    }
+
+                }
+
+                public void onDenied(@NotNull String permission) {
+                    Toast(R.string.some_permission_denied);
+                }
+            }));
+            builder.build().request();
+        } catch (Exception var2) {
+            var2.printStackTrace();
+        }
+
+    }
+
+    private final void getMyLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            binding.loadingLocationLY.setVisibility(View.VISIBLE);
+            SmartLocation.with((Context) this.getActiviy()).location().oneFix().start((OnLocationUpdatedListener) (new OnLocationUpdatedListener() {
+                public final void onLocationUpdated(Location location) {
+                    binding.loadingLocationLY.setVisibility(View.GONE);
+
+                    selectedLat = location.getLatitude();
+                    selectedLng = location.getLongitude();
+                    LatLng latLng = new LatLng(selectedLat, selectedLng);
+
+                    map.clear();
+                    map.addMarker((new MarkerOptions()).position(latLng).
+                            icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(),
+                                    R.drawable.location_icons))).title(getString(R.string.my_location)));
+
+                    // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
+                    binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
+
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
+                    map.animateCamera(cameraUpdate);
+
+
+                    Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
+                    Log.i("TAG", "Log My selectedLat: " + selectedLat);
+                    Log.i("TAG", "Log My selectedLng: " + selectedLng);
+
+
+                }
+
+
+            }));
+        } else {
+            showGPSDisabledAlertToUser();
+        }
+
+
+    }
+
+    private final void initPlaceAutoComplete() {
+        Places.initialize(this.getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
+        autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment.setHint(getString(R.string.searchaddress));
+
+        if (BuildConfig.DEBUG && this.autocompleteFragment == null) {
+            Log.i("Assertion failed", "failed");
+
+        } else {
+
+            autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(@NonNull Place place) {
+                    try {
+
+                        map.clear();
+                        selectedLng = place.getLatLng().longitude;
+                        selectedLat = place.getLatLng().latitude;
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(new LatLng(selectedLng, selectedLng));
+                        cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(selectedLat, selectedLng), zoomLevel);
+                        map.animateCamera(cameraUpdate);
+                        // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
+                        binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
+
+                        map.clear();
+                        map.addMarker(new MarkerOptions().position(new LatLng(selectedLat, selectedLng)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons)))
+                                .title(MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng))
+
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(@NonNull Status status) {
+                    Log.i("TAG", "An error occurred: status" + status + "");
+
+                }
+            });
+
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
+        cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
+        map.moveCamera(cameraUpdate);
+
+        map.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
+
+        map.setOnMapClickListener((GoogleMap.OnMapClickListener) (it -> {
+
+            if (map != null) {
+                map.clear();
+
+
+                map.addMarker(new MarkerOptions().position(new LatLng(it.latitude, it.longitude)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
+                //   binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
+                Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
+                Log.i("TAG", "Log My selectedLat: " + selectedLat);
+                Log.i("TAG", "Log My selectedLng: " + selectedLng);
+
+                selectedLat = it.latitude;
+                selectedLng = it.longitude;
+                binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat) , String.valueOf(selectedLng)));
+
+
+            }
+
+        }));
+
+
+    }
+
+    private void showGPSDisabledAlertToUser() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder((Context) this.getActiviy());
+        alertDialogBuilder.setMessage(getString(R.string.open_gps)).setCancelable(false).setPositiveButton(getString(R.string.enable), (DialogInterface.OnClickListener) ((dialog, id) -> {
+            dialog.cancel();
+            Intent callGPSSettingIntent = new Intent("android.settings.LOCATION_SOURCE_SETTINGS");
+            startActivity(callGPSSettingIntent);
+            dialog.cancel();
+        }));
+
+        alertDialogBuilder.setNegativeButton((CharSequence) this.getString(R.string.cancel_tex), (DialogInterface.OnClickListener) null);
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
 
 }
+
+

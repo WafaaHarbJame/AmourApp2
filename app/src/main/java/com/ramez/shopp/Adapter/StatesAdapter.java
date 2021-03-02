@@ -44,10 +44,10 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.ViewHolder
 
 
         if (selectedCity ==cityModel.getId()) {
-            holder.binding.selectTxt.setText(activity.getString(R.string.fa_circle));
-            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity,R.color.colorPrimaryDark));
+            holder.binding.selectTxt.setText(activity.getString(R.string.fa_check));
+            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity,R.color.green));
         } else {
-            holder.binding.selectTxt.setText(activity.getString(R.string.fa_circle_o));
+            holder.binding.selectTxt.setText("");
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
         }
 

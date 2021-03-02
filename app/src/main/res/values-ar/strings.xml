@@ -99,11 +99,10 @@
     <string name="lat_line">خط الطول</string>
     <string name="address_in_map">العنوان في الخريطة</string>
     <string name="lng_line">خط العرض</string>
-    <string name="block">مجمع</string>
-    <string name="block_kw">قطعة  </string>
+    <string name="block">رقم المجمع</string>
+    <string name="block_kw">رقم القطعة  </string>
     <string name="street_num">رقم الشارع</string>
-    <string name="building">البناية</string>
-    <string name="flat">الشقة</string>
+    <string name="building">رقم البناية</string>
     <string name="choose_address_gps"> تحديد العنوان عن طريق GPS   </string>
     <string name="phonePermissionExplain">لقد رفضت للتو الحصول على إذن مكالمة هاتفية ، لا يمكنك إجراء أي اتصال حتى تقبل الإذن</string>
     <string name="ok">حسناً</string>
@@ -305,5 +304,12 @@
     <string name="popular">شائع</string>
     <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">اضغط على " اضف الكل للسلة " لاضافة كل المكونات الشائعة </string>
     <string name="calories">سعرات حراريه</string>
+    <string name="choose_city">اختر المنطقة </string>
+    <string name="Done">تم</string>
+    <string name="Address_Name">اسم العنوان </string>
+    <string name="block_no">رقم المجمع </string>
+    <string name="code">كود الدولة</string>
+    <string name="area">المنطقة</string>
+    <string name="flat">رقم الشقة</string>
 
 </resources>

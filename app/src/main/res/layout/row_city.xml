@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,14 +11,9 @@
         android:gravity="start"
         android:orientation="horizontal"
         android:padding="@dimen/_10ssp">
-        <com.ramez.shopp.SpichalViews.STextViewIcon2
-            android:id="@+id/selectTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:text="@string/fal_info_circle" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/nameTxt"
             android:layout_width="0dp"
             android:layout_height="@dimen/_18sdp"
@@ -25,8 +21,15 @@
             android:layout_weight="1"
             android:text="@string/text_language_arabic"
             android:textAlignment="viewStart"
-            android:textColor="@color/gray4"
+            android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
+        <com.ramez.shopp.SpichalViews.STextViewIcon2
+            android:id="@+id/selectTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_16ssp"
+            android:text="@string/fa_check" />
 
 
     </LinearLayout>

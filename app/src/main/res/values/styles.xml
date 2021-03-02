@@ -31,6 +31,24 @@
         <item name="hintTextAppearance">@style/hintTextColor</item>
 
     </style>
+
+    <style name="WhiteFillTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+
+<!--        <item name="android:background">@drawable/round_corner_gray_border_fill</item>-->
+        <item name="boxBackgroundMode">filled</item>
+        <item name="hintTextColor">@color/colorTextHint</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/round_corner_big</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/round_corner_big</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/round_corner_big</item>
+        <item name="boxCornerRadiusTopStart">@dimen/round_corner_big</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxStrokeColor">@color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="hintTextAppearance">@style/hintTextColor</item>
+
+    </style>
+
+
     <style name="hintTextColor" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/_11ssp</item>
@@ -50,6 +68,22 @@
         <item name="android:paddingBottom">@dimen/_15sdp</item>
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
+
+    <style name="editTextStyle1">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingTop">@dimen/_20sdp</item>
+        <item name="android:paddingBottom">@dimen/_6sdp</item>
+        <item name="android:paddingEnd">@dimen/_10sdp</item>
+        <item name="android:paddingStart">@dimen/_10sdp</item>
+        <item name="android:minHeight">@dimen/_55sdp</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textColorHint">@color/gray6</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">viewStart</item>
+
+
+    </style>
+
 
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
