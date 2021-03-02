@@ -281,7 +281,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         }
     }
 
-    @SuppressLint("SetTextI18n")
     public void GetUserAddress(int addressId) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -330,13 +329,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         }).GetAddressByIdHandle(addressId);
     }
 
-    private final boolean isValidForm() {
+    private boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
         return formValidator.addField(binding.nameEt, new NonEmptyRule(R.string.enter_name)).validate();
 
     }
-
 
     public void GetAreas(int country_id) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -354,7 +352,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         }).GetAreasHandle(country_id);
     }
 
-    private final void checkLocationPermission() {
+    private void checkLocationPermission() {
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((Context) this.getActiviy());
 
@@ -381,50 +379,47 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     }
 
-    private final void getMyLocation() {
+    private void getMyLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             binding.loadingLocationLY.setVisibility(View.VISIBLE);
-            SmartLocation.with((Context) this.getActiviy()).location().oneFix().start((OnLocationUpdatedListener) (new OnLocationUpdatedListener() {
-                public final void onLocationUpdated(Location location) {
-                    binding.loadingLocationLY.setVisibility(View.GONE);
+            SmartLocation.with((Context) this.getActiviy()).location().oneFix().start((OnLocationUpdatedListener) ((OnLocationUpdatedListener) location -> {
+                binding.loadingLocationLY.setVisibility(View.GONE);
 
-                    selectedLat = location.getLatitude();
-                    selectedLng = location.getLongitude();
-                    LatLng latLng = new LatLng(selectedLat, selectedLng);
+                selectedLat = location.getLatitude();
+                selectedLng = location.getLongitude();
+                LatLng latLng = new LatLng(selectedLat, selectedLng);
 
-                    map.clear();
-                    map.addMarker((new MarkerOptions()).position(latLng).
-                            icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(),
-                                    R.drawable.location_icons))).title(getString(R.string.my_location)));
+                map.clear();
+                map.addMarker((new MarkerOptions()).position(latLng).
+                        icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(),
+                                R.drawable.location_icons))).title(getString(R.string.my_location)));
 
-                    // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
-                    binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
+                // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
+                binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
 
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
-                    map.animateCamera(cameraUpdate);
-
-
-                    Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
-                    Log.i("TAG", "Log My selectedLat: " + selectedLat);
-                    Log.i("TAG", "Log My selectedLng: " + selectedLng);
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
+                map.animateCamera(cameraUpdate);
 
 
-                }
-
+                Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
+                Log.i("TAG", "Log My selectedLat: " + selectedLat);
+                Log.i("TAG", "Log My selectedLng: " + selectedLng);
 
             }));
         } else {
             showGPSDisabledAlertToUser();
         }
 
-
     }
 
-    private final void initPlaceAutoComplete() {
+    private void initPlaceAutoComplete() {
+
         Places.initialize(this.getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
+
         autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
         autocompleteFragment.setHint(getString(R.string.searchaddress));
 
         if (BuildConfig.DEBUG && this.autocompleteFragment == null) {
@@ -501,6 +496,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
 
     }
+
 
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder((Context) this.getActiviy());
