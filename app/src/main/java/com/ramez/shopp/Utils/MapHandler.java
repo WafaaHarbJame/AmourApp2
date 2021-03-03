@@ -36,10 +36,10 @@ public class MapHandler {
 
     public static String getGpsAddress(Context c, double latitude, double longitude) {
         try {
-            Geocoder geocoder;
+
             List<Address> addresses;
             String lang = UtilityApp.getLanguage() != null ? UtilityApp.getLanguage() : Constants.English;
-            geocoder = new Geocoder(c, new Locale(lang));
+            Geocoder geocoder = new Geocoder(c, new Locale(lang));
 
             addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
             String address;

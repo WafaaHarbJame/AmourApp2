@@ -47,8 +47,10 @@ public class Constants {
     public static final String Activity_type = "Activity_type";
     public static final String BRANDS = "BRANDS";
     public static final String BOOKLETS = "BOOKLETS";
+    public static final String DINNERS = "DINNERS";
     public static final String brand_id = "brand_id";
     public static final String DB_productModel = "DB_PRODUCT_MODEL";
+    public static final String DB_DINNER_MODEL = "DB_DINNER_MODEL";
     public static final String CAPTURE = "capture";
     public static final String PICK = "pick";
     public static final String LOGIN = "LOGIN";

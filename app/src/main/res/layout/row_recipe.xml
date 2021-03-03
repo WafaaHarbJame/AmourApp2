@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10ssp">
+
+        <com.ramez.shopp.SpichalViews.STextViewIcon2
+            android:id="@+id/selectTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_16ssp"
+            android:text="@string/fa_check" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/nameTxt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:text="1 tsp salt"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+        <com.ramez.shopp.SpichalViews.STextViewIcon2
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="@string/fa_angle_down"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_16ssp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_view" />
+</LinearLayout>

@@ -297,7 +297,8 @@
     <string name="serving_for_4_people">تكفي ل 4 اشخاص </string>
     <string name="cooking_time">وقت الطبخ </string>
     <string name="recipe">طريقة الاعداد </string>
-    <string name="ShowAll">مشاعدة الكل </string>
+    <string name="ShowAll">مشاهدة الكل </string>
+    <string name="Show_less">عرض اقل </string>
     <string name="ingredients">المكونات </string>
     <string name="add_all">اضف الكل للسلة </string>
     <string name="proceed_to_checkout">اكمال الشراء </string>
@@ -311,5 +312,7 @@
     <string name="code">كود الدولة</string>
     <string name="area">المنطقة</string>
     <string name="flat">رقم الشقة</string>
+    <string name="mots_searched">الكلمات الاكثر شيوعا </string>
+    <string name="no_dinners">لا يوجد وجبات </string>
 
 </resources>

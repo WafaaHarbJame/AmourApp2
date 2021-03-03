@@ -10,12 +10,14 @@ import android.view.View;
 
 import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.BrandsAdapter;
+import com.ramez.shopp.Adapter.KitchenAdapter;
 import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
+import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -26,10 +28,12 @@ import com.ramez.shopp.databinding.ActivityAllBookleteBinding;
 import com.ramez.shopp.databinding.ActivityAllListBinding;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 
-public class AllBookleteActivity extends ActivityBase implements BookletAdapter.OnBookletClick,BrandsAdapter.OnBrandClick {
+public class AllBookleteActivity extends ActivityBase implements BookletAdapter.OnBookletClick, BrandsAdapter.OnBrandClick, KitchenAdapter.OnKitchenClick {
     ActivityAllBookleteBinding binding;
     ArrayList<BookletsModel> list;
     GridLayoutManager gridLayoutManager;
@@ -40,6 +44,8 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     private String type = "";
     private BrandsAdapter brandsAdapter;
     ArrayList<BrandModel> brandsList;
+    private List<DinnerModel> dinnerModelList;
+    private String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +53,11 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         binding = ActivityAllBookleteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
 
 
         list = new ArrayList<>();
+        dinnerModelList = new ArrayList<>();
         brandsList = new ArrayList<>();
 
         gridLayoutManager = new GridLayoutManager(getActiviy(), 2);
@@ -62,29 +70,33 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         binding.recycler.setHasFixedSize(true);
         binding.recycler.setItemAnimator(null);
         city_id = Integer.parseInt(localModel.getCityId());
+
         setTitle("");
 
         getIntentExtra();
 
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
+
             binding.swipeDataContainer.setRefreshing(false);
 
-            if(type.equals(Constants.BOOKLETS)){
+            if (type.equals(Constants.BOOKLETS)) {
                 getBooklets(city_id);
-            }
-            else {
+            } else if (type.equals(Constants.DINNERS)) {
+                getDinners(lang);
+            } else {
+                gridLayoutManager.setSpanCount(3);
                 GetAllBrands(city_id);
 
             }
+
 
         });
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-            if(type.equals(Constants.BOOKLETS)){
+            if (type.equals(Constants.BOOKLETS)) {
                 getBooklets(city_id);
-            }
-            else {
+            } else {
                 GetAllBrands(city_id);
 
             }
@@ -92,12 +104,6 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
         });
 
-
-    }
-
-    public void initAdapter() {
-        adapter = new BookletAdapter(getActiviy(), list, list.size(), this);
-        binding.recycler.setAdapter(adapter);
 
     }
 
@@ -251,6 +257,74 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         }).GetAllBrands(city_id);
     }
 
+    public void getDinners(String lang) {
+        dinnerModelList.clear();
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ArrayList<DinnerModel>> result = (ResultAPIModel<ArrayList<DinnerModel>>) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result.message != null) {
+                    message = result.message;
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else {
+                if (IsSuccess) {
+                    if (result.data != null && result.data.size() > 0) {
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        dinnerModelList = result.data;
+                        initKitchenAdapter();
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                }
+            }
+
+        }).getDinnersList(lang);
+    }
+
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
@@ -265,8 +339,11 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
         if (bundle != null) {
             type = bundle.getString(Constants.Activity_type);
+
             if (type.equals(Constants.BOOKLETS)) {
                 getBooklets(city_id);
+            } else if (type.equals(Constants.DINNERS)) {
+                getDinners(lang);
             } else {
                 gridLayoutManager.setSpanCount(3);
                 GetAllBrands(city_id);
@@ -277,18 +354,41 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
 
+
+    @Override
+    public void onBrandClicked(int position, BrandModel brandModel) {
+        Intent intent = new Intent(getActiviy(), AllListActivity.class);
+        intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.Brands));
+        intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
+        intent.putExtra(Constants.brand_id, brandModel.getId());
+        startActivity(intent);
+
+    }
+
+    private void initKitchenAdapter() {
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this);
+        binding.recycler.setAdapter(kitchenAdapter);
+
+    }
+
+    public void initAdapter() {
+        adapter = new BookletAdapter(getActiviy(), list, list.size(), this);
+        binding.recycler.setAdapter(adapter);
+
+    }
+
     public void initBrandsAdapter() {
         brandsAdapter = new BrandsAdapter(getActiviy(), brandsList, this);
         binding.recycler.setAdapter(brandsAdapter);
 
     }
 
+
+
     @Override
-    public void onBrandClicked(int position, BrandModel brandModel) {
-        Intent intent = new Intent(getActiviy(), AllListActivity.class);
-        intent.putExtra(Constants.LIST_MODEL_NAME,getString(R.string.Brands));
-        intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
-        intent.putExtra(Constants.brand_id, brandModel.getId());
+    public void onKitchenClicked(int position, DinnerModel dinnerModel) {
+        Intent intent = new Intent(getActiviy(), RamezKitchenActivity.class);
+        intent.putExtra(Constants.DB_DINNER_MODEL, dinnerModel);
         startActivity(intent);
 
     }

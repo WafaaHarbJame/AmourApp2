@@ -35,9 +35,11 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
+import com.ramez.shopp.Adapter.MostSearchAdapter;
 import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.FLMFlowLayoutManager;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -46,11 +48,13 @@ import com.ramez.shopp.Models.AutoCompleteModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.MostSearchModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentCategoryProductsBinding;
 import com.ramez.shopp.databinding.SearchFagmentBinding;
+import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +68,7 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick {
+public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick {
 
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     SearchFagmentBinding binding;
@@ -85,16 +89,16 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private Runnable runnable;
     private Handler handler;
     private boolean toggleButton = false;
-
-
+    private ArrayList<MostSearchModel> mostSearchModels;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SearchFagmentBinding.inflate(inflater, container, false);
-        View view=binding.getRoot();
+        View view = binding.getRoot();
 
         productList = new ArrayList<>();
         offerList = new ArrayList<>();
+        mostSearchModels = new ArrayList<>();
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
 
@@ -106,6 +110,23 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.searchEt.setFocusable(true);
         binding.searchEt.requestFocusFromTouch();
         binding.searchEt.setThreshold(1);
+
+        mostSearchModels.add(new MostSearchModel("حليب  ", "milk"));
+        mostSearchModels.add(new MostSearchModel("بيض ", "egg"));
+        mostSearchModels.add(new MostSearchModel("ماء", "water"));
+        mostSearchModels.add(new MostSearchModel("ارز  ", "rice"));
+        mostSearchModels.add(new MostSearchModel("حليب  ", "yogurt"));
+        mostSearchModels.add(new MostSearchModel("طحين", "flour"));
+        mostSearchModels.add(new MostSearchModel("حليب", "milk"));
+        mostSearchModels.add(new MostSearchModel("بيض", "egg"));
+        mostSearchModels.add(new MostSearchModel("ماء", "water"));
+        mostSearchModels.add(new MostSearchModel("ارز", "rice"));
+
+
+        FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
+        flowLayoutManager.setAutoMeasureEnabled(true);
+        binding.mostTagRecycler.setLayoutManager(flowLayoutManager);
+        binding.mostTagRecycler.setAdapter(new MostSearchAdapter(getActivityy(), mostSearchModels, this));
 
 
         gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
@@ -476,19 +497,14 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             adapter.notifyDataSetChanged();
 
 
-        }
-
-        else if (event.type.equals(MessageEvent.TYPE_SORT)) {
+        } else if (event.type.equals(MessageEvent.TYPE_SORT)) {
 
             Collections.sort(productList, Collections.reverseOrder());
 
-        }
-
-       else if (event.type.equals(MessageEvent.TYPE_search)) {
+        } else if (event.type.equals(MessageEvent.TYPE_search)) {
             searchByCode = true;
-            result= (String) event.data;
+            result = (String) event.data;
             searchBarcode(country_id, city_id, user_id, result, 0, 10);
-
 
 
         }
@@ -522,13 +538,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                 token.continuePermissionRequest();
 
             }
-        }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
-
-            }
-        }).onSameThread().check();
+        }).withErrorListener(error -> Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
     }
 
     private void startScan() {
@@ -539,6 +549,13 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
             startActivity(intent);
         }
+
+    }
+
+    @Override
+    public void onTagClicked(int position, MostSearchModel mostSearchModel) {
+        searchTxt(country_id, city_id, user_id, mostSearchModel.getTagName(), 0, 10);
+
 
     }
 }

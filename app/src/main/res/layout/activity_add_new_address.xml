@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray5"
     android:orientation="vertical">
 
@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_250sdp"
             android:background="@color/white">
+
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/loadingLocationLY"
                 android:layout_width="wrap_content"
@@ -43,25 +44,26 @@
                 app:indicatorName="@string/L_2x2" />
 
 
+
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+
+            <ImageView
                 android:id="@+id/myLocationBtn"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@drawable/circle_corner_green"
                 android:gravity="center"
-                android:text="@string/fal_location"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_13ssp"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/my_location_icon"
                 android:visibility="visible" />
 
         </FrameLayout>
@@ -88,7 +90,9 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:hint="@string/address">
+                android:hint="@string/address"
+                android:imeOptions="actionNext"
+                android:nextFocusForward="@id/nameEtInput">
 
                 <com.ramez.shopp.SpichalViews.SAutoCompleteText
                     android:id="@+id/addressTV"
@@ -111,11 +115,13 @@
                     android:id="@+id/nameEtInput"
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:hint="@string/Address_Name">
+                    android:layout_weight="1"
+                    android:hint="@string/Address_Name"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/stateSpinnerTv">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/nameEt"
@@ -127,25 +133,26 @@
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
 
-
                 <com.ramez.shopp.SpichalViews.STextInputLayout
                     android:id="@+id/stateSpinner1Input"
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:hint="@string/area">
+                    android:layout_weight="1"
+                    android:hint="@string/area"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/blockEt">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/stateSpinnerTv"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
-                        android:drawableEnd="@drawable/bottom_arrow_red"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/bottom_arrow_red"
+                        android:inputType="none"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
@@ -168,14 +175,17 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:hint="@string/block_no">
+                    android:hint="@string/block_no"
+                    android:imeOptions="actionNext"
+
+                    android:nextFocusForward="@id/streetEt">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/blockEt"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
@@ -186,19 +196,22 @@
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:hint="@string/street_num"
+                    android:imeOptions="actionNext"
 
-                    android:hint="@string/street_num">
+
+                    android:nextFocusForward="@id/buildingEt">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/streetEt"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
@@ -217,18 +230,20 @@
                     android:id="@+id/buildingEtInput"
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:hint="@string/building">
+                    android:hint="@string/building"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/flatEt">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/buildingEt"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
@@ -238,19 +253,21 @@
                     android:id="@+id/flatEtInput"
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_weight="1"
-                    android:hint="@string/flat">
+                    android:hint="@string/flat"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/codeSpinnerInput">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/flatEt"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
@@ -278,11 +295,9 @@
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/codeSpinner"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
-                        android:drawableEnd="@drawable/bottom_arrow_red"
                         android:layout_height="wrap_content"
-                        android:maxLines="1" />
+                        android:drawableEnd="@drawable/bottom_arrow_red" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
 
@@ -293,21 +308,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_weight="2"
-                    android:hint="@string/text_profile_phone_number">
+                    android:hint="@string/text_profile_phone_number"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/phoneTv">
 
                     <com.ramez.shopp.SpichalViews.SAutoCompleteText
                         android:id="@+id/phoneTv"
                         style="@style/editTextStyle1"
-                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="text"
                         android:maxLines="1" />
 
                 </com.ramez.shopp.SpichalViews.STextInputLayout>
-
 
 
             </LinearLayout>

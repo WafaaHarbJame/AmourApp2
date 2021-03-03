@@ -224,7 +224,7 @@
     <string name="textEmptyOrders">No orders found</string>
     <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
     <string name="textStartShopping">Start Shopping</string>
-    <string name="searchaddress">Find the address here</string>
+    <string name="searchaddress">Search the address </string>
     <string name="send_orders"> Your request has been received ,Thank you for shopping with us.\n  We are always happy to serve you </string>
     <string name="back_to_home">Back To Home</string>
     <string name="no_cities">No Cities</string>
@@ -322,6 +322,7 @@
     <string name="cooking_time">Cooking Time</string>
     <string name="recipe">Recipe</string>
     <string name="ShowAll">Show All</string>
+    <string name="Show_less">Show Less</string>
     <string name="ingredients">Ingredients</string>
     <string name="add_all">ADD All TO CART</string>
     <string name="proceed_to_checkout">Proceed to check out</string>
@@ -336,4 +337,6 @@
     <string name="block_no">Block Number</string>
     <string name="code">code</string>
     <string name="area">Area</string>
+    <string name="mots_searched">Most Searched Tags</string>
+    <string name="no_dinners">No Recipe</string>
 </resources>

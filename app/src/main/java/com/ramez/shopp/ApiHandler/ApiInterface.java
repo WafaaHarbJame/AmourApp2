@@ -20,6 +20,7 @@ import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModelResult;
 import com.ramez.shopp.Models.DeliveryResultModel;
+import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -38,6 +39,7 @@ import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
+import com.ramez.shopp.Models.SingleDinnerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +146,15 @@ ApiInterface {
     Call<ResultAPIModel<ReviewModel>> setRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v4/Products/GetRates")
-    Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams,@Body Map<String, Object> params);
+
+    @POST("v4/Dinners/DinnersList")
+    Call<ResultAPIModel<ArrayList<DinnerModel>>> getDinnersList(@HeaderMap() Map<String, Object> headerParams, @Query("lan") String lan);
+
+    @POST("v4/Dinners/Dinner")
+    Call<ResultAPIModel<SingleDinnerModel>> getSingleDinner(@HeaderMap() Map<String, Object> headerParams, @Query("dinner_id") int dinner_id,
+                                                       @Query("lan") String lan);
+
 
 
     @GET("v4/Products/allbrands")

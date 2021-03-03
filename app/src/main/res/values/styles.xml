@@ -32,10 +32,10 @@
 
     </style>
 
-    <style name="WhiteFillTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+    <style name="WhiteFillTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-<!--        <item name="android:background">@drawable/round_corner_gray_border_fill</item>-->
-        <item name="boxBackgroundMode">filled</item>
+        <item name="android:background">@drawable/round_corner_gray_border_fill</item>
+        <item name="boxBackgroundMode">none</item>
         <item name="hintTextColor">@color/colorTextHint</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/round_corner_big</item>
         <item name="boxCornerRadiusBottomStart">@dimen/round_corner_big</item>
@@ -56,7 +56,7 @@
 
     <style name="RatingBarStyle2" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/gray13</item>
-        <item name="colorControlActivated">@color/quantum_yellowA700</item>
+        <item name="colorControlActivated">@color/yellow</item>
     </style>
 
 
@@ -71,11 +71,11 @@
 
     <style name="editTextStyle1">
         <item name="android:textColor">@color/black</item>
-        <item name="android:paddingTop">@dimen/_20sdp</item>
-        <item name="android:paddingBottom">@dimen/_6sdp</item>
+        <item name="android:paddingTop">@dimen/_2sdp</item>
+        <item name="android:paddingBottom">@dimen/_10sdp</item>
         <item name="android:paddingEnd">@dimen/_10sdp</item>
         <item name="android:paddingStart">@dimen/_10sdp</item>
-        <item name="android:minHeight">@dimen/_55sdp</item>
+<!--        <item name="android:minHeight">@dimen/_40sdp</item>-->
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColorHint">@color/gray6</item>
         <item name="android:textStyle">bold</item>

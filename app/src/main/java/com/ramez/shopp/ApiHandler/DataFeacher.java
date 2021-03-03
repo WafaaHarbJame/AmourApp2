@@ -980,6 +980,33 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+
+    public void getDinnersList(String lang) {
+
+
+        Log.i(TAG, "Log getDinnersList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log lang " + lang);
+
+
+        Call call = apiService.getDinnersList(headerMap, lang);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getSingleDinner(int dinner_id, String lan) {
+
+
+        Log.i(TAG, "Log getSingleDinner");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log lang " + lang);
+        Log.i(TAG, "Log dinner_id " + dinner_id);
+
+
+        Call call = apiService.getSingleDinner(headerMap, dinner_id,lan);
+        call.enqueue(callbackApi);
+    }
+
     public void getAppRate() {
 
         Map<String, Object> params = new HashMap<>();

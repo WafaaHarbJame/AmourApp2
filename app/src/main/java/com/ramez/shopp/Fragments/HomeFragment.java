@@ -40,11 +40,13 @@ import com.ramez.shopp.Activities.AllListActivity;
 import com.ramez.shopp.Activities.BrousherActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
+import com.ramez.shopp.Activities.RamezKitchenActivity;
 import com.ramez.shopp.Adapter.AutomateSlider;
 import com.ramez.shopp.Adapter.BannersAdapter;
 import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.BrandsAdapter;
 import com.ramez.shopp.Adapter.CategoryAdapter;
+import com.ramez.shopp.Adapter.KitchenAdapter;
 import com.ramez.shopp.Adapter.MainSliderAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -55,6 +57,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -68,6 +71,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -75,7 +79,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick, MainSliderAdapter.OnSliderClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, CategoryAdapter.OnItemClick, BookletAdapter.OnBookletClick, AutomateSlider.OnSliderClick, BrandsAdapter.OnBrandClick, BannersAdapter.OnBannersClick, MainSliderAdapter.OnSliderClick, KitchenAdapter.OnKitchenClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -115,6 +119,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private MainSliderAdapter sliderAdapter;
     private BannersAdapter bannerAdapter;
     private BrandsAdapter brandsAdapter;
+    private List<DinnerModel> list;
+    private String lang;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -124,11 +131,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bookletsList = new ArrayList<>();
         sliderList = new ArrayList<>();
         bannersList = new ArrayList<>();
+        list = new ArrayList<>();
         categoryModelList = new ArrayList<>();
         productSellerList = new ArrayList<>();
         productOffersList = new ArrayList<>();
         brandsList = new ArrayList<>();
         mScannerView = new ZXingScannerView(getActivity());
+
+        lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
+
 
         activity = getActivity();
         if (UtilityApp.isLogin()) {
@@ -151,6 +162,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         brandManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager bannersManger = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         GridLayoutManager categoryManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
+
+        LinearLayoutManager kitchenLy = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        binding.kitchenRecycler.setLayoutManager(kitchenLy);
+        binding.kitchenRecycler.setItemAnimator(null);
+        binding.kitchenRecycler.setHasFixedSize(true);
 
 
         binding.offerRecycler.setItemAnimator(null);
@@ -272,6 +288,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         });
 
+        binding.moreKitchenBut.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivityy(), AllBookleteActivity.class);
+            intent.putExtra(Constants.Activity_type, Constants.DINNERS);
+            startActivity(intent);
+
+        });
+
         binding.moreBrandBut.setOnClickListener(view -> {
             Intent intent = new Intent(getActivityy(), AllBookleteActivity.class);
             intent.putExtra(Constants.Activity_type, Constants.BRANDS);
@@ -347,6 +370,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         getBooklets(city_id);
                         GetAllBrands(city_id);
+                        getDinners(lang);
                         if (result.getSliders().size() > 0) {
 
                             for (int i = 0; i < result.getSliders().size(); i++) {
@@ -487,8 +511,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
-
     public void getCategories(int storeId) {
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -659,6 +683,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
+    private void initKitchenAdapter() {
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this);
+        binding.kitchenRecycler.setAdapter(kitchenAdapter);
+
+    }
+
     public void getBooklets(int storeId) {
         bookletsList.clear();
 
@@ -688,6 +718,36 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }).getBookletsList(storeId);
     }
+
+    public void getDinners(String lang) {
+        list.clear();
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ArrayList<DinnerModel>> result = (ResultAPIModel<ArrayList<DinnerModel>>) obj;
+
+            if (IsSuccess) {
+                if (result.data != null && result.data.size() > 0) {
+                    Log.i(TAG, "Log getDinners size " + result.data.size());
+
+                    binding.kitchenRecycler.setVisibility(View.VISIBLE);
+
+                    list = result.data;
+                    initKitchenAdapter();
+
+                } else {
+
+                    binding.noDinnersTv.setVisibility(View.VISIBLE);
+                    binding.kitchenRecycler.setVisibility(View.GONE);
+
+                }
+
+
+            }
+
+
+        }).getDinnersList(lang);
+    }
+
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
@@ -847,4 +907,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
+    @Override
+    public void onKitchenClicked(int position, DinnerModel dinnerModel) {
+        Intent intent = new Intent(getActivityy(), RamezKitchenActivity.class);
+        intent.putExtra(Constants.DB_DINNER_MODEL, dinnerModel);
+        startActivity(intent);
+
+    }
 }

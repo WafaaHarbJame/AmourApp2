@@ -49,22 +49,23 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible" />
+
             <FrameLayout
                 android:id="@+id/fabCart"
-                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:padding="@dimen/_5sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentEnd="true">
+                android:visibility="visible">
 
                 <ImageView
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     app:srcCompat="@drawable/cart_icon_bottom"
@@ -74,16 +75,16 @@
                     android:id="@+id/tVCartSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:background="@drawable/counter_back_style1"
                     android:gravity="center"
-                    android:layout_gravity="end"
                     android:minWidth="@dimen/_15sdp"
                     android:minHeight="@dimen/_15sdp"
                     android:text="0"
-                    android:visibility="visible"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/_8ssp" />
+                    android:textSize="@dimen/_8ssp"
+                    android:visibility="visible" />
 
 
             </FrameLayout>
@@ -124,9 +125,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -134,25 +133,29 @@
                     <com.duolingo.open.rtlviewpager.RtlViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_140sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
                         android:paddingLeft="@dimen/card_padding"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/card_padding"
                         android:paddingRight="@dimen/card_padding"
-                        android:paddingBottom="@dimen/_5sdp" />
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:visibility="visible" />
+
 
                     <com.rd.PageIndicatorView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         app:piv_animationType="color"
                         app:piv_radius="3dp"
-                        app:piv_selectedColor="@color/green"
+                        app:piv_selectedColor="@color/colorPrimaryDark"
                         app:piv_unselectedColor="@color/gray1"
                         app:piv_viewPager="@id/viewPager" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,14 +172,14 @@
                         android:id="@+id/productNameTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="2"
                         android:maxLines="2"
-                        android:text="food name will come here and if  its long it will be two lines maximum   "
+                        android:text="food name"
+                        android:textSize="@dimen/_14ssp"
                         android:textAlignment="viewStart"
                         android:textColor="@color/black" />
 
                     <com.ramez.shopp.SpichalViews.STextView
-                        android:id="@+id/productDescTv"
+                        android:id="@+id/small_dsc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="vegetables Recipes by ramez "
@@ -197,7 +200,8 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:text="@string/serving_for_4_people"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -209,7 +213,8 @@
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp">
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -281,18 +286,21 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/black" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <at.blogc.android.views.ExpandableTextView
+                    android:id="@+id/productDescTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/_4sdp"
+                    android:fontFamily="@font/cairo"
+                    android:maxLines="5"
                     android:paddingStart="@dimen/_8sdp"
-                    android:lineSpacingMultiplier="1.5"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long food name will come here and if  its long "
+                    android:text="test"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:animation_duration="750" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/showAllBut"
@@ -301,12 +309,13 @@
                     android:layout_gravity="start"
                     android:drawablePadding="@dimen/_4sdp"
                     android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp"
                     android:text="@string/ShowAll"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12ssp" />
+
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="match_parent"
@@ -325,24 +334,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                   >
+                    android:paddingBottom="@dimen/_8sdp">
 
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:background="@drawable/popular_shape"
-                        android:layout_height="wrap_content">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -362,10 +371,10 @@
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/use_add_add_all_to_cart_to_add_all_popular_ingredients"
                         android:textAlignment="viewStart"
-                        android:layout_marginStart="@dimen/_8sdp"
                         android:textColor="@color/black" />
 
 
@@ -374,13 +383,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:orientation="horizontal"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@color/white"
+                    android:gravity="start"
+                    android:orientation="horizontal"
                     android:padding="@dimen/_10ssp">
+
                     <com.ramez.shopp.SpichalViews.STextViewIcon2
                         android:id="@+id/selectTxt"
                         android:layout_width="wrap_content"
@@ -390,14 +400,15 @@
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/nameTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_weight="1"
                         android:text="1 tsp salt"
                         android:textAlignment="viewStart"
                         android:textColor="@color/gray4"
                         android:textSize="@dimen/_12ssp" />
+
                     <com.ramez.shopp.SpichalViews.STextViewIcon2
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_18sdp"
@@ -408,6 +419,16 @@
                         android:textSize="@dimen/_12ssp" />
 
                 </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipeRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_recipe" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/no_offers"
@@ -452,41 +473,43 @@
     <include
         android:id="@+id/noDataLY"
         layout="@layout/layout_no_data" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
+
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/cartBut"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_weight="1"
             android:background="@drawable/round_corner_green"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:textAllCaps="true"
             android:padding="@dimen/_8sdp"
             android:text="@string/add_all"
+            android:textAllCaps="true"
             android:textColor="@android:color/white" />
+
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/ProcessCheckBut"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_weight="1"
             android:background="@drawable/round_corner_green_border"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
             android:text="@string/proceed_to_checkout"
             android:textColor="@color/green" />
     </LinearLayout>
-
 
 
     <LinearLayout

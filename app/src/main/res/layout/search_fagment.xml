@@ -19,9 +19,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_gravity="center"
                 android:background="@drawable/round_white_fill"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
@@ -29,9 +29,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
-                    android:gravity="center_vertical"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp">
@@ -76,10 +76,10 @@
                 <ImageView
                     android:id="@+id/sortBut"
                     android:layout_width="@dimen/_20sdp"
-                    android:visibility="gone"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:src="@drawable/sort" />
+                    android:src="@drawable/sort"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>
@@ -98,31 +98,52 @@
         layout="@layout/layout_no_data" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/dataLY"
-        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/searchMostTagLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_8sdp">
+            android:orientation="vertical">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:gravity="center"
+                android:text="@string/mots_searched"
+                android:textColor="@color/black">
+
+            </com.ramez.shopp.SpichalViews.STextViewBold>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
+                android:id="@+id/mostTagRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:itemCount="4"
-                tools:listitem="@layout/row_products_item" />
+                android:layout_marginEnd="@dimen/_4sdp" />
+
 
         </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:itemCount="4"
+            tools:listitem="@layout/row_products_item" />
 
 
     </LinearLayout>

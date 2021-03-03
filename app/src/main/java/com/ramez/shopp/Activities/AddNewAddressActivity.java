@@ -1,22 +1,16 @@
 package com.ramez.shopp.Activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 
@@ -57,20 +51,17 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ImageHandler;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
-import kotlin.jvm.internal.Intrinsics;
 
 public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCallback {
     public List<AreasModel> stateModelList;
@@ -106,8 +97,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         View view = binding.getRoot();
         setContentView(view);
 
-        Log.i("TAG", "Log create  Location: "
-                + MapHandler.getPhysicalLocation(this, String.valueOf(selectedLat), String.valueOf(selectedLng)));
 
 
         stateModelList = new ArrayList<>();
@@ -115,7 +104,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         latLng = new LatLng(selectedLat, selectedLng);
 
-          setTitle(R.string.new_address);
+        setTitle(R.string.new_address);
 
         localModel = UtilityApp.getLocalData();
 
@@ -137,6 +126,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         fragment.getMapAsync(this);
 
+
+        binding.stateSpinnerTv.setInputType(InputType.TYPE_NULL);
+        binding.codeSpinner.setInputType(InputType.TYPE_NULL);
 
         getIntentData();
 
@@ -196,7 +188,10 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         });
 
 
-        binding.stateSpinner1Input.setOnClickListener(view1 -> {
+
+
+
+        binding.stateSpinnerTv.setOnClickListener(view1 -> {
             StateDialog stateDialog = new StateDialog(getActiviy(), selectedCityId, (obj, func, IsSuccess) -> {
                 AreasModel areasModel = (AreasModel) obj;
                 if (areasModel != null) {
@@ -215,7 +210,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
 
         });
-
     }
 
     private void CreateNewAddress() {
@@ -393,19 +387,13 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
                 map.clear();
                 map.addMarker((new MarkerOptions()).position(latLng).
-                        icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(),
-                                R.drawable.location_icons))).title(getString(R.string.my_location)));
+                        icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
 
-                // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
-                binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
+                getLocationAddress();
 
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
                 map.animateCamera(cameraUpdate);
 
-
-                Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
-                Log.i("TAG", "Log My selectedLat: " + selectedLat);
-                Log.i("TAG", "Log My selectedLng: " + selectedLng);
 
             }));
         } else {
@@ -435,18 +423,16 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     try {
 
                         map.clear();
-                        selectedLng = place.getLatLng().longitude;
                         selectedLat = place.getLatLng().latitude;
+                        selectedLng = place.getLatLng().longitude;
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(new LatLng(selectedLng, selectedLng));
                         cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(selectedLat, selectedLng), zoomLevel);
                         map.animateCamera(cameraUpdate);
-                        // binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
-                        binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat), String.valueOf(selectedLng)));
+                        getLocationAddress();
 
                         map.clear();
-                        map.addMarker(new MarkerOptions().position(new LatLng(selectedLat, selectedLng)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons)))
-                                .title(MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng))
+                        map.addMarker(new MarkerOptions().position(new LatLng(selectedLat, selectedLng)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng))
 
                         );
                     } catch (Exception e) {
@@ -480,14 +466,10 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
 
                 map.addMarker(new MarkerOptions().position(new LatLng(it.latitude, it.longitude)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
-                //   binding.addressTV.setText(MapHandler.getGpsAddress(getActiviy(), selectedLat,selectedLng));
-                Log.i("TAG", "Log My Location: " + MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng));
-                Log.i("TAG", "Log My selectedLat: " + selectedLat);
-                Log.i("TAG", "Log My selectedLng: " + selectedLng);
 
                 selectedLat = it.latitude;
                 selectedLng = it.longitude;
-                binding.addressTV.setText(MapHandler.getPhysicalLocation(getActiviy(), String.valueOf(selectedLat) , String.valueOf(selectedLng)));
+                getLocationAddress();
 
 
             }
@@ -497,6 +479,17 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     }
 
+    private void getLocationAddress() {
+
+        String address = MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng);
+        Log.i("TAG", "Log My selectedLat: " + selectedLat);
+        Log.i("TAG", "Log My selectedLng: " + selectedLng);
+        Log.i("TAG", "Log My Location: " + address);
+
+        binding.addressTV.setText(address);
+
+
+    }
 
     private void showGPSDisabledAlertToUser() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder((Context) this.getActiviy());
