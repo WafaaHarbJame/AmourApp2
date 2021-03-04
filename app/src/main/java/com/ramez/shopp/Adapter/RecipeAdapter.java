@@ -108,7 +108,28 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 Recipe recipe = list.get(getAdapterPosition());
                 selectRecipe = recipe.getId();
                 toggleButton = !toggleButton;
-                getProductRecipeList(binding, recipe, recipe.getId(), country_id, city_id, String.valueOf(userId));
+
+                if (toggleButton) {
+
+                    getProductRecipeList(binding, recipe, recipe.getId(), country_id, city_id, String.valueOf(userId));
+                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
+                    binding.rv.setVisibility(View.VISIBLE);
+                    binding.selectTxt.setText(activity.getString(R.string.fa_check));
+                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
+
+
+                } else {
+                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
+                    binding.rv.setVisibility(View.GONE);
+                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
+                    binding.selectTxt.setText("");
+
+
+                }
+
+                if (dataFetcherCallBack != null) {
+                    dataFetcherCallBack.Result(recipe, Constants.success, true);
+                }
 
 
             });
@@ -138,26 +159,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                     binding.rv.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                    if (toggleButton) {
-
-                        binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
-                        binding.rv.setVisibility(View.VISIBLE);
-                        binding.selectTxt.setText(activity.getString(R.string.fa_check));
-                        binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
 
 
-                    } else {
-                        binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
-                        binding.rv.setVisibility(View.GONE);
-                        binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
-                        binding.selectTxt.setText("");
-
-
-                    }
-
-                    if (dataFetcherCallBack != null) {
-                        dataFetcherCallBack.Result(recipe, Constants.success, true);
-                    }
+                }
+                else {
+                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
+                    binding.rv.setVisibility(View.GONE);
+                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
+                    binding.selectTxt.setText("");
 
                 }
 
