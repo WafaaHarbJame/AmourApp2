@@ -954,6 +954,23 @@ public class DataFeacher {
     }
 
 
+    public void getProductRecipeList(int recipe_id, int country_id, int city_id, String user_id, int page_number, int page_size) {
+
+        Log.i(TAG, "Log getProductRecipeList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log recipe_id " + recipe_id);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+
+        Call call = apiService.getProductRecipeLis(headerMap, recipe_id, country_id, city_id, user_id, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+
     public void getBrochuresList(int store_id, int booklet_id) {
 
         Log.i(TAG, "Log getBrochuresList");
@@ -999,11 +1016,11 @@ public class DataFeacher {
 
         Log.i(TAG, "Log getSingleDinner");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log lang " + lang);
+        Log.i(TAG, "Log lang " + lan);
         Log.i(TAG, "Log dinner_id " + dinner_id);
 
 
-        Call call = apiService.getSingleDinner(headerMap, dinner_id,lan);
+        Call call = apiService.getSingleDinner(headerMap, dinner_id, lan);
         call.enqueue(callbackApi);
     }
 

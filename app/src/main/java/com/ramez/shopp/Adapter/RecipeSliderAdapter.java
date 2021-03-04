@@ -49,10 +49,6 @@ public class RecipeSliderAdapter extends PagerAdapter {
                     ,R.drawable.holder_image,productImg);
 
             container.addView(view);
-//
-//            GlobalData.PicassoImg(sliderList.get(position)
-//                    ,R.drawable.holder_image,productImg);
-
 
             productImg.setOnClickListener(view1 -> {
                 ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context,sliderList.get(position));

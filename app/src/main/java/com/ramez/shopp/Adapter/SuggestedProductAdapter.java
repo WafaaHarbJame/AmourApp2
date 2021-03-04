@@ -18,6 +18,7 @@ import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
@@ -25,6 +26,8 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowSuggestedProductItemBinding;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -59,69 +62,71 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         ProductModel productModel = productModels.get(position);
 
         currency = UtilityApp.getLocalData().getCurrencyCode();
+            holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-        holder.binding.productNameTv.setText(productModel.getProductName().trim());
-
-        if (productModel.getFavourite() != null && productModel.getFavourite()) {
-            holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
-        } else {
-            holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
-
-        }
-
-        int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
-
-        if (quantity > 0) {
-
-            holder.binding.productCartQTY.setText(String.valueOf(quantity));
-            holder.binding.CartLy.setVisibility(View.VISIBLE);
-            holder.binding.cartBut.setVisibility(View.GONE);
-
-            if (quantity == 1) {
-                holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
-                holder.binding.minusCartBtn.setVisibility(View.GONE);
+            if (productModel.getFavourite() != null && productModel.getFavourite()) {
+                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
             } else {
-                holder.binding.minusCartBtn.setVisibility(View.VISIBLE);
-                holder.binding.deleteCartBtn.setVisibility(View.GONE);
-            }
-
-        } else {
-            holder.binding.CartLy.setVisibility(View.GONE);
-            holder.binding.cartBut.setVisibility(View.VISIBLE);
-        }
-
-        if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-
-            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                DecimalFormat df = new DecimalFormat("#");
-                String newDiscount_str = df.format(discount);
-                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-            }
-
-
-        } else {
-            if (productModel.getProductBarcodes().get(0).getPrice() != null) {
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
-                holder.binding.discountTv.setVisibility(View.INVISIBLE);
+                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
 
             }
-        }
 
-        String photoUrl = "";
+            int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
 
-        if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
-            photoUrl = productModel.getImages().get(0);
-        } else {
-            photoUrl = "http";
-        }
-        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+            if (quantity > 0) {
+
+                holder.binding.productCartQTY.setText(String.valueOf(quantity));
+                holder.binding.CartLy.setVisibility(View.VISIBLE);
+                holder.binding.cartBut.setVisibility(View.GONE);
+
+                if (quantity == 1) {
+                    holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                    holder.binding.minusCartBtn.setVisibility(View.GONE);
+                } else {
+                    holder.binding.minusCartBtn.setVisibility(View.VISIBLE);
+                    holder.binding.deleteCartBtn.setVisibility(View.GONE);
+                }
+
+            } else {
+                holder.binding.CartLy.setVisibility(View.GONE);
+                holder.binding.cartBut.setVisibility(View.VISIBLE);
+            }
+
+            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
+
+                holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+                if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
+                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                    discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
+                    DecimalFormat df = new DecimalFormat("#");
+                    String newDiscount_str = df.format(discount);
+                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+                }
+
+
+            } else {
+                if (productModel.getProductBarcodes().get(0).getPrice() != null) {
+                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                    holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
+                    holder.binding.discountTv.setVisibility(View.INVISIBLE);
+
+                }
+            }
+
+            String photoUrl = "";
+
+            if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+                photoUrl = productModel.getImages().get(0);
+            } else {
+                photoUrl = "http";
+            }
+            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 //        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+
+
 
     }
 
@@ -428,6 +433,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     System.out.println("Log suggest addToCart");
                     UtilityApp.updateCart(1, productModels.size());
 
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_READ_CART));
+
+
                 } else {
                     GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_cart));
@@ -465,6 +473,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_READ_CART));
 
 
                 } else {

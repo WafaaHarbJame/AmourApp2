@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductModel  implements Serializable, Comparable<ProductModel>{
+public class ProductModel implements Serializable, Comparable<ProductModel> {
 
     @SerializedName("brand_id")
     @Expose
@@ -26,9 +26,6 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
     @SerializedName("product_barcodes")
     @Expose
     private List<ProductBarcode> productBarcodes = null;
-    @SerializedName("product_units")
-    @Expose
-    private Object productUnits;
     @SerializedName("h_description")
     @Expose
     private Object hDescription;
@@ -99,13 +96,6 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
         this.productBarcodes = productBarcodes;
     }
 
-    public Object getProductUnits() {
-        return productUnits;
-    }
-
-    public void setProductUnits(Object productUnits) {
-        this.productUnits = productUnits;
-    }
 
     public Object getHDescription() {
         return hDescription;
@@ -155,12 +145,11 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
         this.productBrand = productBrand;
     }
 
-    public String getProductName(){
-        if(UtilityApp.getLanguage().equals(Constants.English)){
+    public String getProductName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
             return name;
 
-        }
-        else {
+        } else {
             return hName;
         }
     }

@@ -301,7 +301,7 @@
     <string name="Show_less">عرض اقل </string>
     <string name="ingredients">المكونات </string>
     <string name="add_all">اضف الكل للسلة </string>
-    <string name="proceed_to_checkout">اكمال الشراء </string>
+    <string name="proceed_to_checkout">انتقل الى السلة  </string>
     <string name="popular">شائع</string>
     <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">اضغط على " اضف الكل للسلة " لاضافة كل المكونات الشائعة </string>
     <string name="calories">سعرات حراريه</string>

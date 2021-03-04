@@ -350,8 +350,8 @@ public class MainActivity extends ActivityBase {
             boolean TO_CART = getIntent().getBooleanExtra(Constants.CART, false);
 
             if (TO_CART) {
-                initBottomNav(0);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                initBottomNav(2);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
 
             }

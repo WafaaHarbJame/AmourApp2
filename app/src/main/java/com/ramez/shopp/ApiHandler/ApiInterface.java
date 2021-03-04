@@ -7,7 +7,6 @@ import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.orderListCall;
-import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
@@ -17,7 +16,6 @@ import com.ramez.shopp.Models.BrochuresModel;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
-import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModelResult;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DinnerModel;
@@ -25,15 +23,14 @@ import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
-import com.ramez.shopp.Models.MakeOrder;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrdersResultModel;
-import com.ramez.shopp.Models.PaymentModel;
 import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
+import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
@@ -42,7 +39,6 @@ import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.Models.SingleDinnerModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -51,7 +47,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -146,17 +141,20 @@ ApiInterface {
     Call<ResultAPIModel<ReviewModel>> setRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v4/Products/GetRates")
-    Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams,@Body Map<String, Object> params);
+    Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v4/Dinners/DinnersList")
     Call<ResultAPIModel<ArrayList<DinnerModel>>> getDinnersList(@HeaderMap() Map<String, Object> headerParams, @Query("lan") String lan);
 
     @POST("v4/Dinners/Dinner")
     Call<ResultAPIModel<SingleDinnerModel>> getSingleDinner(@HeaderMap() Map<String, Object> headerParams, @Query("dinner_id") int dinner_id,
-                                                       @Query("lan") String lan);
+                                                            @Query("lan") String lan);
 
-
-
+    @GET("v4/Products/productRecipeList")
+    Call<ResultAPIModel<ArrayList<ProductModel>>> getProductRecipeLis(@HeaderMap() Map<String, Object> headerParams, @Query("recipe_id") int recipe_id,
+                                                                      @Query("country_id") int country_id, @Query("city_id")
+                                                                              int city_id, @Query("user_id") String user_id,
+                                                                      @Query("page_number") int page_number, @Query("page_size") int page_size);
     @GET("v4/Products/allbrands")
     Call<ResultAPIModel<ArrayList<BrandModel>>> GetAllBrands(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
@@ -207,7 +205,8 @@ ApiInterface {
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
     @GET("v4/Products/productList")
-    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("brand_id") int brand_id, @Query("page_number") int page_number, @Query("page_size") int page_size);
+    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams,
+                                                   @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("brand_id") int brand_id, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
     @POST("v4/Account/updateProfile")
     Call<LoginResultModel> updateProfile(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
