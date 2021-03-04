@@ -27,6 +27,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:id="@+id/searchLY"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
@@ -134,6 +135,43 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/offerLy"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:layout_gravity="center"
+                android:text="@string/offers"
+                android:textColor="@color/black" />
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/no_offers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/no_offers"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offerRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp" />
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"

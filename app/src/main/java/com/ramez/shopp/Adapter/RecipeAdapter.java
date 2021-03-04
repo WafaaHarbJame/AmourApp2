@@ -27,18 +27,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private Activity activity;
     private List<Recipe> list;
     private DataFetcherCallBack dataFetcherCallBack;
-    int selectRecipe;
+    int selectedPosition;
     ArrayList<ProductModel> productList;
     SuggestedProductAdapter adapter;
     int country_id, city_id, userId = 0;
     private boolean toggleButton = false;
 
 
-    public RecipeAdapter(Activity activity, List<Recipe> list, int selectRecipe, DataFetcherCallBack dataFetcherCallBack) {
+    public RecipeAdapter(Activity activity, List<Recipe> list, int selectedPosition, DataFetcherCallBack dataFetcherCallBack) {
         this.activity = activity;
         this.list = list;
         this.dataFetcherCallBack = dataFetcherCallBack;
-        this.selectRecipe = selectRecipe;
+        this.selectedPosition = selectedPosition;
         productList = new ArrayList<>();
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -71,15 +71,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.binding.rv.setAdapter(adapter);
 
 
-        if (selectRecipe == recipe.getId()) {
-            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
-            holder.binding.selectTxt.setText(activity.getString(R.string.fa_check));
-            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
-        } else {
-            holder.binding.selectTxt.setText("");
-            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
-            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
-        }
+//        if (selectedPosition == recipe.getId()) {
+//            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
+//            holder.binding.selectTxt.setText(activity.getString(R.string.fa_check));
+//            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
+//        } else {
+//            holder.binding.selectTxt.setText("");
+//            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
+//            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
+//        }
 
 
     }
@@ -106,7 +106,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             itemView.setOnClickListener(v -> {
 
                 Recipe recipe = list.get(getAdapterPosition());
-                selectRecipe = recipe.getId();
+                selectedPosition = recipe.getId();
                 toggleButton = !toggleButton;
 
                 if (toggleButton) {
@@ -136,7 +136,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         }
 
-
     }
 
     private void getProductRecipeList(RowRecipeBinding binding, Recipe recipe, int recipe_id,
@@ -152,17 +151,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             if (IsSuccess) {
                 productList = result.data;
                 if (result.data != null && result.data.size() > 0) {
+
                     productList = result.data;
 
                     adapter = new SuggestedProductAdapter(activity, productList, this, productList.size());
-
                     binding.rv.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
 
-
-                }
-                else {
+                } else {
                     binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
                     binding.rv.setVisibility(View.GONE);
                     binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));

@@ -24,6 +24,8 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -36,6 +38,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.MostSearchAdapter;
+import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -47,9 +50,11 @@ import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.AutoCompleteModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.MostSearchModel;
 import com.ramez.shopp.Models.ProductModel;
+import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentCategoryProductsBinding;
@@ -68,7 +73,7 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick {
+public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick, ProductAdapter.OnItemClick {
 
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     SearchFagmentBinding binding;
@@ -77,6 +82,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     GridLayoutManager gridLayoutManager;
     boolean searchByCode = false;
     int numColumn = 2;
+    ArrayList<ProductModel> productOffersList;
     boolean isVisible;
     private ArrayList<AutoCompleteModel> data = null;
     private ArrayList<String> autoCompleteList;
@@ -89,6 +95,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private Runnable runnable;
     private Handler handler;
     private boolean toggleButton = false;
+    private ProductAdapter productOfferAdapter;
     private ArrayList<MostSearchModel> mostSearchModels;
 
     @Override
@@ -101,7 +108,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         mostSearchModels = new ArrayList<>();
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
-
+        productOffersList = new ArrayList<>();
 
         binding.searchEt.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -116,12 +123,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         mostSearchModels.add(new MostSearchModel("ماء", "water"));
         mostSearchModels.add(new MostSearchModel("ارز  ", "rice"));
         mostSearchModels.add(new MostSearchModel("حليب  ", "yogurt"));
-        mostSearchModels.add(new MostSearchModel("طحين", "flour"));
-        mostSearchModels.add(new MostSearchModel("حليب", "milk"));
-        mostSearchModels.add(new MostSearchModel("بيض", "egg"));
-        mostSearchModels.add(new MostSearchModel("ماء", "water"));
-        mostSearchModels.add(new MostSearchModel("ارز", "rice"));
-
 
         FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
         flowLayoutManager.setAutoMeasureEnabled(true);
@@ -146,8 +147,14 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         localModel = UtilityApp.getLocalData();
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
+        GridLayoutManager bestOfferGridLayoutManager = new GridLayoutManager(getActivityy(), 2, RecyclerView.VERTICAL, false);
+        binding.offerRecycler.setLayoutManager(bestOfferGridLayoutManager);
+        binding.offerRecycler.setHasFixedSize(true);
+
 
         getIntentExtra();
+
+        GetHomePage();
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
@@ -165,7 +172,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
 
         binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
-
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                 String text = v.getText().toString();
@@ -205,12 +211,14 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
 
         binding.searchEt.setOnItemClickListener((adapterView, view12, position, l) -> {
+            binding.offerLy.setVisibility(View.GONE);
             String text = autoCompleteList.get(position).toString();
             searchTxt(country_id, city_id, user_id, text, 0, 10);
 
         });
 
         binding.closeBtn.setOnClickListener(view1 -> {
+            binding.offerLy.setVisibility(View.VISIBLE);
             productList.clear();
             binding.searchEt.setText("");
 
@@ -302,7 +310,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-
+                        
+                        binding.offerLy.setVisibility(View.GONE);
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
@@ -373,6 +382,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
             } else {
                 if (IsSuccess) {
+                    binding.offerLy.setVisibility(View.GONE);
+
                     Log.i(TAG, "Log productList Search " + result.getData());
 
                     if (result.getData() != null && result.getData().size() > 0) {
@@ -558,4 +569,81 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
 
     }
+
+
+    public void initOffer() {
+        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList, this, 10);
+        binding.offerRecycler.setAdapter(productOfferAdapter);
+    }
+
+    public void GetHomePage() {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+        binding.searchLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+
+            if (isVisible()) {
+
+                MainModel result = (MainModel) obj;
+                String message = getString(R.string.fail_to_get_data);
+
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+                if (func.equals(Constants.ERROR)) {
+
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
+                    }
+                    binding.dataLY.setVisibility(View.GONE);
+
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        binding.searchLY.setVisibility(View.VISIBLE);
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.searchLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        binding.offerRecycler.setVisibility(View.VISIBLE);
+
+
+                        if (result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
+                            Log.i("tag", "Log Offer List" + offerList.size());
+
+                            productOffersList = result.getOfferedProducts();
+                            initOffer();
+
+                        } else {
+                            binding.noOffers.setVisibility(View.VISIBLE);
+                            binding.offerRecycler.setVisibility(View.GONE);
+
+                        }
+
+
+                    }
+                }
+            }
+        }).GetMainPage(0, country_id, city_id, user_id);
+    }
+
 }
