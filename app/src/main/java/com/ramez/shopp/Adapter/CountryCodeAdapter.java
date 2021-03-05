@@ -42,7 +42,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CountryModel countryModel = list.get(position);
-        holder.binding.nameTxt.setText(countryModel.getName());
+        holder.binding.nameTxt.setText(countryModel.getCountryName());
         String code = "+" + countryModel.getPhonecode();
         holder.binding.codeTxt.setText(code);
 

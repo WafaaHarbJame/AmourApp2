@@ -110,6 +110,9 @@ public class MainActivity extends ActivityBase {
             }
         });
 
+
+
+
         binding.cartButton.setOnClickListener(view1 -> {
 
             binding.cartCountTv.setVisibility(View.GONE);

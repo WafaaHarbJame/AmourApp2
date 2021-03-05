@@ -27,19 +27,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private Activity activity;
     private List<Recipe> list;
     private DataFetcherCallBack dataFetcherCallBack;
-    //    int selectedPosition;
-//    ArrayList<ProductModel> productList;
     SuggestedProductAdapter adapter;
     int country_id, city_id, userId = 0;
-//    private boolean toggleButton = false;
 
 
     public RecipeAdapter(Activity activity, List<Recipe> list, int selectedPosition, DataFetcherCallBack dataFetcherCallBack) {
         this.activity = activity;
         this.list = list;
         this.dataFetcherCallBack = dataFetcherCallBack;
-//        this.selectedPosition = selectedPosition;
-//        productList = new ArrayList<>();
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
@@ -112,24 +107,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             super(view.getRoot());
             binding = view;
 
-            binding.rv.setHasFixedSize(true);
-            binding.rv.setItemAnimator(null);
 
             LinearLayoutManager llm = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
             binding.rv.setLayoutManager(llm);
 
+            binding.rv.setHasFixedSize(true);
+            binding.rv.setItemAnimator(null);
+
+
             itemView.setOnClickListener(v -> {
 
                 Recipe recipe = list.get(getAdapterPosition());
-
-//                selectedPosition = recipe.getId();
-//                toggleButton = !toggleButton;
                 recipe.isOpen = !recipe.isOpen;
                 notifyItemChanged(getAdapterPosition());
 
-//                if (dataFetcherCallBack != null) {
-//                    dataFetcherCallBack.Result(recipe, Constants.success, true);
-//                }
 
             });
 
@@ -150,7 +141,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             ResultAPIModel<ArrayList<ProductModel>> result = (ResultAPIModel<ArrayList<ProductModel>>) obj;
 
             if (IsSuccess) {
-//                productList = result.data;
                 if (result.data != null && result.data.size() > 0) {
 
                     recipe.productsList = result.data;

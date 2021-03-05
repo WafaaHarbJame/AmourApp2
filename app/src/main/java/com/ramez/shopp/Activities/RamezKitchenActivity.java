@@ -108,6 +108,14 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
             startActivity(intent);
         });
 
+        binding.fabCart.setOnClickListener(v -> {
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.putExtra(Constants.CART, true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+
+
         getIntentExtra();
 
         if (UtilityApp.isLogin()) {

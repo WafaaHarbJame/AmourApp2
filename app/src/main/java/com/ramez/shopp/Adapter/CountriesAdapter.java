@@ -40,7 +40,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
     @Override
     public void onBindViewHolder(CountryViewHolder holder, int position) {
         CountryModel countryModel = countryModels.get(position);
-            holder.binding.textCountry.setText(countryModel.getName());
+            holder.binding.textCountry.setText(countryModel.getCountryName());
             holder.binding.imgFlag.setImageResource(countryModel.getFlag());
 
         if (selectedPosition==countryModel.getId()) {

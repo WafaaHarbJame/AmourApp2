@@ -75,8 +75,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     int selectedCityId = 0;
     String CountryCode = "+973";
     private GoogleMap map;
-    private Double longitude = 0.0;
-    private Double latitude = 0.0;
     private String phonePrefix = "973";
     private int countryId = 17;
     private LocalModel localModel;
@@ -171,7 +169,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         countryId = UtilityApp.getLocalData().getCountryId();
 
-        GetAreas(countryId);
+        //GetAreas(countryId);
 
         binding.codeSpinner.setOnClickListener(view1 -> {
             CountryCodeDialog countryCodeDialog = new CountryCodeDialog(getActiviy(), countryId, (obj, func, IsSuccess) -> {
@@ -179,7 +177,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                 if (countryModel != null) {
                     CountryCode = "+".concat(String.valueOf(countryModel.getPhonecode()));
                     phonePrefix = String.valueOf(countryModel.getPhonecode());
-                    binding.codeSpinner.setText(countryModel.getName().concat(" " + "(" + countryModel.getPhonecode() + ")"));
+                    binding.codeSpinner.setText(countryModel.getCountryName().concat(" " + "(" + countryModel.getPhonecode() + ")"));
 
                 }
 
@@ -196,7 +194,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     selectedCityId = areasModel.getId();
 
                 } else {
-                    binding.stateSpinnerTv.setText(state_name);
+                    binding.stateSpinnerTv.setText(getString(R.string.select_area));
 
                 }
 

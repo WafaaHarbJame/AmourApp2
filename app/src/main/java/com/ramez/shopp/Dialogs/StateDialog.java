@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,8 @@ import com.ramez.shopp.Utils.NumberHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class StateDialog extends Dialog {
 
@@ -89,12 +92,20 @@ public class StateDialog extends Dialog {
 
 
         okBtn.setOnClickListener(view -> {
+            if(selectedCountryModel==null){
 
-            if (dataFetcherCallBack != null) {
-                dataFetcherCallBack.Result(selectedCountryModel, Constants.success, true);
+                Toast.makeText(context, ""+context.getString(R.string.select_area), Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                if (dataFetcherCallBack != null) {
+                    dataFetcherCallBack.Result(selectedCountryModel, Constants.success, true);
+                }
+
+                dismiss();
             }
 
-            dismiss();
+
 
         });
 

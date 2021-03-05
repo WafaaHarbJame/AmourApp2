@@ -96,15 +96,10 @@
     <string name="name">Name</string>
     <string name="add_new_address">Add New Address</string>
     <string name="new_address">New Address</string>
-    <string name="lat_line">longitude line</string>
-    <string name="lng_line">Latitude line</string>
-    <string name="address_in_map">Address In Map</string>
-    <string name="block">block Number </string>
     <string name="block_kw">block Number </string>
     <string name="street_num">Street Number</string>
     <string name="building">Building Number</string>
     <string name="flat">Flat Number</string>
-    <string name="choose_address_gps">Choose Location Using GPS</string>
     <string name="phonePermissionExplain">You have just denied phone call permission,
         You can\'t make any call until you accept the permission</string>
     <string name="ok">Ok</string>
@@ -177,15 +172,21 @@
     <string name="Qatar_shotname" translatable="false">QA</string>
     <string name="Saudi_Arabia_shortname" translatable="false">SA</string>
 
-    <string name="Bahrain">Bahrain</string>
-    <string name="Oman">Oman</string>
-    <string name="Qatar">Qatar</string>
-    <string name="Saudi_Arabia">Saudi Arabia</string>
-    <string name="United_Arab_Emirates">United Arab Emirates</string>
-    <string name="Kuwait">Kuwait</string>
+    <string name="Bahrain"  translatable="false">Bahrain</string>
+    <string name="Oman"  translatable="false">Oman</string>
+    <string name="Qatar"  translatable="false">Qatar</string>
+    <string name="Saudi_Arabia"  translatable="false">Saudi Arabia</string>
+    <string name="United_Arab_Emirates" translatable="false" >United Arab Emirates</string>
+    <string name="Kuwait"  translatable="false">Kuwait</string>
+
+    <string name="Bahrain_ar" translatable="false">البحرين</string>
+    <string name="Oman_ar" translatable="false">عمان</string>
+    <string name="Kuwait_ar" translatable="false">>الكويت</string>
+    <string name="Qatar_ar" translatable="false"> قطر</string>
+    <string name="Saudi_Arabia_ar" translatable="false"> السعودية</string>
+    <string name="United_Arab_Emirates_ar" translatable="false">الامارات</string>
     <string name="address_default">This address is set as the default address</string>
     <string name="choose_address">Select Address</string>
-    <string name="enter_area">Enter Area</string>
     <string name="select_area">Select Area</string>
     <string name="want_to_delete_address">Do you want to delete address</string>
     <string name="no_data">No Data</string>
@@ -267,10 +268,7 @@
     <string name="my_location">my_location</string>
     <string name="open_gps">open gps</string>
     <string name="enable">enable Gps </string>
-    <string name="map_str">Map</string>
-    <string name="bh_973">Bahrain (973)</string>
     <string name="add_cart">Add to Cart</string>
-    <string name="info">Remark</string>
     <string name="msg_subscribe_failed">Log subscribe failed</string>
     <string name="msg_subscribed">Log subscribed</string>
     <string name="resend_again">Resend Code  Again</string>
@@ -307,8 +305,6 @@
     <string name="please_install_whats">Please Install whatsUp app </string>
     <string name="please_install_instagram">Please Install instagram app </string>
     <string name="please_twitter">Please Install Twitter app </string>
-    <string name="search_city">Search for city From Here</string>
-    <string name="agree">Ok</string>
     <string name="share_brousher">Share Brochures</string>
     <string name="no_booklets">No Brochures</string>
     <string name="special_offer">Special Offers</string>
@@ -324,20 +320,16 @@
     <string name="ShowAll">Show All</string>
     <string name="Show_less">Show Less</string>
     <string name="ingredients">Ingredients</string>
-    <string name="add_all">ADD All TO CART</string>
     <string name="proceed_to_checkout">Proceed to Cart</string>
-    <string name="popular">popular</string>
-    <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">Use Add \' ADD All TO CART \' to add all popular ingredients</string>
     <string name="calories">CALORIES</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="choose_city">Choose Area</string>
     <string name="Done">Done</string>
     <string name="Address_Name">Address Name</string>
     <string name="block_no">Block Number</string>
     <string name="code">code</string>
     <string name="area">Area</string>
-    <string name="mots_searched">Most Searched Tags</string>
     <string name="no_dinners">No Recipe</string>
     <string name="your_save">Your Saved</string>
+    <string name="addressTxt">Address</string>
 </resources>

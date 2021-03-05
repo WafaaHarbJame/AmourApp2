@@ -1,16 +1,13 @@
 package com.ramez.shopp.Models;
 
-import android.os.Parcel;
-
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 
-/**
- * Created by  on 8/9/2017.
- */
+
 
 public class CountryModel implements Serializable {
 
@@ -35,6 +32,28 @@ public class CountryModel implements Serializable {
     @SerializedName("flag")
     @Expose
     private int flag;
+    @SerializedName("countryNameAr")
+    @Expose
+    private String countryNameAr;
+
+    public String getCountryNameEn() {
+        return countryNameEn;
+    }
+
+    public void setCountryNameEn(String countryNameEn) {
+        this.countryNameEn = countryNameEn;
+    }
+
+    @SerializedName("countryNameEn")
+    @Expose
+    private String countryNameEn;
+    public String getCountryNameAr() {
+        return countryNameAr;
+    }
+
+    public void setCountryNameAr(String countryNameAr) {
+        this.countryNameAr = countryNameAr;
+    }
 
     public int getFlag() {
         return flag;
@@ -52,13 +71,6 @@ public class CountryModel implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getShortname() {
         return shortname;
@@ -92,14 +104,27 @@ public class CountryModel implements Serializable {
         this.fractional = fractional;
     }
 
-    public CountryModel(Integer id, String name, String shortname, Integer phonecode, String currencyCode, Integer fractional, int flag) {
+    public CountryModel(Integer id,String countryNameAr, String countryNameEn, String shortname, Integer phonecode, String currencyCode, Integer fractional, int flag) {
+
         this.id = id;
-        this.name = name;
         this.shortname = shortname;
         this.phonecode = phonecode;
         this.currencyCode = currencyCode;
         this.fractional = fractional;
         this.flag = flag;
+        this.countryNameAr = countryNameAr;
+        this.countryNameEn = countryNameEn;
+    }
+
+
+
+    public String getCountryName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            return countryNameEn;
+
+        } else {
+            return countryNameAr;
+        }
     }
 }
 

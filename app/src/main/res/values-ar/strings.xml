@@ -70,7 +70,7 @@
     <string name="product_review">اراء العملاء</string>
     <string name="fav_products">المنتجات المفضلة</string>
     <string name="my_order">طلباتي</string>
-    <string name="address">العناوين</string>
+    <string name="address">العنوان </string>
     <string name="customer_service">خدمة العملاء</string>
     <string name="lang_setting">إعدادات اللغة </string>
     <string name="change_city_branch">تغيرالفرع </string>
@@ -96,14 +96,9 @@
     <string name="name">الاسم</string>
     <string name="add_new_address">إضافة عنوان جديد</string>
     <string name="new_address">عنوان جديد</string>
-    <string name="lat_line">خط الطول</string>
-    <string name="address_in_map">العنوان في الخريطة</string>
-    <string name="lng_line">خط العرض</string>
-    <string name="block">رقم المجمع</string>
     <string name="block_kw">رقم القطعة  </string>
     <string name="street_num">رقم الشارع</string>
     <string name="building">رقم البناية</string>
-    <string name="choose_address_gps"> تحديد العنوان عن طريق GPS   </string>
     <string name="phonePermissionExplain">لقد رفضت للتو الحصول على إذن مكالمة هاتفية ، لا يمكنك إجراء أي اتصال حتى تقبل الإذن</string>
     <string name="ok">حسناً</string>
     <string name="no_internet_connection">لا يوجد اتصال بالانترنت </string>
@@ -166,15 +161,8 @@
     <string name="fail_to_sen_otp">فشل ارسال الكود </string>
     <string name="please_wait_sending">الرجاء الانتظار يتم الارسال</string>
     <string name="confirm_code">تاكيد الكود</string>
-    <string name="Bahrain">البحرين</string>
-    <string name="Oman">عمان</string>
-    <string name="Kuwait">الكويت</string>
-    <string name="Qatar">قطر</string>
-    <string name="Saudi_Arabia">السعودية</string>
-    <string name="United_Arab_Emirates">الامارات</string>
     <string name="address_default">تم تعيين هذا العنوان كعنوان افتراضي</string>
     <string name="choose_address">اختر العنوان</string>
-    <string name="enter_area">اختر المدينة </string>
     <string name="select_area">اختر المنطقة </string>
     <string name="want_to_delete_address">هل تريد حذف هذا العنوان </string>
     <string name="no_data">لا يوجد بيانات </string>
@@ -245,10 +233,7 @@
     <string name="my_location">موقعي </string>
     <string name="open_gps">فتح GPS </string>
     <string name="enable">تفعيل GPS  </string>
-    <string name="map_str">الخريطة </string>
-    <string name="bh_973">البحرين (973)</string>
     <string name="add_cart">اضف للسلة</string>
-    <string name="info">تعليمات</string>
     <string name="msg_subscribe_failed">Log subscribe failed</string>
     <string name="msg_subscribed">Log subscribed</string>
     <string name="set_default_address">تعين العنوان الافتراضي </string>
@@ -282,8 +267,6 @@
     <string name="please_install_whats">الرجاء تنزيل تطبيق الواتس اب </string>
     <string name="please_twitter">الرجاء تنزيل تطبيق التوتير </string>
     <string name="please_install_instagram">الرجاء تنزيل تطبيق الانستجرام  </string>
-    <string name="search_city">ابحث عن المدينة من هنا </string>
-    <string name="agree">موافق</string>
     <string name="textErrorMessage">حدث خطأ ما حاول مرة أخرى</string>
     <string name="share_brousher">مشاركة البروشور</string>
     <string name="no_booklets">لا يوجد بروشور</string>
@@ -300,10 +283,7 @@
     <string name="ShowAll">مشاهدة الكل </string>
     <string name="Show_less">عرض اقل </string>
     <string name="ingredients">المكونات </string>
-    <string name="add_all">اضف الكل للسلة </string>
     <string name="proceed_to_checkout">انتقل الى السلة  </string>
-    <string name="popular">شائع</string>
-    <string name="use_add_add_all_to_cart_to_add_all_popular_ingredients">اضغط على " اضف الكل للسلة " لاضافة كل المكونات الشائعة </string>
     <string name="calories">سعرات حراريه</string>
     <string name="choose_city">اختر المنطقة </string>
     <string name="Done">تم</string>
@@ -312,8 +292,8 @@
     <string name="code">كود الدولة</string>
     <string name="area">المنطقة</string>
     <string name="flat">رقم الشقة</string>
-    <string name="mots_searched">الكلمات الاكثر شيوعا </string>
     <string name="no_dinners">لا يوجد وجبات </string>
     <string name="your_save">وفرت</string>
+    <string name="addressTxt">العناوين</string>
 
 </resources>

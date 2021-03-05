@@ -1,18 +1,38 @@
 package com.ramez.shopp.Models;
 
 
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 public class LocalModel {
 
     private Integer countryId;
     private String countryName;
+    private String countryNameAr;
     private String shortname="BH";
     private Integer phonecode;
     private String currencyCode;
     private String cityId;
     private int fractional;
     private int minimum_order_amount=0;
+    private String countryNameEn;
 
+
+    public String getCountryNameAr() {
+        return countryNameAr;
+    }
+
+    public String getCountryNameEn() {
+        return countryNameEn;
+    }
+
+    public void setCountryNameEn(String countryNameEn) {
+        this.countryNameEn = countryNameEn;
+    }
+
+    public void setCountryNameAr(String countryNameAr) {
+        this.countryNameAr = countryNameAr;
+    }
 
     public Integer getCountryId() {
         return countryId;
@@ -20,10 +40,6 @@ public class LocalModel {
 
     public void setCountryId(Integer countryId) {
         this.countryId = countryId;
-    }
-
-    public String getCountryName() {
-        return countryName;
     }
 
     public void setCountryName(String countryName) {
@@ -76,5 +92,14 @@ public class LocalModel {
 
     public void setMinimum_order_amount(int minimum_order_amount) {
         this.minimum_order_amount = minimum_order_amount;
+    }
+
+    public String getCountryName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            return countryNameEn;
+
+        } else {
+            return countryNameAr;
+        }
     }
 }

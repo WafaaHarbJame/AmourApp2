@@ -73,12 +73,12 @@ public class CountryCodeDialog extends Dialog {
         rv.hasFixedSize();
 
 
-        countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", Constants.three, R.drawable.ic_flag_oman));
-        countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", Constants.three, R.drawable.ic_flag_behrain));
-        countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", Constants.three, R.drawable.ic_flag_kuwait));
-        countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", Constants.two, R.drawable.ic_flag_qatar));
-        countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", Constants.two, R.drawable.ic_flag_saudi_arabia));
-        countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", Constants.two, R.drawable.ic_flag_uae));
+        countries.add(new CountryModel(4,context.getString(R.string.Oman_ar), context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", Constants.three, R.drawable.ic_flag_oman));
+        countries.add(new CountryModel(17, context.getString(R.string.Bahrain_ar),context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", Constants.three, R.drawable.ic_flag_behrain));
+        countries.add(new CountryModel(117,context.getString(R.string.Kuwait_ar), context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", Constants.three, R.drawable.ic_flag_kuwait));
+        countries.add(new CountryModel(178,context.getString(R.string.Qatar_ar), context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", Constants.two, R.drawable.ic_flag_qatar));
+        countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia_ar),context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", Constants.two, R.drawable.ic_flag_saudi_arabia));
+        countries.add(new CountryModel(229,context.getString(R.string.United_Arab_Emirates_ar), context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", Constants.two, R.drawable.ic_flag_uae));
 
         initAdapter(countries);
 
@@ -122,7 +122,7 @@ public class CountryCodeDialog extends Dialog {
                 for (int i = 0; i < countries.size(); i++) {
                     CountryModel countryModel = countries.get(i);
 
-                    if (countryModel.getName().toLowerCase().contains(searchStr) || countryModel.getPhonecode().toString().contains(searchStr))
+                    if (countryModel.getCountryName().toLowerCase().contains(searchStr) || countryModel.getPhonecode().toString().contains(searchStr))
                         countriesList.add(countryModel);
                     initAdapter(countriesList);
 
