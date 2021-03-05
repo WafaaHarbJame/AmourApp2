@@ -27,19 +27,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private Activity activity;
     private List<Recipe> list;
     private DataFetcherCallBack dataFetcherCallBack;
-    int selectedPosition;
-    ArrayList<ProductModel> productList;
+    //    int selectedPosition;
+//    ArrayList<ProductModel> productList;
     SuggestedProductAdapter adapter;
     int country_id, city_id, userId = 0;
-    private boolean toggleButton = false;
+//    private boolean toggleButton = false;
 
 
     public RecipeAdapter(Activity activity, List<Recipe> list, int selectedPosition, DataFetcherCallBack dataFetcherCallBack) {
         this.activity = activity;
         this.list = list;
         this.dataFetcherCallBack = dataFetcherCallBack;
-        this.selectedPosition = selectedPosition;
-        productList = new ArrayList<>();
+//        this.selectedPosition = selectedPosition;
+//        productList = new ArrayList<>();
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
@@ -59,28 +59,37 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Recipe recipe = list.get(position);
         holder.binding.nameTxt.setText(recipe.getDescription());
 
-        LinearLayoutManager llm = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
-        holder.binding.rv.setLayoutManager(llm);
-        holder.binding.rv.setHasFixedSize(true);
-        holder.binding.rv.setItemAnimator(null);
+        holder.binding.selectTxt.setText(activity.getString(R.string.fa_check));
+        holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
 
-        adapter = new SuggestedProductAdapter(activity, productList, this, productList.size());
-        holder.binding.rv.setAdapter(adapter);
+        if (recipe.isOpen) {
+            // to open and change header icon
+            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
+            holder.binding.selectTxt.setVisibility(View.VISIBLE);
 
+            if (recipe.isLoaded) {
+                // to check if products loaded before
+                adapter = new SuggestedProductAdapter(activity, recipe.productsList, this, 0);
+                holder.binding.rv.setAdapter(adapter);
 
-//        if (selectedPosition == recipe.getId()) {
-//            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
-//            holder.binding.selectTxt.setText(activity.getString(R.string.fa_check));
-//            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
-//        } else {
-//            holder.binding.selectTxt.setText("");
-//            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
-//            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
-//        }
+                holder.binding.progressBar1.setVisibility(View.GONE);
+                holder.binding.noProductsTv.setVisibility(View.GONE);
+                holder.binding.rv.setVisibility(View.VISIBLE);
 
+            } else {
+                // if products not loaded
+                getProductRecipeList(holder.binding, recipe, country_id, city_id, String.valueOf(userId));
+            }
+
+        } else {
+            holder.binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
+            holder.binding.selectTxt.setVisibility(View.GONE);
+            holder.binding.rv.setVisibility(View.GONE);
+        }
 
     }
 
@@ -94,6 +103,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RowRecipeBinding binding;
@@ -102,35 +112,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             super(view.getRoot());
             binding = view;
 
+            binding.rv.setHasFixedSize(true);
+            binding.rv.setItemAnimator(null);
+
+            LinearLayoutManager llm = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
+            binding.rv.setLayoutManager(llm);
 
             itemView.setOnClickListener(v -> {
 
                 Recipe recipe = list.get(getAdapterPosition());
-                selectedPosition = recipe.getId();
-                toggleButton = !toggleButton;
 
-                if (toggleButton) {
+//                selectedPosition = recipe.getId();
+//                toggleButton = !toggleButton;
+                recipe.isOpen = !recipe.isOpen;
+                notifyItemChanged(getAdapterPosition());
 
-                    getProductRecipeList(binding, recipe, recipe.getId(), country_id, city_id, String.valueOf(userId));
-                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_up));
-                    binding.rv.setVisibility(View.VISIBLE);
-                    binding.selectTxt.setText(activity.getString(R.string.fa_check));
-                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.green));
-
-
-                } else {
-                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
-                    binding.rv.setVisibility(View.GONE);
-                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
-                    binding.selectTxt.setText("");
-
-
-                }
-
-                if (dataFetcherCallBack != null) {
-                    dataFetcherCallBack.Result(recipe, Constants.success, true);
-                }
-
+//                if (dataFetcherCallBack != null) {
+//                    dataFetcherCallBack.Result(recipe, Constants.success, true);
+//                }
 
             });
 
@@ -138,10 +137,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     }
 
-    private void getProductRecipeList(RowRecipeBinding binding, Recipe recipe, int recipe_id,
-                                      int country_id, int city_id, String user_id) {
-        productList.clear();
+
+    private void getProductRecipeList(RowRecipeBinding binding, Recipe recipe, int country_id, int city_id, String user_id) {
+//        productList.clear();
         binding.progressBar1.setVisibility(View.VISIBLE);
+        binding.rv.setVisibility(View.GONE);
+        binding.noProductsTv.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.progressBar1.setVisibility(View.GONE);
@@ -149,28 +150,26 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             ResultAPIModel<ArrayList<ProductModel>> result = (ResultAPIModel<ArrayList<ProductModel>>) obj;
 
             if (IsSuccess) {
-                productList = result.data;
+//                productList = result.data;
                 if (result.data != null && result.data.size() > 0) {
 
-                    productList = result.data;
+                    recipe.productsList = result.data;
+                    recipe.isLoaded = true;
 
-                    adapter = new SuggestedProductAdapter(activity, productList, this, productList.size());
+                    SuggestedProductAdapter adapter = new SuggestedProductAdapter(activity, recipe.productsList, this, 0);
                     binding.rv.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
-
+                    binding.rv.setVisibility(View.VISIBLE);
+                    binding.noProductsTv.setVisibility(View.GONE);
                 } else {
-                    binding.toggleBut.setText(activity.getString(R.string.fa_angle_down));
                     binding.rv.setVisibility(View.GONE);
-                    binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
-                    binding.selectTxt.setText("");
+                    binding.noProductsTv.setVisibility(View.VISIBLE);
 
                 }
 
             }
 
 
-        }).getProductRecipeList(recipe_id, country_id, city_id, user_id, 0, 10);
+        }).getProductRecipeList(recipe.getId(), country_id, city_id, user_id, 0, 10);
     }
 
 

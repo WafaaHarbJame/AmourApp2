@@ -99,6 +99,15 @@ public class CartModel implements Serializable {
     @SerializedName("isExtra")
     @Expose
     private boolean isExtra;
+    private Double savePrice;
+
+    public Double getSavePrice() {
+        return savePrice;
+    }
+
+    public void setSavePrice(Double savePrice) {
+        this.savePrice = savePrice;
+    }
 
     public Boolean getSpecialPriceVisible() {
         return isSpecialPriceVisible;

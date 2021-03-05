@@ -62,77 +62,75 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         ProductModel productModel = productModels.get(position);
 
         currency = UtilityApp.getLocalData().getCurrencyCode();
-            holder.binding.productNameTv.setText(productModel.getProductName().trim());
+        holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-            if (productModel.getFavourite() != null && productModel.getFavourite()) {
-                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
+        if (productModel.getFavourite() != null && productModel.getFavourite()) {
+            holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
+        } else {
+            holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
+
+        }
+
+        int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+
+        if (quantity > 0) {
+
+            holder.binding.productCartQTY.setText(String.valueOf(quantity));
+            holder.binding.CartLy.setVisibility(View.VISIBLE);
+            holder.binding.cartBut.setVisibility(View.GONE);
+
+            if (quantity == 1) {
+                holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                holder.binding.minusCartBtn.setVisibility(View.GONE);
             } else {
-                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
-
+                holder.binding.minusCartBtn.setVisibility(View.VISIBLE);
+                holder.binding.deleteCartBtn.setVisibility(View.GONE);
             }
 
-            int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+        } else {
+            holder.binding.CartLy.setVisibility(View.GONE);
+            holder.binding.cartBut.setVisibility(View.VISIBLE);
+        }
 
-            if (quantity > 0) {
+        if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 
-                holder.binding.productCartQTY.setText(String.valueOf(quantity));
-                holder.binding.CartLy.setVisibility(View.VISIBLE);
-                holder.binding.cartBut.setVisibility(View.GONE);
-
-                if (quantity == 1) {
-                    holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
-                    holder.binding.minusCartBtn.setVisibility(View.GONE);
-                } else {
-                    holder.binding.minusCartBtn.setVisibility(View.VISIBLE);
-                    holder.binding.deleteCartBtn.setVisibility(View.GONE);
-                }
-
-            } else {
-                holder.binding.CartLy.setVisibility(View.GONE);
-                holder.binding.cartBut.setVisibility(View.VISIBLE);
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
+                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
+                DecimalFormat df = new DecimalFormat("#");
+                String newDiscount_str = df.format(discount);
+                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
             }
 
-            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 
-                holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-                if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                    discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                    DecimalFormat df = new DecimalFormat("#");
-                    String newDiscount_str = df.format(discount);
-                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-                }
+        } else {
+            if (productModel.getProductBarcodes().get(0).getPrice() != null) {
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
+                holder.binding.discountTv.setVisibility(View.INVISIBLE);
 
-
-            } else {
-                if (productModel.getProductBarcodes().get(0).getPrice() != null) {
-                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                    holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
-                    holder.binding.discountTv.setVisibility(View.INVISIBLE);
-
-                }
             }
+        }
 
-            String photoUrl = "";
+        String photoUrl = "";
 
-            if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
-                photoUrl = productModel.getImages().get(0);
-            } else {
-                photoUrl = "http";
-            }
-            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+        if (productModel.getImages() != null && productModel.getImages().get(0) != null && !productModel.getImages().get(0).isEmpty()) {
+            photoUrl = productModel.getImages().get(0);
+        } else {
+            photoUrl = "http";
+        }
+        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 //        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
-
-
 
 
     }
 
     @Override
     public int getItemCount() {
-        if (limit == 2) return Math.min(productModels.size(), limit);
+        if (limit != 0) return Math.min(productModels.size(), limit);
         else return productModels.size();
 
 
@@ -142,12 +140,12 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
@@ -160,7 +158,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_favorite));
                 }
             }
@@ -189,11 +187,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     notifyDataSetChanged();
 
 
-                } else
-                    {
+                } else {
 
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                context.getString(R.string.fail_to_remove_favorite));
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                            context.getString(R.string.fail_to_remove_favorite));
 
                 }
             }
@@ -274,33 +271,31 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
 
-                    Log.i("limit","Log limit  "+limit);
-                    Log.i("stock","Log stock  "+stock);
+                    Log.i("limit", "Log limit  " + limit);
+                    Log.i("stock", "Log stock  " + stock);
 
-                    if(limit==0){
+                    if (limit == 0) {
 
                         if (count + 1 <= stock) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                         } else {
                             message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
                         }
                     } else {
 
-                        if (count + 1 <= stock && (count + 1 )<= limit) {
+                        if (count + 1 <= stock && (count + 1) <= limit) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-                        }
-                        else {
+                        } else {
 
-                            if(count+1 > stock){
+                            if (count + 1 > stock) {
                                 message = context.getString(R.string.stock_empty);
-                            }
-                            else {
+                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
 
                             }
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
 
                         }
@@ -313,7 +308,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             });
 
             binding.plusCartBtn.setOnClickListener(v -> {
-                String message="";
+                String message = "";
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -329,38 +324,34 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                Log.i("limit","Log limit  "+limit);
-                Log.i("stock","Log stock  "+stock);
+                Log.i("limit", "Log limit  " + limit);
+                Log.i("stock", "Log stock  " + stock);
 
 
-                if(limit==0){
+                if (limit == 0) {
 
                     if (count + 1 <= stock) {
                         updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
-                    }
-                    else {
+                    } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                 message);
 
                     }
-                }
-                else {
+                } else {
 
-                    if (count + 1 <= stock && (count + 1 )<= limit) {
+                    if (count + 1 <= stock && (count + 1) <= limit) {
                         updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
-                    }
-                    else {
-                        if(count+1 > stock){
+                    } else {
+                        if (count + 1 > stock) {
                             message = context.getString(R.string.stock_empty);
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                 message);
                     }
 
@@ -409,13 +400,12 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
             if (onItemClick != null) {
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
-                if(productModels.size()>0){
+                if (productModels.size() > 0) {
                     ProductModel productModel = productModels.get(getAdapterPosition());
                     Intent intent = new Intent(context, ProductDetailsActivity.class);
                     intent.putExtra(Constants.DB_productModel, productModel);
                     context.startActivity(intent);
                 }
-
 
 
             }
@@ -437,7 +427,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
                 } else {
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_cart));
 
 
@@ -454,10 +444,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     notifyItemChanged(position);
 
                 } else {
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_update_cart));
-
-
 
 
                 }
@@ -478,7 +466,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_delete_cart));
 
 

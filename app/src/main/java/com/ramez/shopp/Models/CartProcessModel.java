@@ -17,6 +17,19 @@ public class CartProcessModel {
     @Expose
     private String message;
     private Double total;
+    private Double totalSavePrice;
+
+    public void setCartCount(int cartCount) {
+        this.cartCount = cartCount;
+    }
+
+    public Double getTotalSavePrice() {
+        return totalSavePrice;
+    }
+
+    public void setTotalSavePrice(Double totalSavePrice) {
+        this.totalSavePrice = totalSavePrice;
+    }
 
     public Double getTotal() {
         return total;

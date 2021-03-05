@@ -689,7 +689,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void initProductsAdapter() {
-        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), productList, this, productList.size());
+        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), productList, this, 0);
         binding.offerRecycler.setAdapter(productOfferAdapter);
 
     }

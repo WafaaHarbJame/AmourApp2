@@ -58,6 +58,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     boolean isLogin = false;
     int productsSize;
     String total;
+    String totalSavePrice;
     int productSize;
     private FragmentCartBinding binding;
     private CartAdapter cartAdapter;
@@ -151,6 +152,16 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             } else {
                 total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
+                if (cartProcessModel.getTotalSavePrice() == 0) {
+
+                    binding.saveText.setVisibility(View.GONE);
+                } else {
+                    binding.saveText.setVisibility(View.VISIBLE);
+
+                }
+
+                totalSavePrice = NumberHandler.formatDouble(cartProcessModel.getTotalSavePrice(), fraction);
+                binding.saveText.setText(getString(R.string.your_save) +"\n" + totalSavePrice.concat(" " + currency));
 
                 if (cartProcessModel.getTotal() >= minimum_order_amount) {
 
@@ -171,7 +182,20 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.cartRecycler.setAdapter(cartAdapter);
         productsSize = cartList.size();
         total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
+        totalSavePrice = NumberHandler.formatDouble(cartAdapter.calculateSavePrice(), fraction);
         binding.totalTv.setText(total.concat(" " + currency));
+
+        if (cartAdapter.calculateSavePrice() == 0) {
+
+            binding.saveText.setVisibility(View.GONE);
+        } else {
+            binding.saveText.setVisibility(View.VISIBLE);
+
+        }
+
+        binding.saveText.setText(getString(R.string.your_save) + "\n" + totalSavePrice.concat(" " + currency));
+
+
         cartAdapter.notifyDataSetChanged();
 
 
@@ -297,7 +321,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         EmptyCartDialog.Click okClick = new EmptyCartDialog.Click() {
             @Override
             public void click() {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,0));
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
 
             }
         };
@@ -306,7 +330,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         EmptyCartDialog.Click cancelClick = new EmptyCartDialog.Click() {
             @Override
             public void click() {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,0));
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
 
             }
         };

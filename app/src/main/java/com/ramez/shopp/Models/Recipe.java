@@ -3,6 +3,9 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Recipe {
     @SerializedName("id")
     @Expose
@@ -10,6 +13,10 @@ public class Recipe {
     @SerializedName("description")
     @Expose
     private String description;
+
+    public ArrayList<ProductModel> productsList;
+    public boolean isLoaded;
+    public boolean isOpen;
 
     public int getId() {
         return id;

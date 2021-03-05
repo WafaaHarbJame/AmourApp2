@@ -2,7 +2,6 @@ package com.ramez.shopp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
-import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
@@ -24,11 +22,9 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddCommentDialog;
 import com.ramez.shopp.Models.CartProcessModel;
-import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -81,7 +77,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
-        if(cartDM.isExtra()){
+        if (cartDM.isExtra()) {
             holder.binding.priceTv.setVisibility(View.GONE);
             holder.binding.currencyPriceTv.setVisibility(View.GONE);
             holder.binding.weightUnitTv.setVisibility(View.GONE);
@@ -96,7 +92,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional())+" "+currency);
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
             holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
 
 
@@ -110,13 +106,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
         GlobalData.PicassoImg(cartDM.getImage()
-                ,R.drawable.holder_image,holder.binding.imageView1);
+                , R.drawable.holder_image, holder.binding.imageView1);
 
 //        Picasso.get().load(cartDM.getImage()).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.imageView1);
 
 
         calculateSubTotalPrice();
-
+        calculateSavePrice();
         if (Integer.parseInt(holder.binding.productCartQTY.getText().toString()) == 1) {
 
             holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -187,6 +183,33 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
         return subTotal;
+    }
+
+    public double calculateSavePrice() {
+        double savePrice = 0;
+        for (int i = 0; i < cartDMS.size(); i++) {
+
+
+            double price = 0, specialPrice = 0,  difference = 0;
+            if (cartDMS.get(i).getProductPrice() > 0) {
+
+                if (cartDMS.get(i).getSpecialPrice() > 0) {
+                    specialPrice = cartDMS.get(i).getSpecialPrice();
+                    price = cartDMS.get(i).getProductPrice();
+                    difference=price-specialPrice;
+                    Log.i(TAG, "Log specialPrice result" + price);
+                    Log.i(TAG, "Log price result" + specialPrice);
+
+                    savePrice=savePrice+difference;
+                }
+
+
+            }
+        }
+        Log.i(TAG, "Log savePrice result" + savePrice);
+
+
+        return savePrice;
     }
 
 
@@ -356,8 +379,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int productId = productModel.getProductId();
 
                 int limit = productModel.getLimitQty();
-                boolean isExtra=productModel.isExtra();
-                if(!isExtra){
+                boolean isExtra = productModel.isExtra();
+                if (!isExtra) {
 
                     if (limit == 0) {
 
@@ -385,14 +408,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                         }
 
                     }
-                }
-                else {
+                } else {
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
                 }
-
-
-
 
 
             });
@@ -414,7 +433,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                if (cartDMS!=null && cartDMS.size() > 0& getAdapterPosition() != -1) {
+                if (cartDMS != null && cartDMS.size() > 0 & getAdapterPosition() != -1) {
                     CartModel productModel = cartDMS.get(getAdapterPosition());
                     int product_barcode_id = productModel.getProductBarcodeId();
                     int position = getAdapterPosition();
@@ -431,9 +450,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
 
-
-
-
         }
 
 
@@ -441,6 +457,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
                     calculateSubTotalPrice();
+                    calculateSavePrice();
                     getItemCount();
                     //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
 
@@ -451,6 +468,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
                     cartProcessModel.setTotal(calculateSubTotalPrice());
                     cartProcessModel.setCartCount(cartDMS.size());
+                    cartProcessModel.setTotalSavePrice(calculateSavePrice());
 
 
                     if (dataCallback != null) {
@@ -480,11 +498,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     }
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     calculateSubTotalPrice();
+                    calculateSavePrice();
                     getItemCount();
 
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
                     cartProcessModel.setTotal(calculateSubTotalPrice());
                     cartProcessModel.setCartCount(cartDMS.size());
+                    cartProcessModel.setTotalSavePrice(calculateSavePrice());
 
 
                     if (dataCallback != null) {

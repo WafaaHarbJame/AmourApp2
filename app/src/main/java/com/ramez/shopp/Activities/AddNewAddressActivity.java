@@ -88,7 +88,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     private double selectedLat = 26.05177032598081;
     private double selectedLng = 50.50513866994304;
     private AutocompleteSupportFragment autocompleteFragment;
-    private boolean isGrantPermission;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         binding = ActivityAddNewAddressBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
 
 
         stateModelList = new ArrayList<>();
@@ -119,8 +118,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         }
 
-        checkLocationPermission();
-        initPlaceAutoComplete();
+        getIntentData();
 
         FragmentManager fm = getSupportFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
@@ -130,7 +128,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         binding.stateSpinnerTv.setInputType(InputType.TYPE_NULL);
         binding.codeSpinner.setInputType(InputType.TYPE_NULL);
 
-        getIntentData();
 
         if (localModel != null && localModel.getShortname().equals("KW")) {
             String code = localModel.getShortname();
@@ -166,6 +163,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         } else {
             binding.addNewAddressBut.setVisibility(View.VISIBLE);
+            checkLocationPermission();
+            initPlaceAutoComplete();
+
 
         }
 
@@ -186,10 +186,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             });
             countryCodeDialog.show();
         });
-
-
-
-
 
         binding.stateSpinnerTv.setOnClickListener(view1 -> {
             StateDialog stateDialog = new StateDialog(getActiviy(), selectedCityId, (obj, func, IsSuccess) -> {
@@ -225,8 +221,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         addressModel.setApartmentNo(binding.flatEt.getText().toString());
         addressModel.setPhonePrefix(phonePrefix);
         addressModel.setMobileNumber(binding.phoneTv.getText().toString());
-        addressModel.setLatitude(latitude);
-        addressModel.setLongitude(longitude);
+        addressModel.setLatitude(selectedLat);
+        addressModel.setLongitude(selectedLng);
         addressModel.setUserId(userId);
         addressModel.setGoogleAddress(binding.addressTV.getText().toString());
 
@@ -298,6 +294,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     binding.dataLY.setVisibility(View.VISIBLE);
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
+                        selectedLat = addressModel.getLatitude();
+                        selectedLng = addressModel.getLongitude();
+                        latLng = new LatLng(selectedLat, selectedLng);
+                        if (map != null)
+                            setMapMarker();
+                        getLocationAddress();
                         Log.i("tag", "Log Block " + addressModel.getBlock());
                         binding.addressTV.setText(addressModel.getFullAddress());
                         binding.nameEt.setText(addressModel.getName());
@@ -353,11 +355,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             builder.addPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
             builder.addPermissionRationale((getString(R.string.app_name)));
 
-            builder.addRequestPermissionsCallBack((OnRequestPermissionsCallBack) (new OnRequestPermissionsCallBack() {
+            builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
                 public void onGrant() {
-                    isGrantPermission = true;
                     if (map != null) {
-                        getMyLocation();
+                        if (!isEdit) {
+                            getMyLocation();
+                        }
                     }
 
                 }
@@ -365,7 +368,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                 public void onDenied(@NotNull String permission) {
                     Toast(R.string.some_permission_denied);
                 }
-            }));
+            });
             builder.build().request();
         } catch (Exception var2) {
             var2.printStackTrace();
@@ -454,16 +457,14 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
+
         cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
         map.moveCamera(cameraUpdate);
 
-        map.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
+        if (!isEdit) {
+            map.setOnMapClickListener(it -> {
 
-        map.setOnMapClickListener((GoogleMap.OnMapClickListener) (it -> {
-
-            if (map != null) {
                 map.clear();
-
 
                 map.addMarker(new MarkerOptions().position(new LatLng(it.latitude, it.longitude)).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
 
@@ -471,11 +472,24 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                 selectedLng = it.longitude;
                 getLocationAddress();
 
+            });
+        }
 
-            }
+        if (addressModel != null) {
+            selectedLat = addressModel.getLatitude();
+            selectedLng = addressModel.getLongitude();
+            setMapMarker();
+        }
 
-        }));
+    }
 
+    private void setMapMarker() {
+        map.clear();
+        map.addMarker(new MarkerOptions()
+                .position(latLng).icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
+
+        cameraUpdate = CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(latLng, zoomLevel));
+        map.moveCamera(cameraUpdate);
 
     }
 

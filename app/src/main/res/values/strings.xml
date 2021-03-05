@@ -339,4 +339,5 @@
     <string name="area">Area</string>
     <string name="mots_searched">Most Searched Tags</string>
     <string name="no_dinners">No Recipe</string>
+    <string name="your_save">Your Saved</string>
 </resources>

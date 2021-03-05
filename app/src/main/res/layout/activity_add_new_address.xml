@@ -146,7 +146,7 @@
                     android:imeOptions="actionNext"
                     android:nextFocusForward="@id/blockEt">
 
-                    <com.ramez.shopp.SpichalViews.SAutoCompleteText
+                    <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
                         android:id="@+id/stateSpinnerTv"
                         style="@style/editTextStyle1"
                         android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                     android:layout_weight="1"
                     android:hint="@string/code">
 
-                    <com.ramez.shopp.SpichalViews.SAutoCompleteText
+                    <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
                         android:id="@+id/codeSpinner"
                         style="@style/editTextStyle1"
                         android:layout_width="match_parent"

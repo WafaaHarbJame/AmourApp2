@@ -389,12 +389,12 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_4sdp"
-        android:background="@drawable/round_corner_green_border"
+        android:background="@drawable/round_corner_next"
         android:gravity="center"
         android:padding="@dimen/_8sdp"
         android:textSize="@dimen/_14ssp"
         android:text="@string/proceed_to_checkout"
-        android:textColor="@color/green" />
+        android:textColor="@color/white" />
 
 
     <LinearLayout

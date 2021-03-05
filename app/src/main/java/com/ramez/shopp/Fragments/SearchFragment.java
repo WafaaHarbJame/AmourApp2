@@ -1,7 +1,6 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,25 +23,23 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.MostSearchAdapter;
+import com.ramez.shopp.Adapter.OfferProductAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.FLMFlowLayoutManager;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -54,12 +51,9 @@ import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.MostSearchModel;
 import com.ramez.shopp.Models.ProductModel;
-import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
-import com.ramez.shopp.databinding.FragmentCategoryProductsBinding;
 import com.ramez.shopp.databinding.SearchFagmentBinding;
-import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,7 +67,7 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick, ProductAdapter.OnItemClick {
+public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick, ProductAdapter.OnItemClick,OfferProductAdapter.OnItemClick {
 
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     SearchFagmentBinding binding;
@@ -95,8 +89,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private Runnable runnable;
     private Handler handler;
     private boolean toggleButton = false;
-    private ProductAdapter productOfferAdapter;
-    private ArrayList<MostSearchModel> mostSearchModels;
+    private OfferProductAdapter productOfferAdapter;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,7 +98,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
         productList = new ArrayList<>();
         offerList = new ArrayList<>();
-        mostSearchModels = new ArrayList<>();
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
         productOffersList = new ArrayList<>();
@@ -117,18 +109,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.searchEt.setFocusable(true);
         binding.searchEt.requestFocusFromTouch();
         binding.searchEt.setThreshold(1);
-
-        mostSearchModels.add(new MostSearchModel("حليب  ", "milk"));
-        mostSearchModels.add(new MostSearchModel("بيض ", "egg"));
-        mostSearchModels.add(new MostSearchModel("ماء", "water"));
-        mostSearchModels.add(new MostSearchModel("ارز  ", "rice"));
-        mostSearchModels.add(new MostSearchModel("حليب  ", "yogurt"));
-
-        FlowLayoutManager flowLayoutManager = new FlowLayoutManager();
-        flowLayoutManager.setAutoMeasureEnabled(true);
-        binding.mostTagRecycler.setLayoutManager(flowLayoutManager);
-        binding.mostTagRecycler.setAdapter(new MostSearchAdapter(getActivityy(), mostSearchModels, this));
-
 
         gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
@@ -219,8 +199,10 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
         binding.closeBtn.setOnClickListener(view1 -> {
             binding.offerLy.setVisibility(View.VISIBLE);
+            binding.noDataLY.noDataLY.setVisibility(View.GONE);
             productList.clear();
             binding.searchEt.setText("");
+
 
         });
         return view;
@@ -280,6 +262,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getActivityy().getString(R.string.fail_to_get_data);
+            binding.offerLy.setVisibility(View.GONE);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
@@ -310,7 +293,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-                        
+
                         binding.offerLy.setVisibility(View.GONE);
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -353,6 +336,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getActivityy().getString(R.string.fail_to_get_data);
+
+            binding.offerLy.setVisibility(View.GONE);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
@@ -572,7 +557,14 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
 
     public void initOffer() {
-        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList, this, 10);
+        //productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, this, 10);
+        productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
+                productOffersList.size(), binding.offerRecycler, Constants.offered_filter, this, new DataCallback() {
+            @Override
+            public void dataResult(Object obj, String func, boolean IsSuccess) {
+
+            }
+        });
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 

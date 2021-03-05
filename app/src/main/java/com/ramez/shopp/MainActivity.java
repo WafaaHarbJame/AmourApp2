@@ -119,12 +119,10 @@ public class MainActivity extends ActivityBase {
 
             if (UtilityApp.isLogin()) {
                 binding.toolBar.addExtra.setVisibility(View.VISIBLE);
-                binding.toolBar.deleteBut.setVisibility(View.VISIBLE);
 
 
             } else {
                 binding.toolBar.addExtra.setVisibility(View.GONE);
-                binding.toolBar.deleteBut.setVisibility(View.GONE);
 
             }
 
@@ -139,7 +137,6 @@ public class MainActivity extends ActivityBase {
             initBottomNav(3);
 
             binding.toolBar.addExtra.setVisibility(View.GONE);
-            binding.toolBar.deleteBut.setVisibility(View.GONE);
 
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
@@ -154,7 +151,7 @@ public class MainActivity extends ActivityBase {
             initBottomNav(4);
 
             binding.toolBar.addExtra.setVisibility(View.GONE);
-            binding.toolBar.deleteBut.setVisibility(View.GONE);
+
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
             if (UtilityApp.isLogin()) {
@@ -241,6 +238,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.addExtra.setVisibility(View.GONE);
 
             binding.toolBar.backBtn.setOnClickListener(view -> {
 
@@ -332,7 +330,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.sortBut.setVisibility(View.VISIBLE);
         } else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.deleteBut.setVisibility(View.GONE);
+
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.addExtra.setVisibility(View.GONE);
@@ -410,7 +408,7 @@ public class MainActivity extends ActivityBase {
 
         if (cartCount == 0) {
 
-            binding.toolBar.deleteBut.setVisibility(View.GONE);
+
             binding.cartCountTv.setVisibility(View.GONE);
 
         }
