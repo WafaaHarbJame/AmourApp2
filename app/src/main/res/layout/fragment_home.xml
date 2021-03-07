@@ -138,6 +138,10 @@
                 android:id="@+id/bannersRv"
                 android:layout_width="match_parent"
                 android:clipToPadding="true"
+                tools:itemCount="2"
+                tools:listitem="@layout/row_banners_item"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp" />
@@ -311,7 +315,7 @@
                 android:orientation="horizontal"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_kitchen" />
+                tools:listitem="@layout/row_kitchen_linear" />
 
 
             <LinearLayout

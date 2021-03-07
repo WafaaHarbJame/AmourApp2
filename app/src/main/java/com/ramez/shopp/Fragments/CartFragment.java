@@ -144,6 +144,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private void initAdapter() {
         cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
             CartProcessModel cartProcessModel = (CartProcessModel) obj;
+
             productSize = cartProcessModel.getCartCount();
 
             if (cartProcessModel.getCartCount() == 0) {
@@ -154,14 +155,14 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 binding.totalTv.setText(total.concat(" " + currency));
                 if (cartProcessModel.getTotalSavePrice() == 0) {
 
-                    binding.saveText.setVisibility(View.GONE);
+                    binding.savePriceLy.setVisibility(View.GONE);
                 } else {
-                    binding.saveText.setVisibility(View.VISIBLE);
+                    binding.savePriceLy.setVisibility(View.VISIBLE);
 
                 }
 
                 totalSavePrice = NumberHandler.formatDouble(cartProcessModel.getTotalSavePrice(), fraction);
-                binding.saveText.setText(getString(R.string.your_save) +"\n" + totalSavePrice.concat(" " + currency));
+                binding.saveText.setText(totalSavePrice.concat(" " + currency));
 
                 if (cartProcessModel.getTotal() >= minimum_order_amount) {
 
@@ -187,13 +188,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         if (cartAdapter.calculateSavePrice() == 0) {
 
-            binding.saveText.setVisibility(View.GONE);
+            binding.savePriceLy.setVisibility(View.GONE);
         } else {
-            binding.saveText.setVisibility(View.VISIBLE);
+            binding.savePriceLy.setVisibility(View.VISIBLE);
 
         }
 
-        binding.saveText.setText(getString(R.string.your_save) + "\n" + totalSavePrice.concat(" " + currency));
+        binding.saveText.setText(totalSavePrice.concat(" " + currency));
 
 
         cartAdapter.notifyDataSetChanged();

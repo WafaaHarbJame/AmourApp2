@@ -684,7 +684,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this,false);
         binding.kitchenRecycler.setAdapter(kitchenAdapter);
 
     }

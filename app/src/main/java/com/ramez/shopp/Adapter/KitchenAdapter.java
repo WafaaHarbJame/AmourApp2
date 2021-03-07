@@ -6,52 +6,69 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.DinnerModel;
-import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.RowKitchenBinding;
+import com.ramez.shopp.databinding.RowKitchenGridBinding;
+import com.ramez.shopp.databinding.RowKitchenLinearBinding;
 
 import java.util.List;
 
-public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.Holder> {
+public class KitchenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<DinnerModel> list;
     private OnKitchenClick onKitchenClick;
+    private boolean isGrid;
 
-    public KitchenAdapter(Context context, List<DinnerModel> list, OnKitchenClick onKitchenClick) {
+    public KitchenAdapter(Context context, List<DinnerModel> list, OnKitchenClick onKitchenClick, boolean isGrid) {
         this.context = context;
         this.list = list;
         this.onKitchenClick = onKitchenClick;
-        ;
+        this.isGrid = isGrid;
+
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowKitchenBinding itemView = RowKitchenBinding.inflate(LayoutInflater.from(context), parent, false);
+        if (isGrid) {
+            RowKitchenGridBinding itemView = RowKitchenGridBinding.inflate(LayoutInflater.from(context), parent, false);
+            return new HolderGrid(itemView);
+        } else {
+            RowKitchenLinearBinding itemView = RowKitchenLinearBinding.inflate(LayoutInflater.from(context), parent, false);
+            return new HolderLinear(itemView);
+        }
 
-        return new Holder(itemView);
     }
 
 
     @Override
-    public void onBindViewHolder(final Holder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 
         DinnerModel dinnerModel = list.get(position);
-        String imageUrl=dinnerModel.getImage();
+        String imageUrl = dinnerModel.getImage();
 
+        if (holder instanceof HolderLinear) {
+            HolderLinear holderLinear = (HolderLinear) holder;
+            GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
+            holderLinear.binding.titleTV.setText(dinnerModel.getDescription());
 
-        GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, holder.binding.kitchenImg);
-        holder.binding.titleTV.setText(dinnerModel.getDescription());
+            holderLinear.binding.container.setOnClickListener(v -> {
+                onKitchenClick.onKitchenClicked(position, dinnerModel);
+            });
 
-        holder.binding.container.setOnClickListener(v -> {
-            onKitchenClick.onKitchenClicked(position, dinnerModel);
-        });
+        } else if (holder instanceof HolderGrid) {
+            HolderGrid holderLinear = (HolderGrid) holder;
+            GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
+            holderLinear.binding.titleTV.setText(dinnerModel.getDescription());
+
+            holderLinear.binding.container.setOnClickListener(v -> {
+                onKitchenClick.onKitchenClicked(position, dinnerModel);
+            });
+
+        }
 
     }
 
@@ -65,11 +82,21 @@ public class KitchenAdapter extends RecyclerView.Adapter<KitchenAdapter.Holder> 
         void onKitchenClicked(int position, DinnerModel dinnerModel);
     }
 
-    static class Holder extends RecyclerView.ViewHolder {
+    static class HolderLinear extends RecyclerView.ViewHolder {
 
-        RowKitchenBinding binding;
+        RowKitchenLinearBinding binding;
 
-        Holder(RowKitchenBinding view) {
+        HolderLinear(RowKitchenLinearBinding view) {
+            super(view.getRoot());
+            binding = view;
+        }
+    }
+
+    static class HolderGrid extends RecyclerView.ViewHolder {
+
+        RowKitchenGridBinding binding;
+
+        HolderGrid(RowKitchenGridBinding view) {
             super(view.getRoot());
             binding = view;
         }

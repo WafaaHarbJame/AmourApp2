@@ -472,7 +472,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
                     if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
+                        if (calculateSubTotalPrice() > 0 || calculateSavePrice() >0)
                             dataCallback.dataResult(cartProcessModel, "success", true);
                     }
 

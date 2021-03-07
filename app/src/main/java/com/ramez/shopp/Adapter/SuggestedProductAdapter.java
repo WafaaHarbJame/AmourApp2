@@ -94,24 +94,21 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 
-            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
+             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
                 holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                 discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
                 DecimalFormat df = new DecimalFormat("#");
                 String newDiscount_str = df.format(discount);
                 holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-            }
 
 
         } else {
-            if (productModel.getProductBarcodes().get(0).getPrice() != null) {
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
-                holder.binding.discountTv.setVisibility(View.INVISIBLE);
+            holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
+            holder.binding.discountTv.setVisibility(View.GONE);
 
-            }
+
         }
 
         String photoUrl = "";

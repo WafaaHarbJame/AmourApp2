@@ -354,7 +354,6 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
 
-
     @Override
     public void onBrandClicked(int position, BrandModel brandModel) {
         Intent intent = new Intent(getActiviy(), AllListActivity.class);
@@ -366,7 +365,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this, true);
         binding.recycler.setAdapter(kitchenAdapter);
 
     }
@@ -382,7 +381,6 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         binding.recycler.setAdapter(brandsAdapter);
 
     }
-
 
 
     @Override

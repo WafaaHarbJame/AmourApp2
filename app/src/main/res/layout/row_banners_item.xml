@@ -4,13 +4,13 @@
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_2sdp"
+    android:layout_margin="@dimen/_4sdp"
     android:gravity="center"
     android:orientation="vertical">
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/ivCatImage"
-        android:layout_width="@dimen/_135sdp"
+        android:layout_width="@dimen/_138sdp"
         android:layout_height="@dimen/_40sdp"
         android:src="@drawable/banner_image"
         app:siBorderColor="@color/gray5"
