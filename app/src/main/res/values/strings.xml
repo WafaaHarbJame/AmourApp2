@@ -215,6 +215,7 @@
     <string name="update_profile">"Update Profile "</string>
     <string name="success_update">Success Update</string>
     <string name="please_wait_to_upload_photo">Please wait to upload Photo</string>
+    <string name="please_wait_to_add_request">Please wait to send  Request</string>
     <string name="categories">Categories</string>
     <string name="all">All</string>
     <string name="make_order">Make Order</string>
@@ -313,6 +314,7 @@
     <string name="add_photo">Add photo For Product (optionally)</string>
     <string name="know_price">You can know the price of product when Delivery Order</string>
     <string name="add_specail_order">Add Specail Order</string>
+    <string name="fail_to_add_extra_order">Fail to add  Specail Order</string>
     <string name="ramezKitchen">Ramez Kitchen</string>
     <string name="serving_for_4_people">Serving for 4 people</string>
     <string name="cooking_time">Cooking Time</string>
@@ -328,8 +330,8 @@
     <string name="Address_Name">Address Name</string>
     <string name="block_no">Block Number</string>
     <string name="code">code</string>
-    <string name="area">Area</string>
     <string name="no_dinners">No Recipe</string>
     <string name="your_save">Your Saved</string>
     <string name="addressTxt">Address</string>
+    <string name="please_add_desc">Please add Decribtion</string>
 </resources>

@@ -30,10 +30,10 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     ActivityAllListBinding binding;
     ArrayList<ProductModel> list;
     GridLayoutManager gridLayoutManager;
-    String name="";
+    String name = "";
     private ProductCategoryAdapter adapter;
     private int category_id = 0, country_id, city_id;
-    private String user_id = "0", filter="";
+    private String user_id = "0", filter = "";
     private MemberModel user;
     private LocalModel localModel;
     private int brand_id;
@@ -69,13 +69,12 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
             binding.swipeDataContainer.setRefreshing(false);
-            getProductList(0, country_id, city_id, user_id, filter,brand_id, 0, 10);
-
+            getProductList(0, country_id, city_id, user_id, filter, brand_id, 0, 10);
 
 
         });
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getProductList(0, country_id, city_id, user_id, filter,brand_id, 0, 10);
+            getProductList(0, country_id, city_id, user_id, filter, brand_id, 0, 10);
 
 
         });
@@ -84,7 +83,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     }
 
     public void initAdapter() {
-        adapter = new ProductCategoryAdapter(getActiviy(), list, 0, 0, country_id, city_id, user_id, list.size(), binding.recycler, filter, this, Constants.twoRow);
+        adapter = new ProductCategoryAdapter(getActiviy(), list, 0, country_id, city_id, user_id, list.size(), binding.recycler, filter, this, Constants.twoRow);
         binding.recycler.setAdapter(adapter);
     }
 
@@ -102,16 +101,16 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
         if (bundle != null) {
             name = bundle.getString(Constants.LIST_MODEL_NAME);
             filter = bundle.getString(Constants.FILTER_NAME);
-            brand_id=bundle.getInt(Constants.brand_id);
+            brand_id = bundle.getInt(Constants.brand_id);
             setTitle(name);
-            getProductList(0, country_id, city_id, user_id, filter,brand_id, 0, 10);
+            getProductList(0, country_id, city_id, user_id, filter, brand_id, 0, 10);
 
 
         }
     }
 
 
-    public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
+    public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
         list.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -178,6 +177,6 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
                 }
             }
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 }

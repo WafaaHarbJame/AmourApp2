@@ -53,14 +53,22 @@ public class AutoCompleteDropDown extends AppCompatAutoCompleteTextView {
     protected void onFocusChanged(boolean focused, int direction,
                                   Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (focused) {
-            performFiltering("", 0);
+        try {
+            if (focused) {
+                performFiltering("", 0);
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindowToken(), 0);
+                setKeyListener(null);
+                dismissDropDown();
+            } else {
+                isPopup = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getWindowToken(), 0);
             setKeyListener(null);
             dismissDropDown();
-        } else {
-            isPopup = false;
         }
     }
 
@@ -77,7 +85,7 @@ public class AutoCompleteDropDown extends AppCompatAutoCompleteTextView {
                         requestFocus();
                         showDropDown();
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
                 break;

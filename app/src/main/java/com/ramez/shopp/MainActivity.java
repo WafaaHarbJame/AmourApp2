@@ -261,6 +261,7 @@ public class MainActivity extends ActivityBase {
             int position = (int) event.data;
 
             if (position == 0) {
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_CART));
                 initBottomNav(0);
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
 
@@ -351,6 +352,7 @@ public class MainActivity extends ActivityBase {
             boolean TO_CART = getIntent().getBooleanExtra(Constants.CART, false);
 
             if (TO_CART) {
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_REFRESH));
                 initBottomNav(2);
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 

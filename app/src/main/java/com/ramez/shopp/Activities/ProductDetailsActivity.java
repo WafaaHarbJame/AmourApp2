@@ -364,21 +364,23 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             }
             else {
                 ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-                product_id = productModel.getId();
+                if (productModel != null) {
+                    product_id = productModel.getId();
 
-                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                    productName = productModel.getHName();
 
-                } else {
-                    productName = productModel.getName();
+                    if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                        productName = productModel.getHName();
+
+                    } else {
+                        productName = productModel.getName();
+
+                    }
+
+                    binding.productNameTv.setText(productName);
+                    binding.mainTitleTv.setText(productName);
 
                 }
-
-                binding.productNameTv.setText(productName);
-                binding.mainTitleTv.setText(productName);
-
             }
-
 
 
         }

@@ -81,16 +81,20 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             holder.binding.priceTv.setVisibility(View.GONE);
             holder.binding.currencyPriceTv.setVisibility(View.GONE);
             holder.binding.weightUnitTv.setVisibility(View.GONE);
+            String ProductName = cartDM.getProductName() == null ? cartDM.gethProductName() : cartDM.getProductName();
+            holder.binding.tvName.setText(ProductName);
+
+        } else {
+            holder.binding.tvName.setText(cartDM.getName());
+
         }
 
 
-        holder.binding.tvName.setText(cartDM.getName());
         holder.binding.currencyPriceTv.setText(currency);
 
 
         if (cartDM.getSpecialPrice() > 0) {
 
-            //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
             holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
             holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
@@ -107,8 +111,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         GlobalData.PicassoImg(cartDM.getImage()
                 , R.drawable.holder_image, holder.binding.imageView1);
-
-//        Picasso.get().load(cartDM.getImage()).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.imageView1);
 
 
         calculateSubTotalPrice();
@@ -188,19 +190,22 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public double calculateSavePrice() {
         double savePrice = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
+            CartModel cartModel=cartDMS.get(i);
 
+            double price = 0, specialPrice = 0, difference = 0;
 
-            double price = 0, specialPrice = 0,  difference = 0;
-            if (cartDMS.get(i).getProductPrice() > 0) {
+            if (cartModel.getProductPrice() > 0) {
 
-                if (cartDMS.get(i).getSpecialPrice() > 0) {
-                    specialPrice = cartDMS.get(i).getSpecialPrice();
-                    price = cartDMS.get(i).getProductPrice();
-                    difference=price-specialPrice;
-                    Log.i(TAG, "Log specialPrice result" + price);
-                    Log.i(TAG, "Log price result" + specialPrice);
+                if (cartModel.getSpecialPrice() > 0) {
+                    specialPrice =cartModel.getSpecialPrice();
+                    price = cartModel.getProductPrice();
+                    difference = price - specialPrice;
+                    Log.i(TAG, "Log specialPrice price" + price);
+                    Log.i(TAG, "Log calculateSavePrice specialPrice" + specialPrice);
+                    Log.i(TAG, "Log calculateSavePrice difference" + difference);
+                    Log.i(TAG, "Log calculateSavePrice getQuantity" +cartModel.getQuantity());
 
-                    savePrice=savePrice+difference;
+                    savePrice = savePrice + (difference*cartModel.getQuantity());
                 }
 
 
@@ -377,6 +382,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
+                int cart_id = productModel.getId();
 
                 int limit = productModel.getLimitQty();
                 boolean isExtra = productModel.isExtra();
@@ -385,7 +391,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     if (limit == 0) {
 
                         if (count + 1 <= stock) {
-                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                         } else {
                             message = context.getString(R.string.stock_empty);
@@ -394,7 +400,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     } else {
 
                         if (count + 1 <= stock && (count + 1 <= limit)) {
-                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, productModel.getId(), "quantity");
+                            updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                         } else {
 
@@ -409,7 +415,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                     }
                 } else {
-                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                 }
 
@@ -426,8 +432,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-
-                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                int cart_id = productModel.getId();
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
 
             });
@@ -435,14 +441,17 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             binding.deleteCartBtn.setOnClickListener(v -> {
                 if (cartDMS != null && cartDMS.size() > 0 & getAdapterPosition() != -1) {
                     CartModel productModel = cartDMS.get(getAdapterPosition());
-                    int product_barcode_id = productModel.getProductBarcodeId();
-                    int position = getAdapterPosition();
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                    int productId = productModel.getProductId();
-                    int cart_id = productModel.getId();
+                    if(productModel!=null){
+                        int product_barcode_id = productModel.getProductBarcodeId();
+                        int position = getAdapterPosition();
+                        int userId = UtilityApp.getUserData().getId();
+                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int productId = productModel.getProductId();
+                        int cart_id = productModel.getId();
 
-                    deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
+                        deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
+
+                    }
 
                 }
 
@@ -472,7 +481,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
                     if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0 || calculateSavePrice() >0)
+                        if (calculateSubTotalPrice() > 0 || calculateSavePrice() > 0)
                             dataCallback.dataResult(cartProcessModel, "success", true);
                     }
 

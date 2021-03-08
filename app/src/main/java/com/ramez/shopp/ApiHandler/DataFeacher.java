@@ -608,6 +608,7 @@ public class DataFeacher {
         Log.i(TAG, "Log updateCartHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + userId);
+        Log.i(TAG, "Log cart_id " + cart_id);
         Log.i(TAG, "Log store_ID " + storeId);
         Log.i(TAG, "Log product_id " + productId);
         Log.i(TAG, "Log product_barcode_id " + product_barcode_id);

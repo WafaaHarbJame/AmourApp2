@@ -7,6 +7,7 @@ public class MessageEvent {
     public static final String TYPE_view = "TYPE_view";
     public static final String TYPE_SORT = "TYPE_SORT";
     public static final String TYPE_cart = "cart";
+    public static final String REFRESH_CART = "REFRESH_CART";
     public static final String TYPE_search= "TYPE_search";
     public static final String TYPE_CATEGORY = "TYPE_CATEGORY";
     public static final String TYPE_main = "main";

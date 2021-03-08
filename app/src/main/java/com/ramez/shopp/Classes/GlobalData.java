@@ -26,6 +26,7 @@ public class GlobalData {
     //public static final String ApiURL = BaseURL + "api/";
     public static final String Api = "api/";
     public static final String COUNTRY = "BH";
+    public static final Boolean refresh_cart  = false;
 
 
     public static int Position = 0;

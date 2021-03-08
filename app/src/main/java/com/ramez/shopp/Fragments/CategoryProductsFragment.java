@@ -63,7 +63,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     ArrayList<AutoCompleteModel> data = null;
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
-    ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
+    //    ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
     GridLayoutManager gridLayoutManager;
     int numColumn = 2;
     int selectedSubCat = 0;
@@ -80,12 +80,12 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         binding = FragmentCategoryProductsBinding.inflate(inflater, container, false);
 
         productList = new ArrayList<>();
-        subCategoryDMS = new ArrayList<>();
+//        subCategoryDMS = new ArrayList<>();
         mainCategoryDMS = new ArrayList<>();
 
 
         gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
-        binding.recycler.setLayoutManager(gridLayoutManager);
+        binding.productsRv.setLayoutManager(gridLayoutManager);
 
 
         binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActivityy(), LinearLayoutManager.HORIZONTAL, false));
@@ -93,8 +93,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         binding.listSubCategory.setLayoutManager(new LinearLayoutManager(getActivityy(), LinearLayoutManager.HORIZONTAL, false));
 
 
-        binding.recycler.setHasFixedSize(true);
-        binding.recycler.setItemAnimator(null);
+        binding.productsRv.setHasFixedSize(true);
+        binding.productsRv.setItemAnimator(null);
 
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
@@ -114,8 +114,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         getIntentExtra();
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getCategories(city_id, 0);
-            //   getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+//            getCategories(city_id, 0);
+            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         });
 
@@ -154,8 +154,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     public void initAdapter() {
 
-        adapter = new ProductCategoryAdapter(getActivityy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler, "", this, numColumn);
-        binding.recycler.setAdapter(adapter);
+        adapter = new ProductCategoryAdapter(getActivityy(), productList, category_id, country_id, city_id, user_id, 0, binding.productsRv, "", this, numColumn);
+        binding.productsRv.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
         binding.offerCountTv.setText(String.valueOf(productList.size()));
@@ -185,33 +185,36 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + category_id);
             Log.i(CategoryProductsFragment.class.getName(), "Log categoryModel " + categoryModel.getHName());
 
-            ChildCat childCat = new ChildCat();
-            childCat.setId(0);
-            childCat.setHName(getString(R.string.all));
-            childCat.setName(getString(R.string.all));
-
-            subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
             category_id = categoryModel.getId();
-
-            subCategoryDMS.add(0, childCat);
-
             initMainCategoryAdapter();
 
-            initSubCategoryAdapter();
+            initSubCatList(mainCategoryDMS.get(position).getChildCat());
 
             getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         }
     }
 
+    private void initSubCatList(ArrayList<ChildCat> subCatList) {
+        ChildCat childCat = new ChildCat();
+        childCat.setId(category_id);
+        childCat.setHName(getString(R.string.all));
+        childCat.setName(getString(R.string.all));
 
-    private void initSubCategoryAdapter() {
+        selectedSubCat = category_id;
+        ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
+
+        subCategoryDMS.add(0, childCat);
+
+        initSubCategoryAdapter(subCategoryDMS);
+    }
+
+    private void initSubCategoryAdapter(ArrayList<ChildCat> subCategoryDMS) {
 
         SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS, object -> {
 
-            category_id = object.getId();
-            getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
-
+            selectedSubCat = object.getId();
+            getProductList(selectedSubCat, country_id, city_id, user_id, "", 0, 10);
 
         }, selectedSubCat);
 
@@ -228,7 +231,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
         productList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-        binding.dataLY.setVisibility(View.GONE);
+        binding.productsRv.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
@@ -243,30 +246,22 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                binding.dataLY.setVisibility(View.GONE);
+                binding.productsRv.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
+                binding.productsRv.setVisibility(View.GONE);
 
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 
-                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.productsRv.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
@@ -275,7 +270,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
                     } else {
 
-                        binding.dataLY.setVisibility(View.GONE);
+                        binding.productsRv.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
 
                     }
@@ -283,7 +278,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
                 } else {
 
-                    binding.dataLY.setVisibility(View.GONE);
+                    binding.productsRv.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
@@ -298,10 +293,21 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     @Override
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
-        subCategoryDMS.clear();
+//        subCategoryDMS.clear();
         category_id = mainCategoryDM.getId();
-        getCategories(city_id, position);
+        initSubCatList(mainCategoryDM.getChildCat());
 
+        getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+
+//        ArrayList<ChildCat> subCategoryDMS = mainCategoryDM.getChildCat();
+//        ChildCat childCat = new ChildCat();
+//        childCat.setId(0);
+//        childCat.setHName(getString(R.string.all));
+//        childCat.setName(getString(R.string.all));
+//        subCategoryDMS.add(0, childCat);
+//
+//        initSubCategoryAdapter(subCategoryDMS);
+//        getCategories(city_id, position);
 
     }
 
@@ -350,11 +356,11 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     public void getCategories(int storeId, int position) {
 
-        subCategoryDMS.clear();
+//        subCategoryDMS.clear();
         mainCategoryDMS.clear();
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-        binding.dataLY.setVisibility(View.GONE);
+//        binding.dataLY.setVisibility(View.GONE);
         binding.searchLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
@@ -370,31 +376,23 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                 if (result != null) {
                     message = result.getMessage();
                 }
-                binding.dataLY.setVisibility(View.GONE);
+//                binding.dataLY.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
+//                binding.dataLY.setVisibility(View.GONE);
 
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 
                         binding.searchLY.setVisibility(View.VISIBLE);
-                        binding.dataLY.setVisibility(View.VISIBLE);
+//                        binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
@@ -405,23 +403,23 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
                         mainCategoryDMS = result.getData();
 
-                        subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
-
-                        subCategoryDMS.add(0, childCat);
-
-                        if (subCategoryDMS.size() > 0) {
-                            selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
-
-                        }
+//                        subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
+//
+//                        subCategoryDMS.add(0, childCat);
+//
+//                        if (subCategoryDMS.size() > 0) {
+//                            selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
+//
+//                        }
 
                         initMainCategoryAdapter();
-                        initSubCategoryAdapter();
+//                        initSubCategoryAdapter();
                         getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
 
 
                     } else {
 
-                        binding.dataLY.setVisibility(View.GONE);
+//                        binding.dataLY.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
 
                     }
@@ -429,7 +427,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
                 } else {
 
-                    binding.dataLY.setVisibility(View.GONE);
+//                    binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);

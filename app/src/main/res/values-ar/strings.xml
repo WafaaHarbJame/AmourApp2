@@ -190,6 +190,7 @@
     <string name="failtoupdate_profile">فشل تعديل الملف الشخصي </string>
     <string name="update_profile">تعديل الملف الشخصي</string>
     <string name="success_update">تم تعديل البيانات بنجاح </string>
+    <string name="please_wait_to_add_request">الرجاء الانتظار يتم الان  ارسال الطلب </string>
     <string name="please_wait_to_upload_photo">الرجاء الانتظار يتم الان تحميل الصورة</string>
     <string name="categories">الاصناف</string>
     <string name="all">الكل</string>
@@ -202,6 +203,7 @@
     <string name="textNoXadoxOrder">لم تقم بطلب منتجات من رامز  حتي الان</string>
     <string name="textStartShopping">ابدأ التسوق</string>
     <string name="searchaddress">ابحث عن العنوان من هنا </string>
+    <string name="fail_to_add_extra_order">غشل اضافة الطلب الخاص </string>
     <string name="send_orders"> لقد تم استلام طلبك , شكراً لتسوقكم معنا \n   نسعد بخدمتكم دائما </string>
     <string name="back_to_home">العودة الى  الرئيسية </string>
     <string name="stock_empty">نفذ المخزون </string>
@@ -290,10 +292,10 @@
     <string name="Address_Name">اسم العنوان </string>
     <string name="block_no">رقم المجمع </string>
     <string name="code">كود الدولة</string>
-    <string name="area">المنطقة</string>
     <string name="flat">رقم الشقة</string>
     <string name="no_dinners">لا يوجد وجبات </string>
     <string name="your_save">وفرت</string>
     <string name="addressTxt">العناوين</string>
+    <string name="please_add_desc">الرجاء اضافة وصف المنتج </string>
 
 </resources>

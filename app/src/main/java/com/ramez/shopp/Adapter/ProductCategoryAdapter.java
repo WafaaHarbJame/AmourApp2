@@ -46,7 +46,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public boolean isLoading = false;
     public int visibleThreshold = 5;
     public boolean show_loading = true;
-    int category_id, country_id, city_id, subID;
+    int category_id, country_id, city_id;
     String user_id;
     private int nextPage = 1;
     private int lastVisibleItem;
@@ -65,13 +65,13 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int brand_id;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
+    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
         this.limit = limit;
         this.category_id = category_id;
-        this.subID = subID;
+//        this.subID = subID;
         this.city_id = city_id;
         this.country_id = country_id;
         this.user_id = user_id;

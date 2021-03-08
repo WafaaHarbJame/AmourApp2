@@ -179,7 +179,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         binding.saveBut.setOnClickListener(view1 -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,2));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 2));
 
         });
 
@@ -371,7 +371,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public void getDeliveryTimeList(int storeId) {
 
         datesMap.clear();
-//        deliveryTimesList.clear();
 
         binding.loadingDelivery.setVisibility(View.VISIBLE);
 
@@ -454,9 +453,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.productsSizeTv.setText(total.concat(" " + currency));
             binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
-            Log.i("tag","Log minimum_order_amount "+minimum_order_amount);
-            Log.i("tag","Log deliveryFees "+deliveryFees);
-            Log.i("tag","Log total "+total);
+            Log.i("tag", "Log minimum_order_amount " + minimum_order_amount);
+            Log.i("tag", "Log deliveryFees " + deliveryFees);
+            Log.i("tag", "Log total " + total);
 
             if (deliveryFees > 0) {
                 if (Double.parseDouble(total) >= minimum_order_amount) {
@@ -624,22 +623,24 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public void GetUserAddress(int addressId) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            AddressResultModel result = (AddressResultModel) obj;
-            if (IsSuccess) {
-                binding.dataLY.setVisibility(View.VISIBLE);
-                if (result.getData() != null && result.getData().size() > 0) {
-                    AddressModel addressModel = result.getData().get(0);
-                    addressTitle = addressModel.getName();
-                    addressFullAddress = addressModel.getFullAddress();
-                    binding.delivery.setText(addressTitle);
-                    binding.tvFullAddress.setText(addressFullAddress);
+            if (isVisible()) {
+
+                AddressResultModel result = (AddressResultModel) obj;
+                if (IsSuccess) {
+                    binding.dataLY.setVisibility(View.VISIBLE);
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        AddressModel addressModel = result.getData().get(0);
+                        addressTitle = addressModel.getName();
+                        addressFullAddress = addressModel.getFullAddress();
+                        binding.delivery.setText(addressTitle);
+                        binding.tvFullAddress.setText(addressFullAddress);
+
+
+                    }
 
 
                 }
-
-
             }
-
 
         }).GetAddressByIdHandle(addressId);
     }

@@ -190,7 +190,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
             } else {
-                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
                 holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
                 holder.binding.discountTv.setVisibility(View.GONE);
 
@@ -227,12 +227,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
 
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
             } else {
@@ -245,7 +245,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_favorite));
 
 
@@ -260,12 +260,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_remove_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_remove_favorite));
 
 
@@ -279,7 +279,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_remove_favorite));
 
                 }
@@ -432,7 +432,8 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context,
+                            R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
                 } else {
 
@@ -448,42 +449,36 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     int stock = productModel.getProductBarcodes().get(0).getStockQty();
                     int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                    if(limit==0){
+                    if (limit == 0) {
 
                         if (count + 1 <= stock) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
 
                         }
-                    }
-                    else {
+                    } else {
 
                         if (count + 1 <= stock && (count + 1 <= limit)) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
-                        }
-                        else {
+                        } else {
 
-                            if(count+1 > stock){
+                            if (count + 1 > stock) {
                                 message = context.getString(R.string.stock_empty);
-                            }
-                            else {
+                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
 
                             }
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
                         }
 
 
-
                     }
-
 
 
                 }
@@ -525,20 +520,17 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     } else {
 
-                        if(count+1 > stock){
+                        if (count + 1 > stock) {
                             message = context.getString(R.string.stock_empty);
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                 message);
                     }
 
                 }
-
-
 
 
             });
@@ -590,8 +582,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-
-                  //  initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
@@ -599,7 +589,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_cart));
 
                 }
@@ -612,13 +602,13 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
-                   // initSnackBar(context.getString(R.string.success_to_update_cart), view);
+                    // initSnackBar(context.getString(R.string.success_to_update_cart), view);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_update_cart));
 
                 }
@@ -638,7 +628,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_delete_cart));
 
                 }

@@ -2,9 +2,7 @@ package com.ramez.shopp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,23 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.EmptyCartDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -36,14 +31,14 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.Utils.SharedPManger;
 import com.ramez.shopp.databinding.FragmentCartBinding;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import ru.nikartm.support.BadgePosition;
 
 import static android.content.ContentValues.TAG;
 
@@ -123,10 +118,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             getCarts(storeId, userId);
 
-            if (cartAdapter != null) {
-
-                cartAdapter.notifyDataSetChanged();
-            }
+//            if (cartAdapter != null) {
+//
+//                cartAdapter.notifyDataSetChanged();
+//            }
 
 
         }
@@ -345,5 +340,37 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         checkLoginDialog.show();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
 
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
+        if (event.type.equals(MessageEvent.TYPE_REFRESH)) {
+
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (GlobalData.REFRESH_CART) {
+            getCarts(storeId, userId);
+            GlobalData.REFRESH_CART = false;
+
+        }
+    }
 }

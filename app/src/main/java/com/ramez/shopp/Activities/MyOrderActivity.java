@@ -1,18 +1,16 @@
 package com.ramez.shopp.Activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-
 import com.ramez.shopp.Classes.MessageEvent;
-import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CurrentOrderFragment;
-import com.ramez.shopp.Fragments.HomeFragment;
 import com.ramez.shopp.Fragments.PastOrderFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;

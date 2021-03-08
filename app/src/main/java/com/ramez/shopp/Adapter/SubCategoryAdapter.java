@@ -23,13 +23,13 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     private Context context;
     private ArrayList<ChildCat> mainCategoryDMS;
     private OnSubCategoryItemClicked onSubCategoryItemClicked;
-    private int selectedPosition;
+    private int selectedCat;
 
     public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS, OnSubCategoryItemClicked onSubCategoryItemClicked, int selectedPosition) {
         this.context = context;
         this.mainCategoryDMS = mainCategoryDMS;
         this.onSubCategoryItemClicked = onSubCategoryItemClicked;
-        this.selectedPosition = selectedPosition;
+        this.selectedCat = selectedPosition;
 
     }
 
@@ -47,7 +47,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         holder.buttonCategory.setText(subCategoryDM.getCatName());
 
 
-        if (subCategoryDM.getId() == selectedPosition) {
+        if (subCategoryDM.getId() == selectedCat) {
             holder.view_line.setVisibility(View.VISIBLE);
 
         } else {
@@ -78,9 +78,10 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             buttonCategory.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 ChildCat subCategoryDM = mainCategoryDMS.get(position);
-                onSubCategoryItemClicked.onItemClicked(subCategoryDM);
+                selectedCat = subCategoryDM.getId();
                 notifyDataSetChanged();
-                selectedPosition = subCategoryDM.getId();
+
+                onSubCategoryItemClicked.onItemClicked(subCategoryDM);
 
 
             });
