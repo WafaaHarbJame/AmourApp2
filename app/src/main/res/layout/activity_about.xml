@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start|center_vertical"
+                android:text="@string/app_name"
+                android:textSize="@dimen/_14ssp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textColor="@color/colorPrimary" />
+            <com.ramez.shopp.SpichalViews.STextView
+                android:layout_width="match_parent"
+                android:id="@+id/textTv"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="start|center_vertical"
+                android:textSize="@dimen/_12ssp"
+                android:justificationMode="inter_word"
+                android:textAlignment="viewStart"
+                android:lineSpacingExtra="@dimen/_4sdp"
+                android:scrollbars="vertical"
+                android:text="@string/dummy_text"
+                android:textColor="@color/colorLoginText" />
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/appVersionTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text=""
+                android:paddingBottom="@dimen/_8sdp"
+                android:layout_gravity="center"
+                android:textColor="@color/green" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

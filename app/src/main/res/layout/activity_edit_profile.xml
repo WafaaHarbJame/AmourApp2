@@ -1,0 +1,145 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:padding="@dimen/_16sdp">
+            <FrameLayout
+                android:layout_width="@dimen/_60sdp"
+                android:id="@+id/editPhotoBut"
+                android:layout_height="@dimen/_60sdp">
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/userImg"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:src="@drawable/avatar"
+                    app:siBorderColor="@color/transparent"
+                    app:siBorderWidth="1dp" />
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/edit_photo"
+                    android:layout_height="@dimen/_15sdp"/>
+            </FrameLayout>
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:layout_width="match_parent"
+                android:id="@+id/userNameTv"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:gravity="center"
+                android:text=""
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+            <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/edtUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/name"
+                android:inputType="text"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d8d8d8" />
+            <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_registration_email_id"
+                android:inputType="textEmailAddress"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d8d8d8" />
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/edtPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_profile_phone_number"
+                android:inputType="phone"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d8d8d8" />
+
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/saveBut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:background="@drawable/round_corner_next"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/text_save"
+                android:textColor="@android:color/white"
+                />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

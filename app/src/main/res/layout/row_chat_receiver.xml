@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/userImg"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:src="@drawable/avatar"
+        app:siBorderColor="@color/gray"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_gravity="top"
+        app:siBorderWidth="1dp"
+        app:siRadius="@dimen/round_corner_thin" />
+    <LinearLayout
+        android:id="@+id/rowLY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_10sdp"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_8sdp">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/messageTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Hello"
+                android:textAlignment="viewStart"
+                android:textColor="@color/text_color"
+                android:padding="@dimen/_16sdp"
+                android:background="@drawable/round_corner_grey_small"
+                android:textSize="@dimen/_12ssp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            android:layout_margin="@dimen/_4sdp"
+            app:cardCornerRadius="@dimen/_2sdp"
+            android:clipToPadding="true"
+            app:cardElevation="@dimen/_2sdp">
+            <ImageView
+                android:id="@+id/chatImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/avatar" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp">
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/dateTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="18/12/2020 5.30 م"
+                android:textAlignment="viewStart"
+                android:textColor="@color/gray4"
+                android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/readImv"
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_seen" />
+
+        </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+

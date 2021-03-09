@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="vertical">
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/edtFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableStart="@drawable/phone_icon"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:hint="@string/first_name"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_view" />
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableStart="@drawable/phone_icon"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:hint="@string/text_email"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:text=""
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_view" />
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/edtPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableStart="@drawable/phone_icon"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:hint="@string/text_profile_phone_number"
+                    android:inputType="phone"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorLoginText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_view" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/edtPassword"
+                        android:background="@null"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/passward_icon"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:hint="@string/text_login_password"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLoginText"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <ImageView
+                        android:id="@+id/showPassBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="ShowHidePass"
+                        android:src="@drawable/ic_visibility" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_view" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/edtConfirmPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawableStart="@drawable/passward_icon"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:hint="@string/text_confirm_password"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLoginText"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+                    <ImageView
+                        android:id="@+id/showConfirmPassBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="ShowHidePass"
+                        android:src="@drawable/ic_visibility" />
+                </LinearLayout>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_view" />
+
+
+            </LinearLayout>
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/registerBut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/round_corner_next"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/create_account"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/text_login_dont_have_an_account"
+                    android:textColor="@color/colorLoginText" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/loginBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:text="@string/login_now"
+                    android:textColor="@color/green" />
+            </LinearLayout>
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:gravity="center"
+                android:lines="1"
+                android:text="@string/terms1"
+                android:textColor="@color/colorLoginText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/privacyBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:text="@string/terms2"
+                    android:textColor="@color/colorPrimary" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:text="@string/terms3"
+                    android:textColor="@color/colorLoginText" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/termsBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:text="@string/terms4"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

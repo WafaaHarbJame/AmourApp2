@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray5"
+    android:orientation="vertical"
+    tools:context=".Activities.RamezKitchenActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:scaleX="@integer/scaleXInv"
+                android:src="@drawable/back_icon"
+                android:textSize="@dimen/_15ssp"
+                android:visibility="visible"
+                tools:targetApi="m" />
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/mainTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_toEndOf="@id/backBtn"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="2"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="visible" />
+
+            <FrameLayout
+                android:id="@+id/fabCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    app:srcCompat="@drawable/cart_icon_bottom"
+                    app:tint="@color/white" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/tVCartSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@drawable/counter_back_style1"
+                    android:gravity="center"
+                    android:minWidth="@dimen/_15sdp"
+                    android:minHeight="@dimen/_15sdp"
+                    android:text="0"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/_8ssp"
+                    android:visibility="visible" />
+
+
+            </FrameLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/loadingProgressLY"
+                layout="@layout/layout_pre_loading" />
+
+            <include
+                android:id="@+id/failGetDataLY"
+                layout="@layout/layout_fail_get_data" />
+
+
+            <LinearLayout
+                android:id="@+id/dataLY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.duolingo.open.rtlviewpager.RtlViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:paddingLeft="@dimen/card_padding"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/card_padding"
+                        android:paddingRight="@dimen/card_padding"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:visibility="visible" />
+
+
+                    <com.rd.PageIndicatorView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:piv_animationType="color"
+                        app:piv_radius="3dp"
+                        app:piv_selectedColor="@color/colorPrimaryDark"
+                        app:piv_unselectedColor="@color/gray1"
+                        app:piv_viewPager="@id/viewPager" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp">
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/productNameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="food name"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp" />
+
+                </LinearLayout>
+
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/serve_number"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="@string/serving_for_4_people"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@drawable/round_corner_white_fill_big"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:src="@drawable/cook_time" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.ramez.shopp.SpichalViews.STextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cooking_time"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/gray3" />
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30 MIN"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/calories" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.ramez.shopp.SpichalViews.STextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/calories"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/gray3" />
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="300 KCAL"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/receipe"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:maxLines="2"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="@string/recipe"
+                    android:textSize="@dimen/_12ssp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black" />
+
+                <at.blogc.android.views.ExpandableTextView
+                    android:id="@+id/productDescTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cairo"
+                    android:maxLines="5"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="test"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:animation_duration="750" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/showAllBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="@string/ShowAll"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_10ssp" />
+
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ingredients"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:maxLines="2"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="@string/ingredients"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipeRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_recipe" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/no_offers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/no_offers"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/offerRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_suggested_product_item" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingredientsRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_ingredints_item" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+
+
+    <com.ramez.shopp.SpichalViews.STextViewBold
+        android:id="@+id/processCartBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:background="@drawable/round_corner_next"
+        android:gravity="center"
+        android:padding="@dimen/_8sdp"
+        android:textSize="@dimen/_14ssp"
+        android:text="@string/proceed_to_checkout"
+        android:textColor="@color/white" />
+
+
+    <LinearLayout
+        android:id="@+id/CartLy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/round_corner_gray_fill2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/plusCartBtn"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/counter_green"
+            android:minWidth="@dimen/_20sdp"
+            android:minHeight="@dimen/_20sdp"
+            android:padding="@dimen/_4sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/plus"
+            app:tint="@color/white" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:id="@+id/productCartQTY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_8ssp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:gravity="center"
+            android:minWidth="@dimen/_20sdp"
+            android:minHeight="@dimen/_20sdp"
+            android:text="1"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/minusCartBtn"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_8ssp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/counter_green"
+            android:minWidth="@dimen/_20sdp"
+            android:minHeight="@dimen/_20sdp"
+
+            android:padding="@dimen/_4sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/minues"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/deleteCartBtn"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_16ssp"
+            android:minWidth="@dimen/_20sdp"
+            android:minHeight="@dimen/_20sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/delete_icon" />
+    </LinearLayout>
+
+</LinearLayout>
+

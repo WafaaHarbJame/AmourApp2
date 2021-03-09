@@ -1,0 +1,182 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:padding="@dimen/_16sdp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:text="@string/enter_code1"
+                    android:textColor="@color/text_color"
+                    />
+            </LinearLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:textAlignment="viewStart"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:textAlignment="viewStart"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:textAlignment="viewStart"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--                <com.ramez.ramez.SpichalViews.SEditText-->
+<!--                    android:layout_width="@dimen/_25sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/textlines"-->
+<!--                    android:inputType="number"-->
+<!--                    android:paddingStart="@dimen/_8sdp"-->
+<!--                    android:paddingTop="@dimen/_8sdp"-->
+<!--                    android:paddingEnd="@dimen/_8sdp"-->
+<!--                    android:paddingBottom="@dimen/_8sdp"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:textAlignment="viewStart"-->
+<!--                    android:textColor="@color/colorLoginText"-->
+<!--                    android:textColorHint="@color/colorTextHint"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
+<!--            </LinearLayout>-->
+
+
+            <com.ramez.shopp.SpichalViews.PinEntryEditText
+                android:id="@+id/codeTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:cursorVisible="true"
+                android:digits="1234567890"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="false"
+                android:visibility="visible"
+                android:textSize="@dimen/_15ssp"/>
+
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/confirmBut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:background="@drawable/round_corner_next"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/confirm"
+                android:textColor="@android:color/white"
+                />
+
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/resendCodeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/resend_again"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
+
+</LinearLayout>

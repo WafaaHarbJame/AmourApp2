@@ -1,0 +1,203 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:background="@color/white"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:elevation="4dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/visa_image"
+                app:riv_corner_radius="@dimen/_16sdp" />
+            <LinearLayout
+                android:id="@+id/chooseCardTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/colorLoginText"
+                    android:gravity="start|center_vertical"
+                    android:hint="@string/choose_card_type" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_down" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/lang_style"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/choose_card_type"
+                        android:textColor="@color/colorLoginText" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_down" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray_view" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/recycler"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_lang_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_view" />
+            <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/cardHolderED"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_card_name"
+                android:inputType="text"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_view" />
+            <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/cardNumberED"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_card_num"
+                android:inputType="number"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_view" />
+            <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/cardDateED"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/text_card_date"
+                android:inputType="date"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/colorLoginText"
+                android:textColorHint="@color/colorTextHint"
+                android:textSize="@dimen/_12ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_view" />
+            <com.ramez.shopp.SpichalViews.SCheckBox
+                android:id="@+id/cardDefaultCB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_card"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/colorLoginText"
+                android:theme="@style/checkBoxStyle" />
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/saveBut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:background="@drawable/round_corner_next"
+                android:gravity="center"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/text_save"
+                android:textColor="@android:color/white"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

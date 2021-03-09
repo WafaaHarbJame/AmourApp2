@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:layout_width="wrap_content"
+                android:id="@+id/rbSelectAddress"
+                android:textAlignment="viewStart"
+                android:text=""
+                android:checked="false"
+                android:theme="@style/MyRadioButton"
+                android:layout_height="wrap_content"/>
+            <com.ramez.shopp.SpichalViews.STextView
+                android:layout_width="wrap_content"
+                android:text="Talal"
+                android:id="@+id/tvaAddressTitle"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_height="wrap_content">
+            <com.ramez.shopp.SpichalViews.STextView
+                android:layout_width="0dp"
+                android:id="@+id/tvAddressNote"
+                android:textAlignment="viewStart"
+                android:text="960,21,2923,,,,,BH"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/editBut"
+                android:src="@drawable/edit_icon"
+                android:minWidth="@dimen/_10sdp"
+                android:minHeight="@dimen/_10sdp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:layout_width="match_parent"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="Ph : 33310488"
+            android:id="@+id/tvAddressMark"
+            android:paddingBottom="@dimen/_8sdp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/divider"
+            android:background="#d8d8d8" />
+
+    </LinearLayout>
+
