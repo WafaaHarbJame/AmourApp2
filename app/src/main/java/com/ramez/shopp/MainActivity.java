@@ -396,7 +396,7 @@ public class MainActivity extends ActivityBase {
                             }
                         };
 
-                        new ConfirmDialog(getActiviy(), R.string.updateMessage, R.string.ok, R.string.cancel_label, click, cancel);
+                        new ConfirmDialog(getActiviy(),getString( R.string.updateMessage), R.string.ok, R.string.cancel_label, click, cancel,false);
 
                     }
                     Log.i(TAG, "Log getValidation" + result.getMessage());

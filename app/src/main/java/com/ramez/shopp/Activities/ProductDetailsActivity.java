@@ -21,6 +21,7 @@ import com.ramez.shopp.Adapter.ProductSliderAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -114,6 +115,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private void initListener() {
 
         binding.backBtn.setOnClickListener(view1 -> {
+            GlobalData.REFRESH_CART=true;
             onBackPressed();
         });
 
@@ -923,6 +925,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         }).setRate(reviewModel);
     }
+
 
 
 }

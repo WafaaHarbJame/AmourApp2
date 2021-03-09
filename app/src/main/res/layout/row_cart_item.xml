@@ -21,6 +21,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/cardBack"
+            android:background="@drawable/round_card_white"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_4sdp"
             android:layout_height="wrap_content">
 
             <com.daimajia.swipe.SwipeLayout

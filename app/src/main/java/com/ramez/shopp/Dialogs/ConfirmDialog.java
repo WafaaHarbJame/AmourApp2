@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -18,7 +19,7 @@ public class ConfirmDialog extends Dialog {
 
     Activity activity;
 
-    public ConfirmDialog(Context context, int message, int okStr, int cancelStr, final Click okCall, final Click cancelCall) {
+    public ConfirmDialog(Context context, String message, int okStr, int cancelStr, final Click okCall, final Click cancelCall,Boolean isNotVisible) {
         super(context);
 
         activity = (Activity) context;
@@ -36,6 +37,10 @@ public class ConfirmDialog extends Dialog {
         okBtn = findViewById(R.id.okBtn);
 
         messageTxt.setText(message);
+
+        if(isNotVisible){
+            cancelBtn.setVisibility(View.GONE);
+        }
 
         if (okStr != 0)
             okBtn.setText(okStr);

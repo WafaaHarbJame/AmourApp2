@@ -297,5 +297,12 @@
     <string name="your_save">وفرت</string>
     <string name="addressTxt">العناوين</string>
     <string name="please_add_desc">الرجاء اضافة وصف المنتج </string>
+    <string name="outofstock">تم تغير كمية هذا المنتج : </string>
+    <string name="outofprice">تم تغير سعر هذا المتتج : </string>
+    <string name="product_price">السعر : </string>
+    <string name="product_quan">الكمية : </string>
+    <string name="product_not_Available">المنتج غير متاح  </string>
+    <string name="product_Name">اسم المنتج : </string>
+    <string name="please_update_cart">الرجاء تحديث هذة المنتجات </string>
 
 </resources>

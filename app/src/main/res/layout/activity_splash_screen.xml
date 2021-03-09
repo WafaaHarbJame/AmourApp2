@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:src="@drawable/splash_back" />
 
@@ -30,7 +31,7 @@
         android:layout_marginBottom="@dimen/_5sdp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        app:indicatorColor="@color/white" />
+        app:indicatorColor="@color/colorPrimaryDark" />
 
 
 </RelativeLayout>

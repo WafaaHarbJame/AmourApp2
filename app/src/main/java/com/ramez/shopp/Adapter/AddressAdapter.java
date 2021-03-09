@@ -120,7 +120,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             }
         };
 
-        new ConfirmDialog(context, R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
+        new ConfirmDialog(context,context.getString(R.string.want_to_delete_address), R.string.ok, R.string.cancel_label, click, null,false);
 
     }
 

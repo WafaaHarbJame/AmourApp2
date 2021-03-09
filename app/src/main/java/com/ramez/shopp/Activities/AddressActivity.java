@@ -295,7 +295,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             }
         };
 
-        new ConfirmDialog(getActiviy(), R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
+        new ConfirmDialog(getActiviy(), getString(R.string.want_to_delete_address), R.string.ok, R.string.cancel_label, click, null,false);
 
     }
 

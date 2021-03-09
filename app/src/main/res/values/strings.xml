@@ -333,5 +333,14 @@
     <string name="no_dinners">No Recipe</string>
     <string name="your_save">Your Saved</string>
     <string name="addressTxt">Address</string>
-    <string name="please_add_desc">Please add Decribtion</string>
+    <string name="please_add_desc">Please add Description</string>
+    <string name="outofstock">Product quantity  has been changed : </string>
+    <string name="product_price">product Price: </string>
+    <string name="product_quan">Product Quantity :</string>
+    <string name="product_not_Available">Product not Available : </string>
+    <string name="product_Name">product name : </string>
+    <string name="outofprice">Product price  has been changed : </string>
+    <string name="please_update_cart">Please Update Cart</string>
+
+
 </resources>

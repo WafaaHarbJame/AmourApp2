@@ -432,7 +432,7 @@ public class MyAccountFragment extends FragmentBase {
             }
         };
 
-        new ConfirmDialog(getActivityy(), R.string.want_to_signout, R.string.ok, R.string.cancel_label, click, null);
+        new ConfirmDialog(getActivityy(),getString( R.string.want_to_signout), R.string.ok, R.string.cancel_label, click, null,false);
 
     }
 
