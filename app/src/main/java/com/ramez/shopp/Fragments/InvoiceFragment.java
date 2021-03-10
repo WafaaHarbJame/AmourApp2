@@ -402,6 +402,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             DeliveryTime firstTime = datesList.get(0);
                             deliveryDateId = firstTime.getId();
+                            Log.i("tag","Log  deliveryDateId firstTime "+deliveryDateId);
 
                             String currentDate = firstTime.getDate();
                             List<DeliveryTime> timesList = new ArrayList<>();
@@ -578,7 +579,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), TimeList, deliveryFee, selectedPosition, (obj, func, IsSuccess) -> {
 
             DeliveryTime searchListItem = (DeliveryTime) obj;
-            deliveryDateId = searchListItem.getId();
+            //deliveryDateId = searchListItem.getId();
+            deliveryDateId = deliveryTimesList.get(selectedPosition).getId();
+            Log.i("tag","Log deliveryTimesList click"+deliveryDateId);
 
 
         });

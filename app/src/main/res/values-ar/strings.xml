@@ -303,6 +303,6 @@
     <string name="product_quan">الكمية : </string>
     <string name="product_not_Available">المنتج غير متاح  </string>
     <string name="product_Name">اسم المنتج : </string>
-    <string name="please_update_cart">الرجاء تحديث هذة المنتجات </string>
+    <string name="please_update_cart">الرجاء تحديث هذة المنتجات أوحذفها </string>
 
 </resources>
