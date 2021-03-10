@@ -335,23 +335,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
             if (IsSuccess) {
-//                if (result.getData() != null && result.getData().size() > 0) {
-//
-//                    ArrayList<ProductModel> products = result.getData();
-//                    int pos = productModels.size();
-//
-//                    if (products != null && products.size() > 0) {
-//                        productModels.addAll(products);
-//                        notifyItemRangeInserted(pos, products.size());
-//                        nextPage++;
-//                    } else {
-//                        show_loading = false;
-//                    }
-//
-//                } else {
-//                    show_loading = false;
-//                }
-//                setLoaded();
 
                 if (result.getData() != null && result.getData().size() > 0) {
 
