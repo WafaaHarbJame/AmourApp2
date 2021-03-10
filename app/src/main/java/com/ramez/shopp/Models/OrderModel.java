@@ -9,6 +9,17 @@ import java.util.List;
 
 
 public class OrderModel implements Serializable {
+    @SerializedName("order_id")
+    @Expose
+    private Integer orderId;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
     @SerializedName("order_code")
     @Expose

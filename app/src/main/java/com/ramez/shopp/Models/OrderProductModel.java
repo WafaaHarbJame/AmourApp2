@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 
 public class OrderProductModel implements Serializable {
+
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("weight")
     @Expose
     private Double weight;
@@ -333,4 +337,11 @@ public class OrderProductModel implements Serializable {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

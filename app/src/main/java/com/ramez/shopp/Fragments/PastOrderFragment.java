@@ -236,6 +236,7 @@ public class PastOrderFragment extends FragmentBase {
             orderModel.setOrderCode(currentProduct.getOrderCode());
             orderModel.setAddressName(currentProduct.getAddressName());
             orderModel.setFullAddress(currentProduct.getFullAddress());
+            orderModel.setOrderId(currentProduct.getId());
             orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
             orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
             orderModel.setOrderStatus(currentProduct.getOrderStatus());

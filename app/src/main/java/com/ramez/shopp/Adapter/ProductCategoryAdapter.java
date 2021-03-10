@@ -48,8 +48,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public boolean isLoading = false;
     public int visibleThreshold = 5;
     public boolean show_loading = true;
-    int category_id, country_id, city_id;
-    String user_id;
+    public int category_id, country_id, city_id;
+    public String user_id;
     private int nextPage = 1;
     private int lastVisibleItem;
     private int totalItemCount;
@@ -64,7 +64,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private RecyclerView rv;
     private String filter_text;
     private int gridNumber;
-    private int brand_id;
+    private int brand_id = 0;
     public boolean isCanceled;
     public Call apiCall;
 
@@ -72,17 +72,15 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
-        this.productModels = productModels;
+        this.productModels = new ArrayList<>(productModels);
         this.limit = limit;
         this.category_id = category_id;
-//        this.subID = subID;
         this.city_id = city_id;
         this.country_id = country_id;
         this.user_id = user_id;
         this.rv = rv;
         this.filter_text = filter;
         this.gridNumber = gridNumber;
-
         isCanceled = false;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
@@ -103,8 +101,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         });
         rv.setLayoutManager(gridLayoutManager);
-        rv.setLayoutManager(gridLayoutManager);
-
 
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -237,6 +233,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
@@ -282,14 +279,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
 
-
-    private void loginFirst() {
-        Toast.makeText(context, context.getString(R.string.textLoginFirst), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, RegisterLoginActivity.class);
-        intent.putExtra(Constants.LOGIN, true);
-        context.startActivity(intent);
-
-    }
 
     private void initSnackBar(String message, View viewBar) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -478,9 +467,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.plusCartBtn.setOnClickListener(view1 -> {
                 String message;
                 ProductModel productModel = productModels.get(getAdapterPosition());
-                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
+                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -525,7 +513,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-                //   int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
@@ -569,7 +557,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-//                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
+
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
@@ -589,7 +577,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
-                    //initSnackBar(context.getString(R.string.success_to_update_cart), view);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
@@ -616,7 +603,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
 
-
                 }
 
 
@@ -624,6 +610,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
 
     }
+
 
     class LoadingViewHolder extends RecyclerView.ViewHolder {
 
@@ -636,13 +623,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         }
 
-        public ProgressBar getProgressBar() {
-            return rowLoadingBinding.progressBar1;
-        }
 
-        public void setProgressBar(ProgressBar var1) {
-            var1 = rowLoadingBinding.progressBar1;
-        }
     }
 
 

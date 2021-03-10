@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,13 +21,9 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.DateHandler;
-import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCurrentMyOrderItemBinding;
 import com.ramez.shopp.databinding.RowLoadingBinding;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 

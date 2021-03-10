@@ -80,6 +80,7 @@ public class Constants {
     public static final String delivery_charges = "delivery_charges";
     public static final String CART_MODEL = "CART_MODEL";
     public static final String ORDER_MODEL = "ORDER_MODEL";
+    public static final String ORDER_ID = "ORDER_ID";
     public static final String product_id = "product_id";
     public static final int twoRow = 2;
     public static final int OK_STATUS = 200;

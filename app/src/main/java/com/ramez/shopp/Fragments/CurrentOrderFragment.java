@@ -163,6 +163,7 @@ public class CurrentOrderFragment extends FragmentBase {
 
             OrderModel orderModel = new OrderModel();
             orderModel.setCartId(currentProduct.getCartId());
+            orderModel.setOrderId(currentProduct.getId());
             orderModel.setOrderCode(currentProduct.getOrderCode());
             orderModel.setAddressName(currentProduct.getAddressName());
             orderModel.setFullAddress(currentProduct.getFullAddress());

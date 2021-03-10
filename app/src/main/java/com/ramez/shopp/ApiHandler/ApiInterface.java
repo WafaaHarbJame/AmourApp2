@@ -21,6 +21,7 @@ import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.GeneralModel;
+import com.ramez.shopp.Models.ItemDetailsModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -238,7 +239,7 @@ ApiInterface {
 
 
     @POST("v4/Orders/GetOrderDetails")
-    Call<ResultAPIModel<OrderItemDetail>> GetOrderDetails(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
+    Call<ResultAPIModel<ItemDetailsModel>> GetOrderDetails(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
 
     @GET("v4/Orders/GetOrderDelivery")
     Call<OrdersResultModel> getOrderDelivery(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);

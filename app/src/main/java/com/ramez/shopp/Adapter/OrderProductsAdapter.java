@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -32,9 +33,9 @@ import es.dmoral.toasty.Toasty;
 public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.Holder> {
 
     private Context context;
-    private List<OrderProductModel> orderProductsDMS;
+    private List<OrderItemDetail> orderProductsDMS;
     private String currency="BHD";
-    public OrderProductsAdapter(Context context, List<OrderProductModel> orderProductsDMS) {
+    public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDMS) {
         this.context = context;
         this.orderProductsDMS = orderProductsDMS;
         currency= UtilityApp.getLocalData().getCurrencyCode();
@@ -51,12 +52,12 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
-        OrderProductModel orderProductsDM = orderProductsDMS.get(position);
+        OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
 
             holder.textItemName.setText(orderProductsDM.getName());
 
-        holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getTotalWithTax() + " " + currency);
-        holder.textItemPrice.setText(orderProductsDM.getTotalWithTax() + " " + currency);
+        holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getCartPrice() + " " + currency);
+        holder.textItemPrice.setText(orderProductsDM.getCartPrice() + " " + currency);
 
         GlobalData.PicassoImg(orderProductsDM.getImage()
                 ,R.drawable.holder_image,holder.productImage);
@@ -94,12 +95,12 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
                 int position=getAdapterPosition();
 
-                OrderProductModel orderProductsDM = orderProductsDMS.get(position);
+                OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
                 int count = orderProductsDM.getQuantity();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId =orderProductsDM.getProductId();
-                int product_barcode_id = orderProductsDM.getProductVariationId();
+                int product_barcode_id = orderProductsDM.getProductBarcodeId();
 
                 addToCart(v, position, productId, product_barcode_id, count , userId, storeId);
 

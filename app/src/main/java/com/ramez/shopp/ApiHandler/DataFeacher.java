@@ -676,23 +676,7 @@ public class DataFeacher {
     }
 
 
-    public Call getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
 
-        Log.i(TAG, "Log getFavorite");
-        Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log category_id " + category_id);
-        Log.i(TAG, "Log brand_id " + brand_id);
-        Log.i(TAG, "Log country_id " + country_id);
-        Log.i(TAG, "Log city_id " + city_id);
-        Log.i(TAG, "Log user_id " + user_id);
-        Log.i(TAG, "Log filter " + filter);
-        Log.i(TAG, "Log page_number " + page_number);
-        Log.i(TAG, "Log page_size " + page_size);
-
-        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
-        call.enqueue(callbackApi);
-        return call;
-    }
 
 
     public void updateProfile(MemberModel memberModel) {
@@ -813,6 +797,25 @@ public class DataFeacher {
 
         Call call = apiService.getCatProductList(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
+    }
+
+
+    public Call getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+
+        Log.i(TAG, "Log getFavorite");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log category_id " + category_id);
+        Log.i(TAG, "Log brand_id " + brand_id);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        call.enqueue(callbackApi);
+        return call;
     }
 
 
@@ -1157,5 +1160,7 @@ public class DataFeacher {
         Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
     }
+
+
 
 }

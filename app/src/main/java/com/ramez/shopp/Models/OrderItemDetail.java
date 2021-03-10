@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 public class OrderItemDetail {
 
@@ -158,6 +160,16 @@ public class OrderItemDetail {
 
     public void setRemark(Object remark) {
         this.remark = remark;
+    }
+
+    public String getName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return productName;
+
+        }
+        else {
+            return hProductName;
+        }
     }
 
 }

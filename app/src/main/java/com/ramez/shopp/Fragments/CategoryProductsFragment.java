@@ -63,7 +63,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     ArrayList<AutoCompleteModel> data = null;
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
-    //    ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
     GridLayoutManager gridLayoutManager;
     int numColumn = 2;
     int selectedSubCat = 0;
@@ -73,14 +72,13 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     private MemberModel user;
     private LocalModel localModel;
     private ProductCategoryAdapter adapter;
-    private boolean toggleButton = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryProductsBinding.inflate(inflater, container, false);
 
         productList = new ArrayList<>();
-//        subCategoryDMS = new ArrayList<>();
         mainCategoryDMS = new ArrayList<>();
 
 
@@ -114,7 +112,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         getIntentExtra();
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-//            getCategories(city_id, 0);
+
             getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         });
@@ -151,9 +149,11 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     }
 
-
     public void initAdapter() {
 
+//        binding.productsRv.getRecycledViewPool().clear();
+//        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         adapter = new ProductCategoryAdapter(getActivityy(), productList, category_id, country_id, city_id, user_id, 0, binding.productsRv, "", this, numColumn);
         binding.productsRv.setAdapter(adapter);
 
@@ -272,7 +272,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
                         initAdapter();
 
                     } else {
@@ -331,13 +330,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                 token.continuePermissionRequest();
 
             }
-        }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
-
-            }
-        }).onSameThread().check();
+        }).withErrorListener(error -> Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
     }
 
 
@@ -351,7 +344,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         }
 
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {

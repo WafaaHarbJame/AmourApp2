@@ -1,25 +1,35 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:clickable="true"
-    android:focusable="true"
     android:orientation="vertical">
-
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar" />
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/dataLY"
             android:paddingStart="@dimen/_8sdp"
+            android:visibility="visible"
             android:paddingEnd="@dimen/_8sdp"
             android:orientation="vertical">
 

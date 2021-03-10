@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.ramez.shopp.Classes.CategoryModel;
@@ -27,7 +28,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     private ArrayList<CategoryModel> mainCategoryDMS;
     private OnMainCategoryItemClicked onMainCategoryItemClicked;
     private int selectedPosition;
-    private int lastIndex = 0;
+    private RoundedImageView selectedImageView = null;
 
 
     public MainCategoryAdapter(Context context, ArrayList<CategoryModel> mainCategoryDMS,
@@ -36,9 +37,6 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
         this.mainCategoryDMS = mainCategoryDMS;
         this.onMainCategoryItemClicked = onMainCategoryItemClicked;
         this.selectedPosition = selectedPosition;
-
-
-
 
     }
 
@@ -55,18 +53,16 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     public void onBindViewHolder(final Holder holder, int position) {
         CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
-        GlobalData.PicassoImg(mainMainCategoryDM.getCatImage()
-        ,R.drawable.holder_image,holder.catImage);
+        GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
+                , R.drawable.holder_image, holder.catImage);
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {
             holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
-            holder.catImage.setBorderColor(ContextCompat.getColor(context,R.color.green));
-
+            holder.catImage.setBorderColor(ContextCompat.getColor(context, R.color.green));
+            selectedImageView = holder.catImage;
         } else {
-
             holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
-            holder.catImage.setBorderColor(ContextCompat.getColor(context,R.color.transparent));
-
+            holder.catImage.setBorderColor(ContextCompat.getColor(context, R.color.transparent));
         }
 
 
@@ -84,16 +80,26 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
             super(view);
             catImage = view.findViewById(R.id.catImage);
 
-
             view.setOnClickListener(v -> {
-                int position=getAdapterPosition();
+                int position = getAdapterPosition();
                 CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
-                onMainCategoryItemClicked.OnMainCategoryItemClicked(mainMainCategoryDM,position);
-                lastIndex = getAdapterPosition();
-                notifyDataSetChanged();
-                selectedPosition = mainMainCategoryDM.getId();
+                if (mainMainCategoryDM.getId() != selectedPosition) {
 
+                    if (selectedImageView != null) {
+                        selectedImageView.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
+                        selectedImageView.setBorderColor(ContextCompat.getColor(context, R.color.transparent));
+                    }
+
+                    selectedPosition = mainMainCategoryDM.getId();
+                    selectedImageView = catImage;
+
+                    catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));
+                    catImage.setBorderColor(ContextCompat.getColor(context, R.color.green));
+                }
+//
+//                notifyDataSetChanged();
+                onMainCategoryItemClicked.OnMainCategoryItemClicked(mainMainCategoryDM, position);
 
             });
 
@@ -101,7 +107,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     }
 
     public interface OnMainCategoryItemClicked {
-        void OnMainCategoryItemClicked(CategoryModel mainCategoryDM,int position);
+        void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position);
     }
 
 
