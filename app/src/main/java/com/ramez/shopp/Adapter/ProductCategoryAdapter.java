@@ -36,6 +36,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
@@ -63,6 +65,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private String filter_text;
     private int gridNumber;
     private int brand_id;
+    public boolean isCanceled;
+    public Call apiCall;
 
 
     public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
@@ -78,6 +82,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.rv = rv;
         this.filter_text = filter;
         this.gridNumber = gridNumber;
+
+        isCanceled = false;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
 
@@ -325,9 +331,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         System.out.println("Log category_id: " + category_id);
         System.out.println("Log LoadAllData  page " + nextPage);
 
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
+        DataFeacher dataFeacher = new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (isCanceled) {
+                return;
+            }
             FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = context.getString(R.string.fail_to_get_data);
 
             if (productModels.size() > 0) {
                 productModels.remove(productModels.size() - 1);
@@ -354,8 +362,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             }
 
-
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        });
+        apiCall = dataFeacher.getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 
     @Override

@@ -56,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     public void onBindViewHolder(final Holder holder, int position) {
 
         CategoryModel categoryModel = categoryDMS.get(position);
-        GlobalData.PicassoImg(categoryModel.getImage()
+        GlobalData.PicassoImg(categoryModel.getCatImage()
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
         holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,categoryModel));

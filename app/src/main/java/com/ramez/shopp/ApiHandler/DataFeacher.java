@@ -676,7 +676,7 @@ public class DataFeacher {
     }
 
 
-    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+    public Call getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -691,6 +691,7 @@ public class DataFeacher {
 
         Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
         call.enqueue(callbackApi);
+        return call;
     }
 
 

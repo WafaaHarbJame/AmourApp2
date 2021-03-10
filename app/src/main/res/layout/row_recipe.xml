@@ -13,7 +13,10 @@
         android:background="@color/white"
         android:gravity="start"
         android:orientation="horizontal"
-        android:padding="@dimen/_10ssp">
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_7sdp">
 
         <com.ramez.shopp.SpichalViews.STextViewIcon2
             android:id="@+id/selectTxt"
@@ -26,10 +29,11 @@
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/nameTxt"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_weight="1"
-            android:text="1 tsp salt"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="i salt"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />

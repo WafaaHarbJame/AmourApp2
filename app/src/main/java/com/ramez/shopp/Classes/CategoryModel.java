@@ -17,6 +17,11 @@ public class CategoryModel implements Serializable {
     @SerializedName("image")
     @Expose
     private String image = "http";
+
+    @SerializedName("image2")
+    @Expose
+    private String image2 = "http";
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -75,12 +80,28 @@ public class CategoryModel implements Serializable {
         this.childCat = childCat;
     }
 
-    public String getCatName() {
+    public String getCatImage() {
         if (UtilityApp.getLanguage().equals(Constants.English)) {
-            return name;
+            return image2;
 
         } else {
-            return hName;
+            return image;
         }
+    }
+
+    public String gethName() {
+        return hName;
+    }
+
+    public void sethName(String hName) {
+        this.hName = hName;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
     }
 }

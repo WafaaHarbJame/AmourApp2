@@ -55,7 +55,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     public void onBindViewHolder(final Holder holder, int position) {
         CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
-        GlobalData.PicassoImg(mainMainCategoryDM.getImage()
+        GlobalData.PicassoImg(mainMainCategoryDM.getCatImage()
         ,R.drawable.holder_image,holder.catImage);
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {

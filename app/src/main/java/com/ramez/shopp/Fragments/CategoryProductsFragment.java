@@ -170,6 +170,12 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     }
 
+    private void cancelAPiCall() {
+        if (adapter != null && adapter.apiCall != null && adapter.apiCall.isExecuted()) {
+            adapter.isCanceled = true;
+            adapter.apiCall.cancel();
+        }
+    }
 
     private void getIntentExtra() {
         Bundle bundle = getArguments();
@@ -214,6 +220,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS, object -> {
 
             selectedSubCat = object.getId();
+            cancelAPiCall();
             getProductList(selectedSubCat, country_id, city_id, user_id, "", 0, 10);
 
         }, selectedSubCat);
@@ -293,21 +300,13 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     @Override
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
-//        subCategoryDMS.clear();
         category_id = mainCategoryDM.getId();
         initSubCatList(mainCategoryDM.getChildCat());
 
+        cancelAPiCall();
+
         getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
-//        ArrayList<ChildCat> subCategoryDMS = mainCategoryDM.getChildCat();
-//        ChildCat childCat = new ChildCat();
-//        childCat.setId(0);
-//        childCat.setHName(getString(R.string.all));
-//        childCat.setName(getString(R.string.all));
-//        subCategoryDMS.add(0, childCat);
-//
-//        initSubCategoryAdapter(subCategoryDMS);
-//        getCategories(city_id, position);
 
     }
 
@@ -353,92 +352,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     }
 
-
-    public void getCategories(int storeId, int position) {
-
-//        subCategoryDMS.clear();
-        mainCategoryDMS.clear();
-
-        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-//        binding.dataLY.setVisibility(View.GONE);
-        binding.searchLY.setVisibility(View.GONE);
-        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            CategoryResultModel result = (CategoryResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
-
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-
-            if (func.equals(Constants.ERROR)) {
-
-                if (result != null) {
-                    message = result.getMessage();
-                }
-//                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-//                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.searchLY.setVisibility(View.VISIBLE);
-//                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-                        ChildCat childCat = new ChildCat();
-                        childCat.setId(0);
-                        childCat.setHName(getString(R.string.all));
-                        childCat.setName(getString(R.string.all));
-
-                        mainCategoryDMS = result.getData();
-
-//                        subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
-//
-//                        subCategoryDMS.add(0, childCat);
-//
-//                        if (subCategoryDMS.size() > 0) {
-//                            selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
-//
-//                        }
-
-                        initMainCategoryAdapter();
-//                        initSubCategoryAdapter();
-                        getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
-
-
-                    } else {
-
-//                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
-                    }
-
-
-                } else {
-
-//                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
-
-
-                }
-            }
-
-
-        }).GetAllCategories(storeId);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {

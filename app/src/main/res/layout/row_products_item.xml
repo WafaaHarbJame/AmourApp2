@@ -18,14 +18,14 @@
         <ImageView
             android:id="@+id/productImg"
             android:layout_width="@dimen/_105sdp"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_height="@dimen/_100sdp"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_18sdp"
             android:background="@color/transparent"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:src="@drawable/holder_image" />
 
         <ImageView
@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_marginTop="@dimen/_8sdp"
+            android:scaleType="centerCrop"
             android:layout_marginEnd="@dimen/_6sdp"
             android:src="@drawable/empty_fav" />
         <com.ramez.shopp.SpichalViews.STextView
