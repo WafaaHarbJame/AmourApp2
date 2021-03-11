@@ -125,6 +125,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
+        if (cartDM.getRemark() != null && !cartDM.getRemark().isEmpty()) {
+            holder.binding.markTv.setVisibility(View.VISIBLE);
+            holder.binding.markTv.setText(cartDM.getRemark());
+        } else
+            holder.binding.markTv.setVisibility(View.GONE);
+
 
         holder.binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
 
@@ -161,17 +167,14 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         });
 
         if (cartDM.getQuantity() > cartDM.getProductQuantity() && !cartDM.isExtra()) {
-            holder.binding.cardBack.setBackground(ContextCompat.getDrawable(context,R.drawable.round_card_red));
+            holder.binding.cardBack.setBackground(ContextCompat.getDrawable(context, R.drawable.round_card_red));
 
-        }
-
-      else   if (cartDM.getProductQuantity() == 0 && !cartDM.isExtra()) {
-            holder.binding.cardBack.setBackground(ContextCompat.getDrawable(context,R.drawable.round_card_red));
+        } else if (cartDM.getProductQuantity() == 0 && !cartDM.isExtra()) {
+            holder.binding.cardBack.setBackground(ContextCompat.getDrawable(context, R.drawable.round_card_red));
 
 
-        }
-      else {
-            holder.binding.cardBack.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
+        } else {
+            holder.binding.cardBack.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
 
         }
     }
@@ -203,17 +206,17 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public double calculateSavePrice() {
         double savePrice = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
-            CartModel cartModel=cartDMS.get(i);
+            CartModel cartModel = cartDMS.get(i);
 
             double price = 0, specialPrice = 0, difference = 0;
 
             if (cartModel.getProductPrice() > 0) {
 
                 if (cartModel.getSpecialPrice() > 0) {
-                    specialPrice =cartModel.getSpecialPrice();
+                    specialPrice = cartModel.getSpecialPrice();
                     price = cartModel.getProductPrice();
                     difference = price - specialPrice;
-                    savePrice = savePrice + (difference*cartModel.getQuantity());
+                    savePrice = savePrice + (difference * cartModel.getQuantity());
                 }
 
 
@@ -230,8 +233,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public int getItemCount() {
         return cartDMS.size();
     }
-
-
 
 
     public int getSwipeLayoutResourceId(int position) {
@@ -318,7 +319,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 //
 //            });
 
-            binding.markTv.setOnClickListener(view1 -> {
+            binding.markBtn.setOnClickListener(view1 -> {
 
                 int position = getAdapterPosition();
                 CartModel cartModel = cartDMS.get(position);
@@ -401,7 +402,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     if (limit == 0) {
 
                         if (count + 1 <= stock) {
-                            updateCart(position, productId, product_barcode_id, count + 1,count + 1,false, userId, storeId, cart_id, "quantity");
+                            updateCart(position, productId, product_barcode_id, count + 1, count + 1, false, userId, storeId, cart_id, "quantity");
 
                         } else {
                             message = context.getString(R.string.stock_empty);
@@ -410,22 +411,31 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     } else {
 
                         if (count + 1 <= stock && (count + 1 <= limit)) {
-                            updateCart(position, productId, product_barcode_id, count + 1,count + 1,false, userId, storeId, cart_id, "quantity");
+                            updateCart(position, productId, product_barcode_id, count + 1, count + 1, false, userId, storeId, cart_id, "quantity");
 
                         } else {
 
                             if (count + 1 > stock) {
-                                message = context.getString(R.string.stock_empty);
-                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
 
                             }
+
+                            else if(stock==0){
+                                message = context.getString(R.string.stock_empty);
+
+
+                            }
+                            else {
+                                message = context.getString(R.string.limit) + "" + limit;
+
+                            }
+
                             GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                         }
 
                     }
                 } else {
-                    updateCart(position, productId, product_barcode_id, count + 1,count + 1,false, userId, storeId, cart_id, "quantity");
+                    updateCart(position, productId, product_barcode_id, count + 1, count + 1, false, userId, storeId, cart_id, "quantity");
 
                 }
 
@@ -443,7 +453,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
-                updateCart(position, productId, product_barcode_id, count - 1,count - 1,false, userId, storeId, cart_id, "quantity");
+                updateCart(position, productId, product_barcode_id, count - 1, count - 1, false, userId, storeId, cart_id, "quantity");
 
 
             });
@@ -451,7 +461,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             binding.deleteCartBtn.setOnClickListener(v -> {
                 if (cartDMS != null && cartDMS.size() > 0 & getAdapterPosition() != -1) {
                     CartModel productModel = cartDMS.get(getAdapterPosition());
-                    if(productModel!=null){
+                    if (productModel != null) {
                         int product_barcode_id = productModel.getProductBarcodeId();
                         int position = getAdapterPosition();
                         int userId = UtilityApp.getUserData().getId();
@@ -472,25 +482,21 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
-
-
     }
 
 
-
-    public void updateCart(int position, int productId, int product_barcode_id, int quantity,int quantity2,Boolean fromCart,  int userId, int storeId, int cart_id, String update_quantity) {
+    public void updateCart(int position, int productId, int product_barcode_id, int quantity, int quantity2, Boolean fromCart, int userId, int storeId, int cart_id, String update_quantity) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (IsSuccess) {
-                int cartQuantity= 0;
+                int cartQuantity = 0;
                 calculateSubTotalPrice();
                 calculateSavePrice();
                 getItemCount();
 
-                if(fromCart){
-                    cartQuantity=quantity2;
-                }
-                else {
-                    cartQuantity=quantity;
+                if (fromCart) {
+                    cartQuantity = quantity2;
+                } else {
+                    cartQuantity = quantity;
 
 
                 }
@@ -531,7 +537,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     notifyItemRemoved(position);
 
                 }
-                Toast.makeText(context, ""+context.getString(R.string.success_delete_from_cart), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "" + context.getString(R.string.success_delete_from_cart), Toast.LENGTH_SHORT).show();
 
                 CartProcessModel cartProcessModel = (CartProcessModel) obj;
                 cartProcessModel.setTotal(calculateSubTotalPrice());

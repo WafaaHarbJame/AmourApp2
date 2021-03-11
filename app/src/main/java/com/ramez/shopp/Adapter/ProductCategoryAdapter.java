@@ -23,6 +23,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -490,20 +491,22 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 } else {
 
-                    if (count + 1 <= stock && (count + 1 <= limit)) {
-                        updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+                    if (count + 1 > stock) {
+                        message = context.getString(R.string.limit) + "" + limit;
 
-                    } else {
-
-                        if (count + 1 > stock) {
-                            message = context.getString(R.string.stock_empty);
-                        } else {
-                            message = context.getString(R.string.limit) + "" + limit;
-
-                        }
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
 
+                    else if(stock==0){
+                        message = context.getString(R.string.stock_empty);
+
+
+                    }
+                    else {
+                        message = context.getString(R.string.limit) + "" + limit;
+
+                    }
+
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                 }
 
@@ -555,10 +558,13 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
+                CartProcessModel result = (CartProcessModel) obj;
 
                 if (IsSuccess) {
-
+                    int cartId=result.getId();
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
 

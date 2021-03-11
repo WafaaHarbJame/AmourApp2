@@ -19,32 +19,39 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
-    private static final int SPLASH_TIMER = 3000;
-    int storeId, userId;
+    private static final int SPLASH_TIMER = 3500;
+    int storeId, userId=0;
     MemberModel user;
     LocalModel localModel;
     int cartNumber;
+    int country_id=17;
+    private String lang;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         startSplash();
 
     }
@@ -53,12 +60,18 @@ public class SplashScreenActivity extends ActivityBase {
     private void startSplash() {
 
         setContentView(R.layout.activity_splash_screen);
+        lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
+
         getSetting();
 
         localModel = UtilityApp.getLocalData();
 
         if (localModel != null && localModel.getCityId() != null) {
+            storeId= Integer.parseInt(localModel.getCityId());
+            country_id=localModel.getCountryId();
             getCategories(Integer.parseInt(localModel.getCityId()));
+            getDinners(lang);
+            GetHomePage();
 
 
         }
@@ -206,6 +219,25 @@ public class SplashScreenActivity extends ActivityBase {
         }).GetAllCategories(storeId);
     }
 
+    public void getDinners(String lang) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ArrayList<DinnerModel>> result = (ResultAPIModel<ArrayList<DinnerModel>>) obj;
+
+            if (IsSuccess) {
+                if (result.data != null && result.data.size() > 0) {
+                    ArrayList<DinnerModel> dinnerModels = result.data;
+                    UtilityApp.setDinnersData(dinnerModels);
+                }
+
+
+            }
+
+
+        }).getDinnersList(lang);
+    }
+
+
 
     public void getCarts(int storeId, int userId) {
 
@@ -266,5 +298,47 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getLinks(shortName);
     }
+
+
+
+    public void GetHomePage() {
+        Log.i(TAG, "Log GetMainPage new");
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log user_id " + userId);
+        Log.i(TAG, "Log city_id " + storeId);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+                MainModel result = (MainModel) obj;
+
+            if (IsSuccess) {
+
+                ArrayList<Slider> sliderList=new ArrayList<>();
+                ArrayList<Slider> bannersList=new ArrayList<>();;
+                if (result.getSliders().size() > 0) {
+
+                    for (int i = 0; i < result.getSliders().size(); i++) {
+                        Slider slider = result.getSliders().get(i);
+                        if (slider.getType() == 0) {
+                            sliderList.add(slider);
+
+                        } else {
+                            bannersList.add(slider);
+
+                        }
+
+                    }
+
+                    UtilityApp.setSliderData(sliderList);
+                    UtilityApp.setBannerData(bannersList);
+
+
+                }
+            }
+
+
+        }).GetMainPage(0, country_id, storeId, String.valueOf(userId));
+    }
+
 
 }

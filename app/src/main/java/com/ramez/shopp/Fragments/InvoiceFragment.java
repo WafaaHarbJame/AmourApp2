@@ -282,13 +282,13 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             }
 
             if (paymentModel.getId() == 2) {
-                paymentModel.setImage(R.drawable.card);
+                paymentModel.setImage(R.drawable.collect);
             }
             if (paymentModel.getId() == 3) {
                 paymentModel.setImage(R.drawable.benefit);
             }
             if (paymentModel.getId() == 4) {
-                paymentModel.setImage(R.drawable.collect);
+                paymentModel.setImage(R.drawable.card);
             }
 
         }

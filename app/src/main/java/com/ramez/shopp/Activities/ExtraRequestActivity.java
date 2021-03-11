@@ -261,7 +261,6 @@ public class ExtraRequestActivity extends ActivityBase {
                     try {
 
                         selectedPhotoFil = FileUtil.from(getActiviy(), uri);
-//                        Picasso.get().load(selectedPhotoUri).error(R.drawable.avatar).into(binding.addImage);
 
                         Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 

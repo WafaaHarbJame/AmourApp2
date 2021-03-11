@@ -340,6 +340,7 @@
     <string name="product_not_Available">Product not Available : </string>
     <string name="product_Name">product name : </string>
     <string name="please_update_cart">Please Update These products or deleted from  Cart</string>
+    <string name="delete_product">Delete Product</string>
 
 
 </resources>

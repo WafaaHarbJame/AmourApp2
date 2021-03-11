@@ -32,6 +32,9 @@ public class Constants {
     public static final String KEY_SETTING = "KEY_SETTING";
     public static final String KEY_COUNTRIES = "key_countries";
     public static final String KEY_CATEGORIES = "KEY_CATEGORIES";
+    public static final String KEY_SLIDER = "KEY_SLIDER";
+    public static final String KEY_BANNER = "KEY_BANNER";
+    public static final String KEY_DINNERS = "KEY_DINNERS";
     public static final String KEY_Local = "KEY_Local";
     public static final String KEY_MEMBER_LANGUAGE = "key_member_language";
     public static final String KEY_FIRST_RUN = "key_first_run";

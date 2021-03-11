@@ -10,6 +10,10 @@ public class CartProcessModel {
     @SerializedName("cart_count")
     @Expose
     private int cartCount;
+
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -18,6 +22,14 @@ public class CartProcessModel {
     private String message;
     private Double total;
     private Double totalSavePrice;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setCartCount(int cartCount) {
         this.cartCount = cartCount;

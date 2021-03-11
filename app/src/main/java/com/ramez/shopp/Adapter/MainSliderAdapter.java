@@ -59,13 +59,12 @@ public class MainSliderAdapter extends PagerAdapter {
 
             }
 
-            GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, productImg);
+            GlobalData.GlideImg(context,imageUrl,R.drawable.holder_image,productImg);
+            //GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, productImg);
 
             container.addView(view);
 
             productImg.setOnClickListener(view1 -> {
-//                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context, imageUrl);
-//                showImageDialog.show();
                 onSliderClick.onSliderClicked(position, slider);
 
             });

@@ -42,7 +42,7 @@ public class ProductBarcode implements Serializable {
     private Integer unitId;
     @SerializedName("cart_id")
     @Expose
-    private Integer cartId;
+    private int cartId;
     @SerializedName("product_units")
     @Expose
     private ProductUnits productUnits;

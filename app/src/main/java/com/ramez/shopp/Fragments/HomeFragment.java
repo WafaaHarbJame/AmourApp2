@@ -115,11 +115,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private CategoryAdapter categoryAdapter;
     private BookletAdapter bookletAdapter;
     private Activity activity;
-    private List<BookletsModel> bookletsList;
+    private ArrayList<BookletsModel> bookletsList;
     private MainSliderAdapter sliderAdapter;
     private BannersAdapter bannerAdapter;
     private BrandsAdapter brandsAdapter;
-    private List<DinnerModel> list;
+    private ArrayList<DinnerModel> list;
     private String lang;
 
 
@@ -368,30 +368,50 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                     if (IsSuccess) {
                         binding.searchLY.setVisibility(View.VISIBLE);
 
-                        getBooklets(city_id);
-                        GetAllBrands(city_id);
-                        getDinners(lang);
-                        if (result.getSliders().size() > 0) {
+                        if (UtilityApp.getDinners() != null && UtilityApp.getDinners().size() > 0) {
+                            list = UtilityApp.getDinners();
+                            initKitchenAdapter();
 
-                            for (int i = 0; i < result.getSliders().size(); i++) {
-                                Slider slider = result.getSliders().get(i);
-                                if (slider.getType() == 0) {
-                                    sliderList.add(slider);
+                        } else {
+                            getDinners(lang);
 
-                                } else {
-                                    bannersList.add(slider);
+                        }
+
+                        if (UtilityApp.getSliders() != null && UtilityApp.getSliders().size() > 0
+                                && UtilityApp.getBanners() != null && UtilityApp.getBanners().size() > 0) {
+                            sliderList = UtilityApp.getSliders();
+                            bannersList = UtilityApp.getBanners();
+
+                        } else {
+                            if (result.getSliders().size() > 0) {
+
+                                for (int i = 0; i < result.getSliders().size(); i++) {
+                                    Slider slider = result.getSliders().get(i);
+                                    if (slider.getType() == 0) {
+                                        sliderList.add(slider);
+
+                                    } else {
+                                        bannersList.add(slider);
+
+                                    }
 
                                 }
+
+
+                                UtilityApp.setSliderData(sliderList);
+                                UtilityApp.setBannerData(bannersList);
+
 
                             }
 
 
                         }
 
-
                         initSliderAdapter();
                         initBannersAdapter();
 
+                        getBooklets(city_id);
+                        GetAllBrands(city_id);
 
                         if (result.getFeatured() != null && result.getFeatured().size() > 0 || result.getQuickProducts() != null && result.getQuickProducts().size() > 0 || result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 
@@ -432,6 +452,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                 getCategories(city_id);
 
                             }
+
 
                         } else {
 
@@ -669,7 +690,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-
     private void initBookletAdapter() {
         if (bookletsList.size() >= 3) {
             bookletManger.setOrientation(RecyclerView.HORIZONTAL);
@@ -682,9 +702,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this,false);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this, false);
         binding.kitchenRecycler.setAdapter(kitchenAdapter);
 
     }
@@ -732,6 +751,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                     binding.kitchenRecycler.setVisibility(View.VISIBLE);
 
                     list = result.data;
+                    UtilityApp.setDinnersData(list);
+
+
                     initKitchenAdapter();
 
                 } else {

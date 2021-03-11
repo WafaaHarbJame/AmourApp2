@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.ramez.shopp",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",

@@ -22,6 +22,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -437,10 +438,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     checkLoginDialog.show();
                 } else {
 
-                    ProductModel productModel = productModels.get(getAdapterPosition());
+                    int position = getAdapterPosition();
+                    ProductModel productModel = productModels.get(position);
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                     String message = "";
-                    int position = getAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
@@ -468,9 +469,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                         } else {
 
                             if (count + 1 > stock) {
-                                message = context.getString(R.string.stock_empty);
-                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
+
+                            } else {
+                                message = context.getString(R.string.stock_empty);
 
                             }
                             GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
@@ -487,12 +489,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
                 String message;
+                int position = getAdapterPosition();
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(position);
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -515,20 +517,23 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 } else {
 
-                    if (count + 1 <= stock && (count + 1 <= limit)) {
-                        updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+                    if (count + 1 > stock) {
+                        message = context.getString(R.string.limit) + "" + limit;
 
-                    } else {
-
-                        if (count + 1 > stock) {
-                            message = context.getString(R.string.stock_empty);
-                        } else {
-                            message = context.getString(R.string.limit) + "" + limit;
-
-                        }
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                message);
                     }
+
+                    else if(stock==0){
+                        message = context.getString(R.string.stock_empty);
+
+
+                    }
+                    else {
+                        message = context.getString(R.string.limit) + "" + limit;
+
+                    }
+
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+
 
                 }
 
@@ -536,11 +541,11 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
             binding.minusCartBtn.setOnClickListener(view1 -> {
+                int position = getAdapterPosition();
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(position);
                 //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -554,8 +559,8 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
                 int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(position);
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -573,7 +578,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                int position = getAdapterPosition();
+
+                onItemClick.onItemClicked(position, productModels.get(getAdapterPosition()));
             }
         }
 
@@ -581,8 +588,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
+                CartProcessModel result = (CartProcessModel) obj;
+
                 if (IsSuccess) {
+                    int cartId=result.getId();
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
 

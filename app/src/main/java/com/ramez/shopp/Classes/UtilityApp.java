@@ -4,13 +4,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Models.CountryModel;
+import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.Slider;
+import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.LocaleUtils;
 
@@ -20,6 +26,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static android.content.ContentValues.TAG;
 
 
 public class UtilityApp {
@@ -258,6 +266,53 @@ public class UtilityApp {
 
 
     }
+
+
+    public static ArrayList<Slider> getSliders() {
+        String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_SLIDER);
+        return new Gson().fromJson(dataString, new TypeToken<List<Slider>>() {
+        }.getType());
+
+    }
+
+    public static void setSliderData(ArrayList<Slider> sliderData) {
+        String userData = new Gson().toJson(sliderData);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SLIDER, userData);
+    }
+
+
+    public static ArrayList<Slider> getBanners() {
+        String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_BANNER);
+        return new Gson().fromJson(dataString, new TypeToken<List<Slider>>() {
+        }.getType());
+
+    }
+
+    public static void setBannerData(ArrayList<Slider> bannerData) {
+        String userData = new Gson().toJson(bannerData);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_BANNER, userData);
+    }
+
+
+
+    public static ArrayList<DinnerModel> getDinners() {
+        String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_DINNERS);
+        return new Gson().fromJson(dataString, new TypeToken<List<DinnerModel>>() {
+        }.getType());
+
+    }
+
+    public static void setDinnersData(ArrayList<DinnerModel> bannerData) {
+        String userData = new Gson().toJson(bannerData);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_DINNERS, userData);
+    }
+
+
+
+
+
+
+
 
 
 }

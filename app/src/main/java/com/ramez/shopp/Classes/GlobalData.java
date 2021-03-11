@@ -15,6 +15,7 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
 import com.squareup.picasso.Callback;
@@ -95,7 +96,7 @@ public class GlobalData {
         }
 
         try {
-            Glide.with(c).asBitmap().load(photoUrl).placeholder(placeholder).into(imageView);
+            Glide.with(c).asBitmap().load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }

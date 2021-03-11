@@ -5,4 +5,7 @@
     <dimen name="card_padding">@dimen/_13sdp</dimen>
     <dimen name="round_corner_big">@dimen/_10sdp</dimen>
 
+    <dimen name="cart_quantity_width">@dimen/_25sdp</dimen>
+    <dimen name="cart_quantity_height">@dimen/_25sdp</dimen>
+
 </resources>

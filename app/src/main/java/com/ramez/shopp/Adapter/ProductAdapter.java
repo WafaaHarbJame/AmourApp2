@@ -19,6 +19,8 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -95,17 +97,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                DecimalFormat df = new DecimalFormat("#");
-                String newDiscount_str = df.format(discount);
-                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+            discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
+            DecimalFormat df = new DecimalFormat("#");
+            String newDiscount_str = df.format(discount);
+            holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
 
 
         } else {
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
             holder.binding.discountTv.setVisibility(View.GONE);
 
@@ -126,30 +127,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 .error(R.drawable.holder_image)
                 .into(holder.binding.productImg);
 
-
-//        Picasso.get().load(productModel.getImages().get(0))
-//                .placeholder(R.drawable.holder_image)
-//                .error(R.drawable.holder_image)
-//                .into(holder.binding.productImg);
-
-
-//        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder
-//                (R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//
-//                return false;
-//            }
-//        }).into(holder.binding.productImg);
-//
 
     }
 
@@ -271,12 +248,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 } else {
                     String message = "";
 
-                    ProductModel productModel = productModels.get(getAdapterPosition());
+                    int position = getAdapterPosition();
+
+                    ProductModel productModel = productModels.get(position);
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                     int stock = productModel.getProductBarcodes().get(0).getStockQty();
                     Log.i("lll", "Log stock" + stock);
-
-                    int position = getAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
@@ -285,29 +262,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     Log.i("limit", "Log limit" + limit);
                     Log.i("stock", "Log stock" + stock);
 
-                    if(limit==0){
+                    if (limit == 0) {
 
                         if (count + 1 <= stock) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                         } else {
                             message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
                         }
                     } else {
 
-                        if (count + 1 <= stock && (count + 1 )<= limit) {
+                        if (count + 1 <= stock && (count + 1) <= limit) {
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                         } else {
 
-                            if(count+1 > stock){
+                            if (count + 1 > stock) {
                                 message = context.getString(R.string.stock_empty);
-                            }
-                            else {
+                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
 
                             }
-                            GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
 
                         }
@@ -319,22 +295,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message = "";
+                int position = getAdapterPosition();
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(position);
 //                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int stock = productModel.getProductBarcodes().get(0).getStockQty();
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
-
                 int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-                Log.i("limit", "Log limit" + limit);
-                Log.i("stock", "Log stock" + stock);
-
+                Log.i("tag", "Log limit" + limit);
+                Log.i("tag", "Log cart_id" + cart_id);
+                Log.i("tag", "Log stock" + stock);
 
 
                 if (limit == 0) {
@@ -344,27 +319,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context,  context.getString(R.string.error),message);
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
 
                     }
-                } else {
+                }
+
+                else {
 
                     if (count + 1 <= stock && (count + 1 <= limit)) {
                         updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                     } else {
 
+                        if (count + 1 > stock) {
+                            message = context.getString(R.string.limit) + "" + limit;
 
-                        if(count+1 > stock){
+                        }
+
+                        else if(stock==0){
                             message = context.getString(R.string.stock_empty);
+
+
                         }
                         else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
-                        GlobalData.errorDialogWithButton(context,context.getString(R.string.error),
-                                message);
+
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                     }
 
@@ -375,16 +358,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             });
 
             binding.minusCartBtn.setOnClickListener(v -> {
-
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(position);
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+
+                Log.i("tag", "Log limit " + limit);
+                Log.i("tag", "Log cart_id " + cart_id);
 
                 updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
@@ -393,13 +378,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             binding.deleteCartBtn.setOnClickListener(v -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
                 int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(position);
+
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                Log.i("tag", "Log limit" + limit);
+                Log.i("tag", "Log cart_id" + cart_id);
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -412,8 +400,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                ProductModel productModel = productModels.get(getAdapterPosition());
-                onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(position);
+                onItemClick.onItemClicked(position, productModels.get(position));
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra(Constants.DB_productModel, productModel);
                 context.startActivity(intent);
@@ -425,10 +414,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
+                CartProcessModel result = (CartProcessModel) obj;
+
                 if (IsSuccess) {
-                    Log.i("tag","Log "+UtilityApp.getCartCount());
+                    int cartId=result.getId();
+                    Log.i("tag", "Log " + UtilityApp.getCartCount());
                     UtilityApp.updateCart(1, productModels.size());
                     binding.cartBut.setVisibility(View.GONE);
+                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
@@ -456,7 +449,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                             context.getString(R.string.fail_to_update_cart));
 
 
-
                 }
 
             }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
@@ -467,20 +459,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 if (IsSuccess) {
                     UtilityApp.updateCart(2, productModels.size());
-                    Log.i("tag","Log "+UtilityApp.getCartCount());
+                    Log.i("tag", "Log " + UtilityApp.getCartCount());
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
-
-
                 } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
                             context.getString(R.string.fail_to_delete_cart));
-
-
-
                 }
-
 
             }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
         }

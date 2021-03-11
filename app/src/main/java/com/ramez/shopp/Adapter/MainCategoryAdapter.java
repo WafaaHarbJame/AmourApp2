@@ -53,8 +53,13 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     public void onBindViewHolder(final Holder holder, int position) {
         CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
+
         GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
                 , R.drawable.holder_image, holder.catImage);
+
+       // GlobalData.PicassoImg(mainMainCategoryDM.getCatImage(), R.drawable.holder_image, holder.catImage);
+
+
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {
             holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));

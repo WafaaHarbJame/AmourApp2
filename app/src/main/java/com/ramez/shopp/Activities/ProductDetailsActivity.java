@@ -310,6 +310,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                     if(count+1 > stock){
                         message = getString(R.string.stock_empty);
+
+                    }
+                    else if(stock==0){
+                        message = getString(R.string.stock_empty);
+
                     }
                     else {
                         message = getString(R.string.limit) + "" + limit;
