@@ -70,7 +70,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public Call apiCall;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
+    public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, String filter, OnItemClick onItemClick, int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = new ArrayList<>(productModels);
@@ -607,8 +607,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
-
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                            context.getString(R.string.fail_to_delete_cart));
                 }
 
 

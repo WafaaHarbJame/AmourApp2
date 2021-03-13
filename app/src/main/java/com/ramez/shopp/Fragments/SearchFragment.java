@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,9 +66,10 @@ import java.util.Collections;
 
 import retrofit2.Call;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick, ProductAdapter.OnItemClick,OfferProductAdapter.OnItemClick {
+public class SearchFragment extends FragmentBase implements SearchProductAdapter.OnItemClick, MostSearchAdapter.OnTagClick, ProductAdapter.OnItemClick, OfferProductAdapter.OnItemClick {
 
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     SearchFagmentBinding binding;
@@ -90,6 +92,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private Handler handler;
     private boolean toggleButton = false;
     private OfferProductAdapter productOfferAdapter;
+    private int SEARCH_CODE = 2000;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -173,9 +176,13 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.searchEt.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                binding.closeBtn.setText(R.string.fal_times);
-                searchQuery = s.toString();
-                handler.postDelayed(runnable, 500);
+                if (s.toString().isEmpty()) {
+                    binding.closeBtn.setText(R.string.fal_search);
+                } else {
+                    binding.closeBtn.setText(R.string.fal_times);
+                    searchQuery = s.toString();
+                    handler.postDelayed(runnable, 500);
+                }
 
             }
 
@@ -198,12 +205,12 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         });
 
         binding.closeBtn.setOnClickListener(view1 -> {
-            binding.offerLy.setVisibility(View.VISIBLE);
-            binding.noDataLY.noDataLY.setVisibility(View.GONE);
-            productList.clear();
-            binding.searchEt.setText("");
-
-
+            if (binding.closeBtn.getText().equals(getString(R.string.fal_times))) {
+                binding.offerLy.setVisibility(View.VISIBLE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                productList.clear();
+                binding.searchEt.setText("");
+            }
         });
         return view;
     }
@@ -260,10 +267,13 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            binding.closeBtn.setVisibility(View.VISIBLE);
+            binding.closeBtn.setText(R.string.fal_times);
+
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getActivityy().getString(R.string.fail_to_get_data);
-            binding.offerLy.setVisibility(View.GONE);
 
+            binding.offerLy.setVisibility(View.GONE);
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             if (func.equals(Constants.ERROR)) {
@@ -276,15 +286,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
+            }  else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
@@ -299,25 +301,18 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
+                        Log.i(TAG, "Log productList search " + productList.size());
                         initAdapter();
 
                     } else {
-
                         binding.dataLY.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
                     }
-
-
                 } else {
-
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
-
-
                 }
             }
 
@@ -405,11 +400,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         }).searchTxt(country_id, city_id, user_id, filter, page_number, page_size);
     }
 
-    private void showLoginDialog() {
-        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
-        checkLoginDialog.show();
-    }
-
     private void getIntentExtra() {
         Bundle bundle = getArguments();
 
@@ -462,26 +452,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     }
 
-    private int getOffersProducts(ArrayList<ProductModel> productList) {
-        int size = 0;
-        if (productList != null) {
-
-            for (int i = 0; i < productList.size(); i++) {
-                ProductModel productModel = productList.get(i);
-                if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-                    offerList.add(productModel);
-                }
-            }
-
-
-            size = offerList.size();
-        }
-
-        initAdapter();
-
-        return size;
-
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
@@ -543,7 +513,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
         } else {
             Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, SEARCH_CODE);
         }
 
     }
@@ -636,6 +606,29 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                 }
             }
         }).GetMainPage(0, country_id, city_id, user_id);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SEARCH_CODE) {
+
+                if (data != null) {
+                    boolean searchByCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+                    String CODE = data.getStringExtra(Constants.CODE);
+                    result = CODE;
+                    searchBarcode(country_id, city_id, user_id, result, 0, 10);
+
+
+                }
+
+
+            }
+
+        }
     }
 
 }

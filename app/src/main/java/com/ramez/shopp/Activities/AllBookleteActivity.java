@@ -177,7 +177,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     public void GetAllBrands(int city_id) {
-        list.clear();
+        brandsList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -225,7 +225,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 //                            }
                         for (int i = 0; i < allBrandList.size(); i++) {
                             BrandModel brandModel = result.data.get(i);
-                            if (brandModel.getImage() != null && brandModel.getImage2() != null) {
+                            if (brandModel.getImage() != null || brandModel.getImage2() != null) {
                                 brandsList.add(brandModel);
                                 allBrandList.remove(i);
                                 i--;

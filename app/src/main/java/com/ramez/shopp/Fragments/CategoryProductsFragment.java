@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -13,19 +19,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
@@ -38,7 +36,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AutoCompleteModel;
-import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.ChildCat;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -55,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static android.content.ContentValues.TAG;
+import static android.app.Activity.RESULT_OK;
 
 public class CategoryProductsFragment extends FragmentBase implements ProductCategoryAdapter.OnItemClick, MainCategoryAdapter.OnMainCategoryItemClicked {
     private static final int ZBAR_CAMERA_PERMISSION = 1;
@@ -72,6 +69,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     private MemberModel user;
     private LocalModel localModel;
     private ProductCategoryAdapter adapter;
+    private int SEARCH_CODE = 2000;
 
 
     @Override
@@ -113,7 +111,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+            getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
 
         });
 
@@ -154,7 +152,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 //        binding.productsRv.getRecycledViewPool().clear();
 //        adapter.notifyDataSetChanged();
 //        adapter.notifyDataSetChanged();
-        adapter = new ProductCategoryAdapter(getActivityy(), productList, category_id, country_id, city_id, user_id, 0, binding.productsRv, "", this, numColumn);
+        adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn);
         binding.productsRv.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -191,12 +189,12 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + category_id);
             Log.i(CategoryProductsFragment.class.getName(), "Log categoryModel " + categoryModel.getHName());
 
-            category_id = categoryModel.getId();
+            selectedSubCat = categoryModel.getId();
             initMainCategoryAdapter();
 
             initSubCatList(mainCategoryDMS.get(position).getChildCat());
 
-            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+            getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
 
         }
     }
@@ -230,13 +228,13 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     }
 
     private void initMainCategoryAdapter() {
-        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, category_id);
+        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, selectedSubCat);
         binding.listShopCategories.setAdapter(mainCategoryShopAdapter);
     }
 
 
     public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
-        productList.clear();
+//        productList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.productsRv.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -273,7 +271,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                             binding.productsRv.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                            productList = result.getData();
+                            productList = new ArrayList<>(result.getData());
                             initAdapter();
 
                         } else {
@@ -297,19 +295,19 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
             }
 
-        }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, 0, page_number, page_size);
 
     }
 
     @Override
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
-        category_id = mainCategoryDM.getId();
+        selectedSubCat = mainCategoryDM.getId();
         initSubCatList(mainCategoryDM.getChildCat());
 
         cancelAPiCall();
 
-        getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+        getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
 
 
     }
@@ -344,8 +342,9 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
         } else {
+
             Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, SEARCH_CODE);
         }
 
     }
@@ -376,5 +375,31 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         super.onStop();
         EventBus.getDefault().unregister(this);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SEARCH_CODE) {
+
+                if (data != null) {
+                    boolean SEARCH_BY_CODE_byCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+                    String CODE = data.getStringExtra(Constants.CODE);
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.CODE, CODE);
+                    bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
+                    searchFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+
+                }
+
+
+            }
+
+        }
     }
 }

@@ -82,13 +82,42 @@
                 </LinearLayout>
 
 
-                <TextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16ssp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:text="@string/know_price" />
+
+
+                <com.ramez.shopp.SpichalViews.SButton
+                    android:id="@+id/scanBarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_32sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_corner_next"
+                    android:minWidth="@dimen/_200sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:text="@string/scan_barcode"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/barcodeTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewStart"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_16ssp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:text="@string/Barcode"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible" />
 
 
                 <LinearLayout

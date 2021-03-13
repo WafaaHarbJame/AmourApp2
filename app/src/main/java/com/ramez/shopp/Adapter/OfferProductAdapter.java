@@ -647,8 +647,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_delete_cart));
-
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                            context.getString(R.string.fail_to_delete_cart));
                 }
 
 

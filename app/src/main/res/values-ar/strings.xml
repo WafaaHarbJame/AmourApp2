@@ -303,5 +303,8 @@
     <string name="product_not_Available">المنتج غير متاح  </string>
     <string name="product_Name">اسم المنتج : </string>
     <string name="please_update_cart">الرجاء تحديث هذة المنتجات أوحذفها </string>
+    <string name="delete_product">حذف المنتج </string>
+    <string name="scan_barcode">مسح كود المنتج </string>
+    <string name="Barcode">كود المنتج : </string>
 
 </resources>

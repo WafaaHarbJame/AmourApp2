@@ -83,7 +83,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     }
 
     public void initAdapter() {
-        adapter = new ProductCategoryAdapter(getActiviy(), list, 0, country_id, city_id, user_id, list.size(), binding.recycler, filter, this, Constants.twoRow);
+        adapter = new ProductCategoryAdapter(getActiviy(),binding.recycler, list, 0, country_id, city_id, user_id, list.size(),  filter, this, Constants.twoRow);
         binding.recycler.setAdapter(adapter);
     }
 

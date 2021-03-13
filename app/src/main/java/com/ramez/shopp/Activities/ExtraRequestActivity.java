@@ -1,15 +1,21 @@
 package com.ramez.shopp.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.aminography.choosephotohelper.ChoosePhotoHelper;
 import com.androidnetworking.AndroidNetworking;
@@ -18,29 +24,27 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.bumptech.glide.Glide;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.AddExtraResponse;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.FileUtil;
-import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityExtraRequestBinding;
-import com.squareup.picasso.Picasso;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,8 +68,10 @@ public class ExtraRequestActivity extends ActivityBase {
     private LocalModel localModel;
     private ChoosePhotoHelper choosePhotoHelper;
     private Uri selectedPhotoUri;
+    private static final int ZBAR_CAMERA_PERMISSION = 1;
+    private int SEARCH_CODE = 2000;
     private String country;
-
+    private String CODE="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,14 +142,13 @@ public class ExtraRequestActivity extends ActivityBase {
             } else {
                 addExtraCall.description = binding.tvProductDesc.getText().toString();
                 addExtraCall.userId = user_id;
-                addExtraCall.barcode = "";
+                addExtraCall.barcode = CODE;
                 addExtraCall.qty = Integer.parseInt(binding.productCartQTY.getText().toString());
                 addExtraCall.storeId = store_id;
-                if(selectedPhotoFil!=null){
+                if (selectedPhotoFil != null) {
                     AddRequestWithPhoto(addExtraCall, selectedPhotoFil);
 
-                }
-                else {
+                } else {
                     AddRequestWithOutPhoto(addExtraCall);
 
                 }
@@ -161,6 +166,14 @@ public class ExtraRequestActivity extends ActivityBase {
         binding.addImage.setOnClickListener(view -> {
             openPicker();
 
+        });
+
+        binding.scanBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboard(getActiviy());
+                checkCameraPermission();
+            }
         });
 
 
@@ -268,14 +281,6 @@ public class ExtraRequestActivity extends ActivityBase {
 
                         Log.i("tag", "Log selectedPhotoFil  " + selectedPhotoFil);
                         Log.i("tag", "Log uri " + uri);
-//                        AddExtraCall addExtraCall = new AddExtraCall();
-//                        addExtraCall.description = binding.tvProductDesc.getText().toString();
-//                        addExtraCall.userId = user_id;
-//                        addExtraCall.barcode = "";
-//                        addExtraCall.qty = Integer.parseInt(binding.productCartQTY.getText().toString());
-//                        addExtraCall.storeId = store_id;
-//
-//                        uploadPhoto(addExtraCall, selectedPhotoFil);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -355,7 +360,7 @@ public class ExtraRequestActivity extends ActivityBase {
 //    }
 
     private void navigateToCartScreen() {
-        GlobalData.REFRESH_CART=true;
+        GlobalData.REFRESH_CART = true;
         Intent intent = new Intent(getActiviy(), MainActivity.class);
         intent.putExtra(Constants.CART, true);
         startActivity(intent);
@@ -363,6 +368,7 @@ public class ExtraRequestActivity extends ActivityBase {
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -388,6 +394,14 @@ public class ExtraRequestActivity extends ActivityBase {
                 e.printStackTrace();
                 GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
+        } else if (requestCode == SEARCH_CODE) {
+
+            if (data != null) {
+                 CODE = data.getStringExtra(Constants.CODE);
+                binding.barcodeTv.setText(getString(R.string.Barcode) + " " + CODE);
+            }
+
+
         }
     }
 
@@ -418,7 +432,7 @@ public class ExtraRequestActivity extends ActivityBase {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
-                . writeTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
                 .build();
 
 //AndroidNetworking.initialize(getActiviy(),okHttpClient);
@@ -445,36 +459,36 @@ public class ExtraRequestActivity extends ActivityBase {
                 String message = getString(R.string.fail_to_add_extra_order);
 
 
-                    try {
-                        JSONObject jsonObject = response;
-                        int status = jsonObject.getInt("status");
-                        if (status == 200) {
+                try {
+                    JSONObject jsonObject = response;
+                    int status = jsonObject.getInt("status");
+                    if (status == 200) {
 
-                            AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
-                            successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
-                                    .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-                                navigateToCartScreen();
-                            });
-                            successDialog.show();
-
-
-                        } else {
-                            message = jsonObject.getString("message");
-                            GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
-
-                        }
+                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
+                        successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
+                                .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
+                            navigateToCartScreen();
+                        });
+                        successDialog.show();
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } else {
+                        message = jsonObject.getString("message");
+                        GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+
                     }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
             }
 
             @Override
             public void onError(ANError error) {
-                if(error.getMessage()!=null){
+                if (error.getMessage() != null) {
                     GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
 
                 }
@@ -482,7 +496,6 @@ public class ExtraRequestActivity extends ActivityBase {
             }
         });
     }
-
 
 
     private void AddRequestWithOutPhoto(AddExtraCall addExtraCall) {
@@ -503,7 +516,7 @@ public class ExtraRequestActivity extends ActivityBase {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
-                . writeTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
                 .build();
 
         AndroidNetworking.post(GlobalData.BetaBaseURL + country + GlobalData.grocery +
@@ -558,7 +571,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
             @Override
             public void onError(ANError error) {
-                if(error.getMessage()!=null){
+                if (error.getMessage() != null) {
                     GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
 
                 }
@@ -567,7 +580,41 @@ public class ExtraRequestActivity extends ActivityBase {
         });
     }
 
+    private void checkCameraPermission() {
+        Dexter.withContext(getActiviy()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                startScan();
 
+
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(getActiviy(), "" + getActiviy().getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+
+            }
+        }).withErrorListener(error -> Toast.makeText(getActiviy(), "" + getActiviy().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
+    }
+
+    private void startScan() {
+
+        if (ContextCompat.checkSelfPermission(getActiviy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActiviy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+        } else {
+
+            Intent intent = new Intent(getActiviy(), FullScannerActivity.class);
+            startActivityForResult(intent, SEARCH_CODE);
+
+        }
+
+    }
 
 
 }

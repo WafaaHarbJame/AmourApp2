@@ -639,9 +639,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                            context.getString(R.string.fail_to_delete_cart));
 
+
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                            context.getString(R.string.fail_to_delete_cart));
                 }
 
 

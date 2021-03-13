@@ -671,7 +671,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 //                            }
                             for (int i = 0; i < allBrandList.size(); i++) {
                                 BrandModel brandModel = result.data.get(i);
-                                if (brandModel.getImage() != null && brandModel.getImage2() != null) {
+                                if (brandModel.getImage() != null || brandModel.getImage2() != null) {
                                     brandsList.add(brandModel);
                                     allBrandList.remove(i);
                                     i--;

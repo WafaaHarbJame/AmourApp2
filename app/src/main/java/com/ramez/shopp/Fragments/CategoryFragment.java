@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,6 +42,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 public class CategoryFragment extends FragmentBase implements CategoryAdapter.OnItemClick {
@@ -51,6 +53,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
     private FragmentCategoryBinding binding;
     private CategoryAdapter categoryAdapter;
     private Activity activity;
+    private int SEARCH_CODE = 2000;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
@@ -236,8 +239,35 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
             ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
         } else {
             Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, SEARCH_CODE);
+
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SEARCH_CODE) {
+
+                if (data != null) {
+                    boolean SEARCH_BY_CODE_byCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+                    String CODE = data.getStringExtra(Constants.CODE);
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    SearchFragment searchFragment = new SearchFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.CODE, CODE);
+                    bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
+                    searchFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+
+                }
+
+
+            }
+
+        }
     }
 }
