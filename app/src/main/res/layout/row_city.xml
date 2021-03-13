@@ -11,9 +11,9 @@
         android:gravity="start"
         android:orientation="horizontal"
         android:paddingStart="@dimen/_20sdp"
-        android:paddingTop="@dimen/_3sdp"
-        android:paddingEnd="@dimen/_20sdp"
-        android:paddingBottom="@dimen/_3sdp">
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp">
 
 
         <com.ramez.shopp.SpichalViews.STextViewBold

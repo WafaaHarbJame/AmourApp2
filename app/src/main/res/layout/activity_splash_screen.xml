@@ -14,14 +14,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/splash_logo" />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:scaleType="fitCenter"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/splash_back" />
+
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loadingLY"

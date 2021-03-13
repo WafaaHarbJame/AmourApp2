@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.Result;
@@ -198,6 +199,19 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         GetHomePage();
 
         AllListener();
+
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {/*empty*/}
+
+            @Override
+            public void onPageSelected(int position) {
+                binding.pager.setSelection(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {/*empty*/}
+        });
 
 
         if (savedInstanceState != null) {
@@ -872,13 +886,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     @Override
     public void onSliderClicked(int position, Slider slider) {
         if (slider.getReffrenceType() == 1) {
+
             Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
             intent.putExtra(Constants.product_id, slider.getReffrence());
             intent.putExtra(Constants.FROM_BROSHER, true);
             startActivity(intent);
 
         } else if (slider.getReffrenceType() == 2) {
-
             CategoryModel categoryModel = new CategoryModel();
             categoryModel.setId(Integer.valueOf(slider.getReffrence()));
 
@@ -895,6 +909,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
         } else if (slider.getReffrenceType() == 3) {
+            Log.i("tag", "Log getReffrence" + slider.getReffrence());
             String url = slider.getReffrence();
             ActivityHandler.OpenBrowser(getActivityy(), url);
 

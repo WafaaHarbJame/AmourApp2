@@ -99,8 +99,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             binding.cartRecycler.setLayoutManager(linearLayoutManager);
 
 
-            binding.cartRecycler.setHasFixedSize(false);
+            binding.cartRecycler.setHasFixedSize(true);
             binding.cartRecycler.setAnimation(null);
+            binding.cartRecycler.setItemAnimator(null);
+
 
             getCarts(storeId, userId);
 
@@ -335,7 +337,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                 } else {
                     if (IsSuccess) {
-                        if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                        if (cartResultModel.getData()!=null&&cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);

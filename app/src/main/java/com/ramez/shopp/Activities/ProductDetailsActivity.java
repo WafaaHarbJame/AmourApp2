@@ -29,6 +29,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddRateDialog;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductBarcode;
@@ -98,14 +99,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.reviewRecycler.setLayoutManager(reviewManger);
         binding.reviewRecycler.setHasFixedSize(true);
 
-        getIntentExtra();
 
         if (UtilityApp.isLogin()) {
             user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
 
         }
 
-        getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
+        getIntentExtra();
 
         initListener();
 
@@ -288,7 +288,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int cartId = productModel.getProductBarcodes().get(0).getCartId();
             int limit = productModel.getProductBarcodes().get(0).getLimitQty();
             Log.i("limit","Log limit  "+limit);
-            Log.i("stock","Log stock  "+stock);
+            Log.i("limit","Log limit  "+limit);
+            Log.i("stock","Log cartId  "+cartId);
 
 
             if (limit == 0) {
@@ -366,7 +367,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             FROM_BROSHER=bundle.getBoolean(Constants.FROM_BROSHER);
             if(FROM_BROSHER){
-                product_id=bundle.getInt(Constants.product_id);
+                product_id= Integer.parseInt(bundle.getString(Constants.product_id));
 
             }
             else {
@@ -391,6 +392,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
         }
+
+        getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
 
     }
@@ -705,8 +708,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     private void addToCart(View v, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            CartProcessModel result = (CartProcessModel) obj;
 
             if (IsSuccess) {
+                int cartId=result.getId();
+
+                productModel.getProductBarcodes().get(0).setCartId(cartId);
+                productModel.getProductBarcodes().get(0).setCartQuantity(quantity);
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
                 binding.CartLy.setVisibility(View.VISIBLE);
@@ -768,8 +776,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.productCartQTY.setText(String.valueOf(quantity));
 
                // initSnackBar(getString(R.string.success_to_update_cart), v);
-
-
+                productModel.getProductBarcodes().get(0).setCartQuantity(quantity);
                 if (quantity > 0) {
                     binding.productCartQTY.setText(String.valueOf(quantity));
                     binding.CartLy.setVisibility(View.VISIBLE);

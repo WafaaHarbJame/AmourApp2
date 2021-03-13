@@ -192,7 +192,7 @@
     <string name="success_update">تم تعديل البيانات بنجاح </string>
     <string name="please_wait_to_add_request">الرجاء الانتظار يتم الان  ارسال الطلب </string>
     <string name="please_wait_to_upload_photo">الرجاء الانتظار يتم الان تحميل الصورة</string>
-    <string name="categories">الاصناف</string>
+    <string name="categories">الفئات</string>
     <string name="all">الكل</string>
     <string name="make_order">ارسال الطلب </string>
     <string name="fail_to_send_order">فشل ارسال الطلب </string>

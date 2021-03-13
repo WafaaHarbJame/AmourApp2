@@ -318,7 +318,7 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         v.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(context, ProductDetailsActivity.class);
-            intent.putExtra(Constants.product_id, productsBean.getProductId());
+            intent.putExtra(Constants.product_id, String.valueOf(productsBean.getProductId()));
             intent.putExtra(Constants.FROM_BROSHER, true);
             context.startActivity(intent);
         });

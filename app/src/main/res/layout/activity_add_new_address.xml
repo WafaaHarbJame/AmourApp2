@@ -104,13 +104,13 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:hint="@string/address">
 
-                    <com.ramez.shopp.SpichalViews.SEditText
+                    <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
                         android:id="@+id/addressTV"
                         style="@style/editTextStyle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:inputType="none"
                         android:maxLines="1"
                         android:nextFocusForward="@id/nameEt" />
 

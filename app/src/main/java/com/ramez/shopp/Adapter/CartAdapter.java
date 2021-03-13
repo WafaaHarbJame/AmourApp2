@@ -281,8 +281,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             binding = view;
 
             binding.cardView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
 
-                CartModel cartDM = cartDMS.get(getAdapterPosition());
+                CartModel cartDM = cartDMS.get(position);
                 onCartItemClicked.onCartItemClicked(cartDM);
             });
 
@@ -352,11 +353,11 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteBut.setOnClickListener(view1 -> {
+                int position = getAdapterPosition();
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -384,12 +385,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
+                int position = getAdapterPosition();
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
                 int stock = productModel.getProductQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -397,6 +398,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 int limit = productModel.getLimitQty();
                 boolean isExtra = productModel.isExtra();
+                Log.i("limit", "Log limit" + limit);
+                Log.i("stock", "Log stock" + stock);
                 if (!isExtra) {
 
                     if (limit == 0) {
@@ -443,27 +446,28 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.minusCartBtn.setOnClickListener(v -> {
+                int position = getAdapterPosition();
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-
-                int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
+
                 updateCart(position, productId, product_barcode_id, count - 1, count - 1, false, userId, storeId, cart_id, "quantity");
 
 
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                if (cartDMS != null && cartDMS.size() > 0 & getAdapterPosition() != -1) {
-                    CartModel productModel = cartDMS.get(getAdapterPosition());
+                int position = getAdapterPosition();
+
+                if (cartDMS != null && cartDMS.size() > 0 & position != -1) {
+                    CartModel productModel = cartDMS.get(position);
                     if (productModel != null) {
                         int product_barcode_id = productModel.getProductBarcodeId();
-                        int position = getAdapterPosition();
                         int userId = UtilityApp.getUserData().getId();
                         int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                         int productId = productModel.getProductId();

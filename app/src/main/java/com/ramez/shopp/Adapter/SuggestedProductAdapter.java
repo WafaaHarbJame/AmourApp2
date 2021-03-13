@@ -422,8 +422,6 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 if (IsSuccess) {
                     int cartId=result.getId();
 
-
-//                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     notifyItemChanged(position);

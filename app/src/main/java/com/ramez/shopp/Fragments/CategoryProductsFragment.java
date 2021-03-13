@@ -243,57 +243,62 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
+            if (isVisible()) {
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                FavouriteResultModel result = (FavouriteResultModel) obj;
+                String message = getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.productsRv.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+                if (func.equals(Constants.ERROR)) {
 
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.productsRv.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.productsRv.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getData();
-                        initAdapter();
-
-                    } else {
-
-                        binding.productsRv.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
-
-
-                } else {
-
                     binding.productsRv.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
 
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.productsRv.setVisibility(View.GONE);
 
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.productsRv.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            productList = result.getData();
+                            initAdapter();
+
+                        } else {
+
+                            binding.productsRv.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.productsRv.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
                 }
+
             }
 
         }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+
     }
 
     @Override
