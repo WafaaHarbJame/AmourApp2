@@ -16,14 +16,6 @@ public class DinnerModel implements Serializable {
     @Expose
     private String description;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getImage() {
         return image;
     }
@@ -40,5 +32,11 @@ public class DinnerModel implements Serializable {
         this.description = description;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }

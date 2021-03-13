@@ -36,7 +36,7 @@ public class SplashScreenActivity extends ActivityBase {
     MemberModel user;
     LocalModel localModel;
     int cartNumber;
-    int country_id = 17;
+    int country_id = 0;
     private String lang;
 
 
@@ -212,12 +212,17 @@ public class SplashScreenActivity extends ActivityBase {
     }
 
     public void getDinners(String lang) {
+        UtilityApp.setDinnersData(null);
+        Log.i("TAG","Log dinners Size");
+        Log.i("TAG","Log countryid "+country_id);
+
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<ArrayList<DinnerModel>> result = (ResultAPIModel<ArrayList<DinnerModel>>) obj;
 
             if (IsSuccess) {
                 if (result.data != null && result.data.size() > 0) {
+                    Log.i("TAG","Log dinners Size"+result.data.size());
                     ArrayList<DinnerModel> dinnerModels = result.data;
                     UtilityApp.setDinnersData(dinnerModels);
                 }

@@ -235,7 +235,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
             GetHomePage();
-            getBooklets(city_id);
 
         });
 
@@ -416,7 +415,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                         getBooklets(city_id);
                         GetAllBrands(city_id);
 
-                        if (result.getFeatured() != null && result.getFeatured().size() > 0 || result.getQuickProducts() != null && result.getQuickProducts().size() > 0 || result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
+                        if (result.getFeatured() != null && result.getFeatured().size() > 0 ||
+                                result.getQuickProducts() != null && result.getQuickProducts().size() > 0
+                                || result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.searchLY.setVisibility(View.VISIBLE);
@@ -445,7 +446,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                             Log.i(TAG, "Log productBestList" + productOffersList.size());
                             Log.i(TAG, "Log productSellerList" + productSellerList.size());
                             Log.i(TAG, "Log productOffersList" + productOffersList.size());
-                            initAdapter();
+
 
                             if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                                 categoryModelList = UtilityApp.getCategories();
@@ -455,24 +456,34 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                 getCategories(city_id);
 
                             }
+                            initAdapter();
+
+
 
 
                         } else {
 
-                            binding.dataLY.setVisibility(View.VISIBLE);
-                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                            binding.bestProductLy.setVisibility(View.GONE);
-                            binding.bestSellerLy.setVisibility(View.GONE);
-                            binding.offerLy.setVisibility(View.GONE);
 
-                            if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
-                                categoryModelList = UtilityApp.getCategories();
-                                initCatAdapter();
-
-                            } else {
-                                getCategories(city_id);
+                            if (productOffersList.size() == 0) {
+                                binding.offerLy.setVisibility(View.GONE);
 
                             }
+
+
+                            if (productSellerList.size() == 0) {
+                                binding.bestSellerLy.setVisibility(View.GONE);
+
+                            }
+
+
+                            if (productBestList.size() == 0) {
+                                binding.bestProductLy.setVisibility(View.GONE);
+
+                            }
+
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
 
 
                         }
@@ -590,8 +601,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         } else {
 
-                            binding.dataLY.setVisibility(View.GONE);
-                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.categoryLy.setVisibility(View.GONE);
 
                         }
 
@@ -612,6 +623,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
     public void GetAllBrands(int storeId) {
+        brandsList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -667,16 +679,28 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                 }
 
                             }
+
+
+                            if(brandsList.size()==0){
+                                binding.brandLy.setVisibility(View.GONE);
+
+                            }
                             initBrandsAdapter();
 
                         }
 
+                        else {
+
+                            binding.brandLy.setVisibility(View.GONE);
+
+                        }
+
+
+
                     } else {
 
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failTxt.setText(message);
+                        binding.brandLy.setVisibility(View.GONE);
+
 
 
                     }
@@ -729,10 +753,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
 
-                    binding.noBookletsTv.setVisibility(View.VISIBLE);
-                    binding.BookletRecycler.setVisibility(View.GONE);
+                    binding.bookletLyLy.setVisibility(View.GONE);
+                    binding.speLy.setVisibility(View.GONE);
+
 
                 }
+
+
+            }
+            else {
+                binding.bookletLyLy.setVisibility(View.GONE);
+                binding.speLy.setVisibility(View.GONE);
 
 
             }
@@ -761,11 +792,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
 
-                    binding.noDinnersTv.setVisibility(View.VISIBLE);
-                    binding.kitchenRecycler.setVisibility(View.GONE);
+                    binding.ramezKitchenLy.setVisibility(View.GONE);
+                    binding.dataLY.setVisibility(View.VISIBLE);
 
                 }
 
+
+            }
+            else {
+                binding.ramezKitchenLy.setVisibility(View.GONE);
 
             }
 

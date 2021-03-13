@@ -4,12 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class BrandModel {
+
     @SerializedName("id")
     @Expose
     private int id;
     @SerializedName("h_name")
     @Expose
-    private Object hName;
+    private String hName;
     @SerializedName("image")
     @Expose
     private String image;
@@ -28,11 +29,11 @@ public class BrandModel {
         this.id = id;
     }
 
-    public Object gethName() {
+    public String gethName() {
         return hName;
     }
 
-    public void sethName(Object hName) {
+    public void sethName(String hName) {
         this.hName = hName;
     }
 
