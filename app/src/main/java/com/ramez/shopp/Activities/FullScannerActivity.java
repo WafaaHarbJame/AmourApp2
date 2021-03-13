@@ -1,9 +1,5 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.Ringtone;
@@ -12,31 +8,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.MessageEvent;
-import com.ramez.shopp.Fragments.HomeFragment;
-import com.ramez.shopp.Fragments.SearchFragment;
-import com.ramez.shopp.MainActivity;
-import com.ramez.shopp.R;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class FullScannerActivity extends ActivityBase implements ZBarScannerView.ResultHandler {
-    private static final String FLASH_STATE = "FLASH_STATE";
-    private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
-    private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
-    private static final String CAMERA_ID = "CAMERA_ID";
 
     private ZBarScannerView mScannerView;
-    //    private boolean mFlash=true;
-//    private boolean mAutoFocus;
-    private ArrayList<Integer> mSelectedIndices;
-    //    private final int mCameraId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +56,6 @@ public class FullScannerActivity extends ActivityBase implements ZBarScannerView
         super.onResume();
         mScannerView.setResultHandler(this);
         mScannerView.setAutoFocus(true);
-//        mScannerView.setFlash(mFlash);
         mScannerView.startCamera();
     }
 
@@ -95,4 +77,6 @@ public class FullScannerActivity extends ActivityBase implements ZBarScannerView
             fragment.dismiss();
         }
     }
+
+
 }

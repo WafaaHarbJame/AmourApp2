@@ -32,7 +32,6 @@ public class TermsActivity extends ActivityBase {
 
     }
 
-
     public void getSetting() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {

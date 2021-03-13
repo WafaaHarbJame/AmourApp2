@@ -68,6 +68,7 @@
         android:background="@drawable/round_corner_gray_border_fill"
         android:paddingStart="@dimen/_10sdp"
         android:paddingTop="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:paddingBottom="@dimen/_7sdp"
         android:text="@string/no_products"

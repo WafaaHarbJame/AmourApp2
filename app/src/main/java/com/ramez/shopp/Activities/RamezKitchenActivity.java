@@ -7,23 +7,19 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Adapter.RecipeAdapter;
 import com.ramez.shopp.Adapter.RecipeSliderAdapter;
-import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.DinnerModel;
-import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.Recipe;
@@ -42,8 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
-
 public class RamezKitchenActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityRamezKitchenBinding binding;
     int user_id = 0;
@@ -55,7 +49,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
     String currency;
     private int country_id, city_id, product_id;
     private RecipeSliderAdapter sliderAdapter;
-    private SuggestedProductAdapter productOfferAdapter;
     private LinearLayoutManager productLayoutManager;
     private int storeId;
     private int dinner_id;
@@ -145,77 +138,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         });
 
 
-        binding.plusCartBtn.setOnClickListener(v -> {
-//            String message = "";
-//
-//            int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-//            int stock = dinnerModel.getProductBarcodes().get(0).getStockQty();
-//            int userId = UtilityApp.getUserData().getId();
-//            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-//            int productId = dinnerModel.getId();
-//            int product_barcode_id = dinnerModel.getProductBarcodes().get(0).getId();
-//            int cartId = dinnerModel.getProductBarcodes().get(0).getCartId();
-//            int limit = dinnerModel.getProductBarcodes().get(0).getLimitQty();
-//            Log.i("limit", "Log limit  " + limit);
-//            Log.i("stock", "Log stock  " + stock);
-//
-//
-//            if (limit == 0) {
-//
-//                if (count + 1 <= stock) {
-//                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-//
-//                } else {
-//                    message = getString(R.string.stock_empty);
-//                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
-//                }
-//            } else {
-//
-//                if (count + 1 <= stock && (count + 1) <= limit) {
-//                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-//
-//                } else {
-//
-//                    if (count + 1 > stock) {
-//                        message = getString(R.string.stock_empty);
-//                    } else {
-//                        message = getString(R.string.limit) + "" + limit;
-//
-//                    }
-//                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
-//                }
-//
-//            }
-
-
-        });
-
-        binding.minusCartBtn.setOnClickListener(v -> {
-
-//            // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-//            int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-//            int userId = UtilityApp.getUserData().getId();
-//            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-//            int productId = dinnerModel.getId();
-//            int product_barcode_id = dinnerModel.getProductBarcodes().get(0).getId();
-//            int cart_id = dinnerModel.getProductBarcodes().get(0).getCartId();
-//
-//            updateCart(v, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
-
-
-        });
-
-        binding.deleteCartBtn.setOnClickListener(v -> {
-
-//            int userId = UtilityApp.getUserData().getId();
-//            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-//            int productId = dinnerModel.getId();
-//            int product_barcode_id = dinnerModel.getProductBarcodes().get(0).getId();
-//            int cart_id = dinnerModel.getProductBarcodes().get(0).getCartId();
-//
-//            deleteCart(v, productId, product_barcode_id, cart_id, userId, storeId);
-
-        });
 
         binding.showAllBut.setOnClickListener(v -> {
 
@@ -269,8 +191,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-
-        //getSingleProduct(country_id,city_id,productModel.getId(), String.valueOf(user_id));
 
     }
 

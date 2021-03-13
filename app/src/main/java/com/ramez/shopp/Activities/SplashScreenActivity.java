@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.SettingModel;
@@ -20,7 +17,6 @@ import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.DinnerModel;
-import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -32,19 +28,16 @@ import com.ramez.shopp.R;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
-
 import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
     private static final int SPLASH_TIMER = 3500;
-    int storeId, userId=0;
+    int storeId, userId = 0;
     MemberModel user;
     LocalModel localModel;
     int cartNumber;
-    int country_id=17;
+    int country_id = 17;
     private String lang;
-
 
 
     @Override
@@ -67,8 +60,11 @@ public class SplashScreenActivity extends ActivityBase {
         localModel = UtilityApp.getLocalData();
 
         if (localModel != null && localModel.getCityId() != null) {
-            storeId= Integer.parseInt(localModel.getCityId());
-            country_id=localModel.getCountryId();
+            storeId = Integer.parseInt(localModel.getCityId());
+            country_id = localModel.getCountryId();
+            if (localModel.getShortname() != null) {
+                getLinks(UtilityApp.getLocalData().getShortname());
+            }
             getCategories(Integer.parseInt(localModel.getCityId()));
             getDinners(lang);
             GetHomePage();
@@ -115,7 +111,6 @@ public class SplashScreenActivity extends ActivityBase {
         startActivity(new Intent(getActiviy(), ChangeLanguageActivity.class));
 
     }
-
 
     public void getUserData(int user_id) {
 
@@ -193,9 +188,6 @@ public class SplashScreenActivity extends ActivityBase {
                     UtilityApp.setSetting(settingModel);
                 }
 
-            } else {
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
-
             }
 
 
@@ -236,7 +228,6 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getDinnersList(lang);
     }
-
 
 
     public void getCarts(int storeId, int userId) {
@@ -281,25 +272,21 @@ public class SplashScreenActivity extends ActivityBase {
         }).GetCarts(storeId, userId);
     }
 
-
     public void getLinks(String shortName) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SoicalLink> result = (ResultAPIModel<SoicalLink>) obj;
 
 
-                if (IsSuccess) {
-                    SoicalLink soicalLink=result.data;
-                    UtilityApp.SetLinks(soicalLink);
+            if (IsSuccess) {
+                SoicalLink soicalLink = result.data;
+                UtilityApp.SetLinks(soicalLink);
 
-                }
-
+            }
 
 
         }).getLinks(shortName);
     }
-
-
 
     public void GetHomePage() {
         Log.i(TAG, "Log GetMainPage new");
@@ -309,12 +296,13 @@ public class SplashScreenActivity extends ActivityBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-                MainModel result = (MainModel) obj;
+            MainModel result = (MainModel) obj;
 
             if (IsSuccess) {
 
-                ArrayList<Slider> sliderList=new ArrayList<>();
-                ArrayList<Slider> bannersList=new ArrayList<>();;
+                ArrayList<Slider> sliderList = new ArrayList<>();
+                ArrayList<Slider> bannersList = new ArrayList<>();
+                ;
                 if (result.getSliders().size() > 0) {
 
                     for (int i = 0; i < result.getSliders().size(); i++) {

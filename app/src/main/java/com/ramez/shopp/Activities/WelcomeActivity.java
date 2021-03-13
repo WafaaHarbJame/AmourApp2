@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ramez.shopp.Adapter.WelcomeSliderAdapter;
-import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.WelcomeModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityWelcomeBinding;
@@ -61,18 +60,11 @@ public class WelcomeActivity extends ActivityBase {
     }
 
 
-
-
-
     public void navigateChooseCityActivity() {
         startActivity(new Intent(WelcomeActivity.this, ChooseCityActivity.class));
         finish();
     }
 
-    private void startMainActivity(){
-        UtilityApp.setIsFirstRun(false);
-        startActivity(new Intent(WelcomeActivity.this, SplashScreenActivity.class));
-        finish();
-    }
+
 
 }

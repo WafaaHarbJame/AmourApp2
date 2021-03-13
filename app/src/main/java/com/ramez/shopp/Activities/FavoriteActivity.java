@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.ramez.shopp.Adapter.FavoriteAdapter;
 import com.ramez.shopp.Adapter.OfferProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
@@ -33,7 +32,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
     private String user_id, filter;
     private MemberModel user;
     private LocalModel localModel;
-    private int brand_id;
+    private int brand_id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

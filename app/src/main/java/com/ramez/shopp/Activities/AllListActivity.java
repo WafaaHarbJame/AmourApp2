@@ -1,15 +1,12 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.ramez.shopp.Adapter.ProductAdapter;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -83,7 +80,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     }
 
     public void initAdapter() {
-        adapter = new ProductCategoryAdapter(getActiviy(),binding.recycler, list, 0, country_id, city_id, user_id, list.size(),  filter, this, Constants.twoRow);
+        adapter = new ProductCategoryAdapter(getActiviy(), binding.recycler, list, 0, country_id, city_id, user_id, list.size(), filter, this, Constants.twoRow);
         binding.recycler.setAdapter(adapter);
     }
 

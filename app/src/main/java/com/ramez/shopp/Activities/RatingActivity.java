@@ -6,7 +6,6 @@ import android.view.View;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -55,7 +54,6 @@ public class RatingActivity extends ActivityBase {
 
 
     }
-
 
     private void addRate(ReviewModel reviewModel) {
 

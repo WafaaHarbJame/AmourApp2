@@ -16,8 +16,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.ConfirmDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;

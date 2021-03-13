@@ -3,17 +3,14 @@ package com.ramez.shopp.Activities;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.aminography.choosephotohelper.ChoosePhotoHelper;
-import com.aminography.choosephotohelper.callback.ChoosePhotoCallback;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
@@ -30,17 +27,14 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.FileUtil;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.Utils.PathUtil;
 import com.ramez.shopp.databinding.ActivityEditProfileBinding;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 import id.zelory.compressor.Compressor;
 
@@ -201,7 +195,6 @@ public class EditProfileActivity extends ActivityBase {
 
     }
 
-
     private void updateProfile() {
 
         final String name = NumberHandler.arabicToDecimal(binding.edtUserName.getText().toString());
@@ -246,7 +239,6 @@ public class EditProfileActivity extends ActivityBase {
         }).updateProfile(memberModel);
 
     }
-
 
     private void uploadPhoto(int userId, File photo) {
 
@@ -320,9 +312,4 @@ public class EditProfileActivity extends ActivityBase {
     }
 
 
-//    @Override
-//    protected void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        choosePhotoHelper.onSaveInstanceState(outState);
-//    }
 }

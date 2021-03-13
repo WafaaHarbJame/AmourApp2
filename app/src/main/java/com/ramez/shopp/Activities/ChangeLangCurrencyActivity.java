@@ -1,24 +1,20 @@
 package com.ramez.shopp.Activities;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.ramez.shopp.Adapter.CurrencyAdapter;
 import com.ramez.shopp.Adapter.LangAdapter;
-import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.CurrencyModel;
 import com.ramez.shopp.Models.LanguageModel;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityChangeLangAndCurrencyBinding;
 
@@ -164,7 +160,6 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
         binding.recycler.setAdapter(langAdapter);
 
 
-
     }
 
 
@@ -181,46 +176,6 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
 
     }
 
-    public void getSetting() {
 
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
-
-            if (func.equals(Constants.ERROR)) {
-
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                //Toasty.error(getActiviy(),R.string.fail_to_get_data, Toast.LENGTH_SHORT, true).show();
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                //   Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
-
-
-            }
-
-            if (IsSuccess) {
-                SettingModel settingModel = new SettingModel();
-                if (result.data != null) {
-                    settingModel.setAbout(result.data.getAbout());
-                    settingModel.setConditions(result.data.getConditions());
-                    settingModel.setPrivacy(result.data.getPrivacy());
-                    UtilityApp.setSetting(settingModel);
-                    Intent intent=new Intent(getActiviy(),SplashScreenActivity.class);
-                    startActivity(intent);                }
-
-            } else {
-                Intent intent=new Intent(getActiviy(),SplashScreenActivity.class);
-                startActivity(intent);                }
-
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
-
-
-
-
-        }).getSetting();
-    }
 
 }

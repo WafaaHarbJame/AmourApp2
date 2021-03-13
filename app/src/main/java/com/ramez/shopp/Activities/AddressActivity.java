@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-
 import com.ramez.shopp.Adapter.AddressAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -106,7 +103,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());
             intent.putExtra(Constants.ADDRESS_FULL, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
-//            finish();
 
         }
 

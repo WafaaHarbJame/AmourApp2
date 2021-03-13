@@ -15,7 +15,6 @@ import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.Utils.SharedPManger;
 import com.ramez.shopp.databinding.ActivityChooseNearstCityBinding;
 
 import java.util.ArrayList;

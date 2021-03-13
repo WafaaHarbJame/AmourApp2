@@ -1,16 +1,11 @@
 package com.ramez.shopp.Activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -18,9 +13,6 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ItemDetailsModel;
 import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderModel;
-import com.ramez.shopp.Models.OrderNewModel;
-import com.ramez.shopp.Models.OrderProductModel;
-import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;

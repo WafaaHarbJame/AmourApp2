@@ -365,7 +365,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this, true);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this, true,0);
         binding.recycler.setAdapter(kitchenAdapter);
 
     }
@@ -377,7 +377,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     public void initBrandsAdapter() {
-        brandsAdapter = new BrandsAdapter(getActiviy(), brandsList, this);
+        brandsAdapter = new BrandsAdapter(getActiviy(), brandsList, this,0);
         binding.recycler.setAdapter(brandsAdapter);
 
     }

@@ -21,7 +21,6 @@ import com.ramez.shopp.Adapter.ProductSliderAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -45,7 +44,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
@@ -823,7 +821,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
     }
-
 
     public void getReviews(int product_id, int storeId) {
         reviewList.clear();

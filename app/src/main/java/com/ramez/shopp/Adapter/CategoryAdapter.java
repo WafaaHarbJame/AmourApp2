@@ -71,7 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     @Override
     public int getItemCount() {
 
-        if (limit == 6) return Math.min(categoryDMS.size(), limit);
+        if (limit != 0) return Math.min(categoryDMS.size(), limit);
         else return categoryDMS.size();
     }
 

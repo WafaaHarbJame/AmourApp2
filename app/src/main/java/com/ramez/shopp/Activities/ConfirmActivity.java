@@ -37,8 +37,6 @@ public class ConfirmActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        //binding.toolBar.mainTitleTxt.setText(getString(R.string.confirm_phone));
-
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });

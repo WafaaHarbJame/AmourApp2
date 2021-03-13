@@ -57,8 +57,6 @@ public class ChangeLanguageActivity extends ActivityBase {
 
     }
 
-
-
     public void getSetting() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {

@@ -41,10 +41,6 @@ public class MyOrderActivity extends ActivityBase {
 
     }
 
-
-
-
-
     class MyViewPagerAdapter extends FragmentStatePagerAdapter {
 
         public MyViewPagerAdapter(FragmentManager fm) {
@@ -81,14 +77,12 @@ public class MyOrderActivity extends ActivityBase {
         }
     }
 
-
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
 
         if (event.type.equals(MessageEvent.TYPE_main)) {
 
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION,0));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
             Intent intent = new Intent(getActiviy(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -96,7 +90,6 @@ public class MyOrderActivity extends ActivityBase {
 //                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "MyAccountFragment").commit();
 
         }
-
 
 
     }

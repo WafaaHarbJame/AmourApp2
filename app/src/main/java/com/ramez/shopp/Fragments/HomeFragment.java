@@ -4,9 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,16 +22,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllBookleteActivity;
 import com.ramez.shopp.Activities.AllListActivity;
@@ -71,7 +63,6 @@ import com.ramez.shopp.databinding.FragmentHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -106,8 +97,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private ProductAdapter productOfferAdapter;
     private int category_id = 0, country_id, city_id;
     // TODO Barcode
-    private Barcode barcodeResult;
-    private String result;
     private ZXingScannerView mScannerView;
     private boolean mFlash;
     private boolean mAutoFocus;
@@ -699,7 +688,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     private void initCatAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, categoryModelList.size(), this);
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, 10, this);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
@@ -717,7 +706,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this, false);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this, false,10);
         binding.kitchenRecycler.setAdapter(kitchenAdapter);
 
     }
@@ -812,14 +801,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initBrandsAdapter() {
 
-        if (brandsList.size() >= 4) {
-
-            brandManger.setSpanCount(2);
-        } else {
-            brandManger.setSpanCount(1);
-
-        }
-        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this);
+        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this,10);
         binding.brandsRecycler.setAdapter(brandsAdapter);
 
     }

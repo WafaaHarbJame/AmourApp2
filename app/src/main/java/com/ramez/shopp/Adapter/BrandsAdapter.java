@@ -21,11 +21,13 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
     private Context context;
     private List<BrandModel> list;
     private OnBrandClick onBrandClick;
+    private int limit;
 
-    public BrandsAdapter(Context context, List<BrandModel> categoryDMS, OnBrandClick onBrandClick) {
+    public BrandsAdapter(Context context, List<BrandModel> categoryDMS, OnBrandClick onBrandClick,int limit) {
         this.context = context;
         this.list = categoryDMS;
         this.onBrandClick = onBrandClick;
+        this.limit=limit;
         ;
     }
 
@@ -69,7 +71,8 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (limit != 0) return Math.min(list.size(), limit);
+        else return list.size();
     }
 
     public interface OnBrandClick {

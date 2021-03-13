@@ -20,12 +20,14 @@ public class KitchenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<DinnerModel> list;
     private OnKitchenClick onKitchenClick;
     private boolean isGrid;
+    private int limit;
 
-    public KitchenAdapter(Context context, List<DinnerModel> list, OnKitchenClick onKitchenClick, boolean isGrid) {
+    public KitchenAdapter(Context context, List<DinnerModel> list, OnKitchenClick onKitchenClick, boolean isGrid,int limit) {
         this.context = context;
         this.list = list;
         this.onKitchenClick = onKitchenClick;
         this.isGrid = isGrid;
+        this.limit=limit;
 
     }
 
@@ -75,7 +77,9 @@ public class KitchenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (limit != 0) return Math.min(list.size(), limit);
+        else return list.size();
+
     }
 
     public interface OnKitchenClick {

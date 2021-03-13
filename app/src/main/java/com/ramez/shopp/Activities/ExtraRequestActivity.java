@@ -179,66 +179,6 @@ public class ExtraRequestActivity extends ActivityBase {
 
     }
 
-
-    private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            if (IsSuccess) {
-                Log.i("tag", "Log " + UtilityApp.getCartCount());
-                UtilityApp.updateCart(1, 10);
-                binding.addToCartBtn.setVisibility(View.GONE);
-                binding.productCartQTY.setText(String.valueOf(quantity));
-
-            } else {
-
-                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.fail_to_add_cart), getString(R.string.fail_to_update_cart));
-
-            }
-
-
-        }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
-    }
-
-    private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (IsSuccess) {
-
-                binding.productCartQTY.setText(String.valueOf(quantity));
-
-            } else {
-                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.fail_to_add_cart), getString(R.string.fail_to_update_cart));
-
-
-            }
-
-        }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
-    }
-
-    private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            if (IsSuccess) {
-                UtilityApp.updateCart(2, 10);
-                Log.i("tag", "Log " + UtilityApp.getCartCount());
-                binding.productCartQTY.setText(String.valueOf(0));
-                initSnackBar(getString(R.string.success_delete_from_cart));
-
-
-            } else {
-                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.fail_to_add_cart), getString(R.string.fail_to_delete_cart));
-
-
-            }
-
-
-        }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
-    }
-
-    private void initSnackBar(String message) {
-        Toast.makeText(getActiviy(), message, Toast.LENGTH_SHORT).show();
-
-    }
-
     private final void openPicker() {
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
@@ -366,7 +306,6 @@ public class ExtraRequestActivity extends ActivityBase {
         startActivity(intent);
         finish();
     }
-
 
     @SuppressLint("SetTextI18n")
     @Override
