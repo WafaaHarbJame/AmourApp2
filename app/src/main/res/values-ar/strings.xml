@@ -306,5 +306,8 @@
     <string name="delete_product">حذف المنتج </string>
     <string name="scan_barcode">مسح كود المنتج </string>
     <string name="Barcode">كود المنتج : </string>
+    <string name="touch_brousher">المس البروشور  للوصول إلى العروض الخاصة</string>
+    <string name="Offer_end">Offer ends in</string>
+    <string name="favorite">Favorite</string>
 
 </resources>

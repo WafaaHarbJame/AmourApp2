@@ -201,11 +201,11 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     private void initSubCatList(ArrayList<ChildCat> subCatList) {
         ChildCat childCat = new ChildCat();
-        childCat.setId(category_id);
+        childCat.setId(selectedSubCat);
         childCat.setHName(getString(R.string.all));
         childCat.setName(getString(R.string.all));
 
-        selectedSubCat = category_id;
+     //   selectedSubCat = category_id;
         ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
 
         subCategoryDMS.add(0, childCat);

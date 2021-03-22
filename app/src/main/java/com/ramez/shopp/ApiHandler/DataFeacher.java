@@ -207,7 +207,7 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + memberModel.getId());
 
-        Call call = apiService.logout(headerMap, memberModel.getId());
+        Call call = apiService.logout(headerMap, memberModel.getId(),Constants.user_type);
         call.enqueue(callbackApi);
 
     }
@@ -307,6 +307,7 @@ public class DataFeacher {
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", memberModel.getId());
         params.put("device_token", memberModel.getDeviceToken());
+        params.put("user_type", Constants.user_type);
 
         Log.i(TAG, "Log UpdateTokenHandle");
         Log.i(TAG, "Log headerMap " + headerMap);

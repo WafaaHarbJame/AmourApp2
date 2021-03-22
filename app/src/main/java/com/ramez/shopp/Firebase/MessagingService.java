@@ -24,10 +24,16 @@ import androidx.work.WorkManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.InvoiceInfoActivity;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MyWorker;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 
 public class MessagingService extends FirebaseMessagingService {
@@ -39,7 +45,22 @@ public class MessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         super.onNewToken(token);
-        UtilityApp.setFCMToken(token);
+        Log.i("TAG", "Log  onNewToken token " + token);
+
+        OneSignal.idsAvailable((userId, registrationId) -> {
+            Log.d("debug", "Log User:" + userId);
+            if (registrationId != null)
+                UtilityApp.setFCMToken(OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+
+            if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+                String updateToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+                MemberModel memberModel = UtilityApp.getUserData();
+                memberModel.setDeviceToken(updateToken);
+                UtilityApp.setUserData(memberModel);
+                UpdateToken(memberModel);
+            }
+
+        });
 
     }
 
@@ -107,7 +128,24 @@ public class MessagingService extends FirebaseMessagingService {
 
     }
 
+
+    private void UpdateToken(MemberModel memberModel) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<String> result = (ResultAPIModel) obj;
+            if (IsSuccess) {
+                Log.i("TAG", "Log  UpdateToken Success ");
+
+
+            }
+
+
+        }).UpdateTokenHandle(memberModel);
+
+    }
 }
+
+
 //
 //    private static final String TAG = "MyFirebaseMsgService";
 //    private static final String ADMIN_CHANNEL_ID = "admin_channel";

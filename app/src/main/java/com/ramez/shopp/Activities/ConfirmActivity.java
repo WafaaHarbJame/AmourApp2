@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -199,9 +200,16 @@ public class ConfirmActivity extends ActivityBase {
 
         FCMToken = UtilityApp.getFCMToken();
         if (FCMToken == null) {
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
-                FCMToken = instanceIdResult.getToken();
+
+            OneSignal.idsAvailable((userId, registrationId) -> {
+                Log.d("debug", "Log User:" + userId);
+                if (registrationId != null)
+                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
                 UtilityApp.setFCMToken(FCMToken);
+
+                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+
             });
 
         }
@@ -283,6 +291,11 @@ public class ConfirmActivity extends ActivityBase {
                 if (IsSuccess) {
 
                     MemberModel user = result.data;
+
+                    if(user!=null){
+                        user.setUserType(Constants.user_type);
+
+                    }
                     UtilityApp.setUserData(user);
                     if (UtilityApp.getUserData() != null) {
                         UpdateToken();

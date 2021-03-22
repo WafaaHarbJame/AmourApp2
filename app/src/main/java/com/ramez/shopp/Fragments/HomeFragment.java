@@ -30,7 +30,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllBookleteActivity;
 import com.ramez.shopp.Activities.AllListActivity;
-import com.ramez.shopp.Activities.BrousherActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RamezKitchenActivity;
@@ -811,9 +810,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
-        Intent intent = new Intent(getActivityy(), BrousherActivity.class);
-        intent.putExtra(Constants.bookletsModel, bookletsModel);
-        startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS,true));
+        FragmentManager fragmentManager = getParentFragmentManager();
+        SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+        specialOfferFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+
 
     }
 

@@ -20,10 +20,12 @@ import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.ExampleNotificationOpenedHandler;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
@@ -55,6 +57,7 @@ public class MainActivity extends ActivityBase {
     LocalModel localModel;
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
+    String country_name = "BH";
 
     @SuppressLint("UnsafeExperimentalUsageError")
     @Override
@@ -74,9 +77,19 @@ public class MainActivity extends ActivityBase {
 
         getIntentExtra();
 
+
+
+        Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+
+
         localModel = UtilityApp.getLocalData();
 
         storeId = Integer.parseInt(localModel.getCityId());
+
+        country_name=localModel.getShortname();
+
+        OneSignal.sendTag(Constants.COUNTRY,country_name);
+
 
         if (UtilityApp.isLogin()) {
             getCartsCount();
@@ -109,8 +122,6 @@ public class MainActivity extends ActivityBase {
                 getCartsCount();
             }
         });
-
-
 
 
         binding.cartButton.setOnClickListener(view1 -> {
@@ -195,6 +206,18 @@ public class MainActivity extends ActivityBase {
             startActivity(intent);
         });
 
+
+        OneSignal.idsAvailable((userId, registrationId) -> {
+            Log.d("debug", "Log User:" + userId);
+            if (registrationId != null)
+
+                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+            Log.d("debug", "Log token one signal second  :" + registrationId);
+            Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+
+        });
+
+
     }
 
     private void initBottomNav(int pos) {
@@ -251,7 +274,27 @@ public class MainActivity extends ActivityBase {
 
             });
 
-        } else if (event.type.equals(MessageEvent.TYPE_POSITION)) {
+        }
+
+        else
+        if (event.type.equals(MessageEvent.TYPE_BROUSHERS)) {
+         //   boolean is_Home = (boolean) event.data;
+
+
+            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+            binding.toolBar.view2But.setVisibility(View.GONE);
+            binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.addExtra.setVisibility(View.GONE);
+
+            binding.toolBar.backBtn.setOnClickListener(view -> {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+
+
+            });
+
+        }
+        else if (event.type.equals(MessageEvent.TYPE_POSITION)) {
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
@@ -396,7 +439,7 @@ public class MainActivity extends ActivityBase {
                             }
                         };
 
-                        new ConfirmDialog(getActiviy(),getString( R.string.updateMessage), R.string.ok, R.string.cancel_label, click, cancel,false);
+                        new ConfirmDialog(getActiviy(), getString(R.string.updateMessage), R.string.ok, R.string.cancel_label, click, cancel, false);
 
                     }
                     Log.i(TAG, "Log getValidation" + result.getMessage());
@@ -416,8 +459,7 @@ public class MainActivity extends ActivityBase {
 
             binding.cartCountTv.setVisibility(View.GONE);
 
-        }
-        else {
+        } else {
             binding.cartCountTv.setVisibility(View.VISIBLE);
             binding.cartCountTv.setText(String.valueOf(cartCount));
 

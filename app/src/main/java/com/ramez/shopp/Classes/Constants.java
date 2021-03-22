@@ -57,6 +57,7 @@ public class Constants {
     public static final String CAPTURE = "capture";
     public static final String PICK = "pick";
     public static final String LOGIN = "LOGIN";
+    public static final String COUNTRY = "COUNTRY";
     public static final String REGISTER = "REGISTER";
     public static final String inv_id = "inv_id";
     public static final String CART = "CART";

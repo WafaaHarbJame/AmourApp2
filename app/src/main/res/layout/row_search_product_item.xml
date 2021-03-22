@@ -25,7 +25,7 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_18sdp"
             android:background="@color/transparent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/holder_image" />
 
         <ImageView
@@ -118,7 +118,7 @@
             android:gravity="center"
             android:text="@string/_10220_aed"
             android:textColor="@color/green"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />
 
         <com.ramez.shopp.SpichalViews.STextView
@@ -129,7 +129,7 @@
             android:gravity="center"
             android:text="@string/_10220_aed"
             android:textColor="@color/gray3"
-            android:textSize="@dimen/_11ssp" />
+            android:textSize="@dimen/_10ssp" />
 
         <Space
             android:layout_width="0dp"

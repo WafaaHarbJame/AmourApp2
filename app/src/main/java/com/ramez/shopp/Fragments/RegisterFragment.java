@@ -18,6 +18,7 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ChooseCityActivity;
 import com.ramez.shopp.Activities.ConditionActivity;
 import com.ramez.shopp.Activities.ConfirmActivity;
@@ -152,6 +153,11 @@ public class RegisterFragment extends FragmentBase {
 
                         if (result.getStatus() == 200) {
                             MemberModel user = result.data;
+                            if(user!=null){
+                                user.setUserType(Constants.user_type);
+
+                            }
+
                             UtilityApp.setUserData(user);
                             SendOtp(mobileStr, passwordStr);
 
@@ -202,14 +208,22 @@ public class RegisterFragment extends FragmentBase {
 
         FCMToken = UtilityApp.getFCMToken();
         if (FCMToken == null) {
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
-                FCMToken = instanceIdResult.getToken();
+
+            OneSignal.idsAvailable((userId, registrationId) -> {
+                Log.d("debug", "Log User:" + userId);
+                if (registrationId != null)
+                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
                 UtilityApp.setFCMToken(FCMToken);
+
+                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+
             });
 
         }
 
     }
+
 
     private void GoToChooseCity() {
         Intent intent = new Intent(getActivityy(), ChooseCityActivity.class);

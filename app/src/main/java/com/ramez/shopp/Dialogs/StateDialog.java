@@ -127,17 +127,22 @@ public class StateDialog extends Dialog {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String searchStr = NumberHandler.arabicToDecimal(s.toString());
-                List<AreasModel> countriesList = new ArrayList<>();
-                for (int i = 0; i < areasModels.size(); i++) {
-                    AreasModel countryModel = areasModels.get(i);
+                if(s!=null){
+                    String searchStr = NumberHandler.arabicToDecimal(s.toString());
+                    List<AreasModel> countriesList = new ArrayList<>();
+                    for (int i = 0; i < areasModels.size(); i++) {
+                        AreasModel countryModel = areasModels.get(i);
+                        String areaNameAr=countryModel.getNameAe()!=null?countryModel.getNameAe():countryModel.getNameEn();
+                        String areaNameEn=countryModel.getNameEn()!=null?countryModel.getNameEn():countryModel.getNameAe();
 
-                    if (countryModel.getNameAe().toLowerCase().contains(searchStr) || countryModel.getNameEn().toString().contains(searchStr))
-                        countriesList.add(countryModel);
-                    initAdapter(countriesList);
+                        if (areaNameAr.toLowerCase().contains(searchStr) ||areaNameEn.toLowerCase().contains(searchStr))
+                            countriesList.add(countryModel);
+                        initAdapter(countriesList);
 
 
+                    }
                 }
+
 
 
             }

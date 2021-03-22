@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ConfirmActivity;
 import com.ramez.shopp.Activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -221,6 +222,11 @@ public class LoginFragment extends FragmentBase {
 
                     else if(result.getStatus()==200) {
                         MemberModel user = result.data;
+                        if(user!=null){
+                            user.setUserType(Constants.user_type);
+
+                        }
+
                         UtilityApp.setUserData(user);
                         if (UtilityApp.getUserData() != null) {
                             UpdateToken();
@@ -281,9 +287,16 @@ public class LoginFragment extends FragmentBase {
 
         FCMToken = UtilityApp.getFCMToken();
         if (FCMToken == null) {
-            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
-                FCMToken = instanceIdResult.getToken();
+
+            OneSignal.idsAvailable((userId, registrationId) -> {
+                Log.d("debug", "Log User:" + userId);
+                if (registrationId != null)
+                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
                 UtilityApp.setFCMToken(FCMToken);
+
+                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+
             });
 
         }

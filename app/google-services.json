@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:457290329020:android:e8dbcca5c4f039f4ad19b9",
+        "mobilesdk_app_id": "1:457290329020:android:62740a2d0e742fe5ad19b9",
         "android_client_info": {
-          "package_name": "com.ramez.ramez"
+          "package_name": "com.ramez.driver"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "457290329020-1tiafk0rolbos4di8fl8pa8ecka1ipke.apps.googleusercontent.com",
+              "client_id": "457290329020-0l1aht0mo7ci22k96aif8mkcn5mfca7u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.companyname.NotificationSample"
+                "bundle_id": "com.xamarin.firebase.ios.cloudmessagingsample"
               }
             }
           ]
@@ -44,12 +44,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:457290329020:android:40d17e2f967546c4ad19b9",
+        "mobilesdk_app_id": "1:457290329020:android:e8dbcca5c4f039f4ad19b9",
         "android_client_info": {
-          "package_name": "com.ramez.shopp"
+          "package_name": "com.ramez.ramez"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "457290329020-36jtinbas4ecotd1b7rs1vg5hu3spk4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ramez.ramez",
+            "certificate_hash": "00a9051a33f26c73727b3e1365b0ccf4ad61fb00"
+          }
+        },
         {
           "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
           "client_type": 3
@@ -68,10 +76,54 @@
               "client_type": 3
             },
             {
-              "client_id": "457290329020-1tiafk0rolbos4di8fl8pa8ecka1ipke.apps.googleusercontent.com",
+              "client_id": "457290329020-0l1aht0mo7ci22k96aif8mkcn5mfca7u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.companyname.NotificationSample"
+                "bundle_id": "com.xamarin.firebase.ios.cloudmessagingsample"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_apبp_id": "1:457290329020:android:40d17e2f967546c4ad19b9",
+        "android_client_info": {
+          "package_name": "com.ramez.shopp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457290329020-fctjvi302ue98ji31n178tu2l14i9k2m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ramez.shopp",
+            "certificate_hash": "00a9051a33f26c73727b3e1365b0ccf4ad61fb00"
+          }
+        },
+        {
+          "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHCuTu0x4j8m3bkJu8uvqUs1ZXVTlcwis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457290329020-0l1aht0mo7ci22k96aif8mkcn5mfca7u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xamarin.firebase.ios.cloudmessagingsample"
               }
             }
           ]

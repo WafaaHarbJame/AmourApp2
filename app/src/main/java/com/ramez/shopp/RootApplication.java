@@ -3,6 +3,7 @@ package com.ramez.shopp;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
@@ -10,8 +11,13 @@ import androidx.multidex.MultiDex;
 
 import com.androidnetworking.AndroidNetworking;
 import com.onesignal.OneSignal;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.ExampleNotificationOpenedHandler;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Utils.LocaleUtils;
 import com.ramez.shopp.Utils.SharedPManger;
 
@@ -42,7 +48,7 @@ public class RootApplication extends Application {
         return rootApplication;
     }
 
-    public  SharedPManger getSharedPManger() {
+    public SharedPManger getSharedPManger() {
         return sharedPManger;
     }
 
@@ -55,26 +61,38 @@ public class RootApplication extends Application {
 
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
-        // OneSignal Initialization
         OneSignal.init(this,"",ONESIGNAL_APP_ID);
+
+        OneSignal.startInit(this)
+                .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler(this))
+                .init();
+        String UUID = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+        if (UUID != null) {
+            UtilityApp.setFCMToken(UUID);
+
+        }
+
+
+        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+            String updateToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+            MemberModel memberModel = UtilityApp.getUserData();
+            memberModel.setDeviceToken(updateToken);
+            UtilityApp.setUserData(memberModel);
+            UpdateToken(memberModel);
+        }
+
+
 
         String appLanguage = UtilityApp.getLanguage();
         if (appLanguage == null) {
             appLanguage = Constants.English;
-            UtilityApp.setLanguage(appLanguage);
-
-            LocaleUtils.setLocale(new Locale(appLanguage));
-            LocaleUtils.updateConfig(rootApplication, rootApplication.getResources().getConfiguration());
-
-        } else {
-            UtilityApp.setLanguage(appLanguage);
-            LocaleUtils.setLocale(new Locale(appLanguage));
-            LocaleUtils.updateConfig(rootApplication, rootApplication.getResources().getConfiguration());
 
         }
+        UtilityApp.setLanguage(appLanguage);
+        LocaleUtils.setLocale(new Locale(appLanguage));
+        LocaleUtils.updateConfig(rootApplication, rootApplication.getResources().getConfiguration());
 
         AndroidNetworking.initialize(getApplicationContext());
-
 
 
     }
@@ -86,7 +104,20 @@ public class RootApplication extends Application {
         LocaleUtils.updateConfig(rootApplication, newConfig);
     }
 
+    private void UpdateToken(MemberModel memberModel) {
 
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<String> result = (ResultAPIModel) obj;
+            if (IsSuccess) {
+                Log.i("TAG", "Log  UpdateToken Success ");
+
+
+            }
+
+
+        }).UpdateTokenHandle(memberModel);
+
+    }
 
 }
 

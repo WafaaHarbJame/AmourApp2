@@ -83,7 +83,7 @@ ApiInterface {
     Call<GeneralModel> updatePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
-    @POST("v4/Account/updateDeviceToken")
+    @POST("v4/Account/updateDeviceToken2")
     Call<ResultAPIModel<String>> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
@@ -126,7 +126,7 @@ ApiInterface {
 
 
     @GET("v4/Account/logout")
-    Call<ResultAPIModel<MemberModel>> logout(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+    Call<ResultAPIModel<MemberModel>> logout(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id,@Query("user_type") String user_type);
 
 
     @GET("v4/Products/singleproductList")

@@ -343,6 +343,9 @@
     <string name="delete_product">Delete Product</string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="Barcode">Barcode :</string>
+    <string name="touch_brousher">Touch booklet to access special offers</string>
+    <string name="Offer_end">Offer ends in</string>
+    <string name="favorite">Favorite</string>
 
 
 </resources>

@@ -1,6 +1,7 @@
 package com.ramez.shopp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
@@ -14,7 +15,9 @@ import com.ramez.shopp.Adapter.KitchenAdapter;
 import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Fragments.SpecialOfferFragment;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.DinnerModel;
@@ -26,6 +29,8 @@ import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityAllBookleteBinding;
 import com.ramez.shopp.databinding.ActivityAllListBinding;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -328,9 +333,15 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
-        Intent intent = new Intent(getActiviy(), BrousherActivity.class);
-        intent.putExtra(Constants.bookletsModel, bookletsModel);
-        startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS,false));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+        specialOfferFragment.setArguments(bundle);
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+
+
     }
 
 
