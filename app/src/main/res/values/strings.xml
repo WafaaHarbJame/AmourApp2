@@ -67,7 +67,7 @@
     <string name="suggested_product">Suggested Products</string>
     <string name="product_desc">Product Features</string>
     <string name="product_review">Customer Reviews</string>
-    <string name="add_to_cart">Add Product To Cart</string>
+    <string name="add_to_cart">Add To Cart</string>
     <string name="fav_products"> Favorite Products</string>
     <string name="my_order">My Orders</string>
     <string name="address"> Address</string>
@@ -321,6 +321,8 @@
     <string name="recipe">Recipe</string>
     <string name="ShowAll">Show All</string>
     <string name="Show_less">Show Less</string>
+    <string name="see_all">See All</string>
+    <string name="see_less">See Less</string>
     <string name="ingredients">Ingredients</string>
     <string name="proceed_to_checkout">Proceed to Cart</string>
     <string name="calories">CALORIES</string>
@@ -346,6 +348,10 @@
     <string name="touch_brousher">Touch booklet to access special offers</string>
     <string name="Offer_end">Offer ends in</string>
     <string name="favorite">Favorite</string>
+    <string name="day">Day</string>
+    <string name="hour">Hour</string>
+    <string name="minute">Minute</string>
+    <string name="details">Details</string>
 
 
 </resources>

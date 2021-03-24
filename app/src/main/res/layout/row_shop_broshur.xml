@@ -5,48 +5,85 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
+    android:background="@color/gray5"
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/loadingLY"
-        android:layout_width="@dimen/_125sdp"
-        android:layout_height="@dimen/_125sdp"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:visibility="gone"
-        app:indicatorColor="@color/colorPrimary"
-        app:indicatorName="BallClipRotateMultipleIndicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/ivCatImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:background="@color/white"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/holder_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:siBorderWidth="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:siBorderColor="@color/transparent"
-        app:siSquare="true"
-        app:siRadius="@dimen/_10sdp"
+        app:siBorderWidth="@dimen/_1sdp"
+        app:siRadius="@dimen/_10sdp" />
+
+    <View
+        android:id="@+id/transLy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/round_corner_black_trans"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivCatImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivCatImage" />
+
+    <ImageView
+        android:id="@+id/touchImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/home_clicked"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/transLy" />
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/touchHintTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/touch_brousher"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/touchImg">
+
+    </com.ramez.shopp.SpichalViews.STextView>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/loadingLY"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:visibility="gone"
+        app:indicatorColor="@color/colorPrimary"
+        app:indicatorName="BallClipRotateMultipleIndicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <RelativeLayout
         android:id="@+id/brContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivCatImage"
+        app:layout_constraintEnd_toEndOf="@id/ivCatImage"
+        app:layout_constraintStart_toStartOf="@id/ivCatImage"
+        app:layout_constraintTop_toTopOf="@id/ivCatImage">
 
     </RelativeLayout>
 

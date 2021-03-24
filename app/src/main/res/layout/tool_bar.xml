@@ -96,14 +96,5 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/background"
-        android:background="@drawable/toolbar_back1"
-        android:visibility="gone"
-        android:layout_height="@dimen/_60sdp">
-
-    </RelativeLayout>
-
 
 </LinearLayout>

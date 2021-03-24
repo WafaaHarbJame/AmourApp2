@@ -66,7 +66,7 @@
     <string name="reload">إعادة</string>
     <string name="suggested_product">المنتجات المقترحة</string>
     <string name="product_desc">مواصفات المنتج</string>
-    <string name="add_to_cart">أضف المنتج للسلة</string>
+    <string name="add_to_cart">أضف  للسلة</string>
     <string name="product_review">اراء العملاء</string>
     <string name="fav_products">المنتجات المفضلة</string>
     <string name="my_order">طلباتي</string>
@@ -284,6 +284,8 @@
     <string name="recipe">طريقة الاعداد </string>
     <string name="ShowAll">مشاهدة الكل </string>
     <string name="Show_less">عرض اقل </string>
+    <string name="see_all">مشاهدة الكل </string>
+    <string name="see_less">عرض اقل</string>
     <string name="ingredients">المكونات </string>
     <string name="proceed_to_checkout">انتقل الى السلة  </string>
     <string name="calories">سعرات حراريه</string>
@@ -307,7 +309,8 @@
     <string name="scan_barcode">مسح كود المنتج </string>
     <string name="Barcode">كود المنتج : </string>
     <string name="touch_brousher">المس البروشور  للوصول إلى العروض الخاصة</string>
-    <string name="Offer_end">Offer ends in</string>
-    <string name="favorite">Favorite</string>
+    <string name="Offer_end">العرض ينتهي </string>
+    <string name="favorite">المفضلة </string>
+    <string name="details">تفاصيل </string>
 
 </resources>

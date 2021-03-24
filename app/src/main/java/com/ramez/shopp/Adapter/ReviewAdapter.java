@@ -3,11 +3,9 @@ package com.ramez.shopp.Adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,9 +15,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.RowCurrentMyOrderItemBinding;
 import com.ramez.shopp.databinding.RowItemReviewBinding;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

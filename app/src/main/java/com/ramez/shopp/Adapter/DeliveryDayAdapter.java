@@ -52,7 +52,7 @@ public class DeliveryDayAdapter extends RecyclerView.Adapter<DeliveryDayAdapter.
         String lang=UtilityApp.getLanguage();
 
 
-        String today=DateHandler.GetDateNowString1();
+        String today=DateHandler.GetDateNowString();
         String day = DateHandler.FormatDate4(deliveryTimes.getDate(), "yyyy-MM-dd", "dd", lang);
 
 

@@ -126,27 +126,34 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Log.d("getBooklet_image", "" + brochuresModel.getImage());
 
 
-            Glide.with(context).asBitmap().load(brochuresModel.getImage()).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).addListener(new RequestListener<Bitmap>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                    holder.binding.loadingLY.setVisibility(View.GONE);
-                    return false;
-                }
+            Glide.with(context)
+                    .asBitmap()
+                    .load(brochuresModel.getImage())
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .addListener(new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            holder.binding.loadingLY.setVisibility(View.GONE);
+                            return false;
+                        }
 
-                @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    holder.binding.loadingLY.setVisibility(View.GONE);
-                    return false;
-                }
-            }).into(holder.binding.ivCatImage);
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            holder.binding.loadingLY.setVisibility(View.GONE);
+                            return false;
+                        }
+                    }).into(holder.binding.ivCatImage);
 
-            boolean hasDrawable = (holder.binding.ivCatImage.getDrawable() != null);
-            if (hasDrawable) holder.binding.loadingLY.setVisibility(View.GONE);
-            else holder.binding.loadingLY.setVisibility(View.VISIBLE);
+//            boolean hasDrawable = (holder.binding.ivCatImage.getDrawable() != null);
+//            if (hasDrawable) holder.binding.loadingLY.setVisibility(View.GONE);
+//            else holder.binding.loadingLY.setVisibility(View.VISIBLE);
 
             if (selectedPosition == position && products != null && products.size() > 0 && toggleShowProducts) {
 
                 holder.binding.brContainer.setVisibility(View.VISIBLE);
+                holder.binding.transLy.setVisibility(View.VISIBLE);
+                holder.binding.touchImg.setVisibility(View.VISIBLE);
+                holder.binding.touchHintTv.setVisibility(View.VISIBLE);
 
 
                 double widthPercent = image_width / imageViewWidth;
@@ -170,6 +177,9 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             } else {
                 holder.binding.brContainer.setVisibility(View.GONE);
+                holder.binding.transLy.setVisibility(View.GONE);
+                holder.binding.touchImg.setVisibility(View.GONE);
+                holder.binding.touchHintTv.setVisibility(View.GONE);
             }
 
         } else if (viewHolder instanceof LoadingViewHolder) {
@@ -403,7 +413,7 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                     }
 
-                //    getSingleBroucher(Integer.parseInt(localModel.getCityId()),booklet_id, position);
+                    //    getSingleBroucher(Integer.parseInt(localModel.getCityId()),booklet_id, position);
 
                 } else {
                     notifyItemChanged(selectedPosition);

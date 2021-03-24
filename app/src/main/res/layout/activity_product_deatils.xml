@@ -22,33 +22,36 @@
                 android:id="@+id/backBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:gravity="center"
+                android:minHeight="@dimen/_40sdp"
+                android:padding="@dimen/_5sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:scaleX="@integer/scaleXInv"
                 android:src="@drawable/back_icon"
-                android:textSize="@dimen/_15ssp"
                 android:visibility="visible"
                 tools:targetApi="m" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/mainTitleTv"
+
+            <ImageView
+                android:id="@+id/logoImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/backBtn"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/backBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:lines="2"
-                android:maxLines="2"
+                android:maxWidth="@dimen/_160sdp"
+                android:maxLines="1"
+                android:src="@drawable/toolbar_logo"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_13ssp"
                 android:visibility="visible" />
+
+
         </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -60,13 +63,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/back1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_60sdp"
-                android:background="@drawable/toolbar_back1"
-                android:orientation="vertical" />
 
 
             <include
@@ -87,43 +83,29 @@
                 android:visibility="visible">
 
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/productImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_8ssp"
-                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_height="@dimen/_180sdp"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/holder_image"
+                    android:visibility="visible" />
 
-                    <com.duolingo.open.rtlviewpager.RtlViewPager
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_140sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:overScrollMode="never"
-                        android:paddingBottom="@dimen/_5sdp" />
-
-                    <com.rd.PageIndicatorView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:visibility="gone"
-                        app:piv_animationType="color"
-                        app:piv_radius="3dp"
-                        app:piv_selectedColor="@color/green"
-                        app:piv_unselectedColor="@color/gray1"
-                        app:piv_viewPager="@id/viewPager" />
-                </LinearLayout>
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/productNameTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:text="Product Name Will Come Here and If It's"
+                    android:background="@color/white"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="Product Name Will Come Here and If It's "
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp" />
@@ -131,7 +113,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
@@ -177,10 +160,15 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@id/offerLy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.STextView
@@ -188,12 +176,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center"
-                        android:background="@drawable/round_corner_discount"
+                        android:background="@drawable/round_corner_discount_1"
                         android:gravity="center"
-                        android:paddingStart="@dimen/_6sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingEnd="@dimen/_6sdp"
-                        android:paddingBottom="@dimen/_2sdp"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_4sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_4sdp"
                         android:text="@string/_50_off"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10ssp" />
@@ -203,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Offer_end"
@@ -215,38 +203,80 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_6sdp"
-                        android:text="@string/Offer_end"
+                        android:text="10-10-2014"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_11ssp" />
                 </LinearLayout>
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_6sdp"
+                    android:text="@string/product_desc"
+                    android:textColor="@color/gray3" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/white"
                     android:orientation="horizontal"
-                    android:background="@color/white">
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp">
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/productDescTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/gray3" />
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/weight_unitTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:lines="2"
+                        android:text=""
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10ssp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
+                        android:id="@+id/addToFavBut"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
 
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/favBut"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            android:minWidth="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:minHeight="@dimen/_15sdp"
                             android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:minWidth="@dimen/_15sdp"
+                            android:minHeight="@dimen/_15sdp"
                             android:src="@drawable/favorite_menu_icon"
                             app:tint="@color/colorAppRed" />
 
@@ -264,21 +294,22 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
 
                         android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/shareBtn"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            android:minWidth="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:minHeight="@dimen/_15sdp"
                             android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:minWidth="@dimen/_15sdp"
+                            android:minHeight="@dimen/_15sdp"
                             android:src="@drawable/share_icon"
                             app:tint="@color/colorAppRed" />
 
@@ -297,19 +328,21 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:id="@+id/addRateBut"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
+
                         <ImageView
-                            android:id="@+id/rateBtn"
+                            android:id="@+id/rateImg"
                             android:layout_width="@dimen/_15sdp"
                             android:layout_height="@dimen/_15sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_gravity="center"
-                            android:minHeight="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginBottom="@dimen/_8sdp"
+                            android:minHeight="@dimen/_15sdp"
                             android:src="@drawable/ic_add_comment"
                             app:tint="@color/colorAppRed" />
 
@@ -367,11 +400,6 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/row_suggested_product_item" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/gray_view" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
@@ -379,57 +407,71 @@
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_6sdp"
-                    android:text="@string/product_desc"
-                    android:textColor="@color/gray3" />
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="@string/details"
+                    android:textColor="@color/black" />
 
-                <LinearLayout
+
+                <at.blogc.android.views.ExpandableTextView
+                    android:id="@+id/productDesc1Tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:fontFamily="@font/cairo"
+                    android:maxLines="5"
                     android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp">
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="In consequat, quam id sodales hendrerit, eros mi molestie
+leo, nec lacinia risus neque tristique augue. Proin tempus
+urna vel congue elementum. Vestibulum euismod accumsan
+dui, ac iaculis sem viverra eu. Donec convallis, elit vitae
+ornare cursus, libero purus facilisis felis, a volutpat metus
+tortor bibendum elit. Integer nec mi eleifend, fermentum"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:animation_duration="750" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
-                        android:id="@+id/productDescTv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="2"
-                        android:text=""
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/gray3" />
-
-                    <com.ramez.shopp.SpichalViews.STextViewBold
-                        android:id="@+id/weight_unitTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_4sdp"
-                        android:lines="2"
-                        android:text=""
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/_10ssp" />
-
-                </LinearLayout>
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/showAllBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="@color/white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:text="@string/see_all"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/green1"
+                    android:textSize="@dimen/_10ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/productReviewTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:text="@string/product_review"
-                    android:textColor="@color/gray3"
-                    android:visibility="gone" />
+                    android:textColor="@color/black"
+                    android:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reviewRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:visibility="gone" />
+
+
+
 
             </LinearLayout>
 
@@ -440,94 +482,109 @@
     <include
         android:id="@+id/noDataLY"
         layout="@layout/layout_no_data" />
-
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/cartBut"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_50sdp"
-        android:layout_marginBottom="@dimen/_4sdp"
-        android:background="@drawable/round_corner_next"
-        android:gravity="center"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/add_to_cart"
-        android:textColor="@android:color/white" />
-
+        android:layout_height="@dimen/_6sdp"
+        android:background="@color/gray" />
     <LinearLayout
-        android:id="@+id/CartLy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_4sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@drawable/round_corner_gray_fill2"
-        android:gravity="center"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/_6sdp"
-        android:paddingTop="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
-        android:visibility="gone">
-
-
-        <ImageView
-            android:id="@+id/plusCartBtn"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/counter_green"
-            android:minWidth="@dimen/_20sdp"
-            android:minHeight="@dimen/_20sdp"
-            android:padding="@dimen/_4sdp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/plus"
-            app:tint="@color/white" />
-
-        <com.ramez.shopp.SpichalViews.STextView
-            android:id="@+id/productCartQTY"
-            android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/cartBut"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/_8ssp"
-            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_next"
             android:gravity="center"
-            android:minWidth="@dimen/_20sdp"
-            android:minHeight="@dimen/_20sdp"
-            android:text="1"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            android:visibility="visible" />
+            android:padding="@dimen/_8sdp"
+            android:text="@string/add_to_cart"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:id="@+id/CartLy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/round_corner_white_fill2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp"
+            android:visibility="visible">
 
 
-        <ImageView
-            android:id="@+id/minusCartBtn"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_8ssp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/counter_green"
-            android:minWidth="@dimen/_20sdp"
-            android:minHeight="@dimen/_20sdp"
+            <ImageView
+                android:id="@+id/plusCartBtn"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:minWidth="@dimen/_20sdp"
+                android:minHeight="@dimen/_20sdp"
+                android:padding="@dimen/_4sdp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/plus"
+                app:tint="@color/green1" />
 
-            android:padding="@dimen/_4sdp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/minues"
-            app:tint="@color/white" />
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/productCartQTY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/_8ssp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="center"
+                android:minWidth="@dimen/_20sdp"
+                android:minHeight="@dimen/_20sdp"
+                android:text="1"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/deleteCartBtn"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_16ssp"
-            android:minWidth="@dimen/_20sdp"
-            android:minHeight="@dimen/_20sdp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/delete_icon" />
+
+            <ImageView
+                android:id="@+id/minusCartBtn"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_8ssp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:minWidth="@dimen/_20sdp"
+                android:minHeight="@dimen/_20sdp"
+                android:padding="@dimen/_4sdp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/minues"
+                app:tint="@color/green1" />
+
+            <ImageView
+                android:id="@+id/deleteCartBtn"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_16ssp"
+                android:minWidth="@dimen/_20sdp"
+                android:minHeight="@dimen/_20sdp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/delete_icon" />
+        </LinearLayout>
+
+
     </LinearLayout>
+
+
+
+
 
 </LinearLayout>
 

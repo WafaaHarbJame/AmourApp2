@@ -1,14 +1,11 @@
 package com.ramez.shopp.Utils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
-
 
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -265,19 +262,8 @@ public class DateHandler {
         return "";
     }
 
+
     public static String GetDateNowString() {
-        DateFormat parser = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date date = new Date();
-        try {
-            // Date s = parser.parse("");
-            return parser.format(date);
-        } catch (Exception e) {
-        }
-        return "";
-    }
-
-
-    public static String GetDateNowString1() {
         DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {
@@ -800,12 +786,13 @@ public class DateHandler {
 
         return diffMinutes;
     }
-    public static String convertLongDateToString(String date, String format,String lang) {
+
+    public static String convertLongDateToString(String date, String format, String lang) {
         String stringDate = "";
         try {
             long millisecond = Long.parseLong(date);
             String dateString = android.text.format.DateFormat.format(format, new Date(millisecond)).toString();
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, new Locale("en"));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, new Locale("en"));
             Date dateTime = simpleDateFormat.parse(dateString);
             if (dateTime != null) {
                 stringDate = simpleDateFormat.format(dateTime);
@@ -832,7 +819,7 @@ public class DateHandler {
     }
 
 
-    public  static String FormatDate4(Object o, String inPattern, String outPattern) {
+    public static String FormatDate4(Object o, String inPattern, String outPattern) {
         Locale locale;
         if (UtilityApp.getLanguage().equals("ar")) {
             locale = new Locale("ar");

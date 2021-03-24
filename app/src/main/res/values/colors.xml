@@ -19,7 +19,10 @@
     <color name="gray3">#787878</color>
 
     <color name="header3">@color/gray13</color>
+
     <color name="black">#000000</color>
+    <color name="black_trans1">#43000000</color>
+
     <color name="colorGrayLight">#f2f2f2</color>
     <color name="colorSelect">#ce2325</color>
     <color name="colorUnSelect">#232323</color>

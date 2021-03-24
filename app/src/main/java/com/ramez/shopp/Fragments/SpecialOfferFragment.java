@@ -132,14 +132,14 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
 
 
     private void getExtraIntent() {
-        if (getActivityy().getIntent().getExtras() != null) {
-            BookletsModel bookletsModel = (BookletsModel) getActivityy().getIntent().getSerializableExtra(Constants.bookletsModel);
+
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+
+            BookletsModel bookletsModel = (BookletsModel) bundle.getSerializable(Constants.bookletsModel);
             booklet_id = bookletsModel.getId();
 
-//            if(!bookletsModel.getTitleName().isEmpty()){
-//               // setTitle(bookletsModel.getTitleName());
-//
-//            }
             getBrochuresList(store_id, booklet_id);
 
         }
