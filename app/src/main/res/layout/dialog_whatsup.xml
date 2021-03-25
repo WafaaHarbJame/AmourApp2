@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLy"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/black_trans2"
+        app:layout_constraintBottom_toBottomOf="@id/arrowImg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/roundBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/round_top_corner_white_light_fill"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerGuide" />
+
+    <View
+        android:id="@+id/headerGuide"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/loginHeader"
+        app:layout_constraintTop_toTopOf="@id/loginHeader" />
+
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/loginHeader"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:src="@drawable/whats_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:siBorderColor="@color/white"
+        app:siBorderWidth="@dimen/_6sdp" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginHeader">
+
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/Whatsapp_Live_Support"
+            android:textColor="@color/green1"
+            android:textSize="@dimen/_14ssp" />
+
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/messageTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:gravity="center"
+            android:text="@string/is_Active"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:id="@+id/whats_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/whats_note"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:scaleType="fitCenter"
+            android:scaleX="@integer/scaleXInv"
+            android:src="@drawable/what_image_dialog" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/arrowImg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:scaleType="fitXY"
+        android:scaleX="@integer/scaleX"
+        android:src="@drawable/wizard_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roundBg" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
