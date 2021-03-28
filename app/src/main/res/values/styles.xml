@@ -42,9 +42,16 @@
 
     <style name="RatingBarStyle2" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/gray13</item>
-        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorControlActivated">@color/green1</item>
     </style>
 
+
+    <style name="RatingBarStyle_new" parent="@android:style/Widget.RatingBar">
+<!--        <item name="android:theme">@style/Widget.AppCompat.RatingBar.Small</item>-->
+        <item name="android:minHeight">@dimen/_1sdp</item>
+        <item name="android:minWidth">@dimen/_20sdp</item>
+        <item name="android:progressDrawable">@drawable/rating_style</item>
+    </style>
 
     <style name="editTextStyle">
         <item name="android:textColor">@color/colorAccent</item>
@@ -61,7 +68,7 @@
         <item name="android:paddingBottom">@dimen/_10sdp</item>
         <item name="android:paddingEnd">@dimen/_10sdp</item>
         <item name="android:paddingStart">@dimen/_10sdp</item>
-<!--        <item name="android:minHeight">@dimen/_40sdp</item>-->
+        <!--        <item name="android:minHeight">@dimen/_40sdp</item>-->
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColorHint">@color/gray6</item>
         <item name="android:textStyle">bold</item>

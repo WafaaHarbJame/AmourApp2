@@ -102,6 +102,18 @@ public class UtilityApp {
     }
 
 
+    public static boolean isFirstLogin(){
+
+        boolean isFirstRun = RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_FIRST_LOGIN, true);
+        return isFirstRun;
+    }
+
+    public static void setIsFirstLogin(boolean isFirstRun) {
+
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_FIRST_LOGIN, isFirstRun);
+    }
+
+
     public static boolean isLogin() {
         String userToken = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         return userToken != null;

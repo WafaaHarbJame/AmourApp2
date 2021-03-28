@@ -228,6 +228,7 @@ public class LoginFragment extends FragmentBase {
                         }
 
                         UtilityApp.setUserData(user);
+                        UtilityApp.setIsFirstLogin(true);
                         if (UtilityApp.getUserData() != null) {
                             UpdateToken();
                         }

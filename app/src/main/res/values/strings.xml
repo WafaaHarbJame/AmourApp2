@@ -65,7 +65,7 @@
     <string name="fail_to_get_data">Fail to get data</string>
     <string name="reload">Reload</string>
     <string name="suggested_product">Suggested Products</string>
-    <string name="product_desc">Product Features</string>
+    <string name="product_desc">Product Options</string>
     <string name="product_review">Customer Reviews</string>
     <string name="add_to_cart">Add To Cart</string>
     <string name="fav_products"> Favorite Products</string>
@@ -352,6 +352,9 @@
     <string name="hour">Hour</string>
     <string name="minute">Minute</string>
     <string name="details">Details</string>
+    <string name="Whatsapp_Live_Support">Whatsapp Live Support</string>
+    <string name="is_Active">"is Active "</string>
+    <string name="whats_note">Dear User, our Whatsapp Live Support is Active. Go to your profile and click the Whatsapp icon whenever you will need support.</string>
 
 
 </resources>

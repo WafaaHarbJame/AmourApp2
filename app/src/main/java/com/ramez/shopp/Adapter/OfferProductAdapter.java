@@ -226,7 +226,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
-        } else if (viewHolder instanceof LoadingViewHolder) {
+        }
+        else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;
             loadingViewHolder.rowLoadingBinding.progressBar1.setIndeterminate(true);
 

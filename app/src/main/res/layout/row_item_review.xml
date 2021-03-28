@@ -20,7 +20,7 @@
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.ramez.shopp.SpichalViews.STextViewBold
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +52,7 @@
         android:text="10-10-200155"
         android:textAlignment="viewStart"
         android:textSize="12sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +66,7 @@
         android:padding="@dimen/_8sdp"
         android:text="@string/dummy"
         android:textAlignment="viewStart"
-        android:textColor="@color/gray3"
+        android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/userImage" />
 

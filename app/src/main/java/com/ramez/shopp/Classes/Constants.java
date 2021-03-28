@@ -38,6 +38,7 @@ public class Constants {
     public static final String KEY_Local = "KEY_Local";
     public static final String KEY_MEMBER_LANGUAGE = "key_member_language";
     public static final String KEY_FIRST_RUN = "key_first_run";
+    public static final String KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN";
     public static final String FROM_BROSHER = "FROM_BROSHER";
     public static final String success = "success";
     public static final String KEY_MOBILE = "key_mobile";

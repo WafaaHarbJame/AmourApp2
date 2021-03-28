@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.ramez.shopp.Adapter.ProductOptionAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -34,6 +36,7 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProductModel;
+import com.ramez.shopp.Models.ProductOptionModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
@@ -56,6 +59,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     int user_id = 0;
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
+    ArrayList<ProductOptionModel> optionModelsList;
     ArrayList<ReviewModel> reviewList;
     String productName;
     ProductModel productModel;
@@ -84,6 +88,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         sliderList = new ArrayList<String>();
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
+        optionModelsList = new ArrayList<>();
 
         storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
         currency = UtilityApp.getLocalData().getCurrencyCode();
@@ -92,8 +97,14 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
         binding.offerRecycler.setLayoutManager(productLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);
-
         binding.offerRecycler.setItemAnimator(null);
+
+
+        LinearLayoutManager productOptionLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
+        binding.productOptionRv.setLayoutManager(productOptionLayoutManager);
+        binding.productOptionRv.setHasFixedSize(true);
+        binding.productOptionRv.setItemAnimator(null);
+
 
         reviewManger = new LinearLayoutManager(getActiviy(), RecyclerView.VERTICAL, false);
         binding.reviewRecycler.setLayoutManager(reviewManger);
@@ -119,6 +130,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             onBackPressed();
         });
 
+        binding.moreBoughtBut.setOnClickListener(v -> {
+            Intent intent = new Intent(getActiviy(), AllListActivity.class);
+            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_sell));
+            intent.putExtra(Constants.FILTER_NAME, Constants.quick_filter);
+            startActivity(intent);
+
+        });
 
         binding.productImage.setOnClickListener(v -> {
             ShowImageDialog showImageDialog = new ShowImageDialog(this, sliderList.get(0));
@@ -242,7 +260,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
                 int cart_id = productModel.getProductBarcodes().get(0).getCartId();
-                if(cart_id>0){
+                if (cart_id > 0) {
 
 
                     int count = Integer.parseInt(binding.productCartQTY.getText().toString());
@@ -290,8 +308,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
                     }
-                }
-                else {
+                } else {
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -302,7 +319,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                     Log.i("limit", "Log limit  " + limit);
                     Log.i("stock", "Log stock  " + stock);
-
 
 
                     if (limit == 0) {
@@ -335,8 +351,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     }
 
                 }
-
-
 
 
             }
@@ -481,6 +495,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.CartLy.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -498,6 +513,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.cartBut.setVisibility(View.VISIBLE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.CartLy.setVisibility(View.GONE);
+
                 binding.failGetDataLY.failTxt.setText(message);
 
             } else if (func.equals(Constants.FAIL)) {
@@ -506,6 +523,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
+                binding.CartLy.setVisibility(View.GONE);
                 binding.cartBut.setVisibility(View.GONE);
 
 
@@ -513,6 +531,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.CartLy.setVisibility(View.GONE);
+
                 binding.dataLY.setVisibility(View.GONE);
 
             } else {
@@ -523,6 +543,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productModel = result.getData().get(0);
+                        binding.CartLy.setVisibility(View.VISIBLE);
+
 
                         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
                             productName = productModel.getHName();
@@ -535,14 +557,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.productNameTv.setText(productName);
 
                         if (productModel.getDescription() != null && productModel.getHDescription() != null) {
-
-                            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                                binding.productDescTv.setText(Html.fromHtml(productModel.getHDescription().toString()));
-
-                            } else {
-                                binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
-
-                            }
 
                         }
 
@@ -608,8 +622,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
                         String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
+                        ProductOptionModel productOptionModel=new ProductOptionModel(product_id,NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName,NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
 
-                        binding.weightUnitTv.setText(NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
 
                         isFavorite = productModel.getFavourite();
 
@@ -786,6 +800,18 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.offerRecycler.setAdapter(productOfferAdapter);
 
     }
+
+    private void initOptionAdapter() {
+        ProductOptionAdapter productOptionAdapter = new ProductOptionAdapter(getActiviy(), optionModelsList, new DataCallback() {
+            @Override
+            public void dataResult(Object obj, String func, boolean IsSuccess) {
+
+            }
+        });
+        binding.offerRecycler.setAdapter(productOfferAdapter);
+
+    }
+
 
     private void addToCart(View v, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {

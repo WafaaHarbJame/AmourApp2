@@ -312,5 +312,10 @@
     <string name="Offer_end">العرض ينتهي </string>
     <string name="favorite">المفضلة </string>
     <string name="details">تفاصيل </string>
-
+    <string name="is_Active">مفعل </string>
+    <string name="whats_note">عزيزي المستخدم ، دعم Whatsapp Live الخاص بنا نشط. انتقل إلى ملف الحساب الخاص بك وانقر فوق رمز Whatsapp كلما احتجت إلى دعم.</string>
+    <string name="day">يوم </string>
+    <string name="hour">ساعة </string>
+    <string name="minute">دقيقة </string>
+    <string name="Whatsapp_Live_Support">دعم Whatsapp المباشر</string>
 </resources>

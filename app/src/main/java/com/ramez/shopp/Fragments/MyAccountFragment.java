@@ -31,6 +31,7 @@ import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
+import com.ramez.shopp.Dialogs.InfoDialog;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;

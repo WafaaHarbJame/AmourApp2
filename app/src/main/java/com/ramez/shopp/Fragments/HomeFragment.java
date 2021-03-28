@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -46,6 +47,9 @@ import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Dialogs.InfoDialog;
+import com.ramez.shopp.Dialogs.WhatsUpDialog;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
@@ -187,6 +191,20 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         GetHomePage();
 
         AllListener();
+
+
+
+        if (UtilityApp.isLogin()) {
+            boolean isFirstLogin = UtilityApp.isFirstLogin();
+
+            if (isFirstLogin) {
+                UtilityApp.setIsFirstLogin(false);
+                WhatsUpDialog whatsUpDialog = new WhatsUpDialog(getActivityy(), R.string.Whatsapp_Live_Support, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
+                whatsUpDialog.show();
+
+            }
+        }
+
 
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -458,8 +476,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                             initAdapter();
 
 
-
-
                         } else {
 
 
@@ -680,26 +696,22 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                             }
 
 
-                            if(brandsList.size()==0){
+                            if (brandsList.size() == 0) {
                                 binding.brandLy.setVisibility(View.GONE);
 
                             }
                             initBrandsAdapter();
 
-                        }
-
-                        else {
+                        } else {
 
                             binding.brandLy.setVisibility(View.GONE);
 
                         }
 
 
-
                     } else {
 
                         binding.brandLy.setVisibility(View.GONE);
-
 
 
                     }
@@ -729,7 +741,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this, false,10);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActivityy(), list, this, false, 10);
         binding.kitchenRecycler.setAdapter(kitchenAdapter);
 
     }
@@ -759,8 +771,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 }
 
 
-            }
-            else {
+            } else {
                 binding.bookletLyLy.setVisibility(View.GONE);
                 binding.speLy.setVisibility(View.GONE);
 
@@ -797,8 +808,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 }
 
 
-            }
-            else {
+            } else {
                 binding.ramezKitchenLy.setVisibility(View.GONE);
 
             }
@@ -810,7 +820,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS,true));
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
         FragmentManager fragmentManager = getParentFragmentManager();
         SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
         Bundle bundle = new Bundle();
@@ -840,7 +850,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initBrandsAdapter() {
 
-        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this,10);
+        brandsAdapter = new BrandsAdapter(getActivityy(), brandsList, this, 10);
         binding.brandsRecycler.setAdapter(brandsAdapter);
 
     }

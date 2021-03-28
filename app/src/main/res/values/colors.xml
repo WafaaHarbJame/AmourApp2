@@ -22,12 +22,15 @@
 
     <color name="black">#000000</color>
     <color name="black_trans1">#43000000</color>
+    <color name="black_trans2">#86000000</color>
 
     <color name="colorGrayLight">#f2f2f2</color>
     <color name="colorSelect">#ce2325</color>
     <color name="colorUnSelect">#232323</color>
     <color name="green">#35A348</color>
     <color name="green1">#2AA840</color>
+    <color name="green3">#2ba842</color>
+    <color name="green2">#e3ffe8</color>
     <color name="gray4">#666666</color>
     <color name="gray6">#afafaf</color>
     <color name="gray13">#545454</color>
@@ -40,6 +43,6 @@
     <color name="font_gray">#707070</color>
     <color name="gray_dark">#6A6A6E</color>
     <color name="blue">#007AFF</color>
-    <color name="yellow">#FFEB3B</color>
+    <color name="yellow">#FFC107</color>
 
 </resources>

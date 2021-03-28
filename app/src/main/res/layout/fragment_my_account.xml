@@ -16,8 +16,8 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="match_parent"
                 android:id="@+id/editProfileBu"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_150sdp"
                 android:layout_marginBottom="@dimen/_16sdp">
 
@@ -25,7 +25,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
@@ -97,11 +96,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@drawable/round_corner_white_fill_big"
                     android:gravity="bottom"
+                    android:layout_alignParentBottom="true"
+
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -216,8 +216,8 @@
                 android:id="@+id/changePassBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -269,8 +269,9 @@
                 android:id="@+id/SupportBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@color/white"
+                android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
@@ -315,9 +316,9 @@
                 android:id="@+id/changeLangBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
@@ -328,8 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/choose_lang_icon"
-                    android:textSize="@dimen/_15ssp"
-                    app:tint="@color/green" />
+                    android:textSize="@dimen/_15ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -361,9 +361,9 @@
                 android:id="@+id/changeCityBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
@@ -406,12 +406,12 @@
                 android:id="@+id/termsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
-                android:background="@color/white"
                 android:paddingBottom="@dimen/_12sdp">
 
                 <ImageView
@@ -451,10 +451,10 @@
                 android:id="@+id/conditionsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
-                android:background="@color/white"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
@@ -496,10 +496,10 @@
                 android:id="@+id/aboutUsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
-                android:background="@color/white"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
@@ -541,11 +541,11 @@
                 android:id="@+id/shareBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
-                android:background="@color/white"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
 
@@ -586,19 +586,19 @@
                 android:id="@+id/rateBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
-                android:background="@color/white"
                 android:paddingBottom="@dimen/_12sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:src="@drawable/rate_icon"
+                    android:src="@drawable/rate_app"
                     android:textSize="@dimen/_15ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -631,10 +631,10 @@
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
-                android:background="@color/white"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
@@ -664,10 +664,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@color/gray"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
-                android:background="@color/gray"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
