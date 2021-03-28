@@ -622,8 +622,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
                         String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
-                        ProductOptionModel productOptionModel=new ProductOptionModel(product_id,NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName,NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
-
+                        ProductOptionModel productOptionModel = new ProductOptionModel(product_id, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
+                        optionModelsList.add(productOptionModel);
+                        initOptionAdapter();
 
                         isFavorite = productModel.getFavourite();
 
