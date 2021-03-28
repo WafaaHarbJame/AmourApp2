@@ -621,10 +621,19 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
 
+                        optionModelsList.clear();
                         String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
-                        ProductOptionModel productOptionModel = new ProductOptionModel(product_id, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
+                        ProductOptionModel productOptionModel = new ProductOptionModel(product_id, NumberHandler.formatDouble(productBarcode.getWeight(), 0)
+                                + " " + wightName, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
                         optionModelsList.add(productOptionModel);
-                        initOptionAdapter();
+                        if(optionModelsList.size()>0){
+                            initOptionAdapter();
+
+                        }
+                        else {
+                            binding.productOptionTv.setVisibility(View.GONE);
+                            binding.productOptionRv.setVisibility(View.GONE);
+                        }
 
                         isFavorite = productModel.getFavourite();
 
@@ -803,13 +812,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void initOptionAdapter() {
-        ProductOptionAdapter productOptionAdapter = new ProductOptionAdapter(getActiviy(), optionModelsList, new DataCallback() {
-            @Override
-            public void dataResult(Object obj, String func, boolean IsSuccess) {
+        ProductOptionAdapter productOptionAdapter = new ProductOptionAdapter(getActiviy(), optionModelsList, (obj, func, IsSuccess) -> {
 
-            }
         });
-        binding.offerRecycler.setAdapter(productOfferAdapter);
+        binding.productOptionRv.setAdapter(productOptionAdapter);
 
     }
 

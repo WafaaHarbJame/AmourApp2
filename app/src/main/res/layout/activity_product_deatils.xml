@@ -212,6 +212,7 @@
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
+                    android:id="@+id/productOptionTv"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/gray5"
@@ -564,9 +565,9 @@ tortor bibendum elit. Integer nec mi eleifend, fermentum"
                 app:srcCompat="@drawable/plus"
                 app:tint="@color/green1" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/productCartQTY"
-                android:layout_width="wrap_content"
+                android:layout_width="19dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/_8ssp"
@@ -576,7 +577,7 @@ tortor bibendum elit. Integer nec mi eleifend, fermentum"
                 android:minHeight="@dimen/_20sdp"
                 android:text="1"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/gray_dark"
                 android:textSize="@dimen/_14ssp"
                 android:visibility="visible" />
 
