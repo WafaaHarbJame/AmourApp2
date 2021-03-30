@@ -21,6 +21,7 @@
     <color name="header3">@color/gray13</color>
 
     <color name="black">#000000</color>
+    <color name="black1">#363636</color>
     <color name="black_trans1">#43000000</color>
     <color name="black_trans2">#86000000</color>
 

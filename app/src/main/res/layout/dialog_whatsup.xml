@@ -33,19 +33,20 @@
         app:layout_constraintTop_toTopOf="@id/loginHeader" />
 
 
-    <com.github.siyamed.shapeimageview.CircularImageView
+    <ImageView
         android:id="@+id/loginHeader"
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_45sdp"
         android:layout_marginBottom="@dimen/_5sdp"
-        android:src="@drawable/whats_icon"
+        android:src="@drawable/whats_icon_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:siBorderColor="@color/white"
-        app:siBorderWidth="@dimen/_6sdp" />
+ />
+<!--    app:siBorderColor="@color/white"-->
+<!--    app:siBorderWidth="@dimen/_6sdp"-->
 
     <LinearLayout
         android:id="@+id/container"
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:text="@string/Whatsapp_Live_Support"
             android:textColor="@color/green1"
             android:textSize="@dimen/_14ssp" />
@@ -75,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:gravity="center"
             android:text="@string/is_Active"
             android:textColor="@color/black"

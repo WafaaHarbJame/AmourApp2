@@ -16,7 +16,7 @@
     <string name="text_title_about_us">About Us</string>
     <string name="text_title_select_language">Please Select Language</string>
     <string name="text_registration_email_id">Email Id</string>
-    <string name="text_registration_change_password">Change password</string>
+    <string name="text_registration_change_password">Change Password</string>
     <string name="string_menu_home">Home</string>
     <string name="text_langiage_english">English</string>
     <string name="text_language_arabic">Arabic</string>
@@ -334,7 +334,7 @@
     <string name="code">code</string>
     <string name="no_dinners">No Recipe</string>
     <string name="your_save">Your Saved</string>
-    <string name="addressTxt">Address</string>
+    <string name="addressTxt">My Address</string>
     <string name="please_add_desc">Please add Description</string>
     <string name="outofstock">Product quantity  has been changed : </string>
     <string name="product_price">product Price: </string>

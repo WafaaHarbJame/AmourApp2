@@ -263,12 +263,13 @@
 
                         <ImageView
                             android:id="@+id/favBut"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_8sdp"
-                            android:minWidth="@dimen/_15sdp"
-                            android:minHeight="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:minWidth="@dimen/_20sdp"
+                            android:minHeight="@dimen/_20sdp"
                             android:src="@drawable/favorite_menu_icon"
                             app:tint="@color/colorAppRed" />
 
@@ -296,12 +297,13 @@
 
                         <ImageView
                             android:id="@+id/shareBtn"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_8sdp"
-                            android:minWidth="@dimen/_15sdp"
-                            android:minHeight="@dimen/_15sdp"
+                            android:minWidth="@dimen/_20sdp"
+                            android:minHeight="@dimen/_20sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
                             android:src="@drawable/share_product"
                             app:tint="@color/colorAppRed" />
 
@@ -330,12 +332,13 @@
 
                         <ImageView
                             android:id="@+id/rateImg"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_8sdp"
-                            android:minHeight="@dimen/_15sdp"
-                            android:src="@drawable/ic_add_comment"
+                            android:minWidth="@dimen/_20sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:minHeight="@dimen/_20sdp"                            android:src="@drawable/ic_add_comment"
                             app:tint="@color/colorAppRed" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,7 +8,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,6 +19,7 @@
             <RelativeLayout
                 android:id="@+id/editProfileBu"
                 android:layout_width="match_parent"
+
                 android:layout_height="@dimen/_150sdp"
                 android:layout_marginBottom="@dimen/_16sdp">
 
@@ -43,7 +45,7 @@
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:src="@drawable/avatar"
+                        android:src="@drawable/avatar_image2"
                         app:siBorderColor="@color/transparent"
                         app:siBorderWidth="1dp" />
 
@@ -96,18 +98,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@drawable/round_corner_white_fill_big"
                     android:gravity="bottom"
-                    android:layout_alignParentBottom="true"
 
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/myOrderBut"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -127,7 +129,7 @@
                             android:src="@drawable/my_order_menu" />
 
                         <com.ramez.shopp.SpichalViews.STextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -141,13 +143,13 @@
                     <LinearLayout
                         android:id="@+id/favProductBut"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_12sdp"
-                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_12sdp">
 
                         <ImageView
@@ -162,13 +164,13 @@
 
                         <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/item_title_user"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:maxLines="1"
                             android:orientation="vertical"
                             android:text="@string/fav_products"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_10ssp" />
 
 
@@ -177,10 +179,10 @@
                     <LinearLayout
                         android:id="@+id/addressBtn"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
+                        android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:paddingStart="@dimen/_15sdp"
                         android:paddingTop="@dimen/_12sdp"
@@ -198,11 +200,45 @@
 
                         <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/item_title_password"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/addressTxt"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_10ssp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/changePassBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_12sdp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/_6sdp"
+                            android:src="@drawable/change_pass_icon"
+                            android:textSize="@dimen/_15ssp" />
+
+                        <com.ramez.shopp.SpichalViews.STextView
+                            android:id="@+id/item_title3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_registration_change_password"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_10ssp" />
 
 
@@ -213,70 +249,17 @@
 
 
             <LinearLayout
-                android:id="@+id/changePassBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingTop="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_12sdp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:gravity="start|center_vertical"
-                    android:src="@drawable/change_pass_icon"
-                    android:text="@string/fa_file_contract"
-                    android:textSize="@dimen/_15ssp" />
-
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/item_title3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/text_registration_change_password"
-                    android:textAlignment="viewStart"
-                    android:textSize="@dimen/_10ssp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                </Space>
-
-                <com.ramez.shopp.SpichalViews.STextViewIcon
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX="@integer/scaleX"
-                    android:text="@string/fal_angle_right"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18ssp" />
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
-
-            <LinearLayout
                 android:id="@+id/SupportBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_12sdp">
+                android:paddingBottom="@dimen/_12sdp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -312,6 +295,60 @@
                 android:layout_height="1dp"
                 android:background="@color/gray" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:background="@color/gray" />
+
+
+
+            <LinearLayout
+                android:id="@+id/changeCityBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_12sdp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:src="@drawable/change_city"
+                    android:textSize="@dimen/_15ssp" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_city_branch"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <com.ramez.shopp.SpichalViews.STextViewIcon
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="@integer/scaleX"
+                    android:text="@string/fal_angle_right"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_18ssp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
             <LinearLayout
                 android:id="@+id/changeLangBtn"
                 android:layout_width="match_parent"
@@ -335,6 +372,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lang_setting"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
 
                 <Space
@@ -351,56 +389,13 @@
                     android:textSize="@dimen/_18ssp" />
 
             </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp"
                 android:background="@color/gray" />
 
-            <LinearLayout
-                android:id="@+id/changeCityBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_15sdp"
-                android:paddingTop="@dimen/_12sdp"
-                android:paddingEnd="@dimen/_15sdp"
-                android:paddingBottom="@dimen/_12sdp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:src="@drawable/change_city"
-                    android:textSize="@dimen/_15ssp" />
-
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/change_city_branch"
-                    android:textSize="@dimen/_10ssp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <com.ramez.shopp.SpichalViews.STextViewIcon
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleX="@integer/scaleX"
-                    android:text="@string/fal_angle_right"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_18ssp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
 
             <LinearLayout
                 android:id="@+id/termsBtn"
@@ -425,6 +420,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/terms2"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
 
                 <Space
@@ -469,6 +465,7 @@
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="@string/conditions"
                     android:textSize="@dimen/_10ssp" />
 
@@ -514,6 +511,7 @@
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="@string/text_title_about_us"
                     android:textSize="@dimen/_10ssp" />
 
@@ -560,6 +558,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share_with"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
 
                 <Space
@@ -605,6 +604,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_app"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
 
                 <Space
@@ -651,14 +651,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_login_login"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -709,5 +705,5 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</RelativeLayout>
 

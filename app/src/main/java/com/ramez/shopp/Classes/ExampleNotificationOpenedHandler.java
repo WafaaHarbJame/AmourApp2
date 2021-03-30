@@ -48,7 +48,7 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
         }
 
         Intent intent;
-        if (type.equals("order")) {
+        if (type!=null&&type.equals("order")) {
             intent = new Intent(getApplicationContext(), MyOrderActivity.class);
         } else {
             intent = new Intent(getApplicationContext(), MainActivity.class);
