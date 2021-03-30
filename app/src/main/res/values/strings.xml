@@ -65,6 +65,7 @@
     <string name="fail_to_get_data">Fail to get data</string>
     <string name="reload">Reload</string>
     <string name="suggested_product">Suggested Products</string>
+    <string name="featured_product">Featured Products</string>
     <string name="product_desc">Product Options</string>
     <string name="product_review">Customer Reviews</string>
     <string name="add_to_cart">Add To Cart</string>
@@ -81,7 +82,7 @@
     <string name="app_version">App Version</string>
     <string name="accept">Accept</string>
     <string name="add_rate">Please add a rating for the application services</string>
-    <string name="rate_product">Rating Product</string>
+    <string name="rate_product">Rate Product</string>
     <string name="Edit">Edit</string>
     <string name="complete_request">Complete Order</string>
     <string name="DeliveryTime1">Delivery Time </string>

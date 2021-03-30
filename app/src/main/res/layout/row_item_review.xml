@@ -33,10 +33,10 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
-        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
+        style="@style/RatingBarStyle_new"
         android:theme="@style/RatingBarStyle2"
         app:layout_constraintStart_toStartOf="@id/tv_user_name"
         app:layout_constraintTop_toBottomOf="@id/tv_user_name">

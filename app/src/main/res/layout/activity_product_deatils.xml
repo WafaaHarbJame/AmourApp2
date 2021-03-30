@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray5"
     android:orientation="vertical"
     tools:context=".Activities.ProductDetailsActivity">
 
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white">
+        android:background="@color/gray5">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -69,7 +69,10 @@
 
             <include
                 android:id="@+id/loadingProgressLY"
-                layout="@layout/layout_pre_loading" />
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                layout="@layout/layout_pre_loading"
+                android:layout_height="match_parent" />
 
             <include
                 android:id="@+id/failGetDataLY"
@@ -197,6 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Offer_end"
+                        android:layout_marginStart="@dimen/_6sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp" />
 
@@ -204,7 +208,7 @@
                         android:id="@+id/endOfferTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
                         android:text="10-10-2014"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_11ssp" />
@@ -254,7 +258,8 @@
                     <LinearLayout
                         android:id="@+id/addToFavBut"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
@@ -277,7 +282,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/_10sdp"
                             android:gravity="center"
                             android:text="@string/favorite"
                             android:textColor="@color/colorPrimaryDark"
@@ -288,11 +292,11 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="vertical">
 
                         <ImageView
@@ -311,7 +315,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/_10sdp"
                             android:gravity="center"
                             android:text="@string/share_with"
                             android:textColor="@color/colorPrimaryDark"
@@ -324,9 +327,10 @@
                     <LinearLayout
                         android:id="@+id/addRateBut"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -338,14 +342,14 @@
                             android:layout_marginTop="@dimen/_8sdp"
                             android:minWidth="@dimen/_20sdp"
                             android:layout_marginBottom="@dimen/_6sdp"
-                            android:minHeight="@dimen/_20sdp"                            android:src="@drawable/ic_add_comment"
+                            android:minHeight="@dimen/_20sdp"
+                            android:src="@drawable/ic_add_comment"
                             app:tint="@color/colorAppRed" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/_10sdp"
                             android:gravity="center"
                             android:text="@string/rate_product"
                             android:textColor="@color/colorPrimaryDark"
@@ -380,7 +384,7 @@
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:text="@string/suggested_product"
+                        android:text="@string/featured_product"
                         android:textAlignment="viewStart"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />

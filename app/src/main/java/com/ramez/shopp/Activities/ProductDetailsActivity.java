@@ -359,50 +359,59 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         });
 
         binding.plusCartBtn.setOnClickListener(v -> {
-            String message = "";
 
-            int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-            int stock = productModel.getProductBarcodes().get(0).getStockQty();
-            int userId = UtilityApp.getUserData().getId();
-            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-            int productId = productModel.getId();
-            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cartId = productModel.getProductBarcodes().get(0).getCartId();
-            int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-            Log.i("limit", "Log limit  " + limit);
-            Log.i("limit", "Log limit  " + limit);
-            Log.i("stock", "Log cartId  " + cartId);
+            if (!UtilityApp.isLogin()) {
 
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel_label, null, null);
+                checkLoginDialog.show();
 
-            if (limit == 0) {
-
-                if (count + 1 <= stock) {
-                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-
-                } else {
-                    message = getString(R.string.stock_empty);
-                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                            message);
-                }
             } else {
+                String message = "";
 
-                if (count + 1 <= stock && (count + 1) <= limit) {
-                    updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
+                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
+                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getId();
+                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cartId = productModel.getProductBarcodes().get(0).getCartId();
+                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                Log.i("limit", "Log limit  " + limit);
+                Log.i("limit", "Log limit  " + limit);
+                Log.i("stock", "Log cartId  " + cartId);
 
-                } else {
 
-                    if (count + 1 > stock) {
-                        message = getString(R.string.stock_empty);
+                if (limit == 0) {
 
-                    } else if (stock == 0) {
-                        message = getString(R.string.stock_empty);
+                    if (count + 1 <= stock) {
+                        updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
                     } else {
-                        message = getString(R.string.limit) + "" + limit;
-
+                        message = getString(R.string.stock_empty);
+                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                message);
                     }
-                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                            message);
+                } else {
+
+                    if (count + 1 <= stock && (count + 1) <= limit) {
+                        updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
+
+                    } else {
+
+                        if (count + 1 > stock) {
+                            message = getString(R.string.stock_empty);
+
+                        } else if (stock == 0) {
+                            message = getString(R.string.stock_empty);
+
+                        } else {
+                            message = getString(R.string.limit) + "" + limit;
+
+                        }
+                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                message);
+                    }
+
                 }
 
             }
@@ -412,15 +421,24 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         binding.minusCartBtn.setOnClickListener(v -> {
 
-            // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-            int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-            int userId = UtilityApp.getUserData().getId();
-            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-            int productId = productModel.getId();
-            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+            if (!UtilityApp.isLogin()) {
 
-            updateCart(v, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel_label, null, null);
+                checkLoginDialog.show();
+
+            } else {
+                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getId();
+                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+
+                updateCart(v, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
+
+            }
+
 
 
         });
@@ -467,10 +485,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
             }
 
+            getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
         }
 
-        getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
 
     }
@@ -485,8 +503,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-
-        //getSingleProduct(country_id,city_id,productModel.getId(), String.valueOf(user_id));
 
     }
 
@@ -976,10 +992,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             }
 
             getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
-
-            getReviews(product_id, storeId);
-
-            getSuggestedProduct();
 
             binding.productNameTv.setText(productName);
 
