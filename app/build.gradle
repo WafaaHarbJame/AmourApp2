@@ -172,7 +172,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
-
+    // Import the BoM for the Firebase platform
 
 }
 apply plugin: 'com.google.gms.google-services'

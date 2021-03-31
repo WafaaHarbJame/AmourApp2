@@ -290,13 +290,11 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
 
             <View
+                android:id="@+id/view_login"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="@dimen/_10sdp"
                 android:background="@color/gray" />
 

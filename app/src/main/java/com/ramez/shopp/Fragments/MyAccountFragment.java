@@ -108,11 +108,21 @@ public class MyAccountFragment extends FragmentBase {
             try {
                 if (whats_link != null) {
                     boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp");
+                    boolean installedBusiness = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp.w4b");
                     if (installed) {
                         System.out.println("App is already installed on your phone");
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
                         startActivity(intent);
-                    } else {
+                    }
+
+                   else if (installedBusiness) {
+                        System.out.println("App is already installed on your phone");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+                        startActivity(intent);
+                    }
+
+
+                    else {
                         Toast(getString(R.string.please_install_whats));
                         System.out.println("App is not currently installed on your phone");
                     }
@@ -180,7 +190,7 @@ public class MyAccountFragment extends FragmentBase {
 
 
         if (UtilityApp.isLogin()) {
-
+            binding.viewLogin.setVisibility(View.GONE);
             binding.logoutText.setText(R.string.logout);
             binding.editProfileBu.setVisibility(View.VISIBLE);
 
@@ -206,6 +216,7 @@ public class MyAccountFragment extends FragmentBase {
         } else {
 
             binding.logoutText.setText(R.string.text_login_login);
+            binding.viewLogin.setVisibility(View.VISIBLE);
             binding.editProfileBu.setVisibility(View.GONE);
 
         }

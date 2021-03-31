@@ -453,12 +453,7 @@
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:text="In consequat, quam id sodales hendrerit, eros mi molestie
-leo, nec lacinia risus neque tristique augue. Proin tempus
-urna vel congue elementum. Vestibulum euismod accumsan
-dui, ac iaculis sem viverra eu. Donec convallis, elit vitae
-ornare cursus, libero purus facilisis felis, a volutpat metus
-tortor bibendum elit. Integer nec mi eleifend, fermentum"
+                    android:text=""
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textStyle="bold"

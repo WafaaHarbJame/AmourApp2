@@ -104,6 +104,23 @@ public class GlobalData {
     }
 
 
+    public static void GlideImgGif(Context c, String image, int placeholder, ImageView imageView) {
+        String photoUrl = "";
+
+        if (image != null && !image.isEmpty()) {
+            photoUrl = image;
+        } else {
+            photoUrl = BetaBaseURL;
+        }
+
+        try {
+            Glide.with(c).load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void progressDialog(Context c, int title, int msg) {
         progressDialog = new AwesomeProgressDialog(c);
         progressDialog.setTitle(title).setMessage(msg).setColoredCircle(R.color.colorPrimaryDark).setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white).setCancelable(false);

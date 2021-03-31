@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -24,6 +26,7 @@ import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowSuggestedProductItemBinding;
 import com.squareup.picasso.Picasso;
@@ -48,6 +51,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         this.onItemClick = onItemClick;
         this.productModels = productModels;
         this.limit = limit;
+
     }
 
     @Override
@@ -135,6 +139,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+        Bundle bundleLog = new Bundle();
+        bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
+        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundleLog);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
@@ -416,6 +423,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
+            Bundle bundleLog = new Bundle();
+            bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
+            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundleLog);
+
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 CartProcessModel result = (CartProcessModel) obj;
 

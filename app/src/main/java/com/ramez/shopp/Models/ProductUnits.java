@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 
@@ -40,5 +42,11 @@ public class ProductUnits implements Serializable {
     public void setHName(String hName) {
         this.hName = hName;
     }
+
+    public String getUnitName() {
+
+        return  UtilityApp.getLanguage().equals(Constants.Arabic)? hName :name;
+    }
+
 
 }

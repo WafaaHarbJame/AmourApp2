@@ -62,6 +62,7 @@ public class Constants {
     public static final String REGISTER = "REGISTER";
     public static final String inv_id = "inv_id";
     public static final String CART = "CART";
+    public static final String BEGIN_CHECKOUT = "BEGIN_CHECKOUT";
     public static final String CURRENCY = "CURRENCY";
     public static final String Fractional = "Fractional";
     public static final String favourite_filter = "favourite";
@@ -85,6 +86,7 @@ public class Constants {
     public static final String delivery_charges = "delivery_charges";
     public static final String CART_MODEL = "CART_MODEL";
     public static final String ORDER_MODEL = "ORDER_MODEL";
+    public static final String Invoice = "Invoice";
     public static final String ORDER_ID = "ORDER_ID";
     public static final String product_id = "product_id";
     public static final int twoRow = 2;

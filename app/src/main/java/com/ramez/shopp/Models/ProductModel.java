@@ -19,7 +19,7 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     private Integer categoryId;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("favourite")
     @Expose
     private Boolean favourite;
@@ -28,7 +28,7 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     private List<ProductBarcode> productBarcodes = null;
     @SerializedName("h_description")
     @Expose
-    private Object hDescription;
+    private String hDescription;
     @SerializedName("h_name")
     @Expose
     private String hName;
@@ -72,11 +72,11 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.categoryId = categoryId;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -97,11 +97,11 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     }
 
 
-    public Object getHDescription() {
+    public String getHDescription() {
         return hDescription;
     }
 
-    public void setHDescription(Object hDescription) {
+    public void setHDescription(String hDescription) {
         this.hDescription = hDescription;
     }
 

@@ -11,13 +11,13 @@ import java.util.List;
 public class OrderModel implements Serializable {
     @SerializedName("order_id")
     @Expose
-    private Integer orderId;
+    private int orderId;
 
-    public Integer getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 
@@ -44,7 +44,7 @@ public class OrderModel implements Serializable {
     private Double orderTotal;
     @SerializedName("cart_id")
     @Expose
-    private Integer cartId;
+    private int cartId;
     @SerializedName("from_date")
     @Expose
     private String fromDate;
@@ -156,11 +156,11 @@ public class OrderModel implements Serializable {
         this.orderTotal = orderTotal;
     }
 
-    public Integer getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
-    public void setCartId(Integer cartId) {
+    public void setCartId(int cartId) {
         this.cartId = cartId;
     }
 
@@ -213,7 +213,7 @@ public class OrderModel implements Serializable {
         this.addressName = addressName;
     }
 
-    public Object getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 

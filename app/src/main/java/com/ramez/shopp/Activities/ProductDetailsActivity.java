@@ -2,9 +2,7 @@ package com.ramez.shopp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -17,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Adapter.ProductOptionAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -50,7 +48,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
 
@@ -59,7 +56,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     int user_id = 0;
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
-    ArrayList<ProductOptionModel> optionModelsList;
+    //    ArrayList<ProductOptionModel> optionModelsList;
     ArrayList<ReviewModel> reviewList;
     String productName;
     ProductModel productModel;
@@ -73,6 +70,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private int storeId;
     private boolean isFavorite;
     private boolean FROM_BROSHER = false;
+    private ProductBarcode selectedProductBarcode;
+    private int selectedProductPos;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +89,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         sliderList = new ArrayList<String>();
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
-        optionModelsList = new ArrayList<>();
 
         storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
         currency = UtilityApp.getLocalData().getCurrencyCode();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
@@ -227,6 +228,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.addToFavBut.setOnClickListener(v -> {
             Log.i("tag", "Log isFavorite" + isFavorite);
 
+            Bundle bundle1 = new Bundle();
+            bundle1.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(product_id));
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundle1);
+
+
+
             if (!UtilityApp.isLogin()) {
 
                 CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel_label, null, null);
@@ -259,93 +266,71 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 String message;
 
 
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = selectedProductBarcode.getCartId();
                 if (cart_id > 0) {
-
-
                     int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                    int stock = selectedProductBarcode.getStockQty();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
-                    int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                    int cartId = productModel.getProductBarcodes().get(0).getCartId();
-                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                    int cartId = selectedProductBarcode.getCartId();
+                    int limit = selectedProductBarcode.getLimitQty();
                     Log.i("limit", "Log limit  " + limit);
                     Log.i("limit", "Log limit  " + limit);
                     Log.i("stock", "Log cartId  " + cartId);
 
-
                     if (limit == 0) {
-
                         if (count + 1 <= stock) {
-                            updateCart(view1, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-
+                            updateCart(view1, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
                         } else {
                             message = getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
                         }
                     } else {
 
                         if (count + 1 <= stock && (count + 1) <= limit) {
-                            updateCart(view1, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-
+                            updateCart(view1, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
                         } else {
-
                             if (count + 1 > stock) {
                                 message = getString(R.string.stock_empty);
-
                             } else if (stock == 0) {
                                 message = getString(R.string.stock_empty);
-
                             } else {
                                 message = getString(R.string.limit) + "" + limit;
-
                             }
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
                         }
 
                     }
                 } else {
-                    int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                    int count = selectedProductBarcode.getCartQuantity();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
-                    int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
-                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                    int stock = selectedProductBarcode.getStockQty();
+                    int limit = selectedProductBarcode.getLimitQty();
 
                     Log.i("limit", "Log limit  " + limit);
                     Log.i("stock", "Log stock  " + stock);
 
 
                     if (limit == 0) {
-
                         if (count + 1 <= stock) {
-                            addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
-
+                            addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
                         } else {
                             message = getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
                         }
                     } else {
-
                         if (count + 1 <= stock && (count + 1) <= limit) {
-                            addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
-
+                            addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
                         } else {
-
                             if (count + 1 > stock) {
                                 message = getString(R.string.stock_empty);
                             } else {
                                 message = getString(R.string.limit) + "" + limit;
-
                             }
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
                         }
 
                     }
@@ -369,49 +354,53 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 String message = "";
 
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                int stock = selectedProductBarcode.getStockQty();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cartId = productModel.getProductBarcodes().get(0).getCartId();
-                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                int cartId = selectedProductBarcode.getCartId();
+                int limit = selectedProductBarcode.getLimitQty();
                 Log.i("limit", "Log limit  " + limit);
                 Log.i("limit", "Log limit  " + limit);
                 Log.i("stock", "Log cartId  " + cartId);
 
-
-                if (limit == 0) {
-
-                    if (count + 1 <= stock) {
-                        updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-
-                    } else {
-                        message = getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                message);
-                    }
-                } else {
-
-                    if (count + 1 <= stock && (count + 1) <= limit) {
-                        updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
-
-                    } else {
-
-                        if (count + 1 > stock) {
-                            message = getString(R.string.stock_empty);
-
-                        } else if (stock == 0) {
-                            message = getString(R.string.stock_empty);
+                if (cartId > 0) {
+                    // increase cart quantity
+                    if (limit == 0) {
+                        if (count + 1 <= stock) {
+                            updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
 
                         } else {
-                            message = getString(R.string.limit) + "" + limit;
-
+                            message = getString(R.string.stock_empty);
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                    message);
                         }
-                        GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                message);
-                    }
+                    } else {
 
+                        if (count + 1 <= stock && (count + 1) <= limit) {
+                            updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
+
+                        } else {
+
+                            if (count + 1 > stock) {
+                                message = getString(R.string.stock_empty);
+
+                            } else if (stock == 0) {
+                                message = getString(R.string.stock_empty);
+
+                            } else {
+                                message = getString(R.string.limit) + "" + limit;
+
+                            }
+                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                    message);
+                        }
+
+                    }
+                } else {
+                    // add product to cart for first time
+
+                    checkProductToAdd();
                 }
 
             }
@@ -427,18 +416,15 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 checkLoginDialog.show();
 
             } else {
-                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = selectedProductBarcode.getCartId();
 
-                updateCart(v, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
+                updateCart(v, productId, selectedProductBarcode.getId(), count - 1, userId, storeId, cart_id, "quantity");
 
             }
-
 
 
         });
@@ -448,10 +434,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int userId = UtilityApp.getUserData().getId();
             int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
             int productId = productModel.getId();
-            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+            int cart_id = selectedProductBarcode.getCartId();
 
-            deleteCart(v, productId, product_barcode_id, cart_id, userId, storeId);
+            deleteCart(v, productId, selectedProductBarcode.getId(), cart_id, userId, storeId);
 
         });
     }
@@ -490,9 +475,51 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         }
 
 
-
     }
 
+
+    private void checkProductToAdd() {
+        String message = "";
+        int count = selectedProductBarcode.getCartQuantity();
+        int userId = UtilityApp.getUserData().getId();
+        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        int productId = productModel.getId();
+        int stock = selectedProductBarcode.getStockQty();
+        int limit = selectedProductBarcode.getLimitQty();
+
+        Log.i("limit", "Log limit  " + limit);
+        Log.i("stock", "Log stock  " + stock);
+
+
+        if (limit == 0) {
+
+            if (count + 1 <= stock) {
+                addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
+
+            } else {
+                message = getString(R.string.stock_empty);
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        message);
+            }
+        } else {
+
+            if (count + 1 <= stock && (count + 1) <= limit) {
+                addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
+
+            } else {
+
+                if (count + 1 > stock) {
+                    message = getString(R.string.stock_empty);
+                } else {
+                    message = getString(R.string.limit) + "" + limit;
+
+                }
+                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                        message);
+            }
+
+        }
+    }
 
     public void initReviewAdapter() {
         reviewAdapter = new ReviewAdapter(getActiviy(), reviewList);
@@ -508,6 +535,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     @SuppressLint("SetTextI18n")
     public void getSingleProduct(int country_id, int city_id, int product_id, String user_id) {
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(product_id));
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle1);
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -573,57 +605,14 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.productNameTv.setText(productName);
 
                         if (productModel.getDescription() != null && productModel.getHDescription() != null) {
+                            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                                binding.productDesc1Tv.setText(productModel.getHDescription());
 
-                        }
-
-                        ProductBarcode productBarcode = productModel.getProductBarcodes().get(0);
-
-                        if (productBarcode.getIsSpecial()) {
-                            binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.itlatic_red_line));
-
-                            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-                                binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-
-                                Double discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))
-                                        - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())))
-                                        / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                                DecimalFormat df = new DecimalFormat("#");
-                                String newDiscount_str = df.format(discount);
-                                binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-
-                                // this is different by seconds
-                                long diff = DateHandler.GetDateOnlyLong(productBarcode.getEndOffer()) - DateHandler.GetDateOnlyLong(DateHandler.GetDateNowString());
-                                System.out.println("Log diff " + diff);
-                                int day = (int) (diff / (24 * 60 * 60));
-                                diff = diff % (24 * 60 * 60);
-                                System.out.println("Log day " + day);
-                                System.out.println("Log diff " + diff);
-                                int hour = (int) (diff / (60 * 60));
-                                diff = diff % (60 * 60);
-                                System.out.println("Log hour " + hour);
-                                System.out.println("Log diff " + diff);
-                                int minutes = (int) (diff / 60);
-                                System.out.println("Log minutes " + minutes);
-
-                                String formatedOfferTime = "";
-                                if (day > 0)
-                                    formatedOfferTime += day + " " + getString(R.string.day) + ",";
-                                if (hour > 0)
-                                    formatedOfferTime += hour + " " + getString(R.string.hour) + ",";
-                                if (minutes > 0)
-                                    formatedOfferTime += minutes + " " + getString(R.string.minute);
-                                if (formatedOfferTime.endsWith(","))
-                                    formatedOfferTime = formatedOfferTime.substring(0, formatedOfferTime.length() - 1);
-                                binding.endOfferTv.setText(formatedOfferTime);
+                            } else {
+                                binding.productDesc1Tv.setText(productModel.getDescription());
 
                             }
 
-
-                        } else {
-                            binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                            binding.productPriceBeforeTv.setVisibility(View.GONE);
-                            binding.offerLy.setVisibility(View.GONE);
 
                         }
 
@@ -636,17 +625,33 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                                     , R.drawable.holder_image, binding.productImage);
                         }
 
+//                        optionModelsList.clear();
+                        if (productModel.getProductBarcodes() != null && productModel.getProductBarcodes().size() > 0) {
+                            selectedProductBarcode = productModel.getProductBarcodes().get(0);
 
-                        optionModelsList.clear();
-                        String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
-                        ProductOptionModel productOptionModel = new ProductOptionModel(product_id, NumberHandler.formatDouble(productBarcode.getWeight(), 0)
-                                + " " + wightName, NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
-                        optionModelsList.add(productOptionModel);
-                        if(optionModelsList.size()>0){
-                            initOptionAdapter();
+                            for (int i = 0; i < productModel.getProductBarcodes().size(); i++) {
+                                ProductBarcode productBarcode1 = productModel.getProductBarcodes().get(i);
+
+                                if (selectedProductPos == 0 && productBarcode1.getCartId() != 0) {
+                                    selectedProductBarcode = productBarcode1;
+                                    selectedProductPos = i;
+                                }
+
+                            }
+
+
+                            initProductData();
+
 
                         }
-                        else {
+
+
+                        if (productModel.getProductBarcodes().size() > 0) {
+                            initOptionAdapter();
+                            binding.productOptionTv.setVisibility(View.VISIBLE);
+                            binding.productOptionRv.setVisibility(View.VISIBLE);
+
+                        } else {
                             binding.productOptionTv.setVisibility(View.GONE);
                             binding.productOptionRv.setVisibility(View.GONE);
                         }
@@ -658,22 +663,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.favorite_icon));
                         } else {
                             binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.empty_fav));
-
-                        }
-
-
-                        int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
-
-                        if (quantity > 0) {
-                            binding.productCartQTY.setText(String.valueOf(quantity));
-
-                            if (quantity == 1) {
-                                binding.deleteCartBtn.setVisibility(View.VISIBLE);
-                                binding.minusCartBtn.setVisibility(View.GONE);
-                            } else {
-                                binding.minusCartBtn.setVisibility(View.VISIBLE);
-                                binding.deleteCartBtn.setVisibility(View.GONE);
-                            }
 
                         }
 
@@ -828,7 +817,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void initOptionAdapter() {
-        ProductOptionAdapter productOptionAdapter = new ProductOptionAdapter(getActiviy(), optionModelsList, (obj, func, IsSuccess) -> {
+        ProductOptionAdapter productOptionAdapter = new ProductOptionAdapter(getActiviy(), productModel.getProductBarcodes(), (obj, func, IsSuccess) -> {
+            selectedProductBarcode = (ProductBarcode) obj;
+            initProductData();
+
 
         });
         binding.productOptionRv.setAdapter(productOptionAdapter);
@@ -836,15 +828,16 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
 
-    private void addToCart(View v, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
+    private void addToCart(int productId, int product_barcode_id, int quantity, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             CartProcessModel result = (CartProcessModel) obj;
 
             if (IsSuccess) {
                 int cartId = result.getId();
 
-                productModel.getProductBarcodes().get(0).setCartId(cartId);
-                productModel.getProductBarcodes().get(0).setCartQuantity(quantity);
+                selectedProductBarcode.setCartId(cartId);
+                selectedProductBarcode.setCartQuantity(quantity);
+                productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
 
@@ -883,6 +876,37 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             if (IsSuccess) {
                 initSnackBar(getString(R.string.success_delete_from_cart), v);
                 UtilityApp.updateCart(1, productList.size());
+                selectedProductBarcode.setCartQuantity(0);
+                selectedProductBarcode.setCartId(0);
+                productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
+//                int quantity = selectedProductBarcode.getCartQuantity();
+
+                binding.productCartQTY.setText(String.valueOf(1));
+                binding.deleteCartBtn.setVisibility(View.GONE);
+                binding.minusCartBtn.setVisibility(View.VISIBLE);
+                binding.plusCartBtn.setVisibility(View.VISIBLE);
+
+//                if (quantity > 0) {
+//                    binding.productCartQTY.setText(String.valueOf(quantity));
+//
+//                    if (quantity == 1) {
+//                        binding.deleteCartBtn.setVisibility(View.VISIBLE);
+//                        binding.minusCartBtn.setVisibility(View.GONE);
+//                        binding.plusCartBtn.setVisibility(View.VISIBLE);
+//                    } else {
+//                        binding.deleteCartBtn.setVisibility(View.GONE);
+//                        binding.minusCartBtn.setVisibility(View.VISIBLE);
+//                        binding.plusCartBtn.setVisibility(View.VISIBLE);
+//
+//                    }
+//
+//                } else {
+//                    binding.productCartQTY.setText(String.valueOf(1));
+//                    binding.deleteCartBtn.setVisibility(View.GONE);
+//                    binding.minusCartBtn.setVisibility(View.VISIBLE);
+//                    binding.plusCartBtn.setVisibility(View.VISIBLE);
+//
+//                }
 
 
             } else {
@@ -902,7 +926,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.productCartQTY.setText(String.valueOf(quantity));
 
                 // initSnackBar(getString(R.string.success_to_update_cart), v);
-                productModel.getProductBarcodes().get(0).setCartQuantity(quantity);
+                selectedProductBarcode.setCartQuantity(quantity);
+                productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
+
                 if (quantity > 0) {
                     binding.productCartQTY.setText(String.valueOf(quantity));
 
@@ -1048,6 +1074,78 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
         }).setRate(reviewModel);
+    }
+
+    private void initProductData() {
+
+        int quantity = selectedProductBarcode.getCartQuantity();
+
+        if (quantity > 0) {
+            binding.productCartQTY.setText(String.valueOf(quantity));
+
+            if (quantity == 1) {
+                binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                binding.minusCartBtn.setVisibility(View.GONE);
+            } else {
+                binding.minusCartBtn.setVisibility(View.VISIBLE);
+                binding.deleteCartBtn.setVisibility(View.GONE);
+            }
+
+        } else {
+            binding.productCartQTY.setText(String.valueOf(1));
+
+        }
+
+        if (selectedProductBarcode.getIsSpecial()) {
+            binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.itlatic_red_line));
+
+            if (selectedProductBarcode.getSpecialPrice() != null) {
+                binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+                Double discount = (Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice()))
+                        - Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())))
+                        / (Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice()))) * 100;
+                DecimalFormat df = new DecimalFormat("#");
+                String newDiscount_str = df.format(discount);
+                binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+
+                // this is different by seconds
+                long diff = DateHandler.GetDateOnlyLong(selectedProductBarcode.getEndOffer()) - DateHandler.GetDateOnlyLong(DateHandler.GetDateNowString());
+                System.out.println("Log diff " + diff);
+                int day = (int) (diff / (24 * 60 * 60));
+                diff = diff % (24 * 60 * 60);
+                System.out.println("Log day " + day);
+                System.out.println("Log diff " + diff);
+                int hour = (int) (diff / (60 * 60));
+                diff = diff % (60 * 60);
+                System.out.println("Log hour " + hour);
+                System.out.println("Log diff " + diff);
+                int minutes = (int) (diff / 60);
+                System.out.println("Log minutes " + minutes);
+
+                String formatedOfferTime = "";
+                if (day > 0)
+                    formatedOfferTime += day + " " + getString(R.string.day) + ",";
+                if (hour > 0)
+                    formatedOfferTime += hour + " " + getString(R.string.hour) + ",";
+                if (minutes > 0)
+                    formatedOfferTime += minutes + " " + getString(R.string.minute);
+                if (formatedOfferTime.endsWith(","))
+                    formatedOfferTime = formatedOfferTime.substring(0, formatedOfferTime.length() - 1);
+                binding.endOfferTv.setText(formatedOfferTime);
+
+            }
+
+
+        } else {
+            binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+            binding.productPriceBeforeTv.setVisibility(View.GONE);
+            binding.offerLy.setVisibility(View.GONE);
+
+        }
+
+
     }
 
 

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Adapter.AddressCheckAdapter;
@@ -43,6 +44,7 @@ import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
 
@@ -472,6 +474,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     private void sendOrder(OrderCall orderCall) {
+        Bundle bundleLog = new Bundle();
+        bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME, Constants.BEGIN_CHECKOUT);
+        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundleLog);
+
 
         GlobalData.progressDialog(getActivityy(), R.string.make_order, R.string.please_wait_sending);
 
@@ -493,6 +499,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                             startMain();
                         });
                         successDialog.show();
+
+
+
+
                     } else {
                         String message = getString(R.string.fail_to_send_order);
                         if (result != null && result.getMessage() != null) {

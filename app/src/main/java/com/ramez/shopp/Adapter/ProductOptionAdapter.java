@@ -1,6 +1,8 @@
 package com.ramez.shopp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,15 +10,18 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.CallBack.DataCallback;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductOptionModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowProductOptionBinding;
 
 import java.util.List;
 
 public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdapter.MyHolder> {
 
-    public List<ProductOptionModel> optionModels;
+    public List<ProductBarcode> productBarcodes;
     public Context context;
     public LayoutInflater inflater;
     public int selectedIndex = -1;
@@ -24,8 +29,8 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
     private int lastIndex = 0;
 
 
-    public ProductOptionAdapter(Context context, List<ProductOptionModel> paymentMethods, DataCallback dataCallback) {
-        this.optionModels = paymentMethods;
+    public ProductOptionAdapter(Context context, List<ProductBarcode> productBarcodes, DataCallback dataCallback) {
+        this.productBarcodes = productBarcodes;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataCallback = dataCallback;
@@ -40,11 +45,14 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
 
-        ProductOptionModel productOptionModel = optionModels.get(position);
-        holder.binding.btnCategory.setText(productOptionModel.getName());
+        ProductBarcode productOptionModel = productBarcodes.get(position);
+        String wightName = productOptionModel.getProductUnits().getUnitName();
+        holder.binding.btnCategory.setText(NumberHandler.formatDouble(productOptionModel.getWeight(), 0)
+                + " " + wightName);
 
 
         if (lastIndex == position) {
@@ -61,23 +69,12 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
         }
 
 
-//        holder.binding.cardView.setOnClickListener(v -> {
-//            selectedIndex = position;
-//            lastIndex = position;
-//            Log.i("tag", "Log 1" + paymentMethod.getId());
-//            notifyDataSetChanged();
-//            if (dataCallback != null) {
-//                dataCallback.dataResult(paymentMethod, "success", true);
-//            }
-//        });
-
-
     }
 
 
     @Override
     public int getItemCount() {
-        return optionModels.size();
+        return productBarcodes.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
@@ -86,6 +83,17 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
         public MyHolder(RowProductOptionBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
+            binding.btnCategory.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                selectedIndex = position;
+                lastIndex = position;
+                ProductBarcode optionModel = productBarcodes.get(position);
+                Log.i("tag", "Log 1" + optionModel.getId());
+                notifyDataSetChanged();
+                if (dataCallback != null) {
+                    dataCallback.dataResult(optionModel, "success", true);
+                }
+            });
 
 
         }

@@ -10,6 +10,7 @@ import androidx.multidex.MultiDex;
 
 
 import com.androidnetworking.AndroidNetworking;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -30,6 +31,7 @@ public class RootApplication extends Application {
 
     private static RootApplication rootApplication;
     private static final String ONESIGNAL_APP_ID = "06c038db-2891-4e93-b03f-ac3a308efc8e";
+    public   static  FirebaseAnalytics firebaseAnalytics;
 
     SharedPManger sharedPManger;
 
@@ -58,6 +60,7 @@ public class RootApplication extends Application {
 
         rootApplication = this;
         sharedPManger = new SharedPManger(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 

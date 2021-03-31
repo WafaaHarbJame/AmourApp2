@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Adapter.AddressAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -20,6 +22,7 @@ import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddressBinding;
 
@@ -98,6 +101,11 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         defaultAddressId = addressesDM.getId();
 
         if (deliveryChoose) {
+            Bundle bundleLog = new Bundle();
+            bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME,Constants.Invoice);
+            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_SHIPPING_INFO, bundleLog);
+
+
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
             intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());

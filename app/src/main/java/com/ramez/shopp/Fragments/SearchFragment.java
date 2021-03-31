@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -91,6 +92,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private boolean toggleButton = false;
     private OfferProductAdapter productOfferAdapter;
     private int SEARCH_CODE = 2000;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +104,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
         productOffersList = new ArrayList<>();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivityy());
 
         binding.searchEt.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -249,6 +252,10 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME, productModel.getName());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS, bundle1);
+
         Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
         intent.putExtra(Constants.DB_productModel, productModel);
         startActivity(intent);
@@ -284,7 +291,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
-            }  else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
@@ -318,6 +325,9 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     }
 
     public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME, filter);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle1);
 
         productList.clear();
         offerList.clear();

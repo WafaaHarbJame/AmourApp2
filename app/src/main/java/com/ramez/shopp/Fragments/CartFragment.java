@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SplashScreenActivity;
@@ -65,6 +66,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private Double delivery_charges = 0.0;
     private CartResultModel cartResultModel;
     private Activity activity;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -78,6 +80,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivityy());
 
         user = UtilityApp.getUserData();
 
@@ -106,6 +109,15 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             getCarts(storeId, userId);
 
             binding.contBut.setOnClickListener(view1 -> {
+                Bundle bundle1 = new Bundle();
+                if (cartResultModel != null && cartResultModel.getCartCount() > 0) {
+                    bundle1.putString(FirebaseAnalytics.Param.CONTENT, String.valueOf(cartResultModel.getCartCount()));
+
+                }
+                bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "BEGIN_CHECKOUT");
+
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle1);
+
 
                 String message = "", allMessage;
                 StringBuilder s = new StringBuilder();
@@ -500,6 +512,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
     private void goToCompleteOrder() {
+        Bundle bundleLog = new Bundle();
+        bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME, Constants.BEGIN_CHECKOUT);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundleLog);
+
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
         FragmentManager fragmentManager = getParentFragmentManager();
         InvoiceFragment invoiceFragment = new InvoiceFragment();

@@ -18,6 +18,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.AnalyticsListener;
 import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.onesignal.OneSignal;
@@ -58,6 +59,7 @@ public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
     String country_name = "BH";
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @SuppressLint("UnsafeExperimentalUsageError")
     @Override
@@ -72,6 +74,7 @@ public class MainActivity extends ActivityBase {
         binding.toolBar.view2But.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         getValidation();
 
@@ -91,11 +94,18 @@ public class MainActivity extends ActivityBase {
         OneSignal.sendTag(Constants.COUNTRY,country_name);
 
 
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "open");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle1);
+
+
         if (UtilityApp.isLogin()) {
             getCartsCount();
         }
 
         binding.homeButton.setOnClickListener(view1 -> {
+
+
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
             initBottomNav(0);
@@ -129,6 +139,11 @@ public class MainActivity extends ActivityBase {
             binding.cartCountTv.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
+            Bundle bundleLog = new Bundle();
+            bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME,Constants.CART);
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundleLog);
+
+
             initBottomNav(2);
 
             if (UtilityApp.isLogin()) {
@@ -146,6 +161,7 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.offerButton.setOnClickListener(view1 -> {
+
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
             initBottomNav(3);
