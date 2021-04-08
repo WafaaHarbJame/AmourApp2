@@ -2,6 +2,7 @@
 
     <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyCGhao5aYDhzVLZHHx49BGQWoeqGjuVP1c</string>
     <string name="app_name">Ramez</string>
+    <string name="app_name_for_deep" translatable="false">ramez</string>
     <string name="message_yes">Yes</string>
     <string name="message_no">No</string>
     <string name="text_save">Save</string>
@@ -113,8 +114,8 @@
     <string name="account_data">Your account information</string>
     <string name="register">Register</string>
     <string name="choose_branch">Please Choose Branch</string>
-    <string name="ar_lang" translatable="false">Arabic</string>
-    <string name="en_lang" translatable="false">English</string>
+    <string name="ar_lang">اللغة العربية</string>
+    <string name="en_lang">English</string>
     <string name="invoice_details">Invoice Details </string>
     <string name="total">Total</string>
     <string name="reorder_cart">Reorder Cart</string>
@@ -173,12 +174,12 @@
     <string name="Qatar_shotname" translatable="false">QA</string>
     <string name="Saudi_Arabia_shortname" translatable="false">SA</string>
 
-    <string name="Bahrain"  translatable="false">Bahrain</string>
-    <string name="Oman"  translatable="false">Oman</string>
-    <string name="Qatar"  translatable="false">Qatar</string>
-    <string name="Saudi_Arabia"  translatable="false">Saudi Arabia</string>
-    <string name="United_Arab_Emirates" translatable="false" >United Arab Emirates</string>
-    <string name="Kuwait"  translatable="false">Kuwait</string>
+    <string name="Bahrain" translatable="false">Bahrain</string>
+    <string name="Oman" translatable="false">Oman</string>
+    <string name="Qatar" translatable="false">Qatar</string>
+    <string name="Saudi_Arabia" translatable="false">Saudi Arabia</string>
+    <string name="United_Arab_Emirates" translatable="false">United Arab Emirates</string>
+    <string name="Kuwait" translatable="false">Kuwait</string>
 
     <string name="Bahrain_ar" translatable="false">البحرين</string>
     <string name="Oman_ar" translatable="false">عمان</string>
@@ -356,6 +357,7 @@
     <string name="Whatsapp_Live_Support">Whatsapp Live Support</string>
     <string name="is_Active">"is Active "</string>
     <string name="whats_note">Dear User, our Whatsapp Live Support is Active. Go to your profile and click the Whatsapp icon whenever you will need support.</string>
+    <string name="share_note">\nLet me recommend  to you this product \n\n\</string>
 
 
 </resources>

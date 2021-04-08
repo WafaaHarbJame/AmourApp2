@@ -57,6 +57,7 @@ public class Constants {
     public static final String DB_DINNER_MODEL = "DB_DINNER_MODEL";
     public static final String CAPTURE = "capture";
     public static final String PICK = "pick";
+    public static final String isNotify = "isNotify";
     public static final String LOGIN = "LOGIN";
     public static final String COUNTRY = "COUNTRY";
     public static final String REGISTER = "REGISTER";
@@ -103,6 +104,7 @@ public class Constants {
     public static String api_key = "^~>h2q=m[h=>3?bU/!M'X!m~?4GjKJP{Q@y;~fa3Vjs/M#`8FuB;x[LKwJ&>gNrxBt8!5PZ:9QLuHBUtu{TPc2s]k74]Br?PGe6+NcFUT-8";
     public static String KEY_FILE = "KEY_FILE";
     public static String KEY_EDIT = "KEY_EDIT";
+    public static String KEY_SHOW = "KEY_SHOW";
     public static String KEY_ADD_NEW = "KEY_ADD_NEW";
     public static String KEY_ADDRESS_ID = "KEY_ADDRESS_ID";
     public static String KEY_LAT = "KEY_LAT";

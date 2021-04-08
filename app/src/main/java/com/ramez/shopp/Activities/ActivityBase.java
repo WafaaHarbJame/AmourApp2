@@ -1,6 +1,7 @@
 package com.ramez.shopp.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,8 +20,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.LocaleUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 
 public class ActivityBase extends AppCompatActivity {
@@ -32,6 +40,7 @@ public class ActivityBase extends AppCompatActivity {
     protected ImageView mainTitle;
     protected ImageView home;
     protected LinearLayout toolbar;
+    int back_to_home;
 
 
     public ActivityBase() {
@@ -80,7 +89,20 @@ public class ActivityBase extends AppCompatActivity {
 
         }
 
-        home.setOnClickListener(view -> onBackPressed());
+        home.setOnClickListener(view ->
+                {
+                    if(back_to_home==2){
+                        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
+                        Intent intent = new Intent(getActiviy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                    else {
+                        onBackPressed();
+                    }
+
+                });
+
 
         super.setTitle(title);
 
@@ -155,6 +177,19 @@ public class ActivityBase extends AppCompatActivity {
         Toast.makeText(getActiviy(), getString(resId), Toast.LENGTH_SHORT).show();
     }
 
+
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
+        if (event.type.equals(MessageEvent.TYPE_invoice)) {
+
+            if (event.type.equals(MessageEvent.TYPE_POSITION)) {
+                 back_to_home = (int) event.data;
+            }
+        }
+        }
 
 }
 

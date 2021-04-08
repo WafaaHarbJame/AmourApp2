@@ -148,11 +148,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     }
 
     public void initAdapter() {
-
-//        binding.productsRv.getRecycledViewPool().clear();
-//        adapter.notifyDataSetChanged();
-//        adapter.notifyDataSetChanged();
-        adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn);
+        adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn,0);
         binding.productsRv.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));

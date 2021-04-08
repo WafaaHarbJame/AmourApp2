@@ -2,6 +2,7 @@ package com.ramez.shopp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.ramez.shopp.Adapter.ProductOptionAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -38,6 +40,8 @@ import com.ramez.shopp.Models.ProductOptionModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
+import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityProductDeatilsBinding;
@@ -61,6 +65,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     String productName;
     ProductModel productModel;
     String currency;
+    boolean isNotify = false;
     AddRateDialog addCommentDialog;
     private int category_id = 0, country_id, city_id, product_id;
     private SuggestedProductAdapter productOfferAdapter;
@@ -94,7 +99,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         currency = UtilityApp.getLocalData().getCurrencyCode();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
         binding.offerRecycler.setLayoutManager(productLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);
@@ -113,7 +117,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
         if (UtilityApp.isLogin()) {
-            user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
+            if (memberModel != null) {
+                user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
+
+            }
+
 
         }
 
@@ -128,7 +136,14 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         binding.backBtn.setOnClickListener(view1 -> {
             GlobalData.REFRESH_CART = true;
-            onBackPressed();
+
+            if (isNotify) {
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            } else onBackPressed();
+
         });
 
         binding.moreBoughtBut.setOnClickListener(v -> {
@@ -225,13 +240,20 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
         });
+
+        binding.shareBtn.setOnClickListener(v -> {
+
+//            ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
+//                    + "https://ramezonlin" + "/product/" + storeId + "/" + product_id, null, null);
+
+         ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
+                    + "https://Ramezonline.com" + "/product?shop="+ storeId + "&id=" + product_id, null, null);
+
+//            Ramezonlin://product?shop=17&id=10590z
+
+        });
         binding.addToFavBut.setOnClickListener(v -> {
             Log.i("tag", "Log isFavorite" + isFavorite);
-
-            Bundle bundle1 = new Bundle();
-            bundle1.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(product_id));
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundle1);
-
 
 
             if (!UtilityApp.isLogin()) {
@@ -450,6 +472,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
             if (FROM_BROSHER) {
                 product_id = Integer.parseInt(bundle.getString(Constants.product_id));
+                isNotify = bundle.getBoolean(Constants.isNotify, false);
+
 
             } else {
                 ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
@@ -536,9 +560,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     @SuppressLint("SetTextI18n")
     public void getSingleProduct(int country_id, int city_id, int product_id, String user_id) {
 
-        Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(product_id));
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle1);
+        AnalyticsHandler.ViewItem(product_id, currency, 0);
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -707,6 +729,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
+                    AnalyticsHandler.AddToWishList(productId, currency, productId);
+
                     binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.favorite_icon));
 
                     Toasty.success(getActiviy(), R.string.success_add, Toast.LENGTH_SHORT, true).show();
@@ -839,6 +863,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 selectedProductBarcode.setCartQuantity(quantity);
                 productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
 
+                AnalyticsHandler.AddToCart(cartId, currency, quantity);
+
                 binding.productCartQTY.setText(String.valueOf(quantity));
 
                 if (quantity == 1) {
@@ -849,7 +875,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     binding.deleteCartBtn.setVisibility(View.GONE);
                 }
 
-//                initSnackBar(getString(R.string.success_added_to_cart), v);
                 UtilityApp.updateCart(1, productList.size());
 
 
@@ -880,33 +905,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 selectedProductBarcode.setCartId(0);
                 productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
 //                int quantity = selectedProductBarcode.getCartQuantity();
+                AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
                 binding.productCartQTY.setText(String.valueOf(1));
                 binding.deleteCartBtn.setVisibility(View.GONE);
                 binding.minusCartBtn.setVisibility(View.VISIBLE);
                 binding.plusCartBtn.setVisibility(View.VISIBLE);
-
-//                if (quantity > 0) {
-//                    binding.productCartQTY.setText(String.valueOf(quantity));
-//
-//                    if (quantity == 1) {
-//                        binding.deleteCartBtn.setVisibility(View.VISIBLE);
-//                        binding.minusCartBtn.setVisibility(View.GONE);
-//                        binding.plusCartBtn.setVisibility(View.VISIBLE);
-//                    } else {
-//                        binding.deleteCartBtn.setVisibility(View.GONE);
-//                        binding.minusCartBtn.setVisibility(View.VISIBLE);
-//                        binding.plusCartBtn.setVisibility(View.VISIBLE);
-//
-//                    }
-//
-//                } else {
-//                    binding.productCartQTY.setText(String.valueOf(1));
-//                    binding.deleteCartBtn.setVisibility(View.GONE);
-//                    binding.minusCartBtn.setVisibility(View.VISIBLE);
-//                    binding.plusCartBtn.setVisibility(View.VISIBLE);
-//
-//                }
 
 
             } else {
@@ -1007,15 +1011,27 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         if (bundle != null) {
 
             ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            product_id = productModel.getId();
+            FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
+            if (FROM_BROSHER) {
+                product_id = Integer.parseInt(bundle.getString(Constants.product_id));
+                isNotify = bundle.getBoolean(Constants.isNotify, false);
 
-            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                productName = productModel.getHName();
 
             } else {
-                productName = productModel.getName();
+                if (productModel != null) {
+                    product_id = productModel.getId();
+
+                    if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                        productName = productModel.getHName();
+
+                    } else {
+                        productName = productModel.getName();
+
+                    }
+                }
 
             }
+
 
             getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 

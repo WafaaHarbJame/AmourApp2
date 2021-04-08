@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
@@ -229,9 +230,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundleLog);
+        AnalyticsHandler.AddToWishList(productId, currency, productId);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -528,14 +527,11 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     if (count + 1 > stock) {
                         message = context.getString(R.string.limit) + "" + limit;
 
-                    }
-
-                    else if(stock==0){
+                    } else if (stock == 0) {
                         message = context.getString(R.string.stock_empty);
 
 
-                    }
-                    else {
+                    } else {
                         message = context.getString(R.string.limit) + "" + limit;
 
                     }
@@ -594,20 +590,19 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-            Bundle bundleLog = new Bundle();
-            bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundleLog);
 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 CartProcessModel result = (CartProcessModel) obj;
 
                 if (IsSuccess) {
-                    int cartId=result.getId();
+                    int cartId = result.getId();
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
+
+                    AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
 
 
                 } else {
@@ -647,10 +642,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());
+                    AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
 
                 } else {
-
 
 
                     GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),

@@ -87,8 +87,6 @@ public class MyOrderActivity extends ActivityBase {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
-//                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "MyAccountFragment").commit();
-
         }
 
 

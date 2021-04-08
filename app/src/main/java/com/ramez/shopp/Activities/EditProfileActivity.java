@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.aminography.choosephotohelper.ChoosePhotoHelper;
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
@@ -102,6 +103,8 @@ public class EditProfileActivity extends ActivityBase {
 
                     selectedPhotoFil = FileUtil.from(getActiviy(), selectedPhotoUri);
 
+                    selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
+
                     Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
                     uploadPhoto(userId, selectedPhotoFil);
 
@@ -137,10 +140,10 @@ public class EditProfileActivity extends ActivityBase {
 
                         Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
 
-                        selectedPhotoFil = new Compressor(getActiviy()).compressToFile(selectedPhotoFil);
+                        selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
 
-                        Log.i("tag","Log selectedPhotoFil  " + selectedPhotoFil);
-                        Log.i("tag","Log uri "+uri);
+//                        Log.i("tag","Log selectedPhotoFil  " + selectedPhotoFil);
+//                        Log.i("tag","Log uri "+uri);
 
                         uploadPhoto(userId,selectedPhotoFil);
 
@@ -257,7 +260,8 @@ public class EditProfileActivity extends ActivityBase {
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
                 GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
-                .addHeaders("ApiKey", Constants.api_key).build().
+                .addHeaders("ApiKey", Constants.api_key)
+                .setPriority(Priority.HIGH).build().
                 setUploadProgressListener((bytesUploaded, totalBytes) -> {
                     // do anything with progress
                 }).getAsJSONObject(new JSONObjectRequestListener() {

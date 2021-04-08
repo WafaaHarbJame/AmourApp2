@@ -1,32 +1,21 @@
 package com.ramez.shopp;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
-import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.BuildConfig;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.AnalyticsListener;
-import com.androidnetworking.interfaces.DownloadListener;
-import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
-import com.kcode.permissionslib.main.PermissionCompat;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.ExampleNotificationOpenedHandler;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
@@ -45,11 +34,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.util.Collections;
-
-import ru.nikartm.support.BadgePosition;
-
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
@@ -59,9 +43,7 @@ public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
     String country_name = "BH";
-    private FirebaseAnalytics mFirebaseAnalytics;
 
-    @SuppressLint("UnsafeExperimentalUsageError")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,42 +56,39 @@ public class MainActivity extends ActivityBase {
         binding.toolBar.view2But.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         getValidation();
 
+
         getIntentExtra();
-
-
-
-        Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
 
 
         localModel = UtilityApp.getLocalData();
 
         storeId = Integer.parseInt(localModel.getCityId());
 
-        country_name=localModel.getShortname();
+        country_name = localModel.getShortname();
 
-        OneSignal.sendTag(Constants.COUNTRY,country_name);
-
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "open");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle1);
+        OneSignal.sendTag(Constants.COUNTRY, country_name);
 
 
         if (UtilityApp.isLogin()) {
             getCartsCount();
         }
 
+
+        AnalyticsHandler.APP_OPEN();
+
         binding.homeButton.setOnClickListener(view1 -> {
 
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
-            initBottomNav(0);
 
+            try{
+                initBottomNav(0);
+            } catch(NumberFormatException ex){ // handle your exception
+            }
             binding.toolBar.addExtra.setVisibility(View.GONE);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
@@ -138,11 +117,6 @@ public class MainActivity extends ActivityBase {
 
             binding.cartCountTv.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
-
-            Bundle bundleLog = new Bundle();
-            bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME,Constants.CART);
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundleLog);
-
 
             initBottomNav(2);
 
@@ -290,11 +264,8 @@ public class MainActivity extends ActivityBase {
 
             });
 
-        }
-
-        else
-        if (event.type.equals(MessageEvent.TYPE_BROUSHERS)) {
-         //   boolean is_Home = (boolean) event.data;
+        } else if (event.type.equals(MessageEvent.TYPE_BROUSHERS)) {
+            //   boolean is_Home = (boolean) event.data;
 
 
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
@@ -309,8 +280,7 @@ public class MainActivity extends ActivityBase {
 
             });
 
-        }
-        else if (event.type.equals(MessageEvent.TYPE_POSITION)) {
+        } else if (event.type.equals(MessageEvent.TYPE_POSITION)) {
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
@@ -430,7 +400,7 @@ public class MainActivity extends ActivityBase {
 
                 GeneralModel result = (GeneralModel) obj;
 
-                if (result.getMessage() != null) {
+                if (result != null && result.getMessage() != null){
                     if (result.getStatus().equals(Constants.OK_STATUS)) {
                         Log.i(TAG, "Log getValidation" + result.getMessage());
 

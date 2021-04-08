@@ -19,11 +19,13 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
 import com.ramez.shopp.Activities.AddressActivity;
+import com.ramez.shopp.Activities.InvoiceInfoActivity;
 import com.ramez.shopp.Adapter.AddressCheckAdapter;
 import com.ramez.shopp.Adapter.DeliveryDayAdapter;
 import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
 import com.ramez.shopp.Adapter.PaymentAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -37,6 +39,7 @@ import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.OrderCall;
+import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.PaymentModel;
 import com.ramez.shopp.Models.PaymentResultModel;
@@ -49,6 +52,9 @@ import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -62,6 +68,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     private static final int ADDRESS_CODE = 100;
     public Integer userId;
     public String paymentMethod = "COD";
+    public int paymentMethodId = 0;
     public String couponCodeId = "0";
     public Integer deliveryDateId = 0;
     public Boolean expressDelivery = false;
@@ -73,9 +80,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     ArrayList<CartModel> productList;
     GridLayoutManager payLinearLayoutManager;
     LinearLayoutManager linearLayoutManager;
+
     LocalModel localModel;
     int storeId, productsSize;
-    String total, currency;
+    String total="", currency="";
     List<DeliveryTime> DayList;
     List<DeliveryTime> TimeList;
     int fraction = 2;
@@ -159,9 +167,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         }
 
 
-        //  binding.freeDelivery.setText(getString(R.string.over).concat(" " +NumberHandler.formatDouble(minimum_order_amount, localModel.getFractional()).concat("" + currency)));
-
-
         return view;
     }
 
@@ -181,7 +186,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         binding.saveBut.setOnClickListener(view1 -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 2));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
 
         });
 
@@ -299,6 +304,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             PaymentModel paymentModel = (PaymentModel) obj;
             if (paymentMethod != null) {
                 paymentMethod = paymentModel.getShortname();
+                paymentMethodId = paymentModel.getId();
 
                 if (paymentMethod.equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
@@ -355,6 +361,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         if (result.getData() != null && result.getData().size() > 0) {
                             paymentList = result.getData();
                             paymentMethod = result.getData().get(0).getShortname();
+                            paymentMethodId = result.getData().get(0).getId();
                             initAdapter();
 
 
@@ -404,7 +411,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             DeliveryTime firstTime = datesList.get(0);
                             deliveryDateId = firstTime.getId();
-                            Log.i("tag","Log  deliveryDateId firstTime "+deliveryDateId);
+                            Log.i("tag", "Log  deliveryDateId firstTime " + deliveryDateId);
 
                             String currentDate = firstTime.getDate();
                             List<DeliveryTime> timesList = new ArrayList<>();
@@ -474,10 +481,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     private void sendOrder(OrderCall orderCall) {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME, Constants.BEGIN_CHECKOUT);
-        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundleLog);
-
+        AnalyticsHandler.checkOut(couponCodeId,currency,total,total);
 
         GlobalData.progressDialog(getActivityy(), R.string.make_order, R.string.please_wait_sending);
 
@@ -494,13 +498,37 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 if (IsSuccess) {
                     if (result.getStatus() == 200) {
                         UtilityApp.setCartCount(0);
-                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
-                        successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-                            startMain();
-                        });
-                        successDialog.show();
+
+                        OrderModel ordersDM = new OrderModel();
 
 
+                        if (result.getOrder_id() > 0) {
+                            AnalyticsHandler.PurchaseEvent(couponCodeId, currency, paymentMethodId, deliveryFees,
+                                    String.valueOf(result.getOrder_id()), total);
+
+                            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
+                            ordersDM.setOrderId(result.getOrder_id());
+                            Intent intent = new Intent(getActivityy(), InvoiceInfoActivity.class);
+                            intent.putExtra(Constants.ORDER_MODEL, ordersDM);
+                            intent.putExtra(Constants.KEY_SHOW, true);
+                            startActivity(intent);
+                        }
+
+
+//                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
+//                        successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor)
+//                                .setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
+//                            OrderModel ordersDM =new OrderModel();
+//                            if(result!=null&&result.getOrder_id()>0){
+//                                ordersDM.setOrderId(result.getOrder_id());
+//                                Intent intent = new Intent(getActivityy(), InvoiceInfoActivity.class);
+//                                intent.putExtra(Constants.ORDER_MODEL, ordersDM);
+//                                startActivity(intent);
+//                            }
+//
+//                        });
+//                        successDialog.show();
+//
 
 
                     } else {
@@ -591,7 +619,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             DeliveryTime searchListItem = (DeliveryTime) obj;
             //deliveryDateId = searchListItem.getId();
             deliveryDateId = deliveryTimesList.get(selectedPosition).getId();
-            Log.i("tag","Log deliveryTimesList click"+deliveryDateId);
+            Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
 
 
         });
@@ -625,6 +653,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 binding.delivery.setText(addressTitle);
                 binding.tvFullAddress.setText(addressFullAddress);
                 binding.acceptBtu.setText(R.string.change_address);
+                AnalyticsHandler.addShippingInfo(couponCodeId,currency,total,total);
 
             }
 
@@ -730,6 +759,26 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         }).getQuickDelivery(quickCall1);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
+
+    }
 
 }
 

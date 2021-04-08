@@ -71,7 +71,7 @@ public class ExtraRequestActivity extends ActivityBase {
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     private int SEARCH_CODE = 2000;
     private String country;
-    private String CODE="";
+    private String CODE = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,10 +217,15 @@ public class ExtraRequestActivity extends ActivityBase {
 
                         Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 
-                        selectedPhotoFil = new Compressor(getActiviy()).compressToFile(selectedPhotoFil);
+                        selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
+//                        Log.i(getClass().getSimpleName(), "Log Image Size "+selectedPhotoFil.getPath().length());
+//
+//                        long length = selectedPhotoFil.length();
+//                        length = length/1024;
+//
+//                        Log.i(getClass().getSimpleName(), "Log File Path "+selectedPhotoFil.getPath() + ", File size : " + length +" KB");
+//                        Log.i(getClass().getSimpleName(), "Log Image Size "+selectedPhotoFil.getPath().length());
 
-                        Log.i("tag", "Log selectedPhotoFil  " + selectedPhotoFil);
-                        Log.i("tag", "Log uri " + uri);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -323,6 +328,15 @@ public class ExtraRequestActivity extends ActivityBase {
                     selectedPhotoUri = data.getData();
 
                     selectedPhotoFil = FileUtil.from(getActiviy(), selectedPhotoUri);
+                    selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
+
+
+
+                    long length = selectedPhotoFil.length();
+
+                    length = length/1024;
+                    Log.i(getClass().getSimpleName(), "Log File Path "+selectedPhotoFil.getPath() + ", File size : " + length +" KB");
+                    Log.i(getClass().getSimpleName(), "Log Image Size "+selectedPhotoFil.getPath().length());
 
                     Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 
@@ -336,7 +350,7 @@ public class ExtraRequestActivity extends ActivityBase {
         } else if (requestCode == SEARCH_CODE) {
 
             if (data != null) {
-                 CODE = data.getStringExtra(Constants.CODE);
+                CODE = data.getStringExtra(Constants.CODE);
                 binding.barcodeTv.setText(getString(R.string.Barcode) + " " + CODE);
             }
 
@@ -383,7 +397,7 @@ public class ExtraRequestActivity extends ActivityBase {
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))
                 .addQueryParameter("user_id", String.valueOf(addExtraCall.userId))
                 .addQueryParameter("store_id", String.valueOf(addExtraCall.storeId))
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.HIGH)
                 .setOkHttpClient(okHttpClient)
                 .build().
 
@@ -466,7 +480,7 @@ public class ExtraRequestActivity extends ActivityBase {
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))
                 .addQueryParameter("user_id", String.valueOf(addExtraCall.userId))
                 .addQueryParameter("store_id", String.valueOf(addExtraCall.storeId))
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.HIGH)
                 .setOkHttpClient(okHttpClient)
                 .build().
 

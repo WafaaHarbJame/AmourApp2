@@ -40,6 +40,7 @@ import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -92,7 +93,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private boolean toggleButton = false;
     private OfferProductAdapter productOfferAdapter;
     private int SEARCH_CODE = 2000;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,8 +104,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
         productOffersList = new ArrayList<>();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivityy());
-
         binding.searchEt.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(binding.searchEt, InputMethodManager.SHOW_IMPLICIT);
@@ -252,10 +250,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-        Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME, productModel.getName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS, bundle1);
 
+        AnalyticsHandler.selectItem(productModel.getName());
         Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
         intent.putExtra(Constants.DB_productModel, productModel);
         startActivity(intent);
@@ -283,7 +279,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result!=null&&result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -306,7 +302,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList search " + productList.size());
+                        AnalyticsHandler.ViewSearchResult(filter);
                         initAdapter();
 
                     } else {
@@ -325,9 +321,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     }
 
     public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
-        Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.ITEM_NAME, filter);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle1);
+        AnalyticsHandler.searchEvent(filter);
 
         productList.clear();
         offerList.clear();
@@ -338,7 +332,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActivityy().getString(R.string.fail_to_get_data);
+            String message = getActivityy().getResources().getString(R.string.fail_to_get_data);
 
             binding.offerLy.setVisibility(View.GONE);
 
@@ -346,7 +340,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result!=null&&result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -380,8 +374,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList Search " + productList.size());
-//                        getOffersProducts(productList);
+                        AnalyticsHandler.ViewSearchResult(filter);
                         initAdapter();
 
 
@@ -453,10 +446,15 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         for (int i = 0; i < data.size(); i++) {
             autoCompleteList.add(data.get(i).getDataName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
-        binding.searchEt.setAdapter(adapter);
 
-        if (isVisible) binding.searchEt.showDropDown();
+        if (getActivity()!=null){
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
+            binding.searchEt.setAdapter(adapter);
+
+            if (isVisible) binding.searchEt.showDropDown();
+        }
+
+
 
     }
 

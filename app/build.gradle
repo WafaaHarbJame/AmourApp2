@@ -12,8 +12,8 @@ android {
         applicationId "com.ramez.shopp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 48
-        versionName "5.18"
+        versionCode 50
+        versionName "5.20"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
@@ -54,21 +54,21 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation group: 'com.google.android.material', name: 'material', version: '1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.31"
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'androidx.exifinterface:exifinterface:1.3.2'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+//    implementation 'com.google.firebase:firebase-messaging:21.0.1'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.facebook.fresco:fresco:1.3.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -76,8 +76,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    implementation 'com.google.firebase:firebase-crashlytics'
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.wang.avi:library:2.1.3'
 
@@ -136,12 +135,12 @@ dependencies {
 
     implementation 'com.aminography:choosephotohelper:1.3.1'
 
-    implementation("com.github.bumptech.glide:glide:4.9.0") {
+    implementation("com.github.bumptech.glide:glide:4.11.0") {
         exclude group: "com.android.support"
     }
-    annotationProcessor 'androidx.annotation:annotation:1.1.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation("com.github.bumptech.glide:glide:4.9.0@aar") {
+    annotationProcessor 'androidx.annotation:annotation:1.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation("com.github.bumptech.glide:glide:4.11.0@aar") {
         transitive = true
     }
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
@@ -152,12 +151,14 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'
 
+    implementation 'com.google.firebase:firebase-core:18.0.2'
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
 
     implementation 'androidx.work:work-runtime:2.5.0'
     implementation 'com.twitter.sdk.android:twitter:3.1.1'
@@ -173,6 +174,7 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
     // Import the BoM for the Firebase platform
+
 
 }
 apply plugin: 'com.google.gms.google-services'

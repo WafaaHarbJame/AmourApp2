@@ -33,7 +33,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     private String user_id = "0", filter = "";
     private MemberModel user;
     private LocalModel localModel;
-    private int brand_id;
+    private int brand_id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     }
 
     public void initAdapter() {
-        adapter = new ProductCategoryAdapter(getActiviy(), binding.recycler, list, 0, country_id, city_id, user_id, list.size(), filter, this, Constants.twoRow);
+        adapter = new ProductCategoryAdapter(getActiviy(), binding.recycler, list, 0, country_id, city_id, user_id, list.size(), filter, this, Constants.twoRow,brand_id);
         binding.recycler.setAdapter(adapter);
     }
 
@@ -122,7 +122,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result!=null&&result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);

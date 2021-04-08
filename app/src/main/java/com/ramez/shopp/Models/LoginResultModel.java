@@ -10,7 +10,7 @@ public class LoginResultModel {
     private Integer cartCount;
     @SerializedName("fav_count")
     @Expose
-    private Integer favCount;
+    private int favCount;
     @SerializedName("otp")
     @Expose
     private String otp;
@@ -19,7 +19,7 @@ public class LoginResultModel {
     public MemberModel data;
     @SerializedName("user_address")
     @Expose
-    private Object userAddress;
+    private String userAddress;
     @SerializedName("refer_message")
     @Expose
     private String referMessage;
@@ -38,11 +38,11 @@ public class LoginResultModel {
         this.cartCount = cartCount;
     }
 
-    public Integer getFavCount() {
+    public int getFavCount() {
         return favCount;
     }
 
-    public void setFavCount(Integer favCount) {
+    public void setFavCount(int favCount) {
         this.favCount = favCount;
     }
 
@@ -63,11 +63,11 @@ public class LoginResultModel {
         this.data = data;
     }
 
-    public Object getUserAddress() {
+    public String getUserAddress() {
         return userAddress;
     }
 
-    public void setUserAddress(Object userAddress) {
+    public void setUserAddress(String userAddress) {
         this.userAddress = userAddress;
     }
 

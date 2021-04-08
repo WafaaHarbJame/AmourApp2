@@ -3,6 +3,7 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,11 +39,12 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
     private Context context;
     private List<OrderItemDetail> orderProductsDMS;
-    private String currency="BHD";
+    private String currency = "BHD";
+
     public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDMS) {
         this.context = context;
         this.orderProductsDMS = orderProductsDMS;
-        currency= UtilityApp.getLocalData().getCurrencyCode();
+        currency = UtilityApp.getLocalData().getCurrencyCode();
 
     }
 
@@ -54,13 +60,13 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public void onBindViewHolder(final Holder holder, int position) {
         OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
 
-            holder.textItemName.setText(orderProductsDM.getName());
+        holder.textItemName.setText(orderProductsDM.getName());
 
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getCartPrice() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getCartPrice() + " " + currency);
 
         GlobalData.PicassoImg(orderProductsDM.getImage()
-                ,R.drawable.holder_image,holder.productImage);
+                , R.drawable.holder_image, holder.productImage);
 
         //        Picasso.get()
 //                .load(orderProductsDM.getImage())
@@ -93,26 +99,19 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             reOrderProductBtn.setOnClickListener(v -> {
 
-                int position=getAdapterPosition();
+                int position = getAdapterPosition();
 
                 OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
                 int count = orderProductsDM.getQuantity();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId =orderProductsDM.getProductId();
+                int productId = orderProductsDM.getProductId();
                 int product_barcode_id = orderProductsDM.getProductBarcodeId();
 
-                addToCart(v, position, productId, product_barcode_id, count , userId, storeId);
+                addToCart(v, position, productId, product_barcode_id, count, userId, storeId);
 
 
             });
-
-
-
-
-
-
-
 
 
         }
@@ -124,9 +123,9 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             if (IsSuccess) {
                 initSnackBar(context.getString(R.string.success_added_to_cart), v);
-
-                UtilityApp.updateCart(1,orderProductsDMS.size());
-
+                CartProcessModel result = (CartProcessModel) obj;
+                AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+                UtilityApp.updateCart(1, orderProductsDMS.size());
 
 
             } else {
@@ -137,7 +136,6 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
         }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
     }
-
 
 
     private void initSnackBar(String message, View viewBar) {

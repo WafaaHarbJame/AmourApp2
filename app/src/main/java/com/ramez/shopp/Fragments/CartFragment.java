@@ -20,6 +20,7 @@ import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -56,7 +57,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     LocalModel localModel;
     boolean isLogin = false;
     int productsSize;
-    String total;
+    String total="";
     String totalSavePrice;
     int productSize;
     private FragmentCartBinding binding;
@@ -108,16 +109,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             getCarts(storeId, userId);
 
+
+
             binding.contBut.setOnClickListener(view1 -> {
-                Bundle bundle1 = new Bundle();
-                if (cartResultModel != null && cartResultModel.getCartCount() > 0) {
-                    bundle1.putString(FirebaseAnalytics.Param.CONTENT, String.valueOf(cartResultModel.getCartCount()));
-
-                }
-                bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "BEGIN_CHECKOUT");
-
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle1);
-
+                AnalyticsHandler.checkOut("0", currency, total, total);
 
                 String message = "", allMessage;
                 StringBuilder s = new StringBuilder();
@@ -355,9 +350,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
                             localModel.setMinimum_order_amount(minimum_order_amount);
                             UtilityApp.setLocalData(localModel);
-
                             delivery_charges = cartResultModel.getDeliveryCharges();
-                            Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
                             UtilityApp.setCartCount(cartResultModel.getCartCount());
                             initAdapter();
                             cartAdapter.notifyDataSetChanged();
@@ -377,6 +370,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                                 binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
 
                             }
+
+                            AnalyticsHandler.ViewCart(userId,currency, Double.parseDouble(total));
+
 
 
                         } else {
@@ -512,9 +508,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
     private void goToCompleteOrder() {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME, Constants.BEGIN_CHECKOUT);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundleLog);
+        AnalyticsHandler.checkOut("0", currency, total, total);
 
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
         FragmentManager fragmentManager = getParentFragmentManager();

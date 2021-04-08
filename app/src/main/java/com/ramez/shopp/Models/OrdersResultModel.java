@@ -14,9 +14,20 @@ public class OrdersResultModel {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("order_id")
+    @Expose
+    private Integer order_id;
     @SerializedName("message")
     @Expose
     private String message;
+
+    public Integer getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(Integer order_id) {
+        this.order_id = order_id;
+    }
 
     public List<OrderProductModel> getData() {
         return data;

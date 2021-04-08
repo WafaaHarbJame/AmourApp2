@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ItemDetailsModel;
 import com.ramez.shopp.Models.OrderItemDetail;
@@ -17,6 +18,10 @@ import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityInvoiceInfoBinding;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +92,10 @@ public class InvoiceInfoActivity extends ActivityBase {
 
         orderProductsAdapter = new OrderProductsAdapter(getActiviy(), list);
         binding.productsRecycler.setAdapter(orderProductsAdapter);
-        binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getOrderTotal(), UtilityApp.getLocalData().getFractional()) + " " + currency));
+        if(orderModel.getOrderTotal()>0){
+            binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getOrderTotal(), UtilityApp.getLocalData().getFractional()) + " " + currency));
+
+        }
 
 
     }
@@ -171,6 +179,7 @@ public class InvoiceInfoActivity extends ActivityBase {
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
                         list =result.data.getOrderItemDetails();
+                        orderModel.setOrderTotal(result.data.getTotalAmount());
 
                         initAdapter();
 
@@ -196,5 +205,10 @@ public class InvoiceInfoActivity extends ActivityBase {
             }
 
         }).getOrderDetails(order_id,user_id,store_id,type);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
     }
 }

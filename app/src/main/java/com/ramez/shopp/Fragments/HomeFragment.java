@@ -47,8 +47,6 @@ import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.Dialogs.InfoDialog;
 import com.ramez.shopp.Dialogs.WhatsUpDialog;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
@@ -579,7 +577,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 if (func.equals(Constants.ERROR)) {
 
-                    if (result != null) {
+                    if (result != null && result.getMessage() != null){
                         message = result.getMessage();
                     }
                     binding.dataLY.setVisibility(View.GONE);
@@ -835,10 +833,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     public void initSliderAdapter() {
         sliderAdapter = new MainSliderAdapter(getActivityy(), sliderList, this);
         binding.viewPager.setAdapter(sliderAdapter);
-//        binding.imageSlider.setSliderAdapter(new AutomateSlider(getActivityy(), sliderList, this));
-//        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-//        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-//        binding.imageSlider.startAutoCycle();
+
     }
 
     public void initBannersAdapter() {

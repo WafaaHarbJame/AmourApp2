@@ -18,6 +18,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -99,17 +100,17 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 
-             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                DecimalFormat df = new DecimalFormat("#");
-                String newDiscount_str = df.format(discount);
-                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+            discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
+            DecimalFormat df = new DecimalFormat("#");
+            String newDiscount_str = df.format(discount);
+            holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
 
 
         } else {
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
             holder.binding.discountTv.setVisibility(View.GONE);
 
@@ -139,9 +140,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundleLog);
+        AnalyticsHandler.AddToWishList(productId,currency,productId);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
@@ -423,21 +422,22 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-            Bundle bundleLog = new Bundle();
-            bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundleLog);
+
 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 CartProcessModel result = (CartProcessModel) obj;
 
                 if (IsSuccess) {
-                    int cartId=result.getId();
+                    int cartId = result.getId();
 
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     notifyItemChanged(position);
-                    System.out.println("Log suggest addToCart");
+                    System.out.println("Log suggest addToCart" + result.getTotal());
                     UtilityApp.updateCart(1, productModels.size());
+
+                    AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+
 
                     EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_READ_CART));
 
@@ -478,6 +478,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());
                     EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_READ_CART));
+                    AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
 
                 } else {

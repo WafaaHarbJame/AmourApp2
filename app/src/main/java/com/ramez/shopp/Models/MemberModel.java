@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class MemberModel implements Serializable {
     public int lastSelectedAddress;
 
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -18,16 +19,9 @@ public class MemberModel implements Serializable {
     @SerializedName("mobile_number")
     @Expose
     private String mobileNumber;
-    @SerializedName("password")
-    @Expose
     private String password;
 
-    @SerializedName("new_password")
-    @Expose
     private String new_password;
-
-    @SerializedName("user_type")
-    @Expose
     private String userType;
     @SerializedName("device_id")
     @Expose

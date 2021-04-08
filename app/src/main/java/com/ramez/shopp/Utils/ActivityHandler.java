@@ -113,6 +113,27 @@ public class ActivityHandler {
         context.startActivity(Intent.createChooser(share, context.getResources().getString(R.string.share_with)));
     }
 
+    public static void shareTextUrlDeep(Context context, String title, String url, String shareChannel) {
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        share.setType("text/plain");
+        if (shareChannel != null && !shareChannel.equals("")) share.setPackage(shareChannel);
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        String appStr = "";
+        String body = "";
+        if (title != null && !title.isEmpty()) {
+            body += title;
+        }
+        if (url != null && !url.isEmpty()) {
+            body += "\n" + url;
+        }
+
+        share.putExtra(Intent.EXTRA_SUBJECT, title);
+        share.putExtra(Intent.EXTRA_TEXT, title);
+
+        context.startActivity(Intent.createChooser(share, context.getResources().getString(R.string.share_with)));
+    }
+
     public static void shareTwitter(Context context, String message) {
         Intent tweetIntent = new Intent(Intent.ACTION_SEND);
         tweetIntent.putExtra(Intent.EXTRA_TEXT, message);

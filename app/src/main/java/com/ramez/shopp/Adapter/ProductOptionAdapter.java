@@ -51,8 +51,9 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
 
         ProductBarcode productOptionModel = productBarcodes.get(position);
         String wightName = productOptionModel.getProductUnits().getUnitName();
-        holder.binding.btnCategory.setText(NumberHandler.formatDouble(productOptionModel.getWeight(), 0)
-                + " " + wightName);
+        //NumberHandler.formatDouble(productOptionModel.getWeight(), 0)
+        //                + " " +
+        holder.binding.btnCategory.setText(wightName);
 
 
         if (lastIndex == position) {

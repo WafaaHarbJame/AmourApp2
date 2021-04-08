@@ -16,6 +16,7 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -288,38 +289,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
 
-//            binding.editBut.setOnClickListener(view1 -> {
-//
-//                int position = getAdapterPosition();
-//                CartModel cartModel = cartDMS.get(position);
-//
-//                AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
-//                    @Override
-//                    public void click() {
-//                        String remark = ((EditText) addCommentDialog.findViewById(R.id.remarkET)).getText().toString();
-//
-//                        updateMark(view1, position, cartModel.getId(), remark);
-//
-//
-//                    }
-//                };
-//
-//                AddCommentDialog.Click cancelBut = new AddCommentDialog.Click() {
-//                    @Override
-//                    public void click() {
-//                        addCommentDialog.dismiss();
-//
-//
-//                    }
-//                };
-//
-//                addCommentDialog = new AddCommentDialog(context, cartModel.getRemark(), R.string.add_comment, R.string.add_comment, okBut, cancelBut);
-//
-//                addCommentDialog.show();
-//
-//
-//            });
-
             binding.markBtn.setOnClickListener(view1 -> {
 
                 int position = getAdapterPosition();
@@ -368,20 +337,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
-//            binding.menuBut.setOnClickListener(view1 -> {
-//                if (getAdapterPosition() != -1) {
-//                    CartModel cartModel = cartDMS.get(getAdapterPosition());
-//                    Intent intent = new Intent(context, ProductDetailsActivity.class);
-//                    ProductModel productModel = new ProductModel();
-//                    productModel.setId(cartModel.getProductId());
-//                    productModel.setHName(cartModel.getHProductName());
-//                    productModel.setName(cartModel.getHProductName());
-//                    intent.putExtra(Constants.DB_productModel, productModel);
-//                    context.startActivity(intent);
-//                }
-//
-//
-//            });
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
@@ -536,9 +491,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
-                if (cartDMS.size() > 0) {
+                if (cartDMS.size() > 0 && position<cartDMS.size()) {
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
+
 
                 }
                 Toast.makeText(context, "" + context.getString(R.string.success_delete_from_cart), Toast.LENGTH_SHORT).show();
@@ -547,6 +503,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 cartProcessModel.setTotal(calculateSubTotalPrice());
                 cartProcessModel.setCartCount(cartDMS.size());
                 cartProcessModel.setTotalSavePrice(calculateSavePrice());
+                AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
 
                 if (dataCallback != null) {

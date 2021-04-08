@@ -163,7 +163,7 @@ public class RegisterFragment extends FragmentBase {
 
                         } else {
                             String message = getString(R.string.fail_register);
-                            if (result.getMessage() != null) {
+                            if (result != null && result.getMessage() != null){
                                 message = result.getMessage();
                             }
                             GlobalData.errorDialog(getActivityy(), R.string.register, message);

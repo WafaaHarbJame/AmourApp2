@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
@@ -73,7 +74,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public Call apiCall;
 
 
-    public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, String filter, OnItemClick onItemClick, int gridNumber) {
+    public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, String filter, OnItemClick onItemClick, int gridNumber, int brand_id) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = new ArrayList<>(productModels);
@@ -86,6 +87,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.filter_text = filter;
         this.gridNumber = gridNumber;
         isCanceled = false;
+        this.brand_id = brand_id;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
 
@@ -237,9 +239,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundleLog);
+        AnalyticsHandler.AddToWishList(productId, currency, productId);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -317,6 +317,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 notifyItemInserted(productModels.size() - 1);
 
                 LoadAllData(category_id, country_id, city_id, user_id, filter_text, brand_id, nextPage, 10);
+
             }
 
         });
@@ -501,14 +502,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (count + 1 > stock) {
                         message = context.getString(R.string.limit) + "" + limit;
 
-                    }
-
-                    else if(stock==0){
+                    } else if (stock == 0) {
                         message = context.getString(R.string.stock_empty);
 
 
-                    }
-                    else {
+                    } else {
                         message = context.getString(R.string.limit) + "" + limit;
 
                     }
@@ -564,21 +562,20 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-            Bundle bundleLog = new Bundle();
-            bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundleLog);
+
 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 CartProcessModel result = (CartProcessModel) obj;
 
                 if (IsSuccess) {
-                    int cartId=result.getId();
+                    int cartId = result.getId();
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
 
                     notifyItemChanged(position);
                     UtilityApp.updateCart(1, productModels.size());
 
+                    AnalyticsHandler.AddToCart(cartId, currency, quantity);
 
                 } else {
 
@@ -614,6 +611,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());
+                    AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
 
                 } else {

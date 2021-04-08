@@ -104,7 +104,7 @@ public class ConfirmActivity extends ActivityBase {
             GeneralModel result = (GeneralModel) obj;
 
             if (func.equals(Constants.ERROR)) {
-                if (result != null) {
+                if (result != null&&result.getMessage()!=null) {
                     message = result.getMessage();
 
                 }
@@ -112,7 +112,7 @@ public class ConfirmActivity extends ActivityBase {
 
 
             } else if (func.equals(Constants.FAIL)) {
-                if (result != null) {
+                if (result != null&&result.getMessage()!=null) {
                     message = result.getMessage();
 
                 }

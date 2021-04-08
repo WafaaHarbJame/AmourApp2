@@ -145,30 +145,34 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             holder.binding.TvDeliveryTime.setText(ordersDM.getDeliveryTime());
 
-            Log.i("tag", "Log getDeliveryStatus" + ordersDM.getDeliveryStatus());
+            Log.i("tag", "Log getDeliveryStatus " + ordersDM.getDeliveryStatus());
 
             if (ordersDM.getDeliveryStatus().equals("Not Defined") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Received")) {
 
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
+                holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
+                holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
+                holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
 
-            }
 
-            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Checkout Area") || ordersDM.getDeliveryStatus().equals("On Hold") || ordersDM.getDeliveryStatus().equals("Open")) {
+            } else if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Checkout Area") ||
+                    ordersDM.getDeliveryStatus().equals("On Hold") || ordersDM.getDeliveryStatus().equals("Open")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
+                holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
+                holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
 
 
-            }
 
-            if (ordersDM.getDeliveryStatus().equals("Pending Payment")) {
+            } else if (ordersDM.getDeliveryStatus().equals("Pending Payment")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
+                holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
 
 
-            }
 
-            if (ordersDM.getDeliveryStatus().equals("Delivered") || ordersDM.getDeliveryStatus().equals("Canceled") || ordersDM.getDeliveryStatus().equals("Complete")) {
+            } else if (ordersDM.getDeliveryStatus().equals("Delivered") || ordersDM.getDeliveryStatus().equals("Canceled") || ordersDM.getDeliveryStatus().equals("Complete")) {
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
@@ -182,7 +186,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 holder.binding.divider.setVisibility(View.VISIBLE);
             }
-
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {

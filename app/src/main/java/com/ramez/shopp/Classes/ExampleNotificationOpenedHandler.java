@@ -16,7 +16,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
     int order_id, user_id;
-    String type;
+    String type="";
     RootApplication rootApplication;
 
 
@@ -39,6 +39,16 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
                 Log.i("OneSignalExample", "Log order_id set with value: " + order_id);
                 Log.i("OneSignalExample", "Log type set with value: " + type);
             }
+            Intent intent;
+            if (type!=null&&type.equals("order")) {
+                intent = new Intent(getApplicationContext(), MyOrderActivity.class);
+            } else {
+                intent = new Intent(getApplicationContext(), MainActivity.class);
+            }
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(intent);
+
         }
 
 
@@ -47,15 +57,6 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
             Log.i("OneSignalExample", "Log Button pressed with id: " + result.action.actionID);
         }
 
-        Intent intent;
-        if (type!=null&&type.equals("order")) {
-            intent = new Intent(getApplicationContext(), MyOrderActivity.class);
-        } else {
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-        }
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
-        getApplicationContext().startActivity(intent);
 
 
     }

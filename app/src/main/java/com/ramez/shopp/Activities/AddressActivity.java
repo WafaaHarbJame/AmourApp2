@@ -101,11 +101,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         defaultAddressId = addressesDM.getId();
 
         if (deliveryChoose) {
-            Bundle bundleLog = new Bundle();
-            bundleLog.putString(FirebaseAnalytics.Param.ITEM_NAME,Constants.Invoice);
-            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_SHIPPING_INFO, bundleLog);
-
-
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
             intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());

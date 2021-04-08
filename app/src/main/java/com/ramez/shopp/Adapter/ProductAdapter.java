@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -143,10 +144,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        Bundle bundleLog = new Bundle();
-        bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-        RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundleLog);
-
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
@@ -161,6 +158,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             } else {
                 if (IsSuccess) {
 
+                    AnalyticsHandler.AddToWishList(productId,currency,productId);
                     Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
                     productModels.get(position).setFavourite(true);
                     notifyItemChanged(position);
@@ -331,9 +329,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
 
                     }
-                }
-
-                else {
+                } else {
 
                     if (count + 1 <= stock && (count + 1 <= limit)) {
                         updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
@@ -343,14 +339,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                         if (count + 1 > stock) {
                             message = context.getString(R.string.limit) + "" + limit;
 
-                        }
-
-                        else if(stock==0){
+                        } else if (stock == 0) {
                             message = context.getString(R.string.stock_empty);
 
 
-                        }
-                        else {
+                        } else {
                             message = context.getString(R.string.limit) + "" + limit;
 
                         }
@@ -421,22 +414,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
-            Bundle bundleLog = new Bundle();
-            bundleLog.putString(FirebaseAnalytics.Param.ITEM_ID, String.valueOf(productId));
-            RootApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART, bundleLog);
-
 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 CartProcessModel result = (CartProcessModel) obj;
 
                 if (IsSuccess) {
-                    int cartId=result.getId();
+                    int cartId = result.getId();
                     Log.i("tag", "Log " + UtilityApp.getCartCount());
                     UtilityApp.updateCart(1, productModels.size());
                     binding.cartBut.setVisibility(View.GONE);
                     productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                    AnalyticsHandler.AddToCart(cartId, currency, quantity);
+
                     notifyItemChanged(position);
 
                 } else {
@@ -477,6 +468,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
+                    AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
+
                 } else {
                     GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
                             context.getString(R.string.fail_to_delete_cart));

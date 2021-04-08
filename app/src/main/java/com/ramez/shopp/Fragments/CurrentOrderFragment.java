@@ -40,15 +40,21 @@ public class CurrentOrderFragment extends FragmentBase {
         View view = binding.getRoot();
 
         currentOrdersList = new ArrayList<>();
-
-        user_id = UtilityApp.getUserData().getId();
         activity = getActivity();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
 
-        getUpcomingOrders(user_id);
+
+        if (UtilityApp.isLogin()) {
+            if (UtilityApp.getUserData() != null) {
+                user_id = UtilityApp.getUserData().getId();
+            }
+            getUpcomingOrders(user_id);
+
+        }
+
 
         binding.swipe.setOnRefreshListener(() -> {
             getUpcomingOrders(user_id);
@@ -89,7 +95,7 @@ public class CurrentOrderFragment extends FragmentBase {
 
                 if (func.equals(Constants.ERROR)) {
 
-                    if (result.getMessage() != null) {
+                    if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
                     binding.dataLY.setVisibility(View.GONE);

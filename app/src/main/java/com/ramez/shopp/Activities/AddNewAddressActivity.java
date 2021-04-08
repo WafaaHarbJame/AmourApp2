@@ -120,7 +120,10 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         FragmentManager fm = getSupportFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
-        fragment.getMapAsync(this);
+
+        if (fragment != null) {
+            fragment.getMapAsync(this);
+        }
 
 
         binding.stateSpinnerTv.setInputType(InputType.TYPE_NULL);
@@ -229,9 +232,14 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             AddressResultModel result = (AddressResultModel) obj;
+            String message = "error_in_data";
+
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
-                String message = result.getMessage();
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+
+                }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_addAddress, message);
 
 

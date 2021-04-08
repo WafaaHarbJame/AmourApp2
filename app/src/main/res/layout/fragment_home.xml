@@ -88,24 +88,6 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/imageSlider"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
-                    android:visibility="gone"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderAutoCycleEnabled="true"
-                    app:sliderIndicatorAnimationDuration="600"
-                    app:sliderIndicatorGravity="center_horizontal|bottom"
-                    app:sliderIndicatorMargin="15dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="@color/colorPrimaryDark"
-                    app:sliderIndicatorUnselectedColor="@color/white"
-                    app:sliderScrollTimeInSec="5"
-                    app:sliderStartAutoCycle="true" />
 
                 <com.duolingo.open.rtlviewpager.RtlViewPager
                     android:id="@+id/viewPager"
@@ -138,14 +120,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bannersRv"
                 android:layout_width="match_parent"
-                android:clipToPadding="true"
-                tools:itemCount="2"
-                tools:listitem="@layout/row_banners_item"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp" />
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:clipToPadding="true"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/row_banners_item" />
 
 
             <LinearLayout
@@ -292,7 +274,6 @@
             </LinearLayout>
 
 
-
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/noDinnersTv"
                 android:layout_width="match_parent"
@@ -307,6 +288,7 @@
                 android:text="@string/no_dinners"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/kitchenRecycler"
                 android:layout_width="match_parent"
@@ -373,9 +355,9 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/speLy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/speLy"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 

@@ -116,7 +116,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result != null && result.getMessage() != null){
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
