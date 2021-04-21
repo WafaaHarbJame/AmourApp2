@@ -178,7 +178,6 @@ public class RegisterFragment extends FragmentBase {
                 }
             }
 
-
         }).RegisterHandle(memberModel);
     }
 

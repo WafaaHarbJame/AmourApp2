@@ -316,7 +316,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="@string/share_with"
+                            android:text="@string/share_with_product"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_10ssp" />
 

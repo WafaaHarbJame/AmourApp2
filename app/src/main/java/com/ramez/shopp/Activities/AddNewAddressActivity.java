@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -522,7 +523,13 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         alertDialogBuilder.setNegativeButton((CharSequence) this.getString(R.string.cancel_tex), (DialogInterface.OnClickListener) null);
         AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+
+        try {
+            alert.show();
+        }
+        catch (WindowManager.BadTokenException e) {
+            //use a log message
+        }
     }
 
 

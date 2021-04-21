@@ -268,7 +268,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            binding.closeBtn.setVisibility(View.VISIBLE);
+            if (isVisible()) {
+                binding.closeBtn.setVisibility(View.VISIBLE);
             binding.closeBtn.setText(R.string.fal_times);
 
             FavouriteResultModel result = (FavouriteResultModel) obj;
@@ -279,7 +280,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result!=null&&result.getMessage() != null) {
+                if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -316,7 +317,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                     binding.failGetDataLY.failTxt.setText(message);
                 }
             }
-
+        }
         }).barcodeSearch(country_id, city_id, user_id, filter, page_number, page_size);
     }
 
@@ -331,6 +332,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (isVisible()) {
+
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getActivityy().getResources().getString(R.string.fail_to_get_data);
 
@@ -340,7 +343,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result!=null&&result.getMessage() != null) {
+                if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -397,6 +400,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
                 }
             }
+        }
 
         }).searchTxt(country_id, city_id, user_id, filter, page_number, page_size);
     }
@@ -465,7 +469,12 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         if (event.type.equals(MessageEvent.TYPE_view)) {
             numColumn = (int) event.data;
             initAdapter();
-            gridLayoutManager.setSpanCount(numColumn);
+            try {
+                gridLayoutManager.setSpanCount(numColumn);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             adapter.notifyDataSetChanged();
 
 

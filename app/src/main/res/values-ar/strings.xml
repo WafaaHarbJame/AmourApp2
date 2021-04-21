@@ -30,6 +30,7 @@
 نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="dummy">نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="share_with">انشر التطبيق </string>
+    <string name="share_with_product">مشاركة المنتج </string>
     <string name="no_address">لا يوجد عناوين </string>
     <string name="by_app">بواسطة </string>
     <string name="choose_country">الرجاء أختيار البلد</string>
@@ -321,5 +322,5 @@
     <string name="hour">ساعة </string>
     <string name="minute">دقيقة </string>
     <string name="Whatsapp_Live_Support">دعم Whatsapp المباشر</string>
-    <string name="share_note">اخترنا لك هذا المنتج \n\n\ </string>
+    <string name="share_note">اخترنا لك هذا المنتج \n </string>
 </resources>

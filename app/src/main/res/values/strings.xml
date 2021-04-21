@@ -31,6 +31,7 @@
     <string name="dummy2" translatable="false">A tour of the application </string>
     <string name="by_app">by_app</string>
     <string name="share_with">share with</string>
+    <string name="share_with_product">Share Product</string>
     <string name="no_address">no Address</string>
     <string name="choose_country">please Choose Country </string>
     <string name="choose_nearest">please Choose Nearest  Branch </string>
@@ -357,7 +358,7 @@
     <string name="Whatsapp_Live_Support">Whatsapp Live Support</string>
     <string name="is_Active">"is Active "</string>
     <string name="whats_note">Dear User, our Whatsapp Live Support is Active. Go to your profile and click the Whatsapp icon whenever you will need support.</string>
-    <string name="share_note">\nLet me recommend  to you this product \n\n\</string>
+    <string name="share_note">Let me recommend  to you this product \n\n\</string>
 
 
 </resources>

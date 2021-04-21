@@ -326,8 +326,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     } else {
                         message = context.getString(R.string.stock_empty);
                         GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
-
-
                     }
                 } else {
 
@@ -345,13 +343,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                         } else {
                             message = context.getString(R.string.limit) + "" + limit;
-
                         }
 
                         GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
-
                     }
-
 
                 }
 

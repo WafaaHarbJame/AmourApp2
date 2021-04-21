@@ -237,7 +237,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 } else {
 
                     double total_price = minimum_order_amount - Double.parseDouble(total);
-                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional())
+                            + " " + currency + " " + getString(R.string.get_Free));
 
 
                 }

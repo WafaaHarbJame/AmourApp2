@@ -222,7 +222,6 @@ public class DataFeacher {
         params.put("device_token", memberModel.getDeviceToken());
         params.put("name", memberModel.getName());
         params.put("country", memberModel.getCountry());
-//        params.put("country", "BH");
         params.put("city", memberModel.getCity());
         params.put("email", memberModel.getEmail());
         params.put("device_id", memberModel.getDeviceId());

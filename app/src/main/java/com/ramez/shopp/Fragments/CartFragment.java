@@ -132,7 +132,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         ProductQuantity = String.valueOf(cartModel.getProductQuantity());
                         allMessage = message.concat(" " +
                                 getString(R.string.product_Name).
-                                        concat(" " + product_name).concat(", " + getString(R.string.product_price).concat(" " + product_price + " " + currency).concat(" , " + getString(R.string.product_quan).concat(" " + ProductQuantity))));
+                                        concat(" " + product_name).concat(", " + getString(R.string.product_price).concat(" " + product_price + " " + currency)
+                                        .concat(" , " + getString(R.string.product_quan).concat(" " + ProductQuantity))));
                         s.append(allMessage).append("\n");
                         int product_barcode_id = cartModel.getProductBarcodeId();
                         int userId = UtilityApp.getUserData().getId();
@@ -149,16 +150,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         product_name = cartModel.getName();
                         allMessage = message.concat(" " + getString(R.string.product_Name).concat(" " + product_name));
                         s.append(allMessage + "\n");
-
-                        int product_barcode_id = cartModel.getProductBarcodeId();
-                        int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                        int productId = cartModel.getProductId();
-                        int cart_id = cartModel.getId();
-                        //  deleteCart(i, productId, product_barcode_id, cart_id, userId, storeId)ك
-                        /// cartAdapter.deleteCart(i, productId, product_barcode_id, cart_id, userId, storeId);
                         can_order = false;
-
 
                     }
 
@@ -167,8 +159,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                     if (i == cartList.size() - 1) {
                         lastPosition = i;
                         GlobalData.hideProgressDialog();
-
-
                     }
 
 
@@ -363,7 +353,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                                 } else {
 
                                     double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
-                                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+                                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price,
+                                            UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
 
                                 }
                             } else {

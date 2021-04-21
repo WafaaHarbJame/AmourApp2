@@ -243,13 +243,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         binding.shareBtn.setOnClickListener(v -> {
 
-//            ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
-//                    + "https://ramezonlin" + "/product/" + storeId + "/" + product_id, null, null);
+            ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
+                    + "https://ramezonline.com" + "/product?shop=" + storeId + "&id=" + product_id, null, null);
 
-         ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
-                    + "https://Ramezonline.com" + "/product?shop="+ storeId + "&id=" + product_id, null, null);
-
-//            Ramezonlin://product?shop=17&id=10590z
 
         });
         binding.addToFavBut.setOnClickListener(v -> {
@@ -326,36 +322,40 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     }
                 } else {
                     int count = selectedProductBarcode.getCartQuantity();
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                    int productId = productModel.getId();
-                    int stock = selectedProductBarcode.getStockQty();
-                    int limit = selectedProductBarcode.getLimitQty();
+                    if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+                        int userId = UtilityApp.getUserData().getId();
 
-                    Log.i("limit", "Log limit  " + limit);
-                    Log.i("stock", "Log stock  " + stock);
+                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int productId = productModel.getId();
+                        int stock = selectedProductBarcode.getStockQty();
+                        int limit = selectedProductBarcode.getLimitQty();
+
+                        Log.i("limit", "Log limit  " + limit);
+                        Log.i("stock", "Log stock  " + stock);
 
 
-                    if (limit == 0) {
-                        if (count + 1 <= stock) {
-                            addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
-                        } else {
-                            message = getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
-                        }
-                    } else {
-                        if (count + 1 <= stock && (count + 1) <= limit) {
-                            addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
-                        } else {
-                            if (count + 1 > stock) {
-                                message = getString(R.string.stock_empty);
+                        if (limit == 0) {
+                            if (count + 1 <= stock) {
+                                addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
                             } else {
-                                message = getString(R.string.limit) + "" + limit;
+                                message = getString(R.string.stock_empty);
+                                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
                             }
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
-                        }
+                        } else {
+                            if (count + 1 <= stock && (count + 1) <= limit) {
+                                addToCart(productId, selectedProductBarcode.getId(), count + 1, userId, storeId);
+                            } else {
+                                if (count + 1 > stock) {
+                                    message = getString(R.string.stock_empty);
+                                } else {
+                                    message = getString(R.string.limit) + "" + limit;
+                                }
+                                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error), message);
+                            }
 
+                        }
                     }
+
 
                 }
 

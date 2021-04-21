@@ -90,8 +90,12 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
             } else if (type.equals(Constants.DINNERS)) {
                 getDinners(lang);
             } else {
-                gridLayoutManager.setSpanCount(3);
-                GetAllBrands(city_id);
+                try {
+                    gridLayoutManager.setSpanCount(3);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }                GetAllBrands(city_id);
 
             }
 
@@ -339,7 +343,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.bookletsModel, bookletsModel);
         specialOfferFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
 
 
     }

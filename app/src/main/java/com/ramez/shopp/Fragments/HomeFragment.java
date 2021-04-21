@@ -824,7 +824,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.bookletsModel, bookletsModel);
         specialOfferFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
 
 
     }

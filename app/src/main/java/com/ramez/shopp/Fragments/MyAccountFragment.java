@@ -337,11 +337,14 @@ public class MyAccountFragment extends FragmentBase {
     }
 
     private void initData(MemberModel memberModel) {
-        user_id = memberModel.getId();
-        binding.usernameTV.setText(memberModel.getName());
-        binding.emailTv.setText(memberModel.getEmail());
-        Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
-    }
+        if (memberModel != null && memberModel.getId() != null) {
+            user_id = memberModel.getId();
+            binding.usernameTV.setText(memberModel.getName());
+            binding.emailTv.setText(memberModel.getEmail());
+            Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+
+        }
+            }
 
     private void showDialog(int message) {
         CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null);
