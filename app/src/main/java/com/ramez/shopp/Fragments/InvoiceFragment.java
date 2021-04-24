@@ -20,6 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.InvoiceInfoActivity;
+import com.ramez.shopp.Activities.OrderCompleteActivity;
 import com.ramez.shopp.Adapter.AddressCheckAdapter;
 import com.ramez.shopp.Adapter.DeliveryDayAdapter;
 import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
@@ -71,6 +72,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public int paymentMethodId = 0;
     public String couponCodeId = "0";
     public Integer deliveryDateId = 0;
+    public String deliveryDate,deliveryTime ;
     public Boolean expressDelivery = false;
     public DeliveryDayAdapter deliveryDayAdapter;
     public DeliveryTimeAdapter deliveryTimeAdapter;
@@ -412,6 +414,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             DeliveryTime firstTime = datesList.get(0);
                             deliveryDateId = firstTime.getId();
+                            deliveryDate=firstTime.getDate();
+                            deliveryTime=firstTime.getTime();
+
                             Log.i("tag", "Log  deliveryDateId firstTime " + deliveryDateId);
 
                             String currentDate = firstTime.getDate();
@@ -509,7 +514,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
                             ordersDM.setOrderId(result.getOrder_id());
-                            Intent intent = new Intent(getActivityy(), InvoiceInfoActivity.class);
+                            ordersDM.setDeliveryDate(deliveryDate);
+                            ordersDM.setDeliveryTime(deliveryTime);
+                            Intent intent = new Intent(getActivityy(), OrderCompleteActivity.class);
                             intent.putExtra(Constants.ORDER_MODEL, ordersDM);
                             intent.putExtra(Constants.KEY_SHOW, true);
                             startActivity(intent);
@@ -620,7 +627,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             DeliveryTime searchListItem = (DeliveryTime) obj;
             //deliveryDateId = searchListItem.getId();
             deliveryDateId = deliveryTimesList.get(selectedPosition).getId();
+            deliveryDate=deliveryTimesList.get(selectedPosition).getDate();
+            deliveryTime=deliveryTimesList.get(selectedPosition).getTime();
+
             Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
+            Log.i("tag", "Log deliveryTimesList click" + deliveryTimesList.get(selectedPosition).getTime());
 
 
         });

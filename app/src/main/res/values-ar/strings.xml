@@ -323,4 +323,8 @@
     <string name="minute">دقيقة </string>
     <string name="Whatsapp_Live_Support">دعم Whatsapp المباشر</string>
     <string name="share_note">اخترنا لك هذا المنتج \n </string>
+    <string name="payment_success">تم الدفع بنجاح </string>
+    <string name="order_confirmed">تم الطلب  بنجاح </string>
+    <string name="order_note">تم استلام طلبك  بنجاج ويمكنك  معرفة حالة الطلب من  صفحة الطلبات </string>
+    <string name="will_be_deliverd">سوف تستلم طلبك </string>
 </resources>
