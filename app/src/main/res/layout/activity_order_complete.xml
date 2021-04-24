@@ -29,13 +29,13 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:textColor="@color/green1"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:text="OD004093"
         android:layout_height="wrap_content"/>
     <ImageView
         android:layout_width="wrap_content"
         android:src="@drawable/ic_tick"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:layout_gravity="center"
         android:background="@color/white"
         android:layout_height="@dimen/_100sdp"/>
@@ -44,7 +44,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_16ssp"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:text="@string/order_confirmed"
         android:layout_height="wrap_content"/>
 
@@ -60,6 +60,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:padding="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/round_corner_grey"
         android:layout_height="wrap_content">
         <ImageView
@@ -73,21 +74,34 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:orientation="vertical"
-
             android:layout_height="wrap_content">
             <com.ramez.shopp.SpichalViews.STextView
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:text="@string/will_be_deliverd"
                 android:layout_height="wrap_content"/>
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/deliveryTimeTv"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:text="Mon 12 pm-1pm"
-                android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/deliveryDayTv"
+                    android:layout_width="wrap_content"
+                    android:text="Monday"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"/>
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/deliveryTimeTv"
+                    android:layout_width="wrap_content"
+                    android:text="08:00 PM - 10:00 PM "
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            </LinearLayout>
+
     </LinearLayout>
     </LinearLayout>
 
