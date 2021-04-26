@@ -906,11 +906,44 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
+        else if (slider.getReffrenceType() == 5) {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+            Bundle bundle = new Bundle();
+            BookletsModel bookletsModel=new BookletsModel();
+            bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
+            bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+            specialOfferFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
+
+
+
+        }
+         else if (slider.getReffrenceType() ==6) {
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            bundle.putInt(Constants.position, position);
+            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            categoryProductsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
+
+        }
+
 
     }
 
     @Override
     public void onSliderClicked(int position, Slider slider) {
+        Log.i("tag", "Log getReffrenceType" + slider.getReffrenceType());
+
         if (slider.getReffrenceType() == 1) {
 
             Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
@@ -940,6 +973,38 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             ActivityHandler.OpenBrowser(getActivityy(), url);
 
         }
+
+        else if (slider.getReffrenceType() == 5) {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+            Bundle bundle = new Bundle();
+            BookletsModel bookletsModel=new BookletsModel();
+            bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
+            bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+            specialOfferFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
+
+
+
+        }
+        else if (slider.getReffrenceType() ==6) {
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+            FragmentManager fragmentManager = getParentFragmentManager();
+            CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+            bundle.putInt(Constants.position, position);
+            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            categoryProductsFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
+
+        }
+
 
     }
 
