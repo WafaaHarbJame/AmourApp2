@@ -3,6 +3,7 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,16 +46,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public boolean isLoading = false;
     public int visibleThreshold = 5;
     public boolean show_loading = true;
-    int category_id, country_id, city_id, subID;
-    String user_id;
+    public int categoryId, countryId, cityId, subId;
+    String userId;
     private int nextPage = 1;
     private int lastVisibleItem;
     private int totalItemCount;
     private OnLoadMoreListener mOnLoadMoreListener;
     private int brand_id;
-
-
-    private Context context;
+    private Context activity;
     private OnItemClick onItemClick;
     private List<ProductModel> productModels;
     private double discount = 0.0;
@@ -66,30 +65,25 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private DataCallback dataCallback;
 
 
-    public OfferProductAdapter(Context context, List<ProductModel> productModels, int category_id, int subID,
+    public OfferProductAdapter(Context context, List<ProductModel> productList, int category_id, int subID,
                                int country_id, int city_id, String user_id, int limit, RecyclerView rv,
-                               String filter, OnItemClick onItemClick, DataCallback dataCallback) {
-        this.context = context;
-        this.onItemClick = onItemClick;
-        this.productModels = productModels;
-        this.city_id = city_id;
-        this.country_id = country_id;
-        this.user_id = user_id;
-        this.rv = rv;
-        this.filter_text = filter;
-        this.gridNumber = gridNumber;
-        this.context = context;
-        this.onItemClick = onItemClick;
-        this.productModels = productModels;
-        this.limit = limit;
-        this.category_id = category_id;
-        this.subID = subID;
-        this.city_id = city_id;
-        this.country_id = country_id;
-        this.user_id = user_id;
-        this.rv = rv;
-        this.filter_text = filter;
-        this.dataCallback = dataCallback;
+                               String filter, OnItemClick onItemClicked, DataCallback callback, int gridNumber) {
+
+        activity = context;
+        productModels = new ArrayList<>(productList);
+        categoryId = category_id;
+        subId = subID;
+        countryId = country_id;
+        cityId = city_id;
+        userId = user_id;
+//        limit = limit;
+//        rv = rv;
+        filter_text = filter;
+        onItemClick = onItemClicked;
+        dataCallback = callback;
+//        gridNumber = gridNumber;
+
+        Log.i(getClass().getSimpleName(), "Log OfferProductAdapter " + categoryId);
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
 
@@ -109,7 +103,6 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         });
         rv.setLayoutManager(gridLayoutManager);
-        rv.setLayoutManager(gridLayoutManager);
 
 
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -119,7 +112,6 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 totalItemCount = gridLayoutManager.getItemCount();
                 lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
-
 
                 if (show_loading) {
                     if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
@@ -143,14 +135,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
         if (viewType == VIEW_TYPE_ITEM) {
-            RowSearchProductItemBinding itemView = RowSearchProductItemBinding.inflate(LayoutInflater.from(context), parent, false);
+            RowSearchProductItemBinding itemView = RowSearchProductItemBinding.inflate(LayoutInflater.from(activity), parent, false);
             vh = new Holder(itemView);
 
         } else if (viewType == VIEW_TYPE_LOADING) {
-            RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false);
+            RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(activity), parent, false);
             vh = new LoadingViewHolder(itemView);
         } else if (viewType == VIEW_TYPE_EMPTY) {
-            RowEmptyBinding itemView = RowEmptyBinding.inflate(LayoutInflater.from(context), parent, false);
+            RowEmptyBinding itemView = RowEmptyBinding.inflate(LayoutInflater.from(activity), parent, false);
 
             vh = new EmptyViewHolder(itemView);
 
@@ -169,9 +161,9 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
             if (productModel.getFavourite() != null && productModel.getFavourite()) {
-                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
+                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.favorite_icon));
             } else {
-                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
+                holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.empty_fav));
 
             }
 
@@ -196,7 +188,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
             if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-                holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+                holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(activity, R.drawable.itlatic_red_line));
                 if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
                     holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                     holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
@@ -226,8 +218,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
-        }
-        else if (viewHolder instanceof LoadingViewHolder) {
+        } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;
             loadingViewHolder.rowLoadingBinding.progressBar1.setIndeterminate(true);
 
@@ -247,23 +238,23 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
 
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
             } else {
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_add), v);
+                    initSnackBar(activity.getString(R.string.success_add), v);
                     productModels.get(position).setFavourite(true);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
 
                 }
@@ -277,24 +268,24 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
 
             } else {
                 if (IsSuccess) {
                     productModels.get(position).setFavourite(false);
-                    initSnackBar(context.getString(R.string.success_delete), view);
+                    initSnackBar(activity.getString(R.string.success_delete), view);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
 
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
                 }
             }
@@ -304,15 +295,15 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     private void loginFirst() {
-        Toast.makeText(context, context.getString(R.string.textLoginFirst), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, RegisterLoginActivity.class);
+        Toast.makeText(activity, activity.getString(R.string.textLoginFirst), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(activity, RegisterLoginActivity.class);
         intent.putExtra(Constants.LOGIN, true);
-        context.startActivity(intent);
+        activity.startActivity(intent);
 
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -337,10 +328,9 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (!productModels.contains(null)) {
                 productModels.add(null);
                 System.out.println("Log productDMS size " + productModels.size());
-
                 notifyItemInserted(productModels.size() - 1);
 
-                LoadAllData(category_id, country_id, city_id, user_id, filter_text, nextPage, 10);
+                LoadAllData(categoryId, countryId, cityId, userId, filter_text, nextPage, 10);
             }
 
         });
@@ -349,12 +339,13 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void LoadAllData(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
-        System.out.println("Log category_id: " + category_id);
+//        categoryId = 233;
+        System.out.println("Log LoadAllData category_id: " + categoryId);
         System.out.println("Log LoadAllData  page " + nextPage);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = context.getString(R.string.fail_to_get_data);
+            String message = activity.getString(R.string.fail_to_get_data);
 
             productModels.remove(productModels.size() - 1);
             notifyItemRemoved(productModels.size());
@@ -382,7 +373,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        }).getFavorite(categoryId, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 
     @Override
@@ -421,7 +412,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 if (!UtilityApp.isLogin()) {
 
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(activity, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
 
                 } else {
@@ -446,7 +437,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(activity, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
                 } else {
 
@@ -469,8 +460,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
                         } else {
-                            message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                            message = activity.getString(R.string.stock_empty);
+                            GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
 
                         }
                     } else {
@@ -481,13 +472,13 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         } else {
 
                             if (count + 1 > stock) {
-                                message = context.getString(R.string.limit) + "" + limit;
+                                message = activity.getString(R.string.limit) + "" + limit;
 
                             } else {
-                                message = context.getString(R.string.stock_empty);
+                                message = activity.getString(R.string.stock_empty);
 
                             }
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                            GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                         }
 
 
@@ -520,8 +511,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         updateCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                     } else {
-                        message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                        message = activity.getString(R.string.stock_empty);
+                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                     }
                 } else {
 
@@ -531,18 +522,18 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     } else {
 
                         if (count + 1 > stock) {
-                            message = context.getString(R.string.limit) + "" + limit;
+                            message = activity.getString(R.string.limit) + "" + limit;
 
                         } else if (stock == 0) {
-                            message = context.getString(R.string.stock_empty);
+                            message = activity.getString(R.string.stock_empty);
 
 
                         } else {
-                            message = context.getString(R.string.limit) + "" + limit;
+                            message = activity.getString(R.string.limit) + "" + limit;
 
                         }
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                     }
 
                 }
@@ -611,7 +602,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_cart));
+                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_cart));
 
                 }
 
@@ -629,7 +620,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_update_cart));
+                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_update_cart));
 
                 }
 
@@ -642,14 +633,14 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (IsSuccess) {
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
-                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+                    initSnackBar(activity.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());
 
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
-                            context.getString(R.string.fail_to_delete_cart));
+                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.delete_product),
+                            activity.getString(R.string.fail_to_delete_cart));
                 }
 
 

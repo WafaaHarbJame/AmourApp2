@@ -86,7 +86,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
             catImage = view.findViewById(R.id.catImage);
 
             view.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
                 if (mainMainCategoryDM.getId() != selectedPosition) {

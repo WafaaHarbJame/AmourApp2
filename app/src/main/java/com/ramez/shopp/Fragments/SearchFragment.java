@@ -91,7 +91,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private Runnable runnable;
     private Handler handler;
     private boolean toggleButton = false;
-    private OfferProductAdapter productOfferAdapter;
     private int SEARCH_CODE = 2000;
 
     @Override
@@ -270,54 +269,54 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
                 binding.closeBtn.setVisibility(View.VISIBLE);
-            binding.closeBtn.setText(R.string.fal_times);
+                binding.closeBtn.setText(R.string.fal_times);
 
-            FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActivityy().getString(R.string.fail_to_get_data);
+                FavouriteResultModel result = (FavouriteResultModel) obj;
+                String message = getActivityy().getString(R.string.fail_to_get_data);
 
-            binding.offerLy.setVisibility(View.GONE);
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                binding.offerLy.setVisibility(View.GONE);
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.offerLy.setVisibility(View.GONE);
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getData();
-                        AnalyticsHandler.ViewSearchResult(filter);
-                        initAdapter();
-
-                    } else {
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
-                } else {
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.offerLy.setVisibility(View.GONE);
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            productList = result.getData();
+                            AnalyticsHandler.ViewSearchResult(filter);
+                            initAdapter();
+
+                        } else {
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+                    }
                 }
             }
-        }
         }).barcodeSearch(country_id, city_id, user_id, filter, page_number, page_size);
     }
 
@@ -334,63 +333,24 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
-            FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActivityy().getResources().getString(R.string.fail_to_get_data);
+                FavouriteResultModel result = (FavouriteResultModel) obj;
+                String message = getActivityy().getResources().getString(R.string.fail_to_get_data);
 
-            binding.offerLy.setVisibility(View.GONE);
+                binding.offerLy.setVisibility(View.GONE);
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    binding.offerLy.setVisibility(View.GONE);
-
-                    Log.i(TAG, "Log productList Search " + result.getData());
-
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getData();
-                        AnalyticsHandler.ViewSearchResult(filter);
-                        initAdapter();
-
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
-
-                } else {
+                } else if (func.equals(Constants.FAIL)) {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -398,9 +358,48 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                     binding.failGetDataLY.failTxt.setText(message);
 
 
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        binding.offerLy.setVisibility(View.GONE);
+
+                        Log.i(TAG, "Log productList Search " + result.getData());
+
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            productList = result.getData();
+                            AnalyticsHandler.ViewSearchResult(filter);
+                            initAdapter();
+
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
                 }
             }
-        }
 
         }).searchTxt(country_id, city_id, user_id, filter, page_number, page_size);
     }
@@ -451,13 +450,12 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             autoCompleteList.add(data.get(i).getDataName());
         }
 
-        if (getActivity()!=null){
+        if (getActivity() != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
             binding.searchEt.setAdapter(adapter);
 
             if (isVisible) binding.searchEt.showDropDown();
         }
-
 
 
     }
@@ -543,13 +541,13 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     public void initOffer() {
         //productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, this, 10);
-        productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
+        OfferProductAdapter productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
                 productOffersList.size(), binding.offerRecycler, Constants.offered_filter, this, new DataCallback() {
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
 
             }
-        });
+        }, 2);
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 

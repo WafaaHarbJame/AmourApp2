@@ -721,7 +721,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     private void initCatAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, 10, this);
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, 10, this,false);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }

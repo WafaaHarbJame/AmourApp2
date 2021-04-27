@@ -26,7 +26,7 @@ import static android.content.ContentValues.TAG;
 public class FavoriteActivity extends ActivityBase implements OfferProductAdapter.OnItemClick {
     ActivityFavoriteBinding binding;
     ArrayList<ProductModel> productList;
-    private OfferProductAdapter productFavAdapter;
+
     private GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
     private String user_id, filter;
@@ -84,7 +84,8 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
     public void initAdapter() {
 
-        productFavAdapter = new OfferProductAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(), binding.favoriteRecycler, filter, this, new DataCallback() {
+        OfferProductAdapter productFavAdapter =new OfferProductAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(),
+                binding.favoriteRecycler, filter, this, new DataCallback() {
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
                 int size = (int) obj;
@@ -97,7 +98,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
                 }
             }
-        });
+        },2);
         binding.favoriteRecycler.setAdapter(productFavAdapter);
     }
 

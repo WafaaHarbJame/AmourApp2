@@ -21,6 +21,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCategoryBinding;
+import com.ramez.shopp.databinding.RowDialogCategoryBinding;
 import com.ramez.shopp.databinding.RowProductsItemBinding;
 import com.squareup.picasso.Picasso;
 
@@ -32,13 +33,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     private List<CategoryModel> categoryDMS;
     private OnItemClick onItemClick;
     private int limit = 6;
+    private boolean isHoriz;
 
 
-    public CategoryAdapter(Context context, List<CategoryModel> categoryDMS,int limit, OnItemClick onItemClick) {
+    public CategoryAdapter(Context context, List<CategoryModel> categoryDMS,int limit, OnItemClick onItemClick,boolean isHoriz) {
         this.context = context;
         this.categoryDMS = categoryDMS;
         this.onItemClick = onItemClick;
         this.limit = limit;
+        this.isHoriz=isHoriz;
 
         ;
     }
@@ -84,6 +87,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         RowCategoryBinding binding;
 
         Holder(RowCategoryBinding view) {
+            super(view.getRoot());
+            binding = view;
+        }
+    }
+
+    static class HorizontalHolder extends RecyclerView.ViewHolder {
+
+        RowCategoryBinding binding;
+
+        HorizontalHolder(RowCategoryBinding view) {
             super(view.getRoot());
             binding = view;
         }

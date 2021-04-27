@@ -96,7 +96,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
         });
         rv.setLayoutManager(gridLayoutManager);
-        rv.setLayoutManager(gridLayoutManager);
 
 
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {

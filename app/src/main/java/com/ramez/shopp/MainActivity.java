@@ -100,7 +100,8 @@ public class MainActivity extends ActivityBase {
 
         binding.categoryButton.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
-
+            binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.view2But.setVisibility(View.GONE);
             initBottomNav(1);
 
 
@@ -117,6 +118,8 @@ public class MainActivity extends ActivityBase {
 
             binding.cartCountTv.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
+            binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.view2But.setVisibility(View.GONE);
 
             initBottomNav(2);
 
@@ -135,6 +138,7 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.offerButton.setOnClickListener(view1 -> {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.Type_offer));
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
@@ -150,6 +154,8 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.myAccountButton.setOnClickListener(view1 -> {
+            binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
             initBottomNav(4);
@@ -326,7 +332,15 @@ public class MainActivity extends ActivityBase {
             });
 
 
-        } else if (event.type.equals(MessageEvent.TYPE_main)) {
+        }
+
+        else if (event.type.equals(MessageEvent.Type_offer)) {
+            binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+            binding.toolBar.view2But.setVisibility(View.VISIBLE);
+
+
+        }
+        else if (event.type.equals(MessageEvent.TYPE_main)) {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
 
