@@ -44,19 +44,22 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class OfferFragment extends FragmentBase implements OfferProductAdapter.OnItemClick, MainCategoryAdapter.OnMainCategoryItemClicked {
     private FragmentOfferBinding binding;
-    private OfferProductAdapter productOfferAdapter;
-    ArrayList<ProductModel> productOffersList;
+    List<ProductModel> productOffersList;
     GridLayoutManager gridLayoutManager;
     LinearLayoutManager linearLayoutManager;
     int category_id = 0, country_id, city_id;
     ArrayList<CategoryModel> mainCategoryDMS;
     private LocalModel localModel;
+
     private MainCategoryAdapter categoryAdapter;
+    private OfferProductAdapter productOfferAdapter;
+
     int numColumn = 2;
 
     String user_id = "0";
@@ -106,7 +109,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
 
         binding.dataLY.setOnRefreshListener(() -> {
-            binding.dataLY.setRefreshing(false);
+//            binding.dataLY.setRefreshing(false);
             getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
 
 
@@ -122,12 +125,14 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
     public void initAdapter() {
 
+//        binding.offerRecycler.invalidate();
+//        productOfferAdapter = null;
         productOfferAdapter = new OfferProductAdapter(getActivityy(), productOffersList, category_id, 0, country_id, city_id, user_id,
                 productOffersList.size(), binding.offerRecycler, Constants.offered_filter, this, (obj, func, IsSuccess) -> {
 
         }, numColumn);
         binding.offerRecycler.setAdapter(productOfferAdapter);
-        productOfferAdapter.notifyDataSetChanged();
+//        productOfferAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -153,6 +158,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
                 String message = getString(R.string.fail_to_get_data);
 
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                if (binding.dataLY.isRefreshing())
+                    binding.dataLY.setRefreshing(false);
 
                 if (func.equals(Constants.ERROR)) {
 
@@ -186,6 +193,16 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                             productOffersList = result.getData();
+
+                            if (productOfferAdapter != null) {
+//                                if (category_id != 0){
+                                productOffersList = productOffersList.subList(0, 3);
+//                                }
+                                productOfferAdapter.setAdapterData(productOffersList, category_id, 0, country_id, city_id, user_id, Constants.offered_filter, numColumn);
+                                productOfferAdapter.notifyDataSetChanged();
+                                return;
+                            }
+
                             initAdapter();
 
                         } else {
@@ -226,8 +243,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            initAdapter();
 
+            initAdapter();
 
         }
 
@@ -342,8 +359,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     public void OnMainCategoryItemClicked(CategoryModel categoryModel, int position) {
         category_id = categoryModel.getId();
         Log.i(TAG, "Log MainItem category_id " + category_id);
-        if (productOfferAdapter != null)
-            productOfferAdapter.categoryId = category_id;
+//        if (productOfferAdapter != null)
+//            productOfferAdapter.categoryId = category_id;
         getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
 
     }

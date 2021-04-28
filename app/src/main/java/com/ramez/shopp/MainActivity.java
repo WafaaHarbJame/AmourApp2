@@ -83,6 +83,8 @@ public class MainActivity extends ActivityBase {
 
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
+            binding.toolBar.sortBut.setVisibility(View.GONE);
+            binding.toolBar.view2But.setVisibility(View.GONE);
 
 
             try{
@@ -372,9 +374,11 @@ public class MainActivity extends ActivityBase {
 
         } else if (event.type.equals(MessageEvent.TYPE_SORT)) {
 
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.VISIBLE);
             binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+
+
         } else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
 

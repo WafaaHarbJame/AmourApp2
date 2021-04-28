@@ -964,7 +964,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             bundle.putInt(Constants.position, position);
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment,
+                    "categoryProductsFragment").commit();
 
 
         } else if (slider.getReffrenceType() == 3) {

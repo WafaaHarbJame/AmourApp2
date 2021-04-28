@@ -67,18 +67,18 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public OfferProductAdapter(Context context, List<ProductModel> productList, int category_id, int subID,
                                int country_id, int city_id, String user_id, int limit, RecyclerView rv,
-                               String filter, OnItemClick onItemClicked, DataCallback callback, int gridNumber) {
+                               String filter, OnItemClick onItemClicked, DataCallback callback, int spanCount) {
 
         activity = context;
-        productModels = new ArrayList<>(productList);
-        categoryId = category_id;
-        subId = subID;
-        countryId = country_id;
-        cityId = city_id;
-        userId = user_id;
-//        limit = limit;
-//        rv = rv;
-        filter_text = filter;
+        setAdapterData(productList, category_id, subID, country_id, city_id, user_id, filter, spanCount);
+//        productModels = new ArrayList<>(productList);
+//        categoryId = category_id;
+//        subId = subID;
+//        countryId = country_id;
+//        cityId = city_id;
+//        userId = user_id;
+//        filter_text = filter;
+
         onItemClick = onItemClicked;
         dataCallback = callback;
 //        gridNumber = gridNumber;
@@ -130,6 +130,22 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    public void setAdapterData(List<ProductModel> productList, int category_id, int subID,
+                               int country_id, int city_id, String user_id,
+                               String filter, int spanCount) {
+        productModels = new ArrayList<>(productList);
+        categoryId = category_id;
+        subId = subID;
+        countryId = country_id;
+        cityId = city_id;
+        userId = user_id;
+        filter_text = filter;
+        gridNumber = spanCount;
+        nextPage = 1;
+        isLoading = false;
+       show_loading = true;
+
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
