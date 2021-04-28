@@ -241,6 +241,13 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -490,12 +497,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
 
-    }
 
     private void checkCameraPermission() {
         Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {

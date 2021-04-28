@@ -97,8 +97,6 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
         binding.offerRecycler.setItemAnimator(null);
 
 
-        getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
-
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
             mainCategoryDMS = UtilityApp.getCategories();
             initCateAdapter();
@@ -107,6 +105,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         }
 
+        getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
 
         binding.dataLY.setOnRefreshListener(() -> {
 //            binding.dataLY.setRefreshing(false);
@@ -132,6 +131,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         }, numColumn);
         binding.offerRecycler.setAdapter(productOfferAdapter);
+//        productOfferAdapter.setAdapterData(productOffersList, category_id, 0, country_id, city_id, user_id, Constants.offered_filter, numColumn);
 //        productOfferAdapter.notifyDataSetChanged();
     }
 
@@ -194,16 +194,16 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                             productOffersList = result.getData();
 
-                            if (productOfferAdapter != null) {
-//                                if (category_id != 0){
-                                productOffersList = productOffersList.subList(0, 3);
-//                                }
-                                productOfferAdapter.setAdapterData(productOffersList, category_id, 0, country_id, city_id, user_id, Constants.offered_filter, numColumn);
-                                productOfferAdapter.notifyDataSetChanged();
-                                return;
-                            }
-
                             initAdapter();
+//                            if (productOfferAdapter != null) {
+////                                if (category_id != 0){
+////                                productOffersList = productOffersList.subList(0, 3);
+////                                }
+//                                productOfferAdapter.setAdapterData(productOffersList, category_id, 0, country_id, city_id, user_id, Constants.offered_filter, numColumn);
+//                                productOfferAdapter.notifyDataSetChanged();
+//                                return;
+//                            }
+
 
                         } else {
 
@@ -239,12 +239,15 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             numColumn = (int) event.data;
             try {
                 gridLayoutManager.setSpanCount(numColumn);
-
+                binding.offerRecycler.setLayoutManager(gridLayoutManager);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            initAdapter();
+            if (productOfferAdapter != null)
+                productOfferAdapter.notifyDataSetChanged();
+
+//            initAdapter();
 
         }
 
@@ -260,6 +263,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     @Override
     public void onStop() {
         super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
 

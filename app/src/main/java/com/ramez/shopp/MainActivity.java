@@ -87,9 +87,9 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.view2But.setVisibility(View.GONE);
 
 
-            try{
+            try {
                 initBottomNav(0);
-            } catch(NumberFormatException ex){ // handle your exception
+            } catch (NumberFormatException ex) { // handle your exception
             }
             binding.toolBar.addExtra.setVisibility(View.GONE);
 
@@ -180,22 +180,20 @@ public class MainActivity extends ActivityBase {
             if (toggleButton) {
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_view, 1));
 
-                binding.toolBar.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view_white));
+                binding.toolBar.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view2));
 
             } else {
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_view, 2));
 
-                binding.toolBar.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view2));
+                binding.toolBar.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.filter_view_white));
 
             }
-
 
         });
 
         binding.toolBar.sortBut.setOnClickListener(view11 -> {
 
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_SORT));
-
 
         });
 
@@ -334,15 +332,12 @@ public class MainActivity extends ActivityBase {
             });
 
 
-        }
-
-        else if (event.type.equals(MessageEvent.Type_offer)) {
+        } else if (event.type.equals(MessageEvent.Type_offer)) {
             binding.toolBar.sortBut.setVisibility(View.VISIBLE);
             binding.toolBar.view2But.setVisibility(View.VISIBLE);
 
 
-        }
-        else if (event.type.equals(MessageEvent.TYPE_main)) {
+        } else if (event.type.equals(MessageEvent.TYPE_main)) {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
 
@@ -418,7 +413,7 @@ public class MainActivity extends ActivityBase {
 
                 GeneralModel result = (GeneralModel) obj;
 
-                if (result != null && result.getMessage() != null){
+                if (result != null && result.getMessage() != null) {
                     if (result.getStatus().equals(Constants.OK_STATUS)) {
                         Log.i(TAG, "Log getValidation" + result.getMessage());
 
