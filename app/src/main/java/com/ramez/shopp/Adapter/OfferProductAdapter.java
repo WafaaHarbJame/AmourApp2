@@ -83,9 +83,9 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         dataCallback = callback;
 //        gridNumber = gridNumber;
 
-        Log.i(getClass().getSimpleName(), "Log OfferProductAdapter " + categoryId);
+//        Log.i(getClass().getSimpleName(), "Log OfferProductAdapter " + categoryId);
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
+        final GridLayoutManager gridLayoutManager = (GridLayoutManager) rv.getLayoutManager();
 
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -104,7 +104,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         });
         rv.setLayoutManager(gridLayoutManager);
 
-
+        rv.clearOnScrollListeners();
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -116,8 +116,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (show_loading) {
                     if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                         if (mOnLoadMoreListener != null) {
-                            mOnLoadMoreListener.onLoadMore();
                             isLoading = true;
+                            mOnLoadMoreListener.onLoadMore();
                         }
                     }
                 }
@@ -143,7 +143,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         gridNumber = spanCount;
         nextPage = 1;
         isLoading = false;
-       show_loading = true;
+        show_loading = true;
 
     }
 
@@ -339,11 +339,12 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void setOnloadListener() {
 
+//        mOnLoadMoreListener = null;
         setOnLoadMoreListener(() -> {
-            System.out.println("Log add loading item");
+//            System.out.println("Log add loading item");
             if (!productModels.contains(null)) {
                 productModels.add(null);
-                System.out.println("Log productDMS size " + productModels.size());
+//                System.out.println("Log productDMS size " + productModels.size());
                 notifyItemInserted(productModels.size() - 1);
 
                 LoadAllData(categoryId, countryId, cityId, userId, filter_text, nextPage, 10);
@@ -356,8 +357,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void LoadAllData(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
 //        categoryId = 233;
-        System.out.println("Log LoadAllData category_id: " + categoryId);
-        System.out.println("Log LoadAllData  page " + nextPage);
+//        System.out.println("Log LoadAllData category_id: " + categoryId);
+//        System.out.println("Log LoadAllData  page " + nextPage);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
@@ -367,24 +368,23 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             notifyItemRemoved(productModels.size());
 
             if (IsSuccess) {
-                if (result.getData() != null && result.getData().size() > 0) {
+//                if (result.getData() != null && result.getData().size() > 0) {
 
-                    ArrayList<ProductModel> products = result.getData();
-                    int pos = productModels.size();
+                ArrayList<ProductModel> products = result.getData();
+                int pos = productModels.size();
 
-                    if (products != null && products.size() > 0) {
-                        productModels.addAll(products);
-                        notifyItemRangeInserted(pos, products.size());
-                        nextPage++;
-                    } else {
-                        show_loading = false;
-                    }
-
+                if (products != null && products.size() > 0) {
+                    productModels.addAll(products);
+                    notifyItemRangeInserted(pos, products.size());
+                    nextPage++;
                 } else {
                     show_loading = false;
                 }
-                setLoaded();
 
+//                } else {
+//                    show_loading = false;
+//                }
+                setLoaded();
 
             }
 
@@ -403,11 +403,6 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
 
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
 
@@ -433,7 +428,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
@@ -457,7 +452,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     checkLoginDialog.show();
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
 
                     ProductModel productModel = productModels.get(position);
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -595,7 +590,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 onItemClick.onItemClicked(position, productModels.get(position));
             }
