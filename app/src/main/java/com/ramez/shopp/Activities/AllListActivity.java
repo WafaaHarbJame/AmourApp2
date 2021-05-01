@@ -11,6 +11,7 @@ import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -34,6 +35,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     private MemberModel user;
     private LocalModel localModel;
     private int brand_id=0;
+    private Boolean isNotify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +177,17 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
             }
 
         }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.out.println("Log onBackPressed " + isNotify);
+        if (isNotify) {
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else
+            super.onBackPressed();
     }
 
 
