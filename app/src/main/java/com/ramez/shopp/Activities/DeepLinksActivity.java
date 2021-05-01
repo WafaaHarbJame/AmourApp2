@@ -1,26 +1,54 @@
 package com.ramez.shopp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CartModel;
+import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Fragments.CategoryFragment;
+import com.ramez.shopp.Fragments.CategoryProductsFragment;
+import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.BookletsModel;
+import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class DeepLinksActivity extends ActivityBase {
+    ArrayList<CategoryModel> categoryModelList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Uri data = getIntent().getData();
+        categoryModelList = new ArrayList<>();
+
+
+        if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
+            categoryModelList = UtilityApp.getCategories();
+
+
+        }
+
 
         if (data != null && data.getPathSegments() != null) {
 
@@ -33,40 +61,118 @@ public class DeepLinksActivity extends ActivityBase {
                 Log.i("Log data", "" + data.getHost());
                 Log.i("Log getHost", "" + data.getHost());
                 Log.i("Log segment1", "" + list.get(0));
-//                Log.i("Log segment2", "" + list.get(1));
-//                Log.i("Log segment3", "" + list.get(2));
-//                Log.i("Log segment4", "" + list.get(3));
-
-//                if (list.get(0).equals("product")) {
-//                    Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
-//                    intent.putExtra(Constants.isNotify, true);
-//                    intent.putExtra(Constants.product_id, list.get(2));
-//                    intent.putExtra(Constants.FROM_BROSHER, true);
-//                    startActivity(intent);
-//
-//                    finish();
-//
-//                }
+                // Log.i("Log segment1", "" + list.get(1));
 
 
-                if (list.get(0).equals("product")) {
-                    Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+                if (list.size() == 1 && list.get(0).equals("category")) {
+
+                    //https://ramezshopping.com/category
+
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+//                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORIES);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
+                if (list.size() == 2 && list.get(0).equals("category")) {
+                    //https://ramezshopping.com/category/233
+                    int categoryId = Integer.parseInt(list.get(1));
+                    CategoryModel categoryModel = new CategoryModel();
+                    categoryModel.setId(categoryId);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
+//                    intent.putExtra(Constants.category, true);
                     intent.putExtra(Constants.isNotify, true);
+                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else if (list.size() == 4 && list.get(0).equals("product")) {
 
-                    if (data.getQueryParameter("id") != null) {
-                        Log.i("segment id", "id" + data.getQueryParameter("id"));
-                        String product_id = data.getQueryParameter("id");
-                        intent.putExtra(Constants.product_id, product_id);
-                        intent.putExtra(Constants.FROM_BROSHER, true);
-                        startActivity(intent);
+                    //https://ramezshopping.com/product/12557/store/7263
+                    ProductModel productModel = new ProductModel();
+                    int productId = Integer.parseInt(list.get(1));
+                    int storeId = Integer.parseInt(list.get(3));
+                    productModel.setId(productId);
+                    productModel.setStoreId(storeId);
+                    Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+                    intent.putExtra(Constants.DB_productModel, productModel);
+                    intent.putExtra(Constants.storeId, storeId);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else if (list.size() == 4 && list.get(0).equals("brochures")) {
 
-                        finish();
+                    //https://ramezshopping.com/brochures/29/store/7263
+//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
+
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    int bookletId = Integer.parseInt(list.get(1));
+                    int storeId = Integer.parseInt(list.get(3));
+                    BookletsModel bookletsModel = new BookletsModel();
+                    bookletsModel.setId(bookletId);
+                    bookletsModel.setStoreID(storeId);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_BROSHORE);
+//                    intent.putExtra(Constants.TO_BROSHER, true);
+                    intent.putExtra(Constants.bookletsModel, bookletsModel);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else if (list.size() == 1 && list.get(0).equals("brands")) {
+
+                    // https://ramezshopping.com/brands
+
+                    Intent intent = new Intent(getActiviy(), AllBookleteActivity.class);
+                    intent.putExtra(Constants.Activity_type, Constants.BRANDS);
+                    intent.putExtra(Constants.isNotify, true);
+                    startActivity(intent);
+                    finish();
+                } else if (list.size() == 3 && list.get(0).equals("products")) {
+
+                    // https://ramezshopping.com/products/brand/RAMEZ?brand=1
+
+                    if (data.getQueryParameter("brand") != null) {
+                        Log.i("segment brand", "Log brand" + data.getQueryParameter("brand"));
                     }
+
+                    Intent intent = new Intent(getActiviy(), AllListActivity.class);
+                    intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.Brands));
+                    intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
+                    int brandId = Integer.parseInt(data.getQueryParameter("brand"));
+                    intent.putExtra(Constants.brand_id, brandId);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+                else if (list.size() == 5 && list.get(0).equals("products")) {
+
+                    //https://ramezshopping.com/products/search/bh/store/7263?text=AL-ZAHRAH%20SOAP%20FLAKES%20840GR
+
+                    if (data.getQueryParameter("text") != null) {
+                        Log.i("segment search", "Log search" + data.getQueryParameter("text"));
+                    }
+
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    String text= data.getQueryParameter("text").replace("%"," ");
+                    intent.putExtra(Constants.inputType_text, text);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_SEARCH);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
 
 
                 }
 
-
+            } else {
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
 
 
@@ -74,4 +180,5 @@ public class DeepLinksActivity extends ActivityBase {
 
 
     }
+
 }

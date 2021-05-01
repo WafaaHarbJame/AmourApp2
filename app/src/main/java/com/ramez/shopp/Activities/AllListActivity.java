@@ -101,6 +101,8 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
             name = bundle.getString(Constants.LIST_MODEL_NAME);
             filter = bundle.getString(Constants.FILTER_NAME);
             brand_id = bundle.getInt(Constants.brand_id);
+            isNotify = bundle.getBoolean(Constants.isNotify);
+
             setTitle(name);
             getProductList(0, country_id, city_id, user_id, filter, brand_id, 0, 10);
 

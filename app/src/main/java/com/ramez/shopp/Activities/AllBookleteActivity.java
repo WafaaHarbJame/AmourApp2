@@ -361,9 +361,6 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         if (bundle != null) {
             type = bundle.getString(Constants.Activity_type);
             isNotify = bundle.getBoolean(Constants.isNotify);
-//            if (isNotify) {
-//                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_Deep_links, 2));
-//            }
 
             if (type.equals(Constants.BOOKLETS)) {
                 getBooklets(city_id);
