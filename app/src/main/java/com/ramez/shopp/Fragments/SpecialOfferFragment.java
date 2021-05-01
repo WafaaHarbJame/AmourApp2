@@ -59,65 +59,60 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<ArrayList<BrochuresModel>> result = (ResultAPIModel<ArrayList<BrochuresModel>>) obj;
-            String message = getString(R.string.fail_to_get_data);
+            if (isVisible()) {
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-            binding.dataLY.setVisibility(View.VISIBLE);
+                ResultAPIModel<ArrayList<BrochuresModel>> result = (ResultAPIModel<ArrayList<BrochuresModel>>) obj;
+                String message = getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                binding.dataLY.setVisibility(View.VISIBLE);
 
-                if (result.message != null) {
-                    message = result.message;
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+                if (func.equals(Constants.ERROR)) {
 
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    Log.i("tag", "Log getBrochuresList " + result.data.size());
-                    if (result.data != null && result.data.size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        list = result.data;
-                        initAdapter();
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataTxt.setText(R.string.no_booklets);
-
+                    if (result.message != null) {
+                        message = result.message;
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
-
-                } else {
+                } else if (func.equals(Constants.FAIL)) {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
 
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
 
+                } else {
+                    if (IsSuccess) {
+                        Log.i("tag", "Log getBrochuresList " + result.data.size());
+                        if (result.data != null && result.data.size() > 0) {
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            list = result.data;
+                            initAdapter();
+                        } else {
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataTxt.setText(R.string.no_booklets);
+                        }
+                    } else {
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+                    }
                 }
             }
+
 
         }).getBrochuresList(store_id, booklet_id);
     }
@@ -138,9 +133,17 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
         if (bundle != null) {
 
             BookletsModel bookletsModel = (BookletsModel) bundle.getSerializable(Constants.bookletsModel);
-            booklet_id = bookletsModel.getId();
+            if (bookletsModel != null) {
+                Log.i("Log bookletsModel", "Log bookletsModel from 3 " + bookletsModel.getId());
 
-            getBrochuresList(store_id, booklet_id);
+                booklet_id = bookletsModel.getId();
+                store_id = bookletsModel.getStoreID();
+                Log.i("Log bookletsModel", "Log booklet_id " + booklet_id);
+                Log.i("Log bookletsModel", "Log store_id " + store_id);
+
+                getBrochuresList(store_id, booklet_id);
+            }
+
 
         }
 

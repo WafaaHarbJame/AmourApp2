@@ -244,7 +244,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.shareBtn.setOnClickListener(v -> {
 
             ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
-                    + "https://ramezonline.com" + "/product?shop=" + storeId + "&id=" + product_id, null, null);
+                    + "  https://ramezshopping.com/product/" + product_id+"/store/"+storeId,
+                    null, null);
 
 
         });
@@ -466,13 +467,15 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
+        isNotify = bundle.getBoolean(Constants.isNotify, false);
 
         if (bundle != null) {
 
             FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
+
             if (FROM_BROSHER) {
                 product_id = Integer.parseInt(bundle.getString(Constants.product_id));
-                isNotify = bundle.getBoolean(Constants.isNotify, false);
+
 
 
             } else {
@@ -1012,13 +1015,19 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
             FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
+            isNotify = bundle.getBoolean(Constants.isNotify, false);
+
             if (FROM_BROSHER) {
                 product_id = Integer.parseInt(bundle.getString(Constants.product_id));
-                isNotify = bundle.getBoolean(Constants.isNotify, false);
 
 
-            } else {
+            }
+
+
+
+            else {
                 if (productModel != null) {
+
                     product_id = productModel.getId();
 
                     if (UtilityApp.getLanguage().equals(Constants.Arabic)) {

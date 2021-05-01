@@ -47,6 +47,31 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     @SerializedName("rate")
     @Expose
     private Integer rate;
+    private int storeId;
+
+    public String gethDescription() {
+        return hDescription;
+    }
+
+    public void sethDescription(String hDescription) {
+        this.hDescription = hDescription;
+    }
+
+    public String gethName() {
+        return hName;
+    }
+
+    public void sethName(String hName) {
+        this.hName = hName;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
 
     public Integer getRate() {
         return rate;

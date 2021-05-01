@@ -50,7 +50,7 @@ public class ActivityBase extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window =getWindow();
+        Window window = getWindow();
 
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -89,20 +89,11 @@ public class ActivityBase extends AppCompatActivity {
 
         }
 
-        home.setOnClickListener(view ->
-                {
-                    if(back_to_home==2){
-                        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
-                        Intent intent = new Intent(getActiviy(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                    else {
-                        onBackPressed();
-                    }
+        home.setOnClickListener(view -> {
 
-                });
+            onBackPressed();
 
+        });
 
         super.setTitle(title);
 
@@ -177,19 +168,6 @@ public class ActivityBase extends AppCompatActivity {
         Toast.makeText(getActiviy(), getString(resId), Toast.LENGTH_SHORT).show();
     }
 
-
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(@NotNull MessageEvent event) {
-
-        if (event.type.equals(MessageEvent.TYPE_invoice)) {
-
-            if (event.type.equals(MessageEvent.TYPE_POSITION)) {
-                 back_to_home = (int) event.data;
-            }
-        }
-        }
 
 }
 

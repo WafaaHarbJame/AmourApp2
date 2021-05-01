@@ -40,6 +40,7 @@ public class Constants {
     public static final String KEY_FIRST_RUN = "key_first_run";
     public static final String KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN";
     public static final String FROM_BROSHER = "FROM_BROSHER";
+    public static final String TO_BROSHER = "TO_BROSHER";
     public static final String success = "success";
     public static final String KEY_MOBILE = "key_mobile";
     public static final String verify_account = "verify_account";
@@ -54,6 +55,8 @@ public class Constants {
     public static final String DINNERS = "DINNERS";
     public static final String brand_id = "brand_id";
     public static final String DB_productModel = "DB_PRODUCT_MODEL";
+    public static final String storeId = "storeId";
+    public static final String isDeepLink = "isDeepLink";
     public static final String DB_DINNER_MODEL = "DB_DINNER_MODEL";
     public static final String CAPTURE = "capture";
     public static final String PICK = "pick";
@@ -63,6 +66,9 @@ public class Constants {
     public static final String REGISTER = "REGISTER";
     public static final String inv_id = "inv_id";
     public static final String CART = "CART";
+    public static final String category = "category";
+    public static final String KEY_OPEN_FRAGMENT = "key_open_fragment";
+    public static final String categoryId = "categoryId";
     public static final String BEGIN_CHECKOUT = "BEGIN_CHECKOUT";
     public static final String CURRENCY = "CURRENCY";
     public static final String Fractional = "Fractional";
@@ -109,5 +115,10 @@ public class Constants {
     public static String KEY_ADDRESS_ID = "KEY_ADDRESS_ID";
     public static String KEY_LAT = "KEY_LAT";
     public static String KEY_LNG = "KEY_LNG";
+
+    public static String FRAG_CATEGORIES = "frag_categories";
+    public static String FRAG_CATEGORY_DETAILS = "frag_category_details";
+    public static String FRAG_SEARCH = "frag_search";
+    public static String FRAG_BROSHORE = "frag_broshore";
 
 }

@@ -78,6 +78,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
     private static final String CAMERA_ID = "CAMERA_ID";
     private static final int ZBAR_CAMERA_PERMISSION = 1;
+
     ArrayList<ProductModel> productBestList;
     ArrayList<ProductModel> productSellerList;
     ArrayList<ProductModel> productOffersList;
@@ -130,7 +131,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         mScannerView = new ZXingScannerView(getActivity());
 
         lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
-
 
         activity = getActivity();
         if (UtilityApp.isLogin()) {
@@ -1033,6 +1033,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             }
 
         }
+
+
     }
 
 
@@ -1043,4 +1045,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         startActivity(intent);
 
     }
+
+
+
 }

@@ -1,42 +1,35 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ramez.shopp.Adapter.BookletAdapter;
 import com.ramez.shopp.Adapter.BrandsAdapter;
 import com.ramez.shopp.Adapter.KitchenAdapter;
-import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Fragments.SpecialOfferFragment;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.DinnerModel;
-import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityAllBookleteBinding;
-import com.ramez.shopp.databinding.ActivityAllListBinding;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
 
 public class AllBookleteActivity extends ActivityBase implements BookletAdapter.OnBookletClick, BrandsAdapter.OnBrandClick, KitchenAdapter.OnKitchenClick {
     ActivityAllBookleteBinding binding;
@@ -51,6 +44,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     ArrayList<BrandModel> brandsList;
     private List<DinnerModel> dinnerModelList;
     private String lang;
+    private Boolean isNotify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +72,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
         setTitle("");
 
+
         getIntentExtra();
 
 
@@ -95,7 +90,8 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                }                GetAllBrands(city_id);
+                }
+                GetAllBrands(city_id);
 
             }
 
@@ -116,6 +112,16 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
     }
 
+    @Override
+    public void onBackPressed() {
+        System.out.println("Log onBackPressed " + isNotify);
+        if (isNotify) {
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else
+            super.onBackPressed();
+    }
 
     public void getBooklets(int city_id) {
         list.clear();
@@ -337,7 +343,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS,false));
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, false));
         FragmentManager fragmentManager = getSupportFragmentManager();
         SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
         Bundle bundle = new Bundle();
@@ -354,6 +360,10 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
         if (bundle != null) {
             type = bundle.getString(Constants.Activity_type);
+            isNotify = bundle.getBoolean(Constants.isNotify);
+//            if (isNotify) {
+//                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_Deep_links, 2));
+//            }
 
             if (type.equals(Constants.BOOKLETS)) {
                 getBooklets(city_id);
@@ -362,7 +372,6 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
             } else {
                 gridLayoutManager.setSpanCount(3);
                 GetAllBrands(city_id);
-
             }
 
         }
@@ -380,7 +389,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     private void initKitchenAdapter() {
-        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this, true,0);
+        KitchenAdapter kitchenAdapter = new KitchenAdapter(getActiviy(), dinnerModelList, this, true, 0);
         binding.recycler.setAdapter(kitchenAdapter);
 
     }
@@ -392,11 +401,10 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     }
 
     public void initBrandsAdapter() {
-        brandsAdapter = new BrandsAdapter(getActiviy(), brandsList, this,0);
+        brandsAdapter = new BrandsAdapter(getActiviy(), brandsList, this, 0);
         binding.recycler.setAdapter(brandsAdapter);
 
     }
-
 
     @Override
     public void onKitchenClicked(int position, DinnerModel dinnerModel) {

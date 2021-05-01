@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.androidnetworking.BuildConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -15,15 +17,20 @@ import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
+import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CategoryFragment;
+import com.ramez.shopp.Fragments.CategoryProductsFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
 import com.ramez.shopp.Fragments.MyAccountFragment;
 import com.ramez.shopp.Fragments.OfferFragment;
+import com.ramez.shopp.Fragments.SearchFragment;
+import com.ramez.shopp.Fragments.SpecialOfferFragment;
+import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Utils.ActivityHandler;
@@ -34,6 +41,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
@@ -43,6 +52,8 @@ public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
     String country_name = "BH";
+    ArrayList<CategoryModel> categoryModelList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +68,13 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
+        categoryModelList = new ArrayList<>();
+
         getValidation();
 
+        initListeners();
 
         getIntentExtra();
-
 
         localModel = UtilityApp.getLocalData();
 
@@ -79,13 +92,15 @@ public class MainActivity extends ActivityBase {
 
         AnalyticsHandler.APP_OPEN();
 
-        binding.homeButton.setOnClickListener(view1 -> {
 
+    }
+
+    private void initListeners() {
+        binding.homeButton.setOnClickListener(view1 -> {
 
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
-
 
             try {
                 initBottomNav(0);
@@ -115,7 +130,6 @@ public class MainActivity extends ActivityBase {
             }
         });
 
-
         binding.cartButton.setOnClickListener(view1 -> {
 
             binding.cartCountTv.setVisibility(View.GONE);
@@ -127,13 +141,9 @@ public class MainActivity extends ActivityBase {
 
             if (UtilityApp.isLogin()) {
                 binding.toolBar.addExtra.setVisibility(View.VISIBLE);
-
-
             } else {
                 binding.toolBar.addExtra.setVisibility(View.GONE);
-
             }
-
 
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
@@ -202,7 +212,6 @@ public class MainActivity extends ActivityBase {
             startActivity(intent);
         });
 
-
         OneSignal.idsAvailable((userId, registrationId) -> {
             Log.d("debug", "Log User:" + userId);
             if (registrationId != null)
@@ -212,7 +221,6 @@ public class MainActivity extends ActivityBase {
             Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
 
         });
-
 
     }
 
@@ -255,156 +263,231 @@ public class MainActivity extends ActivityBase {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
 
-        if (event.type.equals(MessageEvent.TYPE_invoice)) {
-
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.GONE);
-            binding.toolBar.sortBut.setVisibility(View.GONE);
-            binding.toolBar.addExtra.setVisibility(View.GONE);
-
-            binding.toolBar.backBtn.setOnClickListener(view -> {
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
-                binding.toolBar.backBtn.setVisibility(View.GONE);
-
-
-            });
-
-        } else if (event.type.equals(MessageEvent.TYPE_BROUSHERS)) {
-            //   boolean is_Home = (boolean) event.data;
-
-
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.GONE);
-            binding.toolBar.sortBut.setVisibility(View.GONE);
-            binding.toolBar.addExtra.setVisibility(View.GONE);
-
-            binding.toolBar.backBtn.setOnClickListener(view -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-                binding.toolBar.backBtn.setVisibility(View.GONE);
-
-
-            });
-
-        } else if (event.type.equals(MessageEvent.TYPE_POSITION)) {
-
-            binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.view2But.setVisibility(View.GONE);
-            binding.toolBar.sortBut.setVisibility(View.GONE);
-
-            binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
-            int position = (int) event.data;
-
-            if (position == 0) {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_CART));
-                initBottomNav(0);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-
-            } else if (position == 1) {
-                initBottomNav(1);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commit();
-
-            } else if (position == 2) {
-                initBottomNav(2);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
-
-            } else if (position == 3) {
-                initBottomNav(3);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
-
-
-            } else if (position == 4) {
-                initBottomNav(4);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
-
-            }
-
-
-        } else if (event.type.equals(MessageEvent.TYPE_CATEGORY_PRODUCT)) {
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.VISIBLE);
-            initBottomNav(0);
-            binding.toolBar.backBtn.setOnClickListener(view -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-                binding.toolBar.backBtn.setVisibility(View.GONE);
+        switch (event.type) {
+            case MessageEvent.TYPE_invoice:
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.sortBut.setVisibility(View.GONE);
+                binding.toolBar.addExtra.setVisibility(View.GONE);
 
-            });
+                binding.toolBar.backBtn.setOnClickListener(view -> {
 
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
 
-        } else if (event.type.equals(MessageEvent.Type_offer)) {
-            binding.toolBar.sortBut.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                });
 
+                break;
+            case MessageEvent.TYPE_BROUSHERS:
+                //   boolean is_Home = (boolean) event.data;
 
-        } else if (event.type.equals(MessageEvent.TYPE_main)) {
-            binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.sortBut.setVisibility(View.GONE);
+                binding.toolBar.addExtra.setVisibility(View.GONE);
 
-            initBottomNav(0);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                binding.toolBar.backBtn.setOnClickListener(view -> {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
+                });
 
+                break;
+            case MessageEvent.TYPE_POSITION:
 
-        } else if (event.type.equals(MessageEvent.TYPE_UPDATE_CART)) {
-            getCartsCount();
-
-        } else if (event.type.equals(MessageEvent.TYPE_view)) {
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.VISIBLE);
-
-        } else if (event.type.equals(MessageEvent.TYPE_search)) {
-            binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-            binding.toolBar.view2But.setVisibility(View.VISIBLE);
-            binding.toolBar.sortBut.setVisibility(View.VISIBLE);
-
-            binding.toolBar.backBtn.setOnClickListener(view -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
 
+                binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
+                int position = (int) event.data;
 
-            });
+                Fragment selectedFragment;
+                if (position == 0) {
+                    selectedFragment = new HomeFragment();
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_CART));
+                } else if (position == 1) {
+                    selectedFragment = new CategoryFragment();
+                } else if (position == 2) {
+                    selectedFragment = new CartFragment();
+                } else if (position == 3) {
+                    selectedFragment = new OfferFragment();
+                } else if (position == 4) {
+                    selectedFragment = new MyAccountFragment();
+                } else {
+                    selectedFragment = new HomeFragment();
+                }
 
+                initBottomNav(position);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, selectedFragment, "MyAccountFragment").commit();
 
-        } else if (event.type.equals(MessageEvent.TYPE_SORT)) {
+                break;
+            case MessageEvent.TYPE_CATEGORY_PRODUCT:
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                initBottomNav(0);
 
-            binding.toolBar.backBtn.setVisibility(View.GONE);
-            binding.toolBar.view2But.setVisibility(View.VISIBLE);
-            binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+                binding.toolBar.backBtn.setOnClickListener(view -> {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
+                    binding.toolBar.view2But.setVisibility(View.GONE);
 
+                });
 
-        } else {
-            binding.toolBar.backBtn.setVisibility(View.GONE);
+                break;
+            case MessageEvent.Type_offer:
+                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                break;
+            case MessageEvent.TYPE_main:
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+                binding.toolBar.view2But.setVisibility(View.GONE);
 
-            binding.toolBar.sortBut.setVisibility(View.GONE);
-            binding.toolBar.view2But.setVisibility(View.GONE);
-            binding.toolBar.addExtra.setVisibility(View.GONE);
+                initBottomNav(0);
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
 
+                break;
+            case MessageEvent.TYPE_UPDATE_CART:
+                getCartsCount();
 
+                break;
+            case MessageEvent.TYPE_view:
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                break;
+            case MessageEvent.TYPE_search:
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+
+                binding.toolBar.backBtn.setOnClickListener(view -> {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
+                    binding.toolBar.view2But.setVisibility(View.GONE);
+                    binding.toolBar.sortBut.setVisibility(View.GONE);
+                });
+                break;
+            case MessageEvent.TYPE_SORT:
+
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+
+                break;
+            default:
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+
+                binding.toolBar.sortBut.setVisibility(View.GONE);
+                binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.addExtra.setVisibility(View.GONE);
+
+                break;
         }
-
 
     }
 
     private void getIntentExtra() {
+        String searchTEXT="";
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            boolean TO_CART = getIntent().getBooleanExtra(Constants.CART, false);
+            boolean TO_CART = bundle.getBoolean(Constants.CART, false);
+//            boolean TO_category = getIntent().getBooleanExtra(Constants.category, false);
+//            boolean TO_BROSHER = getIntent().getBooleanExtra(Constants.TO_BROSHER, false);
+            String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
+            CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
+            BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
+             searchTEXT = bundle.getString(Constants.inputType_text);
+//            Fragment deepLinkFragment = null;
+//            if (fragmentType == null)
+//                fragmentType = "";
 
             if (TO_CART) {
+
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_REFRESH));
-                initBottomNav(2);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
+                binding.cartButton.performClick();
+//                initBottomNav(2);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
+
+            } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
+                if (categoryModel != null && categoryModel.getId() != null) {
+                    if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
+                        categoryModelList = UtilityApp.getCategories();
+                    }
+
+                    int id = categoryModel.getId();
+//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable(Constants.CAT_LIST, categoryModelList);
+                    bundle1.putInt(Constants.SELECTED_POSITION, id);
+                    bundle1.putInt(Constants.position, 0);
+                    bundle1.putSerializable(Constants.CAT_MODEL, categoryModel);
+                    categoryProductsFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
+                    binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.view2But.setVisibility(View.VISIBLE);
+
+                    binding.toolBar.backBtn.setOnClickListener(view -> {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                        binding.toolBar.backBtn.setVisibility(View.GONE);
+                        binding.toolBar.view2But.setVisibility(View.GONE);
+                        binding.toolBar.sortBut.setVisibility(View.GONE);
+                    });
+                }
+
+            } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
+                binding.categoryButton.performClick();
+            } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+                Bundle bundle2 = new Bundle();
+                bundle2.putString(Constants.inputType_text, searchTEXT);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setArguments(bundle2);
+                fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
+
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+
+                binding.toolBar.backBtn.setOnClickListener(view -> {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
+                    binding.toolBar.view2But.setVisibility(View.GONE);
+                    binding.toolBar.sortBut.setVisibility(View.GONE);
+                });
+
+
+            } else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
+
+                if (bookletsModel != null && bookletsModel.getId() != 0) {
+//                      EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable(Constants.bookletsModel, bookletsModel);
+                    bundle2.putBoolean(Constants.TO_BROSHER, true);
+                    specialOfferFragment.setArguments(bundle2);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+
+                    binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+
+                    binding.toolBar.backBtn.setOnClickListener(view -> {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                        binding.toolBar.backBtn.setVisibility(View.GONE);
+                        binding.toolBar.view2But.setVisibility(View.GONE);
+                        binding.toolBar.sortBut.setVisibility(View.GONE);
+                    });
+                }
 
 
             }
-
-
         }
     }
-
 
     public void getValidation() {
         new DataFeacher(false, (obj, func, IsSuccess) -> {

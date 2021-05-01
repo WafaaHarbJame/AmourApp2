@@ -26,30 +26,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activities.OrderCompleteActivity"></activity>
+        <activity android:name=".Activities.OrderCompleteActivity"/>
         <activity
             android:name=".Activities.DeepLinksActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW" />
 
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ramezonline.com"
-                    android:scheme="https" />
-                <data
-                    android:host="ramezonline.com"
-                    android:scheme="http" />
-                <data
-                    android:host="ramezonline"
+                    android:host="www.ramezshopping.com"
                     android:scheme="http" />
                 <data
                     android:host="product"
-                    android:scheme="ramez" />
+                    android:scheme="ramezshopping" />
+                <data
+                    android:host="products"
+                    android:scheme="ramezshopping" />
+                <data
+                    android:host="search"
+                    android:scheme="ramezshopping" />
+                <data
+                    android:host="brochures"
+                    android:scheme="ramezshopping" />
+                <data
+                    android:host="category"
+                    android:scheme="ramezshopping" />
+
+                <data
+                    android:host="brands"
+                    android:scheme="ramezshopping" />
+
+
             </intent-filter>
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
@@ -58,8 +70,20 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="product"
-                    android:scheme="ramezonline" />
+                    android:host="ramezshopping.com"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data
+                    android:host="ramezshopping.com"
+                    android:pathPrefix="/*"
+                    android:scheme="https" />
+                <!-- note that the leading "/" is required for pathPrefix -->
             </intent-filter>
         </activity>
         <activity

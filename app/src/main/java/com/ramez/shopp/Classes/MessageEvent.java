@@ -16,6 +16,7 @@ public class MessageEvent {
     public static final String TYPE_UPDATE_CART = "updateCart";
     public static final String TYPE_REFRESH = "refresh";
     public static final String TYPE_POSITION = "position";
+    public static final String TYPE_Deep_links = "TYPE_Deep_links";
 
 
     //    public int PagerPosition;

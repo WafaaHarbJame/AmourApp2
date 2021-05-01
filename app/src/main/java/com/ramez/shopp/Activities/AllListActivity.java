@@ -176,4 +176,6 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
         }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
+
+
 }

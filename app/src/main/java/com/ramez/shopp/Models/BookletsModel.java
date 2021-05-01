@@ -28,6 +28,15 @@ BookletsModel implements Serializable {
     @SerializedName("title_en")
     @Expose
     private String titleEn;
+    private int StoreID;
+
+    public int getStoreID() {
+        return StoreID;
+    }
+
+    public void setStoreID(int storeID) {
+        StoreID = storeID;
+    }
 
     public int getId() {
         return id;

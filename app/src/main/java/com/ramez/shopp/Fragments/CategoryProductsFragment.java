@@ -36,6 +36,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AutoCompleteModel;
+import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.ChildCat;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 public class CategoryProductsFragment extends FragmentBase implements ProductCategoryAdapter.OnItemClick, MainCategoryAdapter.OnMainCategoryItemClicked {
     private static final int ZBAR_CAMERA_PERMISSION = 1;
@@ -148,7 +150,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     }
 
     public void initAdapter() {
-        adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn,0);
+        adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn, 0);
         binding.productsRv.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -178,6 +180,17 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         if (bundle != null) {
 
             mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
+            if (mainCategoryDMS==null) {
+
+                if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
+                    mainCategoryDMS = UtilityApp.getCategories();
+
+                } else {
+                    getCategories(Integer.parseInt(localModel.getCityId()));
+
+                }
+            }
+
             category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
             CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
             int position = bundle.getInt(Constants.position, 0);
@@ -201,7 +214,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         childCat.setHName(getString(R.string.all));
         childCat.setName(getString(R.string.all));
 
-     //   selectedSubCat = category_id;
+        //   selectedSubCat = category_id;
         ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
 
         subCategoryDMS.add(0, childCat);
@@ -398,4 +411,30 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
         }
     }
+
+
+    public void getCategories(int storeId) {
+
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            CategoryResultModel result = (CategoryResultModel) obj;
+
+            if (IsSuccess) {
+                if (result.getData() != null && result.getData().size() > 0) {
+
+                    mainCategoryDMS = result.getData();
+
+                    Log.i(TAG, "Log productBestList" + mainCategoryDMS.size());
+                    UtilityApp.setCategoriesData(mainCategoryDMS);
+
+                }
+
+
+            }
+
+
+        }).GetAllCategories(storeId);
+    }
+
 }
