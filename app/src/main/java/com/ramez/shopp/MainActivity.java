@@ -335,7 +335,6 @@ public class MainActivity extends ActivityBase {
 
                 break;
             case MessageEvent.Type_offer:
-                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 break;
             case MessageEvent.TYPE_main:
@@ -440,7 +439,12 @@ public class MainActivity extends ActivityBase {
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
                 binding.categoryButton.performClick();
-            } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+            }
+
+            else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
+                binding.offerButton.performClick();
+            }
+            else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
                 Bundle bundle2 = new Bundle();

@@ -233,7 +233,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
         if (event.type.equals(MessageEvent.TYPE_SORT)) {
-            getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
+            //getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
 
         } else if (event.type.equals(MessageEvent.TYPE_view)) {
             numColumn = (int) event.data;
@@ -343,17 +343,17 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     }
 
     private void initCateAdapter() {
-        CategoryModel categoryModel = new CategoryModel();
-        categoryModel.setId(category_id);
-        categoryModel.setHName(getString(R.string.all));
-        categoryModel.setName(getString(R.string.all));
-        categoryModel.setImage("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
-        categoryModel.setImage2("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
-        ArrayList<CategoryModel> allCategoryDMS = new ArrayList<>(mainCategoryDMS);
-        allCategoryDMS.add(0, categoryModel);
 
+//        CategoryModel categoryModel = new CategoryModel();
+//        categoryModel.setId(category_id);
+//        categoryModel.setHName(getString(R.string.all));
+//        categoryModel.setName(getString(R.string.all));
+//        categoryModel.setImage("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
+//        categoryModel.setImage2("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
+//        ArrayList<CategoryModel> allCategoryDMS = new ArrayList<>(mainCategoryDMS);
+//        allCategoryDMS.add(0, categoryModel);
 
-        categoryAdapter = new MainCategoryAdapter(getActivityy(), allCategoryDMS, this, category_id);
+        categoryAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, category_id);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }

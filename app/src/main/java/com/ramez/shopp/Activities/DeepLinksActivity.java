@@ -106,11 +106,26 @@ public class DeepLinksActivity extends ActivityBase {
                 } else if (list.size() == 4 && list.get(0).equals("brochures")) {
 
                     //https://ramezshopping.com/brochures/29/store/7263
-//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
 
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     int bookletId = Integer.parseInt(list.get(1));
                     int storeId = Integer.parseInt(list.get(3));
+                    BookletsModel bookletsModel = new BookletsModel();
+                    bookletsModel.setId(bookletId);
+                    bookletsModel.setStoreID(storeId);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_BROSHORE);
+//                    intent.putExtra(Constants.TO_BROSHER, true);
+                    intent.putExtra(Constants.bookletsModel, bookletsModel);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else if (list.size() == 5 && list.get(0).equals("brochures")) {
+
+                    /// https://ramezshopping.com/brochures/58/bahrain/store/7263
+
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    int bookletId = Integer.parseInt(list.get(1));
+                    int storeId = Integer.parseInt(list.get(4));
                     BookletsModel bookletsModel = new BookletsModel();
                     bookletsModel.setId(bookletId);
                     bookletsModel.setStoreID(storeId);
@@ -129,7 +144,39 @@ public class DeepLinksActivity extends ActivityBase {
                     intent.putExtra(Constants.isNotify, true);
                     startActivity(intent);
                     finish();
-                } else if (list.size() == 3 && list.get(0).equals("products")) {
+                } else if (list.size() == 2 && list.get(0).equals("brands")) {
+
+                    //https://ramezshopping.com/brands/bh
+
+                    Intent intent = new Intent(getActiviy(), AllBookleteActivity.class);
+                    intent.putExtra(Constants.Activity_type, Constants.BRANDS);
+                    intent.putExtra(Constants.isNotify, true);
+                    startActivity(intent);
+                    finish();
+                }
+
+
+
+                else if (list.size() == 6 && list.get(0).equals("products")) {
+
+                    //https://ramezshopping.com/products/brand/RAMEZ/bh/store/7263?brand=1
+
+                    if (data.getQueryParameter("brand") != null) {
+                        Log.i("segment brand", "Log brand" + data.getQueryParameter("brand"));
+                    }
+
+                    Intent intent = new Intent(getActiviy(), AllListActivity.class);
+                    intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.Brands));
+                    intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
+                    int brandId = Integer.parseInt(data.getQueryParameter("brand"));
+                    intent.putExtra(Constants.brand_id, brandId);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+                else if (list.size() == 3 && list.get(0).equals("products")) {
 
                     // https://ramezshopping.com/products/brand/RAMEZ?brand=1
 
@@ -157,7 +204,7 @@ public class DeepLinksActivity extends ActivityBase {
                     }
 
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
-                    String text= data.getQueryParameter("text").replace("%"," ");
+                    String text = data.getQueryParameter("text").replace("%", " ");
                     intent.putExtra(Constants.inputType_text, text);
                     intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_SEARCH);
                     intent.putExtra(Constants.isNotify, true);
@@ -167,6 +214,66 @@ public class DeepLinksActivity extends ActivityBase {
 
 
                 }
+
+
+                if (list.size() == 3 && list.get(0).equals("category")) {
+                    //https://ramezshopping.com/category/241/Fruits
+
+                    int categoryId = Integer.parseInt(list.get(1));
+                    CategoryModel categoryModel = new CategoryModel();
+                    categoryModel.setId(categoryId);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
+//                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+                if (list.size() == 6 && list.get(0).equals("category")) {
+
+                    //https://ramezshopping.com/category/233/Fruits%20&%20Vegetables/bh/store/7263
+
+                    int categoryId = Integer.parseInt(list.get(1));
+                    CategoryModel categoryModel = new CategoryModel();
+                    categoryModel.setId(categoryId);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
+//                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+                else if (list.size() == 6 && list.get(0).equals("product")) {
+                    //https://ramezshopping.com/product/1538/tomato-jordani-1-kg/bh/store/7263
+                    ProductModel productModel = new ProductModel();
+                    int productId = Integer.parseInt(list.get(1));
+                    int storeId = Integer.parseInt(list.get(3));
+                    productModel.setId(productId);
+                    productModel.setStoreId(storeId);
+                    Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+                    intent.putExtra(Constants.DB_productModel, productModel);
+                    intent.putExtra(Constants.storeId, storeId);
+                    intent.putExtra(Constants.isNotify, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+                else  if (list.size() == 5 && list.get(0).equals("products")&&list.get(1).equals("offered")) {
+
+                    //https://ramezshopping.com/products/offered/bh/store/7263
+
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_OFFERS);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
 
             } else {
                 Intent intent = new Intent(getActiviy(), MainActivity.class);

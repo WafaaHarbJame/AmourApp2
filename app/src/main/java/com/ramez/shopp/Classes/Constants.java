@@ -117,6 +117,7 @@ public class Constants {
     public static String KEY_LNG = "KEY_LNG";
 
     public static String FRAG_CATEGORIES = "frag_categories";
+    public static String FRAG_OFFERS = "frag_offers";
     public static String FRAG_CATEGORY_DETAILS = "frag_category_details";
     public static String FRAG_SEARCH = "frag_search";
     public static String FRAG_BROSHORE = "frag_broshore";
