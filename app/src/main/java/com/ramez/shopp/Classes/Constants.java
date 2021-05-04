@@ -84,6 +84,7 @@ public class Constants {
     public static final String CAT_LIST = "CAT_LIST";
     public static final String CAT_MODEL = "CAT_MODEL";
     public static final String bookletsModel = "bookletsModel";
+    public static final String Inside_app = "Inside_app";
     public static final String delivery_choose = "delivery_choose";
     public static final String ADDRESS_ID = "ADDRESS_ID";
     public static final String ADDRESS_TITLE = "ADDRESS_TITLE";

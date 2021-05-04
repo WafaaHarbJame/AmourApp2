@@ -26,6 +26,9 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityAllBookleteBinding;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +69,11 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         localModel = UtilityApp.getLocalData();
         user = UtilityApp.getUserData();
 
-        binding.recycler.setHasFixedSize(true);
         binding.recycler.setItemAnimator(null);
-        city_id = Integer.parseInt(localModel.getCityId());
+        if(localModel!=null){
+            city_id = Integer.parseInt(localModel.getCityId());
+
+        }
 
         setTitle("");
 
@@ -120,7 +125,13 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else
-            super.onBackPressed();
+        {
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+            //super.onBackPressed();
     }
 
     public void getBooklets(int city_id) {
@@ -343,14 +354,22 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
     @Override
     public void onBookletClicked(int position, BookletsModel bookletsModel) {
-        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, false));
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants.bookletsModel, bookletsModel);
-        specialOfferFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
 
+//        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+//        specialOfferFragment.setArguments(bundle);
+//        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
+
+
+        Intent intent = new Intent(getActiviy(), MainActivity.class);
+        intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_BROSHORE);
+        intent.putExtra(Constants.bookletsModel, bookletsModel);
+        intent.putExtra(Constants.Inside_app, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
     }
 
@@ -409,5 +428,24 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         intent.putExtra(Constants.DB_DINNER_MODEL, dinnerModel);
         startActivity(intent);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
+
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

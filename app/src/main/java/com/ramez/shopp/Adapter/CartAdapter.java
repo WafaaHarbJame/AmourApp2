@@ -462,8 +462,11 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
 
                 //initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                cartDMS.get(position).setQuantity(cartQuantity);
-                notifyItemChanged(position);
+                if(cartDMS.size()>0){
+                    cartDMS.get(position).setQuantity(cartQuantity);
+                    notifyItemChanged(position);
+                }
+
 
                 CartProcessModel cartProcessModel = (CartProcessModel) obj;
                 cartProcessModel.setTotal(calculateSubTotalPrice());

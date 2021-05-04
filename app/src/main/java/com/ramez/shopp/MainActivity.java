@@ -14,6 +14,7 @@ import com.androidnetworking.BuildConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ActivityBase;
+import com.ramez.shopp.Activities.AllBookleteActivity;
 import com.ramez.shopp.Activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
@@ -387,6 +388,7 @@ public class MainActivity extends ActivityBase {
     private void getIntentExtra() {
         String searchTEXT="";
         Bundle bundle = getIntent().getExtras();
+        boolean  from_inside_app=false;
 
         if (bundle != null) {
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
@@ -396,6 +398,7 @@ public class MainActivity extends ActivityBase {
             CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
              searchTEXT = bundle.getString(Constants.inputType_text);
+              from_inside_app=bundle.getBoolean(Constants.Inside_app);
 //            Fragment deepLinkFragment = null;
 //            if (fragmentType == null)
 //                fragmentType = "";
@@ -480,11 +483,22 @@ public class MainActivity extends ActivityBase {
 
                     binding.toolBar.backBtn.setVisibility(View.VISIBLE);
 
+                    boolean finalFrom_inside_app = from_inside_app;
                     binding.toolBar.backBtn.setOnClickListener(view -> {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-                        binding.toolBar.backBtn.setVisibility(View.GONE);
-                        binding.toolBar.view2But.setVisibility(View.GONE);
-                        binding.toolBar.sortBut.setVisibility(View.GONE);
+                        if(finalFrom_inside_app){
+                            Intent intent = new Intent(getActiviy(), AllBookleteActivity.class);
+                            intent.putExtra(Constants.Activity_type, Constants.BOOKLETS);
+                            startActivity(intent);
+
+
+                        }
+                        else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                            binding.toolBar.backBtn.setVisibility(View.GONE);
+                            binding.toolBar.view2But.setVisibility(View.GONE);
+                            binding.toolBar.sortBut.setVisibility(View.GONE);
+                        }
+
                     });
                 }
 

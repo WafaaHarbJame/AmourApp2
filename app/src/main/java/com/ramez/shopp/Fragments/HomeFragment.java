@@ -824,7 +824,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.bookletsModel, bookletsModel);
         specialOfferFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
     }
@@ -915,7 +915,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
             bundle.putSerializable(Constants.bookletsModel, bookletsModel);
             specialOfferFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
 
@@ -984,7 +984,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
             bundle.putSerializable(Constants.bookletsModel, bookletsModel);
             specialOfferFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commitNowAllowingStateLoss();
+            fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
 
