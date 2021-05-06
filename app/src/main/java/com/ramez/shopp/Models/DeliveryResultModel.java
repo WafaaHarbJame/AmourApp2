@@ -3,13 +3,13 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DeliveryResultModel {
 
     @SerializedName("data")
     @Expose
-    private ArrayList<DeliveryTime> data = null;
+    private List<DeliveryTime> data = null;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -17,11 +17,11 @@ public class DeliveryResultModel {
     @Expose
     private String message;
 
-    public ArrayList<DeliveryTime> getData() {
+    public List<DeliveryTime> getData() {
         return data;
     }
 
-    public void setData(ArrayList<DeliveryTime> data) {
+    public void setData(List<DeliveryTime> data) {
         this.data = data;
     }
 

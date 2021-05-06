@@ -854,9 +854,8 @@ public class DataFeacher {
     public void getDeliveryTimeList(int sotre_id) {
 
         Log.i(TAG, "Log getDeliveryTimeList");
-
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log sotre_id " + sotre_id);
+        Log.i(TAG, "Log store Id getDeliveryTimeList " + sotre_id);
 
         Call call = apiService.getDeliveryTimeList(headerMap, sotre_id);
         call.enqueue(callbackApi);

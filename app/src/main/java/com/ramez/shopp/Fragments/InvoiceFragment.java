@@ -311,7 +311,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                 if (paymentMethod.equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
-                    expressDelivery = true;
                     initTimeAdapter(0.0);
                     binding.deliveryFees.setText(getString(R.string.free));
                     binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(NumberHandler.formatDouble(Double.parseDouble(total), fraction)) + 0.0, fraction).concat(" " + currency));
@@ -319,7 +318,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                 } else {
                     binding.chooseDelivery.setVisibility(View.VISIBLE);
-                    expressDelivery = false;
                     initTimeAdapter(deliveryFees);
                     binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
                     binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
@@ -417,7 +415,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                             deliveryDate=firstTime.getDate();
                             deliveryTime=firstTime.getTime();
 
-                            Log.i("tag", "Log  deliveryDateId firstTime " + deliveryDateId);
+                            Log.i("tag", "Log deliveryDateId firstTime " + deliveryDateId);
+                            Log.i("tag", "Log deliveryDateId firstTime1 " + result.getData().get(0).getId());
 
                             String currentDate = firstTime.getDate();
                             List<DeliveryTime> timesList = new ArrayList<>();
@@ -599,7 +598,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             deliveryTimesList = datesMap.get(deliveryTime.getTime());
 
             binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
-            expressDelivery = false;
             binding.quickButton.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_big_corner_dark_gray));
 
             initTimesList();

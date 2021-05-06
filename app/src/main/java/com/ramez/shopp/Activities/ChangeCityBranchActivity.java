@@ -54,7 +54,10 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         cityModelArrayList = new ArrayList<>();
         countries = new ArrayList<>();
         localModel = UtilityApp.getLocalData();
-        city_id = Integer.parseInt(localModel.getCityId());
+        if(localModel!=null&&!localModel.getCityId().isEmpty()){
+            city_id = Integer.parseInt(localModel.getCityId());
+
+        }
 
         Log.i("tag", "Log cityId" + localModel.getCityId());
 
@@ -176,7 +179,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     @Override
     public void onCityClicked(int position, CityModel cityModel) {
         city_id = cityModel.getId();
-        localModel.setCityId(String.valueOf(city_id));
+        localModel.setCityId(String.valueOf(cityModel.getId()));
         localModel.setCountryName(newCountryName);
         UtilityApp.setLocalData(localModel);
 
@@ -227,10 +230,13 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
                     if (result.getData() != null && result.getData().size() > 0) {
                         cityModelArrayList = result.getData();
-                        city_id=cityModelArrayList.get(0).getId();
-                        localModel.setCityId(String.valueOf(city_id));
-                        localModel.setCountryName(newCountryName);
-                        UtilityApp.setLocalData(localModel);
+                        if(city_id==0){
+                            city_id=cityModelArrayList.get(0).getId();
+                            localModel.setCityId(String.valueOf(city_id));
+                            localModel.setCountryName(newCountryName);
+                            UtilityApp.setLocalData(localModel);
+                        }
+
                         initCityAdapter();
                         cityAdapter.notifyDataSetChanged();
 
