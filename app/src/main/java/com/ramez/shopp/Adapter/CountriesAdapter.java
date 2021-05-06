@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.RowCountryCodeBinding;
-import com.ramez.shopp.databinding.RowItemCitiesBinding;
+
 import com.ramez.shopp.databinding.RowItemCityBinding;
 
 import java.util.ArrayList;

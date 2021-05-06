@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
@@ -72,7 +76,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public int paymentMethodId = 0;
     public String couponCodeId = "0";
     public Integer deliveryDateId = 0;
-    public String deliveryDate,deliveryTime ;
+    public String deliveryDate, deliveryTime;
     public Boolean expressDelivery = false;
     public DeliveryDayAdapter deliveryDayAdapter;
     public DeliveryTimeAdapter deliveryTimeAdapter;
@@ -85,7 +89,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     LocalModel localModel;
     int storeId, productsSize;
-    String total="", currency="";
+    String total = "", currency = "";
     List<DeliveryTime> DayList;
     List<DeliveryTime> TimeList;
     int fraction = 2;
@@ -145,7 +149,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         getDefaultAddress();
 
-        getDeliveryTimeList(storeId);
+        //getDeliveryTimeList(storeId);
+
+        getDeliveryTimeListNew(storeId);
 
         getPaymentMethod(storeId);
 
@@ -412,8 +418,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             DeliveryTime firstTime = datesList.get(0);
                             deliveryDateId = firstTime.getId();
-                            deliveryDate=firstTime.getDate();
-                            deliveryTime=firstTime.getTime();
+                            deliveryDate = firstTime.getDate();
+                            deliveryTime = firstTime.getTime();
 
                             Log.i("tag", "Log deliveryDateId firstTime " + deliveryDateId);
                             Log.i("tag", "Log deliveryDateId firstTime1 " + result.getData().get(0).getId());
@@ -486,7 +492,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     private void sendOrder(OrderCall orderCall) {
-        AnalyticsHandler.checkOut(couponCodeId,currency,total,total);
+        AnalyticsHandler.checkOut(couponCodeId, currency, total, total);
 
         GlobalData.progressDialog(getActivityy(), R.string.make_order, R.string.please_wait_sending);
 
@@ -625,8 +631,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             DeliveryTime searchListItem = (DeliveryTime) obj;
             //deliveryDateId = searchListItem.getId();
             deliveryDateId = deliveryTimesList.get(selectedPosition).getId();
-            deliveryDate=deliveryTimesList.get(selectedPosition).getDate();
-            deliveryTime=deliveryTimesList.get(selectedPosition).getTime();
+            deliveryDate = deliveryTimesList.get(selectedPosition).getDate();
+            deliveryTime = deliveryTimesList.get(selectedPosition).getTime();
 
             Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
             Log.i("tag", "Log deliveryTimesList click" + deliveryTimesList.get(selectedPosition).getTime());
@@ -663,7 +669,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 binding.delivery.setText(addressTitle);
                 binding.tvFullAddress.setText(addressFullAddress);
                 binding.acceptBtu.setText(R.string.change_address);
-                AnalyticsHandler.addShippingInfo(couponCodeId,currency,total,total);
+                AnalyticsHandler.addShippingInfo(couponCodeId, currency, total, total);
 
             }
 
@@ -789,6 +795,90 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     }
+
+    public void getDeliveryTimeListNew(int storeId) {
+        datesMap.clear();
+
+        binding.loadingDelivery.setVisibility(View.VISIBLE);
+
+        String countryCode = "";
+        if (UtilityApp.getLocalData().getShortname() != null)
+            countryCode = UtilityApp.getLocalData().getShortname();
+        else countryCode = GlobalData.COUNTRY;
+
+        String url = "https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v4/Orders/deliveryTimeList";
+        Log.d(TAG, "Log Get first " + url);
+        Log.d(TAG, "Log  store_id " + storeId);
+
+
+        AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
+                addHeaders("ApiKey", Constants.api_key).
+                addQueryParameter("store_id", String.valueOf(storeId)).build()
+                .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
+                    @Override
+                    public void onResponse(DeliveryResultModel result) {
+
+                        if (isVisible()) {
+
+                            binding.loadingDelivery.setVisibility(View.GONE);
+                            String message = getString(R.string.fail_to_get_data);
+
+                            if (result.getData() != null && result.getData().size() > 0) {
+                                List<DeliveryTime> datesList = result.getData();
+
+                                DeliveryTime firstTime = datesList.get(0);
+                                deliveryDateId = firstTime.getId();
+                                deliveryDate = firstTime.getDate();
+                                deliveryTime = firstTime.getTime();
+
+
+                                String currentDate = firstTime.getDate();
+                                List<DeliveryTime> timesList = new ArrayList<>();
+
+                                while (datesList.size() > 0) {
+                                    DeliveryTime deliveryTime = datesList.get(0);
+
+                                    if (deliveryTime.getDate().equals(currentDate)) {
+                                        timesList.add(deliveryTime);
+                                        datesList.remove(0);
+                                        if (datesList.isEmpty()) {
+                                            datesMap.put(deliveryTime.getDate(), timesList);
+                                        }
+                                    } else {
+                                        datesMap.put(currentDate, timesList);
+                                        currentDate = deliveryTime.getDate();
+                                        timesList = new ArrayList<>();
+                                    }
+                                }
+
+
+                                deliveryTimesList = datesMap.get(firstTime.getDate());
+
+
+                                initDaysAdapter();
+
+
+                            } else {
+                                binding.noDeliveryTv.setVisibility(View.VISIBLE);
+                                GlobalData.Toast(getActivityy(), message);
+
+                            }
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        GlobalData.Toast(getActivityy(), anError.getMessage());
+                    }
+
+
+                });
+    }
+
 
 }
 

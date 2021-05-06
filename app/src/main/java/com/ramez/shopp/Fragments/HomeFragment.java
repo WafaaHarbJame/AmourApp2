@@ -23,6 +23,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -45,12 +49,15 @@ import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.WhatsUpDialog;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.DeliveryResultModel;
+import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -64,6 +71,8 @@ import com.ramez.shopp.databinding.FragmentHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -78,6 +87,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
     private static final String CAMERA_ID = "CAMERA_ID";
     private static final int ZBAR_CAMERA_PERMISSION = 1;
+    String countryCode = "";
 
     ArrayList<ProductModel> productBestList;
     ArrayList<ProductModel> productSellerList;
@@ -189,7 +199,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         GetHomePage();
 
         AllListener();
-
 
 
         if (UtilityApp.isLogin()) {
@@ -1045,6 +1054,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         startActivity(intent);
 
     }
+
 
 
 
