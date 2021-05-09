@@ -149,9 +149,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         getDefaultAddress();
 
-        //getDeliveryTimeList(storeId);
+        getDeliveryTimeList(storeId);
 
-        getDeliveryTimeListNew(storeId);
+//        getDeliveryTimeListNew(storeId);
 
         getPaymentMethod(storeId);
 
@@ -397,14 +397,12 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 String message = getString(R.string.fail_to_get_data);
                 DeliveryResultModel result = (DeliveryResultModel) obj;
 
-
                 if (func.equals(Constants.ERROR)) {
 
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
                     GlobalData.Toast(getActivityy(), message);
-
 
                 } else if (func.equals(Constants.FAIL)) {
                     GlobalData.Toast(getActivityy(), message);

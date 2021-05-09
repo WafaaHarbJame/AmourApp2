@@ -119,14 +119,14 @@ public class SplashScreenActivity extends ActivityBase {
             String message = getString(R.string.fail_to_get_data);
 
             if (func.equals(Constants.ERROR)) {
-
+                UtilityApp.logOut();
                 Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
                 intent.putExtra(Constants.LOGIN, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
             } else if (func.equals(Constants.FAIL)) {
-
+                UtilityApp.logOut();
                 Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
                 intent.putExtra(Constants.LOGIN, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -146,9 +146,18 @@ public class SplashScreenActivity extends ActivityBase {
                     getCarts(storeId, userId);
 
                 }
+                else {
+                    UtilityApp.logOut();
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
 
 
             } else {
+                UtilityApp.logOut();
                 Intent intent = new Intent(getActiviy(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
