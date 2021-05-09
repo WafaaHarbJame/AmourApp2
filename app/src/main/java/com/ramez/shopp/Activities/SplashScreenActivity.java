@@ -148,7 +148,8 @@ public class SplashScreenActivity extends ActivityBase {
                 }
                 else {
                     UtilityApp.logOut();
-                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                    intent.putExtra(Constants.LOGIN, true);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -158,8 +159,8 @@ public class SplashScreenActivity extends ActivityBase {
 
             } else {
                 UtilityApp.logOut();
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
                 startActivity(intent);
                 finish();
             }
