@@ -149,9 +149,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         getDefaultAddress();
 
-        getDeliveryTimeList(storeId);
+        //getDeliveryTimeList(storeId);
 
-//        getDeliveryTimeListNew(storeId);
+        getDeliveryTimeListNew(storeId);
 
         getPaymentMethod(storeId);
 
