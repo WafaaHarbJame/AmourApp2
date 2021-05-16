@@ -423,7 +423,9 @@ public class MyAccountFragment extends FragmentBase {
             @Override
             public void click() {
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
-                    if (func.equals(Constants.ERROR)) {
+                    if (isVisible()) {
+
+                        if (func.equals(Constants.ERROR)) {
                         Toast(R.string.fail_to_sign_out);
                     } else if (func.equals(Constants.FAIL)) {
                         Toast(R.string.fail_to_sign_out);
@@ -443,7 +445,8 @@ public class MyAccountFragment extends FragmentBase {
                         }
                     }
 
-                }).logOut(memberModel);
+                }
+            }).logOut(memberModel);
             }
         };
 
@@ -455,10 +458,10 @@ public class MyAccountFragment extends FragmentBase {
     public void getUserData(int user_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
-            String message = getString(R.string.fail_to_get_data);
 
             if (isVisible()) {
+                ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
+                String message = getString(R.string.fail_to_get_data);
 
                 if (IsSuccess) {
 

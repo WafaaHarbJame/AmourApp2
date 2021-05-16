@@ -363,6 +363,7 @@
     <string name="order_confirmed">Order Confirmed</string>
     <string name="order_note">Your order Has been  confirmed . You can check the status of this order from  order page </string>
     <string name="will_be_deliverd">Will be delivered on </string>
+    <string name="verify_phone_number">Verify Phone Number</string>
 
 
 </resources>

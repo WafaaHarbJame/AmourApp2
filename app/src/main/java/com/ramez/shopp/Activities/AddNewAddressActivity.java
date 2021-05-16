@@ -94,6 +94,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         binding = ActivityAddNewAddressBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        Places.initialize(getActiviy(), this.getString(R.string.mapKey), Locale.US);
+
         setContentView(view);
 
 
@@ -150,10 +152,14 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     Toast(R.string.enter_name);
                     binding.nameEt.requestFocus();
 
-                } else {
+                } else if (selectedCityId==0 ) {
                     YoYo.with(Techniques.Shake).playOn(binding.stateSpinner1Input);
                     Toast(R.string.select_area);
                 }
+
+//                else if(binding.phoneTv.getText().toString().length() >10 ) {
+//                    Toast(R.string.verify_phone_number);
+//                }
 
             }
 
@@ -334,8 +340,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     private boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
-
         return formValidator.addField(binding.nameEt, new NonEmptyRule(R.string.enter_name)).validate();
+        // new MaxLengthRule(10, R.string.verify_phone_number))
+        //                        .validate();
 
     }
 
@@ -414,7 +421,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     private void initPlaceAutoComplete() {
 
-        Places.initialize(this.getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
+        Places.initialize(getActiviy(), this.getString(R.string.mapKey), Locale.US);
 
         autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 

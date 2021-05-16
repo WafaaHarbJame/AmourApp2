@@ -25,6 +25,8 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProfileData;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.FileUtil;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -62,14 +64,20 @@ public class EditProfileActivity extends ActivityBase {
 
         memberModel = UtilityApp.getUserData();
         userId = memberModel.getId();
+        if(memberModel!=null){
+            binding.userNameTv.setText(memberModel.getName());
+            binding.edtUserName.setText(memberModel.getName());
+            binding.etEmail.setText(memberModel.getEmail());
+            binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
+            Log.i("tag", "Log data" + memberModel.getProfilePicture());
 
-        binding.userNameTv.setText(memberModel.getName());
-        binding.edtUserName.setText(memberModel.getName());
-        binding.etEmail.setText(memberModel.getEmail());
-        binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
-        Log.i("tag", "Log data" + memberModel.getProfilePicture());
+            Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
-        Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+
+        }
+        else {
+            getUserData(userId);
+        }
 
 
         binding.saveBut.setOnClickListener(view1 -> {
@@ -314,6 +322,56 @@ public class EditProfileActivity extends ActivityBase {
             }
         });
     }
+
+    public void getUserData(int user_id) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            if (func.equals(Constants.ERROR)) {
+                UtilityApp.logOut();
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            } else if (func.equals(Constants.FAIL)) {
+                UtilityApp.logOut();
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                //  Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
+
+            } else if (IsSuccess) {
+                MemberModel memberModel = UtilityApp.getUserData();
+                if (result != null && result.data != null) {
+                    memberModel.setName(result.data.getName());
+                    memberModel.setEmail(result.data.getEmail());
+                    memberModel.setProfilePicture(result.data.getProfilePicture());
+                    UtilityApp.setUserData(memberModel);
+                    binding.userNameTv.setText(memberModel.getName());
+                    binding.edtUserName.setText(memberModel.getName());
+                    binding.etEmail.setText(memberModel.getEmail());
+                    binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
+                    Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+
+
+                }
+
+
+
+
+            }
+
+
+        }).getUserDetails(user_id);
+    }
+
 
 
 }

@@ -224,7 +224,10 @@ public class ChangePassActivity extends ActivityBase {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
         return formValidator.addField(binding.edtPassword, new NonEmptyRule(R.string.old_pass)).
-                addField(binding.edtNewPassword, new NonEmptyRule(R.string.new_pass)).addField(binding.edtConfirmPassword, new NonEmptyRule(R.string.enter_confirm_password)).addField(binding.edtConfirmPassword, new EqualRule(String.valueOf(binding.edtNewPassword.getText()), R.string.password_confirm_not_match)).validate();
+                addField(binding.edtNewPassword, new NonEmptyRule(R.string.new_pass)).
+                addField(binding.edtConfirmPassword, new NonEmptyRule(R.string.enter_confirm_password))
+                .addField(binding.edtConfirmPassword, new EqualRule(String.valueOf(binding.edtNewPassword.getText()),
+                        R.string.password_confirm_not_match)).validate();
     }
 
 

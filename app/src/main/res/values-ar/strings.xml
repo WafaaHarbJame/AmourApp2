@@ -327,4 +327,5 @@
     <string name="order_confirmed">تم الطلب  بنجاح </string>
     <string name="order_note">تم استلام طلبك  بنجاج ويمكنك  معرفة حالة الطلب من  صفحة الطلبات </string>
     <string name="will_be_deliverd">سوف تستلم طلبك </string>
+    <string name="verify_phone_number">يجب ان يكون رقم الهاتف مكون من 10  ارقام او اقل  </string>
 </resources>
