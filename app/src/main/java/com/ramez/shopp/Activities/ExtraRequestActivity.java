@@ -83,8 +83,12 @@ public class ExtraRequestActivity extends ActivityBase {
 
         user = UtilityApp.getUserData();
         localModel = UtilityApp.getLocalData();
-        store_id = Integer.parseInt(localModel.getCityId());
-        user_id = UtilityApp.getUserData().getId();
+
+        if (UtilityApp.getUserData() != null) {
+            store_id = Integer.parseInt(localModel.getCityId());
+            user_id = UtilityApp.getUserData().getId();
+
+        }
 
         initListener();
 
@@ -132,26 +136,33 @@ public class ExtraRequestActivity extends ActivityBase {
 
 
         binding.addToCartBtn.setOnClickListener(v -> {
+            if (user_id > 0) {
+                count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
-            count = Integer.parseInt(binding.productCartQTY.getText().toString());
-
-            AddExtraCall addExtraCall = new AddExtraCall();
-            if (Objects.requireNonNull(binding.tvProductDesc.getText()).toString().isEmpty()) {
-                Toast(getString(R.string.please_add_desc));
-
-            } else {
-                addExtraCall.description = binding.tvProductDesc.getText().toString();
-                addExtraCall.userId = user_id;
-                addExtraCall.barcode = CODE;
-                addExtraCall.qty = Integer.parseInt(binding.productCartQTY.getText().toString());
-                addExtraCall.storeId = store_id;
-                if (selectedPhotoFil != null) {
-                    AddRequestWithPhoto(addExtraCall, selectedPhotoFil);
+                AddExtraCall addExtraCall = new AddExtraCall();
+                if (Objects.requireNonNull(binding.tvProductDesc.getText()).toString().isEmpty()) {
+                    Toast(getString(R.string.please_add_desc));
 
                 } else {
-                    AddRequestWithOutPhoto(addExtraCall);
+                    addExtraCall.description = binding.tvProductDesc.getText().toString();
+                    addExtraCall.userId = user_id;
+                    addExtraCall.barcode = CODE;
+                    addExtraCall.qty = Integer.parseInt(binding.productCartQTY.getText().toString());
+                    addExtraCall.storeId = store_id;
+                    if (selectedPhotoFil != null) {
+                        AddRequestWithPhoto(addExtraCall, selectedPhotoFil);
 
+                    } else {
+                        AddRequestWithOutPhoto(addExtraCall);
+
+                    }
                 }
+            } else {
+                UtilityApp.logOut();
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
 
 
@@ -331,12 +342,11 @@ public class ExtraRequestActivity extends ActivityBase {
                     selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
 
 
-
                     long length = selectedPhotoFil.length();
 
-                    length = length/1024;
-                    Log.i(getClass().getSimpleName(), "Log File Path "+selectedPhotoFil.getPath() + ", File size : " + length +" KB");
-                    Log.i(getClass().getSimpleName(), "Log Image Size "+selectedPhotoFil.getPath().length());
+                    length = length / 1024;
+                    Log.i(getClass().getSimpleName(), "Log File Path " + selectedPhotoFil.getPath() + ", File size : " + length + " KB");
+                    Log.i(getClass().getSimpleName(), "Log Image Size " + selectedPhotoFil.getPath().length());
 
                     Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 
@@ -392,6 +402,10 @@ public class ExtraRequestActivity extends ActivityBase {
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
                 GlobalData.Api + "v4/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken())
+
                 .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
                 .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))
@@ -401,53 +415,54 @@ public class ExtraRequestActivity extends ActivityBase {
                 .setOkHttpClient(okHttpClient)
                 .build().
 
-                setUploadProgressListener((bytesUploaded, totalBytes) -> {
-                    // do anything with progress
-                }).getAsJSONObject(new JSONObjectRequestListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                GlobalData.hideProgressDialog();
-                Log.i("tag", "Log data response " + response);
+                        setUploadProgressListener((bytesUploaded, totalBytes) -> {
+                            // do anything with progress
+                        }).getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        GlobalData.hideProgressDialog();
+                        Log.i("tag", "Log data response " + response);
 
-                String message = getString(R.string.fail_to_add_extra_order);
-
-
-                try {
-                    JSONObject jsonObject = response;
-                    int status = jsonObject.getInt("status");
-                    if (status == 200) {
-
-                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
-                        successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
-                                .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-                            navigateToCartScreen();
-                        });
-                        successDialog.show();
+                        String message = getString(R.string.fail_to_add_extra_order);
 
 
-                    } else {
-                        message = jsonObject.getString("message");
-                        GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+                        try {
+                            JSONObject jsonObject = response;
+                            int status = jsonObject.getInt("status");
+                            if (status == 200) {
+                                UtilityApp.updateCart(1, 1);
+
+                                AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
+                                successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
+                                        .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
+                                    navigateToCartScreen();
+                                });
+                                successDialog.show();
+
+
+                            } else {
+                                message = jsonObject.getString("message");
+                                GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
 
+                    @Override
+                    public void onError(ANError error) {
+                        if (error.getMessage() != null) {
+                            GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        }
 
-
-            }
-
-            @Override
-            public void onError(ANError error) {
-                if (error.getMessage() != null) {
-                    GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
-
-                }
-
-            }
-        });
+                    }
+                });
     }
 
 
@@ -475,6 +490,9 @@ public class ExtraRequestActivity extends ActivityBase {
         AndroidNetworking.post(GlobalData.BetaBaseURL + country + GlobalData.grocery +
                 GlobalData.Api + "v4/Carts/AddExtrat")
                 .addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken())
                 .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
                 .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))
@@ -499,6 +517,7 @@ public class ExtraRequestActivity extends ActivityBase {
                     JSONObject jsonObject = response;
                     int status = jsonObject.getInt("status");
                     if (status == 200) {
+                        UtilityApp.updateCart(1, 1);
 
                         AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
                         successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)

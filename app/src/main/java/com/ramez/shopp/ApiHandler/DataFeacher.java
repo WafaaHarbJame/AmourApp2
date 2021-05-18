@@ -55,6 +55,9 @@ public class DataFeacher {
         };
 
         headerMap.put("ApiKey", Constants.api_key);
+        headerMap.put("device_type", Constants.deviceType);
+        headerMap.put("app_version", UtilityApp.getAppVersionStr());
+        headerMap.put("token", UtilityApp.getToken());
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
 
@@ -116,6 +119,9 @@ public class DataFeacher {
         apiService = isLong ? ApiClient.getLongClient().create(ApiInterface.class) : ApiClient.getClient().create(ApiInterface.class);
 
         headerMap.put("ApiKey", Constants.api_key);
+        headerMap.put("device_type", Constants.deviceType);
+        headerMap.put("app_version", UtilityApp.getAppVersionStr());
+        headerMap.put("token", UtilityApp.getToken());
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
 

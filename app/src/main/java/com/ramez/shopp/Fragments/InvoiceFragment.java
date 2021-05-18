@@ -810,8 +810,12 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
-                addHeaders("ApiKey", Constants.api_key).
-                addQueryParameter("store_id", String.valueOf(storeId)).build()
+                addHeaders("ApiKey", Constants.api_key)
+                 .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken()).
+
+        addQueryParameter("store_id", String.valueOf(storeId)).build()
                 .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
                     @Override
                     public void onResponse(DeliveryResultModel result) {

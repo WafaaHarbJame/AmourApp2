@@ -342,7 +342,12 @@ public class ContactSupportActivity extends ActivityBase {
 
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
-                .addHeaders("ApiKey", Constants.api_key).build().
+                .addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken())
+
+                .build().
                 setUploadProgressListener((bytesUploaded, totalBytes) -> {
                     // do anything with progress
                 }).getAsJSONObject(new JSONObjectRequestListener() {

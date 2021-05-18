@@ -269,6 +269,10 @@ public class EditProfileActivity extends ActivityBase {
                 GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken())
+
                 .setPriority(Priority.HIGH).build().
                 setUploadProgressListener((bytesUploaded, totalBytes) -> {
                     // do anything with progress

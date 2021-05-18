@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Models.CountryModel;
@@ -89,6 +90,22 @@ public class UtilityApp {
 
 
         return "";
+    }
+
+
+    public  static String getToken(){
+        final String[] FCMToken = new String[1];
+        OneSignal.idsAvailable((userId, registrationId) -> {
+            Log.d("debug", "Log User:" + userId);
+            if (registrationId != null)
+                  FCMToken[0] =OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+
+            Log.i("Utility", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+            Log.i("Utility", "Log token firebase:" + UtilityApp.getFCMToken());
+
+        });
+        return FCMToken[0];
+
     }
 
     public static boolean isFirstRun() {
