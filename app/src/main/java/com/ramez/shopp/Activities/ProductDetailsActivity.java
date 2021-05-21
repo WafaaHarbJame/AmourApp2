@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -270,6 +271,80 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             }
 
 
+        });
+
+        binding.ratingBar.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (!UtilityApp.isLogin()) {
+
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel_label, null, null);
+                    checkLoginDialog.show();
+
+                } else {
+
+                    ReviewModel reviewModel = new ReviewModel();
+
+                    AddRateDialog.Click okClick = new AddRateDialog.Click() {
+
+                        @Override
+                        public void click() {
+
+                            if (!UtilityApp.isLogin()) {
+
+                                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel_label, null, null);
+                                checkLoginDialog.show();
+
+                            } else {
+                                EditText note = addCommentDialog.findViewById(R.id.rateEt);
+                                RatingBar ratingBar = addCommentDialog.findViewById(R.id.ratingBar);
+                                String notes = note.getText().toString();
+
+                                reviewModel.setComment(notes);
+                                reviewModel.setProductId(product_id);
+                                reviewModel.setStoreId(storeId);
+                                reviewModel.setUser_id(user_id);
+                                reviewModel.setRate((int) ratingBar.getRating());
+
+                                if (ratingBar.getRating() == 0) {
+
+                                    Toasty.error(getActiviy(), R.string.please_fill_rate, Toast.LENGTH_SHORT, true).show();
+                                    YoYo.with(Techniques.Shake).playOn(ratingBar);
+                                    ratingBar.requestFocus();
+
+                                } else if (note.getText().toString().isEmpty()) {
+
+                                    note.requestFocus();
+                                    note.setError(getString(R.string.please_fill_comment));
+
+
+                                } else {
+                                    addComment(v, reviewModel);
+                                }
+
+                            }
+
+
+                        }
+
+                    };
+
+                    AddRateDialog.Click cancelClick = new AddRateDialog.Click() {
+                        @Override
+                        public void click() {
+
+                            addCommentDialog.dismiss();
+
+
+                        }
+                    };
+
+                    addCommentDialog = new AddRateDialog(getActiviy(), getString(R.string.add_comment), R.string.ok, R.string.cancel_label, okClick, cancelClick);
+                    addCommentDialog.show();
+
+                }
+            }
+
+            return true;
         });
 
 

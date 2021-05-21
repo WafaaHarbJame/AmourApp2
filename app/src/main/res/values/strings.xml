@@ -364,6 +364,15 @@
     <string name="order_note">Your order Has been  confirmed . You can check the status of this order from  order page </string>
     <string name="will_be_deliverd">Will be delivered on </string>
     <string name="verify_phone_number">Verify Phone Number</string>
+    <string name="product_not_found">When an item not available </string>
+    <string name="product_not_found_1">Allow Ramez to offer close  alternatives</string>
+    <string name="product_not_found_2">Remove out of stock from the order</string>
+    <string name="product_not_found_3">call me before change in order </string>
+    <string name="TEXT_FROM">From </string>
+    <string name="page">page </string>
+    <string name="check_product">Please Select When an item not available</string>
+    <string name="please_select_payment_method">Please select payment method</string>
+    <string name="select_delivery_time">Please select Delivery time </string>
 
 
 </resources>

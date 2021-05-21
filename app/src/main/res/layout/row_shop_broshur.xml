@@ -6,10 +6,21 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
     android:background="@color/gray5"
-    android:layoutDirection="ltr"
     android:orientation="vertical">
 
-
+    <com.ramez.shopp.SpichalViews.STextViewBold
+        android:text=""
+        android:id="@+id/broshur_title"
+        android:background="@drawable/round_corner_tiltle"
+        android:layout_width="match_parent"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:textAlignment="viewStart"
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"/>
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/ivCatImage"
         android:layout_width="match_parent"
@@ -19,10 +30,8 @@
         android:src="@drawable/holder_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:siBorderColor="@color/transparent"
-        app:siBorderWidth="@dimen/_1sdp"
-        app:siRadius="@dimen/_10sdp" />
+        app:layout_constraintTop_toBottomOf="@id/broshur_title"
+     />
 
     <View
         android:id="@+id/transLy"

@@ -9,5 +9,6 @@ public class OrderCall {
     public String coupon_code_id;
     public int delivery_date_id;
     public Boolean expressDelivery;
+    public int itemNotFoundAction;
 }
 

@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.util.List;
 
@@ -115,6 +117,14 @@ public class BrochuresModel {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+    public String getName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            return titleEn;
+
+        } else {
+            return titleAr;
+        }
     }
 
 }

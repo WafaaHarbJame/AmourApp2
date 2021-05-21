@@ -8,8 +8,6 @@
     android:orientation="vertical">
 
 
-
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
@@ -49,7 +47,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_down" />
+                    android:src="@drawable/ic_angle_up" />
 
             </LinearLayout>
 
@@ -107,7 +105,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_down" />
+                        android:src="@drawable/ic_angle_up" />
 
                 </LinearLayout>
 
@@ -139,7 +137,7 @@
                         android:textAlignment="viewStart" />
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
-                        android:id="@+id/acceptBtu"
+                        android:id="@+id/changeAddressBtu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -184,18 +182,21 @@
 
 
                 <ImageView
+                    android:id="@+id/toggleDeliveryBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_down" />
+                    android:src="@drawable/ic_angle_down" />
 
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/freeLY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:background="@drawable/round_corner_grey_small">
+                android:background="@drawable/round_corner_grey_small"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -263,7 +264,8 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/DeliverTimeRecycler"
@@ -271,6 +273,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"
                 tools:listitem="@layout/row_delivery_times" />
@@ -278,9 +281,9 @@
             <LinearLayout
                 android:id="@+id/quickLy"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/quickDeliveryLy"
@@ -335,6 +338,47 @@
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/checkProductLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_baseline_fact_check"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/product_not_found"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <ImageView
+                    android:id="@+id/toggleCheckerBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angle_down" />
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ProductCheckRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_product_check" />
 
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"

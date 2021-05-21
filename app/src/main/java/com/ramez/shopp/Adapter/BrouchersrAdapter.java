@@ -124,6 +124,8 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Holder holder = (Holder) viewHolder;
             BrochuresModel brochuresModel = brousherDm.get(position);
             Log.d("getBooklet_image", "" + brochuresModel.getImage());
+            int first=position+1;
+            holder.binding.broshurTitle.setText(context.getString(R.string.page)+" " +first+" "  +context.getString(R.string.TEXT_FROM)+ " "+brousherDm.size());
 
 
             Glide.with(context)

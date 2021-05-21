@@ -20,9 +20,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
     public List<PaymentModel> paymentMethods;
     public Context context;
     public LayoutInflater inflater;
-    public int selectedIndex = -1;
+    public int selectedIndex;
     DataCallback dataCallback;
-    private int lastIndex = 0;
 
 
     public PaymentAdapter(Context context, List<PaymentModel> paymentMethods, DataCallback dataCallback) {
@@ -30,6 +29,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataCallback = dataCallback;
+//        this.selectedIndex=selectedIndex;
 
     }
 
@@ -49,7 +49,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
         holder.binding.paymentIv.setImageResource(paymentMethod.getImage());
 
 
-        if (lastIndex == position) {
+        if (selectedIndex == paymentMethod.getId()) {
 
             holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_red));
             holder.binding.paymentTv.setTextColor(ContextCompat.getColor(context, R.color.white));
@@ -66,8 +66,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
 
 
         holder.binding.cardView.setOnClickListener(v -> {
-            selectedIndex = position;
-            lastIndex = position;
+            selectedIndex = paymentMethod.getId();
             Log.i("tag", "Log 1" + paymentMethod.getId());
             notifyDataSetChanged();
             if (dataCallback != null) {

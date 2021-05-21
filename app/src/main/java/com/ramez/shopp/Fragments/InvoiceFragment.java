@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,24 +20,22 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
 import com.ramez.shopp.Activities.AddressActivity;
-import com.ramez.shopp.Activities.InvoiceInfoActivity;
 import com.ramez.shopp.Activities.OrderCompleteActivity;
 import com.ramez.shopp.Adapter.AddressCheckAdapter;
 import com.ramez.shopp.Adapter.DeliveryDayAdapter;
 import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
 import com.ramez.shopp.Adapter.PaymentAdapter;
+import com.ramez.shopp.Adapter.ProductCheckAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.Classes.ProductChecker;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartResultModel;
@@ -52,7 +51,6 @@ import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
 
@@ -72,20 +70,20 @@ import static android.content.ContentValues.TAG;
 public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter.OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect, AddressCheckAdapter.OnEditClick {
     private static final int ADDRESS_CODE = 100;
     public Integer userId;
-    public String paymentMethod = "COD";
-    public int paymentMethodId = 0;
+    //    public String paymentMethod = "COD";
     public String couponCodeId = "0";
-    public Integer deliveryDateId = 0;
     public String deliveryDate, deliveryTime;
     public Boolean expressDelivery = false;
     public DeliveryDayAdapter deliveryDayAdapter;
     public DeliveryTimeAdapter deliveryTimeAdapter;
+    public ProductCheckAdapter productCheckerAdapter;
     public int selectedPosition = 0;
     ArrayList<PaymentModel> paymentList;
     List<DeliveryTime> deliveryTimesList;
     ArrayList<CartModel> productList;
     GridLayoutManager payLinearLayoutManager;
     LinearLayoutManager linearLayoutManager;
+    List<ProductChecker> productCheckerList;
 
     LocalModel localModel;
     int storeId, productsSize;
@@ -96,14 +94,22 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     ArrayList<AddressModel> addressList;
     private FragmentInvoiceBinding binding;
     private PaymentAdapter paymentAdapter;
-    private int addressId = 0;
     private String addressTitle;
     private String addressFullAddress;
     private double deliveryFees = 0.0;
     private CartResultModel cartResultModel;
     private int minimum_order_amount = 0;
     private LinkedHashMap<String, List<DeliveryTime>> datesMap = new LinkedHashMap<>();
-    private boolean toggleButton = false;
+    private boolean toggleDeliveryButton = false;
+    private boolean toggleProductButton = false;
+
+
+    public PaymentModel selectedPaymentMethod = null;
+    //    public int paymentMethodId = 0;
+    private int addressId = 0;
+    public Integer deliveryDateId = 0;
+    int itemNotFoundId = 0;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -115,6 +121,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         DayList = new ArrayList<>();
         TimeList = new ArrayList<>();
+        productCheckerList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
         currency = localModel.getCurrencyCode();
@@ -140,23 +147,32 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         binding.DeliverTimeRecycler.setHasFixedSize(true);
+        binding.ProductCheckRecycler.setHasFixedSize(true);
+
+
         LinearLayoutManager deliverTimeLlm = new LinearLayoutManager(getActivityy());
         deliverTimeLlm.setOrientation(LinearLayoutManager.VERTICAL);
         binding.DeliverTimeRecycler.setLayoutManager(deliverTimeLlm);
 
 
+        LinearLayoutManager checkProductLlm = new LinearLayoutManager(getActivityy());
+        checkProductLlm.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.ProductCheckRecycler.setLayoutManager(checkProductLlm);
+
+
         getExtraIntent();
 
-        getDefaultAddress();
 
         //getDeliveryTimeList(storeId);
 
-        getDeliveryTimeListNew(storeId);
 
         getPaymentMethod(storeId);
 
-        getQuickDelivery(storeId, localModel.getCountryId());
-
+//        getDeliveryTimeListNew(storeId);
+//
+//        getQuickDelivery(storeId, localModel.getCountryId());
+//        getDefaultAddress();
+//        getProductCheckerList();
 
         initListener();
 
@@ -178,13 +194,30 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         return view;
     }
 
+    private void getProductCheckerList() {
+        productCheckerList.add(new ProductChecker(1, getString(R.string.product_not_found_1)));
+        productCheckerList.add(new ProductChecker(2, getString(R.string.product_not_found_2)));
+        productCheckerList.add(new ProductChecker(3, getString(R.string.product_not_found_3)));
+        productCheckerAdapter = new ProductCheckAdapter(getActivityy(), productCheckerList, itemNotFoundId, (obj, func, IsSuccess) -> {
+            ProductChecker productChecker = (ProductChecker) obj;
+            itemNotFoundId = productChecker.getId();
+
+            toggleProductButton = !toggleProductButton;
+            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.ProductCheckRecycler.setVisibility(View.GONE);
+
+            checkData();
+
+        });
+        binding.ProductCheckRecycler.setAdapter(productCheckerAdapter);
+    }
+
     private void getDefaultAddress() {
         if (UtilityApp.getUserData().lastSelectedAddress > 0) {
             addressId = UtilityApp.getUserData().lastSelectedAddress;
             GetUserAddress(addressId);
-
         } else {
-            binding.acceptBtu.setText(R.string.select_address);
+            binding.changeAddressBtu.setText(R.string.select_address);
         }
 
 
@@ -200,40 +233,63 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         binding.sendOrder.setOnClickListener(view1 -> {
 
+            if (selectedPaymentMethod == null) {
+                Toast(R.string.please_select_payment_method);
+                return;
+            }
+
+            if (!selectedPaymentMethod.getShortname().equals("CC") && addressId == 0) {
+                Toast(R.string.choose_address);
+                binding.tvFullAddress.setFocusable(true);
+                binding.tvFullAddress.setError(getString(R.string.choose_address));
+                return;
+            }
+
+            if (deliveryDateId == 0) {
+                Toast(R.string.select_delivery_time);
+                return;
+            }
+
+            if (itemNotFoundId == 0) {
+                Toast(R.string.check_product);
+                return;
+            }
+
             OrderCall orderCall = new OrderCall();
             orderCall.user_id = userId;
             orderCall.store_ID = storeId;
             orderCall.address_id = addressId;
-            orderCall.payment_method = paymentMethod;
+            orderCall.payment_method = selectedPaymentMethod.getShortname();
             orderCall.coupon_code_id = couponCodeId;
             orderCall.delivery_date_id = deliveryDateId;
-            orderCall.expressDelivery = expressDelivery;
+            orderCall.itemNotFoundAction = itemNotFoundId;
 
-            if (deliveryTimesList != null && deliveryTimesList.size() > 0) {
-                if (paymentMethod.equals("CC")) {
-                    binding.chooseDelivery.setVisibility(View.GONE);
-                    sendOrder(orderCall);
-                } else {
-                    if (addressId == 0) {
-                        Toast(R.string.choose_address);
-                        binding.tvFullAddress.setFocusable(true);
-                        binding.tvFullAddress.setError(getString(R.string.choose_address));
-                    } else {
-                        sendOrder(orderCall);
-                    }
-                }
-            } else {
-                GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
-            }
+            sendOrder(orderCall);
+
+//            if (deliveryTimesList != null && deliveryTimesList.size() > 0) {
+//                if (selectedPaymentMethod.getShortname().equals("CC")) {
+//                    binding.chooseDelivery.setVisibility(View.GONE);
+//
+//                } else {
+////                    if (addressId == 0) {
+////                        Toast(R.string.choose_address);
+////                        binding.tvFullAddress.setFocusable(true);
+////                        binding.tvFullAddress.setError(getString(R.string.choose_address));
+////                    } else {
+//                    sendOrder(orderCall);
+////                    }
+//                }
+//            } else {
+//                GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
+//            }
 
         });
 
 
-        binding.acceptBtu.setOnClickListener(view12 -> {
+        binding.changeAddressBtu.setOnClickListener(view12 -> {
             Intent intent = new Intent(getActivityy(), AddressActivity.class);
             intent.putExtra(Constants.delivery_choose, true);
             startActivityForResult(intent, ADDRESS_CODE);
-
 
         });
 
@@ -268,8 +324,46 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         });
-    }
 
+
+        binding.chooseDeliveryTime.setOnClickListener(view1 -> {
+
+            toggleDeliveryButton = !toggleDeliveryButton;
+
+            if (toggleDeliveryButton) {
+
+                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+                binding.freeDelivery.setVisibility(View.VISIBLE);
+                binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
+                binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+
+            } else {
+
+                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+                binding.freeDelivery.setVisibility(View.GONE);
+                binding.DeliverDayRecycler.setVisibility(View.GONE);
+                binding.DeliverTimeRecycler.setVisibility(View.GONE);
+            }
+
+        });
+
+        binding.checkProductLy.setOnClickListener(view1 -> {
+
+            toggleProductButton = !toggleProductButton;
+
+
+            if (toggleProductButton) {
+                binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+                binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
+
+            } else {
+                binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+                binding.ProductCheckRecycler.setVisibility(View.GONE);
+
+            }
+
+        });
+    }
 
     private void initTimesList() {
         TimeList.clear();
@@ -288,39 +382,33 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
-
-    public void initAdapter() {
+    public void initPaymentAdapter() {
 
         for (int i = 0; i < paymentList.size(); i++) {
             PaymentModel paymentModel = paymentList.get(i);
             if (paymentModel.getId() == 1) {
                 paymentModel.setImage(R.drawable.cash);
-            }
-
-            if (paymentModel.getId() == 2) {
+            } else if (paymentModel.getId() == 2) {
                 paymentModel.setImage(R.drawable.collect);
-            }
-            if (paymentModel.getId() == 3) {
+            } else if (paymentModel.getId() == 3) {
                 paymentModel.setImage(R.drawable.benefit);
-            }
-            if (paymentModel.getId() == 4) {
+            } else if (paymentModel.getId() == 4) {
                 paymentModel.setImage(R.drawable.card);
             }
 
         }
 
         paymentAdapter = new PaymentAdapter(getActivityy(), paymentList, (obj, func, IsSuccess) -> {
-            PaymentModel paymentModel = (PaymentModel) obj;
-            if (paymentMethod != null) {
-                paymentMethod = paymentModel.getShortname();
-                paymentMethodId = paymentModel.getId();
+            selectedPaymentMethod = (PaymentModel) obj;
+            if (selectedPaymentMethod != null) {
+//                paymentMethod = paymentModel.getShortname();
+//                paymentMethodId = paymentModel.getId();
 
-                if (paymentMethod.equals("CC")) {
+                if (selectedPaymentMethod.getShortname().equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
                     initTimeAdapter(0.0);
                     binding.deliveryFees.setText(getString(R.string.free));
                     binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(NumberHandler.formatDouble(Double.parseDouble(total), fraction)) + 0.0, fraction).concat(" " + currency));
-
 
                 } else {
                     binding.chooseDelivery.setVisibility(View.VISIBLE);
@@ -330,6 +418,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                 }
 
+                checkData();
 
             }
         });
@@ -337,7 +426,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     }
-
 
     public void getPaymentMethod(int user_id) {
 
@@ -367,10 +455,13 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     if (IsSuccess) {
                         if (result.getData() != null && result.getData().size() > 0) {
                             paymentList = result.getData();
-                            paymentMethod = result.getData().get(0).getShortname();
-                            paymentMethodId = result.getData().get(0).getId();
-                            initAdapter();
 
+                            // selectedPaymentMethod = result.getData().get(0);
+//                            paymentMethodId = result.getData().get(0).getId();
+                            initPaymentAdapter();
+
+                            initData();
+//                            checkData();
 
                         }
 
@@ -381,83 +472,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         }).getPaymentMethod(user_id);
-    }
-
-
-    public void getDeliveryTimeList(int storeId) {
-
-        datesMap.clear();
-
-        binding.loadingDelivery.setVisibility(View.VISIBLE);
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (isVisible()) {
-
-                binding.loadingDelivery.setVisibility(View.GONE);
-                String message = getString(R.string.fail_to_get_data);
-                DeliveryResultModel result = (DeliveryResultModel) obj;
-
-                if (func.equals(Constants.ERROR)) {
-
-                    if (result != null && result.getMessage() != null) {
-                        message = result.getMessage();
-                    }
-                    GlobalData.Toast(getActivityy(), message);
-
-                } else if (func.equals(Constants.FAIL)) {
-                    GlobalData.Toast(getActivityy(), message);
-
-                } else if (func.equals(Constants.NO_CONNECTION)) {
-                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-                } else {
-                    if (IsSuccess) {
-                        if (result.getData() != null && result.getData().size() > 0) {
-                            List<DeliveryTime> datesList = result.getData();
-
-                            DeliveryTime firstTime = datesList.get(0);
-                            deliveryDateId = firstTime.getId();
-                            deliveryDate = firstTime.getDate();
-                            deliveryTime = firstTime.getTime();
-
-                            Log.i("tag", "Log deliveryDateId firstTime " + deliveryDateId);
-                            Log.i("tag", "Log deliveryDateId firstTime1 " + result.getData().get(0).getId());
-
-                            String currentDate = firstTime.getDate();
-                            List<DeliveryTime> timesList = new ArrayList<>();
-
-                            while (datesList.size() > 0) {
-                                DeliveryTime deliveryTime = datesList.get(0);
-
-                                if (deliveryTime.getDate().equals(currentDate)) {
-                                    timesList.add(deliveryTime);
-                                    datesList.remove(0);
-                                    if (datesList.isEmpty()) {
-                                        datesMap.put(deliveryTime.getDate(), timesList);
-                                    }
-                                } else {
-                                    datesMap.put(currentDate, timesList);
-                                    currentDate = deliveryTime.getDate();
-                                    timesList = new ArrayList<>();
-                                }
-                            }
-
-
-                            deliveryTimesList = datesMap.get(firstTime.getDate());
-
-
-                            initDaysAdapter();
-
-
-                        } else {
-                            binding.noDeliveryTv.setVisibility(View.VISIBLE);
-                        }
-
-                    }
-                }
-            }
-
-
-        }).getDeliveryTimeList(storeId);
     }
 
     private void getExtraIntent() {
@@ -488,7 +502,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
-
     private void sendOrder(OrderCall orderCall) {
         AnalyticsHandler.checkOut(couponCodeId, currency, total, total);
 
@@ -512,7 +525,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
                         if (result.getOrder_id() > 0) {
-                            AnalyticsHandler.PurchaseEvent(couponCodeId, currency, paymentMethodId, deliveryFees,
+                            AnalyticsHandler.PurchaseEvent(couponCodeId, currency, selectedPaymentMethod.getId(), deliveryFees,
                                     String.valueOf(result.getOrder_id()), total);
 
                             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
@@ -563,13 +576,16 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
-    public void startMain() {
-        Intent intent = new Intent(getActivityy(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    private void initData() {
+
+        getDeliveryTimeListNew(storeId);
+        getQuickDelivery(storeId, localModel.getCountryId());
+        getDefaultAddress();
+        getProductCheckerList();
+
+        checkData();
 
     }
-
 
     @Override
     public void onContainerSelectSelected(AddressModel addressesDM) {
@@ -578,13 +594,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
-
     @Override
     public void onAddressSelected(AddressModel addressesDM) {
         addressId = addressesDM.getId();
 
     }
-
 
     private void initDaysAdapter() {
 
@@ -620,7 +634,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     private void initTimeAdapter(Double deliveryFee) {
-        if (paymentMethod.equals("CC")) {
+        if (selectedPaymentMethod != null && selectedPaymentMethod.getShortname().equals("CC")) {
             deliveryFee = 0.0;
         }
 
@@ -634,6 +648,18 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
             Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
             Log.i("tag", "Log deliveryTimesList click" + deliveryTimesList.get(selectedPosition).getTime());
+
+            toggleDeliveryButton = !toggleDeliveryButton;
+            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.freeDelivery.setVisibility(View.GONE);
+            binding.DeliverDayRecycler.setVisibility(View.GONE);
+            binding.DeliverTimeRecycler.setVisibility(View.GONE);
+
+            checkData();
+
+//            toggleProductButton = !toggleProductButton;
+//            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_arrow_up));
+//            binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
 
 
         });
@@ -666,8 +692,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 addressFullAddress = bundle.getString(Constants.ADDRESS_FULL);
                 binding.delivery.setText(addressTitle);
                 binding.tvFullAddress.setText(addressFullAddress);
-                binding.acceptBtu.setText(R.string.change_address);
+                binding.changeAddressBtu.setText(R.string.change_address);
                 AnalyticsHandler.addShippingInfo(couponCodeId, currency, total, total);
+
+
+                showDeliveryDate();
 
             }
 
@@ -811,11 +840,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
                 addHeaders("ApiKey", Constants.api_key)
-                 .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
                 .addHeaders("token", UtilityApp.getToken()).
 
-        addQueryParameter("store_id", String.valueOf(storeId)).build()
+                addQueryParameter("store_id", String.valueOf(storeId)).build()
                 .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
                     @Override
                     public void onResponse(DeliveryResultModel result) {
@@ -881,6 +910,55 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 });
     }
 
+    private void checkData() {
+
+
+        if (selectedPaymentMethod == null) {
+            return;
+        }
+
+        if (selectedPaymentMethod != null && !selectedPaymentMethod.getShortname().equals("CC") && addressId == 0) {
+            binding.changeAddressBtu.performClick();
+            return;
+        }
+
+        if (deliveryDateId == 0) {
+
+            showDeliveryDate();
+            return;
+        }
+
+
+        if (itemNotFoundId == 0) {
+            toggleProductButton = !toggleProductButton;
+            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+            binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
+            //scrollToView(binding.dataLY, binding.ProductCheckRecycler);
+        }
+
+    }
+
+    private void showDeliveryDate() {
+
+        toggleDeliveryButton = !toggleDeliveryButton;
+        binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+        binding.freeDelivery.setVisibility(View.VISIBLE);
+        binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
+        binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+
+    }
+
+    public static void scrollToView(final NestedScrollView nestedScrollView, final View viewToScrollTo) {
+        final int[] xYPos = new int[2];
+        viewToScrollTo.getLocationOnScreen(xYPos);
+        final int[] scrollxYPos = new int[2];
+        nestedScrollView.getLocationOnScreen(scrollxYPos);
+        int yPosition = xYPos[1];
+        if (yPosition < 0) {
+            yPosition = 0;
+        }
+        nestedScrollView.scrollTo(0, scrollxYPos[1] - yPosition);
+    }
 
 }
 
