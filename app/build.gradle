@@ -12,8 +12,8 @@ android {
         applicationId "com.ramez.shopp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 52
-        versionName "5.22"
+        versionCode 53
+        versionName "5.23"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
