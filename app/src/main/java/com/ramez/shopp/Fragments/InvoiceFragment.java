@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -192,24 +193,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         return view;
     }
 
-    private void getProductCheckerList() {
-        productCheckerList.add(new ProductChecker(1, getString(R.string.product_not_found_1)));
-        productCheckerList.add(new ProductChecker(2, getString(R.string.product_not_found_2)));
-        productCheckerList.add(new ProductChecker(3, getString(R.string.product_not_found_3)));
-        productCheckerAdapter = new ProductCheckAdapter(getActivityy(), productCheckerList, itemNotFoundId, (obj, func, IsSuccess) -> {
-            ProductChecker productChecker = (ProductChecker) obj;
-            itemNotFoundId = productChecker.getId();
-
-            toggleProductButton = !toggleProductButton;
-            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-            binding.ProductCheckRecycler.setVisibility(View.GONE);
-
-            checkData();
-
-        });
-        binding.ProductCheckRecycler.setAdapter(productCheckerAdapter);
-    }
-
     private void getDefaultAddress() {
         if (UtilityApp.getUserData().lastSelectedAddress > 0) {
             addressId = UtilityApp.getUserData().lastSelectedAddress;
@@ -324,41 +307,46 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         });
 
 
+        binding.choosePaymentType.setOnClickListener(view1 -> {
+
+            showHidePaymentLY(binding.paymentRv.getVisibility() == View.GONE);
+
+        });
+
+        binding.chooseDeliveryBtn.setOnClickListener(view1 -> {
+
+            showHideDeliveryLY(binding.DeliverLY.getVisibility() == View.GONE);
+
+        });
+
         binding.chooseDeliveryTime.setOnClickListener(view1 -> {
 
-            toggleDeliveryButton = !toggleDeliveryButton;
+//            toggleDeliveryButton = !toggleDeliveryButton;
 
-            if (toggleDeliveryButton) {
+            showHideDateLY(binding.DeliverDayRecycler.getVisibility() == View.GONE);
 
-                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-                binding.freeDelivery.setVisibility(View.VISIBLE);
-                binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
-                binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
-
-            } else {
-
-                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-                binding.freeDelivery.setVisibility(View.GONE);
-                binding.DeliverDayRecycler.setVisibility(View.GONE);
-                binding.DeliverTimeRecycler.setVisibility(View.GONE);
-            }
+//            if (toggleDeliveryButton) {
+//
+//                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+//                binding.freeDelivery.setVisibility(View.VISIBLE);
+//                binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
+//                binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+//
+//            } else {
+//
+//                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+//                binding.freeDelivery.setVisibility(View.GONE);
+//                binding.DeliverDayRecycler.setVisibility(View.GONE);
+//                binding.DeliverTimeRecycler.setVisibility(View.GONE);
+//            }
 
         });
 
         binding.checkProductLy.setOnClickListener(view1 -> {
 
-            toggleProductButton = !toggleProductButton;
+//            toggleProductButton = !toggleProductButton;
 
-
-            if (toggleProductButton) {
-                binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-                binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
-
-            } else {
-                binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-                binding.ProductCheckRecycler.setVisibility(View.GONE);
-
-            }
+            showHideNoProductLY(binding.ProductCheckRecycler.getVisibility() == View.GONE);
 
         });
     }
@@ -416,6 +404,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                 }
 
+                showHidePaymentLY(false);
+//                binding.choosePaymentType.performClick();
                 checkData();
 
             }
@@ -585,6 +575,63 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
+    private void showHidePaymentLY(boolean show) {
+
+        if (show) {
+            binding.paymentArrowImg.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+            binding.paymentRv.setVisibility(View.VISIBLE);
+        } else {
+            binding.paymentArrowImg.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.paymentRv.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void showHideDeliveryLY(boolean show) {
+
+        if (show) {
+            binding.deliveryArrowImg.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+            binding.DeliverLY.setVisibility(View.VISIBLE);
+        } else {
+            binding.deliveryArrowImg.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.DeliverLY.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void showHideDateLY(boolean show) {
+
+        if (show) {
+
+            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+            binding.freeDelivery.setVisibility(View.VISIBLE);
+            binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
+            binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+
+        } else {
+
+            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.freeDelivery.setVisibility(View.GONE);
+            binding.DeliverDayRecycler.setVisibility(View.GONE);
+            binding.DeliverTimeRecycler.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void showHideNoProductLY(boolean show) {
+
+        if (show) {
+            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+            binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
+
+        } else {
+            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+            binding.ProductCheckRecycler.setVisibility(View.GONE);
+
+        }
+
+    }
+
     @Override
     public void onContainerSelectSelected(AddressModel addressesDM) {
 
@@ -647,12 +694,13 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
             Log.i("tag", "Log deliveryTimesList click" + deliveryTimesList.get(selectedPosition).getTime());
 
-            toggleDeliveryButton = !toggleDeliveryButton;
-            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-            binding.freeDelivery.setVisibility(View.GONE);
-            binding.DeliverDayRecycler.setVisibility(View.GONE);
-            binding.DeliverTimeRecycler.setVisibility(View.GONE);
+//            toggleDeliveryButton = !toggleDeliveryButton;
+//            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+//            binding.freeDelivery.setVisibility(View.GONE);
+//            binding.DeliverDayRecycler.setVisibility(View.GONE);
+//            binding.DeliverTimeRecycler.setVisibility(View.GONE);
 
+            showHideDateLY(false);
             checkData();
 
 //            toggleProductButton = !toggleProductButton;
@@ -693,8 +741,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 binding.changeAddressBtu.setText(R.string.change_address);
                 AnalyticsHandler.addShippingInfo(couponCodeId, currency, total, total);
 
-
-                showDeliveryDate();
+//                binding.chooseDeliveryBtn.performClick();
+                showHideDeliveryLY(false);
+                showHideDateLY(true);
+//                showDeliveryDate();
 
             }
 
@@ -821,6 +871,25 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
+    private void getProductCheckerList() {
+        productCheckerList.add(new ProductChecker(1, getString(R.string.product_not_found_1)));
+        productCheckerList.add(new ProductChecker(2, getString(R.string.product_not_found_2)));
+        productCheckerList.add(new ProductChecker(3, getString(R.string.product_not_found_3)));
+        productCheckerAdapter = new ProductCheckAdapter(getActivityy(), productCheckerList, itemNotFoundId, (obj, func, IsSuccess) -> {
+            ProductChecker productChecker = (ProductChecker) obj;
+            itemNotFoundId = productChecker.getId();
+
+//            toggleProductButton = !toggleProductButton;
+//            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
+//            binding.ProductCheckRecycler.setVisibility(View.GONE);
+
+            showHideNoProductLY(false);
+            checkData();
+
+        });
+        binding.ProductCheckRecycler.setAdapter(productCheckerAdapter);
+    }
+
     public void getDeliveryTimeListNew(int storeId) {
         datesMap.clear();
 
@@ -912,50 +981,67 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         if (selectedPaymentMethod == null) {
+            showHidePaymentLY(true);
             return;
         }
 
-        if (selectedPaymentMethod != null && !selectedPaymentMethod.getShortname().equals("CC") && addressId == 0) {
+        if (!selectedPaymentMethod.getShortname().equals("CC") && addressId == 0) {
+            showHideDeliveryLY(true);
             binding.changeAddressBtu.performClick();
             return;
         }
 
         if (deliveryDateId == 0) {
 
-            showDeliveryDate();
+            showHideDateLY(true);
+//            showDeliveryDate();
+
             return;
         }
 
 
         if (itemNotFoundId == 0) {
-            toggleProductButton = !toggleProductButton;
-            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-            binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
-            //scrollToView(binding.dataLY, binding.ProductCheckRecycler);
+
+            showHideNoProductLY(true);
+
+//            toggleProductButton = !toggleProductButton;
+//            binding.toggleCheckerBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+//            binding.ProductCheckRecycler.setVisibility(View.VISIBLE);
+//            scrollToView(binding.ProductCheckRecycler);
         }
 
     }
 
-    private void showDeliveryDate() {
+//    private void showDeliveryDate() {
+//
+//        toggleDeliveryButton = !toggleDeliveryButton;
+//        binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
+//        binding.freeDelivery.setVisibility(View.VISIBLE);
+//        binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
+//        binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+//
+////        scrollToView(binding.DeliverTimeRecycler);
+//
+//    }
 
-        toggleDeliveryButton = !toggleDeliveryButton;
-        binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-        binding.freeDelivery.setVisibility(View.VISIBLE);
-        binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
-        binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
+    public void scrollToView(View viewToScrollTo) {
+//        View parent = (View) viewToScrollTo.getParent();
+//        System.out.println("Log getParent.getTop " + parent.getTop());
+//        System.out.println("Log view.getTop " + viewToScrollTo.getTop());
+//        int scrollTo = parent.getTop() + viewToScrollTo.getTop();
+//        binding.dataLY.smoothScrollTo(0, scrollTo);
 
-    }
-
-    public static void scrollToView(final NestedScrollView nestedScrollView, final View viewToScrollTo) {
         final int[] xYPos = new int[2];
         viewToScrollTo.getLocationOnScreen(xYPos);
         final int[] scrollxYPos = new int[2];
-        nestedScrollView.getLocationOnScreen(scrollxYPos);
+        binding.dataLY.getLocationOnScreen(scrollxYPos);
         int yPosition = xYPos[1];
         if (yPosition < 0) {
             yPosition = 0;
         }
-        nestedScrollView.scrollTo(0, scrollxYPos[1] - yPosition);
+        int distance = scrollxYPos[1] - yPosition;
+        System.out.println("Log distance " + distance);
+        binding.dataLY.scrollTo(0, distance);
     }
 
 }
