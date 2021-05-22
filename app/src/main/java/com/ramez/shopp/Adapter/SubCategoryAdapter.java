@@ -25,11 +25,11 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     private OnSubCategoryItemClicked onSubCategoryItemClicked;
     private int selectedCat;
 
-    public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS, OnSubCategoryItemClicked onSubCategoryItemClicked, int selectedPosition) {
+    public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS, int selectedId, OnSubCategoryItemClicked onSubCategoryItemClicked) {
         this.context = context;
         this.mainCategoryDMS = mainCategoryDMS;
         this.onSubCategoryItemClicked = onSubCategoryItemClicked;
-        this.selectedCat = selectedPosition;
+        this.selectedCat = selectedId;
 
     }
 

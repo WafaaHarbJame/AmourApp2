@@ -222,8 +222,9 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     }
 
     private void initSubCatList(ArrayList<ChildCat> subCatList) {
+
         ChildCat childCat = new ChildCat();
-        childCat.setId(selectedSubCat);
+        childCat.setId(0);
         childCat.setHName(getString(R.string.all));
         childCat.setName(getString(R.string.all));
 
@@ -237,20 +238,20 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     private void initSubCategoryAdapter(ArrayList<ChildCat> subCategoryDMS) {
 
-        SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS, object -> {
+        SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS,selectedSubCat, object -> {
 
             selectedSubCat = object.getId();
             cancelAPiCall();
             getProductList(selectedSubCat, country_id, city_id, user_id, "", 0, 10);
 
-        }, selectedSubCat);
+        });
 
         binding.listSubCategory.setAdapter(subCategoryAdapter);
 
     }
 
     private void initMainCategoryAdapter() {
-        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, selectedSubCat);
+        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, category_id);
         binding.listShopCategories.setAdapter(mainCategoryShopAdapter);
     }
 
@@ -324,7 +325,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     @Override
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
-        selectedSubCat = mainCategoryDM.getId();
+        category_id = mainCategoryDM.getId();
+        selectedSubCat = 0;
         initSubCatList(mainCategoryDM.getChildCat());
 
         cancelAPiCall();
@@ -454,17 +456,17 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
         for (int i = 0; i < mainCategoryDMS.size(); i++) {
 
-            ArrayList<ChildCat> subArrayList=mainCategoryDMS.get(i).getChildCat();
+            ArrayList<ChildCat> subArrayList = mainCategoryDMS.get(i).getChildCat();
 
-            for (int j = 0; j <subArrayList.size() ; j++) {
-                if (subId==subArrayList.get(j).getId()) {
-                    category_id=mainCategoryDMS.get(i).getId();
+            for (int j = 0; j < subArrayList.size(); j++) {
+                if (subId == subArrayList.get(j).getId()) {
+                    category_id = mainCategoryDMS.get(i).getId();
                     Log.i(CategoryProductsFragment.class.getName(), "Log subCat category_id " + category_id);
-                    selectedSubCat=category_id;
+                    selectedSubCat = subId;
                     initData(i);
 
                 }
-                
+
             }
 
         }
