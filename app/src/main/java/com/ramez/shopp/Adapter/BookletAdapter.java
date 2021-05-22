@@ -67,7 +67,7 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
 //            }
 //        }).into(holder.binding.ivCatImage);
 
-        GlobalData.GlideImgGif(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
+        GlobalData.GlideImgGifSize(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
 
 
 

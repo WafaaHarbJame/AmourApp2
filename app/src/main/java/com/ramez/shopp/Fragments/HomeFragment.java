@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Trace;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -943,6 +944,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
             bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+            bundle.putBoolean(Constants.SUBCATID,true);
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
@@ -1014,6 +1016,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
             bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putBoolean(Constants.SUBCATID,true);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 

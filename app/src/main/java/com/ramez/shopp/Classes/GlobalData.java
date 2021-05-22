@@ -14,6 +14,8 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.R;
@@ -115,6 +117,25 @@ public class GlobalData {
 
         try {
             Glide.with(c).load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static void GlideImgGifSize(Context c, String image, int placeholder, ImageView imageView) {
+        String photoUrl = "";
+
+        if (image != null && !image.isEmpty()) {
+            photoUrl = image;
+        } else {
+            photoUrl = BetaBaseURL;
+        }
+
+        try {
+            Glide.with(c).load(photoUrl).placeholder(placeholder).apply(new RequestOptions().transform(new RoundedCorners((int) c.getResources().getDimension(R.dimen._8sdp))).error(R.drawable.holder_image).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                    .into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }

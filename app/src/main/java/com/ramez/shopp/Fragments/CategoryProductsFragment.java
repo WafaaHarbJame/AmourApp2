@@ -101,7 +101,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         country_id = localModel.getCountryId();
 
 
-        if (UtilityApp.isLogin()&&UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null) {
+        if (UtilityApp.isLogin() && UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
 
             user = UtilityApp.getUserData();
             user_id = String.valueOf(user.getId());
@@ -180,7 +180,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         if (bundle != null) {
 
             mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
-            if (mainCategoryDMS==null) {
+            boolean subCat = bundle.getBoolean(Constants.SUBCATID);
+            if (mainCategoryDMS == null) {
 
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     mainCategoryDMS = UtilityApp.getCategories();
@@ -198,15 +199,26 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + category_id);
             Log.i(CategoryProductsFragment.class.getName(), "Log position " + position);
             Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + categoryModel.getId());
+            Log.i(CategoryProductsFragment.class.getName(), "Log subCat " + subCat);
 
             selectedSubCat = categoryModel.getId();
-            initMainCategoryAdapter();
+            if (subCat) {
+                getCatId(categoryModel.getId());
 
-            initSubCatList(mainCategoryDMS.get(position).getChildCat());
-
-            getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
+            } else {
+                initData(position);
+            }
 
         }
+    }
+
+    private void initData(int position) {
+        initMainCategoryAdapter();
+
+        initSubCatList(mainCategoryDMS.get(position).getChildCat());
+
+        getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
+
     }
 
     private void initSubCatList(ArrayList<ChildCat> subCatList) {
@@ -436,6 +448,27 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
 
         }).GetAllCategories(storeId);
+    }
+
+    private void getCatId(int subId) {
+
+        for (int i = 0; i < mainCategoryDMS.size(); i++) {
+
+            ArrayList<ChildCat> subArrayList=mainCategoryDMS.get(i).getChildCat();
+
+            for (int j = 0; j <subArrayList.size() ; j++) {
+                if (subId==subArrayList.get(j).getId()) {
+                    category_id=mainCategoryDMS.get(i).getId();
+                    Log.i(CategoryProductsFragment.class.getName(), "Log subCat category_id " + category_id);
+                    selectedSubCat=category_id;
+                    initData(i);
+
+                }
+                
+            }
+
+        }
+
     }
 
 }
