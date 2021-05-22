@@ -70,7 +70,6 @@ import static android.content.ContentValues.TAG;
 public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter.OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect, AddressCheckAdapter.OnEditClick {
     private static final int ADDRESS_CODE = 100;
     public Integer userId;
-    //    public String paymentMethod = "COD";
     public String couponCodeId = "0";
     public String deliveryDate, deliveryTime;
     public Boolean expressDelivery = false;
@@ -82,7 +81,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     List<DeliveryTime> deliveryTimesList;
     ArrayList<CartModel> productList;
     GridLayoutManager payLinearLayoutManager;
-    LinearLayoutManager linearLayoutManager;
     List<ProductChecker> productCheckerList;
 
     LocalModel localModel;
@@ -105,7 +103,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     public PaymentModel selectedPaymentMethod = null;
-    //    public int paymentMethodId = 0;
+
     private int addressId = 0;
     public Integer deliveryDateId = 0;
     int itemNotFoundId = 0;
