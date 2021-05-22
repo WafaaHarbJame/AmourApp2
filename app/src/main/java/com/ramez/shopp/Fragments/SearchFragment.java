@@ -158,6 +158,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                 String text = v.getText().toString();
                 searchTxt(country_id, city_id, user_id, text, 0, 10);
                 ActivityHandler.hideKeyboard(getActivity());
+                binding.searchEt.dismissDropDown();
 
                 return true;
 
@@ -181,6 +182,8 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                     searchQuery = s.toString();
                     handler.postDelayed(runnable, 500);
                 }
+
+
 
             }
 
