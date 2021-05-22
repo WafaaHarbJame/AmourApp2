@@ -329,9 +329,9 @@
     <string name="will_be_deliverd">سوف تستلم طلبك </string>
     <string name="verify_phone_number">يجب ان يكون رقم الهاتف مكون من 10  ارقام او اقل  </string>
     <string name="product_not_found">في حالة عدم توفر المنتج</string>
-    <string name="product_not_found_1">السماح لتعاونية الاتحاد بتقديم البدائل</string>
+    <string name="product_not_found_1">السماح لرامز  بتقديم البديل المماثل </string>
     <string name="product_not_found_2">إزالة المنتج الغير متوفر من الطلب</string>
-    <string name="product_not_found_3"> أتصل بي قبل تغير في محتوي الطلب</string>
+    <string name="product_not_found_3"> أتصل بي قبل  أي تغير في محتوي الطلب</string>
     <string name="TEXT_FROM">من </string>
     <string name="page">صفحة</string>
     <string name="check_product">من فضلك اختر في حالة عدم توفر المنتج</string>

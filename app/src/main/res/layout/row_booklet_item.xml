@@ -23,17 +23,18 @@
             app:indicatorColor="@color/colorPrimaryDark"
             app:indicatorName="BallClipRotateMultipleIndicator" />
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/ivCatImage"
             android:layout_width="@dimen/_145sdp"
             android:layout_height="@dimen/_100sdp"
             android:background="@drawable/round_corner_white_small"
             android:scaleType="fitXY"
-            app:riv_border_color="@color/gray5"
+            app:siBorderColor="@color/gray5"
+            app:siRadius="@dimen/_6sdp"
             android:src="@drawable/holder_image"
-            app:riv_border_width="@dimen/_2sdp"
+            app:siBorderWidth="@dimen/_2sdp"
             android:visibility="visible"
-            app:riv_corner_radius="@dimen/_6sdp" />
+           />
 
     </FrameLayout>
 

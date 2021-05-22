@@ -76,7 +76,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             view_line = itemView.findViewById(R.id.view_line);
 
             buttonCategory.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 if(position>=0){
                     ChildCat subCategoryDM = mainCategoryDMS.get(position);
                     selectedCat = subCategoryDM.getId();

@@ -74,6 +74,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -896,17 +897,18 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         } else if (slider.getReffrenceType() == 2) {
             CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            categoryModel.setId(Integer.parseInt(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            bundle.putInt(Constants.position, position);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
+            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+
 
 
         } else if (slider.getReffrenceType() == 3) {
@@ -931,15 +933,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         }
          else if (slider.getReffrenceType() ==6) {
             CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+            categoryModel.setId(Integer.parseInt(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            bundle.putInt(Constants.position, position);
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
+            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+            Log.i(getClass().getSimpleName(),"Log cat modle"+categoryModel.getId());
+            bundle.putSerializable(Constants.FROM_HOME, true);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -969,9 +973,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            bundle.putInt(Constants.position, position);
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
+            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment,
                     "categoryProductsFragment").commit();
@@ -1006,9 +1010,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-            bundle.putInt(Constants.position, position);
             bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
+            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1056,6 +1060,16 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
+
+    public int getItemPosition(int  id)
+    {
+        for (int position=0; position<categoryModelList.size(); position++)
+            if (categoryModelList.get(position).getId() == id)
+
+        return position;
+
+        return 0;
+    }
 
 
 }

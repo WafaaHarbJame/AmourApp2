@@ -196,7 +196,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             int position = bundle.getInt(Constants.position, 0);
             Log.i(CategoryProductsFragment.class.getName(), "Log mainCategoryDMS " + mainCategoryDMS.size());
             Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + category_id);
-            Log.i(CategoryProductsFragment.class.getName(), "Log categoryModel " + categoryModel.getHName());
+            Log.i(CategoryProductsFragment.class.getName(), "Log position " + position);
+            Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + categoryModel.getId());
 
             selectedSubCat = categoryModel.getId();
             initMainCategoryAdapter();

@@ -2,6 +2,7 @@ package com.ramez.shopp.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowBookletItemBinding;
@@ -49,20 +51,24 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         BookletsModel bookletsModel = bookletsList.get(position);
+        Log.i(getClass().getSimpleName(),"Log ImageUrl"+bookletsList.get(position).getImage());
+//
+//        Glide.with(context).asBitmap().load(bookletsModel.getImage()).placeholder(R.drawable.holder_image).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).addListener(new RequestListener<Bitmap>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.GONE);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.GONE);
+//                return false;
+//            }
+//        }).into(holder.binding.ivCatImage);
 
-        Glide.with(context).asBitmap().load(bookletsModel.getImage()).placeholder(R.drawable.holder_image).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).addListener(new RequestListener<Bitmap>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
-                return false;
-            }
+        GlobalData.GlideImgGif(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
 
-            @Override
-            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
-                return false;
-            }
-        }).into(holder.binding.ivCatImage);
 
 
         holder.binding.container.setOnClickListener(v -> onItemClick.onBookletClicked(position, bookletsModel));
