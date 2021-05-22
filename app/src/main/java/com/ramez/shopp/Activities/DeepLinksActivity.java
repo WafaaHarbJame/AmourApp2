@@ -252,7 +252,7 @@ public class DeepLinksActivity extends ActivityBase {
                     //https://ramezshopping.com/product/1538/tomato-jordani-1-kg/bh/store/7263
                     ProductModel productModel = new ProductModel();
                     int productId = Integer.parseInt(list.get(1));
-                    int storeId = Integer.parseInt(list.get(3));
+                    int storeId = Integer.parseInt(list.get(5));
                     productModel.setId(productId);
                     productModel.setStoreId(storeId);
                     Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);

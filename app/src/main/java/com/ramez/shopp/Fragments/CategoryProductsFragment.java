@@ -101,7 +101,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         country_id = localModel.getCountryId();
 
 
-        if (UtilityApp.isLogin()) {
+        if (UtilityApp.isLogin()&&UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null) {
 
             user = UtilityApp.getUserData();
             user_id = String.valueOf(user.getId());

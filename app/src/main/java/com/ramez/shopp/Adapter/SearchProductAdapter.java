@@ -596,12 +596,15 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (IsSuccess) {
                     int cartId = result.getId();
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
-                    notifyItemChanged(position);
-                    UtilityApp.updateCart(1, productModels.size());
+                    if(productModels!=null){
+                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+                        notifyItemChanged(position);
+                        UtilityApp.updateCart(1, productModels.size());
 
-                    AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+                        AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+
+                    }
 
 
                 } else {

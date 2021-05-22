@@ -254,47 +254,54 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 } else {
                     String message = "";
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
 
-                    ProductModel productModel = productModels.get(position);
-                    int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
-                    Log.i("lll", "Log stock" + stock);
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                    int productId = productModel.getId();
-                    int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-                    Log.i("limit", "Log limit" + limit);
-                    Log.i("stock", "Log stock" + stock);
+                    if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+                        ProductModel productModel = productModels.get(position);
+                        int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                        int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                        Log.i("lll", "Log stock" + stock);
 
-                    if (limit == 0) {
+                        int userId = UtilityApp.getUserData().getId();
+                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int productId = productModel.getId();
+                        int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                        int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                        if (count + 1 <= stock) {
-                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-                        } else {
-                            message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                    message);
-                        }
-                    } else {
+                        if (limit == 0) {
 
-                        if (count + 1 <= stock && (count + 1) <= limit) {
-                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-                        } else {
-
-                            if (count + 1 > stock) {
-                                message = context.getString(R.string.stock_empty);
+                            if (count + 1 <= stock) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                             } else {
-                                message = context.getString(R.string.limit) + "" + limit;
+                                message = context.getString(R.string.stock_empty);
+                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                        message);
+                            }
+                        } else {
+
+                            if (count + 1 <= stock && (count + 1) <= limit) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                            } else {
+
+                                if (count + 1 > stock) {
+                                    message = context.getString(R.string.stock_empty);
+                                } else {
+                                    message = context.getString(R.string.limit) + "" + limit;
+
+                                }
+                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                        message);
 
                             }
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                    message);
 
                         }
-
                     }
+                    else {
+                        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                        checkLoginDialog.show();
+                    }
+
+
                 }
 
             });
