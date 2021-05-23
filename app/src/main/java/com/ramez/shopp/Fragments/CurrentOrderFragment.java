@@ -16,8 +16,10 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrdersResultModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCurrentOrderBinding;
 
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class CurrentOrderFragment extends FragmentBase {
 
-    List<OrderProductModel> currentOrdersList;
+    List<OrderNewModel> currentOrdersList;
     private FragmentCurrentOrderBinding binding;
     private MyOrdersAdapter myOrdersAdapter;
     private int user_id;
@@ -51,13 +53,13 @@ public class CurrentOrderFragment extends FragmentBase {
             if (UtilityApp.getUserData() != null) {
                 user_id = UtilityApp.getUserData().getId();
             }
-            getUpcomingOrders(user_id);
+            getUpcomingOrders(user_id,Constants.user_type,"u");
 
         }
 
 
         binding.swipe.setOnRefreshListener(() -> {
-            getUpcomingOrders(user_id);
+            getUpcomingOrders(user_id,Constants.user_type,"u");
             binding.swipe.setRefreshing(false);
         });
 
@@ -70,14 +72,26 @@ public class CurrentOrderFragment extends FragmentBase {
         });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getUpcomingOrders(user_id);
+            getUpcomingOrders(user_id,Constants.user_type,"u");
         });
 
 
         return view;
     }
 
-    public void getUpcomingOrders(int user_id) {
+
+
+    private void initOrdersAdapters(List<OrderNewModel> list) {
+        Log.i("TAG", "Log upcoming adapter  " + list.size());
+
+        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
+        binding.myOrderRecycler.setAdapter(myOrdersAdapter);
+
+
+    }
+
+
+    public void getUpcomingOrders(int user_id,String type,String filter) {
 
         currentOrdersList.clear();
 
@@ -87,131 +101,70 @@ public class CurrentOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (isVisible()) {
-                OrdersResultModel result = (OrdersResultModel) obj;
-                String message = activity.getString(R.string.fail_to_get_data);
+            ResultAPIModel<List<OrderNewModel>>result = (ResultAPIModel<List<OrderNewModel>>) obj;
+            String message = getString(R.string.fail_to_get_data);
 
-                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-                if (func.equals(Constants.ERROR)) {
+            if (func.equals(Constants.ERROR)) {
 
-                    if (result != null && result.getMessage() != null) {
-                        message = result.getMessage();
-                    }
-                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
+                if (result.message!= null) {
+                    message = result.message;
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
 
-                } else if (func.equals(Constants.FAIL)) {
+            } else if (func.equals(Constants.FAIL)) {
 
-                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
-
-
-                } else if (func.equals(Constants.NO_CONNECTION)) {
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                    binding.dataLY.setVisibility(View.GONE);
-
-                } else {
-                    if (IsSuccess) {
-                        if (result.getData() != null && result.getData().size() > 0) {
-
-                            binding.dataLY.setVisibility(View.VISIBLE);
-                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-                            currentOrdersList = result.getData();
-                            Log.i("TAG", "Log list  before  " + result.getData().size());
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
 
 
-                            List<OrderModel> list = initOrderList();
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
 
-                            initOrdersAdapters(list);
+            } else {
+                if (IsSuccess) {
+                    if (result.data!= null && result.data.size() > 0) {
 
-                            Log.i("TAG", "Log upcoming " + list.size());
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
+                        currentOrdersList = result.data;
 
-                        } else {
+                        initOrdersAdapters(currentOrdersList);
 
-                            binding.dataLY.setVisibility(View.GONE);
-                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
-                        }
+                        Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
 
 
                     } else {
 
                         binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failTxt.setText(message);
-
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
 
                     }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
                 }
             }
 
-
-        }).getUpcomingOrders(user_id);
+        }).getOrders(user_id,type,filter);
     }
 
-
-    private List<OrderModel> initOrderList() {
-        List<OrderModel> orderList = new ArrayList<>();
-
-        while (currentOrdersList.size() > 0) {
-            OrderProductModel currentProduct = currentOrdersList.get(0);
-
-            OrderModel orderModel = new OrderModel();
-            orderModel.setCartId(currentProduct.getCartId());
-            orderModel.setOrderId(currentProduct.getId());
-            orderModel.setOrderCode(currentProduct.getOrderCode());
-            orderModel.setAddressName(currentProduct.getAddressName());
-            orderModel.setFullAddress(currentProduct.getFullAddress());
-            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
-            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
-            orderModel.setOrderStatus(currentProduct.getOrderStatus());
-            orderModel.setFromDate(currentProduct.getFromDate());
-            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
-            orderModel.setToDate(currentProduct.getToDate());
-            orderModel.setOrderTotal(currentProduct.getOrderTotal());
-            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
-            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
-            orderModel.setCreatedAt(currentProduct.getCreatedAt());
-
-            List<OrderProductModel> productsList = new ArrayList<>();
-
-            for (int j = 0; j < currentOrdersList.size(); j++) {
-
-                OrderProductModel orderProductModel = currentOrdersList.get(j);
-                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
-                    productsList.add(orderProductModel);
-                    currentOrdersList.remove(j);
-                    j--;
-                }
-            }
-            orderModel.setOrderProductsDMS(productsList);
-            orderList.add(orderModel);
-        }
-
-
-        Log.i("TAG", "Log currentOrdersList" + orderList.size());
-
-        return orderList;
-
-    }
-
-    private void initOrdersAdapters(List<OrderModel> list) {
-        Log.i("TAG", "Log upcoming adapter  " + list.size());
-
-        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
-        binding.myOrderRecycler.setAdapter(myOrdersAdapter);
-
-
-    }
 }

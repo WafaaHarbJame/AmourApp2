@@ -17,11 +17,12 @@ public class OrderCompleteActivity extends ActivityBase {
     ActivityOrderCompleteBinding binding;
     OrderModel orderModel;
     private String orderId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityOrderCompleteBinding.inflate(getLayoutInflater());
-        View view=binding.getRoot();
+        binding = ActivityOrderCompleteBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         setContentView(view);
 
         setTitle(R.string.order_send);
@@ -36,45 +37,27 @@ public class OrderCompleteActivity extends ActivityBase {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             orderModel = (OrderModel) bundle.getSerializable(Constants.ORDER_MODEL);
-            orderId=orderModel.getOrderCode();
+            orderId = orderModel.getOrderCode();
             binding.orderIDTv.setText(orderId);
             String dayName;
 
-            String today=DateHandler.GetDateNowString();
+            String today = DateHandler.GetDateNowString();
 
-
-
-            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-
-                if(today.equals(orderModel.getDeliveryDate())){
-                    dayName=getString(R.string.today);
-                }
-                else {
-                    dayName = DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEEE");
-
-                }
-
+            if (today.equals(orderModel.getDeliveryDate())) {
+                dayName = getString(R.string.today);
             } else {
-
-
-                if(today.equals(orderModel.getDeliveryDate())){
-                    dayName=getString(R.string.today);
-                }
-                else {
-                    dayName = (DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEEE")).substring(0, 3);
-
-                }
-
-
+                if (UtilityApp.getLanguage().equals(Constants.Arabic))
+                    dayName = DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEEE");
+                else
+                    dayName = (DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEE"));
+//                    dayName = (DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEEE")).substring(0, 3);
             }
 
 
-            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime());
             binding.deliveryDayTv.setText(dayName);
+            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime());
         }
     }
-
-
 
 
 }

@@ -77,7 +77,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public DeliveryDayAdapter deliveryDayAdapter;
     public DeliveryTimeAdapter deliveryTimeAdapter;
     public ProductCheckAdapter productCheckerAdapter;
-    public int selectedPosition = 0;
+    //    public int selectedPosition = 0;
     ArrayList<PaymentModel> paymentList;
     List<DeliveryTime> deliveryTimesList;
     ArrayList<CartModel> productList;
@@ -88,7 +88,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     int storeId, productsSize;
     String total = "", currency = "";
     List<DeliveryTime> DayList;
-    List<DeliveryTime> TimeList;
+    //    List<DeliveryTime> TimeList;
     int fraction = 2;
     ArrayList<AddressModel> addressList;
     private FragmentInvoiceBinding binding;
@@ -119,7 +119,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         addressList = new ArrayList<>();
 
         DayList = new ArrayList<>();
-        TimeList = new ArrayList<>();
+//        TimeList = new ArrayList<>();
         productCheckerList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
@@ -352,16 +352,17 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
     private void initTimesList() {
-        TimeList.clear();
+//        TimeList.clear();
 
-        int timeId = 0;
-        TimeList = new ArrayList<>();
 
-        for (DeliveryTime timeModel : deliveryTimesList) {
-            DeliveryTime deliveryTime = new DeliveryTime(timeId, timeModel.getTime(), timeModel.getTime());
-            TimeList.add(deliveryTime);
-            timeId++;
-        }
+//        int timeId = 0;
+//        TimeList = new ArrayList<>();
+//
+//        for (DeliveryTime timeModel : deliveryTimesList) {
+//            DeliveryTime deliveryTime = new DeliveryTime(timeId, timeModel.getDate(), timeModel.getTime());
+//            TimeList.add(deliveryTime);
+//            timeId++;
+//        }
 
         initTimeAdapter(deliveryFees);
 
@@ -509,14 +510,16 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     if (result.getStatus() == 200) {
                         UtilityApp.setCartCount(0);
 
-                        OrderModel ordersDM = new OrderModel();
-
 
                         if (result.getOrder_id() > 0) {
                             AnalyticsHandler.PurchaseEvent(couponCodeId, currency, selectedPaymentMethod.getId(), deliveryFees,
                                     String.valueOf(result.getOrder_id()), total);
 
                             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
+
+                            System.out.println("Log order deliveryDate " + deliveryDate);
+                            System.out.println("Log order deliveryTime " + deliveryTime);
+                            OrderModel ordersDM = new OrderModel();
                             ordersDM.setOrderId(result.getOrder_id());
                             ordersDM.setDeliveryDate(deliveryDate);
                             ordersDM.setDeliveryTime(deliveryTime);
@@ -664,7 +667,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.quickButton.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_big_corner_dark_gray));
 
             initTimesList();
-            deliveryTimeAdapter.notifyDataSetChanged();
+//            deliveryTimeAdapter.notifyDataSetChanged();
 
 
         });
@@ -683,16 +686,16 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             deliveryFee = 0.0;
         }
 
-        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), TimeList, deliveryFee, selectedPosition, (obj, func, IsSuccess) -> {
+        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), deliveryTimesList, deliveryFee, deliveryDateId, (obj, func, IsSuccess) -> {
 
-            DeliveryTime searchListItem = (DeliveryTime) obj;
+            DeliveryTime selectedTime = (DeliveryTime) obj;
             //deliveryDateId = searchListItem.getId();
-            deliveryDateId = deliveryTimesList.get(selectedPosition).getId();
-            deliveryDate = deliveryTimesList.get(selectedPosition).getDate();
-            deliveryTime = deliveryTimesList.get(selectedPosition).getTime();
+            deliveryDateId = selectedTime.getId();
+            deliveryDate = selectedTime.getDate();
+            deliveryTime = selectedTime.getTime();
 
-            Log.i("tag", "Log deliveryTimesList click" + deliveryDateId);
-            Log.i("tag", "Log deliveryTimesList click" + deliveryTimesList.get(selectedPosition).getTime());
+            Log.i("tag", "Log deliveryTimesList click " + deliveryDateId);
+            Log.i("tag", "Log deliveryTimesList click " + selectedTime.getTime());
 
 //            toggleDeliveryButton = !toggleDeliveryButton;
 //            binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
@@ -925,10 +928,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                                 List<DeliveryTime> datesList = result.getData();
 
                                 DeliveryTime firstTime = datesList.get(0);
-                                deliveryDateId = firstTime.getId();
-                                deliveryDate = firstTime.getDate();
-                                deliveryTime = firstTime.getTime();
-
 
                                 String currentDate = firstTime.getDate();
                                 List<DeliveryTime> timesList = new ArrayList<>();
@@ -951,7 +950,13 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
                                 deliveryTimesList = datesMap.get(firstTime.getDate());
+                                if (deliveryTimesList != null && deliveryTimesList.size() > 0)
+                                    deliveryDateId = deliveryTimesList.get(0).getId();
+                                deliveryDate = firstTime.getDate();
+                                deliveryTime = firstTime.getTime();
 
+                                Log.i("tag", "Log deliveryTimesList click " + deliveryDateId);
+                                Log.i("tag", "Log deliveryTimesList click " + deliveryTime);
 
                                 initDaysAdapter();
 

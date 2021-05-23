@@ -234,7 +234,7 @@ ApiInterface {
     @GET("v4/Orders/getUpcomingOrders")
     Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
-    @GET("v4/Orders/GetOrdersList")
+    @POST("v4/Orders/GetOrdersList")
     Call<ResultAPIModel<ArrayList<OrderNewModel>>> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
 
 

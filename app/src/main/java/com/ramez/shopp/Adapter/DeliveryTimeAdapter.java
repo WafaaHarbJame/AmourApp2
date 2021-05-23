@@ -22,22 +22,22 @@ import java.util.List;
 public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapter.ViewHolder> {
 
     private static final String TAG = "DeliveryTimeAdapter";
-//    public int lastIndex = 0;
+    //    public int lastIndex = 0;
     public String currency = "BHD";
     Context context;
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryTimesList;
-    private  Double deliveryFees;
-    public int selectedPosition;
+    private Double deliveryFees;
+    public int selectedId;
 
     private boolean isSelected = false;
 
-    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees,int selectedPosition, DataCallback dataCallback) {
+    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList, Double deliveryFees, int timeId, DataCallback dataCallback) {
         this.deliveryTimesList = deliveryTimesList;
         this.context = context;
         this.dataCallback = dataCallback;
-        this.deliveryFees=deliveryFees;
-        this.selectedPosition=selectedPosition;
+        this.deliveryFees = deliveryFees;
+        this.selectedId = timeId;
 
     }
 
@@ -57,19 +57,17 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         DeliveryTime deliveryTimes = deliveryTimesList.get(position);
         viewHolder.binding.deliveryTime.setText(deliveryTimes.getTime());
 
-        currency=UtilityApp.getLocalData().getCurrencyCode();
+        currency = UtilityApp.getLocalData().getCurrencyCode();
 
-        if(deliveryFees==0){
+        if (deliveryFees == 0) {
             viewHolder.binding.deliveryPrice.setText(context.getString(R.string.free));
 
-        }
-        else {
+        } else {
             viewHolder.binding.deliveryPrice.setText(NumberHandler
                     .formatDouble(deliveryFees,
                             UtilityApp.getLocalData().getFractional()) + " " + currency);
 
         }
-
 
 
 //        if (lastIndex == position) {
@@ -83,7 +81,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
 //        }
 
 
-        if (deliveryTimes.getId() == selectedPosition) {
+        if (deliveryTimes.getId() == selectedId) {
             viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
@@ -113,17 +111,15 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(view1 -> {
-                DeliveryTime deliveryTime = deliveryTimesList.get(getAdapterPosition());
+                DeliveryTime deliveryTime = deliveryTimesList.get(getBindingAdapterPosition());
 //                lastIndex = getAdapterPosition();
+                selectedId = deliveryTime.getId();
                 notifyDataSetChanged();
-                selectedPosition = deliveryTime.getId();
-
 
                 if (dataCallback != null) {
                     dataCallback.dataResult(deliveryTime, "result", true);
                 }
             });
-
 
 
         }

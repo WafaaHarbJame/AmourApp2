@@ -16,11 +16,11 @@ public class DeliveryTime implements Serializable {
     @Expose
     private String time;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class DeliveryTime implements Serializable {
         this.time = time;
     }
 
-    public DeliveryTime(Integer id, String date, String time) {
+    public DeliveryTime(int id, String date, String time) {
         this.id = id;
         this.date = date;
         this.time = time;

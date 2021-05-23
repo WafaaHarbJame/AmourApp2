@@ -124,4 +124,5 @@ public class Constants {
     public static String FRAG_SEARCH = "frag_search";
     public static String FRAG_BROSHORE = "frag_broshore";
 
+    public static String past_order="p";
 }

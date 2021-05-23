@@ -13,7 +13,7 @@ import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ItemDetailsModel;
 import com.ramez.shopp.Models.OrderItemDetail;
-import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -31,11 +31,11 @@ import es.dmoral.toasty.Toasty;
 public class InvoiceInfoActivity extends ActivityBase {
     public String currency = "BHD";
     ActivityInvoiceInfoBinding binding;
-    List<OrderItemDetail> list;
-    OrderModel orderModel;
+    //    List<OrderItemDetail> list;
+    ItemDetailsModel orderModel;
     private OrderProductsAdapter orderProductsAdapter;
-    private int orderId=0;
-    int store_id,userId;
+    private int orderId = 0;
+    int store_id, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +44,14 @@ public class InvoiceInfoActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        list = new ArrayList<>();
+//        list = new ArrayList<>();
         currency = UtilityApp.getLocalData().getCurrencyCode();
-        if(UtilityApp.isLogin()){
-            userId=UtilityApp.getUserData().getId();
+        if (UtilityApp.isLogin()) {
+            userId = UtilityApp.getUserData().getId();
         }
 
-        if(UtilityApp.getLocalData()!=null){
-            store_id= Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        if (UtilityApp.getLocalData() != null) {
+            store_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
         }
 
         getIntentData();
@@ -59,15 +59,15 @@ public class InvoiceInfoActivity extends ActivityBase {
         setTitle(R.string.invoice_details);
 
         binding.reOrderBut.setOnClickListener(view1 -> {
-            for (int i = 0; i <list.size() ; i++) {
-                OrderItemDetail orderProductsDM = list.get(i);
+            for (int i = 0; i < orderModel.getOrderItemDetails().size(); i++) {
+                OrderItemDetail orderProductsDM = orderModel.getOrderItemDetails().get(i);
 
                 int count = orderProductsDM.getQuantity();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId =orderProductsDM.getProductId();
+                int productId = orderProductsDM.getProductId();
                 int product_barcode_id = orderProductsDM.getProductBarcodeId();
-                addToCart(view1, i, productId, product_barcode_id, count , userId, storeId);
+                addToCart(view1, i, productId, product_barcode_id, count, userId, storeId);
 
 
             }
@@ -79,10 +79,10 @@ public class InvoiceInfoActivity extends ActivityBase {
     private void getIntentData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            orderModel = (OrderModel) bundle.getSerializable(Constants.ORDER_MODEL);
-            orderId=orderModel.getOrderId();
-          //  list = orderModel.getOrderProductsDMS();
-            getProductList(orderId,userId,store_id,Constants.user_type);
+            OrderNewModel orderNewModel = (OrderNewModel) bundle.getSerializable(Constants.ORDER_MODEL);
+            orderId = orderNewModel.getId();
+            //  list = orderModel.getOrderProductsDMS();
+            getProductList(orderId, userId, store_id, Constants.user_type);
         }
     }
 
@@ -90,10 +90,10 @@ public class InvoiceInfoActivity extends ActivityBase {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.productsRecycler.setLayoutManager(linearLayoutManager);
 
-        orderProductsAdapter = new OrderProductsAdapter(getActiviy(), list);
+        orderProductsAdapter = new OrderProductsAdapter(getActiviy(), orderModel.getOrderItemDetails());
         binding.productsRecycler.setAdapter(orderProductsAdapter);
-        if(orderModel.getOrderTotal()>0){
-            binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getOrderTotal(), UtilityApp.getLocalData().getFractional()) + " " + currency));
+        if (orderModel.getTotalAmount() > 0) {
+            binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getTotalAmount(), UtilityApp.getLocalData().getFractional()) + " " + currency));
 
         }
 
@@ -105,11 +105,11 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             if (IsSuccess) {
 
-                UtilityApp.updateCart(1,list.size());
+                UtilityApp.updateCart(1, orderModel.getOrderItemDetails().size());
 
 
-                if (i == list.size() - 1) {
-                    initSnackBar(" " +getResources().getString(R.string.success_to_update_cart), v);
+                if (i == orderModel.getOrderItemDetails().size() - 1) {
+                    initSnackBar(" " + getResources().getString(R.string.success_to_update_cart), v);
 
                 }
 
@@ -132,7 +132,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
     public void getProductList(int order_id, int user_id, int store_id, String type) {
 
-        list.clear();
+//        orderModel.getOrderItemDetails().clear();
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -148,7 +148,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result!=null&&result.message!= null) {
+                if (result != null && result.message != null) {
                     message = result.message;
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -172,17 +172,16 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             } else {
                 if (IsSuccess) {
-                    if (result.data!= null && result.data.getOrderItemDetails().size() > 0) {
+                    if (result.data != null && result.data.getOrderItemDetails().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-                        list =result.data.getOrderItemDetails();
-                        orderModel.setOrderTotal(result.data.getTotalAmount());
+                        orderModel = result.data;
+//                        list = result.data.getOrderItemDetails();
 
                         initAdapter();
-
 
 
                     } else {
@@ -204,7 +203,7 @@ public class InvoiceInfoActivity extends ActivityBase {
                 }
             }
 
-        }).getOrderDetails(order_id,user_id,store_id,type);
+        }).getOrderDetails(order_id, user_id, store_id, type);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

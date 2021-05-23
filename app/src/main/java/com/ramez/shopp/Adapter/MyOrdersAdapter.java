@@ -19,6 +19,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.databinding.RowCurrentMyOrderItemBinding;
@@ -37,14 +38,14 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int visibleThreshold = 5;
     public Context context;
     String lang;
-    private List<OrderModel> list;
+    private List<OrderNewModel> list;
     private int lastVisibleItem;
     private int totalItemCount;
     private int userId;
     private OnLoadMoreListener mOnLoadMoreListener;
 
 
-    public MyOrdersAdapter(Context context, RecyclerView rv, List<OrderModel> ordersDMS, int userId) {
+    public MyOrdersAdapter(Context context, RecyclerView rv, List<OrderNewModel> ordersDMS, int userId) {
         this.context = context;
         this.list = ordersDMS;
         this.userId = userId;
@@ -106,7 +107,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         if (viewHolder instanceof ItemHolder) {
             ItemHolder holder = (ItemHolder) viewHolder;
-            final OrderModel ordersDM = list.get(position);
+            final OrderNewModel ordersDM = list.get(position);
 
             holder.binding.tvInvID.setText(ordersDM.getOrderCode());
             holder.binding.tvShopName.setText(R.string.app_name);
@@ -131,19 +132,25 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.binding.noteCTv.setText(ordersDM.getDeliveryStatus());
 
 
-            String orderDayTime = (DateHandler.FormatDate4(ordersDM.getCreatedAt(), "yyyy-MM-dd'T'HH:mm:ss", "hh:mm aa", lang));
+            String orderDayTime = (DateHandler.FormatDate4(ordersDM.getCreateDate(), "yyyy-MM-dd'T'HH:mm:ss", "hh:mm aa", lang));
 
             holder.binding.tvOrderTime.setText(orderDayTime);
 
-            String OrderDayName = (DateHandler.FormatDate4(ordersDM.getCreatedAt(), "yyyy-MM-dd'T'HH:mm:ss", "EEEE", lang));
+            String OrderDayName = (DateHandler.FormatDate4(ordersDM.getCreateDate(), "yyyy-MM-dd'T'HH:mm:ss", "EEEE", lang));
 
             String deliveryDayName = (DateHandler.FormatDate4(ordersDM.getDeliveryDate(), "yyyy-MM-dd", "EEEE", lang));
 
             holder.binding.TvDeliveryDay.setText(deliveryDayName);
             holder.binding.tvOrderDay.setText(OrderDayName);
 
+            if (ordersDM.getDeliveryDate() != null) {
+                String[] dateArr = ordersDM.getDeliveryDate().split(" ");
+                if (dateArr != null && dateArr.length > 1)
+                    holder.binding.TvDeliveryTime.setText(dateArr[1]);
+                else
+                    holder.binding.TvDeliveryTime.setText(dateArr[0]);
+            }
 
-            holder.binding.TvDeliveryTime.setText(ordersDM.getDeliveryTime());
 
             Log.i("tag", "Log getDeliveryStatus " + ordersDM.getDeliveryStatus());
 
@@ -163,13 +170,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
 
 
-
             } else if (ordersDM.getDeliveryStatus().equals("Pending Payment")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
-
 
 
             } else if (ordersDM.getDeliveryStatus().equals("Delivered") || ordersDM.getDeliveryStatus().equals("Canceled") || ordersDM.getDeliveryStatus().equals("Complete")) {
@@ -256,8 +261,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
             binding.rateOrderBtn.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
-                OrderModel ordersDM = list.get(position);
+                int position = getBindingAdapterPosition();
+                OrderNewModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, RatingActivity.class);
                 intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
                 Log.d(TAG, "inv_id" + ordersDM.getOrderCode() + "");
@@ -265,9 +270,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
             binding.container.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
-                OrderModel ordersDM = list.get(position);
+                OrderNewModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, InvoiceInfoActivity.class);
                 intent.putExtra(Constants.ORDER_MODEL, ordersDM);
                 context.startActivity(intent);
@@ -276,8 +281,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
             binding.orderDetailsBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
-                OrderModel ordersDM = list.get(position);
+                int position = getBindingAdapterPosition();
+                OrderNewModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, InvoiceInfoActivity.class);
                 intent.putExtra(Constants.ORDER_MODEL, ordersDM);
                 context.startActivity(intent);

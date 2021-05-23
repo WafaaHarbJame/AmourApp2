@@ -34,7 +34,6 @@ import static android.content.ContentValues.TAG;
 
 
 public class PastOrderFragment extends FragmentBase {
-    List<OrderProductModel> completedOrdersList;
     List<OrderNewModel> completeOrdersList;
     LinearLayoutManager linearLayoutManager;
     private FragmentPastOrderBinding binding;
@@ -47,7 +46,6 @@ public class PastOrderFragment extends FragmentBase {
         binding = FragmentPastOrderBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        completedOrdersList = new ArrayList<>();
         completeOrdersList = new ArrayList<>();
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -55,20 +53,21 @@ public class PastOrderFragment extends FragmentBase {
 
         user_id = UtilityApp.getUserData().getId();
 
-        getPastOrder(user_id);
 
-        //getOrders(user_id,Constants.user_type,Constants.past_order);
+        getOrders(user_id,Constants.user_type,Constants.past_order);
 
 
         binding.swipe.setOnRefreshListener(() -> {
-            getPastOrder(user_id);
             binding.swipe.setRefreshing(false);
+            getOrders(user_id,Constants.user_type,Constants.past_order);
+
         });
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-            getPastOrder(user_id);
+            getOrders(user_id,Constants.user_type,Constants.past_order);
+
 
         });
 
@@ -86,9 +85,9 @@ public class PastOrderFragment extends FragmentBase {
     }
 
 
-    public void getPastOrder(int user_id) {
+    public void getPastOrder(int user_id,String type,String filter) {
 
-        completedOrdersList.clear();
+        //completedOrdersList.clear();
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -137,12 +136,12 @@ public class PastOrderFragment extends FragmentBase {
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-                        completedOrdersList = result.getData();
+                      //  completedOrdersList = result.getData();
 
-                        List<OrderModel> list = initOrderList();
-                        Log.i("TAG", "Log list size " + list.size());
+//                        List<OrderModel> list = initOrderList();
+//                        Log.i("TAG", "Log list size " + list.size());
 
-                        initOrdersAdapters(list);
+                       // initOrdersAdapters(completedOrdersList);
 
 
 
@@ -167,13 +166,13 @@ public class PastOrderFragment extends FragmentBase {
 
         }
 
-        }).getPastOrders(user_id);
+        }).getOrders(user_id,type,filter);
     }
 
 
 
 
-    private void initOrdersAdapters(List<OrderModel> list) {
+    private void initOrdersAdapters(List<OrderNewModel> list) {
 
         myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
         binding.myOrderRecycler.setAdapter(myOrdersAdapter);
@@ -181,97 +180,12 @@ public class PastOrderFragment extends FragmentBase {
 
     }
 
-//    private List<OrderModel> initOrderList() {
-//        List<OrderModel> orderList = new ArrayList<>();
-//
-//        for (int i = 0; i < completedOrdersList.size(); i++) {
-//            OrderProductModel currentProduct = completedOrdersList.get(i);
-//
-//            OrderModel orderModel = new OrderModel();
-//            orderModel.setCartId(currentProduct.getCartId());
-//            orderModel.setOrderCode(currentProduct.getOrderCode());
-//            orderModel.setAddressName(currentProduct.getAddressName());
-//            orderModel.setFullAddress(currentProduct.getFullAddress());
-//            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
-//            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
-//            orderModel.setOrderStatus(currentProduct.getOrderStatus());
-//            orderModel.setFromDate(currentProduct.getFromDate());
-//            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
-//            orderModel.setToDate(currentProduct.getToDate());
-//            orderModel.setOrderTotal(currentProduct.getOrderTotal());
-//            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
-//            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
-//            orderModel.setCreatedAt(currentProduct.getCreatedAt());
-//
-//            List<OrderProductModel> productsList = new ArrayList<>();
-//
-//            for (int j = 0; j < completedOrdersList.size(); j++) {
-//
-//                OrderProductModel orderProductModel = completedOrdersList.get(j);
-//                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
-//                    productsList.add(orderProductModel);
-//                    completedOrdersList.remove(j);
-//                    j--;
-//                }
-//            }
-//            orderModel.setOrderProductsDMS(productsList);
-//            orderList.add(orderModel);
-//        }
-//
-//        Log.i("TAG", "Log currentOrdersList" + orderList.size());
-//
-//        return orderList;
-//
-//    }
 
 
-    private List<OrderModel> initOrderList() {
-        List<OrderModel> orderList = new ArrayList<>();
 
-        while (completedOrdersList.size() > 0) {
-            OrderProductModel currentProduct = completedOrdersList.get(0);
-
-            OrderModel orderModel = new OrderModel();
-            orderModel.setCartId(currentProduct.getCartId());
-            orderModel.setOrderCode(currentProduct.getOrderCode());
-            orderModel.setAddressName(currentProduct.getAddressName());
-            orderModel.setFullAddress(currentProduct.getFullAddress());
-            orderModel.setOrderId(currentProduct.getId());
-            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
-            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
-            orderModel.setOrderStatus(currentProduct.getOrderStatus());
-            orderModel.setFromDate(currentProduct.getFromDate());
-            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
-            orderModel.setToDate(currentProduct.getToDate());
-            orderModel.setOrderTotal(currentProduct.getOrderTotal());
-            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
-            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
-            orderModel.setCreatedAt(currentProduct.getCreatedAt());
-
-            List<OrderProductModel> productsList = new ArrayList<>();
-
-            for (int j = 0; j < completedOrdersList.size(); j++) {
-
-                OrderProductModel orderProductModel = completedOrdersList.get(j);
-                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
-                    productsList.add(orderProductModel);
-                    completedOrdersList.remove(j);
-                    j--;
-                }
-            }
-            orderModel.setOrderProductsDMS(productsList);
-            orderList.add(orderModel);
-        }
-
-
-        Log.i("TAG", "Log currentOrdersList" + orderList.size());
-
-        return orderList;
-
-    }
     public void getOrders(int user_id,String type,String filter) {
 
-        completedOrdersList.clear();
+        completeOrdersList.clear();
 
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
@@ -317,12 +231,7 @@ public class PastOrderFragment extends FragmentBase {
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
                         completeOrdersList = result.data;
-
-                        List<OrderModel> list = initOrderList();
-
-                        initOrdersAdapters(list);
-
-                        Log.i("TAG", "Log ordersDMS" + completedOrdersList.size());
+                        initOrdersAdapters(completeOrdersList);
 
 
                     } else {

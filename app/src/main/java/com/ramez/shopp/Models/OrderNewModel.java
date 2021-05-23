@@ -3,7 +3,9 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderNewModel {
+import java.io.Serializable;
+
+public class OrderNewModel implements Serializable {
 
     @SerializedName("id")
     @Expose
