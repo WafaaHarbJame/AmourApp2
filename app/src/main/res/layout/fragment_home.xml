@@ -232,17 +232,14 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/row_category" />
 
-
             <LinearLayout
-                android:id="@+id/ramezKitchenLy"
+                android:id="@+id/recentlyLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
+                android:orientation="horizontal">
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/recently"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -252,20 +249,20 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:text="@string/ramezKitchen"
+                    android:text="@string/recently"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/moreKitchenBut"
+                    android:id="@+id/moreRecentBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/_8sdp"
                     android:gravity="start|center_vertical"
                     android:maxLines="1"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:text="@string/view_all"
                     android:textAlignment="viewStart"
@@ -274,32 +271,12 @@
             </LinearLayout>
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/noDinnersTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:drawablePadding="@dimen/_8sdp"
-                android:gravity="center"
-                android:maxLines="1"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:text="@string/no_dinners"
-                android:textSize="@dimen/_12ssp"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/kitchenRecycler"
+                android:id="@+id/recentlyRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
-                android:layout_marginEnd="@dimen/_4sdp"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_kitchen_linear" />
-
+                android:layout_marginEnd="@dimen/_4sdp" />
 
             <LinearLayout
                 android:id="@+id/bestSellerLy"
@@ -525,6 +502,73 @@
                 app:spanCount="2"
                 tools:itemCount="3"
                 tools:listitem="@layout/row_band_item" />
+
+            <LinearLayout
+                android:id="@+id/ramezKitchenLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/ramezKitchen"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/moreKitchenBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/view_all"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/noDinnersTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/no_dinners"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/kitchenRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_kitchen_linear" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

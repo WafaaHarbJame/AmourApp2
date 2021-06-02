@@ -75,6 +75,7 @@ public class Constants {
     public static final String Fractional = "Fractional";
     public static final String favourite_filter = "favourite";
     public static final String offered_filter = "offered";
+    public static final String new_filter = "new";
     public static final String featured_filter = "featured";
     public static final String quick_filter = "quick";
     public static final String brand_filter = "";

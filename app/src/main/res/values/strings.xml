@@ -373,6 +373,7 @@
     <string name="check_product">Please Select When an item not available</string>
     <string name="please_select_payment_method">Please select payment method</string>
     <string name="select_delivery_time">Please select Delivery time </string>
+    <string name="recently">Newly arrived</string>
 
 
 </resources>

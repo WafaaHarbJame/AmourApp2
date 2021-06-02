@@ -337,5 +337,6 @@
     <string name="check_product">من فضلك اختر في حالة عدم توفر المنتج</string>
     <string name="please_select_payment_method">اختر طريقة الدفع </string>
     <string name="select_delivery_time">اختر وقت التوصيل  </string>
+    <string name="recently">وصل حديثاً</string>
 
 </resources>

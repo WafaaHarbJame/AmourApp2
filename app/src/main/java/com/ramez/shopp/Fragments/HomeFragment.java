@@ -60,6 +60,7 @@ import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.DinnerModel;
+import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -94,9 +95,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     ArrayList<ProductModel> productBestList;
     ArrayList<ProductModel> productSellerList;
     ArrayList<ProductModel> productOffersList;
+    ArrayList<ProductModel> productRecentsList;
     LinearLayoutManager bestProductGridLayoutManager;
     LinearLayoutManager bestSellerLayoutManager;
     LinearLayoutManager bestOfferGridLayoutManager;
+    LinearLayoutManager recentLayoutManager;
     String user_id = "0";
     ArrayList<CategoryModel> categoryModelList;
     ArrayList<Slider> sliderList;
@@ -109,6 +112,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private ProductAdapter productBestAdapter;
     private ProductAdapter productSellerAdapter;
     private ProductAdapter productOfferAdapter;
+    private ProductAdapter productRecentAdapter;
     private int category_id = 0, country_id, city_id;
     // TODO Barcode
     private ZXingScannerView mScannerView;
@@ -135,11 +139,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bookletsList = new ArrayList<>();
         sliderList = new ArrayList<>();
         bannersList = new ArrayList<>();
+        productRecentsList=new ArrayList<>();
         list = new ArrayList<>();
         categoryModelList = new ArrayList<>();
         productSellerList = new ArrayList<>();
         productOffersList = new ArrayList<>();
         brandsList = new ArrayList<>();
+
         mScannerView = new ZXingScannerView(getActivity());
 
         lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
@@ -161,6 +167,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        recentLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bookletManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         brandManger = new GridLayoutManager(getActivityy(), 2, RecyclerView.HORIZONTAL, false);
         LinearLayoutManager bannersManger = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -171,6 +178,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.kitchenRecycler.setItemAnimator(null);
         binding.kitchenRecycler.setHasFixedSize(true);
 
+
+        binding.recentlyRecycler.setItemAnimator(null);
+        binding.recentlyRecycler.setHasFixedSize(true);
+        binding.recentlyRecycler.setLayoutManager(recentLayoutManager);
 
         binding.offerRecycler.setItemAnimator(null);
         binding.bestProductRecycler.setItemAnimator(null);
@@ -282,6 +293,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         });
 
+        binding.moreRecentBut.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(getActivityy(), AllListActivity.class);
+            intent.putExtra(Constants.LIST_MODEL_NAME, activity.getString(R.string.best_products));
+            intent.putExtra(Constants.FILTER_NAME, Constants.new_filter);
+            startActivity(intent);
+
+
+        });
+
+
         binding.moreCategoryBut.setOnClickListener(view -> {
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 1));
             FragmentManager fragmentManager = getParentFragmentManager();
@@ -341,6 +363,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 
+    public void initRecentAdapter() {
+
+        productRecentAdapter = new ProductAdapter(getActivityy(), productRecentsList, this, 10);
+        binding.recentlyRecycler.setAdapter(productRecentAdapter);
+    }
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
@@ -440,6 +467,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         getBooklets(city_id);
                         GetAllBrands(city_id);
+                        getProductList(0,country_id,city_id,user_id,Constants.new_filter,0,0,10);
 
                         if (result.getFeatured() != null && result.getFeatured().size() > 0 ||
                                 result.getQuickProducts() != null && result.getQuickProducts().size() > 0
@@ -1074,6 +1102,75 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         return 0;
     }
+
+
+    public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+        productRecentsList.clear();
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            FavouriteResultModel result = (FavouriteResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result!=null&&result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else {
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().size() > 0) {
+
+                        binding.recentlyRecycler.setVisibility(View.VISIBLE);
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        productRecentsList = result.getData();
+                        Log.i(TAG, "Log productList new " + productRecentsList.size());
+                        initRecentAdapter();
+                    } else {
+
+                       binding.recentlyRecycler.setVisibility(View.GONE);
+                       binding.recentlyLy.setVisibility(View.GONE);
+                    }
+
+
+                } else {
+
+                    binding.recentlyRecycler.setVisibility(View.GONE);
+                    binding.recentlyLy.setVisibility(View.GONE);
+
+
+                }
+            }
+
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+    }
+
 
 
 }

@@ -116,7 +116,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea
 
 
-            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Checkout Area") || ordersDM.getDeliveryStatus().equals("PendingPayment") || ordersDM.getDeliveryStatus().equals("OnHold") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
+            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Checkout Area") || ordersDM.getDeliveryStatus().equals("PendingPayment") || ordersDM.getDeliveryStatus().equals("OnHold") || ordersDM.getDeliveryStatus().equals("Not Defined")||ordersDM.getDeliveryStatus().equals("")) {
 
                 holder.binding.completeOrderLy.setVisibility(View.GONE);
                 holder.binding.currentLY.setVisibility(View.VISIBLE);
@@ -154,7 +154,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             Log.i("tag", "Log getDeliveryStatus " + ordersDM.getDeliveryStatus());
 
-            if (ordersDM.getDeliveryStatus().equals("Not Defined") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Received")) {
+            if (ordersDM.getDeliveryStatus().equals("Not Defined") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Received")||ordersDM.getDeliveryStatus().equals("")) {
 
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
@@ -162,7 +162,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_not_choose));
 
 
-            } else if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Checkout Area") ||
+            } else if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Checkout Area") ||ordersDM.getDeliveryStatus().equals("CheckoutArea")||
                     ordersDM.getDeliveryStatus().equals("On Hold") || ordersDM.getDeliveryStatus().equals("Open")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
