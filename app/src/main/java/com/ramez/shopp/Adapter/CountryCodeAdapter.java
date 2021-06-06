@@ -74,7 +74,7 @@ public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.
 
             itemView.setOnClickListener(v -> {
 
-                CountryModel countryCodeModel = list.get(getAdapterPosition());
+                CountryModel countryCodeModel = list.get(getBindingAdapterPosition());
                 selectedCountry=countryCodeModel.getId();
                 notifyDataSetChanged();
                 if (dataFetcherCallBack != null) {

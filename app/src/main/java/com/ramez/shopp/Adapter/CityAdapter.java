@@ -109,8 +109,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
 
             itemView.setOnClickListener(v -> {
-                onCityClick.onCityClicked(getAdapterPosition(), list.get(getAdapterPosition()));
-                selectedPosition = list.get(getAdapterPosition()).getId();
+                onCityClick.onCityClicked(getBindingAdapterPosition(), list.get(getBindingAdapterPosition()));
+                selectedPosition = list.get(getBindingAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 

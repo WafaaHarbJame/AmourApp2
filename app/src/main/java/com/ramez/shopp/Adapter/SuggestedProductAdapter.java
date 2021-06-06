@@ -236,7 +236,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     checkLoginDialog.show();
 
                 } else {
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
@@ -263,7 +263,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 } else {
                     String message;
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
 
                     ProductModel productModel = productModels.get(position);
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -315,7 +315,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message = "";
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -369,7 +369,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
             binding.minusCartBtn.setOnClickListener(v -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -386,8 +386,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
+                onItemClick.onItemClicked(position, productModels.get(position));
+
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -406,9 +408,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
 
             if (onItemClick != null) {
-                int position = getAdapterPosition();
-
+                int position = getBindingAdapterPosition();
                 onItemClick.onItemClicked(position, productModels.get(position));
+
                 if (productModels.size() > 0) {
                     ProductModel productModel = productModels.get(position);
                     Intent intent = new Intent(context, ProductDetailsActivity.class);

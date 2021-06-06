@@ -386,7 +386,7 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             binding = view;
 
             view.rowLY.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 imageViewWidth = binding.ivCatImage.getWidth();
                 imageViewHeight = binding.ivCatImage.getHeight();
@@ -401,12 +401,12 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 selectedPosition = position;
                 if (products == null) {
 
-                    products = brousherDm.get(getAdapterPosition()).getProducts();
+                    products = brousherDm.get(getBindingAdapterPosition()).getProducts();
                     if (products != null && products.size() > 0) {
 
 
-                        image_width = Double.parseDouble(String.valueOf(brousherDm.get(getAdapterPosition()).getImageWidth()));
-                        image_height = Double.parseDouble(String.valueOf((brousherDm.get(getAdapterPosition()).getImageHeight())));
+                        image_width = Double.parseDouble(String.valueOf(brousherDm.get(getBindingAdapterPosition()).getImageWidth()));
+                        image_height = Double.parseDouble(String.valueOf((brousherDm.get(getBindingAdapterPosition()).getImageHeight())));
 
                         if (oldPosition != -1) notifyItemChanged(oldPosition);
 

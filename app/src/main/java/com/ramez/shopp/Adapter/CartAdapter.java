@@ -110,7 +110,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-        GlobalData.PicassoImg(cartDM.getImage()
+//        GlobalData.PicassoImg(cartDM.getImage()
+//                , R.drawable.holder_image, holder.binding.imageView1);
+
+        GlobalData.GlideImg(context,cartDM.getImage()
                 , R.drawable.holder_image, holder.binding.imageView1);
 
 
@@ -282,7 +285,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             binding = view;
 
             binding.cardView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 CartModel cartDM = cartDMS.get(position);
                 onCartItemClicked.onCartItemClicked(cartDM);
@@ -291,7 +294,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             binding.markBtn.setOnClickListener(view1 -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 CartModel cartModel = cartDMS.get(position);
 
                 AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
@@ -322,7 +325,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
@@ -340,7 +343,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
@@ -401,7 +404,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.minusCartBtn.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
@@ -417,7 +420,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteCartBtn.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 if (cartDMS != null && cartDMS.size() > 0 & position != -1) {
                     CartModel productModel = cartDMS.get(position);

@@ -102,7 +102,7 @@ public class CurrentOrderFragment extends FragmentBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<List<OrderNewModel>>result = (ResultAPIModel<List<OrderNewModel>>) obj;
-            String message = getString(R.string.fail_to_get_data);
+            String message = getActivity().getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 

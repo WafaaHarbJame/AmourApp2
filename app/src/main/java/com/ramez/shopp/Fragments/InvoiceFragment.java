@@ -117,6 +117,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         paymentList = new ArrayList<>();
         addressList = new ArrayList<>();
+        deliveryTimesList=new ArrayList<>();
 
         DayList = new ArrayList<>();
 //        TimeList = new ArrayList<>();

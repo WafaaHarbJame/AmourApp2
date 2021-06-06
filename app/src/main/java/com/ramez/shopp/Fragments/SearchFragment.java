@@ -84,7 +84,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
     private ArrayList<String> autoCompleteList;
     private SearchProductAdapter adapter;
     private int country_id, city_id;
-    private String user_id = "0", filter, result,SearchText, searchQuery;
+    private String user_id = "0", filter, result, SearchText, searchQuery;
     private MemberModel user;
     private LocalModel localModel;
     private Call searchCall;
@@ -114,7 +114,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
 
-        binding.recycler.setHasFixedSize(true);
+        binding.recycler.setHasFixedSize(false);
         binding.recycler.setItemAnimator(null);
 
         if (UtilityApp.isLogin()) {
@@ -182,7 +182,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
                     searchQuery = s.toString();
                     handler.postDelayed(runnable, 500);
                 }
-
 
 
             }
@@ -421,11 +420,10 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
             result = bundle.getString(Constants.CODE);
             SearchText = bundle.getString(Constants.inputType_text);
             searchByCode = bundle.getBoolean(Constants.SEARCH_BY_CODE_byCode, false);
-            if(searchByCode){
+            if (searchByCode) {
                 searchBarcode(country_id, city_id, user_id, result, 0, 10);
 
-            }
-            else if(SearchText!=null){
+            } else if (SearchText != null) {
                 searchTxt(country_id, city_id, user_id, SearchText, 0, 10);
 
             }
@@ -507,7 +505,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         }
 
     }
-
 
 
     private void checkCameraPermission() {

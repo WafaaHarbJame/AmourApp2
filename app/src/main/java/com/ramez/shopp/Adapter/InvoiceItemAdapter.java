@@ -198,11 +198,11 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             binding.plusCartBtn.setOnClickListener(v -> {
 
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(getBindingAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int cart_id = productModel.getId();
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -222,10 +222,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(getBindingAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -237,10 +237,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
             binding.deleteBut.setOnClickListener(view1 -> {
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(getBindingAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -250,11 +250,11 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             });
             binding.minusCartBtn.setOnClickListener(v -> {
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(getBindingAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
@@ -267,10 +267,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
             binding.deleteCartBtn.setOnClickListener(v -> {
 
-                CartModel productModel = cartDMS.get(getAdapterPosition());
+                CartModel productModel = cartDMS.get(getBindingAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();

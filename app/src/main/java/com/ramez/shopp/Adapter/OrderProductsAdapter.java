@@ -99,7 +99,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             reOrderProductBtn.setOnClickListener(v -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
                 int count = orderProductsDM.getQuantity();

@@ -1,23 +1,17 @@
 package com.ramez.shopp.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.R;
-import com.squareup.picasso.Picasso;
-
 
 import java.util.ArrayList;
 

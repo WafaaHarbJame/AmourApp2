@@ -124,7 +124,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             binding = view;
 
             binding.chatImage.setOnClickListener(view1 -> {
-                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context, chatMessages.get(getAdapterPosition()).getImageUrl());
+                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context, chatMessages.get(getBindingAdapterPosition()).getImageUrl());
                 showImageDialog.show();
 
             });
@@ -141,7 +141,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             binding = itemView;
 
             binding.chatImage.setOnClickListener(view -> {
-                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context, chatMessages.get(getAdapterPosition()).getImageUrl());
+                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context, chatMessages.get(getBindingAdapterPosition()).getImageUrl());
                 showImageDialog.show();
 
             });

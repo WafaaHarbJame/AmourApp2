@@ -78,8 +78,8 @@ public class CardTypesAdapter extends RecyclerView.Adapter<CardTypesAdapter.Coun
 
 
             itemView.setOnClickListener(v -> {
-                onCardTypeClick.OnCardTypeClicked(getAdapterPosition(), list.get(getAdapterPosition()));
-                lastIndex = getAdapterPosition();
+                onCardTypeClick.OnCardTypeClicked(getBindingAdapterPosition(), list.get(getBindingAdapterPosition()));
+                lastIndex = getBindingAdapterPosition();
                 notifyDataSetChanged();
             });
 

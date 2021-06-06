@@ -24,8 +24,10 @@
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+
         <activity android:name=".Activities.OrderCompleteActivity"/>
         <activity
             android:name=".Activities.DeepLinksActivity"

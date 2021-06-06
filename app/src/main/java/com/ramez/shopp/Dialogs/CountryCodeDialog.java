@@ -104,6 +104,8 @@ public class CountryCodeDialog extends Dialog {
             dismiss();
 
         });
+
+
         searchTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

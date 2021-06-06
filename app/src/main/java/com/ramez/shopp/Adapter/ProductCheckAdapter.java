@@ -97,7 +97,7 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
             binding = view;
             itemView.setOnClickListener(view1 -> {
                 ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
-//                lastIndex = getAdapterPosition();
+//                lastIndex = getBindingAdapterPosition();
                 notifyDataSetChanged();
                 selectedPosition = deliveryTime.getId();
 

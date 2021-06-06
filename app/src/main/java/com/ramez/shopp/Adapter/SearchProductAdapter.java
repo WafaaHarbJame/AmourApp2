@@ -84,14 +84,11 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public int getSpanSize(int position) {
                 switch (getAdapter().getItemViewType(position)) {
-                    case VIEW_TYPE_ITEM:
-                        return 1;
                     case VIEW_TYPE_LOADING:
-                        return 2; //number of columns of the grid
                     case VIEW_TYPE_EMPTY:
                         return gridNumber; //number of columns of the grid
                     default:
-                        return 0;
+                        return 1;
                 }
             }
         });
@@ -419,7 +416,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
@@ -444,7 +441,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     checkLoginDialog.show();
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     ProductModel productModel = productModels.get(position);
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                     String message = "";
@@ -495,7 +492,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
                 String message;
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -544,7 +541,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
             binding.minusCartBtn.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
                 //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -562,7 +559,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -581,9 +578,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
-                onItemClick.onItemClicked(position, productModels.get(getAdapterPosition()));
+                onItemClick.onItemClicked(position, productModels.get(getBindingAdapterPosition()));
             }
         }
 
@@ -596,7 +593,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (IsSuccess) {
                     int cartId = result.getId();
-                    if(productModels!=null){
+                    if (productModels != null) {
                         productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                         productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                         notifyItemChanged(position);

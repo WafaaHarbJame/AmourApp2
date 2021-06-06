@@ -1112,59 +1112,62 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
+            if (isVisible()) {
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                FavouriteResultModel result = (FavouriteResultModel) obj;
+                String message = getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-                if (result!=null&&result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+                if (func.equals(Constants.ERROR)) {
 
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.recentlyRecycler.setVisibility(View.VISIBLE);
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productRecentsList = result.getData();
-                        Log.i(TAG, "Log productList new " + productRecentsList.size());
-                        initRecentAdapter();
-                    } else {
-
-                       binding.recentlyRecycler.setVisibility(View.GONE);
-                       binding.recentlyLy.setVisibility(View.GONE);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
 
                 } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
 
-                    binding.recentlyRecycler.setVisibility(View.GONE);
-                    binding.recentlyLy.setVisibility(View.GONE);
+                            binding.recentlyRecycler.setVisibility(View.VISIBLE);
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            productRecentsList = result.getData();
+                            Log.i(TAG, "Log productList new " + productRecentsList.size());
+                            initRecentAdapter();
+                        } else {
+
+                            binding.recentlyRecycler.setVisibility(View.GONE);
+                            binding.recentlyLy.setVisibility(View.GONE);
+                        }
 
 
+                    } else {
+
+                        binding.recentlyRecycler.setVisibility(View.GONE);
+                        binding.recentlyLy.setVisibility(View.GONE);
+
+
+                    }
                 }
             }
 

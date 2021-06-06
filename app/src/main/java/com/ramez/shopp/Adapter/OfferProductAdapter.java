@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
@@ -91,14 +92,11 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public int getSpanSize(int position) {
                 switch (getAdapter().getItemViewType(position)) {
-                    case VIEW_TYPE_ITEM:
-                        return 1;
                     case VIEW_TYPE_LOADING:
-                        return 2; //number of columns of the grid
                     case VIEW_TYPE_EMPTY:
                         return gridNumber; //number of columns of the grid
                     default:
-                        return 0;
+                        return 1;
                 }
             }
         });
@@ -231,7 +229,9 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else {
                 photoUrl = "http";
             }
-            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+            GlobalData.GlideImg(activity,photoUrl,R.drawable.holder_image,holder.binding.productImg);
+            //Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {
@@ -503,7 +503,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             binding.plusCartBtn.setOnClickListener(view1 -> {
                 String message;
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
@@ -554,7 +554,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
@@ -571,7 +571,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());

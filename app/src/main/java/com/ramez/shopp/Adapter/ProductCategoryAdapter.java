@@ -95,14 +95,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public int getSpanSize(int position) {
                 switch (getAdapter().getItemViewType(position)) {
-                    case VIEW_TYPE_ITEM:
-                        return 1;
                     case VIEW_TYPE_LOADING:
-                        return 2; //number of columns of the grid
                     case VIEW_TYPE_EMPTY:
                         return gridNumber; //number of columns of the grid
                     default:
-                        return 0;
+                        return 1;
                 }
             }
         });
@@ -405,7 +402,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
@@ -430,42 +427,52 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else {
                     String message;
                     if (productModels.size() > 0) {
-                        ProductModel productModel = productModels.get(getAdapterPosition());
-                        int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                        int position = getAdapterPosition();
-                        int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                        int productId = productModel.getId();
-                        int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                        int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-                        int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                        if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+                            ProductModel productModel = productModels.get(getBindingAdapterPosition());
+                            int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                            int position = getBindingAdapterPosition();
+
+                            int userId = UtilityApp.getUserData().getId();
+                            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                            int productId = productModel.getId();
+                            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                            int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                            int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
 
-                        if (limit == 0) {
+                            if (limit == 0) {
 
-                            if (count + 1 <= stock) {
-                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-                            } else {
-                                message = context.getString(R.string.stock_empty);
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
-                            }
-                        } else {
-
-                            if (count + 1 <= stock && (count + 1) <= limit) {
-                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-                            } else {
-
-                                if (count + 1 > stock) {
-                                    message = context.getString(R.string.stock_empty);
+                                if (count + 1 <= stock) {
+                                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                                 } else {
-                                    message = context.getString(R.string.limit) + "" + limit;
+                                    message = context.getString(R.string.stock_empty);
+                                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                                }
+                            } else {
+
+                                if (count + 1 <= stock && (count + 1) <= limit) {
+                                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                                } else {
+
+                                    if (count + 1 > stock) {
+                                        message = context.getString(R.string.stock_empty);
+                                    } else {
+                                        message = context.getString(R.string.limit) + "" + limit;
+
+                                    }
+                                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                                 }
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                             }
-
                         }
+                        else {
+                            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                            checkLoginDialog.show();
+                        }
+
+
+
                     }
 
 
@@ -475,10 +482,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
                 String message;
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
 
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -520,10 +527,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
 
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -537,8 +544,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
-                int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -556,7 +563,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                onItemClick.onItemClicked(getBindingAdapterPosition(), productModels.get(getBindingAdapterPosition()));
             }
         }
 

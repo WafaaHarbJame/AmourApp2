@@ -120,9 +120,9 @@ public class DeliveryDayAdapter extends RecyclerView.Adapter<DeliveryDayAdapter.
             binding = view;
 
             itemView.setOnClickListener(view1 -> {
-                DeliveryTime deliveryDay = deliveryDayList.get(getAdapterPosition());
+                DeliveryTime deliveryDay = deliveryDayList.get(getBindingAdapterPosition());
 
-                lastIndex = getAdapterPosition();
+                lastIndex = getBindingAdapterPosition();
                 notifyDataSetChanged();
 
                 if (dataCallback != null) {

@@ -44,10 +44,10 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
-    String productName;
+    String productName="";
     SingleDinnerModel dinnerModel;
     String currency;
-    private int country_id, city_id, product_id;
+    private int country_id, city_id;
     private RecipeSliderAdapter sliderAdapter;
     private LinearLayoutManager productLayoutManager;
     private int storeId;
@@ -153,20 +153,13 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         if (bundle != null) {
 
             DinnerModel dinnerModel = (DinnerModel) bundle.getSerializable(Constants.DB_DINNER_MODEL);
-            dinner_id = dinnerModel.getId();
+            if(dinnerModel!=null){
+                dinner_id = dinnerModel.getId();
+                productName = dinnerModel.getDescription();
+                binding.productNameTv.setText(productName);
+                binding.mainTitleTv.setText(productName);
+            }
 
-//                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-//                    productName = dinnerModel.getDescription();
-//
-//                } else {
-//                    productName = productModel.getName();
-//
-//                }
-
-            productName = dinnerModel.getDescription();
-
-            binding.productNameTv.setText(productName);
-            binding.mainTitleTv.setText(productName);
 
         }
 
@@ -276,7 +269,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
 
 
                         sliderList = result.data.getImages();
-                        Log.i(RamezKitchenActivity.class.getName(), "Log sliderList" + sliderList);
 
 
                         initAdapter();
@@ -333,16 +325,21 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
 
         if (bundle != null) {
 
-            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            product_id = productModel.getId();
+            DinnerModel dinnerModel = (DinnerModel) bundle.getSerializable(Constants.DB_DINNER_MODEL);
 
-            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                productName = productModel.getHName();
 
-            } else {
-                productName = productModel.getName();
+            if(dinnerModel!=null){
+                dinner_id = dinnerModel.getId();
 
             }
+
+            if (dinnerModel!=null&dinnerModel.getDescription()!=null) {
+                productName = dinnerModel.getDescription();
+
+            }
+
+
+            binding.productNameTv.setText(productName);
 
             getSingleDinner(dinner_id, lang);
 

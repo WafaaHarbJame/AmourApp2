@@ -85,7 +85,7 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
             super(itemView.getRoot());
             binding = itemView;
             binding.btnCategory.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 selectedIndex = position;
                 lastIndex = position;
                 ProductBarcode optionModel = productBarcodes.get(position);

@@ -85,14 +85,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             @Override
             public int getSpanSize(int position) {
                 switch (getAdapter().getItemViewType(position)) {
-                    case VIEW_TYPE_ITEM:
-                        return 1;
                     case VIEW_TYPE_LOADING:
-                        return 2; //number of columns of the grid
                     case VIEW_TYPE_EMPTY:
                         return 2; //number of columns of the grid
                     default:
-                        return 0;
+                        return 1;
                 }
             }
         });
@@ -404,7 +401,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             itemView.setOnClickListener(this);
 
             binding.favBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModels.get(position).getId();
@@ -426,10 +423,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 } else {
 
                     String message = "";
-                    ProductModel productModel = productModels.get(getAdapterPosition());
+                    ProductModel productModel = productModels.get(getBindingAdapterPosition());
                     int count = productModel.getProductBarcodes().get(0).getCartQuantity();
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModel.getId();
@@ -477,10 +474,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             binding.plusCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 String message = "";
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -523,9 +520,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -538,8 +535,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                ProductModel productModel = productModels.get(getAdapterPosition());
-                int position = getAdapterPosition();
+                ProductModel productModel = productModels.get(getBindingAdapterPosition());
+                int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
@@ -557,7 +554,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                onItemClick.onItemClicked(getBindingAdapterPosition(), productModels.get(getBindingAdapterPosition()));
             }
         }
 

@@ -48,7 +48,7 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
     int cartCount = 0;
-    int storeId;
+    int storeId=7263;
     LocalModel localModel;
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
@@ -78,12 +78,14 @@ public class MainActivity extends ActivityBase {
         getIntentExtra();
 
         localModel = UtilityApp.getLocalData();
+        if (localModel != null && localModel.getCityId() != null) {
+            storeId = Integer.parseInt(localModel.getCityId());
+            country_name = localModel.getShortname();
+            OneSignal.sendTag(Constants.COUNTRY, country_name);
 
-        storeId = Integer.parseInt(localModel.getCityId());
 
-        country_name = localModel.getShortname();
+        }
 
-        OneSignal.sendTag(Constants.COUNTRY, country_name);
 
 
         if (UtilityApp.isLogin()) {
@@ -386,9 +388,9 @@ public class MainActivity extends ActivityBase {
     }
 
     private void getIntentExtra() {
-        String searchTEXT="";
+        String searchTEXT = "";
         Bundle bundle = getIntent().getExtras();
-        boolean  from_inside_app=false;
+        boolean from_inside_app = false;
 
         if (bundle != null) {
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
@@ -397,8 +399,8 @@ public class MainActivity extends ActivityBase {
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
             CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
-             searchTEXT = bundle.getString(Constants.inputType_text);
-              from_inside_app=bundle.getBoolean(Constants.Inside_app);
+            searchTEXT = bundle.getString(Constants.inputType_text);
+            from_inside_app = bundle.getBoolean(Constants.Inside_app);
 //            Fragment deepLinkFragment = null;
 //            if (fragmentType == null)
 //                fragmentType = "";
@@ -442,12 +444,9 @@ public class MainActivity extends ActivityBase {
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
                 binding.categoryButton.performClick();
-            }
-
-            else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
+            } else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
                 binding.offerButton.performClick();
-            }
-            else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+            } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
                 Bundle bundle2 = new Bundle();
@@ -485,14 +484,13 @@ public class MainActivity extends ActivityBase {
 
                     boolean finalFrom_inside_app = from_inside_app;
                     binding.toolBar.backBtn.setOnClickListener(view -> {
-                        if(finalFrom_inside_app){
+                        if (finalFrom_inside_app) {
                             Intent intent = new Intent(getActiviy(), AllBookleteActivity.class);
                             intent.putExtra(Constants.Activity_type, Constants.BOOKLETS);
                             startActivity(intent);
 
 
-                        }
-                        else {
+                        } else {
                             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                             binding.toolBar.backBtn.setVisibility(View.GONE);
                             binding.toolBar.view2But.setVisibility(View.GONE);

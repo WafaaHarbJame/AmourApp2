@@ -111,14 +111,19 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(view1 -> {
-                DeliveryTime deliveryTime = deliveryTimesList.get(getBindingAdapterPosition());
-//                lastIndex = getAdapterPosition();
-                selectedId = deliveryTime.getId();
-                notifyDataSetChanged();
 
-                if (dataCallback != null) {
-                    dataCallback.dataResult(deliveryTime, "result", true);
+                if(getBindingAdapterPosition()>=0){
+
+                    DeliveryTime deliveryTime = deliveryTimesList.get(getBindingAdapterPosition());
+//                lastIndex = getBindingAdapterPosition();
+                    selectedId = deliveryTime.getId();
+                    notifyDataSetChanged();
+
+                    if (dataCallback != null) {
+                        dataCallback.dataResult(deliveryTime, "result", true);
+                    }
                 }
+
             });
 
 

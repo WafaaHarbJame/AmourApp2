@@ -14,26 +14,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.firebase.ui.auth.AuthUI;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.OAuthProvider;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ConfirmActivity;
 import com.ramez.shopp.Activities.ConfirmPhoneActivity;
@@ -43,7 +27,6 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
-import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -51,15 +34,8 @@ import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentLoginBinding;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterConfig;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-
-import static android.app.Activity.RESULT_OK;
 
 public class LoginFragment extends FragmentBase {
     private static final int RC_SIGN_IN = 1001;
@@ -85,9 +61,10 @@ public class LoginFragment extends FragmentBase {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
-        TwitterAuthConfig mTwitterAuthConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
-        TwitterConfig twitterConfig = new TwitterConfig.Builder(getActivityy()).twitterAuthConfig(mTwitterAuthConfig).build();
-        Twitter.initialize(twitterConfig);
+//
+//        TwitterAuthConfig mTwitterAuthConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
+//        TwitterConfig twitterConfig = new TwitterConfig.Builder(getActivityy()).twitterAuthConfig(mTwitterAuthConfig).build();
+//        Twitter.initialize(twitterConfig);
 
 
         View view = binding.getRoot();
@@ -96,11 +73,11 @@ public class LoginFragment extends FragmentBase {
 
         viewPager = container.findViewById(R.id.viewPager);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivityy(), gso);
-
-        firebaseAuth = FirebaseAuth.getInstance();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+//
+//        mGoogleSignInClient = GoogleSignIn.getClient(getActivityy(), gso);
+//
+//        firebaseAuth = FirebaseAuth.getInstance();
 
         getDeviceToken();
 
@@ -146,7 +123,7 @@ public class LoginFragment extends FragmentBase {
 
 
         binding.loginTwitterBut.setOnClickListener(view1 -> {
-            twitterSignIn();
+          //  twitterSignIn();
         });
 
         binding.showPassBut.setOnClickListener(view1 -> {
@@ -348,46 +325,46 @@ public class LoginFragment extends FragmentBase {
 
     private void facebookSignIn() {
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            signOut();
-        }
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
-
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onCancel() {
-                Log.d(TAG, " Log facebook:onCancel");
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "Log facebook:onError", error);
-
-            }
-
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-
-
-            }
-        });
+//        if (AccessToken.getCurrentAccessToken() != null) {
+//            signOut();
+//        }
+//
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
+//
+//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onCancel() {
+//                Log.d(TAG, " Log facebook:onCancel");
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Log.d(TAG, "Log facebook:onError", error);
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                handleFacebookAccessToken(loginResult.getAccessToken());
+//
+//
+//            }
+//        });
     }
 
     private void twitterSignIn() {
 
-        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
-        provider.addCustomParameter("lang", UtilityApp.getLanguage());
-
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.TwitterBuilder().build());
-
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setTosAndPrivacyPolicyUrls("https://example.com/terms.html", "https://example.com/privacy.html").build(),
-
-                TWITTER_SIGN_IN);
+//        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+//        provider.addCustomParameter("lang", UtilityApp.getLanguage());
+//
+//        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//
+//        List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.TwitterBuilder().build());
+//
+//        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setTosAndPrivacyPolicyUrls("https://example.com/terms.html", "https://example.com/privacy.html").build(),
+//
+//                TWITTER_SIGN_IN);
 
     }
 
@@ -397,42 +374,42 @@ public class LoginFragment extends FragmentBase {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if (resultCode == RESULT_OK) {
-            if (requestCode == RC_SIGN_IN) {
-
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-                try {
-
-                    GoogleSignInAccount account = task.getResult(ApiException.class);
-                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                    firebaseAuthWithGoogle(task.getResult().getIdToken());
-
-                } catch (ApiException e) {
-
-                    Log.w(TAG, "Google sign in failed", e);
-
-                }
-            } else if (requestCode == TWITTER_SIGN_IN) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                Log.i(TAG, "Log" + user.getPhoneNumber());
-                Log.i(TAG, "Log" + user.getEmail());
-                Log.i(TAG, "Log" + user.getDisplayName());
-
-
-            } else {
-                callbackManager.onActivityResult(requestCode, resultCode, data);
-
-            }
-        }
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == RC_SIGN_IN) {
+//
+//                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//
+//                try {
+//
+//                    GoogleSignInAccount account = task.getResult(ApiException.class);
+//                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+//                    firebaseAuthWithGoogle(task.getResult().getIdToken());
+//
+//                } catch (ApiException e) {
+//
+//                    Log.w(TAG, "Google sign in failed", e);
+//
+//                }
+//            } else if (requestCode == TWITTER_SIGN_IN) {
+//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//
+//                Log.i(TAG, "Log" + user.getPhoneNumber());
+//                Log.i(TAG, "Log" + user.getEmail());
+//                Log.i(TAG, "Log" + user.getDisplayName());
+//
+//
+//            } else {
+//                callbackManager.onActivityResult(requestCode, resultCode, data);
+//
+//            }
+//        }
 
     }
 
 
     private void googleSignIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
 
@@ -492,78 +469,78 @@ public class LoginFragment extends FragmentBase {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
-
-        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
-            GlobalData.hideProgressDialog();
-
-            if (task.isSuccessful()) {
-
-                Log.d(TAG, "signInWithCredential:success");
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                Log.i(TAG, "Log nameStr" + user.getDisplayName());
-                Log.i(TAG, "Log getEmail" + user.getEmail());
-                Log.i(TAG, "Log Uid" + user.getUid());
-                Log.i(TAG, "Log getServerAuthCode" + user.getIdToken(true));
-                Log.i(TAG, "Log getPhotoUrl" + user.getPhotoUrl());
-
-                RegisterUser(user.getDisplayName(), user.getEmail());
-
-            } else {
-
-                Log.w(TAG, "signInWithCredential:failure", task.getException());
-                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
-
-            }
-
-            GlobalData.hideProgressDialog();
-        });
+//
+//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//
+//        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+//        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
+//            GlobalData.hideProgressDialog();
+//
+//            if (task.isSuccessful()) {
+//
+//                Log.d(TAG, "signInWithCredential:success");
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//                Log.i(TAG, "Log nameStr" + user.getDisplayName());
+//                Log.i(TAG, "Log getEmail" + user.getEmail());
+//                Log.i(TAG, "Log Uid" + user.getUid());
+//                Log.i(TAG, "Log getServerAuthCode" + user.getIdToken(true));
+//                Log.i(TAG, "Log getPhotoUrl" + user.getPhotoUrl());
+//
+//                RegisterUser(user.getDisplayName(), user.getEmail());
+//
+//            } else {
+//
+//                Log.w(TAG, "signInWithCredential:failure", task.getException());
+//                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+//
+//            }
+//
+//            GlobalData.hideProgressDialog();
+//        });
     }
 
 
     private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
-            if (task.isSuccessful()) {
-
-                Log.d(TAG, "Log signInWithCredential:success");
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                RegisterUser(user.getDisplayName(), user.getEmail());
-
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "Log signInWithCredential:failure", task.getException());
-                Toast("Authentication failed");
-                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
-
-            }
-
-            // ...
-        });
+//        Log.d(TAG, "handleFacebookAccessToken:" + token);
+//
+//        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+//        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
+//            if (task.isSuccessful()) {
+//
+//                Log.d(TAG, "Log signInWithCredential:success");
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                RegisterUser(user.getDisplayName(), user.getEmail());
+//
+//            } else {
+//                // If sign in fails, display a message to the user.
+//                Log.w(TAG, "Log signInWithCredential:failure", task.getException());
+//                Toast("Authentication failed");
+//                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+//
+//            }
+//
+//            // ...
+//        });
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
-            RegisterUser(currentUser.getDisplayName(), currentUser.getEmail());
-
-        }
+//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            RegisterUser(currentUser.getDisplayName(), currentUser.getEmail());
+//
+//        }
 
 
     }
 
 
     public void signOut() {
-        firebaseAuth.signOut();
-        LoginManager.getInstance().logOut();
+//        firebaseAuth.signOut();
+//        LoginManager.getInstance().logOut();
     }
 
 

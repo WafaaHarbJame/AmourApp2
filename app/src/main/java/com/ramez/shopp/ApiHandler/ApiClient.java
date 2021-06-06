@@ -23,7 +23,9 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.TlsVersion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -93,109 +95,150 @@ public class ApiClient {
         return retrofitLong;
     }
 
+//    private static OkHttpClient getOkClient() {
+//
+//        List<ConnectionSpec> specs = new ArrayList<>();
+//        specs.add(spec);
+//        specs.add(ConnectionSpec.COMPATIBLE_TLS);
+//        specs.add(ConnectionSpec.CLEARTEXT);
+//
+//        OkHttpClient.Builder client = new OkHttpClient.Builder()
+////                .addInterceptor(interceptor)
+//                .connectionSpecs(specs).connectTimeout(30, TimeUnit.SECONDS)
+//                .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS);
+//
+//
+//        try {
+////            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
+//
+//            // Create a trust manager that does not validate certificate chains
+//            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+//                @Override
+//                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+//                }
+//
+//                @Override
+//                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+//                }
+//
+//                @Override
+//                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//                    return new java.security.cert.X509Certificate[]{};
+//                }
+//            }};
+//
+//
+//            client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
+//            client.hostnameVerifier(new HostnameVerifier() {
+//                @Override
+//                public boolean verify(String hostname, SSLSession session) {
+//                    return true;
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return client.build();
+//    }
+
     private static OkHttpClient getOkClient() {
+        Interceptor interceptor = chain -> {
+            Request original = chain.request();
 
-        List<ConnectionSpec> specs = new ArrayList<>();
-        specs.add(spec);
-        specs.add(ConnectionSpec.COMPATIBLE_TLS);
-        specs.add(ConnectionSpec.CLEARTEXT);
+            Request request = original.newBuilder()
+                    .header("Accept", "application/json,*/*")
+                    .header("Connection", "close")
+                    .method(original.method(), original.body())
+                    .build();
 
-        OkHttpClient.Builder client = new OkHttpClient.Builder()
-//                .addInterceptor(interceptor)
-                .connectionSpecs(specs).connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS);
+            return chain.proceed(request);
+        };
 
-
-        try {
-//            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
-
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return new java.security.cert.X509Certificate[]{};
-                }
-            }};
-
-
-            client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-            client.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return client.build();
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build();
     }
 
+//    private static OkHttpClient getLongOkClient() {
+//
+//        List<ConnectionSpec> specs = new ArrayList<>();
+//        specs.add(spec);
+//        specs.add(ConnectionSpec.COMPATIBLE_TLS);
+//        specs.add(ConnectionSpec.CLEARTEXT);
+//
+//        OkHttpClient.Builder client = new OkHttpClient.Builder()
+////                .addInterceptor(interceptor)
+//                .connectionSpecs(specs).connectTimeout(10,
+//                        TimeUnit.MINUTES).readTimeout(10,
+//                        TimeUnit.MINUTES).writeTimeout(10, TimeUnit.MINUTES);
+//
+//        try {
+////            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
+//
+//            // Create a trust manager that does not validate certificate chains
+//            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+//                @Override
+//                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+//                }
+//
+//                @Override
+//                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+//                }
+//
+//                @Override
+//                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//                    return new java.security.cert.X509Certificate[]{};
+//                }
+//            }};
+//
+//            // Install the all-trusting trust manager
+////            final SSLContext sslContext = SSLContext.getInstance("SSL");
+////            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+//
+//            // Create an ssl socket factory with our all-trusting manager
+////            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+//
+//            client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
+////            client.sslSocketFactory(new TLSSocketFactory());
+//            client.hostnameVerifier(new HostnameVerifier() {
+//                @Override
+//                public boolean verify(String hostname, SSLSession session) {
+//                    return true;
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return client.build();
+//    }
 
     private static OkHttpClient getLongOkClient() {
 
-        List<ConnectionSpec> specs = new ArrayList<>();
-        specs.add(spec);
-        specs.add(ConnectionSpec.COMPATIBLE_TLS);
-        specs.add(ConnectionSpec.CLEARTEXT);
+        Interceptor interceptor = chain -> {
+            Request original = chain.request();
 
-        OkHttpClient.Builder client = new OkHttpClient.Builder()
-//                .addInterceptor(interceptor)
-                .connectionSpecs(specs).connectTimeout(10,
-                        TimeUnit.MINUTES).readTimeout(10,
-                        TimeUnit.MINUTES).writeTimeout(10, TimeUnit.MINUTES);
+            Request request = original.newBuilder()
+                    .header("Accept", "application/json")
+                    .header("Connection", "close")
+                    .method(original.method(), original.body())
+                    .build();
 
-        try {
-//            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
+            return chain.proceed(request);
+        };
 
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
-
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return new java.security.cert.X509Certificate[]{};
-                }
-            }};
-
-            // Install the all-trusting trust manager
-//            final SSLContext sslContext = SSLContext.getInstance("SSL");
-//            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
-            // Create an ssl socket factory with our all-trusting manager
-//            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-
-            client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-//            client.sslSocketFactory(new TLSSocketFactory());
-            client.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return client.build();
+        return new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .connectTimeout(20, TimeUnit.MINUTES)
+                .readTimeout(20, TimeUnit.MINUTES)
+                .writeTimeout(20, TimeUnit.MINUTES)
+                .build();
     }
-
 
 }

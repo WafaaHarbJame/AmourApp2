@@ -14,6 +14,7 @@ import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderNewModel;
@@ -50,11 +51,16 @@ public class PastOrderFragment extends FragmentBase {
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
+        if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+            user_id = UtilityApp.getUserData().getId();
+            getOrders(user_id,Constants.user_type,Constants.past_order);
 
-        user_id = UtilityApp.getUserData().getId();
+        }
+        else {
+            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
+            checkLoginDialog.show();
+        }
 
-
-        getOrders(user_id,Constants.user_type,Constants.past_order);
 
 
         binding.swipe.setOnRefreshListener(() -> {
@@ -184,17 +190,16 @@ public class PastOrderFragment extends FragmentBase {
 
 
     public void getOrders(int user_id,String type,String filter) {
-
         completeOrdersList.clear();
-
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
           ResultAPIModel<ArrayList<OrderNewModel>>result = (ResultAPIModel<ArrayList<OrderNewModel>>) obj;
-            String message = getString(R.string.fail_to_get_data);
+            String message = getActivity().getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
@@ -229,7 +234,6 @@ public class PastOrderFragment extends FragmentBase {
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
                         completeOrdersList = result.data;
                         initOrdersAdapters(completeOrdersList);
 

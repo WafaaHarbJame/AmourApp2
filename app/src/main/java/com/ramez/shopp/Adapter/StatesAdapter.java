@@ -69,7 +69,7 @@ public class StatesAdapter extends RecyclerView.Adapter<StatesAdapter.ViewHolder
 
             itemView.setOnClickListener(v -> {
 
-                AreasModel cityModel = list.get(getAdapterPosition());
+                AreasModel cityModel = list.get(getBindingAdapterPosition());
                 selectedCity =cityModel.getId();
                 notifyDataSetChanged();
                 if (dataFetcherCallBack != null) {

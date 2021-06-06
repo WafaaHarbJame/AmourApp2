@@ -229,7 +229,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 } else {
 
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
@@ -308,7 +308,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message = "";
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
 //                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
@@ -361,7 +361,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             });
 
             binding.minusCartBtn.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
@@ -381,7 +381,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             binding.deleteCartBtn.setOnClickListener(v -> {
 
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
 
                 int userId = UtilityApp.getUserData().getId();
@@ -403,7 +403,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
                 onItemClick.onItemClicked(position, productModels.get(position));
                 Intent intent = new Intent(context, ProductDetailsActivity.class);

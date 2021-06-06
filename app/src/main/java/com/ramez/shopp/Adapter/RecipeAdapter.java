@@ -117,9 +117,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
             itemView.setOnClickListener(v -> {
 
-                Recipe recipe = list.get(getAdapterPosition());
+                Recipe recipe = list.get(getBindingAdapterPosition());
                 recipe.isOpen = !recipe.isOpen;
-                notifyItemChanged(getAdapterPosition());
+                notifyItemChanged(getBindingAdapterPosition());
 
 
             });

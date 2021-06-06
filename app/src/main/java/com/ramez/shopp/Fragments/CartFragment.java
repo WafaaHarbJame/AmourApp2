@@ -240,7 +240,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 } else {
 
                     double total_price = minimum_order_amount - cartProcessModel.getTotal();
-                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+                    binding.tvFreeDelivery.setText(getActivityy().getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getActivity().getString(R.string.get_Free));
 
                 }
 

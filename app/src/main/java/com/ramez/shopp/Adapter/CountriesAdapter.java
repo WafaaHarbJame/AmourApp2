@@ -74,8 +74,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
             binding = view;
 
             itemView.setOnClickListener(v -> {
-                onItemClick.onCountryClicked(getAdapterPosition(), countryModels.get(getAdapterPosition()));
-                selectedPosition = countryModels.get(getAdapterPosition()).getId();
+                onItemClick.onCountryClicked(getBindingAdapterPosition(), countryModels.get(getBindingAdapterPosition()));
+                selectedPosition = countryModels.get(getBindingAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 

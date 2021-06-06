@@ -103,7 +103,7 @@ public class AddressCheckAdapter extends RecyclerView.Adapter<AddressCheckAdapte
             binding = view;
 
             binding.container.setOnClickListener(view1 -> {
-                AddressModel addressModel=addressModelList.get(getAdapterPosition());
+                AddressModel addressModel=addressModelList.get(getBindingAdapterPosition());
               onContainerSelect.onContainerSelectSelected(addressModel);
 
             });

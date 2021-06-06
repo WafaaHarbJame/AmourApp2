@@ -82,8 +82,8 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
 
 
             itemView.setOnClickListener(v -> {
-                onLangClick.onLangClicked(getAdapterPosition(), langList.get(getAdapterPosition()));
-                selectedPosition = langList.get(getAdapterPosition()).getId();
+                onLangClick.onLangClicked(getBindingAdapterPosition(), langList.get(getBindingAdapterPosition()));
+                selectedPosition = langList.get(getBindingAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 

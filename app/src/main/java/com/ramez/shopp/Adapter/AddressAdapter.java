@@ -147,7 +147,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             binding = view;
 
             binding.container.setOnClickListener(view1 -> {
-                AddressModel addressModel = addressModelList.get(getAdapterPosition());
+                AddressModel addressModel = addressModelList.get(getBindingAdapterPosition());
                 onContainerSelect.onContainerSelectSelected(addressModel);
 
             });

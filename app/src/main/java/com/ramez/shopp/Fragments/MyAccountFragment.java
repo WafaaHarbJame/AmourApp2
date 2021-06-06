@@ -325,7 +325,10 @@ public class MyAccountFragment extends FragmentBase {
 
             if (UtilityApp.isLogin()) {
                 MemberModel memberModel = UtilityApp.getUserData();
-                signOut(memberModel);
+                if(memberModel!=null&memberModel.getId()!=null){
+                    signOut(memberModel);
+
+                }
 
             } else {
                 startLogin();
