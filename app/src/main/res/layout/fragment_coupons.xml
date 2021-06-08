@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray5"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:background="@color/gray5"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/gray5"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/loadingProgressLY"
+                layout="@layout/layout_pre_loading" />
+
+            <include
+                android:id="@+id/noDataLY"
+                layout="@layout/layout_orders_no_list" />
+
+            <include
+                android:id="@+id/failGetDataLY"
+                layout="@layout/layout_fail_get_data" />
+
+            <LinearLayout
+                android:id="@+id/dataLY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myOrderRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_coupons_item"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/scanAgainBut"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_16sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/Generate_Coupons"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>
+

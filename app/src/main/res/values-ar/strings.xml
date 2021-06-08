@@ -338,5 +338,14 @@
     <string name="please_select_payment_method">اختر طريقة الدفع </string>
     <string name="select_delivery_time">اختر وقت التوصيل  </string>
     <string name="recently">وصل حديثاً</string>
+    <string name="Price_Checker">فحص السعر</string>
+    <string name="Ramez_Rewards">مكافآت رامز</string>
+    <string name="Card">البطاقات</string>
+    <string name="Coupons">الكوبونات </string>
+    <string name="Generate_Coupons">انشاء القسيمة</string>
+    <string name="similar_products_at_store">منتجات مماثلة في المتجر</string>
+    <string name="Scene_Again">امسح مرة  اخرى </string>
+    <string name="permission_camera_rationale">السماح للكاميرا </string>
+
 
 </resources>

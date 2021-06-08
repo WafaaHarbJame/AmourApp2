@@ -32,9 +32,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        maven {
-            url  "https://dl.bintray.com/bpappin/pappin"
-        }
+//        maven {
+//            url  "https://dl.bintray.com/bpappin/pappin"
+//        }
     }
 }
 

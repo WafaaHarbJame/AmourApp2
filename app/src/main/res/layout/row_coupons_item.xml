@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_8sdp"
+    android:background="@drawable/round_corner_white_fill_big"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_8sdp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/logo_rewards"
+                android:layout_height="wrap_content"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ribbon"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/ic_barcode"
+            android:layout_height="wrap_content"/>
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/textCouponCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="abc55555555"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="2.5dp"
+            android:singleLine="true"
+           />
+
+
+    </LinearLayout>
+    <com.ramez.shopp.SpichalViews.STextViewBold
+        android:layout_width="match_parent"
+        android:id="@+id/textCouponPrice"
+        android:background="@drawable/cart_button_style"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:backgroundTint="@color/colorAppRed"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="10 BHD"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold" />
+
+<!--    <com.bottlerocketstudios.barcode.generation.ui.BarcodeView-->
+<!--        android:id="@+id/generation_barcode_image"-->
+<!--        app:barcode_format="qr_code"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        app:barcode_text="ABC-abc-1234"-->
+<!--        android:layout_marginTop="20dp"/>-->
+
+</LinearLayout>

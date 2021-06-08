@@ -374,6 +374,14 @@
     <string name="please_select_payment_method">Please select payment method</string>
     <string name="select_delivery_time">Please select Delivery time </string>
     <string name="recently">Newly arrived</string>
+    <string name="Price_Checker">Price Checker</string>
+    <string name="Ramez_Rewards">Ramez Rewards</string>
+    <string name="Card">Card</string>
+    <string name="Coupons">Coupons</string>
+    <string name="Generate_Coupons">Generate Coupons</string>
+    <string name="similar_products_at_store">Similar Products at Store</string>
+    <string name="Scene_Again">Scan Again</string>
+    <string name="permission_camera_rationale">permission_camera_rationale</string>
 
 
 </resources>
