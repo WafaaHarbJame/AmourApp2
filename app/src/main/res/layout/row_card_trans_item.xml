@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_6sdp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,6 +34,9 @@
                 android:id="@+id/dateTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/black"
                 android:text="08.06.2021" />
 
         </LinearLayout>
@@ -59,32 +61,33 @@
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="130"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorAppRed"
                     android:layout_marginBottom="@dimen/_6sdp"
                    />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Bahrain Dinar"
+                    android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_12ssp" />
 
 
             </LinearLayout>
 
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical"
@@ -116,23 +119,24 @@
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="130"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorAppRed"
                     android:layout_marginBottom="@dimen/_6sdp"
                     />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Points Earned"
+                    android:text="@string/points_earned"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_12ssp" />
 
 
             </LinearLayout>

@@ -60,7 +60,7 @@
         android:background="@color/white"
         android:layout_height="wrap_content">
         <com.ramez.shopp.SpichalViews.STextViewBold
-            android:id="@+id/scanAgainBut"
+            android:id="@+id/generateBut"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/_16sdp"
             android:layout_height="wrap_content"

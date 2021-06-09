@@ -18,6 +18,8 @@ import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Dialogs.GenerateDialog;
+import com.ramez.shopp.Dialogs.WhatsUpDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.OrderNewModel;
@@ -70,6 +72,12 @@ public class CardFragment extends FragmentBase implements CardsTransAdapter.OnIt
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
 
+
+        });
+
+        binding.generateBut.setOnClickListener(v -> {
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), R.string.Generate_Coupons, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
+            generateDialog.show();
 
         });
 

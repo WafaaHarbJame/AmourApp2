@@ -386,6 +386,9 @@
     <string name="Transaction_History">Transaction History</string>
     <string name="select_coupon_points">Select Coupon Points</string>
     <string name="minimum_points_needed_100">Minimum points needed 100</string>
+    <string name="points_earned">Points Earned</string>
+    <string name="bhd">BHD</string>
+    <string name="total_points">Total Points</string>
 
 
 </resources>

@@ -9,15 +9,16 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:background="@color/gray_dark"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/gray_dark"
             android:orientation="vertical">
 
             <include
@@ -37,16 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:background="@color/gray5"
                 android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:background="@color/colorAppRed"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_view_card"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical">
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -79,17 +82,17 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:layout_marginEnd="@dimen/_4sdp"
-                            android:textSize="@dimen/_12ssp"
+                            android:textSize="@dimen/_14ssp"
                             android:text="250" />
 
 
 
                         <ImageButton
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:src="@drawable/two_arrows_white"
+                            android:background="@color/transparent"
                             android:layout_gravity="center"
                             android:layout_weight="2"
-                            android:background="@color/colorAppRed"
                             android:layout_height="wrap_content" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
@@ -98,13 +101,14 @@
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp"
-                            android:text="BHD :" />
+                            android:textAlignment="viewStart"
+                            android:text="@string/bhd" />
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_12ssp"
+                            android:textSize="@dimen/_14ssp"
                             android:text="2.5" />
 
                     </LinearLayout>
@@ -115,7 +119,7 @@
                     android:orientation="vertical"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@drawable/round_corner_white_fill_big"
+                    android:background="@drawable/round_corner_white_fill_two_side"
                     android:layout_height="wrap_content">
                     <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
                         android:id="@+id/barcodeView"
@@ -165,15 +169,17 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
         <com.ramez.shopp.SpichalViews.STextViewBold
-            android:id="@+id/scanAgainBut"
+            android:id="@+id/generateBut"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/_16sdp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
             android:background="@drawable/round_corner_next"
             android:gravity="center"
             android:padding="@dimen/_8sdp"
