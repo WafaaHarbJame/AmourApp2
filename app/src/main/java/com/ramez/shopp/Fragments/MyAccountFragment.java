@@ -632,7 +632,6 @@ public class MyAccountFragment extends FragmentBase {
                 Intent intent = new Intent(getActivityy(), PriceCheckerResultActivity.class);
                 ProductModel productModel=new ProductModel();
                 intent.putExtra(Constants.DB_productModel, productModel);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
             }

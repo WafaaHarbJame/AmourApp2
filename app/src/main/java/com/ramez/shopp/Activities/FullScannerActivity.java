@@ -7,24 +7,34 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.databinding.ActivityFavoriteBinding;
+import com.ramez.shopp.databinding.ActivityScanBarcodeBinding;
 
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class FullScannerActivity extends ActivityBase implements ZBarScannerView.ResultHandler {
 
-    private ZBarScannerView mScannerView;
+    //private ZBarScannerView mScannerView;
+    ActivityScanBarcodeBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mScannerView = new ZBarScannerView(getActiviy());
-        setContentView(mScannerView);
+      //  binding.qrScannerView = new ZBarScannerView(getActiviy());
+        binding = ActivityScanBarcodeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        setTitle("");
+
+        //setContentView(mScannerView);
 
     }
 
@@ -54,15 +64,15 @@ public class FullScannerActivity extends ActivityBase implements ZBarScannerView
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.setAutoFocus(true);
-        mScannerView.startCamera();
+        binding.qrScannerView.setResultHandler(this);
+        binding.qrScannerView.setAutoFocus(true);
+        binding.qrScannerView.startCamera();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        binding.qrScannerView.stopCamera();
         closeFormatsDialog();
     }
 

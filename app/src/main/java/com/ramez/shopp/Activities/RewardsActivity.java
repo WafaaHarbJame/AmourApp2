@@ -32,7 +32,7 @@ public class RewardsActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        setTitle(R.string.my_order);
+        setTitle("");
 
         binding.viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         binding.tabs.setupWithViewPager(binding.viewPager);
