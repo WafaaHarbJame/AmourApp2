@@ -2,14 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray5"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <LinearLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -36,17 +39,147 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/colorAppRed"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/reward_cards" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:padding="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_height="wrap_content">
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:text="@string/points" />
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:text="250" />
+
+
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/two_arrows_white"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@color/colorAppRed"
+                            android:layout_height="wrap_content" />
+
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:text="BHD :" />
+                        <com.ramez.shopp.SpichalViews.STextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12ssp"
+                            android:text="2.5" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/round_corner_white_fill_big"
+                    android:layout_height="wrap_content">
+                    <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
+                        android:id="@+id/barcodeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:barcode_format="code_128"
+                        app:barcode_text="10000000000009" />
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/textCouponCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="10000000000009"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2.5dp"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="@string/Transaction_History" />
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/myOrderRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp" />
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    tools:listitem="@layout/row_card_trans_item" />
 
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/scanAgainBut"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_16sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/Generate_Coupons"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </LinearLayout>
 

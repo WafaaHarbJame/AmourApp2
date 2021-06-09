@@ -64,10 +64,6 @@ public class CouponsFragment extends  FragmentBase implements CouponsAdapter.OnI
 
 
 
-        binding.swipe.setOnRefreshListener(() -> {
-            binding.swipe.setRefreshing(false);
-
-        });
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {

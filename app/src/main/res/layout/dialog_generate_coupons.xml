@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLy"
+    android:layout_width="match_parent"
+    android:background="@color/gray5"
+    android:layout_height="match_parent">
+
+
+
+    <View
+        android:id="@+id/roundBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/round_top_corner_white_light_fill"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerGuide" />
+
+    <View
+        android:id="@+id/headerGuide"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/loginHeader"
+        app:layout_constraintTop_toTopOf="@id/loginHeader" />
+
+
+    <TextView
+        android:id="@+id/loginHeader"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginHeader">
+
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/titleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:text="@string/Generate_Coupons"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/messageTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:gravity="center"
+            android:text="250"
+            android:textColor="@color/colorAppRed"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/whats_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="Total Points"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/select_coupon_points"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+         />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/plusCartBtn"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:gravity="center"
+                android:scaleX="@integer/scaleX"
+                android:background="@drawable/round_corner_gray_border_threeside"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:tint="@color/white" />
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/productCartQTY"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_corner_minues"
+                android:gravity="center"
+                android:minHeight="@dimen/_30sdp"
+                android:text="100"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/minusCartBtn"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:gravity="center"
+                android:scaleX="@integer/scaleXInv"
+                android:text="-"
+                android:background="@drawable/round_corner_gray_border_threeside"
+                android:textAlignment="center"
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:gravity="center"
+            android:text="@string/minimum_points_needed_100"
+            android:textColor="@color/colorAppRed"
+            android:textSize="@dimen/_14ssp" />
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/scanAgainBut"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/_16sdp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/Generate_Coupons"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

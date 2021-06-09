@@ -8,10 +8,10 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe"
+    <LinearLayout
         android:background="@color/gray5"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:layout_weight="1"
         android:layout_width="match_parent"
        >
@@ -54,7 +54,7 @@
             </LinearLayout>
         </LinearLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@color/white"

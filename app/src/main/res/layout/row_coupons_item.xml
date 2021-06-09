@@ -34,16 +34,20 @@
 
 
         </LinearLayout>
-        <ImageView
+
+        <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
+            android:id="@+id/barcodeView"
             android:layout_width="match_parent"
-            android:src="@drawable/ic_barcode"
-            android:layout_height="wrap_content"/>
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:barcode_format="code_128"
+            app:barcode_text="10000000000009" />
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/textCouponCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:text="abc55555555"
+            android:text="10000000000009"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_marginTop="2.5dp"
@@ -66,12 +70,6 @@
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold" />
 
-<!--    <com.bottlerocketstudios.barcode.generation.ui.BarcodeView-->
-<!--        android:id="@+id/generation_barcode_image"-->
-<!--        app:barcode_format="qr_code"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_50sdp"-->
-<!--        app:barcode_text="ABC-abc-1234"-->
-<!--        android:layout_marginTop="20dp"/>-->
+
 
 </LinearLayout>

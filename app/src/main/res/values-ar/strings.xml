@@ -346,6 +346,10 @@
     <string name="similar_products_at_store">منتجات مماثلة في المتجر</string>
     <string name="Scene_Again">امسح مرة  اخرى </string>
     <string name="permission_camera_rationale">السماح للكاميرا </string>
+    <string name="points">Points</string>
+    <string name="Transaction_History">Transaction History</string>
+    <string name="select_coupon_points">Select Coupon Points</string>
+    <string name="minimum_points_needed_100">Minimum points needed 100</string>
 
 
 </resources>

@@ -46,7 +46,7 @@ public class FullScannerActivity extends ActivityBase implements ZBarScannerView
         setResult(Activity.RESULT_OK, intent);
         finish();
 
-        Log.i("tag", "Log " + "Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
+        Log.i(getClass().getSimpleName(), "Log " + "Contents = " + rawResult.getContents() + ", Format = " + rawResult.getBarcodeFormat().getName());
 
 
     }

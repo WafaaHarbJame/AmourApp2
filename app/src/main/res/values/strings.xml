@@ -382,6 +382,10 @@
     <string name="similar_products_at_store">Similar Products at Store</string>
     <string name="Scene_Again">Scan Again</string>
     <string name="permission_camera_rationale">permission_camera_rationale</string>
+    <string name="points">Points</string>
+    <string name="Transaction_History">Transaction History</string>
+    <string name="select_coupon_points">Select Coupon Points</string>
+    <string name="minimum_points_needed_100">Minimum points needed 100</string>
 
 
 </resources>
