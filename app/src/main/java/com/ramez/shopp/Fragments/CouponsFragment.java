@@ -17,6 +17,7 @@ import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Dialogs.GenerateDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.OrderNewModel;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CouponsFragment extends  FragmentBase implements CouponsAdapter.OnItemClick {
+public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnItemClick {
     List<CouponsModel> list;
     LinearLayoutManager linearLayoutManager;
     private FragmentCouponsBinding binding;
@@ -47,7 +48,7 @@ public class CouponsFragment extends  FragmentBase implements CouponsAdapter.OnI
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
-        if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
             user_id = UtilityApp.getUserData().getId();
             list.add(new CouponsModel());
             list.add(new CouponsModel());
@@ -56,19 +57,21 @@ public class CouponsFragment extends  FragmentBase implements CouponsAdapter.OnI
 
             initAdapter(list);
 
-        }
-        else {
+        } else {
             CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
             checkLoginDialog.show();
         }
 
 
-
-
-
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
 
+        });
+
+
+        binding.generateBut.setOnClickListener(v -> {
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), R.string.Generate_Coupons, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
+            generateDialog.show();
 
         });
 
@@ -80,17 +83,13 @@ public class CouponsFragment extends  FragmentBase implements CouponsAdapter.OnI
         });
 
 
-
-
         return view;
     }
 
 
-
-
     private void initAdapter(List<CouponsModel> list) {
 
-        adapter = new CouponsAdapter(getActivity(),list,list.size(),this);
+        adapter = new CouponsAdapter(getActivity(), list, list.size(), this);
         binding.myOrderRecycler.setAdapter(adapter);
 
 
