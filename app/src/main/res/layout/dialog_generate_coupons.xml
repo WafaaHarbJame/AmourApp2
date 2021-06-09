@@ -18,8 +18,8 @@
         android:id="@+id/roundBg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20ssp"
         android:background="@drawable/round_top_corner_white_light_fill"
         app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,32 +30,20 @@
         android:id="@+id/headerGuide"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:layout_constraintBottom_toBottomOf="@id/loginHeader"
-        app:layout_constraintTop_toTopOf="@id/loginHeader" />
-
-
-    <TextView
-        android:id="@+id/loginHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_100sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/container" />
 
 
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_20ssp"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:layout_marginEnd="@dimen/_20ssp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginHeader">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <com.ramez.shopp.SpichalViews.STextViewBold
@@ -75,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_4sdp"
             android:gravity="center"
             android:text="250"
             android:textColor="@color/colorAppRed"
@@ -94,7 +81,7 @@
             android:textSize="@dimen/_12ssp"
             tools:ignore="RtlCompat" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.shopp.SpichalViews.STextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -108,12 +95,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:orientation="horizontal">
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/plusBtn"
-                android:layout_width="@dimen/_50sdp"
+                android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/round_corner_gray_border_threeside"
                 android:gravity="center"
@@ -121,7 +111,7 @@
                 android:text="+"
                 android:textAlignment="center"
                 android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 android:visibility="visible"
                 app:tint="@color/white" />
@@ -137,13 +127,13 @@
                 android:text="100"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_16sdp"
                 android:visibility="visible" />
 
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/minusBtn"
-                android:layout_width="@dimen/_50sdp"
+                android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/round_corner_gray_border_threeside"
                 android:gravity="center"
@@ -151,7 +141,7 @@
                 android:text="-"
                 android:textAlignment="center"
                 android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 app:tint="@color/white" />
 
@@ -166,7 +156,7 @@
             android:gravity="center"
             android:text="@string/minimum_points_needed_100"
             android:textColor="@color/colorAppRed"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_12ssp" />
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/scanAgainBut"
