@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,7 +24,8 @@ public class GenerateDialog extends Dialog {
 
     Activity activity;
     ConstraintLayout parentLy;
-    TextView minusBtn, countTV,plusBtn;
+    TextView countTV;
+    ImageView minusBtn,plusBtn;
 
     public GenerateDialog(Context context, int title, int message, int okStr, int cancelStr, final ConfirmDialog.Click okCall, final ConfirmDialog.Click cancelCall) {
         super(context);

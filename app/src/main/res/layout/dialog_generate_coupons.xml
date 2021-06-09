@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20ssp"
-        android:background="@drawable/round_top_corner_white_light_fill"
+        android:background="@drawable/round_corner_white_fill"
         app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
             android:gravity="center"
             android:text="250"
             android:textColor="@color/colorAppRed"
-            android:textSize="@dimen/_16ssp" />
+            android:textSize="@dimen/_20ssp" />
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:layout_width="wrap_content"
@@ -101,25 +101,22 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextView
-                android:id="@+id/plusBtn"
+            <ImageView
+                android:id="@+id/minusBtn"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/round_corner_gray_border_threeside"
                 android:gravity="center"
                 android:scaleX="@integer/scaleX"
-                android:text="+"
-                android:textAlignment="center"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold"
+                android:padding="@dimen/_12sdp"
+                android:src="@drawable/ic_minus"
                 android:visibility="visible"
-                app:tint="@color/white" />
+               />
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/countTV"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_weight="1"
                 android:background="@drawable/round_corner_minues_1"
                 android:gravity="center"
@@ -127,23 +124,19 @@
                 android:text="100"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_20ssp"
                 android:visibility="visible" />
 
 
-            <com.ramez.shopp.SpichalViews.STextView
-                android:id="@+id/minusBtn"
+            <ImageView
+                android:id="@+id/plusBtn"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/round_corner_gray_border_threeside"
                 android:gravity="center"
+                android:padding="@dimen/_10sdp"
                 android:scaleX="@integer/scaleXInv"
-                android:text="-"
-                android:textAlignment="center"
-                android:textColor="@color/gray_dark"
-                android:textSize="@dimen/_16sdp"
-                android:textStyle="bold"
-                app:tint="@color/white" />
+                app:srcCompat="@drawable/ic_plus" />
 
 
         </LinearLayout>

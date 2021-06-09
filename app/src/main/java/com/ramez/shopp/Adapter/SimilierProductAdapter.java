@@ -58,7 +58,6 @@ private SimilierProductAdapter adapter;
         return new Holder(itemView);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);

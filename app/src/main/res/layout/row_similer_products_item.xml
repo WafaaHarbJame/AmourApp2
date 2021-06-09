@@ -33,11 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_6sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/empty_fav" />
+            android:src="@drawable/empty_fav"
+            android:visibility="gone" />
 
         <com.ramez.shopp.SpichalViews.STextView
             android:id="@+id/discountTv"
@@ -49,11 +49,11 @@
             android:paddingStart="@dimen/_6sdp"
             android:paddingTop="@dimen/_2sdp"
             android:paddingEnd="@dimen/_6sdp"
-            android:visibility="gone"
             android:paddingBottom="@dimen/_2sdp"
             android:text="@string/_50_off"
             android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10ssp"
+            android:visibility="gone" />
 
 
     </FrameLayout>
@@ -63,16 +63,32 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:ellipsize="end"
-        android:lines="2"
-        android:maxLines="2"
-        android:text="Damla Water500 ML"
+        android:maxLines="1"
+        android:text="Damla Water"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/productPriceLy" />
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/productSizeTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="500 ML"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productNameTv" />
 
 
     <LinearLayout
@@ -131,10 +147,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:visibility="gone"
             android:text="@string/_10220_aed"
             android:textColor="@color/gray3"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10ssp"
+            android:visibility="gone" />
 
         <Space
             android:layout_width="0dp"
