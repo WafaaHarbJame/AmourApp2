@@ -213,7 +213,7 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + memberModel.getId());
 
-        Call call = apiService.logout(headerMap, memberModel.getId(),Constants.user_type);
+        Call call = apiService.logout(headerMap, memberModel.getId(), Constants.user_type);
         call.enqueue(callbackApi);
 
     }
@@ -494,6 +494,63 @@ public class DataFeacher {
     }
 
 
+    public void getSettings(int countryId) {
+
+        Log.i(TAG, "Log getSettings");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_id " + countryId);
+
+        Call call = apiService.getSettings(headerMap, countryId);
+        call.enqueue(callbackApi);
+    }
+
+    public void getTotalPoint(int userId) {
+
+        Log.i(TAG, "Log getTotalPoint");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log userid " + userId);
+
+        Call call = apiService.getTotalPoint(headerMap, userId);
+        call.enqueue(callbackApi);
+    }
+
+    public void getCoupons(int userId) {
+
+        Log.i(TAG, "Log getCoupons");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log userid " + userId);
+
+        Call call = apiService.getCoupons(headerMap, userId);
+        call.enqueue(callbackApi);
+    }
+
+    public void getTrans(int userId) {
+
+        Log.i(TAG, "Log getTrans");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log userid " + userId);
+
+        Call call = apiService.getTrans(headerMap, userId);
+        call.enqueue(callbackApi);
+    }
+
+    public void generateCoupon(int userId, int points) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("userid", userId);
+        params.put("points", points);
+
+        Log.i(TAG, "Log generateCoupon");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log userid " + userId);
+        Log.i(TAG, "Log points " + points);
+
+        Call call = apiService.generateCoupon(headerMap, params);
+        call.enqueue(callbackApi);
+
+    }
+
+
     public void GetMainPage(int category_id, int country_id, int city_id, String user_id) {
 
         Log.i(TAG, "Log GetMainPage");
@@ -680,9 +737,6 @@ public class DataFeacher {
 
 
     }
-
-
-
 
 
     public void updateProfile(MemberModel memberModel) {
@@ -1165,7 +1219,6 @@ public class DataFeacher {
         Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
     }
-
 
 
 }

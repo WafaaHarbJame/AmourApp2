@@ -17,6 +17,7 @@ import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CountryModelResult;
+import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
@@ -38,8 +39,11 @@ import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.Models.SingleDinnerModel;
+import com.ramez.shopp.Models.TotalPointModel;
+import com.ramez.shopp.Models.TransactionModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -49,6 +53,7 @@ import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 
@@ -91,6 +96,26 @@ ApiInterface {
     Call<GeneralModel> otpVerifyUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body OtpModel param);
 
     /* ------------------------- Address Handle ------------------------- */
+
+    /* -------------------------Start Loayl Handle ------------------------- */
+
+    @POST("v4/Loayl/GetSettings")
+    Call<GeneralModel> getSettings(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int countryId);
+
+    @POST("v4/Loayl/GetTotalPoint")
+    Call<ResultAPIModel<TotalPointModel>> getTotalPoint(@HeaderMap() Map<String, Object> headerParams, @Query("userid") int userId);
+
+    @POST("v4/Loayl/GetCoupons")
+    Call<ResultAPIModel<List<CouponsModel>>> getCoupons(@HeaderMap() Map<String, Object> headerParams, @Query("userid") int userId);
+
+    @POST("v4/Loayl/GetTrans")
+    Call<ResultAPIModel<List<TransactionModel>>> getTrans(@HeaderMap() Map<String, Object> headerParams, @Query("userid") int userId);
+
+    @POST("v4/Loayl/GenerateCoupon")
+    Call<GeneralModel> generateCoupon(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
+
+    /* -------------------------end Loayl Handle ------------------------- */
+
     @POST("v4/Locations/countryList")
     Call<CountryModelResult> GetCountry(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
@@ -126,7 +151,7 @@ ApiInterface {
 
 
     @GET("v4/Account/logout")
-    Call<ResultAPIModel<MemberModel>> logout(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id,@Query("user_type") String user_type);
+    Call<ResultAPIModel<MemberModel>> logout(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("user_type") String user_type);
 
 
     @GET("v4/Products/singleproductList")
@@ -156,6 +181,7 @@ ApiInterface {
                                                                       @Query("country_id") int country_id, @Query("city_id")
                                                                               int city_id, @Query("user_id") String user_id,
                                                                       @Query("page_number") int page_number, @Query("page_size") int page_size);
+
     @GET("v4/Products/allbrands")
     Call<ResultAPIModel<ArrayList<BrandModel>>> GetAllBrands(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 

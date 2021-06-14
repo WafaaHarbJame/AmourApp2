@@ -1,12 +1,24 @@
 package com.ramez.shopp.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class CouponsModel implements Serializable {
+
+    @SerializedName("id")
+    @Expose
     public int id;
     public int user_id;
+    @SerializedName("couponCode")
+    @Expose
     public String coupon_code;
+    @SerializedName("points")
+    @Expose
     public int points;
+    @SerializedName("value")
+    @Expose
     public float value;
     private String created_at;
     public String updated_at;
