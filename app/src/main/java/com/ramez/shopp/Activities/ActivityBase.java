@@ -62,9 +62,10 @@ public class ActivityBase extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_color));
 
-        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
+
 
     }
 
