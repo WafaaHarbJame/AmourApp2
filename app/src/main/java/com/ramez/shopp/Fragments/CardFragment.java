@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ramez.shopp.Adapter.CardsTransAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
+import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.Data;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.Models.TransactionModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCardBinding;
@@ -77,14 +80,6 @@ public class CardFragment extends FragmentBase {
         if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
             user_id = UtilityApp.getUserData().getId();
 
-//            List<TransactionModel> list = new ArrayList<>();
-//            list.add(new TransactionModel());
-//            list.add(new TransactionModel());
-//            list.add(new TransactionModel());
-//            list.add(new TransactionModel());
-
-//            initAdapter(list);
-
             callApi();
 
         } else {
@@ -95,16 +90,14 @@ public class CardFragment extends FragmentBase {
     }
 
     private void callApi() {
-        new DataFeacher(false, new DataFetcherCallBack() {
-            @Override
-            public void Result(Object obj, String func, boolean IsSuccess) {
-                ResultAPIModel<List<TransactionModel>> result = (ResultAPIModel<List<TransactionModel>>) obj;
-                if (result.isSuccessful()) {
-                    List<TransactionModel> list = result.data;
-                    initAdapter(list);
-                } else {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<List<TransactionModel>> result = (ResultAPIModel<List<TransactionModel>>) obj;
+            if (result.isSuccessful()) {
+                List<TransactionModel> list = result.data;
+                GetTotalPoint();
+                initAdapter(list);
+            } else {
 
-                }
             }
         }).getTrans(user_id);
     }
@@ -117,6 +110,25 @@ public class CardFragment extends FragmentBase {
         binding.myOrderRecycler.setAdapter(adapter);
 
 
+    }
+
+
+    private void GetTotalPoint() {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
+            if (result.isSuccessful()) {
+                if(result.data != null){
+
+                    TotalPointModel totalPointModel=result.data;
+                    binding.totalPointTv.setText(String.valueOf(totalPointModel.points));
+                    binding.currencyPriceTv.setText(String.valueOf(totalPointModel.value));
+
+                }
+
+
+            }
+
+        }).getTotalPoint(user_id);
     }
 
 }

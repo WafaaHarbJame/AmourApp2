@@ -23,6 +23,7 @@ import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.TransactionModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCardBinding;
 import com.ramez.shopp.databinding.FragmentCouponsBinding;
@@ -48,25 +49,13 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
-        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
-            user_id = UtilityApp.getUserData().getId();
-            list.add(new CouponsModel());
-            list.add(new CouponsModel());
-            list.add(new CouponsModel());
-            list.add(new CouponsModel());
-
-            initAdapter(list);
-
-        } else {
-            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
-            checkLoginDialog.show();
-        }
-
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-
         });
+
+        getData();
+
 
 
         binding.generateBut.setOnClickListener(v -> {
@@ -96,8 +85,38 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     }
 
 
+
+    private void callApi() {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
+            if (result.isSuccessful()) {
+                List<CouponsModel> list = result.data;
+                initAdapter(list);
+            } else {
+
+            }
+        }).getCoupons(user_id);
+    }
+
+
+
+    private void getData() {
+
+        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+            user_id = UtilityApp.getUserData().getId();
+
+            callApi();
+
+        } else {
+            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
+            checkLoginDialog.show();
+        }
+
+    }
+
+
     @Override
-    public void onItemClicked(int position, CategoryModel categoryModel) {
+    public void onItemClicked(int position, CouponsModel categoryModel) {
 
     }
 }

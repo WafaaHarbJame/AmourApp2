@@ -47,6 +47,19 @@ public class MemberModel implements Serializable {
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
+
+    public String getLoyalBarcode() {
+        return loyalBarcode;
+    }
+
+    public void setLoyalBarcode(String loyalBarcode) {
+        this.loyalBarcode = loyalBarcode;
+    }
+
+    @SerializedName("loyalBarcode")
+    @Expose
+    private String loyalBarcode;
+
 //    @SerializedName("registerType")
 //    @Expose
 //    private String registerType;

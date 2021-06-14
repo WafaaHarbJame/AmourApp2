@@ -83,6 +83,7 @@
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
+                            android:id="@+id/totalPointTv"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:text="250"
@@ -110,6 +111,7 @@
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/currencyPriceTv"
                             android:layout_marginEnd="@dimen/_4sdp"
                             android:text="2.5"
                             android:textColor="@color/white"
