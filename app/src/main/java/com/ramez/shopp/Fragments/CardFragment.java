@@ -15,6 +15,7 @@ import com.ramez.shopp.Adapter.CardsTransAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -38,10 +39,11 @@ public class CardFragment extends FragmentBase {
 
     private FragmentCardBinding binding;
     //    private CardsTransAdapter adapter;
-    private int user_id,countryId;
+    private int userId, countryId;
     private String coupBarcode;
-    private Double totalPoints=0.0;
-    private int  minimumPoints=0;
+    TotalPointModel totalPointModel;
+    SettingCouponsModel settingCouponsModel;
+
     LocalModel localModel;
 
 
@@ -59,8 +61,8 @@ public class CardFragment extends FragmentBase {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
-        localModel=UtilityApp.getLocalData();
-        countryId=localModel.getCountryId();
+        localModel = UtilityApp.getLocalData();
+        countryId = localModel.getCountryId();
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
@@ -70,7 +72,12 @@ public class CardFragment extends FragmentBase {
         });
 
         binding.generateBut.setOnClickListener(v -> {
-            GenerateDialog generateDialog = new GenerateDialog(getActivityy(),totalPoints,minimumPoints, R.string.Generate_Coupons, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(),userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
+                @Override
+                public void Result(Object obj, String func, boolean IsSuccess) {
+
+                }
+            });
             generateDialog.show();
 
         });
@@ -89,12 +96,12 @@ public class CardFragment extends FragmentBase {
     private void getData() {
 
         if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
-            user_id = UtilityApp.getUserData().getId();
-            coupBarcode=UtilityApp.getUserData().getLoyalBarcode();
-            GetTotalPoint();
-            GetSettings(countryId);
+            userId = UtilityApp.getUserData().getId();
+            coupBarcode = UtilityApp.getUserData().getLoyalBarcode();
+            getTotalPoint();
+            getCouponSettings();
 
-
+            callApi();
 
         } else {
             CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
@@ -165,7 +172,7 @@ public class CardFragment extends FragmentBase {
 
 
             }
-        }).getTrans(user_id);
+        }).getTrans(userId);
     }
 
     private void initAdapter(List<TransactionModel> list) {
@@ -179,104 +186,71 @@ public class CardFragment extends FragmentBase {
     }
 
 
-    private void GetTotalPoint() {
-        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-        binding.dataLY.setVisibility(View.GONE);
-        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-        binding.generateBut.setVisibility(View.GONE);
+    private void getTotalPoint() {
+
+        totalPointModel = DBFunction.getTotalPoints();
+
+        if (totalPointModel == null) {
+
+            callGetTotalPoints();
+
+        } else {
+            callGetTotalPoints();
+            setTotalPointsData();
+        }
+    }
+
+    private void callGetTotalPoints() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
-            String message = getActivity().getString(R.string.fail_to_get_data);
-
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-            if (func.equals(Constants.ERROR)) {
-
-                if (result != null && result.message != null) {
-                    message = result.message;
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.generateBut.setVisibility(View.GONE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.generateBut.setVisibility(View.GONE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.generateBut.setVisibility(View.GONE);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            }
 
             if (result.isSuccessful()) {
-                if(result.data != null){
 
-                    binding.dataLY.setVisibility(View.VISIBLE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                    binding.generateBut.setVisibility(View.VISIBLE);
+                totalPointModel = result.data;
+                DBFunction.setTotalPoints(totalPointModel);
 
-                    TotalPointModel totalPointModel=result.data;
-                    totalPoints=totalPointModel.points;
-                    binding.totalPointTv.setText(String.valueOf(totalPointModel.points));
-                    binding.currencyPriceTv.setText(String.valueOf(totalPointModel.value));
-                    binding.barcodeView.setBarcodeText(coupBarcode);
-                    binding.textCouponCode.setText(coupBarcode);
-                    callApi();
-
-                }
-
-
+                setTotalPointsData();
             }
 
-            else {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+        }).getTotalPoint(userId);
 
 
-            }
-
-        }).getTotalPoint(user_id);
     }
 
-    private void GetSettings(int countryId) {
+    private void setTotalPointsData() {
+
+        binding.totalPointTv.setText(String.valueOf(totalPointModel.points));
+        binding.currencyPriceTv.setText(String.valueOf(totalPointModel.value));
+        binding.barcodeView.setBarcodeText(coupBarcode);
+        binding.textCouponCode.setText(coupBarcode);
+
+
+    }
+
+    private void getCouponSettings() {
+
+        settingCouponsModel = DBFunction.getCouponSettings();
+        callGetCouponSettings();
+
+    }
+
+
+    private void callGetCouponSettings() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (result.isSuccessful()) {
-                Log.i(getClass().getSimpleName(),"Log result settingCouponsModel "+result.data);
-                Log.i(getClass().getSimpleName(),"Log result settingCouponsModel  status "+result.status);
 
-                if(result.data != null){
-                    SettingCouponsModel settingCouponsModel=result.data;
-                    minimumPoints=settingCouponsModel.minimumPoints;
-                    Log.i(getClass().getSimpleName(),"Log minimumPoints "+settingCouponsModel.minimumPoints);
-                    Log.i(getClass().getSimpleName(),"Log  value "+settingCouponsModel.value);
-
-                }
-
+                settingCouponsModel = result.data;
+                DBFunction.setCouponSettings(settingCouponsModel);
 
             }
 
         }).getSettings(countryId);
+
     }
-
-
 
 
 }

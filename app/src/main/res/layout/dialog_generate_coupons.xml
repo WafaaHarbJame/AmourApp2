@@ -107,11 +107,10 @@
                 android:layout_height="@dimen/_35sdp"
                 android:background="@drawable/round_corner_gray_border_threeside"
                 android:gravity="center"
-                android:scaleX="@integer/scaleX"
                 android:padding="@dimen/_12sdp"
+                android:scaleX="@integer/scaleX"
                 android:src="@drawable/ic_minus"
-                android:visibility="visible"
-               />
+                android:visibility="visible" />
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/countTV"
@@ -143,9 +142,10 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
+
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,13 +155,14 @@
                 android:text="@string/minimum_points_needed_100"
                 android:textColor="@color/colorAppRed"
                 android:textSize="@dimen/_12ssp" />
+
             <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/minPointTv"
                 android:layout_width="wrap_content"
-                android:id="@+id/minimum_pointsTv"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/colorAppRed"
@@ -170,7 +171,7 @@
 
 
         <com.ramez.shopp.SpichalViews.STextViewBold
-            android:id="@+id/scanAgainBut"
+            android:id="@+id/generateBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_16sdp"

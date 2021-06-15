@@ -48,7 +48,7 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
     int cartCount = 0;
-    int storeId=7263;
+    int storeId = 7263;
     LocalModel localModel;
     private ActivityMainBinding binding;
     private boolean toggleButton = false;
@@ -85,7 +85,6 @@ public class MainActivity extends ActivityBase {
 
 
         }
-
 
 
         if (UtilityApp.isLogin()) {
@@ -513,7 +512,7 @@ public class MainActivity extends ActivityBase {
                 GeneralModel result = (GeneralModel) obj;
 
                 if (result != null && result.getMessage() != null) {
-                    if (result.getStatus().equals(Constants.OK_STATUS)) {
+                    if (result.getStatus() == (Constants.OK_STATUS)) {
                         Log.i(TAG, "Log getValidation" + result.getMessage());
 
                     } else {

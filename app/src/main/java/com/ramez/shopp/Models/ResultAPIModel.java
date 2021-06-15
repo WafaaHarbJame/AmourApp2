@@ -14,6 +14,6 @@ public class ResultAPIModel<T> {
 
 
     public boolean isSuccessful() {
-        return status == 200;
+        return status == 200 || data != null;
     }
 }

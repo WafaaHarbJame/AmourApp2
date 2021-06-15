@@ -353,6 +353,10 @@
     <string name="points_earned">النقاط المكتسبة</string>
     <string name="bhd">BHD</string>
     <string name="total_points">مجموع النقاط</string>
+    <string name="fail_generate_coupon">فشل انشاء الكويون</string>
+    <string name="success_generate_coupon">تم انشاء الكوبون</string>
+    <string name="you_reach_max_point">لقد وصلت الحد الأقصى لنقاطك</string>
+    <string name="minimum_points_needed">الحد الأدنى للنقاط</string>
 
 
 </resources>

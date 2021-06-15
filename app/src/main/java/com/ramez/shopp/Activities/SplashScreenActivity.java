@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -22,7 +23,9 @@ import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.SettingCouponsModel;
 import com.ramez.shopp.Models.Slider;
+import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.R;
 
 import java.util.ArrayList;
@@ -55,7 +58,7 @@ public class SplashScreenActivity extends ActivityBase {
         setContentView(R.layout.activity_splash_screen);
         lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
 
-        getSetting();
+//        getSetting();
 
         localModel = UtilityApp.getLocalData();
 
@@ -68,7 +71,8 @@ public class SplashScreenActivity extends ActivityBase {
             getCategories(Integer.parseInt(localModel.getCityId()));
             getDinners(lang);
             GetHomePage();
-
+            getCouponSettings(country_id);
+            getCouponSettings(country_id);
 
         }
         initData();
@@ -86,7 +90,7 @@ public class SplashScreenActivity extends ActivityBase {
                     user = UtilityApp.getUserData();
                     userId = user.getId();
                     getUserData(userId);
-
+                    getTotalPoints(userId);
 
                 }
 
@@ -145,8 +149,7 @@ public class SplashScreenActivity extends ActivityBase {
                     UtilityApp.setUserData(memberModel);
                     getCarts(storeId, userId);
 
-                }
-                else {
+                } else {
                     UtilityApp.logOut();
                     Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
                     intent.putExtra(Constants.LOGIN, true);
@@ -154,7 +157,6 @@ public class SplashScreenActivity extends ActivityBase {
                     startActivity(intent);
                     finish();
                 }
-
 
 
             } else {
@@ -204,6 +206,37 @@ public class SplashScreenActivity extends ActivityBase {
         }).getSetting();
     }
 
+
+    private void getTotalPoints(int userId) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
+
+            if (result.isSuccessful()) {
+
+                TotalPointModel totalPointModel = result.data;
+                DBFunction.setTotalPoints(totalPointModel);
+
+            }
+
+        }).getTotalPoint(userId);
+    }
+
+    private void getCouponSettings(int countryId) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
+
+            if (result.isSuccessful()) {
+
+                SettingCouponsModel settingCouponsModel = result.data;
+                DBFunction.setCouponSettings(settingCouponsModel);
+
+            }
+
+        }).getSettings(countryId);
+    }
+
     public void getCategories(int storeId) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -223,8 +256,8 @@ public class SplashScreenActivity extends ActivityBase {
 
     public void getDinners(String lang) {
         UtilityApp.setDinnersData(null);
-        Log.i("TAG","Log dinners Size");
-        Log.i("TAG","Log countryid "+country_id);
+        Log.i("TAG", "Log dinners Size");
+        Log.i("TAG", "Log countryid " + country_id);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -232,7 +265,7 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (IsSuccess) {
                 if (result.data != null && result.data.size() > 0) {
-                    Log.i("TAG","Log dinners Size"+result.data.size());
+                    Log.i("TAG", "Log dinners Size" + result.data.size());
                     ArrayList<DinnerModel> dinnerModels = result.data;
                     UtilityApp.setDinnersData(dinnerModels);
                 }

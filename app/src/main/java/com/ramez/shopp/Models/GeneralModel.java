@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 public class GeneralModel {
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -25,6 +25,10 @@ public class GeneralModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean isSuccessful() {
+        return status == 200 ;
     }
 
 }

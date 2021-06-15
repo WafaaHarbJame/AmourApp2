@@ -389,6 +389,10 @@
     <string name="points_earned">Points Earned</string>
     <string name="bhd">BHD</string>
     <string name="total_points">Total Points</string>
+    <string name="fail_generate_coupon">Fail to generate coupon</string>
+    <string name="success_generate_coupon">Success generate coupon</string>
+    <string name="you_reach_max_point">You reach max points</string>
+    <string name="minimum_points_needed">Minimum points is</string>
 
 
 </resources>

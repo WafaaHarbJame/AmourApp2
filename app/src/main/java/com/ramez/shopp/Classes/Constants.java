@@ -126,4 +126,7 @@ public class Constants {
     public static String FRAG_BROSHORE = "frag_broshore";
 
     public static String past_order="p";
+
+    public static String DB_TOTAL_POINTS="db_total_points";
+    public static String DB_COUPON_SETTINGS="db_coupon_settings";
 }
