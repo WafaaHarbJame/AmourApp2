@@ -141,15 +141,33 @@
 
         </LinearLayout>
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:gravity="center"
-            android:text="@string/minimum_points_needed_100"
-            android:textColor="@color/colorAppRed"
-            android:textSize="@dimen/_12ssp" />
+            android:layout_height="wrap_content">
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:gravity="center"
+                android:text="@string/minimum_points_needed_100"
+                android:textColor="@color/colorAppRed"
+                android:textSize="@dimen/_12ssp" />
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="wrap_content"
+                android:id="@+id/minimum_pointsTv"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/colorAppRed"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/scanAgainBut"

@@ -496,7 +496,7 @@ public class DataFeacher {
 
     public void getSettings(int countryId) {
 
-        Log.i(TAG, "Log getSettings");
+        Log.i(TAG, "Log settingCouponsModel");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + countryId);
 

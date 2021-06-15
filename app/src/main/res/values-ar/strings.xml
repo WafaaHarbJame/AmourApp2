@@ -349,7 +349,7 @@
     <string name="points">نقاطي</string>
     <string name="Transaction_History">تاريخ المعاملات</string>
     <string name="select_coupon_points">حدد نقاط القسيمة</string>
-    <string name="minimum_points_needed_100">الحد الأدنى من النقاط المطلوبة 100</string>
+    <string name="minimum_points_needed_100">الحد الأدنى من النقاط المطلوبة </string>
     <string name="points_earned">النقاط المكتسبة</string>
     <string name="bhd">BHD</string>
     <string name="total_points">مجموع النقاط</string>

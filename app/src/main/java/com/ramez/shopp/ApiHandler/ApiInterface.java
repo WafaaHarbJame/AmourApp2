@@ -38,6 +38,7 @@ import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
+import com.ramez.shopp.Models.SettingCouponsModel;
 import com.ramez.shopp.Models.SingleDinnerModel;
 import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.Models.TransactionModel;
@@ -100,7 +101,7 @@ ApiInterface {
     /* -------------------------Start Loayl Handle ------------------------- */
 
     @POST("v4/Loayl/GetSettings")
-    Call<GeneralModel> getSettings(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int countryId);
+    Call<ResultAPIModel<SettingCouponsModel>> getSettings(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id);
 
     @POST("v4/Loayl/GetTotalPoint")
     Call<ResultAPIModel<TotalPointModel>> getTotalPoint(@HeaderMap() Map<String, Object> headerParams, @Query("userid") int userId);

@@ -31,7 +31,7 @@
 
             <include
                 android:id="@+id/noDataLY"
-                layout="@layout/layout_orders_no_list" />
+                layout="@layout/layout_no_data" />
 
             <include
                 android:id="@+id/failGetDataLY"

@@ -38,6 +38,8 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     private FragmentCouponsBinding binding;
     private CouponsAdapter adapter;
     private int user_id;
+    private int totalPoints=0;
+    private int  minimumPoints=0;
 
 
     @Override
@@ -59,7 +61,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
 
         binding.generateBut.setOnClickListener(v -> {
-            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), R.string.Generate_Coupons, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(),totalPoints,minimumPoints, R.string.Generate_Coupons, R.string.is_Active, R.string.ok, R.string.cancel, null, null);
             generateDialog.show();
 
         });
