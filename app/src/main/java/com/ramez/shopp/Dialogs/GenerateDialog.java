@@ -61,9 +61,9 @@ public class GenerateDialog extends Dialog {
         binding = DialogGenerateCouponsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getWindow().setDimAmount(0);
-        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        getWindow().setGravity(Gravity.CENTER);
+//        getWindow().setDimAmount(0);
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        getWindow().setGravity(Gravity.CENTER);
         setCancelable(true);
 
 
