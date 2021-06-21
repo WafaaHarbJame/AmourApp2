@@ -34,7 +34,7 @@ public class MemberModel implements Serializable {
     private String country;
     @SerializedName("city")
     @Expose
-    private String city;
+    private int  city;
     @SerializedName("prefix")
     @Expose
     private String prefix;
@@ -47,6 +47,12 @@ public class MemberModel implements Serializable {
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
+    private int  storeId;
+
+    @SerializedName("loyalBarcode")
+    @Expose
+    private String loyalBarcode;
+
 
     public String getLoyalBarcode() {
         return loyalBarcode;
@@ -56,9 +62,7 @@ public class MemberModel implements Serializable {
         this.loyalBarcode = loyalBarcode;
     }
 
-    @SerializedName("loyalBarcode")
-    @Expose
-    private String loyalBarcode;
+
 
 //    @SerializedName("registerType")
 //    @Expose
@@ -131,12 +135,20 @@ public class MemberModel implements Serializable {
         this.country = country;
     }
 
-    public String getCity() {
+    public int getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(int city) {
         this.city = city;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getPrefix() {

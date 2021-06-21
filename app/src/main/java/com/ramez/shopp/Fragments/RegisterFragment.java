@@ -126,7 +126,7 @@ public class RegisterFragment extends FragmentBase {
         memberModel.setPassword(passwordStr);
         memberModel.setName(nameStr);
         memberModel.setEmail(emailStr);
-        memberModel.setCity(city_id);
+        memberModel.setCity(Integer.parseInt(city_id));
         memberModel.setCountry(country_name);
         memberModel.setDeviceToken(FCMToken);
         memberModel.setDeviceId(UtilityApp.getUnique());
@@ -152,7 +152,7 @@ public class RegisterFragment extends FragmentBase {
                         Log.i("TAG", "Log getStatus " + result.getStatus());
 
                         if (result.getStatus() == 200) {
-                            MemberModel user = result.data;
+                            MemberModel user = result.getData();
                             if(user!=null){
                                 user.setUserType(Constants.user_type);
 
@@ -162,7 +162,7 @@ public class RegisterFragment extends FragmentBase {
                             SendOtp(mobileStr, passwordStr);
 
                         } else {
-                            String message = getString(R.string.fail_register);
+                            String message = getActivityy().getString(R.string.fail_register);
                             if (result != null && result.getMessage() != null){
                                 message = result.getMessage();
                             }

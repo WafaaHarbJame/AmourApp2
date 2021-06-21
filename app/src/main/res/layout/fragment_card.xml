@@ -173,6 +173,11 @@
                     android:layout_marginEnd="@dimen/_4sdp"
                     tools:listitem="@layout/row_card_trans_item" />
 
+                <include
+                    android:id="@+id/NotTransData"
+                    layout="@layout/layout_no_data" />
+
+
             </LinearLayout>
         </LinearLayout>
 

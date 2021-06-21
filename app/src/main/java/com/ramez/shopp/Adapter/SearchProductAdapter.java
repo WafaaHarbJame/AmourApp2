@@ -579,7 +579,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         public void onClick(View v) {
             if (onItemClick != null) {
                 int position = getBindingAdapterPosition();
-
                 onItemClick.onItemClicked(position, productModels.get(getBindingAdapterPosition()));
             }
         }
@@ -593,7 +592,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (IsSuccess) {
                     int cartId = result.getId();
-                    if (productModels != null) {
+                    if (productModels != null&&productModels.get(position).getProductBarcodes()!=null) {
                         productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                         productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
                         notifyItemChanged(position);

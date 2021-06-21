@@ -45,6 +45,7 @@ import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -234,7 +235,7 @@ public class MyAccountFragment extends FragmentBase {
 
             } else {
                 if (memberModel != null && memberModel.getId() != null) {
-                    getUserData(memberModel.getId());
+                    getUserData(memberModel.getId(),memberModel.getStoreId());
 
                 }
             }
@@ -490,6 +491,7 @@ public class MyAccountFragment extends FragmentBase {
 
                             UtilityApp.logOut();
                             GlobalData.Position = 0;
+
                             Intent intent = new Intent(getActivityy(), SplashScreenActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -508,7 +510,7 @@ public class MyAccountFragment extends FragmentBase {
     }
 
 
-    public void getUserData(int user_id) {
+    public void getUserData(int user_id,int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
@@ -522,6 +524,7 @@ public class MyAccountFragment extends FragmentBase {
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
                     memberModel.setId(result.data.getId());
+                    memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
                     memberModel.setProfilePicture(result.data.getProfilePicture());
                     initData(memberModel);
                     UtilityApp.setUserData(memberModel);
@@ -531,7 +534,7 @@ public class MyAccountFragment extends FragmentBase {
             }
 
 
-        }).getUserDetails(user_id);
+        }).getUserDetails(user_id,store_id);
     }
 
     @Override

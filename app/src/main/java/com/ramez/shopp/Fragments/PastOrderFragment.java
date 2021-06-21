@@ -205,7 +205,7 @@ public class PastOrderFragment extends FragmentBase {
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.message!= null) {
+                if (result!=null&&result.message!= null) {
                     message = result.message;
                 }
                 binding.dataLY.setVisibility(View.GONE);

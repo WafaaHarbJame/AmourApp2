@@ -2,38 +2,29 @@ package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.ramez.shopp.Adapter.CouponsAdapter;
-import com.ramez.shopp.Adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.OrderNewModel;
-import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.SettingCouponsModel;
 import com.ramez.shopp.Models.TotalPointModel;
-import com.ramez.shopp.Models.TransactionModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.FragmentCardBinding;
 import com.ramez.shopp.databinding.FragmentCouponsBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -146,6 +137,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
                 } else {
                     binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                    binding.noDataLY.tvErrorMessage.setText(getString(R.string.no_data));
+                    binding.noDataLY.titleTv.setText(getString(R.string.Coupons));
+                    binding.noDataLY.btnBrowseProducts.setVisibility(View.GONE);
                     binding.dataLY.setVisibility(View.GONE);
                 }
 
@@ -160,8 +154,11 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     private void getTotalPoint() {
 
         totalPointModel = DBFunction.getTotalPoints();
-        if (totalPointModel == null)
+
+        if (totalPointModel == null) {
             callGetTotalPoints();
+        }
+
 
     }
 
@@ -173,6 +170,8 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             if (result.isSuccessful()) {
 
                 totalPointModel = result.data;
+                Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
+                Log.i(getClass().getSimpleName(),"Log  totalPointModel call"+totalPointModel.value);
                 DBFunction.setTotalPoints(totalPointModel);
             }
 

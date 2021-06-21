@@ -23,6 +23,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
@@ -64,7 +65,7 @@ public class EditProfileActivity extends ActivityBase {
 
         memberModel = UtilityApp.getUserData();
         userId = memberModel.getId();
-        if(memberModel!=null){
+        if (memberModel != null) {
             binding.userNameTv.setText(memberModel.getName());
             binding.edtUserName.setText(memberModel.getName());
             binding.etEmail.setText(memberModel.getEmail());
@@ -74,9 +75,10 @@ public class EditProfileActivity extends ActivityBase {
             Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
 
-        }
-        else {
-            getUserData(userId);
+        } else {
+            LocalModel localModel = UtilityApp.getLocalData();
+            int store_id = Integer.parseInt(localModel.getCityId());
+            getUserData(userId, store_id);
         }
 
 
@@ -144,7 +146,7 @@ public class EditProfileActivity extends ActivityBase {
                     selectedPhotoUri = uri;
                     try {
 
-                        selectedPhotoFil = FileUtil.from(getActiviy(),uri);
+                        selectedPhotoFil = FileUtil.from(getActiviy(), uri);
 
                         Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
 
@@ -153,7 +155,7 @@ public class EditProfileActivity extends ActivityBase {
 //                        Log.i("tag","Log selectedPhotoFil  " + selectedPhotoFil);
 //                        Log.i("tag","Log uri "+uri);
 
-                        uploadPhoto(userId,selectedPhotoFil);
+                        uploadPhoto(userId, selectedPhotoFil);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -177,7 +179,13 @@ public class EditProfileActivity extends ActivityBase {
             }
 
         });
-        pickImageDialog.show();
+
+        try {
+            pickImageDialog.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -233,7 +241,7 @@ public class EditProfileActivity extends ActivityBase {
             } else {
                 if (IsSuccess) {
 
-                    MemberModel user = result.data;
+                    MemberModel user = result.getData();
                     UtilityApp.setUserData(user);
 
 
@@ -266,7 +274,7 @@ public class EditProfileActivity extends ActivityBase {
         }
 
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+                GlobalData.Api + "v5/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
@@ -297,7 +305,7 @@ public class EditProfileActivity extends ActivityBase {
                             data = jsonObject.getString("data");
                             Log.i("tag", "Log data result " + data);
 
-                            if(data!=null){
+                            if (data != null) {
                                 memberModel.setProfilePicture(data);
                                 UtilityApp.setUserData(memberModel);
                                 GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
@@ -327,7 +335,7 @@ public class EditProfileActivity extends ActivityBase {
         });
     }
 
-    public void getUserData(int user_id) {
+    public void getUserData(int user_id, int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
@@ -356,6 +364,7 @@ public class EditProfileActivity extends ActivityBase {
                 if (result != null && result.data != null) {
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
+                    memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
                     memberModel.setProfilePicture(result.data.getProfilePicture());
                     UtilityApp.setUserData(memberModel);
                     binding.userNameTv.setText(memberModel.getName());
@@ -368,14 +377,11 @@ public class EditProfileActivity extends ActivityBase {
                 }
 
 
-
-
             }
 
 
-        }).getUserDetails(user_id);
+        }).getUserDetails(user_id, store_id);
     }
-
 
 
 }

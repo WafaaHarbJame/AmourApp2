@@ -161,8 +161,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
-        country_id = UtilityApp.getLocalData().getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        if(UtilityApp.getLocalData()!=null&&UtilityApp.getLocalData().getCountryId()!=null&&UtilityApp.getLocalData().getCityId()!=null){
+            country_id = UtilityApp.getLocalData().getCountryId();
+            city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+
+        }
 
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);

@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
-import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
@@ -240,7 +239,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 } else {
 
                     double total_price = minimum_order_amount - cartProcessModel.getTotal();
-                    binding.tvFreeDelivery.setText(getActivityy().getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getActivity().getString(R.string.get_Free));
+                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
 
                 }
 
@@ -466,8 +465,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 cartProcessModel.setTotal(cartAdapter.calculateSubTotalPrice());
                 cartProcessModel.setCartCount(cartAdapter.getItemCount());
                 cartProcessModel.setTotalSavePrice(cartAdapter.calculateSavePrice());
-
-
                 UtilityApp.updateCart(2, cartList.size());
 
 

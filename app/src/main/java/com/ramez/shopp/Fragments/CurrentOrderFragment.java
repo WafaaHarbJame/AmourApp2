@@ -102,14 +102,16 @@ public class CurrentOrderFragment extends FragmentBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<List<OrderNewModel>>result = (ResultAPIModel<List<OrderNewModel>>) obj;
-            String message = getActivity().getString(R.string.fail_to_get_data);
-
+            String message = "";
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             if (func.equals(Constants.ERROR)) {
 
                 if (result.message!= null) {
                     message = result.message;
+                }
+                else {
+                    message = getActivity().getString(R.string.fail_to_get_data);
                 }
                 binding.dataLY.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);

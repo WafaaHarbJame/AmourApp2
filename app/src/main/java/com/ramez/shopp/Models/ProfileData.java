@@ -15,6 +15,18 @@ public class ProfileData {
     @Expose
      String email;
 
+    @SerializedName("loyalBarcode")
+    @Expose
+    String loyalBarcode;
+
+    public String getLoyalBarcode() {
+        return loyalBarcode;
+    }
+
+    public void setLoyalBarcode(String loyalBarcode) {
+        this.loyalBarcode = loyalBarcode;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -153,6 +153,8 @@ public class LoginFragment extends FragmentBase {
         memberModel.setDeviceToken(FCMToken);
         memberModel.setDeviceId(UtilityApp.getUnique());
         memberModel.setUserType(Constants.user_type);
+        memberModel.setStoreId(Integer.parseInt(localModel.getCityId()));
+        memberModel.setCity(Integer.parseInt(localModel.getCityId()));
 
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
 
@@ -198,7 +200,7 @@ public class LoginFragment extends FragmentBase {
                     }
 
                     else if(result.getStatus()==200) {
-                        MemberModel user = result.data;
+                        MemberModel user = result.getData();
                         if(user!=null){
                             user.setUserType(Constants.user_type);
 
@@ -426,7 +428,7 @@ public class LoginFragment extends FragmentBase {
         memberModel.setPassword(String.valueOf(randomNumber));
         memberModel.setName(nameStr);
         memberModel.setEmail(emailStr);
-        memberModel.setCity(city_id);
+        memberModel.setCity(Integer.parseInt(city_id));
         memberModel.setCountry(country_name);
         memberModel.setDeviceToken(FCMToken);
         memberModel.setDeviceId(UtilityApp.getUnique());
@@ -449,7 +451,7 @@ public class LoginFragment extends FragmentBase {
             } else {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
-                    MemberModel user = result.data;
+                    MemberModel user = result.getData();
                     //  user.setRegisterType(Constants.BY_SOCIAL);
                     UtilityApp.setUserData(user);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);

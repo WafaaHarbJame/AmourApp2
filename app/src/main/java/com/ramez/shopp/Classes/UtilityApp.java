@@ -146,6 +146,17 @@ public class UtilityApp {
     public static void logOut() {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER, null);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_LOGIN_PREFERANCE);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_TOTAL_POINTS);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_COUPON_SETTINGS);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CATEGORIES);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CART_SIZE);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_DINNERS);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_BANNER);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SLIDER);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CATEGORIES);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SOCIAL);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
+
 
     }
 
@@ -264,6 +275,7 @@ public class UtilityApp {
 
     }
 
+
     public static int getCartCount() {
         return RootApplication.getInstance().getSharedPManger().getDataInt(Constants.KEY_CART_SIZE, 0);
     }
@@ -305,6 +317,9 @@ public class UtilityApp {
 
     }
 
+
+
+
     public static void setSliderData(ArrayList<Slider> sliderData) {
         String userData = new Gson().toJson(sliderData);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SLIDER, userData);
@@ -317,6 +332,8 @@ public class UtilityApp {
         }.getType());
 
     }
+
+
 
     public static void setBannerData(ArrayList<Slider> bannerData) {
         String userData = new Gson().toJson(bannerData);

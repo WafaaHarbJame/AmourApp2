@@ -340,7 +340,7 @@ public class ContactSupportActivity extends ActivityBase {
 
         }
 
-        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api + "v4/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api + "v5/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)

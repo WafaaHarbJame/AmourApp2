@@ -193,6 +193,7 @@
     <string name="select_area">Select Area</string>
     <string name="want_to_delete_address">Do you want to delete address</string>
     <string name="no_data">No Data</string>
+    <string name="no_coupon">No Coupons</string>
     <string name="fail_to_add_favorite">Fail to add to favorite</string>
     <string name="fail_to_remove_favorite">"Fail to remove from Favorite "</string>
     <string name="success_add">Adding to Favorite Successful</string>

@@ -28,6 +28,7 @@
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:layout_width="match_parent"
+                android:id="@+id/titleTv"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_2sdp"
                 android:gravity="center"

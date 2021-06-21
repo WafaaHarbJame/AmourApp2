@@ -15,6 +15,7 @@ import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -29,6 +30,7 @@ public class ConfirmActivity extends ActivityBase {
     String FCMToken;
     CountDownTimer downTimer = null;
     boolean reset_account=false;
+    LocalModel localModel;
 
 
     @Override
@@ -42,6 +44,8 @@ public class ConfirmActivity extends ActivityBase {
             onBackPressed();
         });
 
+
+        localModel=UtilityApp.getLocalData();
         getDeviceToken();
 
         Bundle bundle = getIntent().getExtras();
@@ -265,6 +269,7 @@ public class ConfirmActivity extends ActivityBase {
         memberModel.setDeviceToken(FCMToken);
         memberModel.setDeviceId(UtilityApp.getUnique());
         memberModel.setUserType(Constants.user_type);
+        memberModel.setCity(Integer.parseInt(localModel.getCityId()));
 
         GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
 
@@ -290,7 +295,7 @@ public class ConfirmActivity extends ActivityBase {
             } else {
                 if (IsSuccess) {
 
-                    MemberModel user = result.data;
+                    MemberModel user = result.getData();
 
                     if(user!=null){
                         user.setUserType(Constants.user_type);

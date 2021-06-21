@@ -192,6 +192,7 @@ public class DataFeacher {
         params.put("device_type", Constants.deviceType);
         params.put("device_token", memberModel.getDeviceToken());
         params.put("device_id", memberModel.getDeviceToken());
+       params.put("city_id", memberModel.getCity());
 
         Log.i(TAG, "Log loginHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -201,6 +202,7 @@ public class DataFeacher {
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
         Log.i(TAG, "Log getDeviceId " + memberModel.getDeviceId());
         Log.i(TAG, "Log user_type " + memberModel.getUserType());
+        Log.i(TAG, "Log StoreId " + memberModel.getCity());
 
         Call call = apiService.loginUserHandle(headerMap, params);
         call.enqueue(callbackApi);
@@ -747,7 +749,7 @@ public class DataFeacher {
         params.put("email", memberModel.getEmail());
         params.put("country", memberModel.getCountry());
         params.put("state", "1");
-        params.put("city", Integer.parseInt(memberModel.getCity()));
+        params.put("city", memberModel.getCity());
 
         Log.i(TAG, "Log updateProfile");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -786,13 +788,14 @@ public class DataFeacher {
     }
 
 
-    public void getUserDetails(int user_id) {
+    public void getUserDetails(int user_id,int store_id) {
 
         Log.i(TAG, "Log getUserDetails");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log store_id " + store_id);
 
-        Call call = apiService.getUserDetail(headerMap, user_id);
+        Call call = apiService.getUserDetail(headerMap,user_id,store_id);
         call.enqueue(callbackApi);
     }
 

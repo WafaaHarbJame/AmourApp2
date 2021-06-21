@@ -271,11 +271,13 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             binding.container.setOnClickListener(view1 -> {
                 int position = getBindingAdapterPosition();
+                if(list!=null&&list.size()>0){
+                    OrderNewModel ordersDM = list.get(position);
+                    Intent intent = new Intent(context, InvoiceInfoActivity.class);
+                    intent.putExtra(Constants.ORDER_MODEL, ordersDM);
+                    context.startActivity(intent);
 
-                OrderNewModel ordersDM = list.get(position);
-                Intent intent = new Intent(context, InvoiceInfoActivity.class);
-                intent.putExtra(Constants.ORDER_MODEL, ordersDM);
-                context.startActivity(intent);
+                }
 
 
             });

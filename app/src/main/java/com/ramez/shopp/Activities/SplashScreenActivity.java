@@ -89,7 +89,7 @@ public class SplashScreenActivity extends ActivityBase {
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user.getId();
-                    getUserData(userId);
+                    getUserData(userId,storeId);
                     getTotalPoints(userId);
 
                 }
@@ -116,7 +116,7 @@ public class SplashScreenActivity extends ActivityBase {
 
     }
 
-    public void getUserData(int user_id) {
+    public void getUserData(int user_id,int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
@@ -142,10 +142,12 @@ public class SplashScreenActivity extends ActivityBase {
 
             } else if (IsSuccess) {
                 MemberModel memberModel = UtilityApp.getUserData();
+
                 if (result != null && result.data != null) {
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
-                    memberModel.setProfilePicture(result.data.getProfilePicture());
+                    memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
+                    memberModel.setProfilePicture(result.data.getLoyalBarcode());
                     UtilityApp.setUserData(memberModel);
                     getCarts(storeId, userId);
 
@@ -168,7 +170,7 @@ public class SplashScreenActivity extends ActivityBase {
             }
 
 
-        }).getUserDetails(user_id);
+        }).getUserDetails(user_id,store_id);
     }
 
     public void getSetting() {
@@ -213,9 +215,14 @@ public class SplashScreenActivity extends ActivityBase {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
             if (result.isSuccessful()) {
+                if(result!=null&&result.data!=null){
+                    TotalPointModel totalPointModel = result.data;
+                    Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
+                    Log.i(getClass().getSimpleName(),"Log  totalPointModel call"+totalPointModel.value);
 
-                TotalPointModel totalPointModel = result.data;
-                DBFunction.setTotalPoints(totalPointModel);
+                    DBFunction.setTotalPoints(totalPointModel);
+                }
+
 
             }
 

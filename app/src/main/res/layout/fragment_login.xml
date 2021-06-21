@@ -69,6 +69,7 @@
                         android:drawablePadding="@dimen/_8sdp"
                         android:hint="@string/text_login_password"
                         android:inputType="textPassword"
+                        android:imeOptions="actionDone"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorLoginText"
                         android:textColorHint="@color/colorTextHint"

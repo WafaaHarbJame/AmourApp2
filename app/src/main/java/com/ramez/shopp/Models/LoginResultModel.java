@@ -1,5 +1,7 @@
 package com.ramez.shopp.Models;
 
+import android.widget.SearchView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +9,7 @@ public class LoginResultModel {
 
     @SerializedName("cart_count")
     @Expose
-    private Integer cartCount;
+    private int cartCount;
     @SerializedName("fav_count")
     @Expose
     private int favCount;
@@ -16,7 +18,7 @@ public class LoginResultModel {
     private String otp;
     @SerializedName("data")
     @Expose
-    public MemberModel data;
+    private MemberModel data;
     @SerializedName("user_address")
     @Expose
     private String userAddress;
@@ -25,16 +27,16 @@ public class LoginResultModel {
     private String referMessage;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
 
-    public Integer getCartCount() {
+    public int getCartCount() {
         return cartCount;
     }
 
-    public void setCartCount(Integer cartCount) {
+    public void setCartCount(int cartCount) {
         this.cartCount = cartCount;
     }
 
@@ -54,7 +56,6 @@ public class LoginResultModel {
         this.otp = otp;
     }
 
-
     public MemberModel getData() {
         return data;
     }
@@ -63,7 +64,7 @@ public class LoginResultModel {
         this.data = data;
     }
 
-    public String getUserAddress() {
+    public Object getUserAddress() {
         return userAddress;
     }
 
@@ -79,11 +80,11 @@ public class LoginResultModel {
         this.referMessage = referMessage;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -94,7 +95,6 @@ public class LoginResultModel {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }
 
 

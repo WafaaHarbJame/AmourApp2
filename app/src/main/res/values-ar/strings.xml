@@ -170,6 +170,8 @@
     <string name="select_area">اختر المنطقة </string>
     <string name="want_to_delete_address">هل تريد حذف هذا العنوان </string>
     <string name="no_data">لا يوجد بيانات </string>
+    <string name="no_coupon">ا يوجدكوبونات  </string>
+
     <string name="fail_to_add_favorite">فشل الاضافة للمفضلة </string>
     <string name="fail_to_remove_favorite">فشل الازالة من المفضلة </string>
     <string name="success_add">تم الاضافة للمفضلة بنجاح</string>

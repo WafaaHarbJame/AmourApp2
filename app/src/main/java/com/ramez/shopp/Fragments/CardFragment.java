@@ -158,9 +158,15 @@ public class CardFragment extends FragmentBase {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                 binding.generateBut.setVisibility(View.VISIBLE);
 
-
                 List<TransactionModel> list = result.data;
-                initAdapter(list);
+                if(list.size()>0){
+                    initAdapter(list);
+
+                }
+                else {
+                    binding.NotTransData.noDataLY.setVisibility(View.VISIBLE);
+                    binding.myOrderRecycler.setVisibility(View.GONE);
+                }
 
             } else {
 
@@ -242,7 +248,6 @@ public class CardFragment extends FragmentBase {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (result.isSuccessful()) {
-
                 settingCouponsModel = result.data;
                 DBFunction.setCouponSettings(settingCouponsModel);
 
