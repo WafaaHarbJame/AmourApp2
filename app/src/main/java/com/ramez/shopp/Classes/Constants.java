@@ -40,7 +40,7 @@ public class Constants {
     public static final String KEY_FIRST_RUN = "key_first_run";
     public static final String KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN";
     public static final String FROM_BROSHER = "FROM_BROSHER";
-    public static final String SUBCATID = "SUBCATID";
+//    public static final String SUBCATID = "SUBCATID";
     public static final String TO_BROSHER = "TO_BROSHER";
     public static final String success = "success";
     public static final String KEY_MOBILE = "key_mobile";
@@ -82,6 +82,8 @@ public class Constants {
     public static final String SEARCH_BY_CODE_byCode = "SEARCH_BY_CODE_byCode";
     public static final String CODE = "CODE";
     public static final String SELECTED_POSITION = "SELECTED_POSITION";
+    public static final String  MAIN_CAT_ID = "main_cat_id";
+    public static final String  SUB_CAT_ID = "sub_cat_id";
     public static final String position = "position";
     public static final String CAT_LIST = "CAT_LIST";
     public static final String CAT_MODEL = "CAT_MODEL";

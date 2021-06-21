@@ -181,7 +181,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         if (bundle != null) {
 
             mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
-            boolean subCat = bundle.getBoolean(Constants.SUBCATID);
+//            boolean subCat = bundle.getBoolean(Constants.SUB_CAT_ID);
             if (mainCategoryDMS == null) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     mainCategoryDMS = UtilityApp.getCategories();
@@ -190,25 +190,27 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                 }
             }
 
-            category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
-            CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
-            if (categoryModel != null) {
-                if (category_id == 0)
-                    category_id = categoryModel.getId();
-//                if (categoryModel.getChildCat() != null)
-//                    subCategoryDMS = new ArrayList<>(categoryModel.getChildCat());
-            }
-            int position = bundle.getInt(Constants.position, 0);
+            category_id = bundle.getInt(Constants.MAIN_CAT_ID, 0);
+            selectedSubCat = bundle.getInt(Constants.SUB_CAT_ID, 0);
+//            category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
+//            CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
+//            if (categoryModel != null) {
+//                if (category_id == 0)
+//                    category_id = categoryModel.getId();
+////                if (categoryModel.getChildCat() != null)
+////                    subCategoryDMS = new ArrayList<>(categoryModel.getChildCat());
+//            }
+//            int position = bundle.getInt(Constants.position, 0);
             Log.i(getClass().getSimpleName(), "Log mainCategoryDMS " + mainCategoryDMS.size());
             Log.i(getClass().getSimpleName(), "Log category_id " + category_id);
-            Log.i(getClass().getSimpleName(), "Log position " + position);
-            Log.i(getClass().getSimpleName(), "Log model category_id " + categoryModel.getId());
-            Log.i(getClass().getSimpleName(), "Log subCat " + subCat);
+//            Log.i(getClass().getSimpleName(), "Log position " + position);
+            Log.i(getClass().getSimpleName(), "Log sub_cat_id " + selectedSubCat);
+//            Log.i(getClass().getSimpleName(), "Log subCat " + subCat);
 
 
-            selectedSubCat = categoryModel.getId();
-            if (subCat) {
-                getCatId(categoryModel.getId());
+//            selectedSubCat = categoryModel.getId();
+            if (category_id == 0 && selectedSubCat != 0) {
+                getCatIdFromSub(selectedSubCat);
             } else {
                 initData();
             }
@@ -232,7 +234,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         childCat.setHName(getString(R.string.all));
         childCat.setName(getString(R.string.all));
 
-        //   selectedSubCat = category_id;
+        if (selectedSubCat == 0)
+            selectedSubCat = category_id;
 //        if (subCategoryDMS != null)
 //            subCategoryDMS.clear();
 //        ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
@@ -462,7 +465,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         }).GetAllCategories(storeId);
     }
 
-    private void getCatId(int subId) {
+    private void getCatIdFromSub(int subId) {
         // get main category id form sub cat
         // this used when deep link
         for (int i = 0; i < mainCategoryDMS.size(); i++) {
@@ -472,7 +475,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             for (int j = 0; j < subArrayList.size(); j++) {
                 if (subId == subArrayList.get(j).getId()) {
                     category_id = mainCategoryDMS.get(i).getId();
-                    Log.i(CategoryProductsFragment.class.getName(), "Log subCat category_id " + category_id);
+                    Log.i(getClass().getSimpleName(), "Log subCat category_id " + category_id);
                     selectedSubCat = subId;
                     subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
                     initData();
@@ -496,6 +499,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                     break;
                 }
             }
+        if (subCategoryDMS == null)
+            subCategoryDMS = new ArrayList<>();
 
     }
 

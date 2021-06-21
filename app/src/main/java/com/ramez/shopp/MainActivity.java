@@ -424,9 +424,10 @@ public class MainActivity extends ActivityBase {
                     CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
                     Bundle bundle1 = new Bundle();
                     bundle1.putSerializable(Constants.CAT_LIST, categoryModelList);
-                    bundle1.putInt(Constants.SELECTED_POSITION, id);
-                    bundle1.putInt(Constants.position, 0);
-                    bundle1.putSerializable(Constants.CAT_MODEL, categoryModel);
+                    bundle1.putInt(Constants.MAIN_CAT_ID, id);
+//                    bundle1.putInt(Constants.SELECTED_POSITION, id);
+//                    bundle1.putInt(Constants.position, 0);
+//                    bundle1.putSerializable(Constants.CAT_MODEL, categoryModel);
                     categoryProductsFragment.setArguments(bundle);
                     fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 

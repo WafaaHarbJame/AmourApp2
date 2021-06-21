@@ -63,14 +63,13 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
         localModel = UtilityApp.getLocalData();
-        activity=getActivity();
+        activity = getActivity();
 
-        if(UtilityApp.getCategories()!=null&&UtilityApp.getCategories().size()>0){
-            categoryModelList=UtilityApp.getCategories();
+        if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
+            categoryModelList = UtilityApp.getCategories();
             initAdapter();
 
-        }
-        else {
+        } else {
             getCategories(Integer.parseInt(localModel.getCityId()));
 
         }
@@ -110,7 +109,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     private void initAdapter() {
 
-        categoryAdapter = new CategoryAdapter(activity, categoryModelList,0, this,false);
+        categoryAdapter = new CategoryAdapter(activity, categoryModelList, 0, this, false);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
@@ -120,15 +119,16 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
     public void onItemClicked(int position, CategoryModel categoryModel) {
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
         FragmentManager fragmentManager = getParentFragmentManager();
+
         CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-        bundle.putInt(Constants.position, position);
-        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+        bundle.putInt(Constants.MAIN_CAT_ID, categoryModelList.get(position).getId());
+//        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+//        bundle.putInt(Constants.position, position);
+//        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
         categoryProductsFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
-
 
 
     }

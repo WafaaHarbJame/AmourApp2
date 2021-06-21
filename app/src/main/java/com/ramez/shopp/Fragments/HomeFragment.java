@@ -139,7 +139,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bookletsList = new ArrayList<>();
         sliderList = new ArrayList<>();
         bannersList = new ArrayList<>();
-        productRecentsList=new ArrayList<>();
+        productRecentsList = new ArrayList<>();
         list = new ArrayList<>();
         categoryModelList = new ArrayList<>();
         productSellerList = new ArrayList<>();
@@ -161,7 +161,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
-        if(UtilityApp.getLocalData()!=null&&UtilityApp.getLocalData().getCountryId()!=null&&UtilityApp.getLocalData().getCityId()!=null){
+        if (UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null && UtilityApp.getLocalData().getCityId() != null) {
             country_id = UtilityApp.getLocalData().getCountryId();
             city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
@@ -470,7 +470,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         getBooklets(city_id);
                         GetAllBrands(city_id);
-                        getProductList(0,country_id,city_id,user_id,Constants.new_filter,0,0,10);
+                        getProductList(0, country_id, city_id, user_id, Constants.new_filter, 0, 0, 10);
 
                         if (result.getFeatured() != null && result.getFeatured().size() > 0 ||
                                 result.getQuickProducts() != null && result.getQuickProducts().size() > 0
@@ -619,7 +619,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 if (func.equals(Constants.ERROR)) {
 
-                    if (result != null && result.getMessage() != null){
+                    if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
                     binding.dataLY.setVisibility(View.GONE);
@@ -763,7 +763,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     private void initCatAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, 10, this,false);
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, 10, this, false);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
@@ -908,9 +908,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
-        bundle.putInt(Constants.position, position);
-        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//        bundle.putInt(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+//        bundle.putInt(Constants.position, position);
+//        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+        bundle.putInt(Constants.MAIN_CAT_ID, categoryModel.getId());
         categoryProductsFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -928,55 +929,54 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             startActivity(intent);
 
         } else if (slider.getReffrenceType() == 2) {
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+//            CategoryModel categoryModel = new CategoryModel();
+//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
-            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putInt(Constants.MAIN_CAT_ID, Integer.parseInt(slider.getReffrence()));
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
+//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
-
 
 
         } else if (slider.getReffrenceType() == 3) {
             String url = slider.getReffrence();
             ActivityHandler.OpenBrowser(getActivityy(), url);
 
-        }
-
-        else if (slider.getReffrenceType() == 5) {
+        } else if (slider.getReffrenceType() == 5) {
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
             FragmentManager fragmentManager = getParentFragmentManager();
             SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
             Bundle bundle = new Bundle();
-            BookletsModel bookletsModel=new BookletsModel();
+            BookletsModel bookletsModel = new BookletsModel();
             bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
             bundle.putSerializable(Constants.bookletsModel, bookletsModel);
             specialOfferFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
-
-        }
-         else if (slider.getReffrenceType() ==6) {
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+        } else if (slider.getReffrenceType() == 6) {
+//            CategoryModel categoryModel = new CategoryModel();
+//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
-            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-            bundle.putBoolean(Constants.SUBCATID,true);
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
+//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+//            bundle.putBoolean(Constants.MAIN_CAT_ID, true);
+            bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
+//            bundle.putBoolean(Constants.SUBCATID,true);
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -999,17 +999,18 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         } else if (slider.getReffrenceType() == 2) {
 
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+//            CategoryModel categoryModel = new CategoryModel();
+//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
-            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+            bundle.putInt(Constants.MAIN_CAT_ID, Integer.parseInt(slider.getReffrence()));
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
+//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1019,35 +1020,33 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             String url = slider.getReffrence();
             ActivityHandler.OpenBrowser(getActivityy(), url);
 
-        }
-
-        else if (slider.getReffrenceType() == 5) {
+        } else if (slider.getReffrenceType() == 5) {
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
             FragmentManager fragmentManager = getParentFragmentManager();
             SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
             Bundle bundle = new Bundle();
-            BookletsModel bookletsModel=new BookletsModel();
+            BookletsModel bookletsModel = new BookletsModel();
             bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
             bundle.putSerializable(Constants.bookletsModel, bookletsModel);
             specialOfferFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
-
-        }
-        else if (slider.getReffrenceType() ==6) {
-            CategoryModel categoryModel = new CategoryModel();
-            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+        } else if (slider.getReffrenceType() == 6) {
+//            CategoryModel categoryModel = new CategoryModel();
+//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
+
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
-            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-            bundle.putBoolean(Constants.SUBCATID,true);
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putInt(Constants.MAIN_CAT_ID,categoryModel.getId());
+            bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
+//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
+//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
+//            bundle.putBoolean(Constants.SUB_CAT_ID,true);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1095,13 +1094,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
-
-    public int getItemPosition(int  id)
-    {
-        for (int position=0; position<categoryModelList.size(); position++)
+    public int getItemPosition(int id) {
+        for (int position = 0; position < categoryModelList.size(); position++)
             if (categoryModelList.get(position).getId() == id)
 
-        return position;
+                return position;
 
         return 0;
     }
@@ -1176,7 +1173,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
-
 
 
 }

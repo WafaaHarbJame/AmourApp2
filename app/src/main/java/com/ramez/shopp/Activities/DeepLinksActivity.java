@@ -202,13 +202,14 @@ public class DeepLinksActivity extends ActivityBase {
                     //https://ramezshopping.com/category/241/Fruits
 
                     int categoryId = Integer.parseInt(list.get(1));
-                    CategoryModel categoryModel = new CategoryModel();
-                    categoryModel.setId(categoryId);
+//                    CategoryModel categoryModel = new CategoryModel();
+//                    categoryModel.setId(categoryId);
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
 //                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.SUB_CAT_ID, categoryId);
+//                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.putExtra(Constants.isNotify, true);
-                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -224,8 +225,9 @@ public class DeepLinksActivity extends ActivityBase {
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
 //                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.MAIN_CAT_ID, categoryId);
+//                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.putExtra(Constants.isNotify, true);
-                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
