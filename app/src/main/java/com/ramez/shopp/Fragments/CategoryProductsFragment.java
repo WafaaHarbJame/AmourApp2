@@ -62,6 +62,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     ArrayList<AutoCompleteModel> data = null;
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
+    ArrayList<ChildCat> subCategoryDMS;
     GridLayoutManager gridLayoutManager;
     int numColumn = 2;
     int selectedSubCat = 0;
@@ -175,70 +176,78 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
     private void getIntentExtra() {
         Bundle bundle = getArguments();
-        Log.i(CategoryProductsFragment.class.getName(), "Log getIntentExtra ");
+        Log.i(getClass().getSimpleName(), "Log getIntentExtra ");
 
         if (bundle != null) {
 
             mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
             boolean subCat = bundle.getBoolean(Constants.SUBCATID);
             if (mainCategoryDMS == null) {
-
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     mainCategoryDMS = UtilityApp.getCategories();
-
                 } else {
                     getCategories(Integer.parseInt(localModel.getCityId()));
-
                 }
             }
 
             category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
             CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
+            if (categoryModel != null) {
+                if (category_id == 0)
+                    category_id = categoryModel.getId();
+//                if (categoryModel.getChildCat() != null)
+//                    subCategoryDMS = new ArrayList<>(categoryModel.getChildCat());
+            }
             int position = bundle.getInt(Constants.position, 0);
-            Log.i(CategoryProductsFragment.class.getName(), "Log mainCategoryDMS " + mainCategoryDMS.size());
-            Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + category_id);
-            Log.i(CategoryProductsFragment.class.getName(), "Log position " + position);
-            Log.i(CategoryProductsFragment.class.getName(), "Log category_id " + categoryModel.getId());
-            Log.i(CategoryProductsFragment.class.getName(), "Log subCat " + subCat);
+            Log.i(getClass().getSimpleName(), "Log mainCategoryDMS " + mainCategoryDMS.size());
+            Log.i(getClass().getSimpleName(), "Log category_id " + category_id);
+            Log.i(getClass().getSimpleName(), "Log position " + position);
+            Log.i(getClass().getSimpleName(), "Log model category_id " + categoryModel.getId());
+            Log.i(getClass().getSimpleName(), "Log subCat " + subCat);
+
 
             selectedSubCat = categoryModel.getId();
             if (subCat) {
                 getCatId(categoryModel.getId());
-
             } else {
-                initData(position);
+                initData();
             }
 
         }
     }
 
-    private void initData(int position) {
+    private void initData() {
         initMainCategoryAdapter();
 
-        initSubCatList(mainCategoryDMS.get(position).getChildCat());
+        initSubCatList();
 
         getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
 
     }
 
-    private void initSubCatList(ArrayList<ChildCat> subCatList) {
+    private void initSubCatList() {
 
         ChildCat childCat = new ChildCat();
-        childCat.setId(0);
+        childCat.setId(category_id);
         childCat.setHName(getString(R.string.all));
         childCat.setName(getString(R.string.all));
 
         //   selectedSubCat = category_id;
-        ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
+//        if (subCategoryDMS != null)
+//            subCategoryDMS.clear();
+//        ArrayList<ChildCat> subCategoryDMS = new ArrayList<>(subCatList);
+
+        if (subCategoryDMS == null)
+            searchSubCatList();
 
         subCategoryDMS.add(0, childCat);
 
-        initSubCategoryAdapter(subCategoryDMS);
+        initSubCategoryAdapter();
     }
 
-    private void initSubCategoryAdapter(ArrayList<ChildCat> subCategoryDMS) {
+    private void initSubCategoryAdapter() {
 
-        SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS,selectedSubCat, object -> {
+        SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActivityy(), subCategoryDMS, selectedSubCat, object -> {
 
             selectedSubCat = object.getId();
             cancelAPiCall();
@@ -326,8 +335,9 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
         category_id = mainCategoryDM.getId();
-        selectedSubCat = 0;
-        initSubCatList(mainCategoryDM.getChildCat());
+        selectedSubCat = category_id;
+        subCategoryDMS = new ArrayList<>(mainCategoryDM.getChildCat());
+        initSubCatList();
 
         cancelAPiCall();
 
@@ -453,7 +463,8 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     }
 
     private void getCatId(int subId) {
-
+        // get main category id form sub cat
+        // this used when deep link
         for (int i = 0; i < mainCategoryDMS.size(); i++) {
 
             ArrayList<ChildCat> subArrayList = mainCategoryDMS.get(i).getChildCat();
@@ -463,13 +474,28 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                     category_id = mainCategoryDMS.get(i).getId();
                     Log.i(CategoryProductsFragment.class.getName(), "Log subCat category_id " + category_id);
                     selectedSubCat = subId;
-                    initData(i);
+                    subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
+                    initData();
 
                 }
 
             }
 
         }
+
+    }
+
+    private void searchSubCatList() {
+        // search for sub category list by main cat id
+
+        if (mainCategoryDMS != null)
+            for (int i = 0; i < mainCategoryDMS.size(); i++) {
+
+                if (category_id == mainCategoryDMS.get(i).getId()) {
+                    subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
+                    break;
+                }
+            }
 
     }
 

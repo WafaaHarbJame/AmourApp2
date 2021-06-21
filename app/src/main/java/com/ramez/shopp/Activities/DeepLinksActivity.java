@@ -1,39 +1,23 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.google.gson.Gson;
-import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Fragments.CategoryFragment;
-import com.ramez.shopp.Fragments.CategoryProductsFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.BookletsModel;
-import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class DeepLinksActivity extends ActivityBase {
     ArrayList<CategoryModel> categoryModelList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +29,6 @@ public class DeepLinksActivity extends ActivityBase {
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
             categoryModelList = UtilityApp.getCategories();
-
-
         }
 
 

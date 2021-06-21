@@ -192,7 +192,7 @@ public class DataFeacher {
         params.put("device_type", Constants.deviceType);
         params.put("device_token", memberModel.getDeviceToken());
         params.put("device_id", memberModel.getDeviceToken());
-       params.put("city_id", memberModel.getCity());
+        params.put("city_id", memberModel.getCity());
 
         Log.i(TAG, "Log loginHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -788,14 +788,14 @@ public class DataFeacher {
     }
 
 
-    public void getUserDetails(int user_id,int store_id) {
+    public void getUserDetails(int user_id, int store_id) {
 
         Log.i(TAG, "Log getUserDetails");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + user_id);
         Log.i(TAG, "Log store_id " + store_id);
 
-        Call call = apiService.getUserDetail(headerMap,user_id,store_id);
+        Call call = apiService.getUserDetail(headerMap, user_id, store_id);
         call.enqueue(callbackApi);
     }
 
@@ -865,6 +865,16 @@ public class DataFeacher {
 
     public Call getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
 
+        Map<String, Object> params = new HashMap<>();
+        params.put("category_id", category_id);
+        params.put("country_id", country_id);
+        params.put("city_id", city_id);
+        params.put("user_id", user_id);
+        params.put("filter", filter);
+        params.put("brand_id", brand_id);
+        params.put("page_number", page_number);
+        params.put("page_size", page_size);
+
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log category_id " + category_id);
@@ -876,7 +886,7 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        Call call = apiService.GetFavoriteProducts(headerMap, params);
         call.enqueue(callbackApi);
         return call;
     }
@@ -1222,7 +1232,6 @@ public class DataFeacher {
         Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
     }
-
 
 
 }
