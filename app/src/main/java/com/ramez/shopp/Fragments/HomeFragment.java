@@ -988,7 +988,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     @Override
     public void onSliderClicked(int position, Slider slider) {
-        Log.i("tag", "Log getReffrence" + slider.getReffrence());
+        Log.i("tag", "Log Reffrence" + slider.getReffrence());
+        Log.i("tag", "Log ReffrenceType" + slider.getReffrenceType());
 
         if (slider.getReffrenceType() == 1) {
 
