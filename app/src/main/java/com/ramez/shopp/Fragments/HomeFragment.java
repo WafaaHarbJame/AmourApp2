@@ -352,9 +352,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.searchBut.setOnClickListener(view1 -> {
 
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
-            FragmentManager fragmentManager = getParentFragmentManager();
-            SearchFragment searchFragment = new SearchFragment();
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
+//            FragmentManager fragmentManager = getParentFragmentManager();
+//            SearchFragment searchFragment = new SearchFragment();
+//            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
 
 
         });
@@ -511,7 +511,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
                     if (IsSuccess) {
-                        binding.searchLY.setVisibility(View.VISIBLE);
+//                        binding.searchLY.setVisibility(View.VISIBLE);
 
                         if (UtilityApp.getDinners() != null && UtilityApp.getDinners().size() > 0) {
                             list = UtilityApp.getDinners();
@@ -564,7 +564,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                 || result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
-                            binding.searchLY.setVisibility(View.VISIBLE);
+//                            binding.searchLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                             productBestList = result.getFeatured();

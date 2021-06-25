@@ -491,19 +491,17 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             if (deliveryFees > 0) {
                 if (Double.parseDouble(total) >= minimum_order_amount) {
                     deliveryFees = 0.0;
-                }
-                else {
+                } else {
                     double total_price = minimum_order_amount - Double.parseDouble(total);
 
-                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
+                    binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
 
                 }
-            }
-            else {
+            } else {
 
-                    double total_price = minimum_order_amount - Double.parseDouble(total);
+                double total_price = minimum_order_amount - Double.parseDouble(total);
 
-                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
+                binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
 //
             }
 
@@ -591,6 +589,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     private void initData() {
 
+        binding.freeLY.setVisibility(View.VISIBLE);
+
         getDeliveryTimeListNew(storeId);
         getQuickDelivery(storeId, localModel.getCountryId());
         getDefaultAddress();
@@ -629,14 +629,14 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         if (show) {
 
             binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-            binding.freeDelivery.setVisibility(View.VISIBLE);
+//            binding.freeLY.setVisibility(View.VISIBLE);
             binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
             binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
 
         } else {
 
             binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-            binding.freeDelivery.setVisibility(View.GONE);
+//            binding.freeLY.setVisibility(View.GONE);
             binding.DeliverDayRecycler.setVisibility(View.GONE);
             binding.DeliverTimeRecycler.setVisibility(View.GONE);
         }

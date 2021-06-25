@@ -84,9 +84,9 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.searchBut.setOnClickListener(view1 -> {
 
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
-            FragmentManager fragmentManager = getParentFragmentManager();
-            SearchFragment searchFragment = new SearchFragment();
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
+//            FragmentManager fragmentManager = getParentFragmentManager();
+//            SearchFragment searchFragment = new SearchFragment();
+//            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
 
         });
 

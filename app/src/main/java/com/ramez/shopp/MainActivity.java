@@ -56,6 +56,7 @@ public class MainActivity extends ActivityBase {
     ArrayList<CategoryModel> categoryModelList;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +104,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
+            binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
             try {
                 initBottomNav(0);
@@ -121,6 +123,8 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
+            binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+
             initBottomNav(1);
 
 
@@ -138,6 +142,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
+            binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
 
             initBottomNav(2);
 
@@ -154,14 +159,14 @@ public class MainActivity extends ActivityBase {
         binding.offerButton.setOnClickListener(view1 -> {
             EventBus.getDefault().post(new MessageEvent(MessageEvent.Type_offer));
 
+            binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
+            binding.toolBar.addExtra.setVisibility(View.GONE);
 
             initBottomNav(3);
 
-            binding.toolBar.addExtra.setVisibility(View.GONE);
-
-
             getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
+
             if (UtilityApp.isLogin()) {
                 getCartsCount();
             }
@@ -171,6 +176,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
+            binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
 
             initBottomNav(4);
 
@@ -202,6 +208,13 @@ public class MainActivity extends ActivityBase {
             }
 
         });
+
+        binding.toolBar.mainSearchBtn.setOnClickListener(view -> {
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+
+        });
+
 
         binding.toolBar.sortBut.setOnClickListener(view11 -> {
 
@@ -245,6 +258,18 @@ public class MainActivity extends ActivityBase {
         putBadge(cartCount);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+
+        if (UtilityApp.isLogin()) {
+            getCartsCount();
+
+        }
+
+    }
 
     @Override
     public void onStart() {
@@ -290,6 +315,7 @@ public class MainActivity extends ActivityBase {
 
                 binding.toolBar.backBtn.setOnClickListener(view -> {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                 });
 
@@ -332,6 +358,7 @@ public class MainActivity extends ActivityBase {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                     binding.toolBar.view2But.setVisibility(View.GONE);
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
                 });
 
@@ -356,15 +383,19 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 break;
             case MessageEvent.TYPE_search:
+                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
                 binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new SearchFragment(), "searchFragment").commit();
 
                 binding.toolBar.backBtn.setOnClickListener(view -> {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.sortBut.setVisibility(View.GONE);
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                 });
                 break;
             case MessageEvent.TYPE_SORT:
@@ -439,6 +470,7 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.sortBut.setVisibility(View.GONE);
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                 });
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
@@ -447,7 +479,7 @@ public class MainActivity extends ActivityBase {
                 binding.offerButton.performClick();
             } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+//                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
                 Bundle bundle2 = new Bundle();
                 bundle2.putString(Constants.inputType_text, searchTEXT);
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -464,6 +496,7 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.sortBut.setVisibility(View.GONE);
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                 });
 
 
@@ -494,6 +527,7 @@ public class MainActivity extends ActivityBase {
                             binding.toolBar.backBtn.setVisibility(View.GONE);
                             binding.toolBar.view2But.setVisibility(View.GONE);
                             binding.toolBar.sortBut.setVisibility(View.GONE);
+                            binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                         }
 
                     });
@@ -565,16 +599,6 @@ public class MainActivity extends ActivityBase {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (UtilityApp.isLogin()) {
-            getCartsCount();
-
-        }
-
-    }
 
 
 }

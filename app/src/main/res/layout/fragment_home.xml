@@ -26,7 +26,7 @@
         android:background="@drawable/round_white_fill"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <com.ramez.shopp.SpichalViews.STextView
@@ -174,16 +174,16 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10ssp" />
 
-                    <!--                    <com.ramez.shopp.SpichalViews.STextViewIcon-->
-                    <!--                        android:id="@+id/deliveryArrowIcon"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_alignParentEnd="true"-->
-                    <!--                        android:layout_centerVertical="true"-->
-                    <!--                        android:layout_marginStart="@dimen/_5sdp"-->
-                    <!--                        android:text="@string/fal_angle_down"-->
-                    <!--                        android:textColor="@color/colorPrimary"-->
-                    <!--                        android:textSize="@dimen/_20ssp" />-->
+                    <com.ramez.shopp.SpichalViews.STextViewIcon
+                        android:id="@+id/deliveryArrowIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:text="@string/fal_angle_down"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_20ssp" />
                 </RelativeLayout>
             </LinearLayout>
 
