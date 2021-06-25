@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 public class CityModel {
 
@@ -40,6 +42,11 @@ public class CityModel {
         this.nameAr = nameAr;
     }
 
+    public String getCityName() {
 
+        String lang = UtilityApp.getLanguage();
+        return lang.equals(Constants.Arabic) && nameAr != null && !nameAr.isEmpty() ? nameAr : name;
+
+    }
 
 }

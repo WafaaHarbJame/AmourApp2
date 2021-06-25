@@ -4,7 +4,6 @@
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_4sdp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -12,9 +11,10 @@
         android:id="@+id/ivCatImage"
         android:layout_width="@dimen/_138sdp"
         android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:scaleType="centerCrop"
         android:src="@drawable/banner_image"
         app:siBorderColor="@color/gray5"
-        android:scaleType="centerCrop"
         app:siBorderWidth="@dimen/_1sdp"
         app:siRadius="@dimen/_6sdp" />
 

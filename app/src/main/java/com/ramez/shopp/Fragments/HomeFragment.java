@@ -2,13 +2,16 @@ package com.ramez.shopp.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Trace;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ import com.ramez.shopp.Activities.AllListActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RamezKitchenActivity;
+import com.ramez.shopp.Activities.RewardsActivity;
 import com.ramez.shopp.Adapter.AutomateSlider;
 import com.ramez.shopp.Adapter.BannersAdapter;
 import com.ramez.shopp.Adapter.BookletAdapter;
@@ -48,26 +52,34 @@ import com.ramez.shopp.Adapter.KitchenAdapter;
 import com.ramez.shopp.Adapter.MainSliderAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.CategoryModel;
+import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.SelectBranchDialog;
 import com.ramez.shopp.Dialogs.WhatsUpDialog;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.Slider;
+import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
+import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -107,6 +119,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     ArrayList<BrandModel> brandsList;
     GridLayoutManager bookletManger;
     GridLayoutManager brandManger;
+
+    ArrayList<CityModel> cityModelArrayList;
+
     private int SEARCH_CODE = 2000;
     private FragmentHomeBinding binding;
     private ProductAdapter productBestAdapter;
@@ -129,7 +144,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private BrandsAdapter brandsAdapter;
     private ArrayList<DinnerModel> list;
     private String lang;
+    private LocalModel localModel;
+    private CityModel selectedCityModel;
+    private TotalPointModel totalPointModel;
 
+    private SelectBranchDialog selectBranchDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -156,16 +175,21 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             if (UtilityApp.getUserData() != null) {
                 MemberModel memberModel = UtilityApp.getUserData();
                 user_id = String.valueOf(memberModel.getId());
+                getTotalPoint();
             }
 
 
         }
 
-        if (UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null && UtilityApp.getLocalData().getCityId() != null) {
+        localModel = UtilityApp.getLocalData();
+        if (localModel != null && localModel.getCountryId() != null && localModel.getCityId() != null) {
             country_id = UtilityApp.getLocalData().getCountryId();
             city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
+            getCityList(country_id);
+            getDeliveryTimeListNew(city_id);
         }
+
 
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -216,6 +240,46 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         AllListener();
 
+        binding.branchLY.setOnClickListener(view1 -> {
+
+            if (selectBranchDialog == null) {
+                selectBranchDialog = new SelectBranchDialog(getActivity(), selectedCityModel, cityModelArrayList, new DataFetcherCallBack() {
+                    @Override
+                    public void Result(Object obj, String func, boolean IsSuccess) {
+                        selectedCityModel = (CityModel) obj;
+
+                        city_id = selectedCityModel.getId();
+                        localModel.setCityId(String.valueOf(city_id));
+                        UtilityApp.setLocalData(localModel);
+
+//                        setBranchData();
+                        if (getActivity() != null)
+                            getActivity().recreate();
+
+                    }
+                });
+                selectBranchDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        selectBranchDialog = null;
+                    }
+                });
+            }
+
+        });
+
+        binding.totalPointLY.setOnClickListener(view1 -> {
+
+            if (UtilityApp.isLogin()) {
+                Intent intent = new Intent(getActivityy(), RewardsActivity.class);
+                startActivity(intent);
+            } else {
+                Toast(R.string.you_not_signin);
+            }
+
+
+        });
+
 
         if (UtilityApp.isLogin()) {
             boolean isFirstLogin = UtilityApp.isFirstLogin();
@@ -258,6 +322,30 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         return view;
     }
+
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        // you can set menu header with title icon etc
+//        menu.setHeaderTitle(getString(R.string.choose_branch));
+//        // add menu items
+//        for (CityModel cityModel : cityModelArrayList) {
+//            menu.add(1, cityModel.getId(), 0, cityModel.getCityName());
+//        }
+//
+//    }
+//
+//    // menu item select listener
+//    @Override
+//    public boolean onContextItemSelected(MenuItem item) {
+//
+////        switch (item.getItemId()) {
+////        }
+//
+//        Toast.makeText(activity, "item id " + item.getItemId(), Toast.LENGTH_SHORT).show();
+//
+//        return true;
+//    }
 
     private void AllListener() {
 
@@ -389,7 +477,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.searchLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-
 
             if (isVisible()) {
 
@@ -593,13 +680,162 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void getDeliveryTimeListNew(int storeId) {
+
+        String countryCode = "";
+        if (UtilityApp.getLocalData().getShortname() != null)
+            countryCode = UtilityApp.getLocalData().getShortname();
+        else countryCode = GlobalData.COUNTRY;
+
+//        String url = "https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v4/Orders/deliveryTimeList";
+        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v4/Orders/deliveryTimeList";
+        Log.d(TAG, "Log Get first " + url);
+        Log.d(TAG, "Log  store_id " + storeId);
+
+
+        AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
+                addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", UtilityApp.getToken()).
+
+                addQueryParameter("store_id", String.valueOf(storeId)).build()
+                .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
+                    @Override
+                    public void onResponse(DeliveryResultModel result) {
+
+                        if (isVisible()) {
+
+//                            String message = getString(R.string.fail_to_get_data);
+
+                            if (result.getData() != null && result.getData().size() > 0) {
+                                List<DeliveryTime> datesList = result.getData();
+
+                                DeliveryTime firstTime = datesList.get(0);
+                                String deliveryDay = DateHandler.FormatDate4(firstTime.getDate(), "yyyy-MM-dd", "EEE", UtilityApp.getLanguage());
+
+                                if (UtilityApp.getLanguage().equals(Constants.Arabic))
+                                    binding.deliveryTimeTv.setText(firstTime.getTime() + " " + deliveryDay);
+                                else
+                                    binding.deliveryTimeTv.setText(deliveryDay + " " + firstTime.getTime());
+
+//                                binding.deliveryTimeTv.setText(deliveryDay + " " + firstTime.getTime());
+//                                String currentDate = firstTime.getDate();
+//                                List<DeliveryTime> timesList = new ArrayList<>();
+//
+//                                while (datesList.size() > 0) {
+//                                    DeliveryTime deliveryTime = datesList.get(0);
+//
+//                                    if (deliveryTime.getDate().equals(currentDate)) {
+//                                        timesList.add(deliveryTime);
+//                                        datesList.remove(0);
+//                                        if (datesList.isEmpty()) {
+//                                            datesMap.put(deliveryTime.getDate(), timesList);
+//                                        }
+//                                    } else {
+//                                        datesMap.put(currentDate, timesList);
+//                                        currentDate = deliveryTime.getDate();
+//                                        timesList = new ArrayList<>();
+//                                    }
+//                                }
+
+
+                            }
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        GlobalData.Toast(getActivityy(), anError.getMessage());
+                    }
+
+
+                });
+    }
+
+    private void getTotalPoint() {
+
+        totalPointModel = DBFunction.getTotalPoints();
+
+        if (totalPointModel == null) {
+
+            callGetTotalPoints();
+
+        } else {
+            callGetTotalPoints();
+            setTotalPointsData();
+        }
+    }
+
+    private void callGetTotalPoints() {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
+
+            if (result.isSuccessful()) {
+
+                totalPointModel = result.data;
+                DBFunction.setTotalPoints(totalPointModel);
+
+                setTotalPointsData();
+            }
+
+        }).getTotalPoint(Integer.parseInt(user_id));
 
 
     }
 
+    private void setTotalPointsData() {
+
+        binding.totalPointTv.setText(String.valueOf(totalPointModel.points));
+
+
+    }
+
+    private void callCityListApi() {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+                CityModelResult result = (CityModelResult) obj;
+                if (result.getData() != null && result.getData().size() > 0) {
+                    cityModelArrayList = new ArrayList<>(result.getData());
+                    searchSelectedCity();
+
+                    setBranchData();
+//                    registerForContextMenu(binding.branchLY);
+                }
+            }
+
+        }).CityHandle(country_id);
+    }
+
+    private void getCityList(int country_id) {
+
+        Log.i("TAG", "Log country_id" + country_id);
+
+        callCityListApi();
+    }
+
+    private void searchSelectedCity() {
+
+        for (CityModel cityModel : cityModelArrayList) {
+            if (city_id == cityModel.getId()) {
+                selectedCityModel = cityModel;
+                break;
+            }
+        }
+
+    }
+
+    private void setBranchData() {
+
+        if (selectedCityModel != null) {
+            binding.branchNameTv.setText(selectedCityModel.getCityName());
+        }
+    }
 
     public void getCategories(int storeId) {
 
@@ -950,8 +1186,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             String url = slider.getReffrence();
             ActivityHandler.OpenBrowser(getActivityy(), url);
 
-        }
-        else if (slider.getReffrenceType() == 5) {
+        } else if (slider.getReffrenceType() == 5) {
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
             FragmentManager fragmentManager = getParentFragmentManager();
             SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
@@ -963,8 +1198,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
-        }
-        else if (slider.getReffrenceType() == 6) {
+        } else if (slider.getReffrenceType() == 6) {
 //            CategoryModel categoryModel = new CategoryModel();
 //            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));

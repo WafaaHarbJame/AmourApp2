@@ -27,11 +27,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     private ArrayList<CityModel> list;
     private int selectedPosition = 0;
 
-    public CityAdapter(Context context, ArrayList<CityModel> list, OnCityClick onCityClick, int selectedPosition) {
+    public CityAdapter(Context context, ArrayList<CityModel> list, int selectedPosition, OnCityClick onCityClick) {
         this.context = context;
         this.onCityClick = onCityClick;
         this.list = list;
-        this.selectedPosition=selectedPosition;
+        this.selectedPosition = selectedPosition;
 
 
     }
@@ -48,37 +48,34 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         CityModel languageModel = list.get(position);
 
-        String lang= UtilityApp.getLanguage();
-        if (lang.equals(Constants.Arabic)) {
-            if(languageModel.getNameAr()==null||languageModel.getNameAr().isEmpty()){
-                holder.binding.nameTxt.setText(languageModel.getName());
+        holder.binding.nameTxt.setText(languageModel.getCityName());
 
-            }
-            else {
-                holder.binding.nameTxt.setText(languageModel.getNameAr());
+//        String lang = UtilityApp.getLanguage();
+//        if (lang.equals(Constants.Arabic)) {
+//            if (languageModel.getNameAr() == null || languageModel.getNameAr().isEmpty()) {
+//
+//            } else {
+//                holder.binding.nameTxt.setText(languageModel.getNameAr());
+//
+//            }
+//        } else {
+//            if (languageModel.getName() == null || languageModel.getName().isEmpty()) {
+//                holder.binding.nameTxt.setText(languageModel.getNameAr());
+//
+//            } else {
+//                holder.binding.nameTxt.setText(languageModel.getName());
+//
+//            }
+//        }
+//
 
-            }
-        }
-        else {
-            if(languageModel.getName()==null||languageModel.getName().isEmpty()){
-                holder.binding.nameTxt.setText(languageModel.getNameAr());
-
-            }
-            else {
-                holder.binding.nameTxt.setText(languageModel.getName());
-
-            }
-        }
-
-
-        if (selectedPosition==languageModel.getId()) {
+        if (selectedPosition == languageModel.getId()) {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
-            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
+            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
         } else {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
         }
-
 
 
         if (position == getItemCount() - 1) {
@@ -86,9 +83,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         } else {
             holder.binding.divider.setVisibility(View.VISIBLE);
         }
-
-
-
 
 
     }
@@ -115,7 +109,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
             });
 
         }
-
 
 
     }

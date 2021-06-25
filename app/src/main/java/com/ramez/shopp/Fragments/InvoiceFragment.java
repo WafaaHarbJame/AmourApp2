@@ -117,7 +117,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         paymentList = new ArrayList<>();
         addressList = new ArrayList<>();
-        deliveryTimesList=new ArrayList<>();
+        deliveryTimesList = new ArrayList<>();
 
         DayList = new ArrayList<>();
 //        TimeList = new ArrayList<>();
@@ -297,13 +297,13 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         });
 
 
-        binding.quickButton.setOnClickListener(view -> {
+        binding.quickLy.setOnClickListener(view -> {
             expressDelivery = true;
             deliveryDayAdapter.lastIndex = -1;
             deliveryDayAdapter.notifyDataSetChanged();
             binding.DeliverTimeRecycler.setVisibility(View.GONE);
-            binding.quickButton.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_red_selected));
-
+            binding.quickLy.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_white_fill_green_border));
+//            binding.quickButton.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_red_selected));
 
         });
 
@@ -665,7 +665,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             deliveryTimesList = datesMap.get(deliveryTime.getTime());
 
             binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
-            binding.quickButton.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_big_corner_dark_gray));
+            binding.quickLy.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_gray_border_fill));
 
             initTimesList();
 //            deliveryTimeAdapter.notifyDataSetChanged();

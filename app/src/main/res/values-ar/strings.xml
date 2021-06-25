@@ -359,6 +359,10 @@
     <string name="success_generate_coupon">تم انشاء الكوبون</string>
     <string name="you_reach_max_point">لقد وصلت الحد الأقصى لنقاطك</string>
     <string name="minimum_points_needed">الحد الأدنى للنقاط</string>
+    <string name="shopping_branch">فرع التوصيل</string>
+    <string name="next_delivery">التوصيل التالي</string>
+    <string name="key_points">النقاط:</string>
+    <string name="shop_more_earn_more">تسوق أكثر إكسب اكثر</string>
 
 
 </resources>

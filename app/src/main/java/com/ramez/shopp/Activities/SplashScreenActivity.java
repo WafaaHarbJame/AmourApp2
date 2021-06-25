@@ -72,7 +72,6 @@ public class SplashScreenActivity extends ActivityBase {
             getDinners(lang);
             GetHomePage();
             getCouponSettings(country_id);
-            getCouponSettings(country_id);
 
         }
         initData();
@@ -89,7 +88,7 @@ public class SplashScreenActivity extends ActivityBase {
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user.getId();
-                    getUserData(userId,storeId);
+                    getUserData(userId, storeId);
                     getTotalPoints(userId);
 
                 }
@@ -116,60 +115,29 @@ public class SplashScreenActivity extends ActivityBase {
 
     }
 
-    public void getUserData(int user_id,int store_id) {
+    public void getUserData(int user_id, int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
-                UtilityApp.logOut();
-                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
-                intent.putExtra(Constants.LOGIN, true);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-            } else if (func.equals(Constants.FAIL)) {
-                UtilityApp.logOut();
-                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
-                intent.putExtra(Constants.LOGIN, true);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-
-            } else if (IsSuccess) {
-
-                if (result != null && result.data != null) {
-                    MemberModel memberModel = UtilityApp.getUserData();
-                    memberModel.setName(result.data.getName());
-                    memberModel.setEmail(result.data.getEmail());
-                    memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
-                    memberModel.setProfilePicture(result.data.getLoyalBarcode());
-                    UtilityApp.setUserData(memberModel);
-                    getCarts(storeId, userId);
-
-                } else {
-                    UtilityApp.logOut();
-                    Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
-                    intent.putExtra(Constants.LOGIN, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-
-
+            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
+            if (IsSuccess && result != null && result.data != null) {
+                MemberModel memberModel = UtilityApp.getUserData();
+                memberModel.setName(result.data.getName());
+                memberModel.setEmail(result.data.getEmail());
+                memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
+                memberModel.setProfilePicture(result.data.getLoyalBarcode());
+                UtilityApp.setUserData(memberModel);
+                getCarts(storeId, userId);
             } else {
                 UtilityApp.logOut();
                 Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
                 intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
 
-
-        }).getUserDetails(user_id,store_id);
+        }).getUserDetails(user_id, store_id);
     }
 
     public void getSetting() {
@@ -213,11 +181,11 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result!=null&&result.isSuccessful()) {
-                if(result!=null&&result.data!=null){
+            if (result != null && result.isSuccessful()) {
+                if (result != null && result.data != null) {
                     TotalPointModel totalPointModel = result.data;
-                    Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
-                    Log.i(getClass().getSimpleName(),"Log  totalPointModel call"+totalPointModel.value);
+                    Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
+                    Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
 
                     DBFunction.setTotalPoints(totalPointModel);
                 }
@@ -233,7 +201,7 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-            if (result!=null&&result.data!=null) {
+            if (result != null && result.data != null) {
 
                 SettingCouponsModel settingCouponsModel = result.data;
                 DBFunction.setCouponSettings(settingCouponsModel);

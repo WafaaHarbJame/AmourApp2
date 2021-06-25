@@ -34,8 +34,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     int city_id = 0;
     int countryId;
     LocalModel localModel;
-    String  oldCountryName;
-    String  newCountryName;
+    String oldCountryName;
+    String newCountryName;
     private LinearLayoutManager linearLayoutManager;
     private CityAdapter cityAdapter;
     private CountriesAdapter countriesAdapter;
@@ -54,18 +54,17 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         cityModelArrayList = new ArrayList<>();
         countries = new ArrayList<>();
         localModel = UtilityApp.getLocalData();
-        if(localModel!=null&&!localModel.getCityId().isEmpty()){
+        if (localModel != null && !localModel.getCityId().isEmpty()) {
             city_id = Integer.parseInt(localModel.getCityId());
 
         }
 
         Log.i("tag", "Log cityId" + localModel.getCityId());
 
-        if(UtilityApp.isLogin()){
-         binding.countryLY.setVisibility(View.GONE);
+        if (UtilityApp.isLogin()) {
+            binding.countryLY.setVisibility(View.GONE);
 
-        }
-        else {
+        } else {
             binding.countryLY.setVisibility(View.VISIBLE);
 
         }
@@ -105,12 +104,12 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
         countryId = localModel.getCountryId();
 
-        countries.add(new CountryModel(4, getString(R.string.Oman_ar), getString(R.string.Oman),getString(R.string.oman_shotname), 968, "OMR", Constants.three, R.drawable.ic_flag_oman));
-        countries.add(new CountryModel(17,getString(R.string.Bahrain_ar), getString(R.string.Bahrain), getString(R.string.bahrain_shotname), 973, "BHD",  Constants.three, R.drawable.ic_flag_behrain));
-        countries.add(new CountryModel(117,getString(R.string.Kuwait_ar), getString(R.string.Kuwait), getString(R.string.Kuwait_shotname), 965, "KWD",  Constants.three, R.drawable.ic_flag_kuwait));
-        countries.add(new CountryModel(178,getString(R.string.Qatar_ar), getString(R.string.Qatar), getString(R.string.Qatar_shotname), 974, "QAR",  Constants.two, R.drawable.ic_flag_qatar));
-        countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia_ar), getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 191, "SAR",  Constants.two, R.drawable.ic_flag_saudi_arabia));
-        countries.add(new CountryModel(229,getString(R.string.United_Arab_Emirates_ar), getString(R.string.United_Arab_Emirates), getString(R.string.United_Arab_Emirates_shotname), 971, "AED",  Constants.two, R.drawable.ic_flag_uae));
+        countries.add(new CountryModel(4, getString(R.string.Oman_ar), getString(R.string.Oman), getString(R.string.oman_shotname), 968, "OMR", Constants.three, R.drawable.ic_flag_oman));
+        countries.add(new CountryModel(17, getString(R.string.Bahrain_ar), getString(R.string.Bahrain), getString(R.string.bahrain_shotname), 973, "BHD", Constants.three, R.drawable.ic_flag_behrain));
+        countries.add(new CountryModel(117, getString(R.string.Kuwait_ar), getString(R.string.Kuwait), getString(R.string.Kuwait_shotname), 965, "KWD", Constants.three, R.drawable.ic_flag_kuwait));
+        countries.add(new CountryModel(178, getString(R.string.Qatar_ar), getString(R.string.Qatar), getString(R.string.Qatar_shotname), 974, "QAR", Constants.two, R.drawable.ic_flag_qatar));
+        countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia_ar), getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 191, "SAR", Constants.two, R.drawable.ic_flag_saudi_arabia));
+        countries.add(new CountryModel(229, getString(R.string.United_Arab_Emirates_ar), getString(R.string.United_Arab_Emirates), getString(R.string.United_Arab_Emirates_shotname), 971, "AED", Constants.two, R.drawable.ic_flag_uae));
 
         initAdapter();
 
@@ -150,7 +149,6 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
                     });
 
 
-
             Toasty.success(getActiviy(), R.string.change_success, Toast.LENGTH_SHORT, true).show();
             Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
             startActivity(intent);
@@ -170,7 +168,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
     public void initCityAdapter() {
 
-        cityAdapter = new CityAdapter(getActiviy(), cityModelArrayList, this, city_id);
+        cityAdapter = new CityAdapter(getActiviy(), cityModelArrayList, city_id, this);
         binding.branchRecycler.setAdapter(cityAdapter);
 
 
@@ -230,8 +228,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
                     if (result.getData() != null && result.getData().size() > 0) {
                         cityModelArrayList = result.getData();
-                        if(city_id==0){
-                            city_id=cityModelArrayList.get(0).getId();
+                        if (city_id == 0) {
+                            city_id = cityModelArrayList.get(0).getId();
                             localModel.setCityId(String.valueOf(city_id));
                             localModel.setCountryName(newCountryName);
                             UtilityApp.setLocalData(localModel);
@@ -252,8 +250,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     @Override
     public void onCountryClicked(int position, CountryModel countryModel) {
         countryId = countryModel.getId();
-        oldCountryName=UtilityApp.getLocalData().getShortname();
-        newCountryName=countryModel.getShortname();
+        oldCountryName = UtilityApp.getLocalData().getShortname();
+        newCountryName = countryModel.getShortname();
         localModel.setShortname(countryModel.getShortname());
         localModel.setCurrencyCode(countryModel.getCurrencyCode());
         localModel.setFractional(countryModel.getFractional());
@@ -275,7 +273,6 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
         binding.branchContainer.setVisibility(View.VISIBLE);
         binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.lang_style));
-
 
 
     }

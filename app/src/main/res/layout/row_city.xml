@@ -12,27 +12,26 @@
         android:orientation="horizontal"
         android:paddingStart="@dimen/_20sdp"
         android:paddingTop="@dimen/_6sdp"
-        android:paddingEnd="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_20sdp"
         android:paddingBottom="@dimen/_5sdp">
-
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/nameTxt"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_weight="1"
             android:text="@string/text_language_arabic"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
+
         <com.ramez.shopp.SpichalViews.STextViewIcon2
             android:id="@+id/selectTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:textSize="@dimen/_16ssp"
-            android:text="@string/fa_check" />
+            android:text="@string/fa_check"
+            android:textSize="@dimen/_16ssp" />
 
 
     </LinearLayout>

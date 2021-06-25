@@ -69,7 +69,7 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
     public void initAdapter() {
 
-        cityAdapter = new CityAdapter(getActiviy(), list, this, 0);
+        cityAdapter = new CityAdapter(getActiviy(), list, 0, this);
         binding.recycler.setAdapter(cityAdapter);
         binding.cityContainer.setVisibility(View.VISIBLE);
         binding.chooseCityTv.setVisibility(View.GONE);
@@ -94,23 +94,20 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
 
-            }
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
 
-                GlobalData.Toast(getActiviy(),getString(R.string.no_internet_connection));
+                GlobalData.Toast(getActiviy(), getString(R.string.no_internet_connection));
 
-            }
-
-            else {
-                if (IsSuccess ) {
-                    if (result != null){
+            } else {
+                if (IsSuccess) {
+                    if (result != null) {
                         list = result.getData();
                         if (list != null && list.size() > 0) {
                             Log.i("TAG", "Log country size " + list.size());
 
                             initAdapter();
                         }
-                    }else{
+                    } else {
                         Toast(getString(R.string.no_cities));
                     }
                 } else {

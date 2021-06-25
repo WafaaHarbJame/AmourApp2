@@ -394,6 +394,14 @@
     <string name="success_generate_coupon">Success generate coupon</string>
     <string name="you_reach_max_point">You reach max points</string>
     <string name="minimum_points_needed">Minimum points is</string>
+    <string name="shopping_branch">Shopping Branch</string>
+    <string name="next_delivery">Next Delivery</string>
+    <string name="key_points">Points:</string>
+    <string name="shop_more_earn_more">Shop more earn more</string>
+    <string name="please_select_branch">Please select branch</string>
+    <string name="you_not_signin">You are not signin</string>
+    <string name="express_delivery">Express Delivery</string>
+    <string name="if_item_not_available">If an item is not available?</string>
 
 
 </resources>

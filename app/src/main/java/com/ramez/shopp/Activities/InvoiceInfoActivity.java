@@ -206,8 +206,4 @@ public class InvoiceInfoActivity extends ActivityBase {
         }).getOrderDetails(order_id, user_id, store_id, type);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(@NotNull MessageEvent event) {
-
-    }
 }

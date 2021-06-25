@@ -11,6 +11,8 @@
         <!--        <item name="android:fitsSystemWindows">true</item>-->
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+
+
     </style>
 
     <style name="RatingBarStyle" parent="Theme.AppCompat">
@@ -47,7 +49,7 @@
 
 
     <style name="RatingBarStyle_new" parent="@android:style/Widget.RatingBar">
-<!--        <item name="android:theme">@style/Widget.AppCompat.RatingBar.Small</item>-->
+        <!--        <item name="android:theme">@style/Widget.AppCompat.RatingBar.Small</item>-->
         <item name="android:minHeight">@dimen/_1sdp</item>
         <item name="android:minWidth">@dimen/_20sdp</item>
         <item name="android:progressDrawable">@drawable/rating_style</item>
