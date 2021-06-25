@@ -296,6 +296,7 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.addExtra.setVisibility(View.GONE);
+                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
 
                 binding.toolBar.backBtn.setOnClickListener(view -> {
 
