@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -205,6 +206,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void initListener() {
 
 
@@ -282,10 +284,15 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                 } else {
 
-                    double total_price = minimum_order_amount - Double.parseDouble(total);
-                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional())
-                            + " " + currency + " " + getString(R.string.get_Free));
+//                    double total_price = minimum_order_amount - Double.parseDouble(total);
+//
+//                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
+////                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional())
+////                            + " " + currency + " " + getString(R.string.get_Free));
 
+                    CategoryFragment categoryFragment = new CategoryFragment();
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryFragment, "homeFragment").commit();
 
                 }
             } else {
@@ -464,6 +471,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         }).getPaymentMethod(user_id);
     }
 
+    @SuppressLint("SetTextI18n")
     private void getExtraIntent() {
 
         Bundle bundle = getArguments();
@@ -484,6 +492,19 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 if (Double.parseDouble(total) >= minimum_order_amount) {
                     deliveryFees = 0.0;
                 }
+                else {
+                    double total_price = minimum_order_amount - Double.parseDouble(total);
+
+                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
+
+                }
+            }
+            else {
+
+                    double total_price = minimum_order_amount - Double.parseDouble(total);
+
+                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
+//
             }
 
 
