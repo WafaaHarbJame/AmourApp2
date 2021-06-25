@@ -36,6 +36,7 @@ import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
+import com.ramez.shopp.Models.RegisterResultModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.Models.SettingCouponsModel;
@@ -62,8 +63,9 @@ public interface
 
 ApiInterface {
 
+
     @POST("v5/Account/userRegister")
-    Call<LoginResultModel> registerUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<RegisterResultModel> registerUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v5/Account/driverRegister")
     Call<LoginResultModel> registerDriverHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);

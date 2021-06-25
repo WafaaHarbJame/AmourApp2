@@ -470,6 +470,13 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         // this used when deep link
         for (int i = 0; i < mainCategoryDMS.size(); i++) {
 
+            if (subId == mainCategoryDMS.get(i).getId()) {
+                category_id = mainCategoryDMS.get(i).getId();
+                selectedSubCat = category_id;// this for all cat
+                subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
+                initData();
+                break;
+            }
             ArrayList<ChildCat> subArrayList = mainCategoryDMS.get(i).getChildCat();
 
             for (int j = 0; j < subArrayList.size(); j++) {
@@ -479,7 +486,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
                     selectedSubCat = subId;
                     subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
                     initData();
-
+                    break;
                 }
 
             }
@@ -487,6 +494,30 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         }
 
     }
+
+//    private void searchCatIdAndSubId(int subId) {
+//        // search for main cat and sub
+//        // this used when deep link
+//        for (int i = 0; i < mainCategoryDMS.size(); i++) {
+//
+//            if (subId == mainCategoryDMS.get(i).getId())
+//            ArrayList<ChildCat> subArrayList = mainCategoryDMS.get(i).getChildCat();
+//
+//            for (int j = 0; j < subArrayList.size(); j++) {
+//                if (subId == subArrayList.get(j).getId()) {
+//                    category_id = mainCategoryDMS.get(i).getId();
+//                    Log.i(getClass().getSimpleName(), "Log subCat category_id " + category_id);
+//                    selectedSubCat = subId;
+//                    subCategoryDMS = new ArrayList<>(mainCategoryDMS.get(i).getChildCat());
+//                    initData();
+//
+//                }
+//
+//            }
+//
+//        }
+//
+//    }
 
     private void searchSubCatList() {
         // search for sub category list by main cat id

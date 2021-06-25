@@ -15,6 +15,7 @@ import com.ramez.shopp.Adapter.CouponsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.DBFunction;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
@@ -73,8 +74,10 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             GenerateDialog generateDialog = new GenerateDialog(getActivityy(), userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
                 @Override
                 public void Result(Object obj, String func, boolean IsSuccess) {
-                    if (IsSuccess) {
-                        getData(false);
+                        if (IsSuccess) {
+                            GlobalData.refresh_points=true;
+                            callGetTotalPoints();
+
                     }
                 }
             });
@@ -209,6 +212,17 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     @Override
     public void onItemClicked(int position, CouponsModel categoryModel) {
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (GlobalData.refresh_points) {
+            callGetTotalPoints();
+            GlobalData.refresh_points = false;
+
+        }
     }
 
 

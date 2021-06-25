@@ -31,6 +31,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.RegisterResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.Utils.SharedPManger;
@@ -138,7 +139,7 @@ public class RegisterFragment extends FragmentBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
-            LoginResultModel result = (LoginResultModel) obj;
+            RegisterResultModel result = (RegisterResultModel) obj;
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_register);
                 if (result != null && result.getMessage() != null) {

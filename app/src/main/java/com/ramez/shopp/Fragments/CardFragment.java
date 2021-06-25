@@ -16,6 +16,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.DBFunction;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -72,9 +73,13 @@ public class CardFragment extends FragmentBase {
         });
 
         binding.generateBut.setOnClickListener(v -> {
-            GenerateDialog generateDialog = new GenerateDialog(getActivityy(),userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
                 @Override
                 public void Result(Object obj, String func, boolean IsSuccess) {
+                    if (IsSuccess) {
+                        GlobalData.refresh_points=true;
+                        callGetTotalPoints();
+                    }
 
                 }
             });
@@ -159,11 +164,10 @@ public class CardFragment extends FragmentBase {
                 binding.generateBut.setVisibility(View.VISIBLE);
 
                 List<TransactionModel> list = result.data;
-                if(list.size()>0){
+                if (list.size() > 0) {
                     initAdapter(list);
 
-                }
-                else {
+                } else {
                     binding.NotTransData.noDataLY.setVisibility(View.VISIBLE);
                     binding.myOrderRecycler.setVisibility(View.GONE);
                 }
@@ -257,5 +261,14 @@ public class CardFragment extends FragmentBase {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (GlobalData.refresh_points) {
+            callGetTotalPoints();
+            GlobalData.refresh_points = false;
+
+        }
+    }
 
 }

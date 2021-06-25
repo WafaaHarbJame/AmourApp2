@@ -6,23 +6,17 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class MemberModel implements Serializable {
-    public int lastSelectedAddress;
 
 
     @SerializedName("id")
     @Expose
     private Integer id;
-
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("mobile_number")
     @Expose
     private String mobileNumber;
-    private String password;
-
-    private String new_password;
-    private String userType;
     @SerializedName("device_id")
     @Expose
     private String deviceId;
@@ -34,7 +28,7 @@ public class MemberModel implements Serializable {
     private String country;
     @SerializedName("city")
     @Expose
-    private int  city;
+    private int city;
     @SerializedName("prefix")
     @Expose
     private String prefix;
@@ -47,11 +41,15 @@ public class MemberModel implements Serializable {
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
-    private int  storeId;
-
     @SerializedName("loyalBarcode")
     @Expose
     private String loyalBarcode;
+
+    public int lastSelectedAddress;
+    private String password;
+    private String new_password;
+    private String userType;
+    private int storeId;
 
 
     public String getLoyalBarcode() {
@@ -61,7 +59,6 @@ public class MemberModel implements Serializable {
     public void setLoyalBarcode(String loyalBarcode) {
         this.loyalBarcode = loyalBarcode;
     }
-
 
 
 //    @SerializedName("registerType")

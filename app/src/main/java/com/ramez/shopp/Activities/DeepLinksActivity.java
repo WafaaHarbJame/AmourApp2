@@ -60,13 +60,14 @@ public class DeepLinksActivity extends ActivityBase {
                 if (list.size() == 2 && list.get(0).equals("category")) {
                     //https://ramezshopping.com/category/233
                     int categoryId = Integer.parseInt(list.get(1));
-                    CategoryModel categoryModel = new CategoryModel();
-                    categoryModel.setId(categoryId);
+//                    CategoryModel categoryModel = new CategoryModel();
+//                    categoryModel.setId(categoryId);
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
 //                    intent.putExtra(Constants.category, true);
+                    intent.putExtra(Constants.SUB_CAT_ID, categoryId);
+//                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.putExtra(Constants.isNotify, true);
-                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -135,11 +136,7 @@ public class DeepLinksActivity extends ActivityBase {
                     intent.putExtra(Constants.isNotify, true);
                     startActivity(intent);
                     finish();
-                }
-
-
-
-                else if (list.size() == 6 && list.get(0).equals("products")) {
+                } else if (list.size() == 6 && list.get(0).equals("products")) {
 
                     //https://ramezshopping.com/products/brand/RAMEZ/bh/store/7263?brand=1
 
@@ -156,9 +153,7 @@ public class DeepLinksActivity extends ActivityBase {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }
-
-                else if (list.size() == 3 && list.get(0).equals("products")) {
+                } else if (list.size() == 3 && list.get(0).equals("products")) {
 
                     // https://ramezshopping.com/products/brand/RAMEZ?brand=1
 
@@ -175,9 +170,7 @@ public class DeepLinksActivity extends ActivityBase {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }
-
-                else if (list.size() == 5 && list.get(0).equals("products")) {
+                } else if (list.size() == 5 && list.get(0).equals("products")) {
 
                     //https://ramezshopping.com/products/search/bh/store/7263?text=AL-ZAHRAH%20SOAP%20FLAKES%20840GR
 
@@ -225,14 +218,13 @@ public class DeepLinksActivity extends ActivityBase {
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_CATEGORY_DETAILS);
 //                    intent.putExtra(Constants.category, true);
-                    intent.putExtra(Constants.MAIN_CAT_ID, categoryId);
+                    intent.putExtra(Constants.SUB_CAT_ID, categoryId);
 //                    intent.putExtra(Constants.CAT_MODEL, categoryModel);
                     intent.putExtra(Constants.isNotify, true);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }
-                else if (list.size() == 6 && list.get(0).equals("product")) {
+                } else if (list.size() == 6 && list.get(0).equals("product")) {
                     //https://ramezshopping.com/product/1538/tomato-jordani-1-kg/bh/store/7263
                     ProductModel productModel = new ProductModel();
                     int productId = Integer.parseInt(list.get(1));
@@ -246,9 +238,7 @@ public class DeepLinksActivity extends ActivityBase {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                }
-
-                else  if (list.size() == 5 && list.get(0).equals("products")&&list.get(1).equals("offered")) {
+                } else if (list.size() == 5 && list.get(0).equals("products") && list.get(1).equals("offered")) {
 
                     //https://ramezshopping.com/products/offered/bh/store/7263
 

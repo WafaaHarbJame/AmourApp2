@@ -121,7 +121,7 @@ public class PastOrderFragment extends FragmentBase {
                 binding.failGetDataLY.failTxt.setText(message);
 
             } else if (func.equals(Constants.FAIL)) {
-
+                message=getString(R.string.fail_to_get_data);
                 binding.dataLY.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
@@ -199,7 +199,7 @@ public class PastOrderFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
           ResultAPIModel<ArrayList<OrderNewModel>>result = (ResultAPIModel<ArrayList<OrderNewModel>>) obj;
-            String message = getActivity().getString(R.string.fail_to_get_data);
+            String message ="";
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 

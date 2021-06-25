@@ -107,7 +107,7 @@ public class CurrentOrderFragment extends FragmentBase {
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result.message!= null) {
+                if (result!=null&&result.message!= null) {
                     message = result.message;
                 }
                 else {
@@ -119,7 +119,7 @@ public class CurrentOrderFragment extends FragmentBase {
                 binding.failGetDataLY.failTxt.setText(message);
 
             } else if (func.equals(Constants.FAIL)) {
-
+                message = getActivity().getString(R.string.fail_to_get_data);
                 binding.dataLY.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);

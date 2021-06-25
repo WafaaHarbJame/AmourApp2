@@ -95,8 +95,11 @@ public class GenerateDialog extends Dialog {
             @Override
             public void onClick(View v) {
 //                int count = Integer.parseInt(binding.countTV.getText().toString());
-                if (count < (int) totalPoints) {
-                    count++;
+
+                if (count + minimumPoints <= (int) totalPoints) {
+
+                    count += minimumPoints;
+
                     binding.countTV.setText(String.valueOf(count));
                 } else {
                     GlobalData.Toast(activity, R.string.you_reach_max_point);
@@ -108,8 +111,8 @@ public class GenerateDialog extends Dialog {
 
         binding.minusBtn.setOnClickListener(v -> {
 //            int count = Integer.parseInt(binding.countTV.getText().toString());
-            if (count > minimumPoints) {
-                count--;
+            if (count - minimumPoints >= minimumPoints) {
+                count -= minimumPoints;
                 binding.countTV.setText(String.valueOf(count));
             } else {
                 String message = activity.getString(R.string.minimum_points_needed) + " " + minimumPoints;
@@ -142,6 +145,8 @@ public class GenerateDialog extends Dialog {
 
             GeneralModel result = (GeneralModel) obj;
             if (result.isSuccessful()) {
+//                callGetTotalPoints();
+//                GlobalData.refresh_points = true;
                 GlobalData.Toast(activity, R.string.success_generate_coupon);
                 dismiss();
                 dataFetcherCallBack.Result("", Constants.success, true);
@@ -155,6 +160,7 @@ public class GenerateDialog extends Dialog {
         }).generateCoupon(userId, points);
 
     }
+
 
 
 }

@@ -15,6 +15,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Models.AddressModel;
@@ -58,7 +59,10 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
 
         if (UtilityApp.isLogin()) {
-            GetUserAddress(user.getId());
+            if (user != null&&user.getId()!=null) {
+                GetUserAddress(user.getId());
+
+            }
 
         }
 
@@ -94,6 +98,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
 
     }
+
 
 
     @Override
@@ -331,4 +336,9 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         }
     }
+
+
+
+
 }
+

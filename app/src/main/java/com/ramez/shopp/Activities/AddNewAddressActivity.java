@@ -307,9 +307,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     binding.dataLY.setVisibility(View.VISIBLE);
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
-                        selectedLat = addressModel.getLatitude();
-                        selectedLng = addressModel.getLongitude();
-                        latLng = new LatLng(selectedLat, selectedLng);
+                        if(addressModel!=null){
+                            selectedLat = addressModel.getLatitude();
+                            selectedLng = addressModel.getLongitude();
+                            latLng = new LatLng(selectedLat, selectedLng);
+                        }
+
                         if (map != null)
                             setMapMarker();
                         getLocationAddress();

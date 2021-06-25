@@ -153,7 +153,6 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_DINNERS);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_BANNER);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SLIDER);
-        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CATEGORIES);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SOCIAL);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
 

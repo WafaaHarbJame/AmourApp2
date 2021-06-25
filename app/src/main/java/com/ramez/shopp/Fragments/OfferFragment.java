@@ -73,7 +73,10 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         if (UtilityApp.isLogin()) {
             MemberModel memberModel = UtilityApp.getUserData();
-            user_id = String.valueOf(memberModel.getId());
+            if(memberModel!=null&&memberModel.getId()!=null){
+                user_id = String.valueOf(memberModel.getId());
+
+            }
 
         }
 

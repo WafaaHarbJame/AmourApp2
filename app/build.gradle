@@ -173,7 +173,7 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'at.blogc:expandabletextview:1.0.5'
     // Import the BoM for the Firebase platform
-    compile ('com.bottlerocketstudios:barcode:1.0.3@aar') {
+    implementation ('com.bottlerocketstudios:barcode:1.0.3@aar') {
         transitive = true;
     }
 

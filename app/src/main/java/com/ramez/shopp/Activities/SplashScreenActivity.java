@@ -138,12 +138,11 @@ public class SplashScreenActivity extends ActivityBase {
 
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
-                //  Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
 
             } else if (IsSuccess) {
-                MemberModel memberModel = UtilityApp.getUserData();
 
                 if (result != null && result.data != null) {
+                    MemberModel memberModel = UtilityApp.getUserData();
                     memberModel.setName(result.data.getName());
                     memberModel.setEmail(result.data.getEmail());
                     memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
@@ -214,7 +213,7 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result.isSuccessful()) {
+            if (result!=null&&result.isSuccessful()) {
                 if(result!=null&&result.data!=null){
                     TotalPointModel totalPointModel = result.data;
                     Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
@@ -234,7 +233,7 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-            if (result.isSuccessful()) {
+            if (result!=null&&result.data!=null) {
 
                 SettingCouponsModel settingCouponsModel = result.data;
                 DBFunction.setCouponSettings(settingCouponsModel);

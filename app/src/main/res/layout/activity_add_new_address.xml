@@ -328,7 +328,7 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionDone"
                             android:maxLength="10"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:maxLines="1" />
 
                     </com.ramez.shopp.SpichalViews.STextInputLayout>

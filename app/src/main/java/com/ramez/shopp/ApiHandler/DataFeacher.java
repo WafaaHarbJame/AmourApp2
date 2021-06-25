@@ -223,17 +223,17 @@ public class DataFeacher {
     public void RegisterHandle(MemberModel memberModel) {
 
         Map<String, Object> params = new HashMap<>();
-        params.put("mobile_number", memberModel.getMobileNumber());
-        params.put("password", memberModel.getPassword());
-        params.put("user_type", Constants.user_type);
-        params.put("device_type", memberModel.getDeviceType());
-        params.put("device_token", memberModel.getDeviceToken());
-        params.put("name", memberModel.getName());
-        params.put("country", memberModel.getCountry());
-        params.put("city", memberModel.getCity());
-        params.put("email", memberModel.getEmail());
-        params.put("device_id", memberModel.getDeviceId());
-        params.put("prefix", memberModel.getPrefix());
+        params.put("mobile_number", memberModel.getMobileNumber()+"");
+        params.put("password", memberModel.getPassword()+"");
+        params.put("user_type", Constants.user_type+"");
+        params.put("device_type", memberModel.getDeviceType()+"");
+        params.put("device_token", memberModel.getDeviceToken()+"");
+        params.put("name", memberModel.getName()+"");
+        params.put("country", memberModel.getCountry()+"");
+        params.put("city", memberModel.getCity() + "");
+        params.put("email", memberModel.getEmail()+"");
+        params.put("device_id", memberModel.getDeviceId()+"");
+        params.put("prefix", memberModel.getPrefix()+"");
 
         Log.i(TAG, "Log RegisterHandle");
         Log.i(TAG, "Log headerMap " + headerMap);

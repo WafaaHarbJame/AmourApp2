@@ -396,7 +396,8 @@ public class MainActivity extends ActivityBase {
 //            boolean TO_category = getIntent().getBooleanExtra(Constants.category, false);
 //            boolean TO_BROSHER = getIntent().getBooleanExtra(Constants.TO_BROSHER, false);
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
-            CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
+//            CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
+            int subCatId = getIntent().getExtras().getInt(Constants.SUB_CAT_ID);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
             searchTEXT = bundle.getString(Constants.inputType_text);
             from_inside_app = bundle.getBoolean(Constants.Inside_app);
@@ -412,35 +413,33 @@ public class MainActivity extends ActivityBase {
 //                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
-                if (categoryModel != null && categoryModel.getId() != null) {
-                    if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
-                        categoryModelList = UtilityApp.getCategories();
-                    }
+                if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
+                    categoryModelList = UtilityApp.getCategories();
+                }
 
-                    int id = categoryModel.getId();
+//                    int id = categoryModel.getId();
 //                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
 
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putSerializable(Constants.CAT_LIST, categoryModelList);
-                    bundle1.putInt(Constants.MAIN_CAT_ID, id);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable(Constants.CAT_LIST, categoryModelList);
+                bundle1.putInt(Constants.SUB_CAT_ID, subCatId);
 //                    bundle1.putInt(Constants.SELECTED_POSITION, id);
 //                    bundle1.putInt(Constants.position, 0);
 //                    bundle1.putSerializable(Constants.CAT_MODEL, categoryModel);
-                    categoryProductsFragment.setArguments(bundle);
-                    fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+                categoryProductsFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
-                    binding.toolBar.backBtn.setVisibility(View.VISIBLE);
-                    binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.view2But.setVisibility(View.VISIBLE);
 
-                    binding.toolBar.backBtn.setOnClickListener(view -> {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-                        binding.toolBar.backBtn.setVisibility(View.GONE);
-                        binding.toolBar.view2But.setVisibility(View.GONE);
-                        binding.toolBar.sortBut.setVisibility(View.GONE);
-                    });
-                }
+                binding.toolBar.backBtn.setOnClickListener(view -> {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                    binding.toolBar.backBtn.setVisibility(View.GONE);
+                    binding.toolBar.view2But.setVisibility(View.GONE);
+                    binding.toolBar.sortBut.setVisibility(View.GONE);
+                });
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
                 binding.categoryButton.performClick();
