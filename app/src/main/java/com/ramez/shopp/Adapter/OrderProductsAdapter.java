@@ -2,33 +2,29 @@ package com.ramez.shopp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.analytics.FirebaseAnalytics;
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.OrderItemDetail;
-import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.RootApplication;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,10 +36,11 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     private Context context;
     private List<OrderItemDetail> orderProductsDMS;
     private String currency = "BHD";
+    private OnItemClick onItemClick;
 
-    public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDMS) {
+    public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDM) {
         this.context = context;
-        this.orderProductsDMS = orderProductsDMS;
+        this.orderProductsDMS = orderProductsDM;
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
     }
@@ -87,6 +84,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         TextView textQTY, textItemName, textItemPrice;
         ImageView productImage;
         Button reOrderProductBtn;
+        LinearLayout cardView;
 
 
         public Holder(View view) {
@@ -96,6 +94,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             textItemPrice = view.findViewById(R.id.price_text);
             productImage = view.findViewById(R.id.imageView1);
             reOrderProductBtn = view.findViewById(R.id.reOrderProductBtn);
+            cardView = view.findViewById(R.id.card_view_outer);
 
             reOrderProductBtn.setOnClickListener(v -> {
 
@@ -110,6 +109,22 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
                 addToCart(v, position, productId, product_barcode_id, count, userId, storeId);
 
+
+            });
+
+
+            cardView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                int position=getBindingAdapterPosition();
+                OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
+                ProductModel productModel=new ProductModel();
+                productModel.setId(orderProductsDM.getProductId());
+                productModel.setHName(orderProductsDM.getHProductName());
+                productModel.setName(orderProductsDM.getName());
+                intent.putExtra(Constants.DB_productModel, productModel);
+                intent.putExtra(Constants.product_id, orderProductsDM.getProductId());
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
             });
 
@@ -143,6 +158,10 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
     }
 
+
+    public interface OnItemClick {
+        void onItemClicked(int position, ProductModel productModel);
+    }
 
 }
 
