@@ -253,7 +253,8 @@
     <string name="Get_FREE_Delivery">احصل على توصيل مجاني </string>
     <string name="today">اليوم</string>
     <string name="change_address">تغير العنوان </string>
-    <string name="select_address">اختر العنوان </string>
+    <string name="select_address">انتقل  الى العناوين من قائمة حسابي  واختر عنوان افتراضي  </string>
+    <string name="select_default_address">اختر عنوان افتراضي  </string>
     <string name="getFreeDelivery">مبروك لقد حصلت على التوصيل المجاني</string>
     <string name="no_default_address">لا يوجد عنوان افتراضي</string>
     <string name="no_products">لا يوجد منتجات مقترحة</string>

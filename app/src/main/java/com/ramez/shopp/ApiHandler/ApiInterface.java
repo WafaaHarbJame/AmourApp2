@@ -3,6 +3,7 @@ package com.ramez.shopp.ApiHandler;
 
 import com.ramez.shopp.Classes.AddExtraResponse;
 import com.ramez.shopp.Classes.CityModelResult;
+import com.ramez.shopp.Classes.DeliveryInfo;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.SoicalLink;
@@ -16,6 +17,8 @@ import com.ramez.shopp.Models.BrochuresModel;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.CheckOrderModel;
+import com.ramez.shopp.Models.CheckOrderResponse;
 import com.ramez.shopp.Models.CountryDetailsModel;
 import com.ramez.shopp.Models.CountryModelResult;
 import com.ramez.shopp.Models.CouponsModel;
@@ -28,7 +31,6 @@ import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
-import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.PaymentResultModel;
@@ -236,8 +238,14 @@ ApiInterface {
     @POST("v6/Carts/updateCart")
     Call<CartProcessModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
-    @GET("v6/Carts/checkOut")
+    // change version
+    @GET("v5/Carts/checkOut")
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
+
+
+    @GET("v6/Orders/checkOut")
+    Call<CheckOrderResponse> checkCart(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
+
 
     @GET("v6/Products/productList")
     Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
@@ -264,8 +272,12 @@ ApiInterface {
     @GET("v6/Orders/getPastOrders")
     Call<OrdersResultModel> getPastOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
+    @GET("v6/Orders/GetDeliveryInfo")
+    Call<DeliveryInfo> GetDeliveryInfo(@HeaderMap() Map<String, Object> headerParams,@QueryMap Map<String, Object> queryParams);
+
+
     @GET("v6/Orders/getUpcomingOrders")
-    Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+    Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("address_id") int user_id);
 
     @POST("v6/Orders/GetOrdersList")
     Call<ResultAPIModel<ArrayList<OrderNewModel>>> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);

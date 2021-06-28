@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -43,6 +44,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 import static android.content.ContentValues.TAG;
 
@@ -165,8 +168,15 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
                 if (can_order) {
-                    GlobalData.hideProgressDialog();
-                    goToCompleteOrder();
+                    if (UtilityApp.getUserData().lastSelectedAddress > 0) {
+                        GlobalData.hideProgressDialog();
+                        goToCompleteOrder();
+                    }
+                    else {
+                        Toasty.warning(getActivityy(), R.string.select_address, Toast.LENGTH_SHORT, true).show();
+
+                    }
+
                 } else {
 
                     if (lastPosition == cartList.size() - 1) {
@@ -280,11 +290,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         startActivity(intent);
     }
 
-    private void startAddCardActivity() {
-        Intent intent = new Intent(getActivityy(), AddCardActivity.class);
-        startActivity(intent);
-    }
-
     @SuppressLint("SetTextI18n")
     public void getCarts(int storeId, int userId) {
 
@@ -297,7 +302,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.contBut.setVisibility(View.GONE);
 
 
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
+        new DataFeacher(true, (obj, func, IsSuccess) -> {
             if (isVisible()) {
                 cartResultModel = (CartResultModel) obj;
                 String message = getString(R.string.fail_to_get_data);
@@ -339,11 +344,18 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
                             localModel.setMinimum_order_amount(minimum_order_amount);
                             UtilityApp.setLocalData(localModel);
-                            delivery_charges = cartResultModel.getDeliveryCharges();
+                            if(cartResultModel.getDeliveryCharges()!=null)
+                            {
+                                delivery_charges = cartResultModel.getDeliveryCharges();
+
+                            }
                             UtilityApp.setCartCount(cartResultModel.getCartCount());
                             initAdapter();
                             cartAdapter.notifyDataSetChanged();
-                            if (delivery_charges > 0) {
+                            Log.i(getClass().getSimpleName(), "Log  minimum_order_amount " + minimum_order_amount);
+                            Log.i(getClass().getSimpleName(), "Log deliveryFees " + delivery_charges);
+                            Log.i(getClass().getSimpleName(), "Log total " + total);
+                            if (delivery_charges >=0) {
                                 if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
 
                                     binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
@@ -422,7 +434,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     }
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -448,52 +459,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         }
     }
-
-
-    private void deleteCart(int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            if (IsSuccess) {
-
-
-                if (cartList.size() > 0) {
-                    cartList.remove(position);
-                    cartAdapter.notifyItemRemoved(position);
-
-                }
-                CartProcessModel cartProcessModel = (CartProcessModel) obj;
-                cartProcessModel.setTotal(cartAdapter.calculateSubTotalPrice());
-                cartProcessModel.setCartCount(cartAdapter.getItemCount());
-                cartProcessModel.setTotalSavePrice(cartAdapter.calculateSavePrice());
-                UtilityApp.updateCart(2, cartList.size());
-
-
-            }
-
-
-        }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
-    }
-
-    private void updateCart(int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (IsSuccess) {
-                cartAdapter.calculateSubTotalPrice();
-                cartAdapter.calculateSavePrice();
-                cartAdapter.getItemCount();
-                cartList.get(position).setQuantity(quantity);
-                cartAdapter.notifyItemChanged(position);
-
-                CartProcessModel cartProcessModel = (CartProcessModel) obj;
-                cartProcessModel.setTotal(cartAdapter.calculateSubTotalPrice());
-                cartProcessModel.setCartCount(cartAdapter.getItemCount());
-                cartProcessModel.setTotalSavePrice(cartAdapter.calculateSavePrice());
-
-
-            }
-
-        }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
-    }
-
 
     private void goToCompleteOrder() {
         AnalyticsHandler.checkOut("0", currency, total, total);

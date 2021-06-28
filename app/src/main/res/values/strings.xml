@@ -286,7 +286,8 @@
     <string name="Get_FREE_Delivery">Get Free Delivery</string>
     <string name="today">Today</string>
     <string name="change_address">Change Address</string>
-    <string name="select_address">Select Address</string>
+    <string name="select_address">Please Go to My Addressfrom profile  Select Address</string>
+    <string name="select_default_address">Select  default Address</string>
     <string name="getFreeDelivery">Congratulations you got free delivery</string>
     <string name="no_default_address">No default Address</string>
     <string name="no_products">No Suggested products </string>

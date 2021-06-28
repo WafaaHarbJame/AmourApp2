@@ -765,6 +765,21 @@ public class DataFeacher {
     }
 
 
+    public void checkCart(int sotre_id, int user_id) {
+
+        Log.i(TAG, "Log GetCarts");
+        Log.i(TAG, "Log headerMap " + headerMap);
+
+        Log.i(TAG, "Log sotre_id " + sotre_id);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Call call = apiService.checkCart(headerMap, user_id, sotre_id);
+        call.enqueue(callbackApi);
+
+
+    }
+
+
     public void updateProfile(MemberModel memberModel) {
 
         Map<String, Object> params = new HashMap<>();
@@ -1255,6 +1270,24 @@ public class DataFeacher {
 
         Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
+    }
+
+
+
+    public void GetDeliveryInfo(int store_ID, int address_id) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("address_id", address_id);
+        params.put("store_ID", store_ID);
+
+        Log.i(TAG, "Log GetDeliveryInfo");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log address_id " + address_id);
+        Log.i(TAG, "Log store_ID " + store_ID);
+
+        Call call = apiService.GetDeliveryInfo(headerMap, params);
+        call.enqueue(callbackApi);
+
     }
 
 

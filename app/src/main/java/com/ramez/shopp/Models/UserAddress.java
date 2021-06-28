@@ -11,7 +11,7 @@ public class UserAddress implements Serializable {
     private Integer id;
     @SerializedName("address_type")
     @Expose
-    private Object addressType;
+    private String addressType;
     @SerializedName("default_address")
     @Expose
     private Integer defaultAddress;
@@ -30,11 +30,11 @@ public class UserAddress implements Serializable {
         this.id = id;
     }
 
-    public Object getAddressType() {
+    public String getAddressType() {
         return addressType;
     }
 
-    public void setAddressType(Object addressType) {
+    public void setAddressType(String addressType) {
         this.addressType = addressType;
     }
 
