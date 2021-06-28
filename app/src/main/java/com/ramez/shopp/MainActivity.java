@@ -101,6 +101,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
+            binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
             try {
                 initBottomNav(0);
