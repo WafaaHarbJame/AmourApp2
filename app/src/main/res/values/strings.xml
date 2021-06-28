@@ -402,6 +402,9 @@
     <string name="you_not_signin">You are not signin</string>
     <string name="express_delivery">Express Delivery</string>
     <string name="if_item_not_available">If an item is not available?</string>
+    <string name="no_active">Loyalty program is currently inactive</string>
+    <string name="Branch">Branch</string>
+    <string name="branch_note">Choose Branch to shop. (The products you will buy will be delivered from the branch you choose.)</string>
 
 
 </resources>

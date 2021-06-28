@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.androidnetworking.BuildConfig;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Activities.AllBookleteActivity;
@@ -56,7 +55,6 @@ public class MainActivity extends ActivityBase {
     ArrayList<CategoryModel> categoryModelList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +90,6 @@ public class MainActivity extends ActivityBase {
             getCartsCount();
         }
 
-
         AnalyticsHandler.APP_OPEN();
 
 
@@ -126,7 +123,6 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
 
             initBottomNav(1);
-
 
             binding.toolBar.addExtra.setVisibility(View.GONE);
 
@@ -262,7 +258,7 @@ public class MainActivity extends ActivityBase {
     protected void onResume() {
         super.onResume();
 
-        binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+        // binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
         if (UtilityApp.isLogin()) {
             getCartsCount();
@@ -290,14 +286,14 @@ public class MainActivity extends ActivityBase {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
 
+        binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+
         switch (event.type) {
             case MessageEvent.TYPE_invoice:
                 binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.addExtra.setVisibility(View.GONE);
-                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
-
                 binding.toolBar.backBtn.setOnClickListener(view -> {
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
@@ -332,6 +328,7 @@ public class MainActivity extends ActivityBase {
 
                 Fragment selectedFragment;
                 if (position == 0) {
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                     selectedFragment = new HomeFragment();
                     EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_CART));
                 } else if (position == 1) {
@@ -343,6 +340,7 @@ public class MainActivity extends ActivityBase {
                 } else if (position == 4) {
                     selectedFragment = new MyAccountFragment();
                 } else {
+                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                     selectedFragment = new HomeFragment();
                 }
 
@@ -370,6 +368,7 @@ public class MainActivity extends ActivityBase {
             case MessageEvent.TYPE_main:
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
                 initBottomNav(0);
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
@@ -384,7 +383,7 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 break;
             case MessageEvent.TYPE_search:
-                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+//                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
                 binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 binding.toolBar.sortBut.setVisibility(View.VISIBLE);
@@ -425,41 +424,27 @@ public class MainActivity extends ActivityBase {
 
         if (bundle != null) {
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
-//            boolean TO_category = getIntent().getBooleanExtra(Constants.category, false);
-//            boolean TO_BROSHER = getIntent().getBooleanExtra(Constants.TO_BROSHER, false);
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
-//            CategoryModel categoryModel = (CategoryModel) getIntent().getExtras().getSerializable(Constants.CAT_MODEL);
             int subCatId = getIntent().getExtras().getInt(Constants.SUB_CAT_ID);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
             searchTEXT = bundle.getString(Constants.inputType_text);
             from_inside_app = bundle.getBoolean(Constants.Inside_app);
-//            Fragment deepLinkFragment = null;
-//            if (fragmentType == null)
-//                fragmentType = "";
+
 
             if (TO_CART) {
 
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_REFRESH));
                 binding.cartButton.performClick();
-//                initBottomNav(2);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
             } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     categoryModelList = UtilityApp.getCategories();
                 }
-
-//                    int id = categoryModel.getId();
-//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
-
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable(Constants.CAT_LIST, categoryModelList);
                 bundle1.putInt(Constants.SUB_CAT_ID, subCatId);
-//                    bundle1.putInt(Constants.SELECTED_POSITION, id);
-//                    bundle1.putInt(Constants.position, 0);
-//                    bundle1.putSerializable(Constants.CAT_MODEL, categoryModel);
                 categoryProductsFragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -504,7 +489,6 @@ public class MainActivity extends ActivityBase {
             } else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
 
                 if (bookletsModel != null && bookletsModel.getId() != 0) {
-//                      EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_BROUSHERS, true));
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
                     Bundle bundle2 = new Bundle();
@@ -537,6 +521,10 @@ public class MainActivity extends ActivityBase {
 
             }
         }
+        else {
+            binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void getValidation() {
@@ -598,8 +586,6 @@ public class MainActivity extends ActivityBase {
         }
 
     }
-
-
 
 
 }

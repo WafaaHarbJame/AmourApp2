@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.ramez.shopp.Adapter.BranchAdapter;
 import com.ramez.shopp.Adapter.CityAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CityModelResult;
@@ -19,32 +22,29 @@ import com.ramez.shopp.databinding.ActivityChooseNearstCityBinding;
 
 import java.util.ArrayList;
 
-public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityClick {
+public class ChooseNearCity extends ActivityBase {
     ActivityChooseNearstCityBinding binding;
     ArrayList<CityModel> list;
     int city_id = 0;
     LocalModel localModel;
-    private CityAdapter cityAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChooseNearstCityBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
         list = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
+        setTitle(getString(R.string.change_city_branch));
 
-        binding.chooseCityTv.setOnClickListener(view1 -> {
-            binding.cityContainer.setVisibility(View.VISIBLE);
-            binding.chooseCityTv.setVisibility(View.GONE);
+        binding.recycler.setLayoutManager(new LinearLayoutManager(getActiviy()));
 
-        });
+        binding.toolBar.mainTitleTv.setVisibility(View.VISIBLE);
+        binding.toolBar.logoImg.setVisibility(View.GONE);
+        binding.toolBar.backBtn.setVisibility(View.VISIBLE);
 
         getExtraIntent();
-
-        binding.toolBar.backBtn.setVisibility(View.GONE);
 
 
     }
@@ -69,10 +69,12 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
     public void initAdapter() {
 
-        cityAdapter = new CityAdapter(getActiviy(), list, 0, this);
+        if (localModel != null && localModel.getCityId() != null)
+            city_id = Integer.parseInt(localModel.getCityId());
+        BranchAdapter cityAdapter = new BranchAdapter(getActiviy(), list, city_id, (position, cityModel) ->
+                onCitySelected(cityModel));
         binding.recycler.setAdapter(cityAdapter);
-        binding.cityContainer.setVisibility(View.VISIBLE);
-        binding.chooseCityTv.setVisibility(View.GONE);
+
 
     }
 
@@ -120,16 +122,21 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
     }
 
-    @Override
-    public void onCityClicked(int position, CityModel cityModel) {
+    public void onCitySelected(CityModel cityModel) {
         UtilityApp.setIsFirstRun(false);
         city_id = cityModel.getId();
         localModel.setCityId(String.valueOf(city_id));
         UtilityApp.setLocalData(localModel);
-        Intent intent = new Intent(getActiviy(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        if (getCallingActivity() != null) {
+            setResult(RESULT_OK);
+        } else {
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Constants.FRAG_HOME,true);
+            startActivity(intent);
+        }
         finish();
+
     }
 
 }

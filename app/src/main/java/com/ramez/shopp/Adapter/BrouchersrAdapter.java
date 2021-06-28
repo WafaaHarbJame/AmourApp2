@@ -146,9 +146,9 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }
                     }).into(holder.binding.ivCatImage);
 
-//            boolean hasDrawable = (holder.binding.ivCatImage.getDrawable() != null);
-//            if (hasDrawable) holder.binding.loadingLY.setVisibility(View.GONE);
-//            else holder.binding.loadingLY.setVisibility(View.VISIBLE);
+            boolean hasDrawable = (holder.binding.ivCatImage.getDrawable() != null);
+            if (hasDrawable) holder.binding.loadingLY.setVisibility(View.GONE);
+            else holder.binding.loadingLY.setVisibility(View.VISIBLE);
 
             if (selectedPosition == position && products != null && products.size() > 0 && toggleShowProducts) {
 

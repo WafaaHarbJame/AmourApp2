@@ -68,6 +68,7 @@ public class RootApplication extends Application {
 
         OneSignal.startInit(this)
                 .setNotificationOpenedHandler(new ExampleNotificationOpenedHandler(this))
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
         String UUID = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
         if (UUID != null) {

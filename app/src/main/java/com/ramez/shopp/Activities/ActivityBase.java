@@ -1,9 +1,6 @@
 package com.ramez.shopp.Activities;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,21 +11,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.ramez.shopp.Classes.MessageEvent;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.LocaleUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 
 public class ActivityBase extends AppCompatActivity {
@@ -37,7 +28,8 @@ public class ActivityBase extends AppCompatActivity {
 
     int onStartCount = 0;
 
-    protected ImageView mainTitle;
+    protected ImageView mainLogo;
+    protected TextView mainTitle;
     protected ImageView home;
     protected LinearLayout toolbar;
     int back_to_home;
@@ -75,10 +67,11 @@ public class ActivityBase extends AppCompatActivity {
 
         toolbar = findViewById(R.id.tool_bar);
         home = toolbar.findViewById(R.id.backBtn);
-        mainTitle = toolbar.findViewById(R.id.logoImg);
+        mainLogo = toolbar.findViewById(R.id.logoImg);
+        mainTitle = toolbar.findViewById(R.id.mainTitleTv);
 
 
-//        mainTitle.setText(title);
+        mainTitle.setText(title);
 
         if (!isMainActivity) {
             home.setVisibility(View.VISIBLE);

@@ -373,6 +373,30 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+
+    public void getCountryDetail(String shortName) {
+
+        Log.i(TAG, "Log getCountryDetail");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log lan " + lang);
+        Log.i(TAG, "Log shortName " + shortName);
+
+        Map<String, Object> params = new HashMap<>();
+        lang = UtilityApp.getLanguage();
+        if (lang != null) {
+            params.put("lan", lang);
+        } else {
+            params.put("lan", Locale.getDefault().getLanguage());
+
+        }
+        params.put("shortname",shortName);
+
+
+
+        Call call = apiService.getCountryDetail(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
     public void sendOpt(String mobile_number) {
 
         Log.i(TAG, "Log sendOpt");

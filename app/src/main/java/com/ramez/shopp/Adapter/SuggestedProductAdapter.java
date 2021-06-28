@@ -140,7 +140,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
-        AnalyticsHandler.AddToWishList(productId,currency,productId);
+        AnalyticsHandler.AddToWishList(productId, currency, productId);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
@@ -408,10 +408,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
 
             if (onItemClick != null) {
-                int position = getBindingAdapterPosition();
-                onItemClick.onItemClicked(position, productModels.get(position));
-
                 if (productModels.size() > 0) {
+                    int position = getBindingAdapterPosition();
+                    onItemClick.onItemClicked(position, productModels.get(position));
                     ProductModel productModel = productModels.get(position);
                     Intent intent = new Intent(context, ProductDetailsActivity.class);
                     intent.putExtra(Constants.DB_productModel, productModel);

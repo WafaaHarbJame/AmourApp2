@@ -137,10 +137,7 @@ public class UtilityApp {
         return userToken != null;
     }
 
-//    public static boolean isLogin() {
-//        boolean isLogin = RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_LOGIN_PREFERANCE, false);
-//        return isLogin;
-//    }
+
 
 
     public static void logOut() {
@@ -155,6 +152,7 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SLIDER);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SOCIAL);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_loyal);
 
 
     }

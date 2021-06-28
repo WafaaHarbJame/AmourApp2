@@ -52,6 +52,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Dialogs.InfoDialog;
+import com.ramez.shopp.Models.CountryDetailsModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ProfileData;
@@ -61,6 +62,7 @@ import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.Utils.FileUtil;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
 
+import es.dmoral.toasty.Toasty;
 import id.zelory.compressor.Compressor;
 
 public class MyAccountFragment extends FragmentBase {
@@ -326,7 +328,11 @@ public class MyAccountFragment extends FragmentBase {
 
         });
 
-        binding.ramezRewardBtn.setOnClickListener(v -> startRewardsActivity());
+        binding.ramezRewardBtn.setOnClickListener(v -> {
+            CheckLoyal();
+
+                }
+                );
 
         binding.editProfileBu.setOnClickListener(view1 -> {
 
@@ -641,6 +647,47 @@ public class MyAccountFragment extends FragmentBase {
 
 
         }
+    }
+
+
+    private void CheckLoyal() {
+         CountryDetailsModel countryDetailsModel= DBFunction.getLoyal();
+        if (countryDetailsModel == null) {
+            if( UtilityApp.getLocalData()!=null&&UtilityApp.getLocalData().getShortname()!=null)
+            getCountryDetail(UtilityApp.getLocalData().getShortname());
+
+        } else {
+            boolean hasLoyal=countryDetailsModel.hasLoyal;
+            if(hasLoyal){
+                startRewardsActivity();
+
+            }
+            else
+            Toasty.warning(getActivityy(),getString(R.string.no_active), Toast.LENGTH_SHORT, true).show();
+
+            }
+
+        }
+
+
+
+
+    private void getCountryDetail(String shortName) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<CountryDetailsModel> result = (ResultAPIModel<CountryDetailsModel>) obj;
+
+            if (result != null && result.isSuccessful()) {
+                if (result != null && result.data != null) {
+                    CountryDetailsModel countryDetailsModel = result.data;
+                    Log.i(getClass().getSimpleName(), "Log  getCountryDetail call hasLoyal " + countryDetailsModel.hasLoyal);
+                    DBFunction.setLoyal(countryDetailsModel);
+                }
+
+
+            }
+
+        }).getCountryDetail(shortName);
     }
 
 

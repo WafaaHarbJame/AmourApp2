@@ -65,6 +65,23 @@
             android:textSize="@dimen/_13ssp"
             android:visibility="visible" />
 
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/mainTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxWidth="@dimen/_160sdp"
+            android:maxLines="1"
+            android:src="@drawable/toolbar_logo"
+            android:text="@string/change_city_branch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
+
+
 
         <ImageView
             android:id="@+id/deleteBut"

@@ -17,6 +17,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.CountryDetailsModel;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
@@ -72,6 +73,8 @@ public class SplashScreenActivity extends ActivityBase {
             getDinners(lang);
             GetHomePage();
             getCouponSettings(country_id);
+            getCountryDetail(localModel.getShortname());
+
 
         }
         initData();
@@ -195,6 +198,24 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getTotalPoint(userId);
     }
+
+    private void getCountryDetail(String shortName) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<CountryDetailsModel> result = (ResultAPIModel<CountryDetailsModel>) obj;
+
+            if (result != null && result.isSuccessful()) {
+                if (result != null && result.data != null) {
+                    CountryDetailsModel  countryDetailsModel = result.data;
+                    DBFunction.setLoyal(countryDetailsModel);
+                }
+
+
+            }
+
+        }).getCountryDetail(shortName);
+    }
+
 
     private void getCouponSettings(int countryId) {
 

@@ -756,6 +756,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         if (resultCode == RESULT_OK) {
 
             if (requestCode == ADDRESS_CODE) {
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
                 assert data != null;
                 Bundle bundle = data.getExtras();
                 addressId = bundle.getInt(Constants.ADDRESS_ID);
@@ -1070,6 +1071,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         System.out.println("Log distance " + distance);
         binding.dataLY.scrollTo(0, distance);
     }
+
+
+
 
 }
 

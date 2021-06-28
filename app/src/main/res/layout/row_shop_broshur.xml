@@ -72,8 +72,8 @@
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loadingLY"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="@dimen/_125sdp"
+        android:layout_height="@dimen/_125sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:visibility="gone"
         app:indicatorColor="@color/colorPrimary"

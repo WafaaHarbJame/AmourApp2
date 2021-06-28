@@ -2,6 +2,7 @@ package com.ramez.shopp.Classes;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ramez.shopp.Models.CountryDetailsModel;
 import com.ramez.shopp.Models.SettingCouponsModel;
 import com.ramez.shopp.Models.TotalPointModel;
 
@@ -14,6 +15,19 @@ public class DBFunction {
         String json = getFromDB(Constants.DB_TOTAL_POINTS);
         if (json != null) {
             return new Gson().fromJson(json, new TypeToken<TotalPointModel>() {
+            }.getType());
+        } else {
+            return null;
+        }
+    }
+
+
+
+    public static CountryDetailsModel getLoyal() {
+
+        String json = getFromDB(Constants.DB_loyal);
+        if (json != null) {
+            return new Gson().fromJson(json, new TypeToken<CountryDetailsModel>() {
             }.getType());
         } else {
             return null;
@@ -38,6 +52,15 @@ public class DBFunction {
         String json = new Gson().toJson(model);
 
         setDB(Constants.DB_TOTAL_POINTS, json);
+
+    }
+
+
+    public static void setLoyal(CountryDetailsModel model) {
+
+        String json = new Gson().toJson(model);
+
+        setDB(Constants.DB_loyal, json);
 
     }
 

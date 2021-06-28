@@ -355,18 +355,21 @@
     <string name="points_earned">النقاط المكتسبة</string>
     <string name="bhd">BHD</string>
     <string name="total_points">مجموع النقاط</string>
-    <string name="fail_generate_coupon">فشل انشاء الكويون</string>
+    <string name="fail_generate_coupon">فشل انشاء الكوبون</string>
     <string name="success_generate_coupon">تم انشاء الكوبون</string>
     <string name="you_reach_max_point">لقد وصلت الحد الأقصى لنقاطك</string>
     <string name="minimum_points_needed">الحد الأدنى للنقاط</string>
-    <string name="shopping_branch">فرع التوصيل</string>
-    <string name="next_delivery">التوصيل التالي</string>
+    <string name="shopping_branch">تسوق من فرع</string>
+    <string name="next_delivery">أقرب موعد توصيل</string>
     <string name="key_points">النقاط:</string>
     <string name="shop_more_earn_more">تسوق أكثر إكسب اكثر</string>
     <string name="please_select_branch">اختر الفرع</string>
     <string name="you_not_signin">الرجاء تسجيل الدخول </string>
     <string name="express_delivery">توصيل سريع </string>
-    <string name="if_item_not_available">اذا لم يوجد المنتج؟</string>
+    <string name="if_item_not_available">في حالة عدم توفر المنتج ؟</string>
+    <string name="no_active">برنامج الولاء غير مفعل حاليًا</string>
+    <string name="Branch">فرع</string>
+    <string name="branch_note">اختر الفرع للتسوق. (سيتم تسليم المنتجات التي ستشتريها من الفرع الذي تختاره.)</string>
 
 
 </resources>

@@ -42,9 +42,13 @@
     <color name="green1">#2AA840</color>
     <color name="green3">#2ba842</color>
     <color name="green2">#e3ffe8</color>
+    <color name="red3">#F3CACA</color>
+    <color name="red4">#EDE0E0</color>
+    <color name="red5">#C70006</color>
     <color name="transparent">#00ffffff</color>
     <color name="status_color">#EE1D23</color>
     <color name="blue">#007AFF</color>
     <color name="yellow">#FFC107</color>
+    <color name="gray9">#E1E0E0</color>
 
 </resources>

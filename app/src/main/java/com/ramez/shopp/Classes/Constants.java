@@ -126,9 +126,11 @@ public class Constants {
     public static String FRAG_CATEGORY_DETAILS = "frag_category_details";
     public static String FRAG_SEARCH = "frag_search";
     public static String FRAG_BROSHORE = "frag_broshore";
+    public static String FRAG_HOME = "FRAG_HOME";
 
     public static String past_order="p";
 
     public static String DB_TOTAL_POINTS="db_total_points";
+    public static String DB_loyal="db_loyal";
     public static String DB_COUPON_SETTINGS="db_coupon_settings";
 }

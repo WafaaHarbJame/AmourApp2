@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -202,7 +203,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             reviewModel.setRate((int) ratingBar.getRating());
 
                             if (ratingBar.getRating() == 0) {
-
                                 Toasty.error(getActiviy(), R.string.please_fill_rate, Toast.LENGTH_SHORT, true).show();
                                 YoYo.with(Techniques.Shake).playOn(ratingBar);
                                 ratingBar.requestFocus();
@@ -245,7 +245,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.shareBtn.setOnClickListener(v -> {
 
             ActivityHandler.shareTextUrlDeep(getActiviy(), getString(R.string.share_note)
-                    + "  https://ramezshopping.com/product/" + product_id+"/store/"+storeId,
+                            + "  https://ramezshopping.com/product/" + product_id + "/store/" + storeId,
                     null, null);
 
 
@@ -552,7 +552,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 product_id = Integer.parseInt(bundle.getString(Constants.product_id));
 
 
-
             } else {
                 ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
                 if (productModel != null) {
@@ -706,10 +705,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         if (productModel.getDescription() != null && productModel.getHDescription() != null) {
                             if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                                binding.productDesc1Tv.setText(productModel.getHDescription());
+                                binding.productDesc1Tv.setText(Html.fromHtml(productModel.getHDescription()));
 
                             } else {
-                                binding.productDesc1Tv.setText(productModel.getDescription());
+                                binding.productDesc1Tv.setText(Html.fromHtml(productModel.getDescription()));
 
                             }
 
@@ -721,7 +720,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         binding.ratingBar.setRating((float) productModel.getRate());
                         if (sliderList.size() > 0) {
-                            GlobalData.PicassoImg(sliderList.get(0)
+                            GlobalData.GlideImg(getActiviy(), sliderList.get(0)
                                     , R.drawable.holder_image, binding.productImage);
                         }
 
@@ -1096,11 +1095,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 product_id = Integer.parseInt(bundle.getString(Constants.product_id));
 
 
-            }
-
-
-
-            else {
+            } else {
                 if (productModel != null) {
 
                     product_id = productModel.getId();

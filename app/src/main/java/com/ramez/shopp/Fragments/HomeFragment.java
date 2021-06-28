@@ -1,10 +1,13 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Trace;
@@ -16,6 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -39,6 +47,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllBookleteActivity;
 import com.ramez.shopp.Activities.AllListActivity;
+import com.ramez.shopp.Activities.ChooseNearCity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RamezKitchenActivity;
@@ -66,6 +75,8 @@ import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CityModel;
+import com.ramez.shopp.Models.CountryDetailsModel;
+import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.DinnerModel;
@@ -90,6 +101,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
+import es.dmoral.toasty.Toasty;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.app.Activity.RESULT_OK;
@@ -147,8 +159,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private LocalModel localModel;
     private CityModel selectedCityModel;
     private TotalPointModel totalPointModel;
+    private CountryDetailsModel countryDetailsModel;
 
     private SelectBranchDialog selectBranchDialog;
+
+    private ActivityResultLauncher<Intent> changeBranchLauncher = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -189,6 +204,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             getCityList(country_id);
             getDeliveryTimeListNew(city_id);
         }
+
+        CheckLoyal();
 
 
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -241,30 +258,35 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         AllListener();
 
         binding.branchLY.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivityy(), ChooseNearCity.class);
+            intent.putExtra(Constants.COUNTRY_ID, localModel.getCountryId());
+            intent.putExtra(Constants.FRAG_HOME, true);
+            changeBranchLauncher.launch(intent);
 
-            if (selectBranchDialog == null) {
-                selectBranchDialog = new SelectBranchDialog(getActivity(), selectedCityModel, cityModelArrayList, new DataFetcherCallBack() {
-                    @Override
-                    public void Result(Object obj, String func, boolean IsSuccess) {
-                        selectedCityModel = (CityModel) obj;
 
-                        city_id = selectedCityModel.getId();
-                        localModel.setCityId(String.valueOf(city_id));
-                        UtilityApp.setLocalData(localModel);
-
-//                        setBranchData();
-                        if (getActivity() != null)
-                            getActivity().recreate();
-
-                    }
-                });
-                selectBranchDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        selectBranchDialog = null;
-                    }
-                });
-            }
+//            if (selectBranchDialog == null) {
+//                selectBranchDialog = new SelectBranchDialog(getActivity(), selectedCityModel, cityModelArrayList, new DataFetcherCallBack() {
+//                    @Override
+//                    public void Result(Object obj, String func, boolean IsSuccess) {
+//                        selectedCityModel = (CityModel) obj;
+//
+//                        city_id = selectedCityModel.getId();
+//                        localModel.setCityId(String.valueOf(city_id));
+//                        UtilityApp.setLocalData(localModel);
+//
+////                        setBranchData();
+//                        if (getActivity() != null)
+//                            getActivity().recreate();
+//
+//                    }
+//                });
+//                selectBranchDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialogInterface) {
+//                        selectBranchDialog = null;
+//                    }
+//                });
+//            }
 
         });
 
@@ -274,7 +296,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 Intent intent = new Intent(getActivityy(), RewardsActivity.class);
                 startActivity(intent);
             } else {
-                Toast(R.string.you_not_signin);
+                Toasty.warning(getActivityy(), R.string.you_not_signin, Toast.LENGTH_SHORT, true).show();
+
             }
 
 
@@ -323,38 +346,27 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         return view;
     }
 
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        // you can set menu header with title icon etc
-//        menu.setHeaderTitle(getString(R.string.choose_branch));
-//        // add menu items
-//        for (CityModel cityModel : cityModelArrayList) {
-//            menu.add(1, cityModel.getId(), 0, cityModel.getCityName());
-//        }
-//
-//    }
-//
-//    // menu item select listener
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//
-////        switch (item.getItemId()) {
-////        }
-//
-//        Toast.makeText(activity, "item id " + item.getItemId(), Toast.LENGTH_SHORT).show();
-//
-//        return true;
-//    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        changeBranchLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult activityResult) {
+                        // Handle the returned Uri
+                        if (getActivity() != null)
+                            getActivity().recreate();
+                    }
+                });
+
+    }
 
     private void AllListener() {
 
         binding.searchBut.setOnClickListener(view1 -> {
 
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
-//            FragmentManager fragmentManager = getParentFragmentManager();
-//            SearchFragment searchFragment = new SearchFragment();
-//            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
 
 
         });
@@ -701,12 +713,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 addQueryParameter("store_id", String.valueOf(storeId)).build()
                 .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(DeliveryResultModel result) {
 
                         if (isVisible()) {
-
-//                            String message = getString(R.string.fail_to_get_data);
 
                             if (result.getData() != null && result.getData().size() > 0) {
                                 List<DeliveryTime> datesList = result.getData();
@@ -718,26 +729,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                     binding.deliveryTimeTv.setText(firstTime.getTime() + " " + deliveryDay);
                                 else
                                     binding.deliveryTimeTv.setText(deliveryDay + " " + firstTime.getTime());
-
-//                                binding.deliveryTimeTv.setText(deliveryDay + " " + firstTime.getTime());
-//                                String currentDate = firstTime.getDate();
-//                                List<DeliveryTime> timesList = new ArrayList<>();
-//
-//                                while (datesList.size() > 0) {
-//                                    DeliveryTime deliveryTime = datesList.get(0);
-//
-//                                    if (deliveryTime.getDate().equals(currentDate)) {
-//                                        timesList.add(deliveryTime);
-//                                        datesList.remove(0);
-//                                        if (datesList.isEmpty()) {
-//                                            datesMap.put(deliveryTime.getDate(), timesList);
-//                                        }
-//                                    } else {
-//                                        datesMap.put(currentDate, timesList);
-//                                        currentDate = deliveryTime.getDate();
-//                                        timesList = new ArrayList<>();
-//                                    }
-//                                }
 
 
                             }
@@ -769,6 +760,46 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             setTotalPointsData();
         }
     }
+
+
+    private void CheckLoyal() {
+        countryDetailsModel = DBFunction.getLoyal();
+        if (countryDetailsModel == null) {
+
+            getCountryDetail(localModel.getShortname());
+
+        } else {
+            boolean hasLoyal = countryDetailsModel.hasLoyal;
+            if (hasLoyal) {
+                binding.totalPointLY.setVisibility(View.VISIBLE);
+            } else {
+                binding.totalPointLY.setVisibility(View.GONE);
+
+            }
+
+        }
+
+    }
+
+
+    private void getCountryDetail(String shortName) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<CountryDetailsModel> result = (ResultAPIModel<CountryDetailsModel>) obj;
+
+            if (result != null && result.isSuccessful()) {
+                if (result != null && result.data != null) {
+                    CountryDetailsModel countryDetailsModel = result.data;
+                    Log.i(getClass().getSimpleName(), "Log  getCountryDetail call hasLoyal " + countryDetailsModel.hasLoyal);
+                    DBFunction.setLoyal(countryDetailsModel);
+                }
+
+
+            }
+
+        }).getCountryDetail(shortName);
+    }
+
 
     private void callGetTotalPoints() {
 
@@ -803,9 +834,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 if (result.getData() != null && result.getData().size() > 0) {
                     cityModelArrayList = new ArrayList<>(result.getData());
                     searchSelectedCity();
-
                     setBranchData();
-//                    registerForContextMenu(binding.branchLY);
                 }
             }
 
@@ -1166,18 +1195,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             startActivity(intent);
 
         } else if (slider.getReffrenceType() == 2) {
-//            CategoryModel categoryModel = new CategoryModel();
-//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
             bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-//            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
-//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1199,21 +1222,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
         } else if (slider.getReffrenceType() == 6) {
-//            CategoryModel categoryModel = new CategoryModel();
-//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
-
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-//            bundle.putInt(Constants.SELECTED_POSITION, categoryModel.getId());
-//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-//            bundle.putBoolean(Constants.MAIN_CAT_ID, true);
             bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
-//            bundle.putBoolean(Constants.SUBCATID,true);
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1237,18 +1251,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         } else if (slider.getReffrenceType() == 2) {
 
-//            CategoryModel categoryModel = new CategoryModel();
-//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
             bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-//            bundle.putInt(Constants.SELECTED_POSITION,categoryModel.getId());
-//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
@@ -1271,20 +1279,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
         } else if (slider.getReffrenceType() == 6) {
-//            CategoryModel categoryModel = new CategoryModel();
-//            categoryModel.setId(Integer.valueOf(slider.getReffrence()));
+
             EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_CATEGORY_PRODUCT));
             FragmentManager fragmentManager = getParentFragmentManager();
 
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-//            bundle.putInt(Constants.MAIN_CAT_ID,categoryModel.getId());
             bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
-//            bundle.putInt(Constants.position, getItemPosition(categoryModel.getId()));
-//            bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
-//            bundle.putBoolean(Constants.SUB_CAT_ID,true);
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 
