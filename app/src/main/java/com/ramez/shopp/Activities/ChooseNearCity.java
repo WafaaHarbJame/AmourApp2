@@ -132,7 +132,7 @@ public class ChooseNearCity extends ActivityBase {
         } else {
             Intent intent = new Intent(getActiviy(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Constants.FRAG_HOME,true);
+//            intent.putExtra(Constants.FRAG_HOME,true);
             startActivity(intent);
         }
         finish();

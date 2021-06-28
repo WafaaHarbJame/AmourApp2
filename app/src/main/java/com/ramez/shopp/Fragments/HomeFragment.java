@@ -260,7 +260,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.branchLY.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivityy(), ChooseNearCity.class);
             intent.putExtra(Constants.COUNTRY_ID, localModel.getCountryId());
-            intent.putExtra(Constants.FRAG_HOME, true);
             changeBranchLauncher.launch(intent);
 
 
@@ -351,13 +350,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         super.onViewCreated(view, savedInstanceState);
 
         changeBranchLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult activityResult) {
-                        // Handle the returned Uri
-                        if (getActivity() != null)
-                            getActivity().recreate();
-                    }
+                activityResult -> {
+                    // Handle the returned Uri
+                    if (getActivity() != null)
+                        getActivity().recreate();
+
+
                 });
 
     }

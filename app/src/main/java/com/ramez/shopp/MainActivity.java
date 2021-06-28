@@ -101,7 +101,6 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
-            binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
 
             try {
                 initBottomNav(0);
@@ -425,6 +424,7 @@ public class MainActivity extends ActivityBase {
         if (bundle != null) {
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
+//            boolean FRAG_HOME=bundle.getBoolean(Constants.FRAG_HOME);
             int subCatId = getIntent().getExtras().getInt(Constants.SUB_CAT_ID);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
             searchTEXT = bundle.getString(Constants.inputType_text);
@@ -436,7 +436,12 @@ public class MainActivity extends ActivityBase {
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_REFRESH));
                 binding.cartButton.performClick();
 
-            } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
+            }
+//            if(FRAG_HOME){
+//                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+//            }
+
+            else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     categoryModelList = UtilityApp.getCategories();
                 }
