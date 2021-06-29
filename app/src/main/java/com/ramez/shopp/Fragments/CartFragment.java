@@ -172,14 +172,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
                 if (can_order) {
-                    if (UtilityApp.getUserData().lastSelectedAddress > 0) {
-                        GlobalData.hideProgressDialog();
-                        goToCompleteOrder();
-                    }
-                    else {
-                        Toasty.warning(getActivityy(), R.string.select_address, Toast.LENGTH_SHORT, true).show();
-
-                    }
+                    GlobalData.hideProgressDialog();
+                    goToCompleteOrder();
 
                 } else {
 

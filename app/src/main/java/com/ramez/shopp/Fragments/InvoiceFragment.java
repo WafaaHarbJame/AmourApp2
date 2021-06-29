@@ -123,7 +123,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         deliveryTimesList = new ArrayList<>();
 
         DayList = new ArrayList<>();
-//        TimeList = new ArrayList<>();
         productCheckerList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
@@ -324,24 +323,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         binding.chooseDeliveryTime.setOnClickListener(view1 -> {
 
-//            toggleDeliveryButton = !toggleDeliveryButton;
-
             showHideDateLY(binding.DeliverDayRecycler.getVisibility() == View.GONE);
 
-//            if (toggleDeliveryButton) {
-//
-//                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-//                binding.freeDelivery.setVisibility(View.VISIBLE);
-//                binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
-//                binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
-//
-//            } else {
-//
-//                binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_down));
-//                binding.freeDelivery.setVisibility(View.GONE);
-//                binding.DeliverDayRecycler.setVisibility(View.GONE);
-//                binding.DeliverTimeRecycler.setVisibility(View.GONE);
-//            }
 
         });
 
@@ -375,8 +358,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         paymentAdapter = new PaymentAdapter(getActivityy(), paymentList, (obj, func, IsSuccess) -> {
             selectedPaymentMethod = (PaymentModel) obj;
-            if (selectedPaymentMethod != null) {
+            Log.i(getClass().getSimpleName(), "Log selectedPaymentMethod " + selectedPaymentMethod.getShortname());
 
+
+            if (selectedPaymentMethod != null) {
                 if (selectedPaymentMethod.getShortname().equals("CC")) {
                     binding.chooseDelivery.setVisibility(View.GONE);
                     initTimeAdapter(0.0);
@@ -390,6 +375,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
                 }
+
                 showHidePaymentLY(false);
                 checkData();
 
@@ -428,13 +414,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     if (IsSuccess) {
                         if (result.getData() != null && result.getData().size() > 0) {
                             paymentList = result.getData();
-
-                            // selectedPaymentMethod = result.getData().get(0);
-//                            paymentMethodId = result.getData().get(0).getId();
                             initPaymentAdapter();
-
                             initData();
-//                            checkData();
 
                         }
 
@@ -547,16 +528,15 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
+
+
     private void initData() {
 
         binding.freeLY.setVisibility(View.VISIBLE);
-
-        // getDeliveryTimeListNew(storeId);
         getDeliveryTimeList(storeId, userId);
         getQuickDelivery(storeId, localModel.getCountryId());
         getDefaultAddress();
         getProductCheckerList();
-
         checkData();
 
     }
@@ -601,6 +581,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         }
 
     }
+
 
     private void showHideNoProductLY(boolean show) {
 
@@ -648,7 +629,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.quickLy.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_gray_border_fill));
 
             initTimesList();
-//            deliveryTimeAdapter.notifyDataSetChanged();
 
 
         });
@@ -667,23 +647,18 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             deliveryFee = 0.0;
         }
 
-        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), deliveryTimesList,
-                deliveryFee, deliveryDateId, (obj, func, IsSuccess) -> {
+        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), deliveryTimesList, deliveryFee, deliveryDateId, (obj, func, IsSuccess) -> {
 
             DeliveryTime selectedTime = (DeliveryTime) obj;
             deliveryDateId = selectedTime.getId();
             deliveryDate = selectedTime.getDate();
             deliveryTime = selectedTime.getTime();
 
-            Log.i(getClass().getSimpleName(), "Log deliveryTimesList click deliveryDateId  " + deliveryDateId);
-            Log.i(getClass().getSimpleName(), "Log deliveryTimesList click Time " + selectedTime.getTime());
-            Log.i(getClass().getSimpleName(), "Log deliveryTimesList click itemNotFoundId  " + itemNotFoundId);
+            Log.i(getClass().getSimpleName(), "Log deliveryTimesList click " + deliveryDateId);
+            Log.i(getClass().getSimpleName(), "Log deliveryTimesList click " + selectedTime.getTime());
 
             showHideDateLY(false);
-            showHideNoProductLY(true);
             checkData();
-
-
         });
 
         binding.DeliverTimeRecycler.setAdapter(deliveryTimeAdapter);
@@ -877,9 +852,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
     private void checkData() {
-        Log.i(getClass().getSimpleName(), "Log itemNotFoundId " + itemNotFoundId);
-        Log.i(getClass().getSimpleName(), "Log deliveryDateId " + deliveryDateId);
 
+        Log.i(getClass().getSimpleName(), "Log deliveryDateId " + deliveryDateId);
 
         if (selectedPaymentMethod == null) {
             showHidePaymentLY(true);
@@ -892,26 +866,22 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             return;
         }
 
-        if (!selectedPaymentMethod.getShortname().equals("CC") && addressId > 0) {
-            showHideDeliveryLY(true);
-            showHideDateLY(true);
-
-            return;
-        }
-
-
         if (deliveryDateId == 0) {
+
             showHideDateLY(true);
+
             return;
         }
+
 
         if (itemNotFoundId == 0) {
+
             showHideNoProductLY(true);
+
 
         }
 
     }
-
 
     public void getDeliveryTimeList(int storeId, int user_id) {
         datesMap.clear();
@@ -963,7 +933,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                                     timesList = new ArrayList<>();
                                 }
                             }
-
 
                             deliveryTimesList = datesMap.get(firstTime.getDate());
                             if (deliveryTimesList != null && deliveryTimesList.size() > 0)
