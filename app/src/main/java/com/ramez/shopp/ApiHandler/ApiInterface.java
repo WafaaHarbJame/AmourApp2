@@ -239,12 +239,13 @@ ApiInterface {
     Call<CartProcessModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     // change version
-    @GET("v5/Carts/checkOut")
+    @GET("v6/Carts/checkOut")
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
 
     @GET("v6/Orders/checkOut")
-    Call<CheckOrderResponse> checkCart(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
+    Call<CheckOrderResponse> checkCart(@HeaderMap() Map<String, Object> headerParams,
+                                       @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
 
     @GET("v6/Products/productList")

@@ -697,8 +697,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-//        String url = "https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v4/Orders/deliveryTimeList";
-        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v4/Orders/deliveryTimeList";
+        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/deliveryTimeList";
         Log.d(TAG, "Log Get first " + url);
         Log.d(TAG, "Log  store_id " + storeId);
 

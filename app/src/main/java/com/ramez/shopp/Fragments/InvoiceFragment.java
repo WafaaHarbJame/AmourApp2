@@ -53,6 +53,7 @@ import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.QuickDeliveryRespond;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.UserDefaultAddress;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
@@ -163,22 +164,18 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
         getExtraIntent();
-
-
-        //getDeliveryTimeList(storeId);
-
-
         getPaymentMethod(storeId);
-
-//        getDeliveryTimeListNew(storeId);
-        getDeliveryTimeList(storeId,userId);
-//
-//        getQuickDelivery(storeId, localModel.getCountryId());
-//        getDefaultAddress();
-//        getProductCheckerList();
-
+        getDeliveryTimeList(storeId, userId);
         initListener();
+       // checkDeliveryFees();
 
+
+
+
+        return view;
+    }
+
+    private void checkDeliveryFees() {
 
         if (deliveryFees == 0) {
             binding.deliveryFees.setText(getString(R.string.free));
@@ -192,9 +189,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
 
         }
-
-
-        return view;
     }
 
     private void getDefaultAddress() {
@@ -414,7 +408,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
                 }
-
                 showHidePaymentLY(false);
 //                binding.choosePaymentType.performClick();
                 checkData();
@@ -552,22 +545,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         }
 
 
-//                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
-//                        successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor)
-//                                .setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-//                            OrderModel ordersDM =new OrderModel();
-//                            if(result!=null&&result.getOrder_id()>0){
-//                                ordersDM.setOrderId(result.getOrder_id());
-//                                Intent intent = new Intent(getActivityy(), InvoiceInfoActivity.class);
-//                                intent.putExtra(Constants.ORDER_MODEL, ordersDM);
-//                                startActivity(intent);
-//                            }
-//
-//                        });
-//                        successDialog.show();
-//
-
-
                     } else {
                         String message = getString(R.string.fail_to_send_order);
                         if (result != null && result.getMessage() != null) {
@@ -593,8 +570,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         binding.freeLY.setVisibility(View.VISIBLE);
 
-       // getDeliveryTimeListNew(storeId);
-        getDeliveryTimeList(storeId,userId);
+        // getDeliveryTimeListNew(storeId);
+        getDeliveryTimeList(storeId, userId);
         getQuickDelivery(storeId, localModel.getCountryId());
         getDefaultAddress();
         getProductCheckerList();
@@ -769,8 +746,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 binding.tvFullAddress.setText(addressFullAddress);
                 binding.changeAddressBtu.setText(R.string.change_address);
                 AnalyticsHandler.addShippingInfo(couponCodeId, currency, total, total);
-                GetDeliveryInfo(storeId,addressId);
-
+                GetDeliveryInfo(storeId, addressId);
 //                binding.chooseDeliveryBtn.performClick();
                 showHideDeliveryLY(false);
                 showHideDateLY(true);
@@ -797,7 +773,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         addressFullAddress = addressModel.getFullAddress();
                         binding.delivery.setText(addressTitle);
                         binding.tvFullAddress.setText(addressFullAddress);
-                        GetDeliveryInfo(storeId,addressId);
+                        GetDeliveryInfo(storeId, addressId);
 
 
                     }
@@ -888,45 +864,42 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             if (isVisible()) {
                 binding.loadingLYPay.setVisibility(View.GONE);
                 DeliveryInfo quickDeliveryRespond = (DeliveryInfo) obj;
-                    if (IsSuccess) {
-                        if (quickDeliveryRespond != null) {
+                if (IsSuccess) {
+                    if (quickDeliveryRespond != null) {
 
-                            Log.i(TAG, "Log GetDeliveryInfo");
-                            deliveryFees = quickDeliveryRespond.deliveryCharges;
-                                if (deliveryFees == 0) {
-                                    binding.deliveryFees.setText(getString(R.string.free));
-                                    binding.freeDelivery.setText(getString(R.string.over1));
-                                    binding.deliveryPrice.setText(getString(R.string.free));
-
-
-                                } else {
-
-                                    binding.deliveryFees.setText(NumberHandler.
-                                            formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
-                                    binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
-
-                                    binding.deliveryPrice.setText(quickDeliveryRespond.expressDeliveryCharges + " ".concat(localModel.getCurrencyCode()));
+                        Log.i(TAG, "Log GetDeliveryInfo");
+                        deliveryFees = quickDeliveryRespond.deliveryCharges;
+                        if (deliveryFees == 0) {
+                            binding.deliveryFees.setText(getString(R.string.free));
+                            binding.freeDelivery.setText(getString(R.string.over1));
+                            binding.deliveryPrice.setText(getString(R.string.free));
 
 
-                                }
+                        } else {
 
-                                binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
+                            binding.deliveryFees.setText(NumberHandler.
+                                    formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+                            binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
 
-
-                            } else {
-                                binding.quickLy.setVisibility(View.GONE);
-                            }
+                            binding.deliveryPrice.setText(quickDeliveryRespond.expressDeliveryCharges + " ".concat(localModel.getCurrencyCode()));
 
 
                         }
 
+                        binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
+
+                    } else {
+                        binding.quickLy.setVisibility(View.GONE);
+                    }
+
+
+                }
 
 
             }
-        }).GetDeliveryInfo(storeId,addressId);
+        }).GetDeliveryInfo(storeId, addressId);
     }
-
 
 
     @Override
@@ -969,95 +942,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         binding.ProductCheckRecycler.setAdapter(productCheckerAdapter);
     }
 
-    public void getDeliveryTimeListNew(int storeId) {
-        datesMap.clear();
-
-        binding.loadingDelivery.setVisibility(View.VISIBLE);
-
-        String countryCode = "";
-        if (UtilityApp.getLocalData().getShortname() != null)
-            countryCode = UtilityApp.getLocalData().getShortname();
-        else countryCode = GlobalData.COUNTRY;
-
-        String url = "https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Orders/deliveryTimeList";
-        Log.d(TAG, "Log Get first " + url);
-        Log.d(TAG, "Log  store_id " + storeId);
-
-
-        AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
-                addHeaders("ApiKey", Constants.api_key)
-                .addHeaders("device_type", Constants.deviceType)
-                .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken()).
-
-                addQueryParameter("store_id", String.valueOf(storeId)).build()
-                .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
-                    @Override
-                    public void onResponse(DeliveryResultModel result) {
-
-                        if (isVisible()) {
-
-                            binding.loadingDelivery.setVisibility(View.GONE);
-                            String message = getString(R.string.fail_to_get_data);
-
-                            if (result.getData() != null && result.getData().size() > 0) {
-                                List<DeliveryTime> datesList = result.getData();
-
-                                DeliveryTime firstTime = datesList.get(0);
-
-                                String currentDate = firstTime.getDate();
-                                List<DeliveryTime> timesList = new ArrayList<>();
-
-                                while (datesList.size() > 0) {
-                                    DeliveryTime deliveryTime = datesList.get(0);
-
-                                    if (deliveryTime.getDate().equals(currentDate)) {
-                                        timesList.add(deliveryTime);
-                                        datesList.remove(0);
-                                        if (datesList.isEmpty()) {
-                                            datesMap.put(deliveryTime.getDate(), timesList);
-                                        }
-                                    } else {
-                                        datesMap.put(currentDate, timesList);
-                                        currentDate = deliveryTime.getDate();
-                                        timesList = new ArrayList<>();
-                                    }
-                                }
-
-
-                                deliveryTimesList = datesMap.get(firstTime.getDate());
-                                if (deliveryTimesList != null && deliveryTimesList.size() > 0)
-                                    deliveryDateId = deliveryTimesList.get(0).getId();
-                                deliveryDate = firstTime.getDate();
-                                deliveryTime = firstTime.getTime();
-
-                                Log.i("tag", "Log deliveryTimesList click " + deliveryDateId);
-                                Log.i("tag", "Log deliveryTimesList click " + deliveryTime);
-
-                                initDaysAdapter();
-
-
-                            } else {
-                                binding.noDeliveryTv.setVisibility(View.VISIBLE);
-                                GlobalData.Toast(getActivityy(), message);
-
-                            }
-
-
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        GlobalData.Toast(getActivityy(), anError.getMessage());
-                    }
-
-
-                });
-    }
-
     private void checkData() {
 
 
@@ -1071,6 +955,14 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             binding.changeAddressBtu.performClick();
             return;
         }
+
+        if (!selectedPaymentMethod.getShortname().equals("CC") && addressId > 0) {
+            showHideDeliveryLY(true);
+            showHideDateLY(true);
+
+            return;
+        }
+
 
         if (deliveryDateId == 0) {
 
@@ -1093,131 +985,82 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
     }
 
-//    private void showDeliveryDate() {
-//
-//        toggleDeliveryButton = !toggleDeliveryButton;
-//        binding.toggleDeliveryBut.setImageDrawable(ContextCompat.getDrawable(getActivityy(), R.drawable.ic_angle_up));
-//        binding.freeDelivery.setVisibility(View.VISIBLE);
-//        binding.DeliverDayRecycler.setVisibility(View.VISIBLE);
-//        binding.DeliverTimeRecycler.setVisibility(View.VISIBLE);
-//
-////        scrollToView(binding.DeliverTimeRecycler);
-//
-//    }
-
-    public void scrollToView(View viewToScrollTo) {
-//        View parent = (View) viewToScrollTo.getParent();
-//        System.out.println("Log getParent.getTop " + parent.getTop());
-//        System.out.println("Log view.getTop " + viewToScrollTo.getTop());
-//        int scrollTo = parent.getTop() + viewToScrollTo.getTop();
-//        binding.dataLY.smoothScrollTo(0, scrollTo);
-
-        final int[] xYPos = new int[2];
-        viewToScrollTo.getLocationOnScreen(xYPos);
-        final int[] scrollxYPos = new int[2];
-        binding.dataLY.getLocationOnScreen(scrollxYPos);
-        int yPosition = xYPos[1];
-        if (yPosition < 0) {
-            yPosition = 0;
-        }
-        int distance = scrollxYPos[1] - yPosition;
-        System.out.println("Log distance " + distance);
-        binding.dataLY.scrollTo(0, distance);
-    }
-
-
-    public void getDeliveryTimeList(int storeId,int user_id) {
+    public void getDeliveryTimeList(int storeId, int user_id) {
         datesMap.clear();
-
         binding.loadingDelivery.setVisibility(View.VISIBLE);
 
-        String countryCode = "";
-        if (UtilityApp.getLocalData().getShortname() != null)
-            countryCode = UtilityApp.getLocalData().getShortname();
-        else countryCode = GlobalData.COUNTRY;
 
-        String url = "https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Orders/checkOut";
-        Log.i(TAG, "Log Get first " + url);
-        Log.i(TAG, "Log  store_id " + storeId);
+        new DataFeacher(true, (obj, func, IsSuccess) -> {
+            if (isVisible()) {
+                CheckOrderResponse result = (CheckOrderResponse) obj;
+                String message = getString(R.string.fail_to_get_data);
 
+                binding.loadingDelivery.setVisibility(View.GONE);
 
-        AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
-                addHeaders("ApiKey", Constants.api_key)
-                .addHeaders("device_type", Constants.deviceType)
-                .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken()).
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().getDeliveryTimes() != null
+                            && result.getData().getDeliveryTimes().size() > 0) {
 
-                addQueryParameter("store_ID", String.valueOf(storeId))
-                .addQueryParameter("user_id", String.valueOf(user_id))
-                .build()
-                .getAsObject(CheckOrderResponse.class, new ParsedRequestListener<CheckOrderResponse>() {
-                    @Override
-                    public void onResponse(CheckOrderResponse result) {
+                        if (result.getData() != null && result.getData().getDeliveryTimes().size() > 0) {
+                            CheckOrderModel checkOrderResponse=result.getData();
+                            UserDefaultAddress userDefaultAddress=checkOrderResponse.getUserAddress();
+                            addressId=userDefaultAddress.getId();
+                            binding.tvFullAddress.setText(userDefaultAddress.getFullAddress());
+                            Log.i(getClass().getSimpleName(), "Log  CheckOrderResponse AddressId  " + result.getData().getUserAddress().getId());
 
-                        if (isVisible()) {
+                            minimum_order_amount=checkOrderResponse.getMinimumOrderAmount();
+                            deliveryFees=checkOrderResponse.getDeliveryCharges();
+                            checkDeliveryFees();
 
-                            binding.loadingDelivery.setVisibility(View.GONE);
-                            String message = getString(R.string.fail_to_get_data);
+                            List<DeliveryTime> datesList = result.getData().getDeliveryTimes();
+                            DeliveryTime firstTime = datesList.get(0);
 
-                            if (result.getData() != null && result.getData().getDeliveryTimes().size() > 0) {
-                                List<DeliveryTime> datesList = result.getData().getDeliveryTimes();
+                            String currentDate = firstTime.getDate();
+                            List<DeliveryTime> timesList = new ArrayList<>();
 
-                                DeliveryTime firstTime = datesList.get(0);
+                            while (datesList.size() > 0) {
+                                DeliveryTime deliveryTime = datesList.get(0);
 
-                                String currentDate = firstTime.getDate();
-                                List<DeliveryTime> timesList = new ArrayList<>();
-
-                                while (datesList.size() > 0) {
-                                    DeliveryTime deliveryTime = datesList.get(0);
-
-                                    if (deliveryTime.getDate().equals(currentDate)) {
-                                        timesList.add(deliveryTime);
-                                        datesList.remove(0);
-                                        if (datesList.isEmpty()) {
-                                            datesMap.put(deliveryTime.getDate(), timesList);
-                                        }
-                                    } else {
-                                        datesMap.put(currentDate, timesList);
-                                        currentDate = deliveryTime.getDate();
-                                        timesList = new ArrayList<>();
+                                if (deliveryTime.getDate().equals(currentDate)) {
+                                    timesList.add(deliveryTime);
+                                    datesList.remove(0);
+                                    if (datesList.isEmpty()) {
+                                        datesMap.put(deliveryTime.getDate(), timesList);
                                     }
+                                } else {
+                                    datesMap.put(currentDate, timesList);
+                                    currentDate = deliveryTime.getDate();
+                                    timesList = new ArrayList<>();
                                 }
-
-
-                                deliveryTimesList = datesMap.get(firstTime.getDate());
-                                if (deliveryTimesList != null && deliveryTimesList.size() > 0)
-                                    deliveryDateId = deliveryTimesList.get(0).getId();
-                                deliveryDate = firstTime.getDate();
-                                deliveryTime = firstTime.getTime();
-
-                                Log.i("tag", "Log deliveryTimesList click " + deliveryDateId);
-                                Log.i("tag", "Log deliveryTimesList click " + deliveryTime);
-
-                                initDaysAdapter();
-
-
-                            } else {
-                                binding.noDeliveryTv.setVisibility(View.VISIBLE);
-                                GlobalData.Toast(getActivityy(), message);
-
                             }
 
+
+                            deliveryTimesList = datesMap.get(firstTime.getDate());
+                            if (deliveryTimesList != null && deliveryTimesList.size() > 0)
+                                deliveryDateId = deliveryTimesList.get(0).getId();
+                            deliveryDate = firstTime.getDate();
+                            deliveryTime = firstTime.getTime();
+
+                            Log.i("tag", "Log deliveryTimesList click " + deliveryDateId);
+                            Log.i("tag", "Log deliveryTimesList click " + deliveryTime);
+
+                            initDaysAdapter();
+
+
+                        } else {
+                            binding.noDeliveryTv.setVisibility(View.VISIBLE);
+                            GlobalData.Toast(getActivityy(), message);
 
                         }
 
 
                     }
+                }
+            }
 
-                    @Override
-                    public void onError(ANError anError) {
-                        GlobalData.Toast(getActivityy(), anError.getMessage());
-                    }
+        }).checkCart(storeId, user_id);
 
-
-                });
     }
-
-
 
 
 }
