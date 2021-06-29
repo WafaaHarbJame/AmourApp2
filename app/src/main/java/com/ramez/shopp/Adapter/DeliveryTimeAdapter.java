@@ -70,17 +70,6 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         }
 
 
-//        if (lastIndex == position) {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
-//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-//
-//        } else {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
-//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
-//
-//        }
-
-
         if (deliveryTimes.getId() == selectedId) {
             viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
@@ -112,7 +101,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
             binding = view;
             itemView.setOnClickListener(view1 -> {
 
-                if(getBindingAdapterPosition()>=0){
+                if (getBindingAdapterPosition() >= 0) {
 
                     DeliveryTime deliveryTime = deliveryTimesList.get(getBindingAdapterPosition());
 //                lastIndex = getBindingAdapterPosition();

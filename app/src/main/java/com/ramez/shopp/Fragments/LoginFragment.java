@@ -557,7 +557,7 @@ public class LoginFragment extends FragmentBase {
 
             if (IsSuccess) {
                 if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
-                    cartNumber = cartResultModel.getCartCount();
+                    cartNumber = cartResultModel.getData().getCartCount();
                     UtilityApp.setCartCount(cartNumber);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

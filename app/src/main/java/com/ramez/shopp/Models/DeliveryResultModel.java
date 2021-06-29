@@ -9,27 +9,27 @@ public class DeliveryResultModel {
 
     @SerializedName("data")
     @Expose
-    private List<DeliveryTime> data = null;
+    private DeliveryTime data;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
 
-    public List<DeliveryTime> getData() {
+    public DeliveryTime getData() {
         return data;
     }
 
-    public void setData(List<DeliveryTime> data) {
+    public void setData(DeliveryTime data) {
         this.data = data;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -40,5 +40,4 @@ public class DeliveryResultModel {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -15,9 +16,12 @@ import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CountryDetailsModel;
+import com.ramez.shopp.Models.Data;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
@@ -42,6 +46,7 @@ public class SplashScreenActivity extends ActivityBase {
     int cartNumber;
     int country_id = 0;
     private String lang;
+    ArrayList<AddressModel> addressList;
 
 
     @Override
@@ -67,7 +72,7 @@ public class SplashScreenActivity extends ActivityBase {
             storeId = Integer.parseInt(localModel.getCityId());
             country_id = localModel.getCountryId();
             if (localModel.getShortname() != null) {
-                getLinks(UtilityApp.getLocalData().getShortname());
+                getLinks(Integer.parseInt(UtilityApp.getLocalData().getCityId()));
             }
             getCategories(Integer.parseInt(localModel.getCityId()));
             getDinners(lang);
@@ -93,6 +98,7 @@ public class SplashScreenActivity extends ActivityBase {
                     userId = user.getId();
                     getUserData(userId, storeId);
                     getTotalPoints(userId);
+                    GetUserAddress(userId);
 
                 }
 
@@ -284,9 +290,10 @@ public class SplashScreenActivity extends ActivityBase {
                 if (cartResultModel.getStatus() == 200) {
 
                     if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
-                        cartNumber = cartResultModel.getCartCount();
+                        Data data=cartResultModel.getData();
+                        cartNumber = data.getCartCount();
                         UtilityApp.setCartCount(cartNumber);
-                        int minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+                        int minimum_order_amount = data.getMinimumOrderAmount();
                         localModel.setMinimum_order_amount(minimum_order_amount);
                         UtilityApp.setLocalData(localModel);
 
@@ -315,7 +322,7 @@ public class SplashScreenActivity extends ActivityBase {
         }).GetCarts(storeId, userId);
     }
 
-    public void getLinks(String shortName) {
+    public void getLinks(int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SoicalLink> result = (ResultAPIModel<SoicalLink>) obj;
@@ -328,7 +335,7 @@ public class SplashScreenActivity extends ActivityBase {
             }
 
 
-        }).getLinks(shortName);
+        }).getLinks(store_id);
     }
 
     public void GetHomePage() {
@@ -370,6 +377,42 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).GetMainPage(0, country_id, storeId, String.valueOf(userId));
     }
+
+
+    public void GetUserAddress(int user_id) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+               AddressResultModel result = (AddressResultModel) obj;
+
+
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        ArrayList<AddressModel> addressList=new ArrayList<>();
+                        addressList=result.getData();
+                        for (int i = 0; i <addressList.size() ; i++) {
+                            AddressModel addressModel = addressList.get(i);
+                            if(addressModel.getDefault()){
+                                MemberModel user=UtilityApp.getUserData();
+                                user.setLastSelectedAddress(addressModel.getId());
+                                UtilityApp.setUserData(user);
+                            }
+
+                        }
+
+
+
+
+                }
+            }
+
+        }).GetAddressHandle(user_id);
+    }
+
+
+
+
+
+
 
 
 }

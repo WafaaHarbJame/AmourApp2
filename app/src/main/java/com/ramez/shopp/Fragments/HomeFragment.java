@@ -203,9 +203,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
             getCityList(country_id);
             getDeliveryTimeListNew(city_id);
+            CheckLoyal(localModel.getShortname());
         }
-
-        CheckLoyal();
 
 
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -254,6 +253,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.brandsRecycler.setHasFixedSize(true);
 
         GetHomePage();
+
 
         AllListener();
 
@@ -697,7 +697,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/deliveryTimeList";
+        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/nextDeliveryTime?";
         Log.d(TAG, "Log Get first " + url);
         Log.d(TAG, "Log  store_id " + storeId);
 
@@ -707,7 +707,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
                 .addHeaders("token", UtilityApp.getToken()).
-
                 addQueryParameter("store_id", String.valueOf(storeId)).build()
                 .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
                     @SuppressLint("SetTextI18n")
@@ -716,10 +715,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         if (isVisible()) {
 
-                            if (result.getData() != null && result.getData().size() > 0) {
-                                List<DeliveryTime> datesList = result.getData();
-
-                                DeliveryTime firstTime = datesList.get(0);
+                            if (result != null && result.getData()!=null) {
+                                DeliveryTime firstTime =result.getData();
                                 String deliveryDay = DateHandler.FormatDate4(firstTime.getDate(), "yyyy-MM-dd", "EEE", UtilityApp.getLanguage());
 
                                 if (UtilityApp.getLanguage().equals(Constants.Arabic))
@@ -759,22 +756,30 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
-    private void CheckLoyal() {
+    private void CheckLoyal(String shortName ) {
         countryDetailsModel = DBFunction.getLoyal();
+
         if (countryDetailsModel == null) {
 
-            getCountryDetail(localModel.getShortname());
+            getCountryDetail(shortName);
 
         } else {
             boolean hasLoyal = countryDetailsModel.hasLoyal;
-            if (hasLoyal) {
-                binding.totalPointLY.setVisibility(View.VISIBLE);
-            } else {
-                binding.totalPointLY.setVisibility(View.GONE);
+            showLoyalLy(hasLoyal);
 
-            }
 
         }
+
+    }
+
+    private  void showLoyalLy(boolean hasLoyal){
+        if (hasLoyal) {
+            binding.totalPointLY.setVisibility(View.VISIBLE);
+        } else {
+            binding.totalPointLY.setVisibility(View.GONE);
+
+        }
+
 
     }
 
@@ -789,6 +794,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                     CountryDetailsModel countryDetailsModel = result.data;
                     Log.i(getClass().getSimpleName(), "Log  getCountryDetail call hasLoyal " + countryDetailsModel.hasLoyal);
                     DBFunction.setLoyal(countryDetailsModel);
+                    showLoyalLy(countryDetailsModel.hasLoyal);
+
                 }
 
 

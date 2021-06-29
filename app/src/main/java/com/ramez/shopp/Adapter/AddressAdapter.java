@@ -50,10 +50,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         RowAddressItemBinding binding = holder.binding;
         AddressModel addressModel = addressModelList.get(position);
 
-        if (UtilityApp.getUserData().lastSelectedAddress == addressModel.getId()) {
-            holder.binding.rbSelectAddress.setChecked(true);
+        if(addressModel.getDefault()){
+            MemberModel user=UtilityApp.getUserData();
+            user.setLastSelectedAddress(addressModel.getId());
+            UtilityApp.setUserData(user);
+            if (UtilityApp.getUserData().lastSelectedAddress == addressModel.getId()) {
+                holder.binding.rbSelectAddress.setChecked(true);
 
-        } else {
+            }
+        }
+
+        else {
             holder.binding.rbSelectAddress.setChecked(false);
         }
 

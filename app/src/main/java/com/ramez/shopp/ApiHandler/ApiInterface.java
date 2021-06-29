@@ -130,7 +130,8 @@ ApiInterface {
 
 
     @GET("v6/Locations/getSocialLink")
-    Call<ResultAPIModel<SoicalLink>> getSocialLink(@HeaderMap() Map<String, Object> headerParams, @Query("country_shortname") String country_shortname);
+    Call<ResultAPIModel<SoicalLink>> getSocialLink(@HeaderMap() Map<String, Object> headerParams,
+                                                   @Query("store_id") int store_id);
 
     @GET("v6/Locations/getValidate")
     Call<GeneralModel> getValidate(@HeaderMap() Map<String, Object> headerParams, @Query("device_type") String device_type, @Query("app_version") String app_version, @Query("app_build") int app_build);
@@ -274,7 +275,7 @@ ApiInterface {
     Call<OrdersResultModel> getPastOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
     @GET("v6/Orders/GetDeliveryInfo")
-    Call<DeliveryInfo> GetDeliveryInfo(@HeaderMap() Map<String, Object> headerParams,@QueryMap Map<String, Object> queryParams);
+    Call<DeliveryInfo> GetDeliveryInfo(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
 
 
     @GET("v6/Orders/getUpcomingOrders")
@@ -293,9 +294,6 @@ ApiInterface {
     @GET("v6/Orders/getPaymentMethod")
     Call<PaymentResultModel> getPaymentMethod(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
-
-    @GET("v6/Orders/deliveryTimeList")
-    Call<DeliveryResultModel> getDeliveryTimeList(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
     @POST("v6/Orders/CreateOrder")
     Call<OrdersResultModel> makeOrder(@HeaderMap() Map<String, Object> headerParams, @Body OrderCall param);

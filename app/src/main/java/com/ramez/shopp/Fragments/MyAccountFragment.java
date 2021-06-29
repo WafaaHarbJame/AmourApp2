@@ -98,7 +98,7 @@ public class MyAccountFragment extends FragmentBase {
 
         } else {
             if (UtilityApp.getLocalData().getShortname() != null) {
-                getLinks(UtilityApp.getLocalData().getShortname());
+                getLinks(Integer.parseInt(UtilityApp.getLocalData().getCityId()));
             }
 
         }
@@ -554,7 +554,7 @@ public class MyAccountFragment extends FragmentBase {
     }
 
 
-    public void getLinks(String shortName) {
+    public void getLinks(int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SoicalLink> result = (ResultAPIModel<SoicalLink>) obj;
@@ -590,7 +590,7 @@ public class MyAccountFragment extends FragmentBase {
             }
 
 
-        }).getLinks(shortName);
+        }).getLinks(store_id);
     }
 
     private void checkCameraPermission() {

@@ -29,8 +29,11 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Dialogs.EmptyCartDialog;
+import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
+import com.ramez.shopp.Models.Data;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -110,6 +113,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
             getCarts(storeId, userId);
+            GetUserAddress(userId);
 
 
 
@@ -341,15 +345,12 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                             cartList = cartResultModel.getData().getCartData();
                             binding.contBut.setVisibility(View.VISIBLE);
-                            minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+                            Data data=cartResultModel.getData();
+                            minimum_order_amount = data.getMinimumOrderAmount();
                             localModel.setMinimum_order_amount(minimum_order_amount);
                             UtilityApp.setLocalData(localModel);
-                            if(cartResultModel.getDeliveryCharges()!=null)
-                            {
-                                delivery_charges = cartResultModel.getDeliveryCharges();
 
-                            }
-                            UtilityApp.setCartCount(cartResultModel.getCartCount());
+                            UtilityApp.setCartCount(data.getCartCount());
                             initAdapter();
                             cartAdapter.notifyDataSetChanged();
                             Log.i(getClass().getSimpleName(), "Log  minimum_order_amount " + minimum_order_amount);
@@ -455,6 +456,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         super.onResume();
         if (GlobalData.REFRESH_CART) {
             getCarts(storeId, userId);
+
             GlobalData.REFRESH_CART = false;
 
         }
@@ -475,5 +477,33 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
     }
+
+    public void GetUserAddress(int user_id) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            AddressResultModel result = (AddressResultModel) obj;
+
+            if (IsSuccess) {
+                if (result.getData() != null && result.getData().size() > 0) {
+                    ArrayList<AddressModel> addressList=result.getData();
+                    for (int i = 0; i <addressList.size() ; i++) {
+                        AddressModel addressModel = addressList.get(i);
+                        if(addressModel.getDefault()){
+                            MemberModel user=UtilityApp.getUserData();
+                            user.setLastSelectedAddress(addressModel.getId());
+                            UtilityApp.setUserData(user);
+                        }
+
+                    }
+
+
+
+
+                }
+            }
+
+        }).GetAddressHandle(user_id);
+    }
+
 
 }

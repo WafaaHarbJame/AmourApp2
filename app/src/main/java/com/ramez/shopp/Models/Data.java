@@ -9,12 +9,42 @@ import java.util.ArrayList;
 
 public class Data implements Serializable {
 
+    @SerializedName("total_amount")
+    @Expose
+    private double totalAmount;
+    @SerializedName("minimum_order_amount")
+    @Expose
+    private int minimumOrderAmount;
+    @SerializedName("cart_count")
+    @Expose
+    private int cartCount;
     @SerializedName("cart_data")
     @Expose
     private ArrayList<CartModel> cartData = null;
-    @SerializedName("user_address")
-    @Expose
-    private UserAddress userAddress;
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public int getMinimumOrderAmount() {
+        return minimumOrderAmount;
+    }
+
+    public void setMinimumOrderAmount(int minimumOrderAmount) {
+        this.minimumOrderAmount = minimumOrderAmount;
+    }
+
+    public int getCartCount() {
+        return cartCount;
+    }
+
+    public void setCartCount(int cartCount) {
+        this.cartCount = cartCount;
+    }
 
     public ArrayList<CartModel> getCartData() {
         return cartData;
@@ -22,13 +52,5 @@ public class Data implements Serializable {
 
     public void setCartData(ArrayList<CartModel> cartData) {
         this.cartData = cartData;
-    }
-
-    public UserAddress getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(UserAddress userAddress) {
-        this.userAddress = userAddress;
     }
 }

@@ -13,6 +13,17 @@ public class UserDefaultAddress implements Serializable {
     @SerializedName("full_address")
     @Expose
     private String fullAddress;
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
