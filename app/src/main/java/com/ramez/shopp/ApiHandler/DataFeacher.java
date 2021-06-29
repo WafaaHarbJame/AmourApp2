@@ -223,17 +223,17 @@ public class DataFeacher {
     public void RegisterHandle(MemberModel memberModel) {
 
         Map<String, Object> params = new HashMap<>();
-        params.put("mobile_number", memberModel.getMobileNumber()+"");
-        params.put("password", memberModel.getPassword()+"");
-        params.put("user_type", Constants.user_type+"");
-        params.put("device_type", memberModel.getDeviceType()+"");
-        params.put("device_token", memberModel.getDeviceToken()+"");
-        params.put("name", memberModel.getName()+"");
-        params.put("country", memberModel.getCountry()+"");
+        params.put("mobile_number", memberModel.getMobileNumber() + "");
+        params.put("password", memberModel.getPassword() + "");
+        params.put("user_type", Constants.user_type + "");
+        params.put("device_type", memberModel.getDeviceType() + "");
+        params.put("device_token", memberModel.getDeviceToken() + "");
+        params.put("name", memberModel.getName() + "");
+        params.put("country", memberModel.getCountry() + "");
         params.put("city", memberModel.getCity() + "");
-        params.put("email", memberModel.getEmail()+"");
-        params.put("device_id", memberModel.getDeviceId()+"");
-        params.put("prefix", memberModel.getPrefix()+"");
+        params.put("email", memberModel.getEmail() + "");
+        params.put("device_id", memberModel.getDeviceId() + "");
+        params.put("prefix", memberModel.getPrefix() + "");
 
         Log.i(TAG, "Log RegisterHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -389,8 +389,7 @@ public class DataFeacher {
             params.put("lan", Locale.getDefault().getLanguage());
 
         }
-        params.put("shortname",shortName);
-
+        params.put("shortname", shortName);
 
 
         Call call = apiService.getCountryDetail(headerMap, params);
@@ -963,17 +962,16 @@ public class DataFeacher {
     }
 
 
-
-
     public void makeOrder(OrderCall orderCalls) {
-        OrderCall orderCall = new OrderCall();
-        orderCall.user_id = orderCalls.user_id;
-        orderCall.store_ID = orderCalls.store_ID;
-        orderCall.address_id = orderCalls.address_id;
-        orderCall.payment_method = orderCalls.payment_method;
-        orderCall.coupon_code_id = orderCalls.coupon_code_id;
-        orderCall.delivery_date_id = orderCalls.delivery_date_id;
-        orderCall.expressDelivery = orderCalls.expressDelivery;
+//        OrderCall orderCall = new OrderCall();
+//        orderCall.user_id = orderCalls.user_id;
+//        orderCall.store_ID = orderCalls.store_ID;
+//        orderCall.address_id = orderCalls.address_id;
+//        orderCall.payment_method = orderCalls.payment_method;
+//        orderCall.coupon_code_id = orderCalls.coupon_code_id;
+//        orderCall.delivery_date_id = orderCalls.delivery_date_id;
+//        orderCall.expressDelivery = orderCalls.expressDelivery;
+//        orderCall.itemNotFoundAction=orderCalls.itemNotFoundAction;
 
         Log.i(TAG, "Log makeOrder");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -984,8 +982,9 @@ public class DataFeacher {
         Log.i(TAG, "Log coupon_code_id " + orderCalls.coupon_code_id);
         Log.i(TAG, "Log delivery_date_id " + orderCalls.delivery_date_id);
         Log.i(TAG, "Log expressDelivery " + orderCalls.expressDelivery);
+        Log.i(TAG, "Log itemNotFoundAction " + orderCalls.itemNotFoundAction);
 
-        Call call = apiService.makeOrder(headerMap, orderCall);
+        Call call = apiService.makeOrder(headerMap, orderCalls);
         call.enqueue(callbackApi);
     }
 
@@ -1263,7 +1262,6 @@ public class DataFeacher {
         Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
     }
-
 
 
     public void GetDeliveryInfo(int store_ID, int address_id) {

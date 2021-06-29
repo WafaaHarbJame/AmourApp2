@@ -25,17 +25,19 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
     private Context context;
     private List<AddressModel> addressModelList;
-    private OnRadioAddressSelect onRadioAddressSelect;
     private OnDeleteClicked onDeleteClicked;
     private OnContainerSelect onContainerSelect;
+    //    private boolean canSelect;
+    MemberModel user;
 
-
-    public AddressAdapter(Context context, List<AddressModel> addressModelList, OnRadioAddressSelect onRadioAddressSelect, OnDeleteClicked onDeleteClicked, OnContainerSelect OnContainerSelect) {
+    public AddressAdapter(Context context, List<AddressModel> addressModelList, OnDeleteClicked onDeleteClicked, OnContainerSelect OnContainerSelect) {
         this.context = context;
         this.addressModelList = addressModelList;
-        this.onRadioAddressSelect = onRadioAddressSelect;
         this.onDeleteClicked = onDeleteClicked;
         this.onContainerSelect = OnContainerSelect;
+//        this.canSelect = canSelect;
+        user = UtilityApp.getUserData();
+
     }
 
     @NonNull
@@ -50,31 +52,20 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         RowAddressItemBinding binding = holder.binding;
         AddressModel addressModel = addressModelList.get(position);
 
-        if(addressModel.getDefault()){
-            MemberModel user=UtilityApp.getUserData();
-            user.setLastSelectedAddress(addressModel.getId());
-            UtilityApp.setUserData(user);
-            if (UtilityApp.getUserData().lastSelectedAddress == addressModel.getId()) {
-                holder.binding.rbSelectAddress.setChecked(true);
-
-            }
-        }
-
-        else {
+        if (user.getLastSelectedAddress() == addressModel.getId()) {
+//            MemberModel user = UtilityApp.getUserData();
+//            user.setLastSelectedAddress(addressModel.getId());
+//            UtilityApp.setUserData(user);
+//            if (UtilityApp.getUserData().lastSelectedAddress == addressModel.getId()) {
+            holder.binding.rbSelectAddress.setChecked(true);
+//            }
+        } else {
             holder.binding.rbSelectAddress.setChecked(false);
         }
 
         binding.tvAddressMark.setText(context.getString(R.string.ph).concat(" " + addressModel.getMobileNumber()));
         binding.tvAddressNote.setText(addressModel.getFullAddress());
         binding.tvaAddressTitle.setText(addressModel.getName());
-
-        binding.rbSelectAddress.setOnClickListener(v -> {
-            onRadioAddressSelect.onAddressSelected(addressModel);
-            MemberModel memberModel = UtilityApp.getUserData();
-            memberModel.setLastSelectedAddress(addressModel.getId());
-            UtilityApp.setUserData(memberModel);
-            notifyDataSetChanged();
-        });
 
 
         binding.deleteAddressBut.setOnClickListener(v -> {
@@ -127,19 +118,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             }
         };
 
-        new ConfirmDialog(context,context.getString(R.string.want_to_delete_address), R.string.ok, R.string.cancel_label, click, null,false);
+        new ConfirmDialog(context, context.getString(R.string.want_to_delete_address), R.string.ok, R.string.cancel_label, click, null, false);
 
     }
 
     public interface OnContainerSelect {
-        void onContainerSelectSelected(AddressModel addressesDM);
+        void onContainerSelectSelected(AddressModel addressesDM/*, boolean makeDefault*/);
     }
-
-
-    public interface OnRadioAddressSelect {
-        void onAddressSelected(AddressModel addressesDM);
-    }
-
 
     public interface OnDeleteClicked {
         void onDeleteClicked(AddressModel addressModel, boolean isChecked, int position);
@@ -152,6 +137,18 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         public Holder(RowAddressItemBinding view) {
             super(view.getRoot());
             binding = view;
+
+            binding.rbSelectAddress.setOnClickListener(v -> {
+                AddressModel addressModel = addressModelList.get(getBindingAdapterPosition());
+//                user = UtilityApp.getUserData();
+                if (addressModel.getId() != user.getLastSelectedAddress()) {
+                    user.setLastSelectedAddress(addressModel.getId());
+                    UtilityApp.setUserData(user);
+                    notifyDataSetChanged();
+//                    onContainerSelect.onContainerSelectSelected(addressModel);
+                }
+
+            });
 
             binding.container.setOnClickListener(view1 -> {
                 AddressModel addressModel = addressModelList.get(getBindingAdapterPosition());

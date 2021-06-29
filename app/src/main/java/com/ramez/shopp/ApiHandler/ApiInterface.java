@@ -241,7 +241,7 @@ ApiInterface {
 
     // change version
     @GET("v6/Carts/checkOut")
-    Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
+    Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int store_ID);
 
 
     @GET("v6/Orders/checkOut")

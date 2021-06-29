@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -16,10 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.OrderCompleteActivity;
@@ -38,11 +36,9 @@ import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.ProductChecker;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AddressModel;
-import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CheckOrderModel;
 import com.ramez.shopp.Models.CheckOrderResponse;
-import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.OrderCall;
@@ -66,7 +62,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
@@ -105,6 +100,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     private boolean toggleDeliveryButton = false;
     private boolean toggleProductButton = false;
 
+    private ActivityResultLauncher<Intent> selectAddressLauncher = null;
 
     public PaymentModel selectedPaymentMethod = null;
 
@@ -116,7 +112,19 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
 
-        View view = binding.getRoot();
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        selectAddressLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    initAddressData(result.getResultCode(), result.getData());
+                }
+        );
 
         paymentList = new ArrayList<>();
         addressList = new ArrayList<>();
@@ -169,7 +177,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         // checkDeliveryFees();
 
 
-        return view;
     }
 
     private void checkDeliveryFees() {
@@ -239,6 +246,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             orderCall.coupon_code_id = couponCodeId;
             orderCall.delivery_date_id = deliveryDateId;
             orderCall.itemNotFoundAction = itemNotFoundId;
+            orderCall.expressDelivery = expressDelivery;
 
             sendOrder(orderCall);
 
@@ -248,8 +256,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         binding.changeAddressBtu.setOnClickListener(view12 -> {
             Intent intent = new Intent(getActivityy(), AddressActivity.class);
-            intent.putExtra(Constants.delivery_choose, true);
-            startActivityForResult(intent, ADDRESS_CODE);
+//            intent.putExtra(Constants.delivery_choose, true);
+            selectAddressLauncher.launch(intent);
 
         });
 
@@ -298,6 +306,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 }
 
             } else {
+                expressDelivery = false;
                 binding.quickLy.setBackground(ContextCompat.getDrawable(getActivityy(), R.drawable.round_corner_gray_border_fill));
                 binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
                 checkDeliveryFees();
@@ -529,7 +538,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
 
-
     private void initData() {
 
         binding.freeLY.setVisibility(View.VISIBLE);
@@ -657,8 +665,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             Log.i(getClass().getSimpleName(), "Log deliveryTimesList click " + deliveryDateId);
             Log.i(getClass().getSimpleName(), "Log deliveryTimesList click " + selectedTime.getTime());
 
+            // to hide layout when select time
             showHideDateLY(false);
-            checkData();
+            showHideNoProductLY(true);
+//            checkData();
         });
 
         binding.DeliverTimeRecycler.setAdapter(deliveryTimeAdapter);
@@ -675,15 +685,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         startActivity(intent);
     }
 
+    public void initAddressData(int resultCode, @Nullable Intent data) {
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
-            if (requestCode == ADDRESS_CODE) {
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
-                assert data != null;
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
+            if (data != null) {
                 Bundle bundle = data.getExtras();
                 addressId = bundle.getInt(Constants.ADDRESS_ID);
                 addressTitle = bundle.getString(Constants.ADDRESS_TITLE);
@@ -695,11 +701,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 GetDeliveryInfo(storeId, addressId);
                 showHideDeliveryLY(false);
                 showHideDateLY(true);
-
             }
 
-
         }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -845,7 +850,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             ProductChecker productChecker = (ProductChecker) obj;
             itemNotFoundId = productChecker.getId();
             showHideNoProductLY(false);
-            checkData();
+//            checkData();
 
         });
         binding.ProductCheckRecycler.setAdapter(productCheckerAdapter);
@@ -866,7 +871,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             return;
         }
 
-        if (deliveryDateId == 0) {
+//        if (deliveryDateId == 0) {
+        if (binding.DeliverDayRecycler.getVisibility() == View.GONE) {
 
             showHideDateLY(true);
 
