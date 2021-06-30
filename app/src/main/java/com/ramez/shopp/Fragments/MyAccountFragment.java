@@ -1,7 +1,6 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -37,7 +36,6 @@ import com.ramez.shopp.Activities.FavoriteActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.MyOrderActivity;
 import com.ramez.shopp.Activities.PriceCheckerResultActivity;
-import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RatingActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.Activities.RewardsActivity;
@@ -51,7 +49,6 @@ import com.ramez.shopp.Classes.SoicalLink;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
-import com.ramez.shopp.Dialogs.InfoDialog;
 import com.ramez.shopp.Models.CountryDetailsModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -59,11 +56,9 @@ import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
-import com.ramez.shopp.Utils.FileUtil;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
 
 import es.dmoral.toasty.Toasty;
-import id.zelory.compressor.Compressor;
 
 public class MyAccountFragment extends FragmentBase {
     boolean isLogin = false;

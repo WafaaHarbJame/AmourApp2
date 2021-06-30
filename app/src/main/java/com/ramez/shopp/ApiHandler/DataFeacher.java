@@ -764,7 +764,7 @@ public class DataFeacher {
     }
 
 
-    public void checkCart(int sotre_id, int user_id) {
+    public void getDeliveryTimeList(int sotre_id, int user_id) {
 
         Log.i(TAG, "Log checkCart");
         Log.i(TAG, "Log headerMap " + headerMap);

@@ -70,13 +70,16 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.ViewHolder
             binding = view;
 
             binding.rowLY.setOnClickListener(v -> {
-                CityModel selectedCityModel = list.get(getBindingAdapterPosition());
+                if(list!=null&&getBindingAdapterPosition()>=0){
+                    CityModel selectedCityModel = list.get(getBindingAdapterPosition());
 //                if (selectedPosition != getBindingAdapterPosition()) {
 //                    selectedPosition = cityModel.getId();
 //                    notifyDataSetChanged();
 //                }
-                onCityClick.onCityClicked(selectedPosition, selectedCityModel);
+                    onCityClick.onCityClicked(selectedPosition, selectedCityModel);
 
+
+                }
 
             });
 

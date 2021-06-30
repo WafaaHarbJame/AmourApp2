@@ -62,7 +62,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     int user_id = 0;
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
-    //    ArrayList<ProductOptionModel> optionModelsList;
     ArrayList<ReviewModel> reviewList;
     String productName;
     ProductModel productModel;
@@ -449,57 +448,59 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 checkLoginDialog.show();
 
             } else {
-                String message = "";
+                if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+                    String message = "";
+                    int count = Integer.parseInt(binding.productCartQTY.getText().toString());
+                    int stock = selectedProductBarcode.getStockQty();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int productId = productModel.getId();
+                    int cartId = selectedProductBarcode.getCartId();
+                    int limit = selectedProductBarcode.getLimitQty();
+                    Log.i("limit", "Log limit  " + limit);
+                    Log.i("limit", "Log limit  " + limit);
+                    Log.i("stock", "Log cartId  " + cartId);
 
-                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int stock = selectedProductBarcode.getStockQty();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModel.getId();
-                int cartId = selectedProductBarcode.getCartId();
-                int limit = selectedProductBarcode.getLimitQty();
-                Log.i("limit", "Log limit  " + limit);
-                Log.i("limit", "Log limit  " + limit);
-                Log.i("stock", "Log cartId  " + cartId);
-
-                if (cartId > 0) {
-                    // increase cart quantity
-                    if (limit == 0) {
-                        if (count + 1 <= stock) {
-                            updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
-
-                        } else {
-                            message = getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
-                        }
-                    } else {
-
-                        if (count + 1 <= stock && (count + 1) <= limit) {
-                            updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
-
-                        } else {
-
-                            if (count + 1 > stock) {
-                                message = getString(R.string.stock_empty);
-
-                            } else if (stock == 0) {
-                                message = getString(R.string.stock_empty);
+                    if (cartId > 0) {
+                        // increase cart quantity
+                        if (limit == 0) {
+                            if (count + 1 <= stock) {
+                                updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
 
                             } else {
-                                message = getString(R.string.limit) + "" + limit;
-
+                                message = getString(R.string.stock_empty);
+                                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                        message);
                             }
-                            GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                                    message);
+                        } else {
+
+                            if (count + 1 <= stock && (count + 1) <= limit) {
+                                updateCart(v, productId, selectedProductBarcode.getId(), count + 1, userId, storeId, cartId, "quantity");
+
+                            } else {
+
+                                if (count + 1 > stock) {
+                                    message = getString(R.string.stock_empty);
+
+                                } else if (stock == 0) {
+                                    message = getString(R.string.stock_empty);
+
+                                } else {
+                                    message = getString(R.string.limit) + "" + limit;
+
+                                }
+                                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                                        message);
+                            }
+
                         }
+                    } else {
+                        // add product to cart for first time
 
+                        checkProductToAdd();
                     }
-                } else {
-                    // add product to cart for first time
-
-                    checkProductToAdd();
                 }
+
 
             }
 

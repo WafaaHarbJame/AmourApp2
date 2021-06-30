@@ -913,7 +913,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                             binding.tvFullAddress.setText(userDefaultAddress.getFullAddress());
                             binding.delivery.setText(addressTitle);
                             Log.i(getClass().getSimpleName(), "Log  CheckOrderResponse AddressId  " + result.getData().getUserAddress().getId());
-
                             minimum_order_amount = checkOrderResponse.getMinimumOrderAmount();
                             deliveryFees = checkOrderResponse.getDeliveryCharges();
                             checkDeliveryFees();
@@ -963,7 +962,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 }
             }
 
-        }).checkCart(storeId, user_id);
+        }).getDeliveryTimeList(storeId, user_id);
 
     }
 

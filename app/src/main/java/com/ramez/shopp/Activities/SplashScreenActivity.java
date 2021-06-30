@@ -46,7 +46,6 @@ public class SplashScreenActivity extends ActivityBase {
     int cartNumber;
     int country_id = 0;
     private String lang;
-    ArrayList<AddressModel> addressList;
 
 
     @Override
@@ -284,12 +283,11 @@ public class SplashScreenActivity extends ActivityBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             CartResultModel cartResultModel = (CartResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
-
             if (IsSuccess) {
                 if (cartResultModel.getStatus() == 200) {
 
-                    if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                    if (cartResultModel.getData() != null && cartResultModel.getData().getCartData()
+                            != null && cartResultModel.getData().getCartData().size() > 0) {
                         Data data=cartResultModel.getData();
                         cartNumber = data.getCartCount();
                         UtilityApp.setCartCount(cartNumber);

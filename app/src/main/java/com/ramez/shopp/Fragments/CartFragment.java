@@ -113,7 +113,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
             getCarts(storeId, userId);
-            GetUserAddress(userId);
+//            GetUserAddress(userId);
 
 
 

@@ -172,7 +172,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             } else {
                 if (IsSuccess) {
-                    if (result.data != null && result.data.getOrderItemDetails().size() > 0) {
+                    if (result.data != null &&result.data.getOrderItemDetails() != null&& result.data.getOrderItemDetails().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
