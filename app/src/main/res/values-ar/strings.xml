@@ -370,7 +370,9 @@
     <string name="if_item_not_available">في حالة عدم توفر المنتج ؟</string>
     <string name="no_active">برنامج الولاء غير مفعل حاليًا</string>
     <string name="Branch">فرع</string>
-    <string name="branch_note">اختر الفرع للتسوق. (سيتم تسليم المنتجات التي ستشتريها من الفرع الذي تختاره.)</string>
+    <string name="branch_note">اختر الفرع الأقرب اليك للتسوق. ( مشترياتك سوف يتم توصيلها من الفرع الذي تم اختياره)</string>
+    <string name="please_select_default_address">اختر عنوان افتراضي </string>
+    <string name="getData">معلومات التوصيل</string>
 
 
 </resources>

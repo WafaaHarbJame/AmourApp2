@@ -104,4 +104,12 @@ public class CategoryModel implements Serializable {
     public void setImage2(String image2) {
         this.image2 = image2;
     }
+
+    public CategoryModel(Integer id) {
+        this.id = id;
+
+    }
+
+    public CategoryModel() {
+    }
 }

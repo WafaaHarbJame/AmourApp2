@@ -10,12 +10,14 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.ramez.shopp.Adapter.BranchAdapter;
 import com.ramez.shopp.Adapter.CityAdapter;
 import com.ramez.shopp.Adapter.CountriesAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 
-public class ChangeCityBranchActivity extends ActivityBase implements CityAdapter.OnCityClick, CountriesAdapter.OnCountryClick {
+public class ChangeCityBranchActivity extends ActivityBase implements CountriesAdapter.OnCountryClick {
     ActivityChangeCityBranchBinding binding;
     ArrayList<CityModel> cityModelArrayList;
     ArrayList<CountryModel> countries;
@@ -37,7 +39,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     String oldCountryName;
     String newCountryName;
     private LinearLayoutManager linearLayoutManager;
-    private CityAdapter cityAdapter;
+    private BranchAdapter cityAdapter;
     private CountriesAdapter countriesAdapter;
 
     private boolean toggleButton = false;
@@ -76,10 +78,13 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
             if (toggleButton) {
                 binding.branchContainer.setVisibility(View.VISIBLE);
-                binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.lang_style));
+                binding.divider.setVisibility(View.GONE);
+              binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(),R.color.white));
+
             } else {
                 binding.branchContainer.setVisibility(View.GONE);
-                binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
+                binding.divider.setVisibility(View.VISIBLE);
+                  binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
             }
 
         });
@@ -152,6 +157,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
             Toasty.success(getActiviy(), R.string.change_success, Toast.LENGTH_SHORT, true).show();
             Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
             startActivity(intent);
+            finish();
 
 
         });
@@ -168,18 +174,18 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
     public void initCityAdapter() {
 
-        cityAdapter = new CityAdapter(getActiviy(), cityModelArrayList, city_id, this);
+        cityAdapter = new BranchAdapter(getActiviy(), cityModelArrayList, city_id, this::onCitySelected);
         binding.branchRecycler.setAdapter(cityAdapter);
 
 
     }
 
-    @Override
-    public void onCityClicked(int position, CityModel cityModel) {
+    public void onCitySelected(int position, CityModel cityModel) {
         city_id = cityModel.getId();
         localModel.setCityId(String.valueOf(cityModel.getId()));
         localModel.setCountryName(newCountryName);
         UtilityApp.setLocalData(localModel);
+
 
     }
 

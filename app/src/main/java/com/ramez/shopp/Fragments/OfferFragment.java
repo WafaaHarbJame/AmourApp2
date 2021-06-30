@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.ChildCat;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -92,6 +94,15 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
             mainCategoryDMS = UtilityApp.getCategories();
+
+            mainCategoryDMS.add(new CategoryModel(0));
+            CategoryModel all=new CategoryModel();
+            all.setId(0);
+            all.setHName(getString(R.string.all));
+            all.setName(getString(R.string.all));
+            mainCategoryDMS.add(0, all);
+
+
             initCateAdapter();
         } else {
             getCategories(Integer.parseInt(localModel.getCityId()));

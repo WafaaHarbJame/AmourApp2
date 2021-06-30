@@ -430,6 +430,7 @@ public class MainActivity extends ActivityBase {
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
             searchTEXT = bundle.getString(Constants.inputType_text);
             from_inside_app = bundle.getBoolean(Constants.Inside_app);
+            boolean TO_FRAG_HOME = bundle.getBoolean(Constants.TO_FRAG_HOME);
 
 
             if (TO_CART) {
@@ -438,11 +439,14 @@ public class MainActivity extends ActivityBase {
                 binding.cartButton.performClick();
 
             }
-//            if(FRAG_HOME){
-//                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
-//            }
 
-            else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
+            if (TO_FRAG_HOME) {
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+                binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.sortBut.setVisibility(View.GONE);
+                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                binding.homeButton.performClick();
+            } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     categoryModelList = UtilityApp.getCategories();
                 }
@@ -469,6 +473,17 @@ public class MainActivity extends ActivityBase {
                 binding.categoryButton.performClick();
             } else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
                 binding.offerButton.performClick();
+
+            } else if (fragmentType.equals(Constants.FRAG_HOME)) {
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+                binding.toolBar.backBtn.setVisibility(View.GONE);
+                binding.toolBar.view2But.setVisibility(View.GONE);
+                binding.toolBar.sortBut.setVisibility(View.GONE);
+                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                binding.homeButton.performClick();
+
+
             } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
 //                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
@@ -526,8 +541,7 @@ public class MainActivity extends ActivityBase {
 
 
             }
-        }
-        else {
+        } else {
             binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
         }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +53,14 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.ViewHolder
             holder.binding.bgLy.setBackground(ContextCompat.getDrawable(context, R.drawable.round_corner_light_red));
         }
 
+        holder.binding.rowLY.setOnClickListener(v -> {
+            {
+                onCityClick.onCityClicked(selectedPosition, cityModel);
+                selectedPosition = cityModel.getId();
+                notifyDataSetChanged();
+            }
+        });
+
 
     }
 
@@ -77,6 +86,7 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.ViewHolder
 //                    notifyDataSetChanged();
 //                }
                     onCityClick.onCityClicked(selectedPosition, selectedCityModel);
+                    notifyDataSetChanged();
 
 
                 }

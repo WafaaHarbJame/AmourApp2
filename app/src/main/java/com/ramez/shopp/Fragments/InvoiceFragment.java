@@ -174,14 +174,25 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         getPaymentMethod(storeId);
         getDeliveryTimeList(storeId, userId);
         initListener();
-        // checkDeliveryFees();
 
 
     }
 
     private void checkDeliveryFees() {
 
-        if (deliveryFees == 0) {
+        if (Double.parseDouble(total) >= minimum_order_amount) {
+            deliveryFees = 0.0;
+            binding.deliveryFees.setText(getString(R.string.free));
+
+        }
+        else {
+            double total_price = minimum_order_amount - Double.parseDouble(total);
+            binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
+
+        }
+
+
+        if (deliveryFees == 0||deliveryFees==0.0) {
             binding.deliveryFees.setText(getString(R.string.free));
             binding.freeDelivery.setText(getString(R.string.over1));
 
@@ -198,9 +209,11 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     private void getDefaultAddress() {
         if (UtilityApp.getUserData().lastSelectedAddress > 0) {
             addressId = UtilityApp.getUserData().lastSelectedAddress;
-            GetDeliveryInfo(storeId, addressId);
+            Log.i(getClass().getSimpleName(),"Log addressId"+addressId);
+            GetDeliveryInfo(storeId, addressId,false);
         } else {
-            binding.changeAddressBtu.setText(R.string.select_address);
+            Log.i(getClass().getSimpleName(),"Log addressId"+addressId);
+            binding.changeAddressBtu.setText(R.string.choose_address);
         }
 
 
@@ -267,13 +280,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     Toast(getString(R.string.getFreeDelivery));
 
                 } else {
-
-//                    double total_price = minimum_order_amount - Double.parseDouble(total);
-//
-//                    binding.freeBut.setText(getString(R.string.add)+" "+total_price +" "+currency+ " " + getString(R.string.get_Free));
-////                    Toast(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional())
-////                            + " " + currency + " " + getString(R.string.get_Free));
-
                     CategoryFragment categoryFragment = new CategoryFragment();
                     FragmentManager fragmentManager = getParentFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryFragment, "homeFragment").commit();
@@ -445,7 +451,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             total = bundle.getString(Constants.CART_SUM);
             productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0);
             cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
-            deliveryFees = bundle.getDouble(Constants.delivery_charges);
             productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(total.concat(" " + currency));
             binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
@@ -453,23 +458,20 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             Log.i(getClass().getSimpleName(), "Log minimum_order_amount " + minimum_order_amount);
             Log.i(getClass().getSimpleName(), "Log deliveryFees " + deliveryFees);
             Log.i(getClass().getSimpleName(), "Log total " + total);
+            Log.i(getClass().getSimpleName(), "Log deliveryFees " + deliveryFees);
 
-            if (deliveryFees > 0) {
                 if (Double.parseDouble(total) >= minimum_order_amount) {
                     deliveryFees = 0.0;
-                } else {
-                    double total_price = minimum_order_amount - Double.parseDouble(total);
+                    binding.deliveryFees.setText(getString(R.string.free));
 
+                }
+                else {
+                    double total_price = minimum_order_amount - Double.parseDouble(total);
                     binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
 
                 }
-            } else {
 
-                double total_price = minimum_order_amount - Double.parseDouble(total);
 
-                binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
-//
-            }
 
 
         }
@@ -698,7 +700,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 binding.tvFullAddress.setText(addressFullAddress);
                 binding.changeAddressBtu.setText(R.string.change_address);
                 AnalyticsHandler.addShippingInfo(couponCodeId, currency, total, total);
-                GetDeliveryInfo(storeId, addressId);
+                GetDeliveryInfo(storeId, addressId,true);
                 showHideDeliveryLY(false);
                 showHideDateLY(true);
             }
@@ -778,14 +780,19 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         }).getQuickDelivery(quickCall1);
     }
 
-    public void GetDeliveryInfo(int storeId, int addressId) {
-
-
+    public void GetDeliveryInfo(int storeId, int addressId,boolean fromAddress) {
+        if(fromAddress){
+            GlobalData.progressDialog(getActivityy(),R.string.getData,R.string.please_wait_upload);
+        }
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
-                binding.loadingLYPay.setVisibility(View.GONE);
+
                 DeliveryInfo quickDeliveryRespond = (DeliveryInfo) obj;
                 if (IsSuccess) {
+                    if(fromAddress){
+                        GlobalData.hideProgressDialog();
+                    }
+
                     if (quickDeliveryRespond != null) {
 
                         Log.i(TAG, "Log GetDeliveryInfo");
@@ -814,6 +821,10 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         binding.quickLy.setVisibility(View.GONE);
                     }
 
+
+                }
+                else {
+                    GlobalData.hideProgressDialog();
 
                 }
 
@@ -908,11 +919,15 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         if (result.getData() != null && result.getData().getDeliveryTimes().size() > 0) {
                             CheckOrderModel checkOrderResponse = result.getData();
                             UserDefaultAddress userDefaultAddress = checkOrderResponse.getUserAddress();
-                            addressId = userDefaultAddress.getId();
-                            addressTitle = userDefaultAddress.getName();
-                            binding.tvFullAddress.setText(userDefaultAddress.getFullAddress());
-                            binding.delivery.setText(addressTitle);
-                            Log.i(getClass().getSimpleName(), "Log  CheckOrderResponse AddressId  " + result.getData().getUserAddress().getId());
+                           if(userDefaultAddress!=null&&userDefaultAddress.getId()>0){
+                               addressId = userDefaultAddress.getId();
+                               addressTitle = userDefaultAddress.getName();
+                               binding.tvFullAddress.setText(userDefaultAddress.getFullAddress());
+                               binding.delivery.setText(addressTitle);
+                               Log.i(getClass().getSimpleName(), "Log  CheckOrderResponse AddressId  " + result.getData().getUserAddress().getId());
+
+                           }
+
                             minimum_order_amount = checkOrderResponse.getMinimumOrderAmount();
                             deliveryFees = checkOrderResponse.getDeliveryCharges();
                             checkDeliveryFees();

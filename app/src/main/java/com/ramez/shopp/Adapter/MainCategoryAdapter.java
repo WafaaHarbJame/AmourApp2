@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.ramez.shopp.Classes.CategoryModel;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 
 import java.util.ArrayList;
@@ -48,12 +50,19 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
         CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
 
-        GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
-                , R.drawable.holder_image, holder.catImage);
+        if (mainMainCategoryDM.getId() == 0) {
+            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                holder.catImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.all_ar));
 
-       // GlobalData.PicassoImg(mainMainCategoryDM.getCatImage(), R.drawable.holder_image, holder.catImage);
+            } else {
+                holder.catImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.all_en));
 
+            }
+        } else {
+            GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
+                    , R.drawable.holder_image, holder.catImage);
 
+        }
 
         if (mainCategoryDMS.get(position).getId() == selectedPosition) {
             holder.catImage.setBorderWidth(context.getResources().getDimension(R.dimen._2sdp));

@@ -86,8 +86,12 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
 
 
         binding.acceptBtu.setOnClickListener(view1 -> {
+            Log.i(getClass().getSimpleName(), "Log defaultAddressId  " + defaultAddressId);
 
-            setDefaultAddress(user.getId(), defaultAddressId);
+            if (defaultAddressId != 0)
+                setDefaultAddress(user.getId(), defaultAddressId);
+            else
+                Toast(R.string.please_select_default_address);
 
         });
 
@@ -115,12 +119,13 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
     public void initAdapter() {
 
         for (AddressModel addressModel : addressList) {
-            if (addressModel.getDefault() && addressModel.getId() != user.getLastSelectedAddress()){
+            if (addressModel.getDefault() && addressModel.getId() != user.getLastSelectedAddress()) {
                 user.setLastSelectedAddress(addressModel.getId());
                 UtilityApp.setUserData(user);
             }
         }
-        addressAdapter = new AddressAdapter(getActiviy(), addressList, this, this);
+        boolean canSelect = getCallingActivity() != null;
+        addressAdapter = new AddressAdapter(getActiviy(), addressList, canSelect, this, this);
         binding.addressRecycler.setAdapter(addressAdapter);
         addressAdapter.notifyDataSetChanged();
 
@@ -199,18 +204,21 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
 //    }
 
     @Override
-    public void onContainerSelectSelected(AddressModel addressesDM) {
+    public void onContainerSelectSelected(AddressModel addressesDM, boolean makeDefault) {
 
-        if (getCallingActivity() != null ) {
+        if (makeDefault) {
+            defaultAddressId = addressesDM.getId();
+            return;
+        }
+
+        if (getCallingActivity() != null) {
             Intent intent = new Intent();
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
             intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());
             intent.putExtra(Constants.ADDRESS_FULL, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
             finish();
-
         } else {
-
             Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
             intent.putExtra(Constants.KEY_EDIT, true);
             intent.putExtra(Constants.KEY_ADDRESS_ID, addressesDM.getId());
@@ -242,7 +250,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
 
                     user.setLastSelectedAddress(defaultAddressId);
                     UtilityApp.setUserData(user);
-                    addressAdapter.notifyDataSetChanged();
+//                    addressAdapter.notifyDataSetChanged();
 
                 }
             }
@@ -267,10 +275,10 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
                     } else {
                         if (IsSuccess) {
 
-                            if (UtilityApp.getUserData().lastSelectedAddress == addressId) {
-                                MemberModel memberModel = UtilityApp.getUserData();
-                                memberModel.setLastSelectedAddress(0);
-                                UtilityApp.setUserData(memberModel);
+                            if (user.lastSelectedAddress == addressId) {
+                                user.setLastSelectedAddress(0);
+                                UtilityApp.setUserData(user);
+
                             }
                             if (addressList.size() > 0) {
                                 addressList.remove(position);
@@ -318,7 +326,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
                     Bundle bundle = data.getExtras();
 
                     addNewAddress = bundle.getBoolean(Constants.KEY_ADD_NEW, false);
-                    Log.i("TAG", "Log addNewAddress onActivityResult  " + addNewAddress);
+                    Log.i(getClass().getSimpleName(), "Log addNewAddress onActivityResult  " + addNewAddress);
 
                     if (addNewAddress) {
                         GetUserAddress(user.getId());

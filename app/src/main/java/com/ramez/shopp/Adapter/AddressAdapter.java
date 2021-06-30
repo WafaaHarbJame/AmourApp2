@@ -27,17 +27,18 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
     private List<AddressModel> addressModelList;
     private OnDeleteClicked onDeleteClicked;
     private OnContainerSelect onContainerSelect;
-    //    private boolean canSelect;
+    private boolean canSelect;
     MemberModel user;
+    private int defaultAddressId;
 
-    public AddressAdapter(Context context, List<AddressModel> addressModelList, OnDeleteClicked onDeleteClicked, OnContainerSelect OnContainerSelect) {
+    public AddressAdapter(Context context, List<AddressModel> addressModelList, boolean canSelect, OnDeleteClicked onDeleteClicked, OnContainerSelect OnContainerSelect) {
         this.context = context;
         this.addressModelList = addressModelList;
         this.onDeleteClicked = onDeleteClicked;
         this.onContainerSelect = OnContainerSelect;
-//        this.canSelect = canSelect;
+        this.canSelect = canSelect;
         user = UtilityApp.getUserData();
-
+        defaultAddressId = user.lastSelectedAddress;
     }
 
     @NonNull
@@ -52,7 +53,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         RowAddressItemBinding binding = holder.binding;
         AddressModel addressModel = addressModelList.get(position);
 
-        if (user.getLastSelectedAddress() == addressModel.getId()) {
+        if (defaultAddressId == addressModel.getId()) {
 //            MemberModel user = UtilityApp.getUserData();
 //            user.setLastSelectedAddress(addressModel.getId());
 //            UtilityApp.setUserData(user);
@@ -123,7 +124,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
     }
 
     public interface OnContainerSelect {
-        void onContainerSelectSelected(AddressModel addressesDM/*, boolean makeDefault*/);
+        void onContainerSelectSelected(AddressModel addressesDM, boolean makeDefault);
     }
 
     public interface OnDeleteClicked {
@@ -138,21 +139,24 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             super(view.getRoot());
             binding = view;
 
+            binding.rbSelectAddress.setEnabled(!canSelect);
+
             binding.rbSelectAddress.setOnClickListener(v -> {
                 AddressModel addressModel = addressModelList.get(getBindingAdapterPosition());
 //                user = UtilityApp.getUserData();
-                if (addressModel.getId() != user.getLastSelectedAddress()) {
-                    user.setLastSelectedAddress(addressModel.getId());
-                    UtilityApp.setUserData(user);
+                if (addressModel.getId() != defaultAddressId) {
+                    defaultAddressId = addressModel.getId();
+//                    user.setLastSelectedAddress(addressModel.getId());
+//                    UtilityApp.setUserData(user);
                     notifyDataSetChanged();
-//                    onContainerSelect.onContainerSelectSelected(addressModel);
+                    onContainerSelect.onContainerSelectSelected(addressModel, true);
                 }
 
             });
 
             binding.container.setOnClickListener(view1 -> {
                 AddressModel addressModel = addressModelList.get(getBindingAdapterPosition());
-                onContainerSelect.onContainerSelectSelected(addressModel);
+                onContainerSelect.onContainerSelectSelected(addressModel, false);
 
             });
 
