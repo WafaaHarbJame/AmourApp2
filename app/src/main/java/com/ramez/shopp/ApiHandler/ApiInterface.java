@@ -32,6 +32,7 @@ import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.OrderNewModel;
+import com.ramez.shopp.Models.OrderResultModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
@@ -282,7 +283,7 @@ ApiInterface {
     Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("address_id") int user_id);
 
     @POST("v6/Orders/GetOrdersList")
-    Call<ResultAPIModel<ArrayList<OrderNewModel>>> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
+    Call<OrderResultModel> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
 
 
     @POST("v6/Orders/GetOrderDetails")

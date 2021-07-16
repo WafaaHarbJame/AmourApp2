@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
+import androidx.multidex.BuildConfig;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -36,7 +37,6 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;

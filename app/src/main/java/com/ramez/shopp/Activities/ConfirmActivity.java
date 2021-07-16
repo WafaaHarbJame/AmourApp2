@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;

@@ -8,23 +8,19 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
-
 import com.androidnetworking.AndroidNetworking;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.ExampleNotificationOpenedHandler;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Utils.LocaleUtils;
 import com.ramez.shopp.Utils.SharedPManger;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 
 public class RootApplication extends Application {

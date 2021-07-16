@@ -796,23 +796,35 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                     if (quickDeliveryRespond != null) {
 
                         Log.i(TAG, "Log GetDeliveryInfo");
-                        deliveryFees = quickDeliveryRespond.deliveryCharges;
-                        if (deliveryFees == 0) {
+
+                        if (Double.parseDouble(total) >= minimum_order_amount) {
+                            deliveryFees = 0.0;
                             binding.deliveryFees.setText(getString(R.string.free));
-                            binding.freeDelivery.setText(getString(R.string.over1));
-                            binding.deliveryPrice.setText(getString(R.string.free));
-
-
-                        } else {
-
-                            binding.deliveryFees.setText(NumberHandler.
-                                    formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
-                            binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
-
-                            binding.deliveryPrice.setText(quickDeliveryRespond.expressDeliveryCharges + " ".concat(localModel.getCurrencyCode()));
-
 
                         }
+                        else {
+                            double total_price = minimum_order_amount - Double.parseDouble(total);
+                            binding.freeBut.setText(getString(R.string.add) + " " + NumberHandler.roundDouble(total_price) + " " + currency + " " + getString(R.string.get_Free));
+                            deliveryFees = quickDeliveryRespond.deliveryCharges;
+                            if (deliveryFees == 0) {
+                                binding.deliveryFees.setText(getString(R.string.free));
+                                binding.freeDelivery.setText(getString(R.string.over1));
+                                binding.deliveryPrice.setText(getString(R.string.free));
+
+
+                            } else {
+
+                                binding.deliveryFees.setText(NumberHandler.
+                                        formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+                                binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency + "."));
+
+                                binding.deliveryPrice.setText(quickDeliveryRespond.expressDeliveryCharges + " ".concat(localModel.getCurrencyCode()));
+
+                            }
+
+                        }
+
+
 
                         binding.totalTv.setText(NumberHandler.formatDouble(Double.parseDouble(total) + deliveryFees, fraction).concat(" " + currency));
 
@@ -930,6 +942,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
                             minimum_order_amount = checkOrderResponse.getMinimumOrderAmount();
                             deliveryFees = checkOrderResponse.getDeliveryCharges();
+                            Log.i(getClass().getSimpleName(), "Log  CheckOrderResponse deliveryFees  " + deliveryFees);
+
                             checkDeliveryFees();
 
                             List<DeliveryTime> datesList = result.getData().getDeliveryTimes();

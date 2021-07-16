@@ -90,7 +90,8 @@ public class SelectBranchDialog extends Dialog {
 
     public void initCityAdapter() {
 
-        CityAdapter cityAdapter = new CityAdapter(activity, cityModelsList, selectedCity != null ? selectedCity.getId() : 0, new CityAdapter.OnCityClick() {
+        CityAdapter cityAdapter = new CityAdapter(activity, cityModelsList, selectedCity != null ? selectedCity.getId() : 0,
+                new CityAdapter.OnCityClick() {
             @Override
             public void onCityClicked(int position, CityModel cityModel) {
                 selectedCity = cityModel;

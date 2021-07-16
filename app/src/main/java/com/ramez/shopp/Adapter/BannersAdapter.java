@@ -52,8 +52,7 @@ public class BannersAdapter extends RecyclerView.Adapter<BannersAdapter.Holder> 
 
         }
 
-
-        GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, holder.binding.ivCatImage);
+        GlobalData.GlideImgGif(context,imageUrl,R.drawable.holder_image,holder.binding.ivCatImage);
 
         holder.binding.container.setOnClickListener(v -> {
             onBannersClick.onBannersClicked(position, slider);

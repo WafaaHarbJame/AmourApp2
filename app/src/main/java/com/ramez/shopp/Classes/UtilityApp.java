@@ -153,6 +153,10 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SOCIAL);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_loyal);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, 0);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_MEMBER);
+
+
 
 
     }

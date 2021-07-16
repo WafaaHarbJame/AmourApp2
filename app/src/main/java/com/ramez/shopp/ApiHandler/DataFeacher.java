@@ -1235,6 +1235,7 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log type " + type);
         Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log user_id " + user_id);
         orderListCall orderListCall = new orderListCall();
         orderListCall.setUserId(user_id);
         orderListCall.setType(type);

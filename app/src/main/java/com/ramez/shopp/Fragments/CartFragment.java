@@ -91,7 +91,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         user = UtilityApp.getUserData();
 
 
-        if (!isLogin) {
+        if (!UtilityApp.isLogin()) {
             binding.dataLY.setVisibility(View.GONE);
             binding.contBut.setVisibility(View.GONE);
             showLoginDialog();

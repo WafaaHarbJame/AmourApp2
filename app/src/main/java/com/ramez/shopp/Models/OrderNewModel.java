@@ -9,13 +9,13 @@ public class OrderNewModel implements Serializable {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("order_code")
     @Expose
     private String orderCode;
     @SerializedName("store_id")
     @Expose
-    private Integer storeId;
+    private int storeId;
     @SerializedName("delivery_date")
     @Expose
     private String deliveryDate;
@@ -29,13 +29,11 @@ public class OrderNewModel implements Serializable {
     @Expose
     private String storeName;
 
-
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,11 +45,11 @@ public class OrderNewModel implements Serializable {
         this.orderCode = orderCode;
     }
 
-    public Integer getStoreId() {
+    public int getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Integer storeId) {
+    public void setStoreId(int storeId) {
         this.storeId = storeId;
     }
 
@@ -86,5 +84,4 @@ public class OrderNewModel implements Serializable {
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
-
 }

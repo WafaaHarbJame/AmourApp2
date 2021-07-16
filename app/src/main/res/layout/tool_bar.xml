@@ -23,7 +23,7 @@
             android:paddingEnd="@dimen/_10sdp"
             android:scaleX="@integer/scaleXInv"
             android:src="@drawable/back_icon"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/mainSearchBtn"

@@ -21,6 +21,7 @@ import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrderProductsModel;
 import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderResultModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
@@ -91,90 +92,6 @@ public class PastOrderFragment extends FragmentBase {
     }
 
 
-    public void getPastOrder(int user_id,String type,String filter) {
-
-        //completedOrdersList.clear();
-
-        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-        binding.dataLY.setVisibility(View.GONE);
-        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-
-             if (isVisible()){
-
-            OrdersResultModel result = (OrdersResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
-
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-
-            if (func.equals(Constants.ERROR)) {
-
-                if (result!=null&&result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-                message=getString(R.string.fail_to_get_data);
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-                      //  completedOrdersList = result.getData();
-
-//                        List<OrderModel> list = initOrderList();
-//                        Log.i("TAG", "Log list size " + list.size());
-
-                       // initOrdersAdapters(completedOrdersList);
-
-
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
-                    }
-
-
-                } else {
-
-                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
-
-
-                }
-            }
-
-        }
-
-        }).getOrders(user_id,type,filter);
-    }
-
 
 
 
@@ -198,7 +115,7 @@ public class PastOrderFragment extends FragmentBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-          ResultAPIModel<ArrayList<OrderNewModel>>result = (ResultAPIModel<ArrayList<OrderNewModel>>) obj;
+            OrderResultModel result = (OrderResultModel) obj;
             String message ="";
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);

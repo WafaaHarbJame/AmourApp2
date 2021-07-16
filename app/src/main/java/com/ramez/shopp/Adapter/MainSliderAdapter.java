@@ -60,7 +60,6 @@ public class MainSliderAdapter extends PagerAdapter {
             }
 
             GlobalData.GlideImgGif(context,imageUrl,R.drawable.holder_image,productImg);
-            //GlobalData.PicassoImg(imageUrl, R.drawable.holder_image, productImg);
 
             container.addView(view);
 

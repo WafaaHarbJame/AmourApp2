@@ -1,25 +1,19 @@
 package com.ramez.shopp.Classes;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.core.content.ContextCompat;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.R;
-import com.ramez.shopp.RootApplication;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;

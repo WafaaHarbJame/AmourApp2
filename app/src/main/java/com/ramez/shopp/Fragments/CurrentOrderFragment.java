@@ -18,6 +18,7 @@ import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrderProductModel;
+import com.ramez.shopp.Models.OrderResultModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
@@ -101,7 +102,8 @@ public class CurrentOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<List<OrderNewModel>>result = (ResultAPIModel<List<OrderNewModel>>) obj;
+            OrderResultModel result = (OrderResultModel) obj;
+
             String message = "";
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
