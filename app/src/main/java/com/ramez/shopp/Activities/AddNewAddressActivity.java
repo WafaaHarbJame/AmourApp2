@@ -106,7 +106,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         setTitle(R.string.new_address);
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
 
         if (UtilityApp.getLocalData() != null) {
 

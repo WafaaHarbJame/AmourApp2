@@ -282,34 +282,38 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         }
 
         private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-            new DataFeacher(false, (obj, func, IsSuccess) -> {
-                if (IsSuccess) {
+            if (quantity > 0) {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    if (IsSuccess) {
 
-                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                        CartProcessModel cartProcessModel = (CartProcessModel) obj;
 
-                    calculateSubTotalPrice();
-                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                    cartDMS.get(position).setQuantity(quantity);
-                    cartProcessModel.setTotal(calculateSubTotalPrice());
+                        calculateSubTotalPrice();
+                        initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                        cartDMS.get(position).setQuantity(quantity);
+                        cartProcessModel.setTotal(calculateSubTotalPrice());
 
 
-                    notifyItemChanged(position);
-                    if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
-                            cartProcessModel.setTotal(calculateSubTotalPrice());
-                        dataCallback.dataResult(cartProcessModel, "success", true);
+                        notifyItemChanged(position);
+                        if (dataCallback != null) {
+                            if (calculateSubTotalPrice() > 0)
+                                cartProcessModel.setTotal(calculateSubTotalPrice());
+                            dataCallback.dataResult(cartProcessModel, "success", true);
+                        }
+
+
+                    } else {
+
+                        Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
+
+
                     }
 
+                }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
-
-                } else {
-
-                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
-
-
-                }
-
-            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+            } else {
+                Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+            }
         }
 
         private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
@@ -332,13 +336,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                     cartProcessModel.setCartCount(cartDMS.size());
 
                     if (dataCallback != null) {
-                            dataCallback.dataResult(cartProcessModel, "success", true);
+                        dataCallback.dataResult(cartProcessModel, "success", true);
                     }
 
-                    UtilityApp.updateCart(2,cartDMS.size());
-
-
-
+                    UtilityApp.updateCart(2, cartDMS.size());
 
 
                 } else {

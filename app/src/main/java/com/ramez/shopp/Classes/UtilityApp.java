@@ -1,5 +1,6 @@
 package com.ramez.shopp.Classes;
 
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
@@ -264,10 +265,27 @@ public class UtilityApp {
         return model;
     }
 
+    public static LocalModel getDefaultLocalData(Context context) {
+        LocalModel newLocal=new LocalModel();
+        newLocal.setCityId("7263");
+        newLocal.setCountryId(17);
+        newLocal.setCountryNameEn(context.getString(R.string.Bahrain));
+        newLocal.setCountryNameAr(context.getString(R.string.Bahrain_ar));
+        newLocal.setCurrencyCode("BHD");
+        newLocal.setShortname(context.getString(R.string.bahrain_shotname));
+        newLocal.setPhonecode(973);
+
+        newLocal.setFractional(Constants.three);
+        return newLocal;
+    }
+
     public static void setLocalData(LocalModel model) {
         String localData = new Gson().toJson(model);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_Local, localData);
     }
+
+
+
 
     public static Boolean isEnglish() {
         Boolean isEnglish = false;

@@ -44,6 +44,7 @@ import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.AutoCompleteModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
@@ -117,17 +118,22 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.recycler.setHasFixedSize(false);
         binding.recycler.setItemAnimator(null);
 
-        if (UtilityApp.isLogin()) {
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
+        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
+                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
+                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+
+
+
+        if (UtilityApp.isLogin() && UtilityApp.getUserData()!=null &&UtilityApp.getUserData().getId()!=null) {
             user = UtilityApp.getUserData();
             user_id = String.valueOf(user.getId());
 
         }
 
 
-        localModel = UtilityApp.getLocalData();
-        country_id = localModel.getCountryId();
-        city_id = Integer.parseInt(localModel.getCityId());
         GridLayoutManager bestOfferGridLayoutManager = new GridLayoutManager(getActivityy(), 2, RecyclerView.VERTICAL, false);
         binding.offerRecycler.setLayoutManager(bestOfferGridLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);

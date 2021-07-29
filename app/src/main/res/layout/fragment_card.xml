@@ -86,7 +86,7 @@
                             android:id="@+id/totalPointTv"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
-                            android:text="250"
+                            android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp" />
 
@@ -113,7 +113,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/currencyPriceTv"
                             android:layout_marginEnd="@dimen/_4sdp"
-                            android:text="2.5"
+                            android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_14ssp" />
 

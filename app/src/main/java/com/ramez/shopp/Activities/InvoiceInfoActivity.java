@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ItemDetailsModel;
@@ -101,26 +102,34 @@ public class InvoiceInfoActivity extends ActivityBase {
     }
 
     private void addToCart(View v, int i, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-            if (IsSuccess) {
+        if (quantity > 0) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-                UtilityApp.updateCart(1, orderModel.getOrderItemDetails().size());
+                if (IsSuccess) {
+
+                    UtilityApp.updateCart(1, orderModel.getOrderItemDetails().size());
 
 
-                if (i == orderModel.getOrderItemDetails().size() - 1) {
-                    initSnackBar(" " + getResources().getString(R.string.success_to_update_cart), v);
+                    if (i == orderModel.getOrderItemDetails().size() - 1) {
+                        initSnackBar(" " + getResources().getString(R.string.success_to_update_cart), v);
 
+                    }
+
+
+                } else {
+
+                    initSnackBar(getString(R.string.fail_to_update_cart), v);
                 }
 
 
-            } else {
-
-                initSnackBar(getString(R.string.fail_to_update_cart), v);
-            }
+            }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
 
 
-        }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+        } else {
+            Toast(getString(R.string.quanity_wrong));
+        }
+
     }
 
 
@@ -172,7 +181,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             } else {
                 if (IsSuccess) {
-                    if (result.data != null &&result.data.getOrderItemDetails() != null&& result.data.getOrderItemDetails().size() > 0) {
+                    if (result.data != null && result.data.getOrderItemDetails() != null && result.data.getOrderItemDetails().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);

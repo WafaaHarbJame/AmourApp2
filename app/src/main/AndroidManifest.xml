@@ -123,7 +123,9 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".Activities.AllListActivity" />
+        <activity android:name=".Activities.AllListActivity"   android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"  />
         <activity
             android:name=".Activities.WelcomeActivity"
             android:launchMode="singleTask"

@@ -556,7 +556,7 @@ public class LoginFragment extends FragmentBase {
             String message = getString(R.string.fail_to_get_data);
 
             if (IsSuccess) {
-                if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                if (cartResultModel.getData()!=null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
                     cartNumber = cartResultModel.getData().getCartCount();
                     UtilityApp.setCartCount(cartNumber);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);

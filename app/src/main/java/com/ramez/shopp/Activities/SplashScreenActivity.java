@@ -189,14 +189,13 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result != null && result.isSuccessful()) {
-                if (result != null && result.data != null) {
+            if (result != null && result.isSuccessful() && result.data != null) {
                     TotalPointModel totalPointModel = result.data;
                     Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
                     Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
 
                     DBFunction.setTotalPoints(totalPointModel);
-                }
+
 
 
             }
@@ -209,11 +208,10 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<CountryDetailsModel> result = (ResultAPIModel<CountryDetailsModel>) obj;
 
-            if (result != null && result.isSuccessful()) {
-                if (result != null && result.data != null) {
+            if (result != null && result.isSuccessful() && result.data != null) {
                     CountryDetailsModel  countryDetailsModel = result.data;
                     DBFunction.setLoyal(countryDetailsModel);
-                }
+
 
 
             }
@@ -227,10 +225,11 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-            if (result != null && result.data != null) {
+            if (result != null && result.data != null && result.status==200) {
 
-                SettingCouponsModel settingCouponsModel = result.data;
-                DBFunction.setCouponSettings(settingCouponsModel);
+                    SettingCouponsModel settingCouponsModel = result.data;
+                    DBFunction.setCouponSettings(settingCouponsModel);
+
 
             }
 

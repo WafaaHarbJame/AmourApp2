@@ -47,30 +47,36 @@ import static android.content.ContentValues.TAG;
 
 public class CategoryFragment extends FragmentBase implements CategoryAdapter.OnItemClick {
     private static final int ZBAR_CAMERA_PERMISSION = 1;
+    private int SEARCH_CODE = 2000;
+
     ArrayList<CategoryModel> categoryModelList;
     GridLayoutManager gridLayoutManager;
     LocalModel localModel;
     private FragmentCategoryBinding binding;
     private CategoryAdapter categoryAdapter;
     private Activity activity;
-    private int SEARCH_CODE = 2000;
+    int cityId;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        activity = getActivity();
+
         gridLayoutManager = new GridLayoutManager(getActivityy(), 3);
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
-        localModel = UtilityApp.getLocalData();
-        activity = getActivity();
+
+        localModel = UtilityApp.getLocalData()!=null?UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(getActivityy());
+
+        cityId= Integer.parseInt(localModel.getCityId());
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
             categoryModelList = UtilityApp.getCategories();
             initAdapter();
 
         } else {
-            getCategories(Integer.parseInt(localModel.getCityId()));
+            getCategories(cityId);
 
         }
 

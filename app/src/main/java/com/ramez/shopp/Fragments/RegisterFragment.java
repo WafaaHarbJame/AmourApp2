@@ -160,7 +160,8 @@ public class RegisterFragment extends FragmentBase {
                             SendOtp(mobileStr, passwordStr);
 
                         } else {
-                            String message = getActivityy().getString(R.string.fail_register);
+                            String message =getString(R.string.fail_register);
+
                             if (result != null && result.getMessage() != null){
                                 message = result.getMessage();
                             }

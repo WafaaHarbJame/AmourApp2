@@ -20,6 +20,7 @@ import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.DinnerModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.Recipe;
@@ -44,7 +45,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
-    String productName="";
+    String productName = "";
     SingleDinnerModel dinnerModel;
     String currency;
     private int country_id, city_id;
@@ -54,6 +55,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
     private int dinner_id;
     private String lang;
     List<Recipe> recipes;
+    private LocalModel localModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,12 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
             lang = Locale.getDefault().getLanguage();
         }
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
         MemberModel memberModel = UtilityApp.getUserData();
         country_id = UtilityApp.getLocalData().getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
+        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
         sliderList = new ArrayList<>();
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
@@ -116,8 +120,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
             user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
             binding.tVCartSize.setText(String.valueOf(UtilityApp.getCartCount()));
 
-        }
-        else {
+        } else {
             binding.fabCart.setVisibility(View.GONE);
 
         }
@@ -138,7 +141,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         });
 
 
-
         binding.showAllBut.setOnClickListener(v -> {
 
             binding.showAllBut.setText(binding.productDescTv.isExpanded() ? R.string.ShowAll : R.string.Show_less);
@@ -153,7 +155,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         if (bundle != null) {
 
             DinnerModel dinnerModel = (DinnerModel) bundle.getSerializable(Constants.DB_DINNER_MODEL);
-            if(dinnerModel!=null){
+            if (dinnerModel != null) {
                 dinner_id = dinnerModel.getId();
                 productName = dinnerModel.getDescription();
                 binding.productNameTv.setText(productName);
@@ -328,12 +330,12 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
             DinnerModel dinnerModel = (DinnerModel) bundle.getSerializable(Constants.DB_DINNER_MODEL);
 
 
-            if(dinnerModel!=null){
+            if (dinnerModel != null) {
                 dinner_id = dinnerModel.getId();
 
             }
 
-            if (dinnerModel!=null&dinnerModel.getDescription()!=null) {
+            if (dinnerModel != null & dinnerModel.getDescription() != null) {
                 productName = dinnerModel.getDescription();
 
             }

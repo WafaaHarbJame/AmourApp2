@@ -64,18 +64,12 @@ public class EditProfileActivity extends ActivityBase {
         setTitle(R.string.text_title_edit_profile);
 
         memberModel = UtilityApp.getUserData();
-        userId = memberModel.getId();
+
         if (memberModel != null) {
-            binding.userNameTv.setText(memberModel.getName());
-            binding.edtUserName.setText(memberModel.getName());
-            binding.etEmail.setText(memberModel.getEmail());
-            binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
-            Log.i("tag", "Log data" + memberModel.getProfilePicture());
+            initData();
 
-            Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+        } else if (memberModel != null && memberModel.getId() != null) {
 
-
-        } else {
             LocalModel localModel = UtilityApp.getLocalData();
             int store_id = Integer.parseInt(localModel.getCityId());
             getUserData(userId, store_id);
@@ -367,13 +361,7 @@ public class EditProfileActivity extends ActivityBase {
                     memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
                     memberModel.setProfilePicture(result.data.getProfilePicture());
                     UtilityApp.setUserData(memberModel);
-                    binding.userNameTv.setText(memberModel.getName());
-                    binding.edtUserName.setText(memberModel.getName());
-                    binding.etEmail.setText(memberModel.getEmail());
-                    binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
-                    Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
-
-
+                    initData();
                 }
 
 
@@ -383,5 +371,16 @@ public class EditProfileActivity extends ActivityBase {
         }).getUserDetails(user_id, store_id);
     }
 
+
+    private void initData() {
+        userId = memberModel.getId();
+        binding.userNameTv.setText(memberModel.getName());
+        binding.edtUserName.setText(memberModel.getName());
+        binding.etEmail.setText(memberModel.getEmail());
+        binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
+        Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+
+
+    }
 
 }

@@ -134,22 +134,29 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
 
     private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-            if (IsSuccess) {
-                initSnackBar(context.getString(R.string.success_added_to_cart), v);
-                CartProcessModel result = (CartProcessModel) obj;
-                AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
-                UtilityApp.updateCart(1, orderProductsDMS.size());
+       if(quantity>0){
+           new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-
-            } else {
-                Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
-
-            }
+               if (IsSuccess) {
+                   initSnackBar(context.getString(R.string.success_added_to_cart), v);
+                   CartProcessModel result = (CartProcessModel) obj;
+                   AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+                   UtilityApp.updateCart(1, orderProductsDMS.size());
 
 
-        }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+               } else {
+                   Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
+
+               }
+
+
+           }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+
+       }
+       else {
+           Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+       }
     }
 
 

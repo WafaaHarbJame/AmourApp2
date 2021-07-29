@@ -170,7 +170,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result.isSuccessful()) {
+            if (result != null && result.isSuccessful() && result.data != null) {
 
                 totalPointModel = result.data;
                 Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
@@ -198,9 +198,12 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (result.isSuccessful()) {
+                if (result != null && result.data != null && result.status==200) {
+                    settingCouponsModel = result.data;
+                    DBFunction.setCouponSettings(settingCouponsModel);
+                }
 
-                settingCouponsModel = result.data;
-                DBFunction.setCouponSettings(settingCouponsModel);
+
 
             }
 

@@ -215,7 +215,7 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result.isSuccessful()) {
+            if (result != null && result.isSuccessful() && result.data != null) {
 
                 totalPointModel = result.data;
                 DBFunction.setTotalPoints(totalPointModel);
@@ -252,8 +252,14 @@ public class CardFragment extends FragmentBase {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (result.isSuccessful()) {
-                settingCouponsModel = result.data;
-                DBFunction.setCouponSettings(settingCouponsModel);
+
+
+                if (result != null && result.data != null && result.status==200) {
+                    settingCouponsModel = result.data;
+                    DBFunction.setCouponSettings(settingCouponsModel);
+
+                }
+
 
             }
 

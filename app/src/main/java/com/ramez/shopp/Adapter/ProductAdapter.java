@@ -416,49 +416,63 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
+            if(quantity>0){
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-            new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    CartProcessModel result = (CartProcessModel) obj;
 
-                CartProcessModel result = (CartProcessModel) obj;
+                    if (IsSuccess) {
+                        int cartId = result.getId();
+                        Log.i("tag", "Log " + UtilityApp.getCartCount());
+                        UtilityApp.updateCart(1, productModels.size());
+                        binding.cartBut.setVisibility(View.GONE);
+                        productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        AnalyticsHandler.AddToCart(cartId, currency, quantity);
 
-                if (IsSuccess) {
-                    int cartId = result.getId();
-                    Log.i("tag", "Log " + UtilityApp.getCartCount());
-                    UtilityApp.updateCart(1, productModels.size());
-                    binding.cartBut.setVisibility(View.GONE);
-                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                    AnalyticsHandler.AddToCart(cartId, currency, quantity);
+                        notifyItemChanged(position);
 
-                    notifyItemChanged(position);
+                    } else {
 
-                } else {
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
+                                context.getString(R.string.fail_to_update_cart));
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
-                            context.getString(R.string.fail_to_update_cart));
-
-                }
+                    }
 
 
-            }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+                }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+
+            }
+            else {
+                Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
         private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-            new DataFeacher(false, (obj, func, IsSuccess) -> {
-                if (IsSuccess) {
 
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                    /// initSnackBar(context.getString(R.string.success_to_update_cart));
-                    notifyItemChanged(position);
+            if(quantity>0){
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    if (IsSuccess) {
 
-                } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
-                            context.getString(R.string.fail_to_update_cart));
+                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        /// initSnackBar(context.getString(R.string.success_to_update_cart));
+                        notifyItemChanged(position);
+
+                    } else {
+                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
+                                context.getString(R.string.fail_to_update_cart));
 
 
-                }
+                    }
 
-            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+                }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+
+            }
+            else {
+                Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+            }
         }
 
         private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {

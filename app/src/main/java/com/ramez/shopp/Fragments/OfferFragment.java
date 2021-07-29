@@ -66,8 +66,15 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         mainCategoryDMS = new ArrayList<>();
 
-        localModel = UtilityApp.getLocalData();
-        country_id = localModel.getCountryId();
+
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+
+        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
+                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
+                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+
+
 
         linearLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         binding.catRecycler.setHasFixedSize(true);
@@ -81,6 +88,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             }
 
         }
+
+
 
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());

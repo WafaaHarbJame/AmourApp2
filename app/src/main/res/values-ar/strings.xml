@@ -373,6 +373,7 @@
     <string name="branch_note">اختر الفرع الأقرب اليك للتسوق. ( مشترياتك سوف يتم توصيلها من الفرع الذي تم اختياره)</string>
     <string name="please_select_default_address">اختر عنوان افتراضي </string>
     <string name="getData">معلومات التوصيل</string>
+    <string name="quanity_wrong">الكمية المدخلة غير صحيحية </string>
 
 
 </resources>

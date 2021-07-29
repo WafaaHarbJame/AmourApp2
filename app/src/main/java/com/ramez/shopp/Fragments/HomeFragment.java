@@ -196,15 +196,16 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
-        localModel = UtilityApp.getLocalData();
-        if (localModel != null && localModel.getCountryId() != null && localModel.getCityId() != null) {
-            country_id = UtilityApp.getLocalData().getCountryId();
-            city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-            getCityList(country_id);
-            getDeliveryTimeListNew(city_id);
-            CheckLoyal(localModel.getShortname());
-        }
+        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
+                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
+                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+
+        getCityList(country_id);
+        getDeliveryTimeListNew(city_id);
+        CheckLoyal(localModel.getShortname());
 
 
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -715,8 +716,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                         if (isVisible()) {
 
-                            if (result != null && result.getData()!=null) {
-                                DeliveryTime firstTime =result.getData();
+                            if (result != null && result.getData() != null) {
+                                DeliveryTime firstTime = result.getData();
                                 String deliveryDay = DateHandler.FormatDate4(firstTime.getDate(), "yyyy-MM-dd", "EEE", UtilityApp.getLanguage());
 
                                 if (UtilityApp.getLanguage().equals(Constants.Arabic))
@@ -756,7 +757,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
-    private void CheckLoyal(String shortName ) {
+    private void CheckLoyal(String shortName) {
         countryDetailsModel = DBFunction.getLoyal();
 
         if (countryDetailsModel == null) {
@@ -772,7 +773,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-    private  void showLoyalLy(boolean hasLoyal){
+    private void showLoyalLy(boolean hasLoyal) {
         if (hasLoyal) {
             binding.totalPointLY.setVisibility(View.VISIBLE);
         } else {
@@ -810,12 +811,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result.isSuccessful()) {
-
+            if (result != null && result.isSuccessful() && result.data != null) {
                 totalPointModel = result.data;
                 DBFunction.setTotalPoints(totalPointModel);
-
                 setTotalPointsData();
+
             }
 
         }).getTotalPoint(Integer.parseInt(user_id));

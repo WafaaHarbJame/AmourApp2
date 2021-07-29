@@ -33,6 +33,7 @@ import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ShowImageDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductBarcode;
@@ -79,6 +80,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private ProductBarcode selectedProductBarcode;
     private int selectedProductPos;
     private FirebaseAnalytics mFirebaseAnalytics;
+    LocalModel localModel;
 
 
     @Override
@@ -89,8 +91,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         setContentView(view);
 
         MemberModel memberModel = UtilityApp.getUserData();
-        country_id = UtilityApp.getLocalData().getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
+        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
+                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActiviy()).getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
+                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
 
         sliderList = new ArrayList<String>();
         productList = new ArrayList<>();
@@ -929,43 +936,58 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     }
 
+    /*
+       private void addToCart(int productId, int product_barcode_id, int quantity, int userId, int storeId) {
+        if(quantity>0){
+
+        }
+          else {
+            Toast(getString(R.string.quanity_wrong));
+        }
+     */
 
     private void addToCart(int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            CartProcessModel result = (CartProcessModel) obj;
+        if(quantity>0){
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
+                CartProcessModel result = (CartProcessModel) obj;
 
-            if (IsSuccess) {
-                int cartId = result.getId();
+                if (IsSuccess) {
+                    int cartId = result.getId();
 
-                selectedProductBarcode.setCartId(cartId);
-                selectedProductBarcode.setCartQuantity(quantity);
-                productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
+                    selectedProductBarcode.setCartId(cartId);
+                    selectedProductBarcode.setCartQuantity(quantity);
+                    productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
 
-                AnalyticsHandler.AddToCart(cartId, currency, quantity);
+                    AnalyticsHandler.AddToCart(cartId, currency, quantity);
 
-                binding.productCartQTY.setText(String.valueOf(quantity));
+                    binding.productCartQTY.setText(String.valueOf(quantity));
 
-                if (quantity == 1) {
-                    binding.deleteCartBtn.setVisibility(View.VISIBLE);
-                    binding.minusCartBtn.setVisibility(View.GONE);
+                    if (quantity == 1) {
+                        binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                        binding.minusCartBtn.setVisibility(View.GONE);
+                    } else {
+                        binding.minusCartBtn.setVisibility(View.VISIBLE);
+                        binding.deleteCartBtn.setVisibility(View.GONE);
+                    }
+
+                    UtilityApp.updateCart(1, productList.size());
+
+
                 } else {
-                    binding.minusCartBtn.setVisibility(View.VISIBLE);
-                    binding.deleteCartBtn.setVisibility(View.GONE);
+
+
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            getString(R.string.fail_to_add_cart));
+
                 }
 
-                UtilityApp.updateCart(1, productList.size());
 
+            }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
 
-            } else {
-
-
-                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                        getString(R.string.fail_to_add_cart));
-
-            }
-
-
-        }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+        }
+          else {
+            Toast(getString(R.string.quanity_wrong));
+        }
     }
 
     private void initSnackBar(String message, View viewBar) {
@@ -974,6 +996,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void deleteCart(View v, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
+
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
@@ -1002,37 +1025,43 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void updateCart(View v, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (IsSuccess) {
+        if(quantity>0){
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
+                if (IsSuccess) {
 
-                binding.productCartQTY.setText(String.valueOf(quantity));
-
-                // initSnackBar(getString(R.string.success_to_update_cart), v);
-                selectedProductBarcode.setCartQuantity(quantity);
-                productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
-
-                if (quantity > 0) {
                     binding.productCartQTY.setText(String.valueOf(quantity));
 
-                    if (quantity == 1) {
-                        binding.deleteCartBtn.setVisibility(View.VISIBLE);
-                        binding.minusCartBtn.setVisibility(View.GONE);
-                    } else {
-                        binding.minusCartBtn.setVisibility(View.VISIBLE);
-                        binding.deleteCartBtn.setVisibility(View.GONE);
+                    // initSnackBar(getString(R.string.success_to_update_cart), v);
+                    selectedProductBarcode.setCartQuantity(quantity);
+                    productModel.getProductBarcodes().set(selectedProductPos, selectedProductBarcode);
+
+                    if (quantity > 0) {
+                        binding.productCartQTY.setText(String.valueOf(quantity));
+
+                        if (quantity == 1) {
+                            binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                            binding.minusCartBtn.setVisibility(View.GONE);
+                        } else {
+                            binding.minusCartBtn.setVisibility(View.VISIBLE);
+                            binding.deleteCartBtn.setVisibility(View.GONE);
+                        }
+
                     }
+
+
+                } else {
+                    GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
+                            getString(R.string.fail_to_update_cart));
+
 
                 }
 
+            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
-            } else {
-                GlobalData.errorDialogWithButton(getActiviy(), getString(R.string.error),
-                        getString(R.string.fail_to_update_cart));
-
-
-            }
-
-        }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+        }
+        else {
+            Toast(getString(R.string.quanity_wrong));
+        }
     }
 
 

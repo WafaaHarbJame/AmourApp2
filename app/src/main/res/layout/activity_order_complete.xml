@@ -19,6 +19,7 @@
     <com.ramez.shopp.SpichalViews.STextView
         android:layout_width="match_parent"
         android:gravity="center"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:layout_marginBottom="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_20sdp"

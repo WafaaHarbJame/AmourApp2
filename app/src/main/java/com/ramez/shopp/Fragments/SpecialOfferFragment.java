@@ -40,7 +40,8 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
         binding.broucherRecycler.setHasFixedSize(true);
         binding.broucherRecycler.setItemAnimator(null);
         localModel = UtilityApp.getLocalData();
-        store_id = Integer.parseInt(localModel.getCityId());
+
+        store_id = localModel.getCityId() != null ? Integer.parseInt(localModel.getCityId()) : 7263;
 
         binding.swipeContainer.setOnRefreshListener(() -> {
             binding.swipeContainer.setRefreshing(false);
@@ -69,7 +70,7 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
 
                 if (func.equals(Constants.ERROR)) {
 
-                    if (result!=null&&result.message != null) {
+                    if (result != null && result.message != null) {
                         message = result.message;
                     }
                     binding.dataLY.setVisibility(View.GONE);

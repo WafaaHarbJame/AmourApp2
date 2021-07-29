@@ -408,6 +408,7 @@
     <string name="branch_note">Choose Branch to shop. (The products you will buy will be delivered from the branch you choose.)</string>
     <string name="please_select_default_address">Please select default address</string>
     <string name="getData">Get Data</string>
+    <string name="quanity_wrong">The Quanity not correct</string>
 
 
 </resources>

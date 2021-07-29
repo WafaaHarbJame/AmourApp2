@@ -230,7 +230,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 photoUrl = "http";
             }
 
-            GlobalData.GlideImg(activity,photoUrl,R.drawable.holder_image,holder.binding.productImg);
+            GlobalData.GlideImg(activity, photoUrl, R.drawable.holder_image, holder.binding.productImg);
             //Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 
@@ -452,47 +452,53 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     checkLoginDialog.show();
                 } else {
 
-                    int position = getBindingAdapterPosition();
 
-                    ProductModel productModel = productModels.get(position);
-                    int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                    String message = "";
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                    int productId = productModel.getId();
-                    int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                    if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+                        int position = getBindingAdapterPosition();
+                        ProductModel productModel = productModels.get(position);
+                        int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                        String message = "";
+                        int userId = UtilityApp.getUserData().getId();
+                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int productId = productModel.getId();
+                        int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-                    int stock = productModel.getProductBarcodes().get(0).getStockQty();
-                    int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                        int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                        int limit = productModel.getProductBarcodes().get(0).getLimitQty();
 
-                    if (limit == 0) {
+                        if (limit == 0) {
 
-                        if (count + 1 <= stock) {
-                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                        } else {
-                            message = activity.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
-
-                        }
-                    } else {
-
-                        if (count + 1 <= stock && (count + 1 <= limit)) {
-                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                        } else {
-
-                            if (count + 1 > stock) {
-                                message = activity.getString(R.string.limit) + "" + limit;
+                            if (count + 1 <= stock) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
                             } else {
                                 message = activity.getString(R.string.stock_empty);
+                                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
 
                             }
-                            GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                        } else {
+
+                            if (count + 1 <= stock && (count + 1 <= limit)) {
+                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                            } else {
+
+                                if (count + 1 > stock) {
+                                    message = activity.getString(R.string.limit) + "" + limit;
+
+                                } else {
+                                    message = activity.getString(R.string.stock_empty);
+
+                                }
+                                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                            }
+
+
                         }
 
-
+                    } else {
+                        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(activity, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                        checkLoginDialog.show();
                     }
 
 
@@ -598,44 +604,61 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-            new DataFeacher(false, (obj, func, IsSuccess) -> {
-                CartProcessModel result = (CartProcessModel) obj;
-
-                if (IsSuccess) {
-
-                    int cartId = result.getId();
-
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                    productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
-                    notifyItemChanged(position);
-                    UtilityApp.updateCart(1, productModels.size());
 
 
-                } else {
+            if (quantity > 0) {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    CartProcessModel result = (CartProcessModel) obj;
 
-                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_cart));
+                    if (IsSuccess) {
 
-                }
+                        int cartId = result.getId();
+
+                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+                        notifyItemChanged(position);
+                        UtilityApp.updateCart(1, productModels.size());
 
 
-            }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+                    } else {
+
+                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_cart));
+
+                    }
+
+
+                }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+
+            } else {
+                Toast.makeText(activity, activity.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
         private void updateCart(View view, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-            new DataFeacher(false, (obj, func, IsSuccess) -> {
-                if (IsSuccess) {
 
-                    // initSnackBar(context.getString(R.string.success_to_update_cart), view);
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                    notifyItemChanged(position);
+            if (quantity > 0) {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    if (IsSuccess) {
 
-                } else {
+                        // initSnackBar(context.getString(R.string.success_to_update_cart), view);
+                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        notifyItemChanged(position);
 
-                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_update_cart));
+                    } else {
 
-                }
+                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_update_cart));
 
-            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+                    }
+
+                }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+
+
+            } else {
+                Toast.makeText(activity, activity.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {

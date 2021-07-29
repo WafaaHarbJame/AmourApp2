@@ -49,7 +49,8 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
         binding.recycler.setLayoutManager(gridLayoutManager);
         binding.recycler.setHasFixedSize(true);
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
         user = UtilityApp.getUserData();
 
         binding.recycler.setHasFixedSize(true);
@@ -58,7 +59,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
 
-        if (UtilityApp.isLogin()) {
+        if (UtilityApp.isLogin() && user.getId()!=null) {
             user_id = String.valueOf(user.getId());
 
         }

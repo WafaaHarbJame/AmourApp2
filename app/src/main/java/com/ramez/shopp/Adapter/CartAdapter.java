@@ -448,49 +448,57 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
     public void updateCart(int position, int productId, int product_barcode_id, int quantity, int quantity2, Boolean fromCart, int userId, int storeId, int cart_id, String update_quantity) {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (IsSuccess) {
-                int cartQuantity = 0;
-                calculateSubTotalPrice();
-                calculateSavePrice();
-                getItemCount();
+        if (quantity > 0) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
+                if (IsSuccess) {
+                    int cartQuantity = 0;
+                    calculateSubTotalPrice();
+                    calculateSavePrice();
+                    getItemCount();
 
-                if (fromCart) {
-                    cartQuantity = quantity2;
+                    if (fromCart) {
+                        cartQuantity = quantity2;
+                    } else {
+                        cartQuantity = quantity;
+
+
+                    }
+                    //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
+
+                    //initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                    if(cartDMS.size()>0){
+                        cartDMS.get(position).setQuantity(cartQuantity);
+                        notifyItemChanged(position);
+                    }
+
+
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
+                    cartProcessModel.setCartCount(cartDMS.size());
+                    cartProcessModel.setTotalSavePrice(calculateSavePrice());
+
+
+                    if (dataCallback != null) {
+                        if (calculateSubTotalPrice() > 0 || calculateSavePrice() > 0)
+                            dataCallback.dataResult(cartProcessModel, "success", true);
+                    }
+
+
                 } else {
-                    cartQuantity = quantity;
+
+                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_update_cart));
 
 
                 }
-                //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
 
-                //initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                if(cartDMS.size()>0){
-                    cartDMS.get(position).setQuantity(cartQuantity);
-                    notifyItemChanged(position);
-                }
+            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
 
-                CartProcessModel cartProcessModel = (CartProcessModel) obj;
-                cartProcessModel.setTotal(calculateSubTotalPrice());
-                cartProcessModel.setCartCount(cartDMS.size());
-                cartProcessModel.setTotalSavePrice(calculateSavePrice());
+        } else {
+            Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+        }
 
 
-                if (dataCallback != null) {
-                    if (calculateSubTotalPrice() > 0 || calculateSavePrice() > 0)
-                        dataCallback.dataResult(cartProcessModel, "success", true);
-                }
-
-
-            } else {
-
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_update_cart));
-
-
-            }
-
-        }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
     }
 
     public void deleteCart(int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
