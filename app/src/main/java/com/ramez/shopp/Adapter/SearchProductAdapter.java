@@ -179,24 +179,37 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
             if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
+
+                double originalPrice = productModel.getProductBarcodes().get(0).getPrice();
+                double specialPrice = productModel.getProductBarcodes().get(0).getSpecialPrice();
+
+
                 holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-                if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                    discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                    DecimalFormat df = new DecimalFormat("#");
-                    String newDiscount_str = df.format(discount);
-                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+
+                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(originalPrice,
+                        UtilityApp.getLocalData().getFractional()) + " " + currency);
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(specialPrice,
+                        UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+                double discountValue = originalPrice - specialPrice;
+                double discountPercent = (discountValue / originalPrice) * 100;
+
+                if (originalPrice > 0) {
+                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal((int) discountPercent + " % " + "OFF"));
+
+                } else {
+                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal((int) 0 + " % " + "OFF"));
+
                 }
 
-
             } else {
+
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
                 holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
                 holder.binding.discountTv.setVisibility(View.GONE);
 
-            }
 
+            }
 
             String photoUrl = "";
 
@@ -244,7 +257,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     initSnackBar(context.getString(R.string.success_add), v);
                     productModels.get(position).setFavourite(true);
+                    rv.getRecycledViewPool().clear();
                     notifyItemChanged(position);
+                    rv.getRecycledViewPool().clear();
                     notifyDataSetChanged();
 
                 } else {
@@ -278,6 +293,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     productModels.get(position).setFavourite(false);
                     initSnackBar(context.getString(R.string.success_delete), view);
                     notifyItemChanged(position);
+                    rv.getRecycledViewPool().clear();
                     notifyDataSetChanged();
 
 
@@ -292,14 +308,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
 
-
-    private void loginFirst() {
-        Toast.makeText(context, context.getString(R.string.textLoginFirst), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, RegisterLoginActivity.class);
-        intent.putExtra(Constants.LOGIN, true);
-        context.startActivity(intent);
-
-    }
 
     private void initSnackBar(String message, View viewBar) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -597,6 +605,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                         if (productModels != null && productModels.get(position).getProductBarcodes() != null) {
                             productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                             productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+                            rv.getRecycledViewPool().clear();
                             notifyItemChanged(position);
                             UtilityApp.updateCart(1, productModels.size());
 
@@ -669,7 +678,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     }
 
-    class LoadingViewHolder extends RecyclerView.ViewHolder {
+    static class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         RowLoadingBinding rowLoadingBinding;
 
@@ -680,17 +689,11 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         }
 
-        public ProgressBar getProgressBar() {
-            return rowLoadingBinding.progressBar1;
-        }
 
-        public void setProgressBar(ProgressBar var1) {
-            var1 = rowLoadingBinding.progressBar1;
-        }
     }
 
 
-    class EmptyViewHolder extends RecyclerView.ViewHolder {
+    static class EmptyViewHolder extends RecyclerView.ViewHolder {
 
         RowEmptyBinding rowEmptyBinding;
 
@@ -703,6 +706,9 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     }
+
+
+
 
 
 }
