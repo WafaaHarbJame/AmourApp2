@@ -36,6 +36,8 @@ import com.ramez.shopp.databinding.RowLoadingBinding;
 import com.ramez.shopp.databinding.RowSearchProductItemBinding;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     public SearchProductAdapter(Context context, List<ProductModel> productModels, int country_id, int city_id, String user_id, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
-        this.productModels = productModels;
+        this.productModels = new ArrayList<>(productModels);
         this.city_id = city_id;
         this.country_id = country_id;
         this.user_id = user_id;
@@ -78,7 +80,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.filter_text = filter;
         this.gridNumber = gridNumber;
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
+        final GridLayoutManager gridLayoutManager = (GridLayoutManager) rv.getLayoutManager();
 
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -122,21 +124,19 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
+    @NotNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
         if (viewType == VIEW_TYPE_ITEM) {
             RowSearchProductItemBinding itemView = RowSearchProductItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new Holder(itemView);
-
         } else if (viewType == VIEW_TYPE_LOADING) {
             RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new LoadingViewHolder(itemView);
         } else if (viewType == VIEW_TYPE_EMPTY) {
             RowEmptyBinding itemView = RowEmptyBinding.inflate(LayoutInflater.from(context), parent, false);
-
             vh = new EmptyViewHolder(itemView);
-
         }
         return vh;
     }
@@ -354,8 +354,10 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
 
-            if (productModels.size() > 0) productModels.remove(productModels.size() - 1);
-            notifyItemRemoved(productModels.size());
+            if (productModels.size() > 0) {
+                productModels.remove(productModels.size() - 1);
+                notifyItemRemoved(productModels.size());
+            }
 
             if (IsSuccess) {
                 if (result.getData() != null && result.getData().size() > 0) {
@@ -706,9 +708,6 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     }
-
-
-
 
 
 }
