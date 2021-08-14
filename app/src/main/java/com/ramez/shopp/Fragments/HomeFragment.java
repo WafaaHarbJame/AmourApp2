@@ -912,7 +912,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
                     if (IsSuccess) {
-                        if (result.getData() != null && result.getData().size() > 0) {
+                        if (result!=null&&result.getData() != null && result.getData().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);

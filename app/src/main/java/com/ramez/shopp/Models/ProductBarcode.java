@@ -27,10 +27,10 @@ public class ProductBarcode implements Serializable {
     private Integer limitQty;
     @SerializedName("price")
     @Expose
-    private Double price;
+    private double price;
     @SerializedName("special_price")
     @Expose
-    private Double specialPrice;
+    private double specialPrice;
     @SerializedName("isSpecial")
     @Expose
     private Boolean isSpecial;
@@ -126,15 +126,15 @@ public class ProductBarcode implements Serializable {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Double getSpecialPrice() {
+    public double getSpecialPrice() {
         return specialPrice;
     }
 
-    public void setSpecialPrice(Double specialPrice) {
+    public void setSpecialPrice(double specialPrice) {
         this.specialPrice = specialPrice;
     }
 

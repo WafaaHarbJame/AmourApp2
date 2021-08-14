@@ -2,7 +2,6 @@ package com.ramez.shopp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -13,8 +12,12 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -30,7 +33,8 @@ import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddRateDialog;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.Dialogs.ShowImageDialog;
+import com.ramez.shopp.Fragments.ImageFragment;
+import com.ramez.shopp.Fragments.SuggestedProductsFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -39,11 +43,9 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProductModel;
-import com.ramez.shopp.Models.ProductOptionModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -55,13 +57,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
 public class ProductDetailsActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityProductDeatilsBinding binding;
     int user_id = 0;
-    ArrayList<String> sliderList;
+    //    ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
     String productName;
@@ -99,7 +102,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
                 UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
 
-        sliderList = new ArrayList<String>();
+//        sliderList = new ArrayList<String>();
+
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
 
@@ -140,7 +144,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initListener() {
+
 
         binding.backBtn.setOnClickListener(view1 -> {
             GlobalData.REFRESH_CART = true;
@@ -160,11 +166,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             intent.putExtra(Constants.FILTER_NAME, Constants.quick_filter);
             startActivity(intent);
 
-        });
-
-        binding.productImage.setOnClickListener(v -> {
-            ShowImageDialog showImageDialog = new ShowImageDialog(this, sliderList.get(0));
-            showImageDialog.show();
         });
 
 
@@ -547,45 +548,40 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         });
     }
 
-
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
         isNotify = bundle.getBoolean(Constants.isNotify, false);
 
-        if (bundle != null) {
+        FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
 
-            FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
-
-            if (FROM_BROSHER) {
-                product_id = Integer.parseInt(bundle.getString(Constants.product_id));
+        if (FROM_BROSHER) {
+            product_id = Integer.parseInt(bundle.getString(Constants.product_id));
 
 
-            } else {
-                ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-                if (productModel != null) {
-                    product_id = productModel.getId();
+        } else {
+            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
+            if (productModel != null) {
+                product_id = productModel.getId();
 
 
-                    if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                        productName = productModel.getHName();
+                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                    productName = productModel.getHName();
 
-                    } else {
-                        productName = productModel.getName();
-
-                    }
-
-                    binding.productNameTv.setText(productName);
+                } else {
+                    productName = productModel.getName();
 
                 }
+
+                binding.productNameTv.setText(productName);
+
             }
-
-            getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
-
         }
 
 
-    }
+        getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
+
+    }
 
     private void checkProductToAdd() {
         String message = "";
@@ -642,7 +638,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     }
 
-    @SuppressLint("SetTextI18n")
     public void getSingleProduct(int country_id, int city_id, int product_id, String user_id) {
 
         AnalyticsHandler.ViewItem(product_id, currency, 0);
@@ -700,13 +695,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         productModel = result.getData().get(0);
                         binding.CartLy.setVisibility(View.VISIBLE);
 
-
                         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
                             productName = productModel.getHName();
-
                         } else {
                             productName = productModel.getName();
-
                         }
 
                         binding.productNameTv.setText(productName);
@@ -724,12 +716,19 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
 
-                        sliderList = productModel.getImages();
+//                        sliderList = productModel.getImages();
+                        String[] list = productName.split(" ");
+                        String filter = list[0];
+
+                        Log.i(getClass().getSimpleName(), "Log  productName " + productName);
+                        Log.i(getClass().getSimpleName(), "Log search filter " + filter);
+
 
                         binding.ratingBar.setRating((float) productModel.getRate());
-                        if (sliderList.size() > 0) {
-                            GlobalData.GlideImg(getActiviy(), sliderList.get(0)
-                                    , R.drawable.holder_image, binding.productImage);
+
+                        if (productModel.getImages().size() > 0) {
+                            setupViewPager(binding.viewPager);
+                            binding.pager.setViewPager(binding.viewPager);
                         }
 
 //                        optionModelsList.clear();
@@ -947,7 +946,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
      */
 
     private void addToCart(int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-        if(quantity>0){
+        if (quantity > 0) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 CartProcessModel result = (CartProcessModel) obj;
 
@@ -984,8 +983,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
 
-        }
-          else {
+        } else {
             Toast(getString(R.string.quanity_wrong));
         }
     }
@@ -1025,7 +1023,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void updateCart(View v, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-        if(quantity>0){
+        if (quantity > 0) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
@@ -1058,8 +1056,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
-        }
-        else {
+        } else {
             Toast(getString(R.string.quanity_wrong));
         }
     }
@@ -1224,7 +1221,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         if (selectedProductBarcode.getIsSpecial()) {
             binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.itlatic_red_line));
 
-            if (selectedProductBarcode.getSpecialPrice() != null) {
+//            if (selectedProductBarcode.getSpecialPrice() != null) {
                 binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                 binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
 
@@ -1260,8 +1257,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     formatedOfferTime = formatedOfferTime.substring(0, formatedOfferTime.length() - 1);
                 binding.endOfferTv.setText(formatedOfferTime);
 
-            }
-
+//            }
 
         } else {
             binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
@@ -1271,6 +1267,66 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         }
 
 
+    }
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+//        add list of photos fragments
+
+        for (String image : productModel.getImages()) {
+            Bundle imageBundle = new Bundle();
+            imageBundle.putString(Constants.KEY_IMAGE_URL, image);
+            Fragment imageFragment = new ImageFragment();
+            imageFragment.setArguments(imageBundle);
+            adapter.addFragment(imageFragment, "");
+
+        }
+
+        String[] list = productName.split(" ");
+        String filter = list[0];
+
+        // add suggestions fragment
+
+        Fragment suggestedProductsFragment = new SuggestedProductsFragment();
+        Bundle suggestedBundle = new Bundle();
+        suggestedBundle.putString(Constants.KEY_FILTER, filter);
+        suggestedProductsFragment.setArguments(suggestedBundle);
+        adapter.addFragment(suggestedProductsFragment, "");
+
+        viewPager.setAdapter(adapter);
+
+    }
+
+    public static class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
 

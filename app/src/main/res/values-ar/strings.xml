@@ -374,6 +374,8 @@
     <string name="please_select_default_address">اختر عنوان افتراضي </string>
     <string name="getData">معلومات التوصيل</string>
     <string name="quanity_wrong">الكمية المدخلة غير صحيحية </string>
+    <string name="seller_recommendation">منتجات موصى بها</string>
+    <string name="discover_more">اكتشف المزيد</string>
 
 
 </resources>

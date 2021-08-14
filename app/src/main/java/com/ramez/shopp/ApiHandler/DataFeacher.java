@@ -589,12 +589,15 @@ public class DataFeacher {
     }
 
     public void GetSingleProduct(int country_id, int city_id, int product_id, String user_id) {
+//        product_id = ;
 
         Log.i(TAG, "Log GetSingleProduct");
-        Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log country_id " + country_id);
-        Log.i(TAG, "Log product_id " + product_id);
-        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log  GetSingleProduct headerMap " + headerMap);
+        Log.i(TAG, "Log  GetSingleProduct country_id " + country_id);
+//        Log.i(TAG, "Log  GetSingleProduct product_id " + 16629);
+        Log.i(TAG, "Log  GetSingleProduct product_id " + product_id);
+        Log.i(TAG, "Log  GetSingleProduct user_id " + user_id);
+        Log.i(TAG, "Log  GetSingleProduct city_id " + city_id);
 
         Call call = apiService.GetSignalProducts(headerMap, country_id, city_id, product_id, user_id);
         call.enqueue(callbackApi);

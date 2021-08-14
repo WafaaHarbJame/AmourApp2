@@ -74,8 +74,8 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         localModel = UtilityApp.getLocalData();
 
         initProgress();
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        rv.setLayoutManager(linearLayoutManager);
+//        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//        rv.setLayoutManager(linearLayoutManager);
 
 
 //        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {

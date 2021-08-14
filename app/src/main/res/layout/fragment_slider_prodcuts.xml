@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/_8sdp">
+   <com.ramez.shopp.SpichalViews.STextView
+       android:id="@+id/discoverLb"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginEnd="@dimen/_10sdp"
+       android:text="@string/seller_recommendation"
+       android:textAlignment="viewStart"
+       android:textColor="@color/gray4"
+       android:textSize="@dimen/_12ssp" />
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:id="@+id/recycler"
+       tools:listitem="@layout/row_recommend_products_item"
+       tools:itemCount="6"
+       app:spanCount="3"
+       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+       android:layout_height="wrap_content">
+
+   </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
+
+
+
+

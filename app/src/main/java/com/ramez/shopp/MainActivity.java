@@ -425,13 +425,11 @@ public class MainActivity extends ActivityBase {
         if (bundle != null) {
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
-//            boolean FRAG_HOME=bundle.getBoolean(Constants.FRAG_HOME);
             int subCatId = getIntent().getExtras().getInt(Constants.SUB_CAT_ID);
             BookletsModel bookletsModel = (BookletsModel) getIntent().getExtras().getSerializable(Constants.bookletsModel);
             searchTEXT = bundle.getString(Constants.inputType_text);
             from_inside_app = bundle.getBoolean(Constants.Inside_app);
             boolean TO_FRAG_HOME = bundle.getBoolean(Constants.TO_FRAG_HOME);
-
 
             if (TO_CART) {
 
@@ -439,14 +437,14 @@ public class MainActivity extends ActivityBase {
                 binding.cartButton.performClick();
 
             }
-
-            if (TO_FRAG_HOME) {
+            else if (TO_FRAG_HOME) {
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                 binding.homeButton.performClick();
-            } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
+            }
+            else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     categoryModelList = UtilityApp.getCategories();
                 }
@@ -469,12 +467,16 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                 });
 
-            } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
+            }
+            else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
                 binding.categoryButton.performClick();
-            } else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
+            }
+            else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
                 binding.offerButton.performClick();
 
-            } else if (fragmentType.equals(Constants.FRAG_HOME)) {
+            }
+
+            else if (fragmentType.equals(Constants.FRAG_HOME)) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                 binding.toolBar.backBtn.setVisibility(View.GONE);
@@ -484,9 +486,10 @@ public class MainActivity extends ActivityBase {
                 binding.homeButton.performClick();
 
 
-            } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+            }
 
-//                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+
                 Bundle bundle2 = new Bundle();
                 bundle2.putString(Constants.inputType_text, searchTEXT);
                 FragmentManager fragmentManager = getSupportFragmentManager();

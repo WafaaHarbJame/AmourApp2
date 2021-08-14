@@ -51,7 +51,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.userId = userId;
 
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) rv.getLayoutManager();
 
         rv.setLayoutManager(linearLayoutManager);
 

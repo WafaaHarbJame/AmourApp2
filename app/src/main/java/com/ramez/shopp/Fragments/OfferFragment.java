@@ -152,6 +152,12 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     public void onItemClicked(int position, ProductModel productModel) {
         Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
         intent.putExtra(Constants.DB_productModel, productModel);
+        Log.i(getClass().getSimpleName(), "Log offer  IsSpecial  " + productModel.getProductBarcodes().get(0).getIsSpecial());
+        Log.i(getClass().getSimpleName(), "Log offer SpecialPrice  " + productModel.getProductBarcodes().get(0).getSpecialPrice());
+        Log.i(getClass().getSimpleName(), "Log offer  price  " + productModel.getProductBarcodes().get(0).getPrice());
+        Log.i(getClass().getSimpleName(), "Log offer Id  " + productModel.getProductBarcodes().get(0).getId());
+
+
         startActivity(intent);
 
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/discoverLb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:text="@string/seller_recommendation"
+        android:textAlignment="viewStart"
+        android:textColor="@color/gray4"
+        android:textSize="@dimen/_12ssp" />
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/noProductsTv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:visibility="gone"
+        android:text="@string/no_products"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_4sdp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:itemCount="6"
+        android:visibility="visible"
+        tools:listitem="@layout/row_recommend_products_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
+
+
+
+

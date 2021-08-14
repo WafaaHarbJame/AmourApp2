@@ -232,6 +232,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
     public void initAdapter() {
 
+        
         adapter = new SearchProductAdapter(getActivityy(), productList, country_id, city_id, user_id, binding.recycler, binding.searchEt.getText().toString(), this, numColumn);
         binding.recycler.setAdapter(adapter);
     }

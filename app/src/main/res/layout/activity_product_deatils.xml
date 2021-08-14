@@ -69,10 +69,10 @@
 
             <include
                 android:id="@+id/loadingProgressLY"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
                 layout="@layout/layout_pre_loading"
-                android:layout_height="match_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
 
             <include
                 android:id="@+id/failGetDataLY"
@@ -88,19 +88,47 @@
                 android:visibility="visible">
 
 
-                <ImageView
-                    android:id="@+id/productImage"
+                <!--              -->
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@color/gray"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/holder_image"
-                    android:visibility="visible" />
+                    android:visibility="visible">
 
+
+                    <com.duolingo.open.rtlviewpager.RtlViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_230sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:paddingLeft="@dimen/card_padding"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/card_padding"
+                        android:paddingRight="@dimen/card_padding"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:visibility="visible" />
+
+
+                    <com.rd.PageIndicatorView
+                        android:id="@+id/pager"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:scaleX="@integer/scaleX"
+                        app:piv_animationType="color"
+                        app:piv_radius="3dp"
+                        app:piv_selectedColor="@color/colorPrimaryDark"
+                        app:piv_unselectedColor="@color/gray1"
+                        app:piv_viewPager="@id/viewPager" />
+                </LinearLayout>
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/productNameTv"
@@ -156,9 +184,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:isIndicator="true"
                         android:numStars="5"
                         android:rating="2"
-                        android:isIndicator="true"
                         android:text="@string/product_name" />
 
                 </LinearLayout>
@@ -200,8 +228,8 @@
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Offer_end"
                         android:layout_marginStart="@dimen/_6sdp"
+                        android:text="@string/Offer_end"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp" />
 
@@ -216,8 +244,8 @@
                 </LinearLayout>
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:layout_width="match_parent"
                     android:id="@+id/productOptionTv"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/gray5"
@@ -234,9 +262,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:orientation="horizontal"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingBottom="@dimen/_4sdp"
-                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
                     tools:listitem="@layout/row_product_option" />
@@ -259,9 +287,9 @@
                     <LinearLayout
                         android:id="@+id/addToFavBut"
                         android:layout_width="0dp"
-                        android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
 
@@ -296,9 +324,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="vertical">
 
                         <ImageView
@@ -306,9 +334,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_6sdp"
                             android:minWidth="@dimen/_20sdp"
                             android:minHeight="@dimen/_20sdp"
-                            android:layout_marginBottom="@dimen/_6sdp"
                             android:src="@drawable/share_product"
                             app:tint="@color/colorAppRed" />
 
@@ -330,8 +358,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -341,8 +369,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_8sdp"
-                            android:minWidth="@dimen/_20sdp"
                             android:layout_marginBottom="@dimen/_6sdp"
+                            android:minWidth="@dimen/_20sdp"
                             android:minHeight="@dimen/_20sdp"
                             android:src="@drawable/ic_add_comment"
                             app:tint="@color/colorAppRed" />

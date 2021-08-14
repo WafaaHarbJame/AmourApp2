@@ -96,16 +96,30 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 
-            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-            discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-            DecimalFormat df = new DecimalFormat("#");
-            String newDiscount_str = df.format(discount);
-            holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+            double originalPrice = productModel.getProductBarcodes().get(0).getPrice();
+            double specialPrice = productModel.getProductBarcodes().get(0).getSpecialPrice();
 
+
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
+
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(originalPrice,
+                    UtilityApp.getLocalData().getFractional()) + " " + currency);
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(specialPrice,
+                    UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+            double discountValue = originalPrice - specialPrice;
+            double discountPercent = (discountValue / originalPrice) * 100;
+
+            if (originalPrice > 0) {
+                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal((int) discountPercent + " % " + "OFF"));
+
+            } else {
+                holder.binding.discountTv.setText(NumberHandler.arabicToDecimal((int) 0 + " % " + "OFF"));
+
+            }
 
         } else {
+
             holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
             holder.binding.discountTv.setVisibility(View.GONE);

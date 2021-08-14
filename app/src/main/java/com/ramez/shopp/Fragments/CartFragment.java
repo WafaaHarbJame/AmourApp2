@@ -2,21 +2,17 @@ package com.ramez.shopp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -29,8 +25,6 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Dialogs.EmptyCartDialog;
-import com.ramez.shopp.Models.AddressModel;
-import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.Data;
@@ -47,10 +41,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import es.dmoral.toasty.Toasty;
-
-import static android.content.ContentValues.TAG;
 
 public class CartFragment extends FragmentBase implements CartAdapter.OnCartItemClicked {
     ArrayList<CartModel> cartList;
@@ -216,7 +206,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     }
 
-    @SuppressLint("SetTextI18n")
     private void initAdapter() {
         cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
             CartProcessModel cartProcessModel = (CartProcessModel) obj;
@@ -470,33 +459,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         invoiceFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
-    }
-
-    public void GetUserAddress(int user_id) {
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            AddressResultModel result = (AddressResultModel) obj;
-
-            if (IsSuccess) {
-                if (result.getData() != null && result.getData().size() > 0) {
-                    ArrayList<AddressModel> addressList=result.getData();
-                    for (int i = 0; i <addressList.size() ; i++) {
-                        AddressModel addressModel = addressList.get(i);
-                        if(addressModel.getDefault()){
-                            MemberModel user=UtilityApp.getUserData();
-                            user.setLastSelectedAddress(addressModel.getId());
-                            UtilityApp.setUserData(user);
-                        }
-
-                    }
-
-
-
-
-                }
-            }
-
-        }).GetAddressHandle(user_id);
     }
 
 
