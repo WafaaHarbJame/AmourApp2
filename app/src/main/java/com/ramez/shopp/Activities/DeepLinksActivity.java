@@ -164,12 +164,15 @@ public class DeepLinksActivity extends ActivityBase {
                     Intent intent = new Intent(getActiviy(), AllListActivity.class);
                     intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.Brands));
                     intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
-                    int brandId = Integer.parseInt(data.getQueryParameter("brand"));
-                    intent.putExtra(Constants.brand_id, brandId);
-                    intent.putExtra(Constants.isNotify, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+                    if(data.getQueryParameter("brand")!=null){
+                        int brandId = Integer.parseInt(data.getQueryParameter("brand"));
+                        intent.putExtra(Constants.brand_id, brandId);
+                        intent.putExtra(Constants.isNotify, true);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 } else if (list.size() == 5 && list.get(0).equals("products")) {
 
                     //https://ramezshopping.com/products/search/bh/store/7263?text=AL-ZAHRAH%20SOAP%20FLAKES%20840GR

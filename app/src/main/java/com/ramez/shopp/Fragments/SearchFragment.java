@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -44,7 +43,6 @@ import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.AutoCompleteModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
@@ -118,12 +116,12 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.recycler.setHasFixedSize(false);
         binding.recycler.setItemAnimator(null);
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-
-        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
-                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
-                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() :
+                UtilityApp.getDefaultLocalData(getActivityy());
+        country_id = localModel!= null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
+           localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
 
 

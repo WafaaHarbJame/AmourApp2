@@ -84,6 +84,8 @@ public class ChooseNearCity extends ActivityBase {
         Log.i("TAG", "Log country_id" + country_id);
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
@@ -93,12 +95,18 @@ public class ChooseNearCity extends ActivityBase {
                 String message = getString(R.string.fail_to_get_data);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.recycler.setVisibility(View.GONE);
+
+
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
 
                 GlobalData.Toast(getActiviy(), getString(R.string.no_internet_connection));
+
 
             } else {
                 if (IsSuccess) {
@@ -110,10 +118,15 @@ public class ChooseNearCity extends ActivityBase {
                             initAdapter();
                         }
                     } else {
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.recycler.setVisibility(View.GONE);
+
                         Toast(getString(R.string.no_cities));
                     }
                 } else {
                     Toast(getString(R.string.fail_to_get_data));
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.recycler.setVisibility(View.GONE);
 
                 }
             }

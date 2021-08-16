@@ -215,7 +215,7 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result != null && result.isSuccessful() && result.data != null) {
+            if (IsSuccess && result != null  && result.data != null) {
 
                 totalPointModel = result.data;
                 DBFunction.setTotalPoints(totalPointModel);

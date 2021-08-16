@@ -12,6 +12,7 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar" />
 
+
     <com.ramez.shopp.SpichalViews.STextViewBold
         android:id="@+id/branchTv"
         android:layout_width="match_parent"
@@ -22,6 +23,14 @@
         android:text="@string/branch_note"
         android:textColor="@color/white"
         android:textSize="@dimen/_10ssp" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

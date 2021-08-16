@@ -50,6 +50,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Models.CountryDetailsModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ProfileData;
@@ -73,7 +74,9 @@ public class MyAccountFragment extends FragmentBase {
     private String twitter_links = "";
     private static final int ZBAR_CAMERA_PERMISSION = 1;
     private int SEARCH_CODE = 2000;
+    LocalModel localModel;
     private String CODE = "";
+    private  int country_id,city_id;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +87,15 @@ public class MyAccountFragment extends FragmentBase {
         binding.SupportBtn.setVisibility(View.GONE);
 
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivity());
+
+
+        country_id = localModel != null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(localModel!= null && localModel.getCityId() != null ?
+                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+
+
         if (UtilityApp.getLinks() != null) {
             soicalLink = UtilityApp.getLinks();
             twitter_links = soicalLink.getTwitterLink();
@@ -92,8 +104,8 @@ public class MyAccountFragment extends FragmentBase {
             whats_link = soicalLink.getWhatsappLink();
 
         } else {
-            if (UtilityApp.getLocalData().getShortname() != null) {
-                getLinks(Integer.parseInt(UtilityApp.getLocalData().getCityId()));
+            if (localModel.getShortname() != null) {
+                getLinks(city_id);
             }
 
         }
@@ -225,10 +237,6 @@ public class MyAccountFragment extends FragmentBase {
                     initData(memberModel);
 
                 }
-//                if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
-//                    binding.changePassBtn.setVisibility(View.GONE);
-//                }
-
 
             } else {
                 if (memberModel != null && memberModel.getId() != null) {
@@ -371,7 +379,8 @@ public class MyAccountFragment extends FragmentBase {
 
             if (UtilityApp.isLogin()) {
                 MemberModel memberModel = UtilityApp.getUserData();
-                if(memberModel!=null&memberModel.getId()!=null){
+
+                if(memberModel!=null && memberModel.getId()!=null){
                     signOut(memberModel);
 
                 }
@@ -648,8 +657,8 @@ public class MyAccountFragment extends FragmentBase {
     private void CheckLoyal() {
          CountryDetailsModel countryDetailsModel= DBFunction.getLoyal();
         if (countryDetailsModel == null) {
-            if( UtilityApp.getLocalData()!=null&&UtilityApp.getLocalData().getShortname()!=null)
-            getCountryDetail(UtilityApp.getLocalData().getShortname());
+            if( localModel!=null&& localModel.getShortname()!=null)
+            getCountryDetail(localModel.getShortname());
 
         } else {
             boolean hasLoyal=countryDetailsModel.hasLoyal;

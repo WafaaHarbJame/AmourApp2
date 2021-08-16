@@ -550,32 +550,35 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
-        isNotify = bundle.getBoolean(Constants.isNotify, false);
+        if(bundle!=null){
+            isNotify = bundle.getBoolean(Constants.isNotify, false);
 
-        FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
+            FROM_BROSHER = bundle.getBoolean(Constants.FROM_BROSHER);
 
-        if (FROM_BROSHER) {
-            product_id = Integer.parseInt(bundle.getString(Constants.product_id));
-
-
-        } else {
-            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            if (productModel != null) {
-                product_id = productModel.getId();
+            if (FROM_BROSHER) {
+                product_id = Integer.parseInt(bundle.getString(Constants.product_id));
 
 
-                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                    productName = productModel.getHName();
+            } else {
+                ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
+                if (productModel != null) {
+                    product_id = productModel.getId();
 
-                } else {
-                    productName = productModel.getName();
+
+                    if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                        productName = productModel.getHName();
+
+                    } else {
+                        productName = productModel.getName();
+
+                    }
+
+                    binding.productNameTv.setText(productName);
 
                 }
-
-                binding.productNameTv.setText(productName);
-
             }
         }
+
 
 
         getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
@@ -752,7 +755,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
 
-                        if (productModel.getProductBarcodes().size() > 0) {
+                        if (productModel.getProductBarcodes()!=null && productModel.getProductBarcodes().size() > 0) {
                             initOptionAdapter();
                             binding.productOptionTv.setVisibility(View.VISIBLE);
                             binding.productOptionRv.setVisibility(View.VISIBLE);

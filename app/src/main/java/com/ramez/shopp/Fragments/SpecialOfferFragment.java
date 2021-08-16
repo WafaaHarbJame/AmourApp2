@@ -54,6 +54,7 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
 
 
     public void getBrochuresList(int store_id, int booklet_id) {
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -61,7 +62,6 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
-
                 ResultAPIModel<ArrayList<BrochuresModel>> result = (ResultAPIModel<ArrayList<BrochuresModel>>) obj;
                 String message = getString(R.string.fail_to_get_data);
 

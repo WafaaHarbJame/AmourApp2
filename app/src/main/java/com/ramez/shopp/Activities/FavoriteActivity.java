@@ -32,7 +32,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
     private String user_id, filter;
     private MemberModel user;
     private LocalModel localModel;
-    private int brand_id=0;
+    private int brand_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,12 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
         setContentView(view);
 
         user = UtilityApp.getUserData();
-        user_id = String.valueOf(UtilityApp.getUserData().getId());
 
+
+        if (user != null) {
+            user_id = String.valueOf(user.getId());
+
+        }
 
         productList = new ArrayList<>();
 
@@ -62,11 +66,11 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
         binding.favoriteRecycler.setHasFixedSize(true);
         binding.favoriteRecycler.setItemAnimator(null);
-        getFavoriteProducts(category_id, country_id, city_id, user_id, filter, brand_id,0, 10);
+        getFavoriteProducts(category_id, country_id, city_id, user_id, filter, brand_id, 0, 10);
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
-            getFavoriteProducts(category_id, country_id, city_id, user_id, filter,brand_id, 0, 10);
+            getFavoriteProducts(category_id, country_id, city_id, user_id, filter, brand_id, 0, 10);
 
         });
 
@@ -74,17 +78,16 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-            Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
-            intent.putExtra(Constants.DB_productModel, productModel);
-            startActivity(intent);
-
+        Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+        intent.putExtra(Constants.DB_productModel, productModel);
+        startActivity(intent);
 
 
     }
 
     public void initAdapter() {
 
-        OfferProductAdapter productFavAdapter =new OfferProductAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(),
+        OfferProductAdapter productFavAdapter = new OfferProductAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(),
                 binding.favoriteRecycler, filter, this, new DataCallback() {
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
@@ -98,12 +101,12 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
                 }
             }
-        },2);
+        }, 2);
         binding.favoriteRecycler.setAdapter(productFavAdapter);
     }
 
 
-    public void getFavoriteProducts(int category_id, int country_id, int city_id, String user_id, String filter,int brand_id, int page_number, int page_size) {
+    public void getFavoriteProducts(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -117,7 +120,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result != null && result.getMessage() != null){
+                if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -169,6 +172,6 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
                 }
             }
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter,brand_id, page_number, page_size);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 }

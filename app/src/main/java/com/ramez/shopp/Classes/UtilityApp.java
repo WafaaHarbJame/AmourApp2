@@ -267,13 +267,13 @@ public class UtilityApp {
 
     public static LocalModel getDefaultLocalData(Context context) {
         LocalModel newLocal=new LocalModel();
-        newLocal.setCityId("7263");
-        newLocal.setCountryId(17);
+        newLocal.setCityId(Constants.default_storeId);
+        newLocal.setCountryId(Constants.default_country_id);
         newLocal.setCountryNameEn(context.getString(R.string.Bahrain));
         newLocal.setCountryNameAr(context.getString(R.string.Bahrain_ar));
-        newLocal.setCurrencyCode("BHD");
+        newLocal.setCurrencyCode(Constants.BHD);
         newLocal.setShortname(context.getString(R.string.bahrain_shotname));
-        newLocal.setPhonecode(973);
+        newLocal.setPhonecode(Constants.default_country_code);
 
         newLocal.setFractional(Constants.three);
         return newLocal;

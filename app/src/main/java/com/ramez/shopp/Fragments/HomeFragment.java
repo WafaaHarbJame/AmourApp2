@@ -3,26 +3,17 @@ package com.ramez.shopp.Fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Trace;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,7 +52,6 @@ import com.ramez.shopp.Adapter.KitchenAdapter;
 import com.ramez.shopp.Adapter.MainSliderAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
@@ -76,7 +66,6 @@ import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryDetailsModel;
-import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.DinnerModel;
@@ -96,10 +85,7 @@ import com.ramez.shopp.databinding.FragmentHomeBinding;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 
 import es.dmoral.toasty.Toasty;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -198,10 +184,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
-                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
-                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        country_id = localModel != null && localModel.getCountryId() != null ?
+             localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(localModel!= null && localModel.getCityId() != null ?
+            localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
         getCityList(country_id);
         getDeliveryTimeListNew(city_id);
@@ -698,7 +684,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/nextDeliveryTime?";
+        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v7/Orders/nextDeliveryTime?";
         Log.d(TAG, "Log Get first " + url);
         Log.d(TAG, "Log  store_id " + storeId);
 
@@ -1260,7 +1246,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(slider.getReffrence()));
+            String subCatId=slider.getReffrence()!=null ? slider.getReffrence() :"0";
+            bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(subCatId));
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
 

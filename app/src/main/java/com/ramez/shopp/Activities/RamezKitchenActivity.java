@@ -70,21 +70,18 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         } else {
             lang = Locale.getDefault().getLanguage();
         }
-
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         MemberModel memberModel = UtilityApp.getUserData();
-        country_id = UtilityApp.getLocalData().getCountryId();
+        country_id =localModel.getCountryId();
 
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        city_id = Integer.parseInt(localModel.getCityId());
         sliderList = new ArrayList<>();
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
         recipes = new ArrayList<>();
-
-        storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-        currency = UtilityApp.getLocalData().getCurrencyCode();
-
+        storeId = Integer.parseInt(localModel.getCityId());
+        currency = localModel.getCurrencyCode();
 
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
         binding.offerRecycler.setLayoutManager(productLayoutManager);

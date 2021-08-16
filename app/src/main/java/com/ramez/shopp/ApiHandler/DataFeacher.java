@@ -39,7 +39,7 @@ import retrofit2.http.Query;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v6/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v7/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -355,7 +355,7 @@ public class DataFeacher {
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Locations/citiesByCountry";
+        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v7/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -594,7 +594,6 @@ public class DataFeacher {
         Log.i(TAG, "Log GetSingleProduct");
         Log.i(TAG, "Log  GetSingleProduct headerMap " + headerMap);
         Log.i(TAG, "Log  GetSingleProduct country_id " + country_id);
-//        Log.i(TAG, "Log  GetSingleProduct product_id " + 16629);
         Log.i(TAG, "Log  GetSingleProduct product_id " + product_id);
         Log.i(TAG, "Log  GetSingleProduct user_id " + user_id);
         Log.i(TAG, "Log  GetSingleProduct city_id " + city_id);

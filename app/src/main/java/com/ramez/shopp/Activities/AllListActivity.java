@@ -51,13 +51,19 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
+        country_id = localModel != null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActiviy()).getCountryId();
+        city_id = Integer.parseInt(localModel!= null && localModel.getCityId() != null ?
+                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
+
+
         user = UtilityApp.getUserData();
 
         binding.recycler.setHasFixedSize(true);
         binding.recycler.setItemAnimator(null);
 
-        country_id = localModel.getCountryId();
-        city_id = Integer.parseInt(localModel.getCityId());
+
+
 
         if (UtilityApp.isLogin() && user.getId()!=null) {
             user_id = String.valueOf(user.getId());
