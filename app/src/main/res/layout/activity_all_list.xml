@@ -45,7 +45,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
-                    app:spanCount="2"
+                    app:spanCount="3"
                     tools:listitem="@layout/row_search_product_item"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     android:layout_height="match_parent" />

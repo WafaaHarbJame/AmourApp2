@@ -83,6 +83,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         if (!UtilityApp.isLogin()) {
             binding.dataLY.setVisibility(View.GONE);
+            binding.noDataLY.noDataLY.setVisibility(View.GONE);
             binding.contBut.setVisibility(View.GONE);
             showLoginDialog();
         } else {
@@ -245,17 +246,16 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         });
         binding.cartRecycler.setAdapter(cartAdapter);
+
         productsSize = cartList.size();
         total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
         totalSavePrice = NumberHandler.formatDouble(cartAdapter.calculateSavePrice(), fraction);
         binding.totalTv.setText(total.concat(" " + currency));
 
         if (cartAdapter.calculateSavePrice() == 0) {
-
             binding.savePriceLy.setVisibility(View.GONE);
         } else {
             binding.savePriceLy.setVisibility(View.VISIBLE);
-
         }
 
         binding.saveText.setText(totalSavePrice.concat(" " + currency));

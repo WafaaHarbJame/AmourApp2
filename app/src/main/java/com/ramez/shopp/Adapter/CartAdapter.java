@@ -63,7 +63,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         int quantity = cartDM.getQuantity();
 
-        holder.binding.weightUnitTv.setText(cartDM.getWeightUnit());
+        holder.binding.weightUnitTv.setText(cartDM.getWightName());
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
 
@@ -113,7 +113,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 //        GlobalData.PicassoImg(cartDM.getImage()
 //                , R.drawable.holder_image, holder.binding.imageView1);
 
-        GlobalData.GlideImg(context,cartDM.getImage()
+        GlobalData.GlideImg(context, cartDM.getImage()
                 , R.drawable.holder_image, holder.binding.imageView1);
 
 
@@ -134,41 +134,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             holder.binding.markTv.setText(cartDM.getRemark());
         } else
             holder.binding.markTv.setVisibility(View.GONE);
-
-
-        holder.binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
-
-        holder.binding.swipe.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-            }
-        });
 
         if (cartDM.getQuantity() > cartDM.getProductQuantity() && !cartDM.isExtra()) {
             holder.binding.cardBack.setBackground(ContextCompat.getDrawable(context, R.drawable.round_card_red));
@@ -286,9 +251,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             binding.cardView.setOnClickListener(v -> {
                 int position = getBindingAdapterPosition();
-
-                CartModel cartDM = cartDMS.get(position);
-                onCartItemClicked.onCartItemClicked(cartDM);
+                if (position >= 0) {
+                    CartModel cartDM = cartDMS.get(position);
+                    onCartItemClicked.onCartItemClicked(cartDM);
+                }
             });
 
 
@@ -379,14 +345,11 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                             if (count + 1 > stock) {
                                 message = context.getString(R.string.limit) + "" + limit;
 
-                            }
-
-                            else if(stock==0){
+                            } else if (stock == 0) {
                                 message = context.getString(R.string.stock_empty);
 
 
-                            }
-                            else {
+                            } else {
                                 message = context.getString(R.string.limit) + "" + limit;
 
                             }
@@ -440,6 +403,40 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
+            binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
+
+            binding.swipe.addSwipeListener(new SwipeLayout.SwipeListener() {
+                @Override
+                public void onStartOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onOpen(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onStartClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onClose(SwipeLayout layout) {
+
+                }
+
+                @Override
+                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+                }
+
+                @Override
+                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+                }
+            });
+
 
         }
 
@@ -466,7 +463,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
 
                     //initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                    if(cartDMS!=null && cartDMS.size()>0){
+                    if (cartDMS != null && cartDMS.size() > 0) {
                         cartDMS.get(position).setQuantity(cartQuantity);
                         notifyItemChanged(position);
                     }
@@ -505,7 +502,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
-                if (cartDMS.size() > 0 && position<cartDMS.size()) {
+                if (cartDMS.size() > 0 && position < cartDMS.size()) {
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
 

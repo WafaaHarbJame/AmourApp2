@@ -39,7 +39,7 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
         binding.broucherRecycler.setLayoutManager(linearLayoutManager);
         binding.broucherRecycler.setHasFixedSize(true);
         binding.broucherRecycler.setItemAnimator(null);
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
         store_id = localModel.getCityId() != null ? Integer.parseInt(localModel.getCityId()) : 7263;
 
@@ -138,7 +138,8 @@ public class SpecialOfferFragment extends FragmentBase implements BrouchersrAdap
                 Log.i("Log bookletsModel", "Log bookletsModel from 3 " + bookletsModel.getId());
 
                 booklet_id = bookletsModel.getId();
-                store_id = bookletsModel.getStoreID();
+                store_id = bookletsModel.getStoreID() > 0 ?bookletsModel.getStoreID():localModel.getCityId() != null ? Integer.parseInt(localModel.getCityId()) : 7263;
+                ;
                 Log.i("Log bookletsModel", "Log booklet_id " + booklet_id);
                 Log.i("Log bookletsModel", "Log store_id " + store_id);
 

@@ -193,7 +193,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         getDeliveryTimeListNew(city_id);
         CheckLoyal(localModel.getShortname());
 
-
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -684,16 +683,18 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v7/Orders/nextDeliveryTime?";
+        String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/nextDeliveryTime?";
         Log.d(TAG, "Log Get first " + url);
         Log.d(TAG, "Log  store_id " + storeId);
 
+
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
 
         AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
                 addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken()).
+                .addHeaders("token", token).
                 addQueryParameter("store_id", String.valueOf(storeId)).build()
                 .getAsObject(DeliveryResultModel.class, new ParsedRequestListener<DeliveryResultModel>() {
                     @SuppressLint("SetTextI18n")
@@ -828,7 +829,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 }
             }
 
-        }).CityHandle(country_id);
+        }).CityHandle(country_id,getActivity());
     }
 
     private void getCityList(int country_id) {
@@ -1119,7 +1120,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         FragmentManager fragmentManager = getParentFragmentManager();
         SpecialOfferFragment specialOfferFragment = new SpecialOfferFragment();
         Bundle bundle = new Bundle();
+        bookletsModel.setStoreID(city_id);
         bundle.putSerializable(Constants.bookletsModel, bookletsModel);
+
         specialOfferFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
@@ -1206,6 +1209,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             Bundle bundle = new Bundle();
             BookletsModel bookletsModel = new BookletsModel();
             bookletsModel.setId(Integer.parseInt(slider.getReffrence()));
+            bookletsModel.setStoreID(city_id);
             bundle.putSerializable(Constants.bookletsModel, bookletsModel);
             specialOfferFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();

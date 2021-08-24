@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
 import com.androidnetworking.AndroidNetworking;
+import com.google.android.libraries.places.api.Places;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -57,6 +58,8 @@ public class RootApplication extends Application {
         rootApplication = this;
         sharedPManger = new SharedPManger(this);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        Places.initialize(getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
 
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 

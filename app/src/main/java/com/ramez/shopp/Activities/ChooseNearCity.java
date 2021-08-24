@@ -1,5 +1,6 @@
 package com.ramez.shopp.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,7 +61,7 @@ public class ChooseNearCity extends ActivityBase {
             Log.i("TAG", "Log country_id Intent" + country_id);
             Log.i("TAG", "Log country_id model " + localModel.getCountryId());
 
-            getCityList(country_id);
+            getCityList(country_id,getActiviy());
 
         }
 
@@ -79,7 +80,7 @@ public class ChooseNearCity extends ActivityBase {
     }
 
 
-    private void getCityList(int country_id) {
+    private void getCityList(int country_id, Activity activity) {
         list.clear();
         Log.i("TAG", "Log country_id" + country_id);
 
@@ -131,7 +132,7 @@ public class ChooseNearCity extends ActivityBase {
                 }
             }
 
-        }).CityHandle(country_id);
+        }).CityHandle(country_id,activity);
 
     }
 

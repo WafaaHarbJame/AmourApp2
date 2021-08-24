@@ -54,6 +54,7 @@ public class GlobalData {
         }
 
         String finalPhotoUrl = photoUrl;
+
         Picasso.get().load(finalPhotoUrl).placeholder(placeholder).error(R.drawable.holder_image).into(imageView);
 
     }

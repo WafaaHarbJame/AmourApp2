@@ -399,12 +399,14 @@ public class ExtraRequestActivity extends ActivityBase {
                 .build();
 
 //AndroidNetworking.initialize(getActiviy(),okHttpClient);
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v7/Carts/AddExtrat").addMultipartFile("file", photo)
+                GlobalData.Api + "v6/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken())
+                .addHeaders("token", token)
 
                 .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
                 .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
@@ -487,12 +489,14 @@ public class ExtraRequestActivity extends ActivityBase {
                 .writeTimeout(120, TimeUnit.SECONDS)
                 .build();
 
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+
         AndroidNetworking.post(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v7/Carts/AddExtrat")
+                GlobalData.Api + "v6/Carts/AddExtrat")
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken())
+                .addHeaders("token", token)
                 .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
                 .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))

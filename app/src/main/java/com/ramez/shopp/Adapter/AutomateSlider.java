@@ -52,7 +52,7 @@ public class AutomateSlider extends SliderViewAdapter<AutomateSlider.sliderAdapt
         }
 
 
-        GlobalData.PicassoImg(imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
+        GlobalData.GlideImg(context,imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
 
 //        Glide.with(viewHolder.itemView).load(imageUrl).error(R.drawable.holder_image).placeholder(R.drawable.holder_image).fitCenter().into(viewHolder.imageViewBackground);
 

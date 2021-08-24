@@ -366,6 +366,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 
         Intent intent = new Intent(getActiviy(), MainActivity.class);
         intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_BROSHORE);
+        bookletsModel.setStoreID(city_id);
         intent.putExtra(Constants.bookletsModel, bookletsModel);
         intent.putExtra(Constants.Inside_app, true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

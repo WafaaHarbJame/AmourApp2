@@ -2,6 +2,7 @@ package com.ramez.shopp.ApiHandler;
 
 
 import android.accounts.Account;
+import android.app.Activity;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -39,7 +40,7 @@ import retrofit2.http.Query;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v7/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v6/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -54,10 +55,12 @@ public class DataFeacher {
 
         };
 
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+
         headerMap.put("ApiKey", Constants.api_key);
         headerMap.put("device_type", Constants.deviceType);
         headerMap.put("app_version", UtilityApp.getAppVersionStr());
-        headerMap.put("token", UtilityApp.getToken());
+        headerMap.put("token", token);
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
 
@@ -118,10 +121,11 @@ public class DataFeacher {
         this.dataFetcherCallBack = dataFetcherCallBack;
         apiService = isLong ? ApiClient.getLongClient().create(ApiInterface.class) : ApiClient.getClient().create(ApiInterface.class);
 
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
         headerMap.put("ApiKey", Constants.api_key);
         headerMap.put("device_type", Constants.deviceType);
         headerMap.put("app_version", UtilityApp.getAppVersionStr());
-        headerMap.put("token", UtilityApp.getToken());
+        headerMap.put("token", token);
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
 
@@ -344,18 +348,20 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void CityHandle(int country_id) {
+    public void CityHandle(int country_id, Activity activity) {
 
         Log.i(TAG, "Log CityHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
 
         String countryCode = "";
-        if (UtilityApp.getLocalData().getShortname() != null)
-            countryCode = UtilityApp.getLocalData().getShortname();
+       LocalModel localModel = UtilityApp.getLocalData()!=null ?UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(activity);
+
+        if (localModel.getShortname() != null)
+            countryCode = localModel.getShortname();
         else countryCode = GlobalData.COUNTRY;
 
-        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v7/Locations/citiesByCountry";
+        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -1282,6 +1288,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
 
     }
+
 
 
 }

@@ -158,7 +158,6 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
 
         binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
                 String text = v.getText().toString();
                 searchTxt(country_id, city_id, user_id, text, 0, 10);
                 ActivityHandler.hideKeyboard(getActivity());

@@ -131,10 +131,11 @@ public class SplashScreenActivity extends ActivityBase {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
             if (IsSuccess && result != null && result.data != null) {
                 MemberModel memberModel = UtilityApp.getUserData();
-                memberModel.setName(result.data.getName());
-                memberModel.setEmail(result.data.getEmail());
-                memberModel.setLoyalBarcode(result.data.getLoyalBarcode());
-                memberModel.setProfilePicture(result.data.getLoyalBarcode());
+                ProfileData profileData=result.data;
+                memberModel.setName(profileData.getName()+"");
+                memberModel.setEmail(profileData.getEmail());
+                memberModel.setLoyalBarcode(profileData.getLoyalBarcode());
+                memberModel.setProfilePicture(profileData.getLoyalBarcode());
                 UtilityApp.setUserData(memberModel);
                 getCarts(storeId, userId);
             } else {

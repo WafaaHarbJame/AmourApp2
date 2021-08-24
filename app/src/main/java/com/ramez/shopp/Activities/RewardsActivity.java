@@ -48,6 +48,7 @@ public class RewardsActivity extends ActivityBase {
             super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
 
@@ -59,7 +60,7 @@ public class RewardsActivity extends ActivityBase {
                     return new CouponsFragment();
 
                 default:
-                    return new CurrentOrderFragment();
+                    return new CardFragment();
             }
         }
 

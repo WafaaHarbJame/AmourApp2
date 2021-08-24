@@ -1,5 +1,6 @@
 package com.ramez.shopp.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,11 +120,11 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         initAdapter();
 
 
-        getCityList(countryId);
+        getCityList(countryId,getActiviy());
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getCityList(countryId);
+            getCityList(countryId,getActiviy());
         });
 
 
@@ -189,7 +190,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
 
     }
 
-    private void getCityList(int country_id) {
+    private void getCityList(int country_id, Activity activity) {
 
         cityModelArrayList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
@@ -249,7 +250,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
             }
 
 
-        }).CityHandle(country_id);
+        }).CityHandle(country_id,activity);
 
     }
 
@@ -269,7 +270,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         Log.i("tag", "Log click oldCountry" + oldCountryName);
         Log.i("tag", "Log click newCountryName" + newCountryName);
         Log.i("tag", "Log click ShortName" + countryModel.getShortname());
-        getCityList(countryId);
+        getCityList(countryId,getActiviy());
 
         toggleLangButton = !toggleLangButton;
         toggleButton = !toggleButton;

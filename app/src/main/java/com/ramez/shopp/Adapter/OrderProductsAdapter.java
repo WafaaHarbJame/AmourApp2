@@ -62,7 +62,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getCartPrice() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getCartPrice() + " " + currency);
 
-        GlobalData.PicassoImg(orderProductsDM.getImage()
+        GlobalData.GlideImg(context,orderProductsDM.getImage()
                 , R.drawable.holder_image, holder.productImage);
 
         //        Picasso.get()

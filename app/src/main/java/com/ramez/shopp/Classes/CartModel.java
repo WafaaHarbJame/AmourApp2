@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class CartModel implements Serializable {
     @SerializedName("id")
@@ -99,6 +100,9 @@ public class CartModel implements Serializable {
     @SerializedName("isExtra")
     @Expose
     private boolean isExtra;
+    @SerializedName("weight_unit_ar")
+    @Expose
+    private String weight_unit_ar;
     private Double savePrice;
 
     public Double getSavePrice() {
@@ -391,12 +395,35 @@ public class CartModel implements Serializable {
 
 
     public String getName(){
-        if(UtilityApp.getLanguage().equals(Constants.English)){
+        String lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
+
+        if(lang.equals(Constants.English)){
             return productName;
 
         }
         else {
             return hProductName;
         }
+    }
+
+
+    public String getWightName(){
+        String lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
+
+        if(lang.equals(Constants.English)){
+            return weightUnit;
+
+        }
+        else {
+            return weight_unit_ar;
+        }
+    }
+
+    public String getWeight_unit_ar() {
+        return weight_unit_ar;
+    }
+
+    public void setWeight_unit_ar(String weight_unit_ar) {
+        this.weight_unit_ar = weight_unit_ar;
     }
 }

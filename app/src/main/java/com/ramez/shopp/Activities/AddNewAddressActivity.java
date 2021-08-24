@@ -94,10 +94,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         binding = ActivityAddNewAddressBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        Places.initialize(getActiviy(), this.getString(R.string.mapKey), Locale.US);
-
         setContentView(view);
 
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
+        }
 
         stateModelList = new ArrayList<>();
         stateNames = new ArrayList<>();

@@ -96,7 +96,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         MemberModel memberModel = UtilityApp.getUserData();
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
-
         country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
                 UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActiviy()).getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?

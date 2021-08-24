@@ -102,72 +102,79 @@ public class CurrentOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            OrderResultModel result = (OrderResultModel) obj;
 
-            String message = "";
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            if (isVisible()) {
 
-            if (func.equals(Constants.ERROR)) {
+                OrderResultModel result = (OrderResultModel) obj;
 
-                if (result!=null&&result.message!= null) {
-                    message = result.message;
-                }
-                else {
-                    message = getActivity().getString(R.string.fail_to_get_data);
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+                String message = "";
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            } else if (func.equals(Constants.FAIL)) {
-                message = getActivity().getString(R.string.fail_to_get_data);
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
+                if (func.equals(Constants.ERROR)) {
 
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-                if (IsSuccess) {
-                    if (result.data!= null && result.data.size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-                        currentOrdersList = result.data;
-
-                        initOrdersAdapters(currentOrdersList);
-
-                        Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
-
-
+                    if (result != null && result.message != null) {
+                        message = result.message;
                     } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
+                        message = getString(R.string.fail_to_get_data);
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
+                } else if (func.equals(Constants.FAIL)) {
 
-                } else {
+                    message = getString(R.string.fail_to_get_data);
 
+                    if (result != null && result.message != null) {
+                        message = result.message;
+                    }
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
 
 
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        if (result.data != null && result.data.size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+                            currentOrdersList = result.data;
+
+                            initOrdersAdapters(currentOrdersList);
+
+                            Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
+
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
                 }
             }
-
         }).getOrders(user_id,type,filter);
     }
 

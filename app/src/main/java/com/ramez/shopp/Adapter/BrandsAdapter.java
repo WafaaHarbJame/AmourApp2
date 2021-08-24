@@ -54,7 +54,7 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
 
         }
 
-        GlobalData.PicassoImg(imageUrl
+        GlobalData.GlideImg(context,imageUrl
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
 

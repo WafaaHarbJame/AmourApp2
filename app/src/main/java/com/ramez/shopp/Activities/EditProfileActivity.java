@@ -267,13 +267,16 @@ public class EditProfileActivity extends ActivityBase {
 
         }
 
+        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+
+
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v7/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+                GlobalData.Api + "v6/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", UtilityApp.getToken())
+                .addHeaders("token", token)
 
                 .setPriority(Priority.HIGH).build().
                 setUploadProgressListener((bytesUploaded, totalBytes) -> {
