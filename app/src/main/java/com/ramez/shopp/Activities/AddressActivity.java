@@ -15,6 +15,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Models.AddressModel;
@@ -53,15 +54,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
 
 //        getIntentExtra();
 
-
-        if (UtilityApp.isLogin()) {
-            if (user != null && user.getId() != null) {
-                GetUserAddress(user.getId());
-
-            }
-
-        }
-
+        getAddress();
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
@@ -70,12 +63,13 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
 
         binding.swipe.setOnRefreshListener(() -> {
             binding.swipe.setRefreshing(false);
-            GetUserAddress(user.getId());
 
+            getAddress();
         });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            GetUserAddress(user.getId());
+
+            getAddress();
         });
 
 
@@ -136,6 +130,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
         Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
         startActivityForResult(intent, ADD_ADDRESS);
     }
+
 
     public void GetUserAddress(int user_id) {
 
@@ -329,8 +324,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
                     Log.i(getClass().getSimpleName(), "Log addNewAddress onActivityResult  " + addNewAddress);
 
                     if (addNewAddress) {
-                        GetUserAddress(user.getId());
-
+                        getAddress();
                     }
 
 
@@ -343,5 +337,26 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnCo
     }
 
 
+    private void showDialogs(int message) {
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null);
+        checkLoginDialog.show();
+        checkLoginDialog.show();
+
+    }
+
+    private void getAddress() {
+
+        if (UtilityApp.isLogin()) {
+            if (user != null && user.getId() != null) {
+                GetUserAddress(user.getId());
+
+            }
+
+        } else {
+            showDialogs(R.string.to_show_address);
+
+        }
+
+    }
 }
 
