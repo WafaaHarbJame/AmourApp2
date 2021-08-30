@@ -77,7 +77,7 @@ public class StateDialog extends Dialog {
         linearLayoutManager = new LinearLayoutManager(activity);
         rv.setLayoutManager(linearLayoutManager);
         rv.hasFixedSize();
-        LocalModel localModel = UtilityApp.getLocalData();
+        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         countryId = localModel.getCountryId();
         loadingProgressLY = findViewById(R.id.loadingLY);
 

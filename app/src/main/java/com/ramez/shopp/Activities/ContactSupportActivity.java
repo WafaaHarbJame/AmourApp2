@@ -76,7 +76,7 @@ public class ContactSupportActivity extends ActivityBase {
         setContentView(view);
 
         user = UtilityApp.getUserData();
-        userID = String.valueOf(user.getId());
+        userID =   user != null && user.getId() != null ? String.valueOf(user.getId()) : "0";
 
         userName = user.getName();
         user_image = user.getProfilePicture();

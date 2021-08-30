@@ -67,7 +67,7 @@ public class CategoryDialog extends Dialog  implements CategoryAdapter.OnItemCli
         gridLayoutManager = new GridLayoutManager(activity, 3);
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         if(UtilityApp.getCategories()!=null&&UtilityApp.getCategories().size()>0){
             categoryModelList=UtilityApp.getCategories();
             initAdapter();

@@ -98,7 +98,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
         country_id = localModel.getCountryId();
 
 

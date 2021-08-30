@@ -64,7 +64,7 @@ public class LoginFragment extends FragmentBase {
 
         View view = binding.getRoot();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
         viewPager = container.findViewById(R.id.viewPager);
 
@@ -302,7 +302,7 @@ public class LoginFragment extends FragmentBase {
 
             } else {
                 if (IsSuccess) {
-                    localModel = UtilityApp.getLocalData();
+                    localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user.getId();

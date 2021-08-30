@@ -679,7 +679,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     public void getDeliveryTimeListNew(int storeId) {
 
         String countryCode = "";
-        if (UtilityApp.getLocalData().getShortname() != null)
+        if (localModel.getShortname() != null)
             countryCode = UtilityApp.getLocalData().getShortname();
         else countryCode = GlobalData.COUNTRY;
 

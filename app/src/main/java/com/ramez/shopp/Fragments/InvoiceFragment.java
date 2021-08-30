@@ -133,8 +133,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         DayList = new ArrayList<>();
         productCheckerList = new ArrayList<>();
 
-        localModel = UtilityApp.getLocalData();
-        currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
         minimum_order_amount = localModel.getMinimum_order_amount();
 

@@ -58,8 +58,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
         list = new ArrayList<>();
 
-        localModel = UtilityApp.getLocalData();
-        countryId = localModel.getCountryId();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+        countryId = localModel != null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
@@ -74,9 +75,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             GenerateDialog generateDialog = new GenerateDialog(getActivityy(), userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
                 @Override
                 public void Result(Object obj, String func, boolean IsSuccess) {
-                        if (IsSuccess) {
-                            GlobalData.refresh_points=true;
-                            callGetTotalPoints();
+                    if (IsSuccess) {
+                        GlobalData.refresh_points = true;
+                        callGetTotalPoints();
 
                     }
                 }
@@ -173,8 +174,8 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             if (result != null && result.isSuccessful() && result.data != null) {
 
                 totalPointModel = result.data;
-                Log.i(getClass().getSimpleName(),"Log  totalPointModel call "+totalPointModel.points);
-                Log.i(getClass().getSimpleName(),"Log  totalPointModel call"+totalPointModel.value);
+                Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
+                Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
                 DBFunction.setTotalPoints(totalPointModel);
             }
 
@@ -198,11 +199,10 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (result.isSuccessful()) {
-                if (result != null && result.data != null && result.status==200) {
+                if (result != null && result.data != null && result.status == 200) {
                     settingCouponsModel = result.data;
                     DBFunction.setCouponSettings(settingCouponsModel);
                 }
-
 
 
             }

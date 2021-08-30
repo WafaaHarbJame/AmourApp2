@@ -50,7 +50,7 @@ public class GenerateDialog extends Dialog {
         super(context);
 
         activity = (Activity) context;
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         countryId = localModel.getCountryId();
         total = totalPoints;
         this.userId = userId;

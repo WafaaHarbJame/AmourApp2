@@ -82,7 +82,7 @@ public class ExtraRequestActivity extends ActivityBase {
         setTitle("");
 
         user = UtilityApp.getUserData();
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         if (UtilityApp.getUserData() != null) {
             store_id = Integer.parseInt(localModel.getCityId());

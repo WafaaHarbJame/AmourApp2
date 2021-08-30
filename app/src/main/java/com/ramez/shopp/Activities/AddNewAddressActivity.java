@@ -111,7 +111,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
 
-        if (UtilityApp.getLocalData() != null) {
+        if (localModel!= null) {
 
             if (localModel.getCountryName() != null && localModel.getPhonecode() != null) {
                 binding.codeSpinner.setText(localModel.getCountryName().concat(" " + "(" + localModel.getPhonecode() + ")"));

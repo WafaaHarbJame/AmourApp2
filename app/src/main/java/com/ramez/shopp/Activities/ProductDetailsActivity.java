@@ -111,7 +111,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         fraction=localModel.getFractional();
 
-        storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        storeId = Integer.parseInt(localModel.getCityId());
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
