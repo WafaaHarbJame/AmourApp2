@@ -13,6 +13,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ItemDetailsModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -37,6 +38,7 @@ public class InvoiceInfoActivity extends ActivityBase {
     private OrderProductsAdapter orderProductsAdapter;
     private int orderId = 0;
     int store_id, userId;
+    int fraction=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,11 @@ public class InvoiceInfoActivity extends ActivityBase {
         setContentView(view);
 
 //        list = new ArrayList<>();
-        currency = UtilityApp.getLocalData().getCurrencyCode();
+
+        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        currency = localModel.getCurrencyCode();
+        fraction=localModel.getFractional();
+        
         if (UtilityApp.isLogin()) {
             userId = UtilityApp.getUserData().getId();
         }
@@ -94,7 +100,7 @@ public class InvoiceInfoActivity extends ActivityBase {
         orderProductsAdapter = new OrderProductsAdapter(getActiviy(), orderModel.getOrderItemDetails());
         binding.productsRecycler.setAdapter(orderProductsAdapter);
         if (orderModel.getTotalAmount() > 0) {
-            binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getTotalAmount(), UtilityApp.getLocalData().getFractional()) + " " + currency));
+            binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getTotalAmount(), fraction) + " " + currency));
 
         }
 

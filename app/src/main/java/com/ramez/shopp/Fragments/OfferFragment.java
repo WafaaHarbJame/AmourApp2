@@ -75,20 +75,18 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
                 UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
 
-
         linearLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(linearLayoutManager);
 
         if (UtilityApp.isLogin()) {
             MemberModel memberModel = UtilityApp.getUserData();
-            if(memberModel!=null&&memberModel.getId()!=null){
+            if (memberModel != null && memberModel.getId() != null) {
                 user_id = String.valueOf(memberModel.getId());
 
             }
 
         }
-
 
 
         country_id = UtilityApp.getLocalData().getCountryId();
@@ -105,7 +103,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             mainCategoryDMS = UtilityApp.getCategories();
 
             mainCategoryDMS.add(new CategoryModel(0));
-            CategoryModel all=new CategoryModel();
+            CategoryModel all = new CategoryModel();
             all.setId(0);
             all.setHName(getString(R.string.all));
             all.setName(getString(R.string.all));
@@ -152,10 +150,10 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     public void onItemClicked(int position, ProductModel productModel) {
         Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
         intent.putExtra(Constants.DB_productModel, productModel);
-        Log.i(getClass().getSimpleName(), "Log offer  IsSpecial  " + productModel.getProductBarcodes().get(0).getIsSpecial());
-        Log.i(getClass().getSimpleName(), "Log offer SpecialPrice  " + productModel.getProductBarcodes().get(0).getSpecialPrice());
-        Log.i(getClass().getSimpleName(), "Log offer  price  " + productModel.getProductBarcodes().get(0).getPrice());
-        Log.i(getClass().getSimpleName(), "Log offer Id  " + productModel.getProductBarcodes().get(0).getId());
+        Log.i(getClass().getSimpleName(), "Log offer  IsSpecial  " + productModel.getFirstProductBarcodes().isSpecial());
+        Log.i(getClass().getSimpleName(), "Log offer SpecialPrice  " + productModel.getFirstProductBarcodes().getSpecialPrice());
+        Log.i(getClass().getSimpleName(), "Log offer  price  " + productModel.getFirstProductBarcodes().getPrice());
+        Log.i(getClass().getSimpleName(), "Log offer Id  " + productModel.getFirstProductBarcodes().getId());
 
 
         startActivity(intent);

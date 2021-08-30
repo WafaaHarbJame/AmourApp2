@@ -23,7 +23,9 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
+import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
@@ -44,6 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     private double discount = 0.0;
     private String currency = "BHD";
     private int limit = 2;
+    int fraction = 2;
 
 
     public ProductAdapter(Context context, ArrayList<ProductModel> productModels, OnItemClick onItemClick, int limit) {
@@ -67,12 +70,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
 
-        currency = UtilityApp.getLocalData().getCurrencyCode();
+        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        currency = localModel.getCurrencyCode();
+        fraction = localModel.getFractional();
 
         holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
 
-        if (productModel.getFavourite() != null && productModel.getFavourite()) {
+        if (productModel.isFavourite()) {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
         } else {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
@@ -80,7 +85,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+        int quantity = productModel.getFirstProductBarcodes().getCartQuantity();
+
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
             holder.binding.CartLy.setVisibility(View.VISIBLE);
@@ -100,19 +106,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
+        if (productModel.getFirstProductBarcodes().isSpecial()) {
 
-        if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-
-            double originalPrice = productModel.getProductBarcodes().get(0).getPrice();
-            double specialPrice = productModel.getProductBarcodes().get(0).getSpecialPrice();
+            double originalPrice = productModel.getFirstProductBarcodes().getPrice();
+            double specialPrice = productModel.getFirstProductBarcodes().getSpecialPrice();
 
 
             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
 
             holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(originalPrice,
-                    UtilityApp.getLocalData().getFractional()) + " " + currency);
+                    fraction) + " " + currency);
             holder.binding.productPriceTv.setText(NumberHandler.formatDouble(specialPrice,
-                    UtilityApp.getLocalData().getFractional()) + " " + currency);
+                    fraction) + " " + currency);
 
             double discountValue = originalPrice - specialPrice;
             double discountPercent = (discountValue / originalPrice) * 100;
@@ -127,7 +132,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         } else {
 
-            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+            holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getFirstProductBarcodes().getPrice())), fraction) + " " + currency + "");
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
             holder.binding.discountTv.setVisibility(View.GONE);
 
@@ -174,7 +179,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             } else {
                 if (IsSuccess) {
 
-                    AnalyticsHandler.AddToWishList(productId,currency,productId);
+                    AnalyticsHandler.AddToWishList(productId, currency, productId);
                     Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
                     productModels.get(position).setFavourite(true);
                     notifyItemChanged(position);
@@ -249,7 +254,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
-                    boolean isFavorite = productModels.get(position).getFavourite();
+                    boolean isFavorite = productModels.get(position).isFavourite();
                     if (isFavorite) {
                         removeFromFavorite(view1, position, productId, userId, storeId);
 
@@ -272,17 +277,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                     int position = getBindingAdapterPosition();
 
-                    if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+                    if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
                         ProductModel productModel = productModels.get(position);
-                        int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                        int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                        ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                        int count = productBarcode.getCartQuantity();
+                        int stock = productBarcode.getStockQty();
                         Log.i("lll", "Log stock" + stock);
 
                         int userId = UtilityApp.getUserData().getId();
                         int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                         int productId = productModel.getId();
-                        int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                        int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                        int product_barcode_id = productBarcode.getId();
+                        int limit = productBarcode.getLimitQty();
 
                         if (limit == 0) {
 
@@ -311,8 +317,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                             }
 
                         }
-                    }
-                    else {
+                    } else {
                         CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                         checkLoginDialog.show();
                     }
@@ -327,15 +332,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int position = getBindingAdapterPosition();
 
                 ProductModel productModel = productModels.get(position);
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
 //                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                int stock = productBarcode.getStockQty();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
-                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                int product_barcode_id = productBarcode.getId();
+                int cart_id = productBarcode.getCartId();
+                int limit = productBarcode.getLimitQty();
                 Log.i("tag", "Log limit" + limit);
                 Log.i("tag", "Log cart_id" + cart_id);
                 Log.i("tag", "Log stock" + stock);
@@ -379,13 +385,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             binding.minusCartBtn.setOnClickListener(v -> {
                 int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                int product_barcode_id = productBarcode.getId();
+                int cart_id = productBarcode.getCartId();
 
                 Log.i("tag", "Log limit " + limit);
                 Log.i("tag", "Log cart_id " + cart_id);
@@ -399,12 +406,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 int position = getBindingAdapterPosition();
                 ProductModel productModel = productModels.get(position);
-
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                int product_barcode_id = productBarcode.getId();
+                int cart_id = productBarcode.getCartId();
                 Log.i("tag", "Log limit" + limit);
                 Log.i("tag", "Log cart_id" + cart_id);
 
@@ -432,7 +439,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
-            if(quantity>0){
+            if (quantity > 0) {
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                     CartProcessModel result = (CartProcessModel) obj;
@@ -442,8 +449,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                         Log.i("tag", "Log " + UtilityApp.getCartCount());
                         UtilityApp.updateCart(1, productModels.size());
                         binding.cartBut.setVisibility(View.GONE);
-                        productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
-                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        productModels.get(position).getFirstProductBarcodes().setCartId(cartId);
+                        productModels.get(position).getFirstProductBarcodes().setCartQuantity(quantity);
                         AnalyticsHandler.AddToCart(cartId, currency, quantity);
 
                         notifyItemChanged(position);
@@ -458,8 +465,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
 
-            }
-            else {
+            } else {
                 Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
             }
 
@@ -468,11 +474,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
 
-            if(quantity>0){
+            if (quantity > 0) {
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
                     if (IsSuccess) {
 
-                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        productModels.get(position).getFirstProductBarcodes().setCartQuantity(quantity);
                         /// initSnackBar(context.getString(R.string.success_to_update_cart));
                         notifyItemChanged(position);
 
@@ -485,8 +491,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
-            }
-            else {
+            } else {
                 Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
             }
         }
@@ -497,7 +502,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 if (IsSuccess) {
                     UtilityApp.updateCart(2, productModels.size());
                     Log.i("tag", "Log " + UtilityApp.getCartCount());
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
+                    productModels.get(position).getFirstProductBarcodes().setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
                     AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);

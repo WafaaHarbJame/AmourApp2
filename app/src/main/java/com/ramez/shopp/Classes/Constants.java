@@ -140,5 +140,6 @@ public class Constants {
     public static String default_storeId="7263";
     public static int default_country_id=17;
     public static int default_country_code=973;
+    public static String default_short_name="BH";
     public static final String BHD ="BHD" ;
 }

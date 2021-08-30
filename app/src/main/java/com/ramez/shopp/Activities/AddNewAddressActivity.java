@@ -155,7 +155,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     Toast(R.string.enter_name);
                     binding.nameEt.requestFocus();
 
-                } else if (selectedCityId==0 ) {
+                } else if (selectedCityId == 0) {
                     YoYo.with(Techniques.Shake).playOn(binding.stateSpinner1Input);
                     Toast(R.string.select_area);
                 }
@@ -176,7 +176,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             binding.addNewAddressBut.setVisibility(View.VISIBLE);
             checkLocationPermission();
             initPlaceAutoComplete();
-
 
         }
 
@@ -217,6 +216,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
 
         });
+
     }
 
     private void CreateNewAddress() {
@@ -310,7 +310,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     binding.dataLY.setVisibility(View.VISIBLE);
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
-                        if(addressModel!=null){
+                        if (addressModel != null) {
                             selectedLat = addressModel.getLatitude();
                             selectedLng = addressModel.getLongitude();
                             latLng = new LatLng(selectedLat, selectedLng);
@@ -474,6 +474,13 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (autocompleteFragment == null)
+            initPlaceAutoComplete();
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
@@ -539,8 +546,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         try {
             alert.show();
-        }
-        catch (WindowManager.BadTokenException e) {
+        } catch (WindowManager.BadTokenException e) {
             //use a log message
         }
     }

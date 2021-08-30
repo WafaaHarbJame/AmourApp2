@@ -57,7 +57,7 @@ public class FavoriteActivity extends ActivityBase implements OfferProductAdapte
         filter = Constants.favourite_filter;
 
 
-        localModel = UtilityApp.getLocalData();
+          localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         setTitle(R.string.fav_products);
 

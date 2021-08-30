@@ -33,7 +33,7 @@ public class CouponsAdapter extends RecyclerView.Adapter<CouponsAdapter.Holder> 
         this.couponsModelList = couponsModelList;
         this.onItemClick = onItemClick;
         this.limit = limit;
-        localModel= UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
 
         ;
     }

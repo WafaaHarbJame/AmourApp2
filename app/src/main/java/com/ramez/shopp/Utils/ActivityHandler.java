@@ -90,7 +90,7 @@ public class ActivityHandler {
 
     }
 
-    public static void shareTextUrl(Context context, String title, String url, String IphoneUrl,String shareChannel) {
+    public static void shareTextUrl(Context context, String title, String url, String IphoneUrl, String shareChannel) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         if (shareChannel != null && !shareChannel.equals(""))
@@ -106,7 +106,7 @@ public class ActivityHandler {
             body += title;
         }
         if (url != null && !url.isEmpty()) {
-            body += "\n\n"+context.getString(R.string.android)+" \n"+ url +"\n"+ context.getString(R.string.ios)+"\n"+IphoneUrl;
+            body += "\n\n" + context.getString(R.string.android) + " \n" + url + "\n" + context.getString(R.string.ios) + "\n" + IphoneUrl;
         }
         share.putExtra(Intent.EXTRA_TEXT, body /*+ "\n\n" + appStr*/);
 
@@ -172,6 +172,11 @@ public class ActivityHandler {
             Log.wtf("TAG", "UTF-8 should always be supported", e);
             return "";
         }
+    }
+
+    public static Uri newFacebookIntent(String pageId) {
+        //        return Uri.parse("fb://profile/" + pageId);
+        return Uri.parse("http://facebook.com/" + pageId);
     }
 
     public static void hideKeyboard(Activity activity) {

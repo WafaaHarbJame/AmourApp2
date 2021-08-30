@@ -7,9 +7,10 @@ import java.io.Serializable;
 
 public class ProductBarcode implements Serializable {
 
+
     @SerializedName("cart_quantity")
     @Expose
-    private Integer cartQuantity;
+    private int cartQuantity=0;
     @SerializedName("barcode")
     @Expose
     private String barcode;
@@ -21,64 +22,43 @@ public class ProductBarcode implements Serializable {
     private String fromOffer;
     @SerializedName("id")
     @Expose
-    private int id;
+    private int id=0;
     @SerializedName("limit_qty")
     @Expose
-    private Integer limitQty;
+    private int limitQty=0;
     @SerializedName("price")
     @Expose
-    private double price;
+    private double price=0.0;
     @SerializedName("special_price")
     @Expose
-    private double specialPrice;
+    private double specialPrice=0.0;
     @SerializedName("isSpecial")
     @Expose
-    private Boolean isSpecial;
+    private boolean isSpecial;
     @SerializedName("stock_qty")
     @Expose
-    private Integer stockQty;
+    private int stockQty=0;
     @SerializedName("unit_id")
     @Expose
-    private Integer unitId;
+    private int unitId=0;
     @SerializedName("cart_id")
     @Expose
-    private int cartId;
+    private int cartId=0;
     @SerializedName("product_units")
     @Expose
     private ProductUnits productUnits;
     @SerializedName("weight")
     @Expose
-    private Double weight;
+    private double weight=0.0;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
-    public Boolean getSpecial() {
-        return isSpecial;
-    }
-
-    public void setSpecial(Boolean special) {
-        isSpecial = special;
-    }
-
-    public ProductUnits getProductUnits() {
-        return productUnits;
-    }
-
-    public void setProductUnits(ProductUnits productUnits) {
-        this.productUnits = productUnits;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Integer getCartQuantity() {
+    public int getCartQuantity() {
         return cartQuantity;
     }
 
-    public void setCartQuantity(Integer cartQuantity) {
+    public void setCartQuantity(int cartQuantity) {
         this.cartQuantity = cartQuantity;
     }
 
@@ -106,23 +86,23 @@ public class ProductBarcode implements Serializable {
         this.fromOffer = fromOffer;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getLimitQty() {
+    public int getLimitQty() {
         return limitQty;
     }
 
-    public void setLimitQty(Integer limitQty) {
+    public void setLimitQty(int limitQty) {
         this.limitQty = limitQty;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -138,36 +118,59 @@ public class ProductBarcode implements Serializable {
         this.specialPrice = specialPrice;
     }
 
-    public Boolean getIsSpecial() {
+    public boolean isSpecial() {
         return isSpecial;
     }
 
-    public void setIsSpecial(Boolean isSpecial) {
-        this.isSpecial = isSpecial;
+    public void setSpecial(boolean special) {
+        isSpecial = special;
     }
 
-    public Integer getStockQty() {
+    public int getStockQty() {
         return stockQty;
     }
 
-    public void setStockQty(Integer stockQty) {
+    public void setStockQty(int stockQty) {
         this.stockQty = stockQty;
     }
 
-    public Integer getUnitId() {
+    public int getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(Integer unitId) {
+    public void setUnitId(int unitId) {
         this.unitId = unitId;
     }
 
-    public Integer getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
-    public void setCartId(Integer cartId) {
+    public void setCartId(int cartId) {
         this.cartId = cartId;
     }
 
+    public ProductUnits getProductUnits() {
+        return productUnits;
+    }
+
+    public void setProductUnits(ProductUnits productUnits) {
+        this.productUnits = productUnits;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

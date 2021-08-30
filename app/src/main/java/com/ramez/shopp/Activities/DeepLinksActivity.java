@@ -164,7 +164,7 @@ public class DeepLinksActivity extends ActivityBase {
                     Intent intent = new Intent(getActiviy(), AllListActivity.class);
                     intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.Brands));
                     intent.putExtra(Constants.FILTER_NAME, Constants.brand_filter);
-                    if(data.getQueryParameter("brand")!=null){
+                    if (data.getQueryParameter("brand") != null) {
                         int brandId = Integer.parseInt(data.getQueryParameter("brand"));
                         intent.putExtra(Constants.brand_id, brandId);
                         intent.putExtra(Constants.isNotify, true);
@@ -176,19 +176,18 @@ public class DeepLinksActivity extends ActivityBase {
                 } else if (list.size() == 5 && list.get(0).equals("products")) {
 
                     //https://ramezshopping.com/products/search/bh/store/7263?text=AL-ZAHRAH%20SOAP%20FLAKES%20840GR
-
                     if (data.getQueryParameter("text") != null) {
-                        Log.i("segment search", "Log search" + data.getQueryParameter("text"));
-                    }
+                        Intent intent = new Intent(getActiviy(), MainActivity.class);
 
-                    Intent intent = new Intent(getActiviy(), MainActivity.class);
-                    String text = data.getQueryParameter("text").replace("%", " ");
-                    intent.putExtra(Constants.inputType_text, text);
-                    intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_SEARCH);
-                    intent.putExtra(Constants.isNotify, true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+                        Log.i("segment search", "Log search" + data.getQueryParameter("text"));
+                        String text = data.getQueryParameter("text").replace("%", " ");
+                        intent.putExtra(Constants.inputType_text, text);
+                        intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_SEARCH);
+                        intent.putExtra(Constants.isNotify, true);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
 
 
                 }

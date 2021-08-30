@@ -13,16 +13,16 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
 
     @SerializedName("brand_id")
     @Expose
-    private Integer brandId;
+    private int brandId;
     @SerializedName("category_id")
     @Expose
-    private Integer categoryId;
+    private int categoryId;
     @SerializedName("description")
     @Expose
     private String description;
     @SerializedName("favourite")
     @Expose
-    private Boolean favourite;
+    private boolean favourite;
     @SerializedName("product_barcodes")
     @Expose
     private List<ProductBarcode> productBarcodes = null;
@@ -34,10 +34,10 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     private String hName;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("images")
     @Expose
-    private ArrayList<String> images = null;
+    private List<String> images = null;
     @SerializedName("name")
     @Expose
     private String name;
@@ -46,8 +46,53 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
     private ProductBrand productBrand;
     @SerializedName("rate")
     @Expose
-    private Integer rate;
+    private int rate;
     private int storeId;
+
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
+    public List<ProductBarcode> getProductBarcodes() {
+        return productBarcodes;
+    }
+
+    public ProductBarcode getFirstProductBarcodes() {
+        return productBarcodes!= null && productBarcodes.size()> 0 ?   productBarcodes.get(0) : new ProductBarcode() ;
+    }
+
+    public void setProductBarcodes(List<ProductBarcode> productBarcodes) {
+        this.productBarcodes = productBarcodes;
+    }
 
     public String gethDescription() {
         return hDescription;
@@ -65,92 +110,19 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
         this.hName = hName;
     }
 
-    public int getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId) {
-        this.storeId = storeId;
-    }
-
-    public Integer getRate() {
-        return rate;
-    }
-
-    public void setRate(Integer rate) {
-        this.rate = rate;
-    }
-
-    public Integer getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(Integer brandId) {
-        this.brandId = brandId;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getFavourite() {
-        return favourite;
-    }
-
-    public void setFavourite(Boolean favourite) {
-        this.favourite = favourite;
-    }
-
-    public List<ProductBarcode> getProductBarcodes() {
-        return productBarcodes;
-    }
-
-    public void setProductBarcodes(List<ProductBarcode> productBarcodes) {
-        this.productBarcodes = productBarcodes;
-    }
-
-
-    public String getHDescription() {
-        return hDescription;
-    }
-
-    public void setHDescription(String hDescription) {
-        this.hDescription = hDescription;
-    }
-
-    public String getHName() {
-        return hName;
-    }
-
-    public void setHName(String hName) {
-        this.hName = hName;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public ArrayList<String> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<String> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
@@ -168,6 +140,22 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
 
     public void setProductBrand(ProductBrand productBrand) {
         this.productBrand = productBrand;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getProductName() {

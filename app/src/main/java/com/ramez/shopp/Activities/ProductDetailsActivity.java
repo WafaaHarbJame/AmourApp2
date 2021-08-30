@@ -84,6 +84,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private int selectedProductPos;
     private FirebaseAnalytics mFirebaseAnalytics;
     LocalModel localModel;
+    private int fraction=2;
 
 
     @Override
@@ -106,8 +107,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
 
+        currency = localModel.getCurrencyCode();
+
+        fraction=localModel.getFractional();
+
         storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-        currency = UtilityApp.getLocalData().getCurrencyCode();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
@@ -565,7 +569,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
                     if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                        productName = productModel.getHName();
+                        productName = productModel.gethName();
 
                     } else {
                         productName = productModel.getName();
@@ -698,16 +702,16 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.CartLy.setVisibility(View.VISIBLE);
 
                         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                            productName = productModel.getHName();
+                            productName = productModel.gethName();
                         } else {
                             productName = productModel.getName();
                         }
 
                         binding.productNameTv.setText(productName);
 
-                        if (productModel.getDescription() != null && productModel.getHDescription() != null) {
+                        if (productModel.getDescription() != null && productModel.gethDescription() != null) {
                             if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                                binding.productDesc1Tv.setText(Html.fromHtml(productModel.getHDescription()));
+                                binding.productDesc1Tv.setText(Html.fromHtml(productModel.gethDescription()));
 
                             } else {
                                 binding.productDesc1Tv.setText(Html.fromHtml(productModel.getDescription()));
@@ -735,7 +739,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 //                        optionModelsList.clear();
                         if (productModel.getProductBarcodes() != null && productModel.getProductBarcodes().size() > 0) {
-                            selectedProductBarcode = productModel.getProductBarcodes().get(0);
+                            selectedProductBarcode = productModel.getFirstProductBarcodes();
 
                             for (int i = 0; i < productModel.getProductBarcodes().size(); i++) {
                                 ProductBarcode productBarcode1 = productModel.getProductBarcodes().get(i);
@@ -764,9 +768,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             binding.productOptionRv.setVisibility(View.GONE);
                         }
 
-                        isFavorite = productModel.getFavourite();
+                        isFavorite = productModel.isFavourite();
 
-                        if (productModel.getFavourite() != null && isFavorite) {
+                        if (productModel!= null && isFavorite) {
 
                             binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.favorite_icon));
                         } else {
@@ -1130,7 +1134,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     product_id = productModel.getId();
 
                     if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                        productName = productModel.getHName();
+                        productName = productModel.gethName();
 
                     } else {
                         productName = productModel.getName();
@@ -1220,12 +1224,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         }
 
-        if (selectedProductBarcode.getIsSpecial()) {
+        if (selectedProductBarcode.isSpecial()) {
             binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.itlatic_red_line));
 
 //            if (selectedProductBarcode.getSpecialPrice() != null) {
-                binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), fraction) + " " + currency);
+                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())), fraction) + " " + currency);
 
                 Double discount = (Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice()))
                         - Double.parseDouble(String.valueOf(selectedProductBarcode.getSpecialPrice())))
@@ -1262,7 +1266,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 //            }
 
         } else {
-            binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+            binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(selectedProductBarcode.getPrice())), fraction) + " " + currency + "");
             binding.productPriceBeforeTv.setVisibility(View.GONE);
             binding.offerLy.setVisibility(View.GONE);
 

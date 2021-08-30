@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.DeliveryTime;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowDeliveryTimesBinding;
@@ -29,6 +30,8 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     private List<DeliveryTime> deliveryTimesList;
     private Double deliveryFees;
     public int selectedId;
+    int fraction=2;
+
 
     private boolean isSelected = false;
 
@@ -56,8 +59,9 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
         DeliveryTime deliveryTimes = deliveryTimesList.get(position);
         viewHolder.binding.deliveryTime.setText(deliveryTimes.getTime());
-
-        currency = UtilityApp.getLocalData().getCurrencyCode();
+        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        currency = localModel.getCurrencyCode();
+        fraction = localModel.getFractional();
 
         if (deliveryFees == 0) {
             viewHolder.binding.deliveryPrice.setText(context.getString(R.string.free));
@@ -65,7 +69,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         } else {
             viewHolder.binding.deliveryPrice.setText(NumberHandler
                     .formatDouble(deliveryFees,
-                            UtilityApp.getLocalData().getFractional()) + " " + currency);
+                           fraction) + " " + currency);
 
         }
 

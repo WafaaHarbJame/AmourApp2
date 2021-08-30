@@ -36,7 +36,7 @@ public class ChooseNearCity extends ActivityBase {
         setContentView(binding.getRoot());
         list = new ArrayList<>();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
         setTitle(getString(R.string.change_city_branch));
 
         binding.recycler.setLayoutManager(new LinearLayoutManager(getActiviy()));

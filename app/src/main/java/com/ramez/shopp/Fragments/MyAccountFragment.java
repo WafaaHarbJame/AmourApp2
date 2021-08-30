@@ -76,7 +76,7 @@ public class MyAccountFragment extends FragmentBase {
     private int SEARCH_CODE = 2000;
     LocalModel localModel;
     private String CODE = "";
-    private  int country_id,city_id;
+    private int country_id, city_id;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class MyAccountFragment extends FragmentBase {
 
         country_id = localModel != null && localModel.getCountryId() != null ?
                 localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(localModel!= null && localModel.getCityId() != null ?
+        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
                 localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
 
@@ -112,25 +112,25 @@ public class MyAccountFragment extends FragmentBase {
 
 
         binding.facebookBut.setOnClickListener(view1 -> {
+            System.out.println("Log facebook_link" + facebook_link);
 
             try {
                 if (facebook_link != null) {
-//                boolean installed = ActivityHandler.isPackageExist(getActivityy(),"com.facebook.katana");
-//                if(installed) {
-//
-//                    System.out.println("App is already installed on your phone");
-//                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
-//                    startActivity(intent);
-//                } else {
-//                    Toast(getString(R.string.please_install_facebook));
-//                    System.out.println("App is not currently installed on your phone");
-//                }
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
+                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.facebook.katana");
+                    Uri intentUri = Uri.parse(facebook_link);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, intentUri);
+                    if (installed) {
+                        String pageId = intentUri.getLastPathSegment();
+                        System.out.println("Log pageId " + pageId);
+                        intent.setData(ActivityHandler.newFacebookIntent(pageId));
+                        intent.setPackage("com.facebook.katana");
+                    }
                     startActivity(intent);
+//                    goToFacebook();
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
                 // This will catch any exception, because they are all descended from Exception
                 System.out.println("Error " + e.getMessage());
             }
@@ -140,29 +140,27 @@ public class MyAccountFragment extends FragmentBase {
 
 
         binding.whatsBut.setOnClickListener(view1 -> {
+            System.out.println("Log whats_link" + whats_link);
+            Log.i("TAG", "Log whats_link " + whats_link);
 
             try {
                 if (whats_link != null) {
                     boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp");
                     boolean installedBusiness = ActivityHandler.isPackageExist(getActivityy(), "com.whatsapp.w4b");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+
                     if (installed) {
                         System.out.println("App is already installed on your phone");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+                        intent.setPackage("com.whatsapp");
                         startActivity(intent);
-                    }
 
-                   else if (installedBusiness) {
+                    } else if (installedBusiness) {
                         System.out.println("App is already installed on your phone");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(whats_link));
+                        intent.setPackage("com.whatsapp.w4b");
+                        startActivity(intent);
+                    } else {
                         startActivity(intent);
                     }
-
-
-                    else {
-                        Toast(getString(R.string.please_install_whats));
-                        System.out.println("App is not currently installed on your phone");
-                    }
-
 
                 }
 
@@ -180,15 +178,12 @@ public class MyAccountFragment extends FragmentBase {
 
                 if (twitter_links != null) {
                     boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.twitter.android");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_links));
                     if (installed) {
-
+                        intent.setPackage("com.twitter.android");
                         System.out.println("App is already installed on your phone");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitter_links));
-                        startActivity(intent);
-                    } else {
-                        Toast(getString(R.string.please_twitter));
-                        System.out.println("App is not currently installed on your phone");
                     }
+                    startActivity(intent);
 
                 }
             } catch (Exception e) {
@@ -204,15 +199,12 @@ public class MyAccountFragment extends FragmentBase {
 
                 if (instagram_links != null) {
                     boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.instagram.android");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram_links));
                     if (installed) {
-
                         System.out.println("App is already installed on your phone");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagram_links));
-                        startActivity(intent);
-                    } else {
-                        Toast(getString(R.string.please_install_instagram));
-                        System.out.println("App is not currently installed on your phone");
+                        intent.setPackage("com.instagram.android");
                     }
+                    startActivity(intent);
 
                 }
 
@@ -240,7 +232,7 @@ public class MyAccountFragment extends FragmentBase {
 
             } else {
                 if (memberModel != null && memberModel.getId() != null) {
-                    getUserData(memberModel.getId(),memberModel.getStoreId());
+                    getUserData(memberModel.getId(), memberModel.getStoreId());
 
                 }
             }
@@ -289,9 +281,6 @@ public class MyAccountFragment extends FragmentBase {
         });
 
 
-
-
-
         binding.shareBtn.setOnClickListener(view1 -> {
 
             final String appPackageName = getActivityy().getPackageName();
@@ -332,17 +321,16 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.ramezRewardBtn.setOnClickListener(v -> {
-            CheckLoyal();
+                    CheckLoyal();
 
                 }
-                );
+        );
 
         binding.editProfileBu.setOnClickListener(view1 -> {
 
             startEditProfileActivity();
 
         });
-
 
 
         binding.addressBtn.setOnClickListener(view1 -> {
@@ -380,7 +368,7 @@ public class MyAccountFragment extends FragmentBase {
             if (UtilityApp.isLogin()) {
                 MemberModel memberModel = UtilityApp.getUserData();
 
-                if(memberModel!=null && memberModel.getId()!=null){
+                if (memberModel != null && memberModel.getId() != null) {
                     signOut(memberModel);
 
                 }
@@ -402,7 +390,7 @@ public class MyAccountFragment extends FragmentBase {
             Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
         }
-            }
+    }
 
     private void showDialog(int message) {
         CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null);
@@ -490,37 +478,38 @@ public class MyAccountFragment extends FragmentBase {
                     if (isVisible()) {
 
                         if (func.equals(Constants.ERROR)) {
-                        Toast(R.string.fail_to_sign_out);
-                    } else if (func.equals(Constants.FAIL)) {
-                        Toast(R.string.fail_to_sign_out);
-                    } else if (func.equals(Constants.NO_CONNECTION)) {
-                        GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-                    } else {
-
-                        if (IsSuccess) {
-
-                            UtilityApp.logOut();
-                            GlobalData.Position = 0;
-
-                            Intent intent = new Intent(getActivityy(), SplashScreenActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        } else {
                             Toast(R.string.fail_to_sign_out);
-                        }
-                    }
+                        } else if (func.equals(Constants.FAIL)) {
+                            Toast(R.string.fail_to_sign_out);
+                        } else if (func.equals(Constants.NO_CONNECTION)) {
+                            GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                        } else {
 
-                }
-            }).logOut(memberModel);
+                            if (IsSuccess) {
+
+                                UtilityApp.logOut();
+                                UtilityApp.setCartCount(0);
+                                GlobalData.Position = 0;
+
+                                Intent intent = new Intent(getActivityy(), SplashScreenActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else {
+                                Toast(R.string.fail_to_sign_out);
+                            }
+                        }
+
+                    }
+                }).logOut(memberModel);
             }
         };
 
-        new ConfirmDialog(getActivityy(),getString( R.string.want_to_signout), R.string.ok, R.string.cancel_label, click, null,false);
+        new ConfirmDialog(getActivityy(), getString(R.string.want_to_signout), R.string.ok, R.string.cancel_label, click, null, false);
 
     }
 
 
-    public void getUserData(int user_id,int store_id) {
+    public void getUserData(int user_id, int store_id) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
@@ -544,7 +533,7 @@ public class MyAccountFragment extends FragmentBase {
             }
 
 
-        }).getUserDetails(user_id,store_id);
+        }).getUserDetails(user_id, store_id);
     }
 
     @Override
@@ -638,12 +627,12 @@ public class MyAccountFragment extends FragmentBase {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-     if (requestCode == SEARCH_CODE) {
+        if (requestCode == SEARCH_CODE) {
 
             if (data != null) {
                 CODE = data.getStringExtra(Constants.CODE);
                 Intent intent = new Intent(getActivityy(), PriceCheckerResultActivity.class);
-                ProductModel productModel=new ProductModel();
+                ProductModel productModel = new ProductModel();
                 intent.putExtra(Constants.DB_productModel, productModel);
                 startActivity(intent);
 
@@ -655,25 +644,22 @@ public class MyAccountFragment extends FragmentBase {
 
 
     private void CheckLoyal() {
-         CountryDetailsModel countryDetailsModel= DBFunction.getLoyal();
+        CountryDetailsModel countryDetailsModel = DBFunction.getLoyal();
         if (countryDetailsModel == null) {
-            if( localModel!=null&& localModel.getShortname()!=null)
-            getCountryDetail(localModel.getShortname());
+            if (localModel != null && localModel.getShortname() != null)
+                getCountryDetail(localModel.getShortname());
 
         } else {
-            boolean hasLoyal=countryDetailsModel.hasLoyal;
-            if(hasLoyal){
+            boolean hasLoyal = countryDetailsModel.hasLoyal;
+            if (hasLoyal) {
                 startRewardsActivity();
 
-            }
-            else
-            Toasty.warning(getActivityy(),getString(R.string.no_active), Toast.LENGTH_SHORT, true).show();
-
-            }
+            } else
+                Toasty.warning(getActivityy(), getString(R.string.no_active), Toast.LENGTH_SHORT, true).show();
 
         }
 
-
+    }
 
 
     private void getCountryDetail(String shortName) {
@@ -694,7 +680,14 @@ public class MyAccountFragment extends FragmentBase {
         }).getCountryDetail(shortName);
     }
 
-
-
+    private void goToFacebook() {
+        try {
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+            facebookIntent.setData(Uri.parse(facebook_link));
+            startActivity(facebookIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

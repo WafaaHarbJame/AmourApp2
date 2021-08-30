@@ -35,7 +35,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     private MemberModel user;
     private LocalModel localModel;
     private int brand_id=0;
-    private Boolean isNotify;
+    private Boolean isNotify=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

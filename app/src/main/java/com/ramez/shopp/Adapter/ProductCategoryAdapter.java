@@ -28,6 +28,8 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
@@ -72,6 +74,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int brand_id = 0;
     public boolean isCanceled;
     public Call apiCall;
+    int fraction = 2;
 
 
     public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, String filter, OnItemClick onItemClick, int gridNumber, int brand_id) {
@@ -97,7 +100,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 switch (getAdapter().getItemViewType(position)) {
                     case VIEW_TYPE_LOADING:
                     case VIEW_TYPE_EMPTY:
-                        return gridNumber; //number of columns of the grid
+                        return gridLayoutManager.getSpanCount(); //number of columns of the grid
                     default:
                         return 1;
                 }
@@ -157,18 +160,22 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             ProductModel productModel = productModels.get(position);
-            currency = UtilityApp.getLocalData().getCurrencyCode();
+            LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+            currency = localModel.getCurrencyCode();
+            fraction = localModel.getFractional();
 
             holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-            if (productModel.getFavourite() != null && productModel.getFavourite()) {
+            if (productModel.isFavourite()) {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
             } else {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
 
             }
 
-            int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+
+            int quantity = productModel.getFirstProductBarcodes().getCartQuantity();
+
             if (quantity > 0) {
                 holder.binding.productCartQTY.setText(String.valueOf(quantity));
                 holder.binding.CartLy.setVisibility(View.VISIBLE);
@@ -187,18 +194,18 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.binding.cartBut.setVisibility(View.VISIBLE);
             }
 
-            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-
-                double originalPrice = productModel.getProductBarcodes().get(0).getPrice();
-                double specialPrice = productModel.getProductBarcodes().get(0).getSpecialPrice();
+            if (productModel.getFirstProductBarcodes().isSpecial()) {
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                double originalPrice = productBarcode.getPrice();
+                double specialPrice = productBarcode.getSpecialPrice();
 
 
                 holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
 
                 holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(originalPrice,
-                        UtilityApp.getLocalData().getFractional()) + " " + currency);
+                        fraction) + " " + currency);
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(specialPrice,
-                        UtilityApp.getLocalData().getFractional()) + " " + currency);
+                        fraction) + " " + currency);
 
                 double discountValue = originalPrice - specialPrice;
                 double discountPercent = (discountValue / originalPrice) * 100;
@@ -212,8 +219,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
             } else {
-
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                double price = productModel.getFirstProductBarcodes() != null ? productModel.getFirstProductBarcodes().getPrice() : 0.0;
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(price, fraction) + " " + currency + "");
                 holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
                 holder.binding.discountTv.setVisibility(View.GONE);
 
@@ -224,8 +231,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 //            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
 //                holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 ////                if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-//                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-//                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+//                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), fraction) + " " + currency);
+//                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), fraction) + " " + currency);
 //                    discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
 //                    DecimalFormat df = new DecimalFormat("#");
 //                    String newDiscount_str = df.format(discount);
@@ -234,7 +241,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 //
 //
 //            } else {
-//                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+//                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), fraction) + " " + currency + "");
 //                holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
 //                holder.binding.discountTv.setVisibility(View.GONE);
 //
@@ -439,7 +446,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     int userId = UtilityApp.getUserData().getId();
                     int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                     int productId = productModels.get(position).getId();
-                    boolean isFavorite = productModels.get(position).getFavourite();
+                    boolean isFavorite = productModels.get(position).isFavourite();
                     if (isFavorite) {
                         removeFromFavorite(view1, position, productId, userId, storeId);
 
@@ -460,17 +467,18 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else {
                     String message;
                     if (productModels.size() > 0) {
-                        if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
+                        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
                             ProductModel productModel = productModels.get(getBindingAdapterPosition());
-                            int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                            ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                            int count = productBarcode.getCartQuantity();
                             int position = getBindingAdapterPosition();
 
                             int userId = UtilityApp.getUserData().getId();
                             int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                             int productId = productModel.getId();
-                            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                            int limit = productModel.getProductBarcodes().get(0).getLimitQty();
-                            int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                            int product_barcode_id = productBarcode.getId();
+                            int limit = productBarcode.getLimitQty();
+                            int stock = productBarcode.getStockQty();
 
 
                             if (limit == 0) {
@@ -498,12 +506,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 }
 
                             }
-                        }
-                        else {
+                        } else {
                             CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                             checkLoginDialog.show();
                         }
-
 
 
                     }
@@ -522,10 +528,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int stock = productModel.getProductBarcodes().get(0).getStockQty();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
-                int limit = productModel.getProductBarcodes().get(0).getLimitQty();
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                int product_barcode_id = productBarcode.getId();
+                int stock = productBarcode.getStockQty();
+                int cart_id = productBarcode.getCartId();
+                int limit = productBarcode.getLimitQty();
 
 
                 if (limit == 0) {
@@ -567,8 +574,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                int product_barcode_id = productBarcode.getId();
+                int cart_id = productBarcode.getCartId();
 
                 updateCart(view1, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
@@ -582,8 +590,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
-                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
+                ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                int product_barcode_id = productBarcode.getId();
+                int cart_id = productBarcode.getCartId();
 
                 deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -603,14 +612,15 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
-            if(quantity>0){
+            if (quantity > 0) {
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
                     CartProcessModel result = (CartProcessModel) obj;
 
                     if (IsSuccess) {
                         int cartId = result.getId();
-                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-                        productModels.get(position).getProductBarcodes().get(0).setCartId(cartId);
+                        ProductBarcode productBarcode = productModels.get(position).getFirstProductBarcodes();
+                        productBarcode.setCartQuantity(quantity);
+                        productBarcode.setCartId(cartId);
 
                         notifyItemChanged(position);
                         UtilityApp.updateCart(1, productModels.size());
@@ -626,8 +636,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
 
-            }
-            else {
+            } else {
                 Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
             }
         }
@@ -635,12 +644,12 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private void updateCart(View view, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
 
 
-            if(quantity>0){
+            if (quantity > 0) {
 
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
                     if (IsSuccess) {
 
-                        productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+                        productModels.get(position).getFirstProductBarcodes().setCartQuantity(quantity);
                         notifyItemChanged(position);
 
                     } else {
@@ -651,8 +660,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
 
-            }
-            else {
+            } else {
                 Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
             }
 
@@ -662,7 +670,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
+                    productModels.get(position).getFirstProductBarcodes().setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
                     UtilityApp.updateCart(2, productModels.size());

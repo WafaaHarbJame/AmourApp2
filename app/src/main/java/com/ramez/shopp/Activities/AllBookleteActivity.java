@@ -47,7 +47,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     ArrayList<BrandModel> brandsList;
     private List<DinnerModel> dinnerModelList;
     private String lang;
-    private Boolean isNotify;
+    private Boolean isNotify=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
         binding.recycler.setLayoutManager(gridLayoutManager);
         binding.recycler.setHasFixedSize(true);
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
         user = UtilityApp.getUserData();
 
         binding.recycler.setItemAnimator(null);
@@ -126,12 +126,12 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
             startActivity(intent);
         } else
         {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+//            Intent intent = new Intent(getActiviy(), MainActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+            super.onBackPressed();
         }
 
-            //super.onBackPressed();
     }
 
     public void getBooklets(int city_id) {

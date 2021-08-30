@@ -70,7 +70,8 @@ public class EditProfileActivity extends ActivityBase {
 
         } else if (memberModel != null && memberModel.getId() != null) {
 
-            LocalModel localModel = UtilityApp.getLocalData();
+            LocalModel  localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
             int store_id = Integer.parseInt(localModel.getCityId());
             getUserData(userId, store_id);
         }

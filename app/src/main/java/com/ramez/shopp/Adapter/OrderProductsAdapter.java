@@ -22,6 +22,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.OrderItemDetail;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -37,10 +38,13 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     private List<OrderItemDetail> orderProductsDMS;
     private String currency = "BHD";
     private OnItemClick onItemClick;
+    int fraction=2;
 
     public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDM) {
         this.context = context;
         this.orderProductsDMS = orderProductsDM;
+        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        fraction=localModel.getFractional();
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
     }
@@ -119,7 +123,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
                 ProductModel productModel=new ProductModel();
                 productModel.setId(orderProductsDM.getProductId());
-                productModel.setHName(orderProductsDM.getHProductName());
+                productModel.sethName(orderProductsDM.getHProductName());
                 productModel.setName(orderProductsDM.getName());
                 intent.putExtra(Constants.DB_productModel, productModel);
                 intent.putExtra(Constants.product_id, orderProductsDM.getProductId());

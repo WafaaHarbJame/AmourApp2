@@ -62,9 +62,9 @@ public class CardFragment extends FragmentBase {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
-        localModel = UtilityApp.getLocalData();
-        countryId = localModel.getCountryId();
-
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+        countryId = localModel != null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 

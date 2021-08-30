@@ -72,7 +72,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         isLogin = UtilityApp.isLogin();
         activity = getActivity();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
@@ -237,7 +237,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 } else {
 
                     double total_price = minimum_order_amount - cartProcessModel.getTotal();
-                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, fraction) + " " + currency + " " + getString(R.string.get_Free));
 
                 }
 
@@ -272,7 +272,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         ProductModel productModel = new ProductModel();
         productModel.setId(cartDM.getProductId());
         productModel.setName(cartDM.getName());
-        productModel.setHName(cartDM.getHProductName());
+        productModel.sethName(cartDM.getHProductName());
         intent.putExtra(Constants.DB_productModel, productModel);
         startActivity(intent);
     }
@@ -349,7 +349,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                                     double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
                                     binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price,
-                                            UtilityApp.getLocalData().getFractional()) + " " + currency + " " + getString(R.string.get_Free));
+                                           fraction) + " " + currency + " " + getString(R.string.get_Free));
 
                                 }
                             } else {

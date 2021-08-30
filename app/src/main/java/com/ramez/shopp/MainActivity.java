@@ -76,10 +76,11 @@ public class MainActivity extends ActivityBase {
 
         getIntentExtra();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
         if (localModel != null && localModel.getCityId() != null) {
             storeId = Integer.parseInt(localModel.getCityId());
-            country_name = localModel.getShortname();
+            country_name = localModel.getShortname() != null ? localModel.getShortname() : Constants.default_short_name;
             OneSignal.sendTag(Constants.COUNTRY, country_name);
 
 
@@ -423,6 +424,7 @@ public class MainActivity extends ActivityBase {
         boolean from_inside_app = false;
 
         if (bundle != null) {
+            System.out.println("Log main has bundle");
             boolean TO_CART = bundle.getBoolean(Constants.CART, false);
             String fragmentType = bundle.getString(Constants.KEY_OPEN_FRAGMENT, "");
             int subCatId = getIntent().getExtras().getInt(Constants.SUB_CAT_ID);
@@ -475,7 +477,6 @@ public class MainActivity extends ActivityBase {
                 binding.offerButton.performClick();
 
             }
-
             else if (fragmentType.equals(Constants.FRAG_HOME)) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
@@ -487,7 +488,6 @@ public class MainActivity extends ActivityBase {
 
 
             }
-
             else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
                 Bundle bundle2 = new Bundle();
@@ -510,7 +510,8 @@ public class MainActivity extends ActivityBase {
                 });
 
 
-            } else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
+            }
+            else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
 
                 if (bookletsModel != null && bookletsModel.getId() != 0) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -544,7 +545,11 @@ public class MainActivity extends ActivityBase {
 
 
             }
+            else{
+                binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+            }
         } else {
+            System.out.println("Log main not has bundle");
             binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
         }
 
@@ -609,8 +614,6 @@ public class MainActivity extends ActivityBase {
         }
 
     }
-
-
 
 
 }

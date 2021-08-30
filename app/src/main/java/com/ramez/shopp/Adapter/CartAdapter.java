@@ -23,6 +23,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddCommentDialog;
 import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
@@ -39,7 +40,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     private Context context;
     private List<CartModel> cartDMS;
     private OnCartItemClicked onCartItemClicked;
-
+    int fraction = 2;
 
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
@@ -59,7 +60,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         CartModel cartDM = cartDMS.get(position);
-        currency = UtilityApp.getLocalData().getCurrencyCode();
+        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        currency = localModel.getCurrencyCode();
+        fraction = localModel.getFractional();
 
         int quantity = cartDM.getQuantity();
 
@@ -97,14 +100,14 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         if (cartDM.getSpecialPrice() > 0) {
 
             holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context, R.drawable.itlatic_red_line));
-            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
+            holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), fraction) + " " + currency);
+            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), fraction));
 
 
         } else {
 
             holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())),
-                    UtilityApp.getLocalData().getFractional()));
+                    fraction));
             holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
 
 

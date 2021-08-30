@@ -48,7 +48,7 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
         langList =new ArrayList<>();
         currencyList =new ArrayList<>();
         countries=new ArrayList<>();
-        localModel=UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         langList.add(new LanguageModel(1,getString(R.string.text_language_arabic),getString(R.string.ar_lang)));
         langList.add(new LanguageModel(2,getString(R.string.text_langiage_english),getString(R.string.en_lang)));

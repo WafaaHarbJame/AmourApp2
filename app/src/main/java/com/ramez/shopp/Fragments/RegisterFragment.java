@@ -113,9 +113,8 @@ public class RegisterFragment extends FragmentBase {
         final String passwordStr = NumberHandler.arabicToDecimal(binding.edtPassword.getText().toString());
         final String nameStr = NumberHandler.arabicToDecimal(binding.edtFirstName.getText().toString());
         final String emailStr = NumberHandler.arabicToDecimal(binding.edtEmail.getText().toString());
-        LocalModel localModel = UtilityApp.getLocalData();
-
-        country_name = localModel.getShortname();
+        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+        country_name = localModel.getShortname() !=null ? localModel.getShortname() :UtilityApp.getDefaultLocalData(getActivityy()).getShortname();
         CountryCode = String.valueOf(localModel.getPhonecode());
         city_id = localModel.getCityId();
 

@@ -9,15 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.viewpager.widget.ViewPager;
-
 import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.firebase.auth.FirebaseAuth;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Activities.ConfirmActivity;
 import com.ramez.shopp.Activities.ConfirmPhoneActivity;
@@ -52,9 +47,9 @@ public class LoginFragment extends FragmentBase {
     MemberModel user;
     private FragmentLoginBinding binding;
     private ViewPager viewPager;
-    private CallbackManager callbackManager;
-    private GoogleSignInClient mGoogleSignInClient;
-    private FirebaseAuth firebaseAuth;
+//    private CallbackManager callbackManager;
+//    private GoogleSignInClient mGoogleSignInClient;
+//    private FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +79,7 @@ public class LoginFragment extends FragmentBase {
         binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
 
 
-        callbackManager = CallbackManager.Factory.create();
+//        callbackManager = CallbackManager.Factory.create();
 
         binding.textForgotPassword.setOnClickListener(view1 -> {
             startRestPassword();

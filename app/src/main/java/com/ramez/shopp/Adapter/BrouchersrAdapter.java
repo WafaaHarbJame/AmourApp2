@@ -71,7 +71,7 @@ public class BrouchersrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.brousherDm = broushserDm;
         this.onItemClick = onItemClick;
         this.booklet_id = booklet_id;
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
 
         initProgress();
 //        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);

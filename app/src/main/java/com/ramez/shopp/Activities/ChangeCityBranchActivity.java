@@ -56,13 +56,20 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         setTitle(R.string.change_city_branch);
         cityModelArrayList = new ArrayList<>();
         countries = new ArrayList<>();
-        localModel = UtilityApp.getLocalData();
+
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
         if (localModel != null && !localModel.getCityId().isEmpty()) {
             city_id = Integer.parseInt(localModel.getCityId());
 
         }
+        else {
+            city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
+                    localModel.getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
 
-        Log.i("tag", "Log cityId" + localModel.getCityId());
+        }
+
+//        Log.i("tag", "Log cityId" + localModel.getCityId());
 
         if (UtilityApp.isLogin()) {
             binding.countryLY.setVisibility(View.GONE);
@@ -80,12 +87,12 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
             if (toggleButton) {
                 binding.branchContainer.setVisibility(View.VISIBLE);
                 binding.divider.setVisibility(View.GONE);
-              binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(),R.color.white));
+                binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.color.white));
 
             } else {
                 binding.branchContainer.setVisibility(View.GONE);
                 binding.divider.setVisibility(View.VISIBLE);
-                  binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
+                binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
             }
 
         });
@@ -120,11 +127,11 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         initAdapter();
 
 
-        getCityList(countryId,getActiviy());
+        getCityList(countryId, getActiviy());
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getCityList(countryId,getActiviy());
+            getCityList(countryId, getActiviy());
         });
 
 
@@ -250,7 +257,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
             }
 
 
-        }).CityHandle(country_id,activity);
+        }).CityHandle(country_id, activity);
 
     }
 
@@ -270,7 +277,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         Log.i("tag", "Log click oldCountry" + oldCountryName);
         Log.i("tag", "Log click newCountryName" + newCountryName);
         Log.i("tag", "Log click ShortName" + countryModel.getShortname());
-        getCityList(countryId,getActiviy());
+        getCityList(countryId, getActiviy());
 
         toggleLangButton = !toggleLangButton;
         toggleButton = !toggleButton;

@@ -15,6 +15,7 @@ import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -35,6 +36,7 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
     private List<ProductModel> productModels;
     private String currency = "BHD";
     private String filter = "";
+    private int fraction = 2;
 
     public RecommendProductAdapter(Context context, String filter, List<ProductModel> productModels) {
         this.context = context;
@@ -64,15 +66,17 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (viewHolder instanceof ProductHolder) {
             ProductHolder holder = (ProductHolder) viewHolder;
             ProductModel productModel = productModels.get(position);
-            currency = UtilityApp.getLocalData().getCurrencyCode();
+            LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+            currency = localModel.getCurrencyCode();
+            fraction = localModel.getFractional();
 
-            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
+            if (productModel.getFirstProductBarcodes().isSpecial()) {
 
-                double originalPrice = productModel.getProductBarcodes().get(0).getPrice();
-                double specialPrice = productModel.getProductBarcodes().get(0).getSpecialPrice();
+                double originalPrice = productModel.getFirstProductBarcodes().getPrice();
+                double specialPrice = productModel.getFirstProductBarcodes().getSpecialPrice();
 
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(specialPrice,
-                        UtilityApp.getLocalData().getFractional()) + " " + currency);
+                        fraction) + " " + currency);
 
                 double discountValue = originalPrice - specialPrice;
                 double discountPercent = (discountValue / originalPrice) * 100;
@@ -87,7 +91,7 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             } else {
 
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(productModel.getFirstProductBarcodes().getPrice(), fraction) + " " + currency + "");
                 holder.binding.discountTv.setVisibility(View.INVISIBLE);
 
 
