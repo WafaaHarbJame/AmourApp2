@@ -51,9 +51,9 @@ public class ChangeLanguageActivity extends ActivityBase {
     }
 
     private void ChooseWelcomeActivity() {
-        Intent intent = new Intent(getActiviy(), WelcomeActivity.class);
-        startActivity(intent);
-//        finish();
+//        Intent intent = new Intent(getActiviy(), WelcomeActivity.class);
+//        startActivity(intent);
+////        finish();
 
     }
 
@@ -84,12 +84,12 @@ public class ChangeLanguageActivity extends ActivityBase {
                     settingModel.setConditions(result.data.getConditions());
                     settingModel.setPrivacy(result.data.getPrivacy());
                     UtilityApp.setSetting(settingModel);
-                    ChooseWelcomeActivity();
+                    navigateChooseCityActivity();
                 }
 
             } else {
 
-                ChooseWelcomeActivity();
+                navigateChooseCityActivity();
 
                 // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
 
@@ -97,6 +97,11 @@ public class ChangeLanguageActivity extends ActivityBase {
 
 
         }).getSetting();
+    }
+
+    public void navigateChooseCityActivity() {
+        startActivity(new Intent(ChangeLanguageActivity.this, ChooseCityActivity.class));
+        finish();
     }
 
 }

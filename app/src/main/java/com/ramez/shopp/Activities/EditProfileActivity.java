@@ -49,10 +49,10 @@ public class EditProfileActivity extends ActivityBase {
     int REQUEST_PICK_IMAGE = 11;
     int userId;
     File selectedPhotoFil = null;
-    private ActivityEditProfileBinding binding;
     private String country;
     private ChoosePhotoHelper choosePhotoHelper;
     private Uri selectedPhotoUri;
+    private ActivityEditProfileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

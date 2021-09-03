@@ -61,8 +61,8 @@ public class WelcomeActivity extends ActivityBase {
 
 
     public void navigateChooseCityActivity() {
-        startActivity(new Intent(WelcomeActivity.this, ChooseCityActivity.class));
-        finish();
+//        startActivity(new Intent(WelcomeActivity.this, ChooseCityActivity.class));
+//        finish();
     }
 
 
