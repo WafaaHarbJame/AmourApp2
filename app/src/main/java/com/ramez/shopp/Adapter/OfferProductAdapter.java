@@ -67,7 +67,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private int limit = 2;
     private DataCallback dataCallback;
     private int fraction = 2;
-
+    LocalModel localModel;
 
     public OfferProductAdapter(Context context, List<ProductModel> productList, int category_id, int subID,
                                int country_id, int city_id, String user_id, int limit, RecyclerView rv,
@@ -173,7 +173,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             ProductModel productModel = productModels.get(position);
-            LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(activity);
+            localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(activity);
             currency = localModel.getCurrencyCode();
             fraction = localModel.getFractional();
 
@@ -447,7 +447,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int storeId = Integer.parseInt(localModel.getCityId());
                     int productId = productModels.get(position).getId();
                     boolean isFavorite = productModels.get(position).isFavourite();
                     if (isFavorite) {
@@ -477,7 +477,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         int count = productBarcode.getCartQuantity();
                         String message = "";
                         int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int storeId = Integer.parseInt(localModel.getCityId());
                         int productId = productModel.getId();
                         int product_barcode_id = productBarcode.getId();
 
@@ -532,7 +532,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int stock = productBarcode.getStockQty();
@@ -585,7 +585,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();
@@ -601,7 +601,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ProductModel productModel = productModels.get(position);
                 ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();

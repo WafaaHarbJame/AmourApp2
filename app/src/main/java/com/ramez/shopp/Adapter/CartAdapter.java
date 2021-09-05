@@ -41,7 +41,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     private List<CartModel> cartDMS;
     private OnCartItemClicked onCartItemClicked;
     int fraction = 2;
-
+    LocalModel localModel;
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = cartDMS;
@@ -60,7 +60,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         CartModel cartDM = cartDMS.get(position);
-        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
@@ -300,7 +300,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
 
@@ -319,7 +319,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int stock = productModel.getProductQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
 
@@ -376,7 +376,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
 
@@ -393,7 +393,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     if (productModel != null) {
                         int product_barcode_id = productModel.getProductBarcodeId();
                         int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int storeId = Integer.parseInt(localModel.getCityId());
                         int productId = productModel.getProductId();
                         int cart_id = productModel.getId();
 

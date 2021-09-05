@@ -680,7 +680,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         String countryCode = "";
         if (localModel.getShortname() != null)
-            countryCode = UtilityApp.getLocalData().getShortname();
+            countryCode = localModel.getShortname();
         else countryCode = GlobalData.COUNTRY;
 
         String url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/nextDeliveryTime?";

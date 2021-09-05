@@ -65,13 +65,13 @@ public class SplashScreenActivity extends ActivityBase {
 
 //        getSetting();
 
-        localModel = UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         if (localModel != null && localModel.getCityId() != null) {
             storeId = Integer.parseInt(localModel.getCityId());
             country_id = localModel.getCountryId();
             if (localModel.getShortname() != null) {
-                getLinks(Integer.parseInt(UtilityApp.getLocalData().getCityId()));
+                getLinks(Integer.parseInt(localModel.getCityId()));
             }
             getCategories(Integer.parseInt(localModel.getCityId()));
             getDinners(lang);

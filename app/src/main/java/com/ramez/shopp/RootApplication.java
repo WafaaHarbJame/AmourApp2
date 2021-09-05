@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
 import com.androidnetworking.AndroidNetworking;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.libraries.places.api.Places;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.onesignal.OneSignal;
@@ -58,6 +59,7 @@ public class RootApplication extends Application {
         rootApplication = this;
         sharedPManger = new SharedPManger(this);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Fresco.initialize(this);
 
         Places.initialize(getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
 

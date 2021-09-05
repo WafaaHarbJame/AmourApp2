@@ -14,6 +14,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.Recipe;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -29,14 +30,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private DataFetcherCallBack dataFetcherCallBack;
     SuggestedProductAdapter adapter;
     int country_id, city_id, userId = 0;
+    LocalModel localModel;
 
 
     public RecipeAdapter(Activity activity, List<Recipe> list, int selectedPosition, DataFetcherCallBack dataFetcherCallBack) {
         this.activity = activity;
         this.list = list;
         this.dataFetcherCallBack = dataFetcherCallBack;
-        country_id = UtilityApp.getLocalData().getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(activity);
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
 
         if (UtilityApp.getUserData() != null) {
             userId = UtilityApp.getUserData().getId();

@@ -10,6 +10,7 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -113,6 +114,29 @@ public class GlobalData {
 
         try {
             Glide.with(c).load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void GlideImgWeb(Context c, String image, int placeholder, ImageView imageView) {
+        String photoUrl = "";
+
+        if (image != null && !image.isEmpty()) {
+            photoUrl = image;
+        } else {
+            photoUrl = BetaBaseURL;
+        }
+
+        try {
+//            RequestOptions requestOptions = new RequestOptions();
+//            requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
+
+            Glide.with(c).load(photoUrl)
+//                    .apply(requestOptions)
+//                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }

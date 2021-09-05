@@ -134,7 +134,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         s.append(allMessage).append("\n");
                         int product_barcode_id = cartModel.getProductBarcodeId();
                         int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int storeId = Integer.parseInt(localModel.getCityId());
                         int productId = cartModel.getProductId();
                         int cart_id = cartModel.getId();
                         int count = cartModel.getProductQuantity();

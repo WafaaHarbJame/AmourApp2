@@ -37,11 +37,14 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
     private String currency = "BHD";
     private String filter = "";
     private int fraction = 2;
+    LocalModel localModel;
 
     public RecommendProductAdapter(Context context, String filter, List<ProductModel> productModels) {
         this.context = context;
         this.productModels = productModels;
         this.filter = filter;
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+
 
     }
 
@@ -63,10 +66,12 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+
         if (viewHolder instanceof ProductHolder) {
             ProductHolder holder = (ProductHolder) viewHolder;
             ProductModel productModel = productModels.get(position);
-            LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
             currency = localModel.getCurrencyCode();
             fraction = localModel.getFractional();
 

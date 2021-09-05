@@ -116,8 +116,7 @@ public class SearchFragment extends FragmentBase implements SearchProductAdapter
         binding.recycler.setHasFixedSize(false);
         binding.recycler.setItemAnimator(null);
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() :
-                UtilityApp.getDefaultLocalData(getActivityy());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
         country_id = localModel!= null && localModel.getCountryId() != null ?
                 localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
         city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?

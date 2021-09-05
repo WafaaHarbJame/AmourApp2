@@ -383,8 +383,8 @@ public class ExtraRequestActivity extends ActivityBase {
 
         GlobalData.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 
-        if (UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        if (localModel.getShortname() != null) {
+            country =localModel.getShortname();
 
         } else {
             country = GlobalData.COUNTRY;
@@ -474,8 +474,8 @@ public class ExtraRequestActivity extends ActivityBase {
 
         GlobalData.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 
-        if (UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        if (localModel.getShortname() != null) {
+            country = localModel.getShortname();
 
         } else {
             country = GlobalData.COUNTRY;

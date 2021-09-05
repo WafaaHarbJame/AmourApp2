@@ -194,8 +194,8 @@ public class DataFeacher {
         params.put("password", memberModel.getPassword());
         params.put("user_type", memberModel.getUserType());
         params.put("device_type", Constants.deviceType);
-        params.put("device_token", memberModel.getDeviceToken());
-        params.put("device_id", memberModel.getDeviceToken());
+        params.put("device_token", memberModel.getDeviceToken()+"");
+        params.put("device_id", memberModel.getDeviceToken()+"");
         params.put("city_id", memberModel.getCity());
 
         Log.i(TAG, "Log loginHandle");

@@ -16,6 +16,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCartBinding;
@@ -32,6 +33,7 @@ public class SuggestedProductsFragment extends FragmentBase {
     int city_id;
     String user_id = "0";
     String filter = "";
+    LocalModel localModel;
 
 
     @Override
@@ -39,10 +41,12 @@ public class SuggestedProductsFragment extends FragmentBase {
                              Bundle savedInstanceState) {
         binding = FragmentProductsBinding.inflate(inflater, container, false);
 
-        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
-                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
-                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        localModel = UtilityApp.getLocalData()!=null? UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(getActivityy());
+
+        country_id = localModel != null && localModel.getCountryId() != null ?
+              localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
+                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
         if (UtilityApp.isLogin() && UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
             user_id = String.valueOf(UtilityApp.getUserData().getId());

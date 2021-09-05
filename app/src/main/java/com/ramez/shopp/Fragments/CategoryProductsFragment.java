@@ -101,7 +101,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
         country_id = localModel.getCountryId();
 
-
         if (UtilityApp.isLogin() && UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
 
             user = UtilityApp.getUserData();

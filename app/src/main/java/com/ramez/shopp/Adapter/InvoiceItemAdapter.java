@@ -38,6 +38,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     private List<CartModel> cartDMS;
     private OnInvoiceItemClicked onInvoiceItemClicked;
     int fraction=2;
+    LocalModel localModel;
 
 
     public InvoiceItemAdapter(Context context, List<CartModel> cartDMS, OnInvoiceItemClicked onInvoiceItemClicked, DataCallback dataCallback) {
@@ -58,7 +59,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
 
-        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction=localModel.getFractional();
         CartModel cartDM = cartDMS.get(position);
@@ -208,7 +209,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int cart_id = productModel.getId();
                 int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int stock = productModel.getProductQuantity();
 
@@ -231,7 +232,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
                 deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
@@ -246,7 +247,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
                 deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
@@ -260,7 +261,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                 int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
 
@@ -276,7 +277,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int position = getBindingAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);

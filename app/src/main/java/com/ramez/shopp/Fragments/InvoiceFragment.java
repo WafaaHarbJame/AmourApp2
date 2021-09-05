@@ -126,18 +126,20 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 }
         );
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() :
+                UtilityApp.getDefaultLocalData(getActivityy());
+
         paymentList = new ArrayList<>();
         addressList = new ArrayList<>();
         deliveryTimesList = new ArrayList<>();
 
         DayList = new ArrayList<>();
         productCheckerList = new ArrayList<>();
-
         fraction = localModel.getFractional();
         minimum_order_amount = localModel.getMinimum_order_amount();
 
 
-        storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        storeId = Integer.parseInt(localModel.getCityId());
         currency = localModel.getCurrencyCode();
 
         userId = UtilityApp.getUserData().getId();

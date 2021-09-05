@@ -70,6 +70,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
     private String filter_text;
     //    private int gridNumber;
     int fraction = 2;
+    LocalModel localModel;
 
 
     public SearchProductAdapter(Context context, List<ProductModel> productModels, int country_id, int city_id, String user_id, RecyclerView rv, String filter, OnItemClick onItemClick/*, int gridNumber*/) {
@@ -150,7 +151,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             ProductModel productModel = productModels.get(position);
-            LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+             localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
             currency = localModel.getCurrencyCode();
             fraction = localModel.getFractional();
 
@@ -431,7 +432,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int storeId = Integer.parseInt(localModel.getCityId());
                     int productId = productModels.get(position).getId();
                     boolean isFavorite = productModels.get(position).isFavourite();
                     if (isFavorite) {
@@ -462,7 +463,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                         int count = productBarcode.getCartQuantity();
                         String message = "";
                         int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                        int storeId = Integer.parseInt(localModel.getCityId());
                         int productId = productModel.getId();
                         int product_barcode_id = productBarcode.getId();
 
@@ -517,7 +518,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int stock = productBarcode.getStockQty();
@@ -566,7 +567,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 //  int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();
@@ -582,7 +583,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ProductModel productModel = productModels.get(position);
                 ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();

@@ -44,7 +44,7 @@ public class ConfirmActivity extends ActivityBase {
         });
 
 
-        localModel=UtilityApp.getLocalData();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
         getDeviceToken();
 
         Bundle bundle = getIntent().getExtras();

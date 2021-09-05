@@ -38,14 +38,15 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     private List<OrderItemDetail> orderProductsDMS;
     private String currency = "BHD";
     private OnItemClick onItemClick;
-    int fraction=2;
+    int fraction = 2;
+    LocalModel localModel;
 
     public OrderProductsAdapter(Context context, List<OrderItemDetail> orderProductsDM) {
         this.context = context;
         this.orderProductsDMS = orderProductsDM;
-        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
-        fraction=localModel.getFractional();
-        currency = UtilityApp.getLocalData().getCurrencyCode();
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        fraction = localModel.getFractional();
+        currency = localModel.getCurrencyCode();
 
     }
 
@@ -66,7 +67,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getCartPrice() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getCartPrice() + " " + currency);
 
-        GlobalData.GlideImg(context,orderProductsDM.getImage()
+        GlobalData.GlideImg(context, orderProductsDM.getImage()
                 , R.drawable.holder_image, holder.productImage);
 
         //        Picasso.get()
@@ -107,7 +108,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
                 int count = orderProductsDM.getQuantity();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = orderProductsDM.getProductId();
                 int product_barcode_id = orderProductsDM.getProductBarcodeId();
 
@@ -119,9 +120,9 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             cardView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
-                int position=getBindingAdapterPosition();
+                int position = getBindingAdapterPosition();
                 OrderItemDetail orderProductsDM = orderProductsDMS.get(position);
-                ProductModel productModel=new ProductModel();
+                ProductModel productModel = new ProductModel();
                 productModel.setId(orderProductsDM.getProductId());
                 productModel.sethName(orderProductsDM.getHProductName());
                 productModel.setName(orderProductsDM.getName());
@@ -139,28 +140,27 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
     private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
-       if(quantity>0){
-           new DataFeacher(false, (obj, func, IsSuccess) -> {
+        if (quantity > 0) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-               if (IsSuccess) {
-                   initSnackBar(context.getString(R.string.success_added_to_cart), v);
-                   CartProcessModel result = (CartProcessModel) obj;
-                   AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
-                   UtilityApp.updateCart(1, orderProductsDMS.size());
-
-
-               } else {
-                   Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
-
-               }
+                if (IsSuccess) {
+                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
+                    CartProcessModel result = (CartProcessModel) obj;
+                    AnalyticsHandler.AddToCart(result.getId(), currency, quantity);
+                    UtilityApp.updateCart(1, orderProductsDMS.size());
 
 
-           }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+                } else {
+                    Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
 
-       }
-       else {
-           Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
-       }
+                }
+
+
+            }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+
+        } else {
+            Toast.makeText(context, context.getString(R.string.quanity_wrong), Toast.LENGTH_SHORT).show();
+        }
     }
 
 

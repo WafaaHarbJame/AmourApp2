@@ -179,7 +179,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         }
 
-        countryId = UtilityApp.getLocalData().getCountryId();
+        countryId = localModel.getCountryId();
 
         //GetAreas(countryId);
 
@@ -220,7 +220,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     }
 
     private void CreateNewAddress() {
-        state_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        state_id = Integer.parseInt(localModel.getCityId());
         int userId = UtilityApp.getUserData().getId();
         AddressModel addressModel = new AddressModel();
         addressModel.setName(binding.nameEt.getText().toString());

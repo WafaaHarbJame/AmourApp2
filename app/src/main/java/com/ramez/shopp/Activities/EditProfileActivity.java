@@ -52,6 +52,7 @@ public class EditProfileActivity extends ActivityBase {
     private String country;
     private ChoosePhotoHelper choosePhotoHelper;
     private Uri selectedPhotoUri;
+    LocalModel localModel;
     private ActivityEditProfileBinding binding;
 
     @Override
@@ -60,6 +61,7 @@ public class EditProfileActivity extends ActivityBase {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         setTitle(R.string.text_title_edit_profile);
 
@@ -68,10 +70,7 @@ public class EditProfileActivity extends ActivityBase {
         if (memberModel != null) {
             initData();
 
-        } else if (memberModel != null && memberModel.getId() != null) {
-
-            LocalModel  localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
-
+        } else {
             int store_id = Integer.parseInt(localModel.getCityId());
             getUserData(userId, store_id);
         }
@@ -260,15 +259,15 @@ public class EditProfileActivity extends ActivityBase {
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
 
-        if (UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        if (localModel != null) {
+            country = localModel.getShortname();
 
         } else {
             country = GlobalData.COUNTRY;
 
         }
 
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
 
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +

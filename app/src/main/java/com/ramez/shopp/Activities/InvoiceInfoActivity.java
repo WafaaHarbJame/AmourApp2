@@ -38,7 +38,8 @@ public class InvoiceInfoActivity extends ActivityBase {
     private OrderProductsAdapter orderProductsAdapter;
     private int orderId = 0;
     int store_id, userId;
-    int fraction=2;
+    int fraction = 2;
+    LocalModel localModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +50,15 @@ public class InvoiceInfoActivity extends ActivityBase {
 
 //        list = new ArrayList<>();
 
-        LocalModel localModel= UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
         currency = localModel.getCurrencyCode();
-        fraction=localModel.getFractional();
-        
+        fraction = localModel.getFractional();
+
         if (UtilityApp.isLogin()) {
             userId = UtilityApp.getUserData().getId();
         }
 
-        if (UtilityApp.getLocalData() != null) {
-            store_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-        }
+        store_id = Integer.parseInt(localModel.getCityId());
 
         getIntentData();
 
@@ -71,7 +70,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
                 int count = orderProductsDM.getQuantity();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = orderProductsDM.getProductId();
                 int product_barcode_id = orderProductsDM.getProductBarcodeId();
                 addToCart(view1, i, productId, product_barcode_id, count, userId, storeId);

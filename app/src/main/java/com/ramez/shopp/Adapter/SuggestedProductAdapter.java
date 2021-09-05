@@ -44,6 +44,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     private String currency = "BHD";
     private int limit = 2;
     int fraction = 2;
+    LocalModel localModel;
 
 
     public SuggestedProductAdapter(Context context, ArrayList<ProductModel> productModels, OnItemClick onItemClick, int limit) {
@@ -65,8 +66,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
-
-        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
@@ -254,7 +254,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 } else {
                     int position = getBindingAdapterPosition();
                     int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int storeId = Integer.parseInt(localModel.getCityId());
                     int productId = productModels.get(position).getId();
                     boolean isFavorite = productModels.get(position).isFavourite();
                     if (isFavorite) {
@@ -286,7 +286,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     int count = productBarcode.getCartQuantity();
 
                     int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int storeId = Integer.parseInt(localModel.getCityId());
                     int productId = productModel.getId();
                     int product_barcode_id = productBarcode.getId();
                     int limit = productBarcode.getLimitQty();
@@ -339,7 +339,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 int count = productBarcode.getCartQuantity();
 
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();
@@ -391,7 +391,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                 int count = productBarcode.getCartQuantity();
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();
@@ -409,7 +409,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 onItemClick.onItemClicked(position, productModels.get(position));
 
                 int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productBarcode.getId();
                 int cart_id = productBarcode.getCartId();

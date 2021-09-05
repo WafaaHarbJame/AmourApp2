@@ -34,7 +34,7 @@ public class MemberModel implements Serializable {
     private String prefix;
     @SerializedName("device_token")
     @Expose
-    private String deviceToken;
+    private String deviceToken="token";
     @SerializedName("email")
     @Expose
     private String email;
@@ -157,7 +157,7 @@ public class MemberModel implements Serializable {
     }
 
     public String getDeviceToken() {
-        return deviceToken;
+        return deviceToken!=null ? deviceToken :"deviceToken";
     }
 
     public void setDeviceToken(String deviceToken) {

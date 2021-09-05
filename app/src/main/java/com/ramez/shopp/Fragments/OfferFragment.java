@@ -69,10 +69,10 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-        country_id = UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCountryId() != null ?
-                UtilityApp.getLocalData().getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getCityId() != null ?
-                UtilityApp.getLocalData().getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        country_id = localModel != null && localModel.getCountryId() != null ?
+                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
+                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
 
         linearLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
@@ -89,8 +89,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
         }
 
 
-        country_id = UtilityApp.getLocalData().getCountryId();
-        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
 
         gridLayoutManager = new GridLayoutManager(getActivityy(), numColumn);
         binding.offerRecycler.setLayoutManager(gridLayoutManager);

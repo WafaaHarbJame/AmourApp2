@@ -30,6 +30,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.Models.ChatModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.PathUtil;
@@ -66,17 +67,18 @@ public class ContactSupportActivity extends ActivityBase {
     private ChatModel chatMessage;
     private String inputType = "";
     private Bitmap imageBitmap;
+    LocalModel localModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityContactSupportBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
         setContentView(view);
 
         user = UtilityApp.getUserData();
         userID =   user != null && user.getId() != null ? String.valueOf(user.getId()) : "0";
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         userName = user.getName();
         user_image = user.getProfilePicture();
@@ -332,8 +334,8 @@ public class ContactSupportActivity extends ActivityBase {
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
 
-        if (UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        if (localModel.getShortname() != null) {
+            country = localModel.getShortname();
 
         } else {
             country = GlobalData.COUNTRY;
