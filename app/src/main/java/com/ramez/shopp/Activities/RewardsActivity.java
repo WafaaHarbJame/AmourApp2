@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Fragments.CardFragment;
 import com.ramez.shopp.Fragments.CouponsFragment;
-import com.ramez.shopp.Fragments.CurrentOrderFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityRewardsBinding;

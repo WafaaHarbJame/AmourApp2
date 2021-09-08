@@ -434,6 +434,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding = view;
 
             itemView.setOnClickListener(this);
+
             binding.favBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {

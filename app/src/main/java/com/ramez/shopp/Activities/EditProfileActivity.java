@@ -220,27 +220,23 @@ public class EditProfileActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
 
-            LoginResultModel result = (LoginResultModel) obj;
             if (func.equals(Constants.ERROR)) {
-
+                ResultAPIModel result = (ResultAPIModel) obj;
                 String message = getString(R.string.failtoupdate_profile);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
+                if (result != null && result.message != null && !result.message.isEmpty()) {
+                    message = result.message;
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
             } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, getString(R.string.no_internet_connection));
-
-
             } else {
                 if (IsSuccess) {
+                    LoginResultModel result = (LoginResultModel) obj;
 
                     MemberModel user = result.getData();
                     UtilityApp.setUserData(user);
 
-
                     GlobalData.successDialog(getActiviy(), getString(R.string.update_profile), getString(R.string.success_update));
-
 
                 } else {
                     Toast(getString(R.string.failtoupdate_profile));

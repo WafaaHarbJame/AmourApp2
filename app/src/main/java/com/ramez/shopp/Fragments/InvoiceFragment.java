@@ -126,9 +126,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 }
         );
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() :
-                UtilityApp.getDefaultLocalData(getActivityy());
-
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
         paymentList = new ArrayList<>();
         addressList = new ArrayList<>();
         deliveryTimesList = new ArrayList<>();

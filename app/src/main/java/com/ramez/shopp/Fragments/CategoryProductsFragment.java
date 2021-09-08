@@ -107,7 +107,9 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             user_id = String.valueOf(user.getId());
 
         }
-        city_id = Integer.parseInt(localModel.getCityId());
+        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
+                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+
 
         getIntentExtra();
 

@@ -36,7 +36,7 @@ public class AddressModel {
     private String additionalDirection="";
     @SerializedName("landline_number")
     @Expose
-    private int landlineNumber=0;
+    private String landlineNumber="0";
     @SerializedName("floor")
     @Expose
     private String floor="";
@@ -177,11 +177,11 @@ public class AddressModel {
         this.additionalDirection = additionalDirection;
     }
 
-    public int getLandlineNumber() {
+    public String  getLandlineNumber() {
         return landlineNumber;
     }
 
-    public void setLandlineNumber(int landlineNumber) {
+    public void setLandlineNumber(String landlineNumber) {
         this.landlineNumber = landlineNumber;
     }
 

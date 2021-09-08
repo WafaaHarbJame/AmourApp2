@@ -125,8 +125,8 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<List<TransactionModel>> result = (ResultAPIModel<List<TransactionModel>>) obj;
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            String message = getString(R.string.fail_to_get_data);
 
-            String message = getActivity().getString(R.string.fail_to_get_data);
             if (func.equals(Constants.ERROR)) {
 
                 if (result != null && result.message != null) {

@@ -87,7 +87,7 @@ public class GlobalData {
 
     public static void GlideImg(Context c, String image, int placeholder, ImageView imageView) {
         String photoUrl = "";
-
+        RequestOptions requestOptions=new RequestOptions();
         if (image != null && !image.isEmpty()) {
             photoUrl = image;
         } else {
@@ -95,7 +95,11 @@ public class GlobalData {
         }
 
         try {
-            Glide.with(c).asBitmap().load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(placeholder).into(imageView);
+            Glide.with(c).asBitmap().load(photoUrl)
+                    .apply(requestOptions)
+                    .thumbnail(0.5f)
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .placeholder(placeholder).into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
