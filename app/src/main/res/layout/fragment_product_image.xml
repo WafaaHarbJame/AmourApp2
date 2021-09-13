@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/cart_back_style"
     android:layout_margin="@dimen/_8sdp">
 
-    <com.github.siyamed.shapeimageview.RoundedImageView
+<!--    <com.github.siyamed.shapeimageview.RoundedImageView-->
+<!--        android:id="@+id/slideImg"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:siRadius="@dimen/_8sdp"-->
+<!--        app:siBorderColor="@color/gray5"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:siBorderWidth="@dimen/_1sdp"-->
+<!--        android:src="@drawable/slider_image" />-->
+
+    <ImageView
         android:id="@+id/slideImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:siRadius="@dimen/_8sdp"
-        app:siBorderColor="@color/gray5"
-        android:scaleType="centerCrop"
-        app:siBorderWidth="@dimen/_1sdp"
+        android:padding="@dimen/_7sdp"
+        android:scaleType="fitCenter"
         android:src="@drawable/slider_image" />
 
 

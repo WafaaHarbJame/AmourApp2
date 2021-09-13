@@ -411,8 +411,9 @@
     <string name="quanity_wrong">The Quanity not correct</string>
     <string name="seller_recommendation">Seller Recommendation</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="discover_more">Discover more</string>
+    <string name="customer">Customer</string>
+    <string name="enter_email">Enter Email</string>
 
 
 </resources>

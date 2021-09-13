@@ -376,6 +376,8 @@
     <string name="quanity_wrong">الكمية المدخلة غير صحيحية </string>
     <string name="seller_recommendation">منتجات موصى بها</string>
     <string name="discover_more">اكتشف المزيد</string>
+    <string name="customer">زبون </string>
+    <string name="enter_email">ادخل البريدالإلكتروني </string>
 
 
 </resources>
