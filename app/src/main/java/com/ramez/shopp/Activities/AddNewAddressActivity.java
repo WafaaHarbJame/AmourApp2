@@ -98,7 +98,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
 
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), this.getString(R.string.mapKey), Locale.US);
+            Places.initialize(getApplicationContext(), getString(R.string.mapKey), Locale.US);
         }
 
         stateModelList = new ArrayList<>();
@@ -370,7 +370,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     private void checkLocationPermission() {
         try {
-            PermissionCompat.Builder builder = new PermissionCompat.Builder((Context) this.getActiviy());
+            PermissionCompat.Builder builder = new PermissionCompat.Builder(getActiviy());
 
             builder.addPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
             builder.addPermissionRationale((getString(R.string.app_name)));
@@ -387,6 +387,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
                 public void onDenied(@NotNull String permission) {
                     Toast(R.string.some_permission_denied);
+                    Log.e("TAG", permission + "Denied");
+
                 }
             });
             builder.build().request();
@@ -401,7 +403,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             binding.loadingLocationLY.setVisibility(View.VISIBLE);
-            SmartLocation.with((Context) this.getActiviy()).location().oneFix().start((OnLocationUpdatedListener) ((OnLocationUpdatedListener) location -> {
+
+            SmartLocation.with(getActiviy()).location().oneFix().start(location -> {
                 binding.loadingLocationLY.setVisibility(View.GONE);
 
                 selectedLat = location.getLatitude();
@@ -410,7 +413,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
                 map.clear();
                 map.addMarker((new MarkerOptions()).position(latLng).
-                        icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap((Context) getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
+                        icon(BitmapDescriptorFactory.fromBitmap(ImageHandler.getBitmap(getActiviy(), R.drawable.location_icons))).title(getString(R.string.my_location)));
 
                 getLocationAddress();
 
@@ -418,7 +421,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                 map.animateCamera(cameraUpdate);
 
 
-            }));
+            });
         } else {
             showGPSDisabledAlertToUser();
         }
@@ -427,16 +430,12 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     private void initPlaceAutoComplete() {
 
-        Places.initialize(getActiviy(), this.getString(R.string.mapKey), Locale.US);
+        Places.initialize(getActiviy(), getString(R.string.mapKey), Locale.US);
 
         autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-        autocompleteFragment.setHint(getString(R.string.searchaddress));
-
-        if (BuildConfig.DEBUG && this.autocompleteFragment == null) {
-            Log.i("Assertion failed", "failed");
-
-        } else {
+        if (autocompleteFragment != null) {
+            autocompleteFragment.setHint(getString(R.string.searchaddress));
 
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
@@ -471,6 +470,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             });
 
         }
+
+
+
     }
 
     @Override
@@ -523,9 +525,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     private void getLocationAddress() {
 
         String address = MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng);
-        Log.i("TAG", "Log My selectedLat: " + selectedLat);
-        Log.i("TAG", "Log My selectedLng: " + selectedLng);
-        Log.i("TAG", "Log My Location: " + address);
+        Log.i("TAG", "Log My selectedLat: " + selectedLat+"");
+        Log.i("TAG", "Log My selectedLng: " + selectedLng+"");
+        Log.i("TAG", "Log My Location: " + address +"");
 
         binding.addressTV.setText(address);
 
@@ -533,7 +535,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     }
 
     private void showGPSDisabledAlertToUser() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder((Context) this.getActiviy());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActiviy());
         alertDialogBuilder.setMessage(getString(R.string.open_gps)).setCancelable(false).setPositiveButton(getString(R.string.enable), (DialogInterface.OnClickListener) ((dialog, id) -> {
             dialog.cancel();
             Intent callGPSSettingIntent = new Intent("android.settings.LOCATION_SOURCE_SETTINGS");
@@ -541,7 +543,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             dialog.cancel();
         }));
 
-        alertDialogBuilder.setNegativeButton((CharSequence) this.getString(R.string.cancel_tex), (DialogInterface.OnClickListener) null);
+        alertDialogBuilder.setNegativeButton(getString(R.string.cancel_tex), null);
         AlertDialog alert = alertDialogBuilder.create();
 
         try {

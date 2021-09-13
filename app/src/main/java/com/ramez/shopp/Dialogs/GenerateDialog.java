@@ -144,7 +144,7 @@ public class GenerateDialog extends Dialog {
             GlobalData.hideProgressDialog();
 
             GeneralModel result = (GeneralModel) obj;
-            if (result.isSuccessful()) {
+            if (result!=null && result.isSuccessful()) {
 //                callGetTotalPoints();
 //                GlobalData.refresh_points = true;
                 GlobalData.Toast(activity, R.string.success_generate_coupon);

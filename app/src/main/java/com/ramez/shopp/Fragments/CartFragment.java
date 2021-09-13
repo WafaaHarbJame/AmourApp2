@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
@@ -52,7 +53,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     LocalModel localModel;
     boolean isLogin = false;
     int productsSize;
-    String total="";
+    String total = "";
     String totalSavePrice;
     int productSize;
     private FragmentCartBinding binding;
@@ -105,7 +106,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             getCarts(storeId, userId);
 //            GetUserAddress(userId);
-
 
 
             binding.contBut.setOnClickListener(view1 -> {
@@ -207,6 +207,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     }
 
+    @SuppressLint("SetTextI18n")
     private void initAdapter() {
         cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
             CartProcessModel cartProcessModel = (CartProcessModel) obj;
@@ -237,7 +238,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 } else {
 
                     double total_price = minimum_order_amount - cartProcessModel.getTotal();
-                    binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price, fraction) + " " + currency + " " + getString(R.string.get_Free));
+
+                    String Add_more = getString(R.string.Add_more);
+                    String freeStr = getString(R.string.get_Free);
+
+                    binding.tvFreeDelivery.setText(Add_more + " " +
+                            NumberHandler.formatDouble(total_price, fraction)
+                            + " " + currency + " " + freeStr);
 
                 }
 
@@ -328,7 +335,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                             cartList = cartResultModel.getData().getCartData();
                             binding.contBut.setVisibility(View.VISIBLE);
-                            Data data=cartResultModel.getData();
+                            Data data = cartResultModel.getData();
                             minimum_order_amount = data.getMinimumOrderAmount();
                             localModel.setMinimum_order_amount(minimum_order_amount);
                             UtilityApp.setLocalData(localModel);
@@ -339,7 +346,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             Log.i(getClass().getSimpleName(), "Log  minimum_order_amount " + minimum_order_amount);
                             Log.i(getClass().getSimpleName(), "Log deliveryFees " + delivery_charges);
                             Log.i(getClass().getSimpleName(), "Log total " + total);
-                            if (delivery_charges >=0) {
+                            if (delivery_charges >= 0) {
                                 if (cartAdapter.calculateSubTotalPrice() >= minimum_order_amount) {
 
                                     binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
@@ -349,7 +356,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                                     double total_price = minimum_order_amount - cartAdapter.calculateSubTotalPrice();
                                     binding.tvFreeDelivery.setText(getString(R.string.Add_more) + " " + NumberHandler.formatDouble(total_price,
-                                           fraction) + " " + currency + " " + getString(R.string.get_Free));
+                                            fraction) + " " + currency + " " + getString(R.string.get_Free));
 
                                 }
                             } else {
@@ -357,8 +364,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                             }
 
-                            AnalyticsHandler.ViewCart(userId,currency, Double.parseDouble(total));
-
+                            AnalyticsHandler.ViewCart(userId, currency, Double.parseDouble(total));
 
 
                         } else {

@@ -80,7 +80,7 @@ public class ContactSupportActivity extends ActivityBase {
         userID =   user != null && user.getId() != null ? String.valueOf(user.getId()) : "0";
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
-        userName = user.getName();
+        userName = user!=null && user.getName()!=null ?user.getName() : getString(R.string.customer);
         user_image = user.getProfilePicture();
 
         chatMessages = new ArrayList<>();

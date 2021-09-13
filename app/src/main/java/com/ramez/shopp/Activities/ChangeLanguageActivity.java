@@ -62,21 +62,6 @@ public class ChangeLanguageActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
 
-            if (func.equals(Constants.ERROR)) {
-
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                //Toasty.error(getActiviy(),R.string.fail_to_get_data, Toast.LENGTH_SHORT, true).show();
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                //   Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
-
-
-            }
-
             if (IsSuccess) {
                 SettingModel settingModel = new SettingModel();
                 if (result.data != null) {
@@ -90,8 +75,6 @@ public class ChangeLanguageActivity extends ActivityBase {
             } else {
 
                 navigateChooseCityActivity();
-
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
 
             }
 

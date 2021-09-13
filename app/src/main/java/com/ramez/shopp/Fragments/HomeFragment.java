@@ -184,10 +184,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-        country_id = localModel != null && localModel.getCountryId() != null ?
-             localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(localModel!= null && localModel.getCityId() != null ?
-            localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId()!=null ? localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
         getCityList(country_id);
         getDeliveryTimeListNew(city_id);
@@ -688,7 +686,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         Log.d(TAG, "Log  store_id " + storeId);
 
 
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
         AndroidNetworking.get(url).setTag("test").setPriority(Priority.HIGH).
                 addHeaders("ApiKey", Constants.api_key)
@@ -829,7 +827,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 }
             }
 
-        }).CityHandle(country_id,getActivity());
+        }).CityHandle(country_id, getActivity());
     }
 
     private void getCityList(int country_id) {
@@ -899,7 +897,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 } else {
                     if (IsSuccess) {
-                        if (result!=null&&result.getData() != null && result.getData().size() > 0) {
+                        if (result != null && result.getData() != null && result.getData().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -1250,7 +1248,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
             CategoryProductsFragment categoryProductsFragment = new CategoryProductsFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.CAT_LIST, categoryModelList);
-            String subCatId=slider.getReffrence()!=null ? slider.getReffrence() :"0";
+            String subCatId = slider.getReffrence() != null ? slider.getReffrence() : "0";
             bundle.putInt(Constants.SUB_CAT_ID, Integer.parseInt(subCatId));
             categoryProductsFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();

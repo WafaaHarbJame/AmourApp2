@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -39,13 +38,18 @@ import java.util.Locale;
 import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
+
     private static final int SPLASH_TIMER = 3500;
     int storeId, userId = 0;
+    int country_id = 0;
+    int cartNumber;
+
+    String lang;
+    String shortName;
+
     MemberModel user;
     LocalModel localModel;
-    int cartNumber;
-    int country_id = 0;
-    private String lang;
+
 
 
     @Override
@@ -57,30 +61,29 @@ public class SplashScreenActivity extends ActivityBase {
 
     }
 
-
     private void startSplash() {
 
         setContentView(R.layout.activity_splash_screen);
-        lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
-
-//        getSetting();
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
 
         if (localModel != null && localModel.getCityId() != null) {
+
             storeId = Integer.parseInt(localModel.getCityId());
             country_id = localModel.getCountryId();
-            if (localModel.getShortname() != null) {
-                getLinks(Integer.parseInt(localModel.getCityId()));
-            }
-            getCategories(Integer.parseInt(localModel.getCityId()));
+            shortName = localModel.getShortname();
+
+            getCategories(storeId);
             getDinners(lang);
             GetHomePage();
             getCouponSettings(country_id);
-            getCountryDetail(localModel.getShortname());
+            getCountryDetail(shortName);
+            getLinks(storeId);
 
 
         }
+
         initData();
 
     }
@@ -91,11 +94,11 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (UtilityApp.isLogin()) {
                 if (UtilityApp.getUserData() != null) {
-                    localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
-                    ;
+
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
-                    userId = user.getId();
+                    userId = user != null && user.getId() != null ? user.getId() : 0;
+
                     getUserData(userId, storeId);
                     getTotalPoints(userId);
                     GetUserAddress(userId);
@@ -106,7 +109,6 @@ public class SplashScreenActivity extends ActivityBase {
 
                 if (!UtilityApp.isFirstRun()) {
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
-//                    intent.putExtra(Constants.LOGIN, true); // here is the problem
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -155,21 +157,6 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
 
-            if (func.equals(Constants.ERROR)) {
-
-                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                //Toasty.error(getActiviy(),R.string.fail_to_get_data, Toast.LENGTH_SHORT, true).show();
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                //   Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
-
-
-            }
-
             if (IsSuccess) {
                 SettingModel settingModel = new SettingModel();
                 if (result.data != null) {
@@ -185,7 +172,6 @@ public class SplashScreenActivity extends ActivityBase {
         }).getSetting();
     }
 
-
     private void getTotalPoints(int userId) {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -193,9 +179,8 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (result != null && result.isSuccessful() && result.data != null) {
                 TotalPointModel totalPointModel = result.data;
-                Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
-                Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
-
+//                Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
+//                Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
                 DBFunction.setTotalPoints(totalPointModel);
 
 
@@ -218,7 +203,6 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getCountryDetail(shortName);
     }
-
 
     private void getCouponSettings(int countryId) {
 
@@ -256,7 +240,7 @@ public class SplashScreenActivity extends ActivityBase {
     public void getDinners(String lang) {
         UtilityApp.setDinnersData(null);
         Log.i("TAG", "Log dinners Size");
-        Log.i("TAG", "Log countryid " + country_id);
+        Log.i("TAG", "Log country id " + country_id);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -275,7 +259,6 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getDinnersList(lang);
     }
-
 
     public void getCarts(int storeId, int userId) {
 
@@ -343,7 +326,7 @@ public class SplashScreenActivity extends ActivityBase {
 
                 ArrayList<Slider> sliderList = new ArrayList<>();
                 ArrayList<Slider> bannersList = new ArrayList<>();
-                ;
+
                 if (result.getSliders().size() > 0) {
 
                     for (int i = 0; i < result.getSliders().size(); i++) {
@@ -357,9 +340,15 @@ public class SplashScreenActivity extends ActivityBase {
                         }
 
                     }
+                    if (sliderList.size() > 0) {
+                        UtilityApp.setSliderData(sliderList);
 
-                    UtilityApp.setSliderData(sliderList);
-                    UtilityApp.setBannerData(bannersList);
+                    }
+
+                    if (bannersList.size() > 0) {
+                        UtilityApp.setBannerData(bannersList);
+
+                    }
 
 
                 }
@@ -368,7 +357,6 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).GetMainPage(0, country_id, storeId, String.valueOf(userId));
     }
-
 
     public void GetUserAddress(int user_id) {
 
@@ -380,15 +368,17 @@ public class SplashScreenActivity extends ActivityBase {
                 if (result.getData() != null && result.getData().size() > 0) {
                     ArrayList<AddressModel> addressList = new ArrayList<>();
                     addressList = result.getData();
-                    for (int i = 0; i < addressList.size(); i++) {
-                        AddressModel addressModel = addressList.get(i);
-                        if (addressModel.getDefault()) {
-                            MemberModel user = UtilityApp.getUserData();
-                            user.setLastSelectedAddress(addressModel.getId());
-                            UtilityApp.setUserData(user);
-                        }
+                    if (addressList != null && addressList.size() > 0)
+                        for (int i = 0; i < addressList.size(); i++) {
+                            AddressModel addressModel = addressList.get(i);
+                            if (addressModel.getDefault()) {
+                                MemberModel user = UtilityApp.getUserData();
+                                if (user != null && addressModel.getId() != null)
+                                    user.setLastSelectedAddress(addressModel.getId());
+                                UtilityApp.setUserData(user);
+                            }
 
-                    }
+                        }
 
 
                 }
@@ -396,6 +386,5 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).GetAddressHandle(user_id);
     }
-
 
 }

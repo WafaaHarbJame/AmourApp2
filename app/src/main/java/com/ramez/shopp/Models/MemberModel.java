@@ -13,7 +13,7 @@ public class MemberModel implements Serializable {
     private Integer id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name="";
     @SerializedName("mobile_number")
     @Expose
     private String mobileNumber;
@@ -37,7 +37,7 @@ public class MemberModel implements Serializable {
     private String deviceToken="token";
     @SerializedName("email")
     @Expose
-    private String email;
+    private String email="";
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;

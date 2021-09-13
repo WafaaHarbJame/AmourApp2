@@ -63,8 +63,7 @@ public class CardFragment extends FragmentBase {
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-        countryId = localModel != null && localModel.getCountryId() != null ?
-                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        countryId =localModel.getCountryId() ;
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
@@ -73,16 +72,17 @@ public class CardFragment extends FragmentBase {
         });
 
         binding.generateBut.setOnClickListener(v -> {
-            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
-                @Override
-                public void Result(Object obj, String func, boolean IsSuccess) {
-                    if (IsSuccess) {
-                        GlobalData.refresh_points=true;
-                        callGetTotalPoints();
-                    }
 
-                }
-            });
+            double points=totalPointModel!=null && totalPointModel.points > 0 ? totalPointModel.points : 0;
+            GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
+
+                    userId,points, settingCouponsModel.minimumPoints, (obj, func, IsSuccess) -> {
+                        if (IsSuccess) {
+                            GlobalData.refresh_points=true;
+                            callGetTotalPoints();
+                        }
+
+                    });
             generateDialog.show();
 
         });
@@ -105,7 +105,6 @@ public class CardFragment extends FragmentBase {
             coupBarcode = UtilityApp.getUserData().getLoyalBarcode();
             getTotalPoint();
             getCouponSettings();
-
             callApi();
 
         } else {
@@ -123,65 +122,82 @@ public class CardFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<List<TransactionModel>> result = (ResultAPIModel<List<TransactionModel>>) obj;
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-            String message = getString(R.string.fail_to_get_data);
+            if (isVisible()) {
+                ResultAPIModel<List<TransactionModel>> result = (ResultAPIModel<List<TransactionModel>>) obj;
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                String message = getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result != null && result.message != null) {
-                    message = result.message;
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-                binding.generateBut.setVisibility(View.GONE);
-
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-                binding.generateBut.setVisibility(View.GONE);
+                    if (result != null && result.message != null) {
+                        message = result.message;
+                    }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+                    binding.generateBut.setVisibility(View.GONE);
 
 
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-                binding.generateBut.setVisibility(View.GONE);
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+                    binding.generateBut.setVisibility(View.GONE);
 
 
-            }
-            if (result.isSuccessful()) {
-                binding.dataLY.setVisibility(View.VISIBLE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                binding.generateBut.setVisibility(View.VISIBLE);
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.generateBut.setVisibility(View.GONE);
 
-                List<TransactionModel> list = result.data;
-                if (list.size() > 0) {
-                    initAdapter(list);
 
-                } else {
-                    binding.NotTransData.noDataLY.setVisibility(View.VISIBLE);
-                    binding.myOrderRecycler.setVisibility(View.GONE);
                 }
 
-            } else {
+                if (IsSuccess) {
+                    if (result != null  && result.data != null) {
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        binding.generateBut.setVisibility(View.VISIBLE);
 
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-                binding.generateBut.setVisibility(View.GONE);
+                        List<TransactionModel> list = result.data;
+                        if (list.size() > 0) {
+                            initAdapter(list);
 
+                        } else {
+                            binding.NotTransData.noDataLY.setVisibility(View.VISIBLE);
+                            binding.myOrderRecycler.setVisibility(View.GONE);
+                        }
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+                        binding.generateBut.setVisibility(View.GONE);
+
+
+                    }
+                }
+                else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+                    binding.generateBut.setVisibility(View.GONE);
+
+
+                }
 
             }
+
         }).getTrans(userId);
     }
 
@@ -251,14 +267,12 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-            if (result.isSuccessful()) {
 
-
-                if (result != null && result.data != null && result.status==200) {
+                if (result != null && result.isSuccessful() && result.data != null) {
                     settingCouponsModel = result.data;
                     DBFunction.setCouponSettings(settingCouponsModel);
 
-                }
+
 
 
             }

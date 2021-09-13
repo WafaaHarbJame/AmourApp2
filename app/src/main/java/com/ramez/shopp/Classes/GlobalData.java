@@ -122,6 +122,31 @@ public class GlobalData {
             e.printStackTrace();
         }
 
+
+
+    }
+
+
+    public static void GlideImgWithTransform(Context c, String image, int placeholder, ImageView imageView) {
+        String photoUrl = "";
+
+        if (image != null && !image.isEmpty()) {
+            photoUrl = image;
+        } else {
+            photoUrl = BetaBaseURL;
+        }
+
+        try {
+            Glide.with(c).load(photoUrl)
+                    .transform(new RoundedCorners(25))
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .placeholder(placeholder).into(imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
     public static void GlideImgWeb(Context c, String image, int placeholder, ImageView imageView) {

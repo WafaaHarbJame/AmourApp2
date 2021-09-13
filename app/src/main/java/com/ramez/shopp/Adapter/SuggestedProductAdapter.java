@@ -426,7 +426,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
 
             if (onItemClick != null) {
-                if (productModels.size() > 0) {
+                if (productModels!=null && productModels.size() > 0) {
                     int position = getBindingAdapterPosition();
                     onItemClick.onItemClicked(position, productModels.get(position));
                     ProductModel productModel = productModels.get(position);

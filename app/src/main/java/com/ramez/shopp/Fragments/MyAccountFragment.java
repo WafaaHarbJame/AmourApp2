@@ -90,8 +90,7 @@ public class MyAccountFragment extends FragmentBase {
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivity());
 
 
-        country_id = localModel != null && localModel.getCountryId() != null ?
-                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
                 localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 

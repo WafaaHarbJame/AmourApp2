@@ -69,10 +69,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-        country_id = localModel != null && localModel.getCountryId() != null ?
-                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
-        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
-                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
 
 
         linearLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);

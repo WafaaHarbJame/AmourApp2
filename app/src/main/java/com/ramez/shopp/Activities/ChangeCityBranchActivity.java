@@ -63,11 +63,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
             city_id = Integer.parseInt(localModel.getCityId());
 
         }
-        else {
-            city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
-                    localModel.getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
 
-        }
 
 //        Log.i("tag", "Log cityId" + localModel.getCityId());
 

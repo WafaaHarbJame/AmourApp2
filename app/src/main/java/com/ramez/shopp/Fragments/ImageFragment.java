@@ -52,7 +52,7 @@ public class ImageFragment extends FragmentBase {
         Bundle bundle = getArguments();
         if (bundle != null) {
             imageUrl = bundle.getString(Constants.KEY_IMAGE_URL);
-            GlobalData.GlideImgGif(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
+            GlobalData.GlideImgWithTransform(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
 
         }
 

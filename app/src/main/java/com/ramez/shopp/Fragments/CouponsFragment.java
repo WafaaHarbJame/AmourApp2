@@ -59,8 +59,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         list = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-        countryId = localModel != null && localModel.getCountryId() != null ?
-                localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActivityy()).getCountryId();
+        countryId = localModel.getCountryId();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
@@ -130,28 +129,32 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             binding.dataLY.setVisibility(View.GONE);
         }
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-            ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
-            if (result.isSuccessful()) {
-                if (result.data != null && result.data.size() > 0) {
-                    binding.dataLY.setVisibility(View.VISIBLE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    List<CouponsModel> list = result.data;
-                    initAdapter(list);
+            if (isVisible()) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
+                if (result!=null&& result.isSuccessful()) {
+
+                    if (result.data != null && result.data.size() > 0) {
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        List<CouponsModel> list = result.data;
+                        initAdapter(list);
+
+                    } else {
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.tvErrorMessage.setText(getString(R.string.no_data));
+                        binding.noDataLY.titleTv.setText(getString(R.string.Coupons));
+                        binding.noDataLY.btnBrowseProducts.setVisibility(View.GONE);
+                        binding.dataLY.setVisibility(View.GONE);
+                    }
 
                 } else {
-                    binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-                    binding.noDataLY.tvErrorMessage.setText(getString(R.string.no_data));
-                    binding.noDataLY.titleTv.setText(getString(R.string.Coupons));
-                    binding.noDataLY.btnBrowseProducts.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.dataLY.setVisibility(View.GONE);
                 }
-
-            } else {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.dataLY.setVisibility(View.GONE);
             }
+
         }).getCoupons(userId);
     }
 

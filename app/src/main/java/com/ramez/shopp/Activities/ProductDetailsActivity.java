@@ -96,13 +96,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         MemberModel memberModel = UtilityApp.getUserData();
 
-        localModel = localModel != null ? localModel : UtilityApp.getDefaultLocalData(getActiviy());
-        country_id = localModel.getCountryId() != null ?
-               localModel.getCountryId() : UtilityApp.getDefaultLocalData(getActiviy()).getCountryId();
-        city_id = Integer.parseInt(localModel != null && localModel.getCityId() != null ?
-                localModel.getCityId() : UtilityApp.getDefaultLocalData(getActiviy()).getCityId());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData()
+                : UtilityApp.getDefaultLocalData(getActiviy());
+        country_id = localModel.getCountryId() ;
 
-//        sliderList = new ArrayList<String>();
+        city_id = Integer.parseInt(localModel.getCityId());
 
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();

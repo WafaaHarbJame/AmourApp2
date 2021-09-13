@@ -16,6 +16,8 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
+import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -54,6 +56,7 @@ public class EditProfileActivity extends ActivityBase {
     private Uri selectedPhotoUri;
     LocalModel localModel;
     private ActivityEditProfileBinding binding;
+    int store_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +65,28 @@ public class EditProfileActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        store_id = Integer.parseInt(localModel.getCityId());
 
         setTitle(R.string.text_title_edit_profile);
 
         memberModel = UtilityApp.getUserData();
 
-        if (memberModel != null) {
+        if (memberModel != null && memberModel.getId() != null) {
             initData();
 
-        } else {
-            int store_id = Integer.parseInt(localModel.getCityId());
-            getUserData(userId, store_id);
         }
+
+//        else {
+//            int userId = memberModel.getId();
+//        getUserData(userId, store_id);
+//        }
 
 
         binding.saveBut.setOnClickListener(view1 -> {
 
-            updateProfile();
+            if (isValidForm()) {
+                updateProfile();
+            }
 
         });
 
@@ -212,9 +220,10 @@ public class EditProfileActivity extends ActivityBase {
 
         final String name = NumberHandler.arabicToDecimal(binding.edtUserName.getText().toString());
         final String email = NumberHandler.arabicToDecimal(binding.etEmail.getText().toString());
-
-        memberModel.setName(name);
-        memberModel.setEmail(email);
+        if (memberModel != null) {
+            memberModel.setName(name);
+            memberModel.setEmail(email);
+        }
 
         GlobalData.progressDialog(getActiviy(), R.string.update_profile, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -379,6 +388,14 @@ public class EditProfileActivity extends ActivityBase {
         binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
         Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
+
+    }
+
+    private boolean isValidForm() {
+        FormValidator formValidator = FormValidator.Companion.getInstance();
+        return formValidator.addField(binding.edtUserName, new NonEmptyRule(R.string.enter_name))
+                .addField(binding.etEmail, new NonEmptyRule(R.string.enter_email))
+                .validate();
 
     }
 

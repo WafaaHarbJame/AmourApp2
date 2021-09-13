@@ -67,26 +67,4 @@ public class PickImageDialog extends Dialog {
         return this;
     }
 
-    private final void openPicker() {
-        try {
-            PermissionCompat.Builder builder = new PermissionCompat.Builder((activity));
-            builder.addPermissions(new String[]{"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"});
-            builder.addPermissionRationale(activity.getString(R.string.should_allow_permission));
-            builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
-                public void onGrant() {
-
-
-                }
-                public void onDenied(@NotNull String permission) {
-                    Toast.makeText(activity, ""+activity.getString(R.string.some_permission_denied), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            builder.build().request();
-        } catch (Exception var2) {
-            var2.printStackTrace();
-        }
-
-    }
-
 }
