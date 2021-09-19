@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
+
 import com.facebook.AccessToken;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
@@ -28,13 +32,14 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
+import com.ramez.shopp.Utils.PhoneHandler;
 import com.ramez.shopp.databinding.FragmentLoginBinding;
 
+import java.util.List;
 import java.util.Random;
 
 public class LoginFragment extends FragmentBase {
-    private static final int RC_SIGN_IN = 1001;
-    private static final int TWITTER_SIGN_IN = 1002;
+
     final String TAG = "Log";
     String FCMToken;
     String CountryCode = "+966";
@@ -45,42 +50,42 @@ public class LoginFragment extends FragmentBase {
     int cartNumber;
     int storeId, userId;
     MemberModel user;
+    int countryId;
     private FragmentLoginBinding binding;
     private ViewPager viewPager;
-//    private CallbackManager callbackManager;
-//    private GoogleSignInClient mGoogleSignInClient;
-//    private FirebaseAuth firebaseAuth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
-//
-//        TwitterAuthConfig mTwitterAuthConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
-//        TwitterConfig twitterConfig = new TwitterConfig.Builder(getActivityy()).twitterAuthConfig(mTwitterAuthConfig).build();
-//        Twitter.initialize(twitterConfig);
-
-
-        View view = binding.getRoot();
-
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-
         viewPager = container.findViewById(R.id.viewPager);
 
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
-//
-//        mGoogleSignInClient = GoogleSignIn.getClient(getActivityy(), gso);
-//
-//        firebaseAuth = FirebaseAuth.getInstance();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+
+        localModel = UtilityApp.getLocalData() != null ?
+                UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+        countryId=localModel.getCountryId();
 
         getDeviceToken();
 
+        CountryCode= String.valueOf(localModel.getPhonecode());
+        String intro=GlobalData.getIntro(CountryCode);
+        Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
+        binding.edtPhoneNumber.setHint(intro);
+
+        initListeners();
+    }
+
+    private void initListeners() {
+
         binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
-
-
-//        callbackManager = CallbackManager.Factory.create();
-
         binding.textForgotPassword.setOnClickListener(view1 -> {
             startRestPassword();
         });
@@ -88,7 +93,6 @@ public class LoginFragment extends FragmentBase {
         binding.skipButton.setOnClickListener(view1 -> {
             startMain();
         });
-
 
         binding.loginBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
@@ -101,13 +105,13 @@ public class LoginFragment extends FragmentBase {
 
 
         binding.loginGoogleBut.setOnClickListener(view1 -> {
-            googleSignIn();
+//            googleSignIn();
 
 
         });
 
         binding.loginFacebookBut.setOnClickListener(view1 -> {
-            facebookSignIn();
+//            facebookSignIn();
         });
 
         binding.registerBut.setOnClickListener(view1 -> {
@@ -118,7 +122,7 @@ public class LoginFragment extends FragmentBase {
 
 
         binding.loginTwitterBut.setOnClickListener(view1 -> {
-          //  twitterSignIn();
+            //  twitterSignIn();
         });
 
         binding.showPassBut.setOnClickListener(view1 -> {
@@ -132,8 +136,6 @@ public class LoginFragment extends FragmentBase {
             }
         });
 
-
-        return view;
     }
 
     private void loginUser() {
@@ -154,77 +156,73 @@ public class LoginFragment extends FragmentBase {
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
-            LoginResultModel result = (LoginResultModel) obj;
+            if (isVisible()) {
 
-            if (func.equals(Constants.ERROR)) {
-                String message = getString(R.string.fail_signin);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
+                GlobalData.hideProgressDialog();
+                LoginResultModel result = (LoginResultModel) obj;
 
-                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
-            } else if (func.equals(Constants.FAIL)) {
-                String message = getString(R.string.fail_signin);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            } else {
-                if (IsSuccess) {
-
-                    if (result.getStatus() == 106) {
-                        Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
-                        intent.putExtra(Constants.KEY_MOBILE, mobileStr);
-                        intent.putExtra(Constants.verify_account, true);
-                        intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
-                        startActivity(intent);
-
+                if (func.equals(Constants.ERROR)) {
+                    String message = getString(R.string.fail_signin);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
 
-                    else if(result.getStatus()==0){
-
-                        String message = getString(R.string.fail_signin);
-                        if (result != null && result.getMessage() != null) {
-                            message = result.getMessage();
-                        }
-
-                        GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                    GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                } else if (func.equals(Constants.FAIL)) {
+                    String message = getString(R.string.fail_signin);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
                     }
-
-                    else if(result.getStatus()==200) {
-                        MemberModel user = result.getData();
-                        if(user!=null){
-                            user.setUserType(Constants.user_type);
-
-                        }
-
-                        UtilityApp.setUserData(user);
-                        UtilityApp.setIsFirstLogin(true);
-                        if (UtilityApp.getUserData() != null) {
-                            UpdateToken();
-                        }
-                    }
-
-                    else {
-
-                        String message = getString(R.string.fail_signin);
-                        if (result != null && result.getMessage() != null) {
-                            message = result.getMessage();
-                        }
-
-                        GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
-                    }
-
-
+                    GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
                 } else {
-                    Toast(getString(R.string.fail_signin));
+                    if (IsSuccess) {
 
+                        if (result.getStatus() == 106) {
+                            Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
+                            intent.putExtra(Constants.KEY_MOBILE, mobileStr);
+                            intent.putExtra(Constants.verify_account, true);
+                            intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
+                            startActivity(intent);
+
+                        } else if (result.getStatus() == 0) {
+
+                            String message = getString(R.string.fail_signin);
+                            if (result.getMessage() != null) {
+                                message = result.getMessage();
+                            }
+
+                            GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                        } else if (result.getStatus() == 200) {
+                            MemberModel user = result.getData();
+                            if (user != null) {
+                                user.setUserType(Constants.user_type);
+
+                            }
+
+                            UtilityApp.setUserData(user);
+                            UtilityApp.setIsFirstLogin(true);
+                            if (UtilityApp.getUserData() != null) {
+                                UpdateToken();
+                            }
+                        } else {
+
+                            String message = getString(R.string.fail_signin);
+                            if (result.getMessage() != null) {
+                                message = result.getMessage();
+                            }
+
+                            GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                        }
+
+
+                    } else {
+                        Toast(getString(R.string.fail_signin));
+
+                    }
                 }
             }
-
 
         }).loginHandle(memberModel);
 
@@ -266,7 +264,7 @@ public class LoginFragment extends FragmentBase {
             OneSignal.idsAvailable((userId, registrationId) -> {
                 Log.d("debug", "Log User:" + userId);
                 if (registrationId != null)
-                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+                    FCMToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
                 UtilityApp.setFCMToken(FCMToken);
 
                 Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
@@ -291,30 +289,33 @@ public class LoginFragment extends FragmentBase {
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
-            ResultAPIModel<String> result = (ResultAPIModel) obj;
-            if (func.equals(Constants.ERROR)) {
-                String message = getString(R.string.fail_signin);
-                if (result != null && result.message != null) {
-                    message = result.message;
-                }
-                Toast(message);
+            if (isVisible()) {
 
-            } else {
-                if (IsSuccess) {
-                    localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-                    storeId = Integer.parseInt(localModel.getCityId());
-                    user = UtilityApp.getUserData();
-                    userId = user.getId();
-
-                    getCarts(storeId, userId);
+                GlobalData.hideProgressDialog();
+                ResultAPIModel<String> result = (ResultAPIModel) obj;
+                if (func.equals(Constants.ERROR)) {
+                    String message = getString(R.string.fail_signin);
+                    if (result != null && result.message != null) {
+                        message = result.message;
+                    }
+                    Toast(message);
 
                 } else {
-                    Toast(getString(R.string.fail_signin));
+                    if (IsSuccess) {
+                        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+                        storeId = Integer.parseInt(localModel.getCityId());
+                        user = UtilityApp.getUserData();
+                        userId = user.getId();
 
+                        getCarts(storeId, userId);
+
+                    } else {
+                        Toast(getString(R.string.fail_signin));
+
+                    }
                 }
-            }
 
+            }
 
         }).UpdateTokenHandle(memberModel);
 
@@ -435,27 +436,30 @@ public class LoginFragment extends FragmentBase {
         GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
-            LoginResultModel result = (LoginResultModel) obj;
-            if (func.equals(Constants.ERROR)) {
-                String message = getString(R.string.fail_register);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
-            } else {
-                if (IsSuccess) {
-                    Log.i("TAG", "Log otp " + result.getOtp());
-                    MemberModel user = result.getData();
-                    //  user.setRegisterType(Constants.BY_SOCIAL);
-                    UtilityApp.setUserData(user);
-                    Intent intent = new Intent(getActivityy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+            if (isVisible()) {
 
+                GlobalData.hideProgressDialog();
+                LoginResultModel result = (LoginResultModel) obj;
+                if (func.equals(Constants.ERROR)) {
+                    String message = getString(R.string.fail_register);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
+                    }
+                    GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
                 } else {
-                    Toast(getString(R.string.fail_register));
+                    if (IsSuccess) {
+                        Log.i("TAG", "Log otp " + result.getOtp());
+                        MemberModel user = result.getData();
+                        //  user.setRegisterType(Constants.BY_SOCIAL);
+                        UtilityApp.setUserData(user);
+                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
 
+                    } else {
+                        Toast(getString(R.string.fail_register));
+
+                    }
                 }
             }
 
@@ -545,27 +549,29 @@ public class LoginFragment extends FragmentBase {
 
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (isVisible()) {
 
-            GlobalData.hideProgressDialog();
-            CartResultModel cartResultModel = (CartResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
+                GlobalData.hideProgressDialog();
+                CartResultModel cartResultModel = (CartResultModel) obj;
+                String message = getString(R.string.fail_to_get_data);
 
-            if (IsSuccess) {
-                if (cartResultModel.getData()!=null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
-                    cartNumber = cartResultModel.getData().getCartCount();
-                    UtilityApp.setCartCount(cartNumber);
-                    Intent intent = new Intent(getActivityy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } else {
-                    UtilityApp.setCartCount(0);
-                    Intent intent = new Intent(getActivityy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                if (IsSuccess) {
+                    if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                        cartNumber = cartResultModel.getData().getCartCount();
+                        UtilityApp.setCartCount(cartNumber);
+                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        UtilityApp.setCartCount(0);
+                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                    getActivity().finish();
+
+
                 }
-                getActivity().finish();
-
-
             }
 
         }).GetCarts(storeId, userId);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,11 +38,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public String currency = "BHD";
     DataCallback dataCallback;
     AddCommentDialog addCommentDialog;
-    private Context context;
-    private List<CartModel> cartDMS;
-    private OnCartItemClicked onCartItemClicked;
+    private final Context context;
+    private final List<CartModel> cartDMS;
+    private final OnCartItemClicked onCartItemClicked;
     int fraction = 2;
     LocalModel localModel;
+
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = cartDMS;
@@ -50,6 +52,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
     }
 
+    @NonNull
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         RowCartItemBinding itemView = RowCartItemBinding.inflate(LayoutInflater.from(context), parent, false);
@@ -59,6 +62,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
+
         CartModel cartDM = cartDMS.get(position);
          localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
@@ -67,6 +71,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         int quantity = cartDM.getQuantity();
 
         holder.binding.weightUnitTv.setText(cartDM.getWightName());
+
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
 
@@ -113,15 +118,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-//        GlobalData.PicassoImg(cartDM.getImage()
-//                , R.drawable.holder_image, holder.binding.imageView1);
-
         GlobalData.GlideImg(context, cartDM.getImage()
                 , R.drawable.holder_image, holder.binding.imageView1);
 
 
         calculateSubTotalPrice();
         calculateSavePrice();
+
         if (Integer.parseInt(holder.binding.productCartQTY.getText().toString()) == 1) {
 
             holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -152,6 +155,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     }
 
     public double calculateSubTotalPrice() {
+
         double subTotal = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
             double price = 0;
@@ -200,17 +204,14 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         return savePrice;
     }
 
-
     @Override
     public int getItemCount() {
         return cartDMS.size();
     }
 
-
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
     }
-
 
     private void initSnackBar(String message, View viewBar) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
@@ -222,7 +223,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             if (IsSuccess) {
 
                 addCommentDialog.dismiss();
-                notifyDataSetChanged();
                 notifyItemChanged(position);
                 initSnackBar(context.getString(R.string.success_to_update_cart), v);
                 cartDMS.get(position).setRemark(remark);
@@ -239,10 +239,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     }
 
 
-    public interface OnCartItemClicked {
-        void onCartItemClicked(CartModel cartDM);
-    }
-
     class Holder extends RecyclerView.ViewHolder {
 
         RowCartItemBinding binding;
@@ -254,11 +250,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             binding.cardView.setOnClickListener(v -> {
                 int position = getBindingAdapterPosition();
+
                 if (position >= 0) {
                     CartModel cartDM = cartDMS.get(position);
                     onCartItemClicked.onCartItemClicked(cartDM);
                 }
             });
+
 
 
             binding.markBtn.setOnClickListener(view1 -> {
@@ -294,10 +292,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             });
 
             binding.deleteBut.setOnClickListener(view1 -> {
-                int position = getBindingAdapterPosition();
 
+                int position = getBindingAdapterPosition();
                 CartModel productModel = cartDMS.get(position);
-                int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(localModel.getCityId());
@@ -446,7 +443,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
     }
 
-
     public void updateCart(int position, int productId, int product_barcode_id, int quantity, int quantity2, Boolean fromCart, int userId, int storeId, int cart_id, String update_quantity) {
         if (quantity > 0) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -463,10 +459,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
                     }
-                    //Toast.makeText(context, context.getString(R.string.success_to_update_cart), Toast.LENGTH_SHORT).show();
-
-                    //initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                    if (cartDMS != null && cartDMS.size() > 0) {
+                     if (cartDMS != null && cartDMS.size() > 0) {
                         cartDMS.get(position).setQuantity(cartQuantity);
                         notifyItemChanged(position);
                     }
@@ -500,6 +493,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
     }
+
 
     public void deleteCart(int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -537,5 +531,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
     }
 
+    public interface OnCartItemClicked {
+        void onCartItemClicked(CartModel cartDM);
+    }
 
 }

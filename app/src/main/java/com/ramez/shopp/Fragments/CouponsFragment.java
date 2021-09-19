@@ -64,24 +64,25 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
+        getData();
+
+
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getData(true);
+
+            getData();
         });
 
 
         binding.generateBut.setOnClickListener(v -> {
+            if (totalPointModel != null && totalPointModel.points > 0) {
+                showGenerateDialog();
+            } else {
+                getData();
 
-            GenerateDialog generateDialog = new GenerateDialog(getActivityy(), userId, totalPointModel.points, settingCouponsModel.minimumPoints, new DataFetcherCallBack() {
-                @Override
-                public void Result(Object obj, String func, boolean IsSuccess) {
-                    if (IsSuccess) {
-                        GlobalData.refresh_points = true;
-                        callGetTotalPoints();
+            }
 
-                    }
-                }
-            });
-            generateDialog.show();
+            showGenerateDialog();
+
 
         });
 
@@ -92,7 +93,20 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
         });
 
-        getData(true);
+    }
+
+    private void showGenerateDialog() {
+        double points = totalPointModel != null  ? totalPointModel.points : 0;
+        GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
+                userId, points,
+                settingCouponsModel.minimumPoints, (obj, func, IsSuccess) -> {
+                    if (IsSuccess) {
+                        GlobalData.refresh_points = true;
+                        callGetTotalPoints();
+
+                    }
+                });
+        generateDialog.show();
     }
 
     private void initAdapter(List<CouponsModel> list) {
@@ -104,14 +118,13 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     }
 
 
-    private void getData(boolean loading) {
+    private void getData() {
 
         if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
             userId = UtilityApp.getUserData().getId();
             getTotalPoint();
             getCouponSettings();
-
-            callApi(loading);
+            callApi(true);
 
         } else {
             CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
@@ -132,7 +145,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             if (isVisible()) {
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
                 ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
-                if (result!=null&& result.isSuccessful()) {
+                if (result != null && result.isSuccessful()) {
 
                     if (result.data != null && result.data.size() > 0) {
                         binding.dataLY.setVisibility(View.VISIBLE);

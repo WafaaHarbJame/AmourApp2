@@ -64,6 +64,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         View view = binding.getRoot();
         setContentView(view);
 
+        MemberModel memberModel = UtilityApp.getUserData();
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -72,7 +73,6 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         }
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
-        MemberModel memberModel = UtilityApp.getUserData();
         country_id =localModel.getCountryId();
 
         city_id = Integer.parseInt(localModel.getCityId());

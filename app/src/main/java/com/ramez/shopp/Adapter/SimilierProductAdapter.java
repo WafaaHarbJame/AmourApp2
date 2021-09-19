@@ -42,7 +42,6 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
     private double discount = 0.0;
     private String currency = "BHD";
     private int limit = 2;
-    private SimilierProductAdapter adapter;
     int fraction = 2;
     LocalModel localModel;
 
@@ -51,6 +50,8 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
         this.onItemClick = onItemClick;
         this.productModels = productModels;
         this.limit = limit;
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+
 
     }
 

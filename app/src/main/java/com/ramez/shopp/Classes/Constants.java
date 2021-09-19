@@ -3,6 +3,8 @@ package com.ramez.shopp.Classes;
 
 import com.ramez.shopp.MainActivity;
 
+import java.util.HashMap;
+
 /**
  * Created by wokman on 1/18/2017.
  */
@@ -40,7 +42,7 @@ public class Constants {
     public static final String KEY_FIRST_RUN = "key_first_run";
     public static final String KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN";
     public static final String FROM_BROSHER = "FROM_BROSHER";
-//    public static final String SUBCATID = "SUBCATID";
+    //    public static final String SUBCATID = "SUBCATID";
     public static final String TO_BROSHER = "TO_BROSHER";
     public static final String success = "success";
     public static final String KEY_MOBILE = "key_mobile";
@@ -82,8 +84,8 @@ public class Constants {
     public static final String SEARCH_BY_CODE_byCode = "SEARCH_BY_CODE_byCode";
     public static final String CODE = "CODE";
     public static final String SELECTED_POSITION = "SELECTED_POSITION";
-    public static final String  MAIN_CAT_ID = "main_cat_id";
-    public static final String  SUB_CAT_ID = "sub_cat_id";
+    public static final String MAIN_CAT_ID = "main_cat_id";
+    public static final String SUB_CAT_ID = "sub_cat_id";
     public static final String position = "position";
     public static final String CAT_LIST = "CAT_LIST";
     public static final String CAT_MODEL = "CAT_MODEL";
@@ -131,15 +133,18 @@ public class Constants {
     public static String FRAG_HOME = "FRAG_HOME";
     public static String TO_FRAG_HOME = "TO_FRAG_HOME";
 
-    public static String past_order="p";
+    public static String past_order = "p";
 
-    public static String DB_TOTAL_POINTS="db_total_points";
-    public static String DB_loyal="db_loyal";
-    public static String DB_COUPON_SETTINGS="db_coupon_settings";
+    public static String DB_TOTAL_POINTS = "db_total_points";
+    public static String DB_loyal = "db_loyal";
+    public static String DB_COUPON_SETTINGS = "db_coupon_settings";
 
-    public static String default_storeId="7263";
-    public static int default_country_id=17;
-    public static int default_country_code=973;
-    public static String default_short_name="BH";
-    public static final String BHD ="BHD" ;
+    public static String default_storeId = "7263";
+    public static int default_country_id = 17;
+    public static int default_country_code = 973;
+    public static String default_short_name = "BH";
+    public static final String BHD = "BHD";
+
+
+
 }

@@ -152,8 +152,9 @@ public class GenerateDialog extends Dialog {
                 dataFetcherCallBack.Result("", Constants.success, true);
             } else {
                 String message = activity.getString(R.string.fail_generate_coupon);
-                if (result.getMessage() != null && !result.getMessage().isEmpty())
+                if (result != null && result.getMessage() != null && !result.getMessage().isEmpty()){
                     message = result.getMessage();
+                }
                 GlobalData.Toast(activity, message);
             }
 

@@ -186,6 +186,7 @@
     <string name="fail_to_delete_cart">لم يتم حذف هذا المنتج من السلة </string>
     <string name="success_to_update_cart">تم تحديث العربة بنجاح </string>
     <string name="fail_to_change_password">فشل تغير كلمة المرور</string>
+    <string name="fail_to_rest_password">فشل استعادة  كلمة المرور</string>
     <string name="change_city_currency">تغير اللغة </string>
     <string name="change_success">تم التغير بنجاح </string>
     <string name="should_allow_permission">يجب السماح للصلاحيات </string>

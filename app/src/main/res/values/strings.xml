@@ -207,7 +207,8 @@
     <string name="success_to_update_cart">Success to update to cart</string>
     <string name="success_delete_from_cart">Success delete from cart</string>
     <string name="fail_to_delete_cart">Fail To delete item</string>
-    <string name="fail_to_change_password">Fail to change address</string>
+    <string name="fail_to_change_password">Fail to change Password</string>
+    <string name="fail_to_rest_password">Fail to reset  password</string>
     <string name="change_city_currency">Change Language </string>
     <string name="change_success">Change Successfully "</string>
     <string name="should_allow_permission">Should Allow Permission</string>

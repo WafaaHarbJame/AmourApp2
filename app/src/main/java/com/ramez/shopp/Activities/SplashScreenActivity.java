@@ -98,7 +98,6 @@ public class SplashScreenActivity extends ActivityBase {
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user != null && user.getId() != null ? user.getId() : 0;
-
                     getUserData(userId, storeId);
                     getTotalPoints(userId);
                     GetUserAddress(userId);
@@ -135,10 +134,15 @@ public class SplashScreenActivity extends ActivityBase {
             if (IsSuccess && result != null && result.data != null) {
                 MemberModel memberModel = UtilityApp.getUserData();
                 ProfileData profileData = result.data;
-                memberModel.setName(profileData.getName() + "");
-                memberModel.setEmail(profileData.getEmail());
-                memberModel.setLoyalBarcode(profileData.getLoyalBarcode());
-                memberModel.setProfilePicture(profileData.getLoyalBarcode());
+
+                String name=profileData!=null&& profileData.getName()!=null? profileData.getName():"";
+                String email=profileData!=null&& profileData.getEmail()!=null? profileData.getEmail():"";
+                String LoyalBarcode=profileData!=null&& profileData.getLoyalBarcode()!=null? profileData.getLoyalBarcode():"";
+                String ProfilePicture=profileData!=null&& profileData.getProfilePicture()!=null? profileData.getProfilePicture():"";
+                memberModel.setName(name);
+                memberModel.setEmail(email);
+                memberModel.setLoyalBarcode(LoyalBarcode);
+                memberModel.setProfilePicture(ProfilePicture);
                 UtilityApp.setUserData(memberModel);
                 getCarts(storeId, userId);
             } else {
@@ -313,6 +317,10 @@ public class SplashScreenActivity extends ActivityBase {
     }
 
     public void GetHomePage() {
+        ArrayList<Slider> sliderList = new ArrayList<>();
+        ArrayList<Slider> bannersList = new ArrayList<>();
+
+
         Log.i(TAG, "Log GetMainPage new");
         Log.i(TAG, "Log country_id " + country_id);
         Log.i(TAG, "Log user_id " + userId);
@@ -324,8 +332,8 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (IsSuccess) {
 
-                ArrayList<Slider> sliderList = new ArrayList<>();
-                ArrayList<Slider> bannersList = new ArrayList<>();
+                sliderList.clear();
+                bannersList.clear();
 
                 if (result.getSliders().size() > 0) {
 

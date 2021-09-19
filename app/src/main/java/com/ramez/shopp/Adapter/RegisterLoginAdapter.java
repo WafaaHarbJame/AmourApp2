@@ -31,24 +31,22 @@ public class RegisterLoginAdapter extends FragmentStatePagerAdapter {
     private final Context mContext;
 
     public RegisterLoginAdapter(Context context, FragmentManager fm) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
         fragments = new SparseArray<>();
     }
-
-
 
 
     @Override
     public Fragment getItem(int position) {
 
         Fragment fragment = null;
-        if(position==0) {
+        if (position == 0) {
             fragment = new RegisterFragment();
 
         }
-        if(position ==1)
-            fragment=new LoginFragment();
+        if (position == 1)
+            fragment = new LoginFragment();
 
         return fragment;
     }
@@ -66,7 +64,7 @@ public class RegisterLoginAdapter extends FragmentStatePagerAdapter {
     }
 
     public Fragment getCurrentFragment(int index) {
-        if(fragments.size() > 0)
+        if (fragments.size() > 0)
             return fragments.get(index);
         else
             return null;

@@ -9,12 +9,12 @@ public class LocalModel {
     private Integer countryId;
     private String countryName;
     private String countryNameAr;
-    private String shortname="BH";
+    private String shortname = "BH";
     private Integer phonecode;
     private String currencyCode;
     private String cityId;
     private int fractional;
-    private int minimum_order_amount=0;
+    private int minimum_order_amount = 0;
     private String countryNameEn;
 
 
@@ -71,7 +71,7 @@ public class LocalModel {
     }
 
     public String getCityId() {
-        return cityId;
+        return cityId != null ? cityId :Constants.default_storeId;
     }
 
     public void setCityId(String cityId) {

@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -20,8 +19,10 @@
         android:padding="@dimen/_16sdp">
 
         <ImageView
+            android:id="@+id/logoIv"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_150sdp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/splash_logo" />
 
         <LinearLayout
@@ -52,8 +53,10 @@
 
 
                 <ImageView
+                    android:id="@+id/icDownBut1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_down" />
 
             </LinearLayout>
@@ -90,8 +93,10 @@
 
 
                 <ImageView
+                    android:id="@+id/icDownBut2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_down" />
 
             </LinearLayout>
@@ -125,6 +130,7 @@
                     android:id="@+id/imgArabicTick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_flag_selection_tick"
                     android:visibility="gone" />
             </LinearLayout>
@@ -160,6 +166,7 @@
                     android:id="@+id/imgEnglishTick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_flag_selection_tick"
                     android:visibility="gone" />
             </LinearLayout>

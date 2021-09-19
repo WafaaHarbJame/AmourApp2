@@ -7,10 +7,13 @@ import android.view.View;
 
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -20,6 +23,8 @@ public class ConfirmPhoneActivity extends ActivityBase {
     private ActivityConformPhoneBinding binding;
     String mobileStr;
     boolean reset_account=false;
+    LocalModel localModel;
+    String CountryCode = "+966";
 
 
     @Override
@@ -28,6 +33,11 @@ public class ConfirmPhoneActivity extends ActivityBase {
         binding = ActivityConformPhoneBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        CountryCode= String.valueOf(localModel.getPhonecode());
+        String intro=GlobalData.getIntro(CountryCode);
+        Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
+        binding.edtPhoneNumber.setHint(intro);
 
 
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
@@ -43,14 +53,9 @@ public class ConfirmPhoneActivity extends ActivityBase {
         }
 
 
-
-
-
-
         binding.confirmBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
                 String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
-
                     MemberModel memberModel=new MemberModel();
                     memberModel.setUserType(Constants.user_type);
                     memberModel.setMobileNumber(mobileStr);
@@ -79,7 +84,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
 
     }
 
-    private final boolean isValidForm() {
+    private boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
         return formValidator.addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).validate();
     }
@@ -92,10 +97,20 @@ public class ConfirmPhoneActivity extends ActivityBase {
                 Toast(R.string.fail_to_sen_otp);
             } else {
                 if (IsSuccess) {
-
                     OtpModel otpModel = (OtpModel) obj;
-                    Log.i("TAG", "Log otp " + otpModel.getData());
-                    GoToConfirm();
+
+                    if(otpModel.getStatus()==200 ) {
+                        Log.i("TAG", "Log otp " + otpModel.getData());
+                        GoToConfirm();
+                    }
+                    else {
+
+                    String message= otpModel.getMessage() != null ?otpModel.getMessage() : getString(R.string.fail_to_sen_otp);
+                            Toast(message);
+
+
+                    }
+
 
 
                 } else {
@@ -116,7 +131,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
-                Toast(R.string.fail_to_sen_otp);
+                Toast(R.string.fail_to_rest_password);
             }
 
             else if (func.equals(Constants.NO_CONNECTION)) {
@@ -124,11 +139,21 @@ public class ConfirmPhoneActivity extends ActivityBase {
             }
             else {
                 if (IsSuccess) {
-                    SendOtp(memberModel.getMobileNumber());
+                    OtpModel otpModel = (OtpModel) obj;
+                    Log.i(getClass().getSimpleName(), "Log OtpModel status " +otpModel.getStatus());
+
+                    if(otpModel.getStatus()==200 ) {
+                        SendOtp(memberModel.getMobileNumber());
+                    }
+                    else {
+                        String message= otpModel.getMessage() != null ?otpModel.getMessage() : getString(R.string.fail_to_rest_password);
+                        Toast(message);
+
+                    }
 
 
                 } else {
-                    Toast(R.string.fail_to_sen_otp);
+                    Toast(R.string.fail_to_rest_password);
                 }
             }
 

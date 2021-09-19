@@ -23,7 +23,8 @@
             android:paddingEnd="@dimen/_10sdp"
             android:scaleX="@integer/scaleXInv"
             android:src="@drawable/back_icon"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:contentDescription="@string/app_name" />
 
         <ImageView
             android:id="@+id/mainSearchBtn"
@@ -63,7 +64,8 @@
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:contentDescription="@string/app_name" />
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/mainTitleTv"
@@ -96,7 +98,8 @@
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/delete_toolbar"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="@string/app_name" />
 
         <ImageView
             android:id="@+id/sortBut"
@@ -108,7 +111,8 @@
             android:minHeight="@dimen/_40sdp"
             android:src="@drawable/sort_icon"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="@string/app_name" />
 
         <ImageView
             android:id="@+id/view2But"
@@ -123,7 +127,8 @@
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/filter_view_white"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="@string/app_name" />
 
     </RelativeLayout>
 

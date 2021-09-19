@@ -76,10 +76,15 @@ public class EditProfileActivity extends ActivityBase {
 
         }
 
-//        else {
+        else {
 //            int userId = memberModel.getId();
 //        getUserData(userId, store_id);
-//        }
+            UtilityApp.logOut();
+            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+            intent.putExtra(Constants.LOGIN, true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
 
 
         binding.saveBut.setOnClickListener(view1 -> {

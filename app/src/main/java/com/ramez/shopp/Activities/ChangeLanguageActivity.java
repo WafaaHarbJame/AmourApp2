@@ -19,8 +19,7 @@ public class ChangeLanguageActivity extends ActivityBase {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChangeLanguageBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
 
         binding.chooseLangTv.setOnClickListener(view1 -> {
             binding.langContainer.setVisibility(View.VISIBLE);
@@ -63,11 +62,11 @@ public class ChangeLanguageActivity extends ActivityBase {
             ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
 
             if (IsSuccess) {
-                SettingModel settingModel = new SettingModel();
-                if (result.data != null) {
-                    settingModel.setAbout(result.data.getAbout());
-                    settingModel.setConditions(result.data.getConditions());
-                    settingModel.setPrivacy(result.data.getPrivacy());
+                if (result!=null && result.data != null) {
+                    SettingModel settingModel = new SettingModel();
+                    settingModel.setAbout(result.data.getAbout()+"");
+                    settingModel.setConditions(result.data.getConditions()+"");
+                    settingModel.setPrivacy(result.data.getPrivacy()+"");
                     UtilityApp.setSetting(settingModel);
                     navigateChooseCityActivity();
                 }

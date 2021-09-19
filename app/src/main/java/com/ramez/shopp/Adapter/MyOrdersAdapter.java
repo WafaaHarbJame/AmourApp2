@@ -110,7 +110,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final OrderNewModel ordersDM = list.get(position);
 
             holder.binding.tvInvID.setText(ordersDM.getOrderCode());
-            holder.binding.tvShopName.setText(R.string.app_name);
+            holder.binding.tvShopName.setText(ordersDM.getStoreName());
 
             //delivery_status = PN:Pending || RC:Received || IP:Processing || CA:CheckoutArea ||
             // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea

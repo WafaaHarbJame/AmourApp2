@@ -14,10 +14,14 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GlobalData {
@@ -87,7 +91,7 @@ public class GlobalData {
 
     public static void GlideImg(Context c, String image, int placeholder, ImageView imageView) {
         String photoUrl = "";
-        RequestOptions requestOptions=new RequestOptions();
+        RequestOptions requestOptions = new RequestOptions();
         if (image != null && !image.isEmpty()) {
             photoUrl = image;
         } else {
@@ -123,7 +127,6 @@ public class GlobalData {
         }
 
 
-
     }
 
 
@@ -144,7 +147,6 @@ public class GlobalData {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -252,6 +254,36 @@ public class GlobalData {
     public static void Toast(Context context, int resId) {
 
         Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show();
+    }
+
+    public static String getIntro(String countryCode) {
+        String introStr = "3";
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+
+        // country Id :4 ,country name Oman
+        // country Id :17 ,country name Bahrain
+        // country Id :117 ,country name Kuwait
+        // country Id :178 ,country name Qatar
+        // country Id :191 ,country name Saudi_Arabia
+        // country Id :229 ,country name United_Arab_Emirates_ar
+
+        hashMap.put("968", "9");
+        hashMap.put("973", "3");
+        hashMap.put("965", "6");
+        hashMap.put("974", "5");
+        hashMap.put("966", "5");
+        hashMap.put("971", "5");
+
+        if(countryCode.equals("966")||countryCode.equals("971")){
+            introStr=hashMap.get(countryCode)+"xxxxxxxxx";
+
+        }
+        else {
+            introStr=hashMap.get(countryCode)+ "xxxxxxxx";
+
+        }
+
+        return introStr;
     }
 
 

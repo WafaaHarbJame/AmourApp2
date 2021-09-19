@@ -11,7 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.multidex.BuildConfig;
@@ -32,8 +37,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -88,6 +96,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     private double selectedLng = 50.50513866994304;
     private AutocompleteSupportFragment autocompleteFragment;
 
+    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
+    private ActivityResultLauncher<Intent> placeLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +121,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
 
-        if (localModel!= null) {
+        if (localModel != null) {
 
             if (localModel.getCountryName() != null && localModel.getPhonecode() != null) {
                 binding.codeSpinner.setText(localModel.getCountryName().concat(" " + "(" + localModel.getPhonecode() + ")"));
@@ -131,13 +141,27 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             fragment.getMapAsync(this);
         }
 
+        placeLauncher =registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result!=null &&result.getResultCode() == RESULT_OK) {
+
+                Place place = Autocomplete.getPlaceFromIntent(result.getData());
+                Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
+            } else if (result.getResultCode() == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(result.getData());
+                Log.i("TAG", status.getStatusMessage());
+            } else if (result.getResultCode() == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+            return;
+
+        });
 
         binding.stateSpinnerTv.setInputType(InputType.TYPE_NULL);
         binding.codeSpinner.setInputType(InputType.TYPE_NULL);
 
 
         if (localModel != null && localModel.getShortname().equals("KW")) {
-            String code = localModel.getShortname();
             binding.blockEt.setHint(getString(R.string.block_kw));
         }
 
@@ -221,7 +245,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
     private void CreateNewAddress() {
         state_id = Integer.parseInt(localModel.getCityId());
-        int userId = UtilityApp.getUserData().getId();
+        int userId = UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null
+                ? UtilityApp.getUserData().getId() : 0;
         AddressModel addressModel = new AddressModel();
         addressModel.setName(binding.nameEt.getText().toString());
         addressModel.setAreaId(selectedCityId);
@@ -439,14 +464,25 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
 
             autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
+
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+
+            // Start the autocomplete intent.
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                    .build(this);
+
+//            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+            placeLauncher.launch(intent);
+
+
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(@NonNull Place place) {
                     try {
 
                         map.clear();
-                        selectedLat = place.getLatLng().latitude;
-                        selectedLng = place.getLatLng().longitude;
+                        selectedLat = place.getLatLng() != null ? place.getLatLng().latitude : 0.0;
+                        selectedLng = place.getLatLng() != null ? place.getLatLng().longitude : 0.0;
                         MarkerOptions markerOptions = new MarkerOptions();
                         markerOptions.position(new LatLng(selectedLng, selectedLng));
                         cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(selectedLat, selectedLng), zoomLevel);
@@ -472,7 +508,6 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         }
 
 
-
     }
 
     @Override
@@ -483,7 +518,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
 
 
@@ -525,9 +560,9 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
     private void getLocationAddress() {
 
         String address = MapHandler.getGpsAddress(getActiviy(), selectedLat, selectedLng);
-        Log.i("TAG", "Log My selectedLat: " + selectedLat+"");
-        Log.i("TAG", "Log My selectedLng: " + selectedLng+"");
-        Log.i("TAG", "Log My Location: " + address +"");
+        Log.i("TAG", "Log My selectedLat: " + selectedLat + "");
+        Log.i("TAG", "Log My selectedLng: " + selectedLng + "");
+        Log.i("TAG", "Log My Location: " + address + "");
 
         binding.addressTV.setText(address);
 
@@ -552,6 +587,24 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             //use a log message
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = Autocomplete.getPlaceFromIntent(data);
+//                Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
+//            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+//                // TODO: Handle the error.
+//                Status status = Autocomplete.getStatusFromIntent(data);
+//                Log.i("TAG", status.getStatusMessage());
+//            } else if (resultCode == RESULT_CANCELED) {
+//                // The user canceled the operation.
+//            }
+//            return;
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
 
 }

@@ -179,7 +179,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                             }
                         };
 
-                        new ConfirmDialog(getActivityy(), String.valueOf(s) + "" + getString(R.string.please_update_cart), R.string.ok, R.string.cancel_label, click, null, true);
+                        new ConfirmDialog(getActivityy(), s + "" + getString(R.string.please_update_cart), R.string.ok, R.string.cancel_label, click, null, true);
 
 
                     }
@@ -188,12 +188,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
             });
-
-
-//            if (cartAdapter != null) {
-//
-//                cartAdapter.notifyDataSetChanged();
-//            }
 
 
         }
@@ -207,8 +201,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     private void initAdapter() {
+
         cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
             CartProcessModel cartProcessModel = (CartProcessModel) obj;
 
@@ -234,13 +229,11 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                     binding.tvFreeDelivery.setText(R.string.getFreeDelivery);
 
-
                 } else {
-
                     double total_price = minimum_order_amount - cartProcessModel.getTotal();
 
-                    String Add_more = getString(R.string.Add_more);
-                    String freeStr = getString(R.string.get_Free);
+                    String Add_more = getActivityy().getString(R.string.Add_more);
+                    String freeStr = getActivityy().getString(R.string.get_Free);
 
                     binding.tvFreeDelivery.setText(Add_more + " " +
                             NumberHandler.formatDouble(total_price, fraction)
@@ -267,8 +260,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         binding.saveText.setText(totalSavePrice.concat(" " + currency));
 
-
-        cartAdapter.notifyDataSetChanged();
+        binding.cartRecycler.post(() -> cartAdapter.notifyDataSetChanged());
 
 
     }
@@ -284,7 +276,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         startActivity(intent);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     public void getCarts(int storeId, int userId) {
 
         cartList.clear();
@@ -342,7 +334,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                             UtilityApp.setCartCount(data.getCartCount());
                             initAdapter();
-                            cartAdapter.notifyDataSetChanged();
+
+                            binding.cartRecycler.post(() -> cartAdapter.notifyDataSetChanged());
+
                             Log.i(getClass().getSimpleName(), "Log  minimum_order_amount " + minimum_order_amount);
                             Log.i(getClass().getSimpleName(), "Log deliveryFees " + delivery_charges);
                             Log.i(getClass().getSimpleName(), "Log total " + total);

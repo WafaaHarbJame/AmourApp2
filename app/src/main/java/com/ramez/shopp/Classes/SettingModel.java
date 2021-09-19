@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 public class SettingModel {
     @SerializedName("about")
     @Expose
-    private String about;
+    private String about="";
     @SerializedName("privacy")
     @Expose
-    private String privacy;
+    private String privacy="";
     @SerializedName("conditions")
     @Expose
-    private String conditions;
+    private String conditions="";
 
     public String getAbout() {
         return about;

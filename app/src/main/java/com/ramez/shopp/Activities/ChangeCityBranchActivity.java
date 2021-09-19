@@ -117,7 +117,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         countries.add(new CountryModel(17, getString(R.string.Bahrain_ar), getString(R.string.Bahrain), getString(R.string.bahrain_shotname), 973, "BHD", Constants.three, R.drawable.ic_flag_behrain));
         countries.add(new CountryModel(117, getString(R.string.Kuwait_ar), getString(R.string.Kuwait), getString(R.string.Kuwait_shotname), 965, "KWD", Constants.three, R.drawable.ic_flag_kuwait));
         countries.add(new CountryModel(178, getString(R.string.Qatar_ar), getString(R.string.Qatar), getString(R.string.Qatar_shotname), 974, "QAR", Constants.two, R.drawable.ic_flag_qatar));
-        countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia_ar), getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 191, "SAR", Constants.two, R.drawable.ic_flag_saudi_arabia));
+        countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia_ar), getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 966, "SAR", Constants.two, R.drawable.ic_flag_saudi_arabia));
         countries.add(new CountryModel(229, getString(R.string.United_Arab_Emirates_ar), getString(R.string.United_Arab_Emirates), getString(R.string.United_Arab_Emirates_shotname), 971, "AED", Constants.two, R.drawable.ic_flag_uae));
 
         initAdapter();
@@ -260,7 +260,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
     @Override
     public void onCountryClicked(int position, CountryModel countryModel) {
         countryId = countryModel.getId();
-        oldCountryName = UtilityApp.getLocalData().getShortname();
+        oldCountryName = localModel.getShortname();
         newCountryName = countryModel.getShortname();
         localModel.setShortname(countryModel.getShortname());
         localModel.setCurrencyCode(countryModel.getCurrencyCode());

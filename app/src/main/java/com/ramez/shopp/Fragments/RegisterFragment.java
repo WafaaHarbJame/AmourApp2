@@ -55,6 +55,14 @@ public class RegisterFragment extends FragmentBase {
         getDeviceToken();
         sharedPManger = new SharedPManger(getActivityy());
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+        country_name = localModel.getShortname() !=null ? localModel.getShortname() :UtilityApp.getDefaultLocalData(getActivityy()).getShortname();
+        CountryCode = String.valueOf(localModel.getPhonecode());
+        city_id = localModel.getCityId();
+
+        String intro=GlobalData.getIntro(CountryCode);
+        Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
+        binding.edtPhoneNumber.setHint(intro);
         binding.loginBut.setOnClickListener(view1 -> {
             startLogin();
 
@@ -113,10 +121,6 @@ public class RegisterFragment extends FragmentBase {
         final String passwordStr = NumberHandler.arabicToDecimal(binding.edtPassword.getText().toString());
         final String nameStr = NumberHandler.arabicToDecimal(binding.edtFirstName.getText().toString());
         final String emailStr = NumberHandler.arabicToDecimal(binding.edtEmail.getText().toString());
-         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-        country_name = localModel.getShortname() !=null ? localModel.getShortname() :UtilityApp.getDefaultLocalData(getActivityy()).getShortname();
-        CountryCode = String.valueOf(localModel.getPhonecode());
-        city_id = localModel.getCityId();
 
         MemberModel memberModel = new MemberModel();
         memberModel.setMobileNumber(mobileStr);
@@ -134,23 +138,25 @@ public class RegisterFragment extends FragmentBase {
         GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
-            RegisterResultModel result = (RegisterResultModel) obj;
-            if (func.equals(Constants.ERROR)) {
-                String message = getString(R.string.fail_register);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.errorDialog(getActivityy(), R.string.register, message);
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            } else {
-                if (IsSuccess) {
+            if (isVisible()) {
+
+                GlobalData.hideProgressDialog();
+                RegisterResultModel result = (RegisterResultModel) obj;
+                if (func.equals(Constants.ERROR)) {
+                    String message = getString(R.string.fail_register);
+                    if (result != null && result.getMessage() != null) {
+                        message = result.getMessage();
+                    }
+                    GlobalData.errorDialog(getActivityy(), R.string.register, message);
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                } else {
+                    if (IsSuccess) {
                         Log.i("TAG", "Log getStatus " + result.getStatus());
 
                         if (result.getStatus() == 200) {
                             MemberModel user = result.getData();
-                            if(user!=null){
+                            if (user != null) {
                                 user.setUserType(Constants.user_type);
 
                             }
@@ -159,9 +165,9 @@ public class RegisterFragment extends FragmentBase {
                             SendOtp(mobileStr, passwordStr);
 
                         } else {
-                            String message =getString(R.string.fail_register);
+                            String message = getString(R.string.fail_register);
 
-                            if (result != null && result.getMessage() != null){
+                            if (result != null && result.getMessage() != null) {
                                 message = result.getMessage();
                             }
                             GlobalData.errorDialog(getActivityy(), R.string.register, message);
@@ -170,12 +176,13 @@ public class RegisterFragment extends FragmentBase {
                         }
 
 
-                } else {
-                    Toast(getString(R.string.fail_register));
+                    } else {
+                        Toast(getString(R.string.fail_register));
 
+                    }
                 }
-            }
 
+            }
         }).RegisterHandle(memberModel);
     }
 
@@ -233,25 +240,29 @@ public class RegisterFragment extends FragmentBase {
     public void SendOtp(String mobile, String password) {
         final String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            if (func.equals(Constants.ERROR)) {
-                Toast(R.string.error_in_data);
-            } else if (func.equals(Constants.FAIL)) {
-                Toast(R.string.fail_to_sen_otp);
-            } else {
-                if (IsSuccess) {
-                    OtpModel otpModel = (OtpModel) obj;
-                    if (otpModel.getData() != null) {
-                        Log.i("TAG", "Log otp " + otpModel.getData());
+            if (isVisible()) {
 
-                    }
-                    Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
-                    intent.putExtra(Constants.KEY_MOBILE, mobileStr);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-
-
-                } else {
+                if (func.equals(Constants.ERROR)) {
+                    Toast(R.string.error_in_data);
+                } else if (func.equals(Constants.FAIL)) {
                     Toast(R.string.fail_to_sen_otp);
+                } else {
+                    if (IsSuccess) {
+                        OtpModel otpModel = (OtpModel) obj;
+                        if(otpModel.getStatus()==200) {
+                            Log.i("TAG", "Log otp " + otpModel.getData());
+                            Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
+                            intent.putExtra(Constants.KEY_MOBILE, mobileStr);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+
+                        }
+
+
+
+                    } else {
+                        Toast(R.string.fail_to_sen_otp);
+                    }
                 }
             }
 

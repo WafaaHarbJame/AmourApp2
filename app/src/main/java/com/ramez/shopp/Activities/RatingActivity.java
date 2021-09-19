@@ -9,6 +9,8 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
@@ -18,6 +20,7 @@ import com.ramez.shopp.databinding.ActivityRatingBinding;
 public class RatingActivity extends ActivityBase {
 
     ActivityRatingBinding binding;
+    MemberModel memberModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,27 +31,37 @@ public class RatingActivity extends ActivityBase {
 
         setTitle(R.string.rate_app);
 
+        memberModel = UtilityApp.getUserData();
+
         binding.rateBut.setOnClickListener(view1 -> {
-            ReviewModel reviewModel = new ReviewModel();
-            String note = NumberHandler.arabicToDecimal(binding.rateEt.getText().toString());
-            reviewModel.setComment(note);
-            reviewModel.setUser_id(UtilityApp.getUserData().getId());
-            reviewModel.setRate((int) binding.ratingBr.getRating());
+            int userId=memberModel!=null && memberModel.getId()!=null ?memberModel.getId():0;
+            if(userId>0){
+                ReviewModel reviewModel = new ReviewModel();
+                String note = NumberHandler.arabicToDecimal(binding.rateEt.getText().toString());
+                reviewModel.setComment(note);
+                reviewModel.setUser_id(userId);
+                reviewModel.setRate((int) binding.ratingBr.getRating());
 
-            if (binding.ratingBr.getRating() == 0) {
-                Toast(R.string.please_fill_rate);
-                YoYo.with(Techniques.Shake).playOn(binding.ratingBr);
-                binding.rateBut.requestFocus();
-
-
-            } else if (binding.rateEt.getText().toString().isEmpty()) {
-                binding.rateEt.requestFocus();
-                binding.rateEt.setError(getString(R.string.please_fill_comment));
+                if (binding.ratingBr.getRating() == 0) {
+                    Toast(R.string.please_fill_rate);
+                    YoYo.with(Techniques.Shake).playOn(binding.ratingBr);
+                    binding.rateBut.requestFocus();
 
 
-            } else {
-                addRate(reviewModel);
+                } else if (binding.rateEt.getText().toString().isEmpty()) {
+                    binding.rateEt.requestFocus();
+                    binding.rateEt.setError(getString(R.string.please_fill_comment));
+
+
+                } else {
+                    addRate(reviewModel);
+                }
             }
+            else {
+                showDialogs(R.string.to_rate_app);
+
+            }
+
 
         });
 
@@ -65,13 +78,11 @@ public class RatingActivity extends ActivityBase {
 
             ResultAPIModel<ReviewModel> result = (ResultAPIModel<ReviewModel>) obj;
 
-            if(result!=null){
+            if (result != null) {
 
-                message=result.message;
+                message = result.message;
 
             }
-
-
 
 
             GlobalData.hideProgressDialog();
@@ -107,4 +118,13 @@ public class RatingActivity extends ActivityBase {
 
         }).setAppRate(reviewModel);
     }
+
+
+    private void showDialogs(int message){
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null);
+        checkLoginDialog.show();
+        checkLoginDialog.show();
+         }
+
+
 }

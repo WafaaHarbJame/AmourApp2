@@ -1,7 +1,9 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -113,26 +115,49 @@ public class MyAccountFragment extends FragmentBase {
         binding.facebookBut.setOnClickListener(view1 -> {
             System.out.println("Log facebook_link" + facebook_link);
 
+
             try {
                 if (facebook_link != null) {
-                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.facebook.katana");
-                    Uri intentUri = Uri.parse(facebook_link);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, intentUri);
-                    if (installed) {
-                        String pageId = intentUri.getLastPathSegment();
-                        System.out.println("Log pageId " + pageId);
-                        intent.setData(ActivityHandler.newFacebookIntent(pageId));
-                        intent.setPackage("com.facebook.katana");
-                    }
-                    startActivity(intent);
-//                    goToFacebook();
+//                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.facebook.katana");
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebook_link));
+//
+//                    if (installed) {
+//                        System.out.println("App is already installed on your phone");
+//                        intent.setPackage("com.whatsapp");
+//                        intent.setData(Uri.parse(facebook_link));
+//
+//
+//                    }
+//                    intent.setData(Uri.parse(facebook_link));
+//                    startActivity(intent);
+                    goToFacebook();
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
                 // This will catch any exception, because they are all descended from Exception
                 System.out.println("Error " + e.getMessage());
             }
+
+
+//
+//            try {
+//                if (facebook_link != null) {
+//                    boolean installed = ActivityHandler.isPackageExist(getActivityy(), "com.facebook.katana");
+//                    Uri intentUri = Uri.parse(facebook_link);
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, intentUri);
+//                    if (installed) {
+//                        intent.setData(Uri.parse(facebook_link));
+//                        intent.setPackage("com.facebook.katana");
+//                    }
+//                    startActivity(intent);
+////                    goToFacebook();
+//                }
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                // This will catch any exception, because they are all descended from Exception
+//                System.out.println("Error " + e.getMessage());
+//            }
 
 
         });
@@ -271,13 +296,7 @@ public class MyAccountFragment extends FragmentBase {
         });
 
 
-        binding.priceCheckerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCameraPermission();
-
-            }
-        });
+        binding.priceCheckerBtn.setOnClickListener(v -> checkCameraPermission());
 
 
         binding.shareBtn.setOnClickListener(view1 -> {
@@ -687,6 +706,70 @@ public class MyAccountFragment extends FragmentBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void openFacebookPage(String pageId, Context context) {
+        String pageUrl = "https://www.facebook.com/" + pageId;
+
+        try {
+            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo("com.facebook.katana", 0);
+
+            if (applicationInfo.enabled) {
+                int versionCode = context.getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+                String url;
+
+                if (versionCode >= 3002850) {
+                    url = "fb://facewebmodal/f?href=" + pageUrl;
+                } else {
+                    url = "fb://page/" + pageId;
+                }
+
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            } else {
+                throw new Exception("Facebook is disabled");
+            }
+        } catch (Exception e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageUrl)));
+        }
+    }
+
+    private void goToFacebookNew() {
+        try {
+            String facebookUrl = getFacebookPageURL();
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+            facebookIntent.setData(Uri.parse(facebookUrl));
+            startActivity(facebookIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getFacebookPageURL() {
+        String FACEBOOK_URL = facebook_link;
+        String facebookurl = null;
+
+        try {
+            PackageManager packageManager = getActivity().getPackageManager();
+
+            if (packageManager != null) {
+                Intent activated = packageManager.getLaunchIntentForPackage("com.facebook.katana");
+
+                if (activated != null) {
+                    int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+
+                    if (versionCode >= 3002850) {
+                        facebookurl = "fb://page/XXXXXXpage_id";
+                    }
+                } else {
+                    facebookurl = FACEBOOK_URL;
+                }
+            } else {
+                facebookurl = FACEBOOK_URL;
+            }
+        } catch (Exception e) {
+            facebookurl = FACEBOOK_URL;
+        }
+        return facebookurl;
     }
 
 }

@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -26,6 +30,9 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
+import com.kcode.permissionslib.main.PermissionCompat;
+import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -39,6 +46,7 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCategoryBinding;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -56,6 +64,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
     private CategoryAdapter categoryAdapter;
     private Activity activity;
     int cityId;
+    private ActivityResultLauncher<Intent> scanLauncher;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
@@ -67,9 +77,9 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
 
-        localModel = UtilityApp.getLocalData()!=null?UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(getActivityy());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
-        cityId= Integer.parseInt(localModel.getCityId());
+        cityId = Integer.parseInt(localModel.getCityId());
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
             categoryModelList = UtilityApp.getCategories();
@@ -109,6 +119,25 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
         });
 
+        scanLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result != null && result.getData() != null) {
+
+                        Bundle bundle = result.getData().getExtras();
+                        boolean SEARCH_BY_CODE_byCode = bundle.getBoolean(Constants.SEARCH_BY_CODE_byCode, false);
+                        String CODE = bundle.getString(Constants.CODE);
+                        FragmentManager fragmentManager = getParentFragmentManager();
+
+                        SearchFragment searchFragment = new SearchFragment();
+                        Bundle data = new Bundle();
+                        data.putString(Constants.CODE, CODE);
+                        data.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
+                        searchFragment.setArguments(data);
+                        fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+
+                    }
+                }
+        );
 
         return view;
     }
@@ -241,39 +270,62 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     private void startScan() {
 
-        if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
-        } else {
-            Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-            startActivityForResult(intent, SEARCH_CODE);
+//        if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+//        } else {
+//            Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
+//            startActivityForResult(intent, SEARCH_CODE);
+//
+//        }
+        try {
+            PermissionCompat.Builder builder = new PermissionCompat.Builder((getActivityy()));
+            builder.addPermissions(new String[]{Manifest.permission.CAMERA});
+            builder.addPermissionRationale(getString(R.string.should_allow_permission));
+            builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
+                public void onGrant() {
+                    Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
+                    scanLauncher.launch(intent);
 
-        }
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SEARCH_CODE) {
-
-                if (data != null) {
-                    boolean SEARCH_BY_CODE_byCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
-                    String CODE = data.getStringExtra(Constants.CODE);
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    SearchFragment searchFragment = new SearchFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constants.CODE, CODE);
-                    bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
-                    searchFragment.setArguments(bundle);
-                    fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
 
                 }
 
+                public void onDenied(@NotNull String permission) {
+                    Toast(R.string.some_permission_denied);
 
-            }
-
+                }
+            });
+            builder.build().request();
+        } catch (Exception var2) {
+            var2.printStackTrace();
         }
+
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == SEARCH_CODE) {
+//
+//                if (data != null) {
+//                    boolean SEARCH_BY_CODE_byCode = data.getBooleanExtra(Constants.SEARCH_BY_CODE_byCode, false);
+//                    String CODE = data.getStringExtra(Constants.CODE);
+//                    FragmentManager fragmentManager = getParentFragmentManager();
+//                    SearchFragment searchFragment = new SearchFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(Constants.CODE, CODE);
+//                    bundle.putBoolean(Constants.SEARCH_BY_CODE_byCode, SEARCH_BY_CODE_byCode);
+//                    searchFragment.setArguments(bundle);
+//                    fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commitAllowingStateLoss();
+//
+//                }
+//
+//
+//            }
+//
+//        }
+//    }
+
+
 }

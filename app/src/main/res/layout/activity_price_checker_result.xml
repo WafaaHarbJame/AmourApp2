@@ -41,7 +41,8 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/water_top"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:contentDescription="@string/app_name" />
 
                 <View
                     android:layout_width="match_parent"

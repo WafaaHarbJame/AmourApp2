@@ -529,6 +529,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                     if (slider.getType() == 0) {
                                         sliderList.add(slider);
 
+
                                     } else {
                                         bannersList.add(slider);
 

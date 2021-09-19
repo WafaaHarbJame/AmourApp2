@@ -2,15 +2,14 @@ package com.ramez.shopp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Adapter.SimilierProductAdapter;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Models.ProductModel;
-import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityPriceCheckerResultBinding;
 
 import java.util.ArrayList;
@@ -21,13 +20,13 @@ public class PriceCheckerResultActivity extends ActivityBase  implements Similie
     private String CODE = "";
     ArrayList<ProductModel> productList;
     private SimilierProductAdapter adapter;
+    private ActivityResultLauncher<Intent> scanLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPriceCheckerResultBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
         setTitle("");
 
          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
@@ -45,31 +44,45 @@ public class PriceCheckerResultActivity extends ActivityBase  implements Similie
 
         initAdapter();
 
-        binding.scanAgainBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActiviy(), FullScannerActivity.class);
-                startActivityForResult(intent, SEARCH_CODE);
-            }
+        scanLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result != null && result.getData() != null) {
+
+
+                    }
+                }
+        );
+
+
+        binding.scanAgainBut.setOnClickListener(v -> {
+            Intent intent = new Intent(getActiviy(), FullScannerActivity.class);
+//            startActivityForResult(intent, SEARCH_CODE);
+            scanLauncher.launch(intent);
+
         });
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == SEARCH_CODE) {
+//
+//            if (data != null) {
+//                CODE = data.getStringExtra(Constants.CODE);
+//
+//
+//            }
+//
+//
+//        }
+//    }
 
-        if (requestCode == SEARCH_CODE) {
-
-            if (data != null) {
-                CODE = data.getStringExtra(Constants.CODE);
 
 
-            }
 
 
-        }
-    }
 
     private void initAdapter() {
         adapter = new SimilierProductAdapter(getActiviy(), productList, this, 0);
@@ -82,4 +95,7 @@ public class PriceCheckerResultActivity extends ActivityBase  implements Similie
     public void onItemClicked(int position, ProductModel productModel) {
 
     }
+
+
+
 }

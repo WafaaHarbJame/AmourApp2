@@ -54,8 +54,8 @@ public class OrderCompleteActivity extends ActivityBase {
             }
 
 
-            binding.deliveryDayTv.setText(dayName);
-            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime());
+            binding.deliveryDayTv.setText(dayName+"");
+            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime()+"");
         }
     }
 

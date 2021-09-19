@@ -54,7 +54,8 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="bottom"
-                        android:src="@drawable/edit_photo" />
+                        android:src="@drawable/edit_photo"
+                        android:contentDescription="@string/app_name" />
                 </FrameLayout>
 
                 <com.ramez.shopp.SpichalViews.STextViewBold

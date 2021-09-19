@@ -186,9 +186,21 @@ public class ConfirmActivity extends ActivityBase {
             } else {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
-                    Log.i("TAG", "Log otp " + otpModel.getData());
-                    binding.codeTxt.setText("");
-                    downTimer.start();
+
+                    if (otpModel.getStatus() == 200) {
+                        Log.i("TAG", "Log otp " + otpModel.getData());
+                        binding.codeTxt.setText("");
+                        downTimer.start();
+                    }
+                    else {
+
+                        String message= otpModel.getMessage() != null ?otpModel.getMessage() : getString(R.string.fail_to_sen_otp);
+                        Toast(message);
+
+
+                    }
+
+
 
                 } else {
                     Toast(R.string.fail_to_sen_otp);

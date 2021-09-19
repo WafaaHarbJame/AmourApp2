@@ -103,6 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
+                            android:id="@+id/currencyTv"
                             android:text="@string/bhd"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
