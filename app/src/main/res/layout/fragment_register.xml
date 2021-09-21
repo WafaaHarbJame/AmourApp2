@@ -175,6 +175,17 @@
 
             </LinearLayout>
 
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/skipButton"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/textlines"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="@string/skip_register"
+                android:textColor="@color/gray3" />
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/registerBut"
                 android:layout_width="match_parent"

@@ -38,6 +38,7 @@
     <string name="create_account">انشاء حساب </string>
     <string name="remember">تذكر</string>
     <string name="skip_register">تخطي عملية التسجيل</string>
+    <string name="skip_login">تخطي عملية الدخول</string>
     <string name="new_member"> عضو جديد ؟</string>
     <string name="register_now">سجل الأن </string>
     <string name="first_name">الاسم الأول</string>

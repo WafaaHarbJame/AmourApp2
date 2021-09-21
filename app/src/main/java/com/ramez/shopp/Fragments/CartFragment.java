@@ -81,7 +81,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         user = UtilityApp.getUserData();
 
-
         if (!UtilityApp.isLogin()) {
             binding.dataLY.setVisibility(View.GONE);
             binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -108,94 +107,11 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 //            GetUserAddress(userId);
 
 
-            binding.contBut.setOnClickListener(view1 -> {
-                AnalyticsHandler.checkOut("0", currency, total, total);
-
-                String message = "", allMessage;
-                StringBuilder s = new StringBuilder();
-
-                String product_name = "", product_price = "", ProductQuantity = "";
-                boolean can_order = true;
-                int lastPosition = 0;
-
-                for (int i = 0; i < cartList.size(); i++) {
-                    GlobalData.progressDialog(getActivityy(), R.string.please_wait_sending, R.string.save_update);
-
-                    CartModel cartModel = cartList.get(i);
-                    if (cartModel.getQuantity() > cartModel.getProductQuantity() && !cartModel.isExtra()) {
-                        message = getString(R.string.outofstock);
-                        product_name = cartModel.getName();
-                        product_price = String.valueOf(cartModel.getProductPrice());
-                        ProductQuantity = String.valueOf(cartModel.getProductQuantity());
-                        allMessage = message.concat(" " +
-                                getString(R.string.product_Name).
-                                        concat(" " + product_name).concat(", " + getString(R.string.product_price).concat(" " + product_price + " " + currency)
-                                        .concat(" , " + getString(R.string.product_quan).concat(" " + ProductQuantity))));
-                        s.append(allMessage).append("\n");
-                        int product_barcode_id = cartModel.getProductBarcodeId();
-                        int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(localModel.getCityId());
-                        int productId = cartModel.getProductId();
-                        int cart_id = cartModel.getId();
-                        int count = cartModel.getProductQuantity();
-                        // updateCart(i, productId, product_barcode_id, count, userId, storeId, cart_id, "quantity");
-                        // cartAdapter.updateCart(i, productId, product_barcode_id, count,count,false, userId, storeId, cart_id, "quantity");
-                        can_order = false;
-
-                    } else if (cartModel.getProductQuantity() == 0 && !cartModel.isExtra()) {
-                        message = getString(R.string.product_not_Available);
-                        product_name = cartModel.getName();
-                        allMessage = message.concat(" " + getString(R.string.product_Name).concat(" " + product_name));
-                        s.append(allMessage + "\n");
-                        can_order = false;
-
-                    }
-
-                    GlobalData.hideProgressDialog();
-
-                    if (i == cartList.size() - 1) {
-                        lastPosition = i;
-                        GlobalData.hideProgressDialog();
-                    }
-
-
-                }
-
-
-                if (can_order) {
-                    GlobalData.hideProgressDialog();
-                    goToCompleteOrder();
-
-                } else {
-
-                    if (lastPosition == cartList.size() - 1) {
-                        GlobalData.hideProgressDialog();
-
-                        ConfirmDialog.Click click = new ConfirmDialog.Click() {
-                            @Override
-                            public void click() {
-
-
-                            }
-                        };
-
-                        new ConfirmDialog(getActivityy(), s + "" + getString(R.string.please_update_cart), R.string.ok, R.string.cancel_label, click, null, true);
-
-
-                    }
-
-                }
-
-
-            });
-
 
         }
 
 
-        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getCarts(storeId, userId);
-        });
+        initListeners();
 
         return view;
 
@@ -280,7 +196,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     public void getCarts(int storeId, int userId) {
 
         cartList.clear();
-
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -428,10 +343,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
 
-        if (event.type.equals(MessageEvent.TYPE_REFRESH)) {
-
-
-        }
     }
 
     @Override
@@ -460,6 +371,95 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
     }
+
+    private void initListeners()
+    {
+
+        binding.contBut.setOnClickListener(view1 -> {
+            AnalyticsHandler.checkOut("0", currency, total, total);
+
+            String message = "", allMessage;
+            StringBuilder s = new StringBuilder();
+
+            String product_name = "", product_price = "", ProductQuantity = "";
+            boolean can_order = true;
+            int lastPosition = 0;
+
+            for (int i = 0; i < cartList.size(); i++) {
+                GlobalData.progressDialog(getActivityy(), R.string.please_wait_sending, R.string.save_update);
+
+                CartModel cartModel = cartList.get(i);
+                if (cartModel.getQuantity() > cartModel.getProductQuantity() && !cartModel.isExtra()) {
+                    message = getString(R.string.outofstock);
+                    product_name = cartModel.getName();
+                    product_price = String.valueOf(cartModel.getProductPrice());
+                    ProductQuantity = String.valueOf(cartModel.getProductQuantity());
+                    allMessage = message.concat(" " +
+                            getString(R.string.product_Name).
+                                    concat(" " + product_name).concat(", " + getString(R.string.product_price).concat(" " + product_price + " " + currency)
+                                    .concat(" , " + getString(R.string.product_quan).concat(" " + ProductQuantity))));
+                    s.append(allMessage).append("\n");
+                    int product_barcode_id = cartModel.getProductBarcodeId();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(localModel.getCityId());
+                    int productId = cartModel.getProductId();
+                    int cart_id = cartModel.getId();
+                    int count = cartModel.getProductQuantity();
+                    // updateCart(i, productId, product_barcode_id, count, userId, storeId, cart_id, "quantity");
+                    // cartAdapter.updateCart(i, productId, product_barcode_id, count,count,false, userId, storeId, cart_id, "quantity");
+                    can_order = false;
+
+                } else if (cartModel.getProductQuantity() == 0 && !cartModel.isExtra()) {
+                    message = getString(R.string.product_not_Available);
+                    product_name = cartModel.getName();
+                    allMessage = message.concat(" " + getString(R.string.product_Name).concat(" " + product_name));
+                    s.append(allMessage + "\n");
+                    can_order = false;
+
+                }
+
+                GlobalData.hideProgressDialog();
+
+                if (i == cartList.size() - 1) {
+                    lastPosition = i;
+                    GlobalData.hideProgressDialog();
+                }
+
+
+            }
+
+
+            if (can_order) {
+                GlobalData.hideProgressDialog();
+                goToCompleteOrder();
+
+            } else {
+
+                if (lastPosition == cartList.size() - 1) {
+                    GlobalData.hideProgressDialog();
+
+                    ConfirmDialog.Click click = new ConfirmDialog.Click() {
+                        @Override
+                        public void click() {
+
+
+                        }
+                    };
+
+                    new ConfirmDialog(getActivityy(), s + "" + getString(R.string.please_update_cart), R.string.ok, R.string.cancel_label, click, null, true);
+
+
+                }
+
+            }
+
+
+        });
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getCarts(storeId, userId);
+        });
+         }
 
 
 }

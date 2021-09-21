@@ -62,7 +62,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         GlobalData.GlideImg(context,categoryModel.getCatImage()
                 ,R.drawable.holder_image,holder.binding.ivCatImage);
 
-        holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,categoryModel));
+        holder.binding.container.setOnClickListener(v -> {
+                    onItemClick.onItemClicked(position,categoryModel);
+                }
+              );
 
     }
 

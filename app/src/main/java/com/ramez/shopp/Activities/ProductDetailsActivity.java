@@ -37,6 +37,7 @@ import com.ramez.shopp.Fragments.ImageFragment;
 import com.ramez.shopp.Fragments.SuggestedProductsFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -72,7 +73,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     String currency;
     boolean isNotify = false;
     AddRateDialog addCommentDialog;
-    private int category_id = 0, country_id, city_id, product_id;
+    private int  country_id, city_id, product_id;
     private SuggestedProductAdapter productOfferAdapter;
     private ReviewAdapter reviewAdapter;
     private LinearLayoutManager productLayoutManager;
@@ -85,6 +86,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private FirebaseAnalytics mFirebaseAnalytics;
     LocalModel localModel;
     private int fraction=2;
+    private int categoryId=0;
+    String filter;
 
 
     @Override
@@ -692,12 +695,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productModel = result.getData().get(0);
                         binding.CartLy.setVisibility(View.VISIBLE);
+                        categoryId=productModel.getCategoryId();
+                        Log.i(getClass().getSimpleName(), "Log getSingleProduct categoryId " + categoryId);
 
                         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
                             productName = productModel.gethName();
@@ -722,7 +726,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 //                        sliderList = productModel.getImages();
                         String[] list = productName.split(" ");
-                        String filter = list[0];
+                         filter = list[0];
 
                         Log.i(getClass().getSimpleName(), "Log  productName " + productName);
                         Log.i(getClass().getSimpleName(), "Log search filter " + filter);
@@ -876,7 +880,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.dataLY.setVisibility(View.VISIBLE);
 
-            MainModel result = (MainModel) obj;
+            FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
@@ -901,12 +905,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             } else {
                 if (IsSuccess) {
-                    if (result.getQuickProducts() != null && result.getQuickProducts().size() > 0) {
+                    if (result.getData() != null && result.getData().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getQuickProducts();
+                        productList = result.getData();
                         initProductsAdapter();
 
                     } else {
@@ -919,7 +923,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
             }
 
-        }).GetMainPage(0, country_id, city_id, String.valueOf(user_id));
+        }).getFavorite(categoryId, country_id, city_id, String.valueOf(user_id), filter, 0, 0, 100);;
     }
 
     private void initProductsAdapter() {

@@ -261,8 +261,7 @@ public class UtilityApp {
 
     public static LocalModel getLocalData() {
         String localJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_Local);
-        LocalModel model = new Gson().fromJson(localJsonData, LocalModel.class);
-        return model;
+        return new Gson().fromJson(localJsonData, LocalModel.class);
     }
 
     public static LocalModel getDefaultLocalData(Context context) {

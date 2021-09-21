@@ -103,6 +103,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+            binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
             try {
                 initBottomNav(0);
@@ -122,6 +123,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.sortBut.setVisibility(View.GONE);
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+            binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
             initBottomNav(1);
 
@@ -159,6 +161,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.addExtra.setVisibility(View.GONE);
+            binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
             initBottomNav(3);
 
@@ -174,6 +177,7 @@ public class MainActivity extends ActivityBase {
             binding.toolBar.view2But.setVisibility(View.GONE);
             binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+            binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
             initBottomNav(4);
 
@@ -208,7 +212,13 @@ public class MainActivity extends ActivityBase {
 
         binding.toolBar.mainSearchBtn.setOnClickListener(view -> {
 
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search,false));
+
+        });
+
+        binding.toolBar.SearchBtn.setOnClickListener(view -> {
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search,false));
 
         });
 
@@ -286,8 +296,10 @@ public class MainActivity extends ActivityBase {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
+        System.out.println("Log event " + event.type);
 
         binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+        binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
         switch (event.type) {
             case MessageEvent.TYPE_invoice:
@@ -295,6 +307,7 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.addExtra.setVisibility(View.GONE);
+
                 binding.toolBar.backBtn.setOnClickListener(view -> {
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
@@ -315,6 +328,8 @@ public class MainActivity extends ActivityBase {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
                     binding.toolBar.backBtn.setVisibility(View.GONE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                 });
 
                 break;
@@ -330,6 +345,7 @@ public class MainActivity extends ActivityBase {
                 Fragment selectedFragment;
                 if (position == 0) {
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
                     selectedFragment = new HomeFragment();
                     EventBus.getDefault().post(new MessageEvent(MessageEvent.REFRESH_CART));
                 } else if (position == 1) {
@@ -342,6 +358,7 @@ public class MainActivity extends ActivityBase {
                     selectedFragment = new MyAccountFragment();
                 } else {
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
                     selectedFragment = new HomeFragment();
                 }
 
@@ -359,18 +376,26 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.backBtn.setVisibility(View.GONE);
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
 
                 });
 
                 break;
+            case MessageEvent.TYPE_SHOW_SEARCH:
+                boolean showSearchBtn = (boolean) event.data;
+
+                binding.toolBar.SearchBtn.setVisibility(showSearchBtn ? View.VISIBLE : View.GONE);
+
+                break;
             case MessageEvent.Type_offer:
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
                 break;
             case MessageEvent.TYPE_main:
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
-
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
                 initBottomNav(0);
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
 
@@ -382,23 +407,76 @@ public class MainActivity extends ActivityBase {
             case MessageEvent.TYPE_view:
                 binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                 break;
             case MessageEvent.TYPE_search:
-//                binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+                final boolean[] toCat = {(boolean) event.data};
+                System.out.println("Log toCat " + toCat[0]);
+
                 binding.toolBar.backBtn.setVisibility(View.VISIBLE);
                 binding.toolBar.view2But.setVisibility(View.VISIBLE);
                 binding.toolBar.sortBut.setVisibility(View.VISIBLE);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new SearchFragment(), "searchFragment").commit();
-
                 binding.toolBar.backBtn.setOnClickListener(view -> {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
-                    binding.toolBar.backBtn.setVisibility(View.GONE);
-                    binding.toolBar.view2But.setVisibility(View.GONE);
-                    binding.toolBar.sortBut.setVisibility(View.GONE);
-                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+
+                    if(toCat[0]){
+                        System.out.println("Log toCat " + toCat[0]);
+                        hideSoftKeyboard(getActiviy());
+                        onBackPressed();
+                        binding.toolBar.mainSearchBtn.setVisibility(View.GONE);
+                        binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+                        binding.toolBar.view2But.setVisibility(View.VISIBLE);
+                        binding.toolBar.sortBut.setVisibility(View.GONE);
+                        binding.toolBar.SearchBtn.setVisibility(View.GONE);
+                        toCat[0] =false;
+
+                    }
+
+                    else {
+                        getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new HomeFragment(), "HomeFragment").addToBackStack(null).commit();
+                        binding.toolBar.backBtn.setVisibility(View.GONE);
+                        binding.toolBar.view2But.setVisibility(View.GONE);
+                        binding.toolBar.sortBut.setVisibility(View.GONE);
+                        binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                        binding.toolBar.SearchBtn.setVisibility(View.GONE);
+                        hideSoftKeyboard(getActiviy());
+                    }
+
+
+
+
                 });
+
+
+
+                getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new SearchFragment(),
+                        "searchFragment").addToBackStack(null).commit();
+
+
                 break;
+
+
+//            case MessageEvent.TYPE_Search_From_Cat:
+//
+//                binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+//                binding.toolBar.view2But.setVisibility(View.VISIBLE);
+//                binding.toolBar.sortBut.setVisibility(View.VISIBLE);
+//                binding.toolBar.SearchBtn.setVisibility(View.GONE);
+//                getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new SearchFragment(),
+//                        "searchFragment").addToBackStack(null).commit();
+//
+//                binding.toolBar.backBtn.setOnClickListener(view -> {
+//                    onBackPressed();
+//                    binding.toolBar.backBtn.setVisibility(View.GONE);
+//                    binding.toolBar.view2But.setVisibility(View.GONE);
+//                    binding.toolBar.sortBut.setVisibility(View.GONE);
+//                    binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+//                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
+//
+//                });
+//                break;
+
             case MessageEvent.TYPE_SORT:
 
                 binding.toolBar.backBtn.setVisibility(View.GONE);
@@ -407,8 +485,8 @@ public class MainActivity extends ActivityBase {
 
                 break;
             default:
+                System.out.println("Log default event");
                 binding.toolBar.backBtn.setVisibility(View.GONE);
-
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.addExtra.setVisibility(View.GONE);
@@ -438,15 +516,14 @@ public class MainActivity extends ActivityBase {
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_REFRESH));
                 binding.cartButton.performClick();
 
-            }
-            else if (TO_FRAG_HOME) {
+            } else if (TO_FRAG_HOME) {
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
                 binding.homeButton.performClick();
-            }
-            else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
+            } else if (fragmentType.equals(Constants.FRAG_CATEGORY_DETAILS)) {
                 if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
                     categoryModelList = UtilityApp.getCategories();
                 }
@@ -467,28 +544,28 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.sortBut.setVisibility(View.GONE);
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                 });
 
-            }
-            else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
+            } else if (fragmentType.equals(Constants.FRAG_CATEGORIES)) {
                 binding.categoryButton.performClick();
-            }
-            else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
+            } else if (fragmentType.equals(Constants.FRAG_OFFERS)) {
                 binding.offerButton.performClick();
 
-            }
-            else if (fragmentType.equals(Constants.FRAG_HOME)) {
+            } else if (fragmentType.equals(Constants.FRAG_HOME)) {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
                 binding.toolBar.backBtn.setVisibility(View.GONE);
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
                 binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                 binding.homeButton.performClick();
 
 
-            }
-            else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
+            } else if (fragmentType.equals(Constants.FRAG_SEARCH)) {
 
                 Bundle bundle2 = new Bundle();
                 bundle2.putString(Constants.inputType_text, searchTEXT);
@@ -507,11 +584,12 @@ public class MainActivity extends ActivityBase {
                     binding.toolBar.view2But.setVisibility(View.GONE);
                     binding.toolBar.sortBut.setVisibility(View.GONE);
                     binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                    binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                 });
 
 
-            }
-            else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
+            } else if (fragmentType.equals(Constants.FRAG_BROSHORE)) {
 
                 if (bookletsModel != null && bookletsModel.getId() != 0) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -538,19 +616,24 @@ public class MainActivity extends ActivityBase {
                             binding.toolBar.view2But.setVisibility(View.GONE);
                             binding.toolBar.sortBut.setVisibility(View.GONE);
                             binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                            binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
                         }
 
                     });
                 }
 
 
-            }
-            else{
+            } else {
                 binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+                binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
             }
         } else {
             System.out.println("Log main not has bundle");
             binding.toolBar.mainSearchBtn.setVisibility(View.VISIBLE);
+            binding.toolBar.SearchBtn.setVisibility(View.GONE);
+
         }
 
     }

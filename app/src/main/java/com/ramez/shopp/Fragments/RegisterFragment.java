@@ -26,6 +26,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.RegisterResultModel;
@@ -63,6 +64,16 @@ public class RegisterFragment extends FragmentBase {
         String intro=GlobalData.getIntro(CountryCode);
         Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
         binding.edtPhoneNumber.setHint(intro);
+
+        initListeners();
+
+
+        return view;
+    }
+
+
+    private void initListeners(){
+
         binding.loginBut.setOnClickListener(view1 -> {
             startLogin();
 
@@ -113,9 +124,10 @@ public class RegisterFragment extends FragmentBase {
 
         });
 
-        return view;
-    }
-
+        binding.skipButton.setOnClickListener(v -> {
+            startMain();
+        });
+         }
     private void RegisterUser() {
         final String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
         final String passwordStr = NumberHandler.arabicToDecimal(binding.edtPassword.getText().toString());
@@ -278,6 +290,13 @@ public class RegisterFragment extends FragmentBase {
     private void startConditionActivity() {
         Intent intent = new Intent(getActivityy(), ConditionActivity.class);
         startActivity(intent);
+    }
+
+    public void startMain() {
+        Intent intent = new Intent(getActivityy(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
 }

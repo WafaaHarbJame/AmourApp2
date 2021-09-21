@@ -63,7 +63,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
 
 
-        if (UtilityApp.isLogin() && user.getId()!=null) {
+        if (UtilityApp.isLogin() && user!=null && user.getId()!=null) {
             user_id = String.valueOf(user.getId());
 
         }

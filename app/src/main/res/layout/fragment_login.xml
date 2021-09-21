@@ -125,7 +125,7 @@
                     android:background="@drawable/textlines"
                     android:gravity="center"
                     android:paddingBottom="@dimen/_4sdp"
-                    android:text="@string/skip_register"
+                    android:text="@string/skip_login"
                     android:textColor="@color/gray3" />
 
                 <View

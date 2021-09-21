@@ -65,10 +65,13 @@ public class SplashScreenActivity extends ActivityBase {
 
         setContentView(R.layout.activity_splash_screen);
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        localModel = UtilityApp.getLocalData() ;
+        //!= null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        //
         lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
 
-        if (localModel != null && localModel.getCityId() != null) {
+
+        if(localModel!=null && localModel.getCityId()!=null){
 
             storeId = Integer.parseInt(localModel.getCityId());
             country_id = localModel.getCountryId();
@@ -81,8 +84,8 @@ public class SplashScreenActivity extends ActivityBase {
             getCountryDetail(shortName);
             getLinks(storeId);
 
-
         }
+
 
         initData();
 
@@ -321,14 +324,16 @@ public class SplashScreenActivity extends ActivityBase {
         ArrayList<Slider> bannersList = new ArrayList<>();
 
 
-        Log.i(TAG, "Log GetMainPage new");
-        Log.i(TAG, "Log country_id " + country_id);
-        Log.i(TAG, "Log user_id " + userId);
-        Log.i(TAG, "Log city_id " + storeId);
+        Log.i(TAG, "Log getSliders ");
+        Log.i(TAG, "Log getSliders country_id " + country_id);
+        Log.i(TAG, "Log getSliders user_id " + userId);
+        Log.i(TAG, "Log getSliders  city_id " + storeId);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             MainModel result = (MainModel) obj;
+            UtilityApp.setSliderData(null);
+            UtilityApp.setBannerData(null);
 
             if (IsSuccess) {
 
@@ -348,6 +353,7 @@ public class SplashScreenActivity extends ActivityBase {
                         }
 
                     }
+
                     if (sliderList.size() > 0) {
                         UtilityApp.setSliderData(sliderList);
 

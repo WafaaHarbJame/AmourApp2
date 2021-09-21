@@ -144,9 +144,9 @@ public class ChooseNearCity extends ActivityBase {
         if (getCallingActivity() != null) {
             setResult(RESULT_OK);
         } else {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+            intent.putExtra(Constants.REGISTER, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.putExtra(Constants.FRAG_HOME,true);
             startActivity(intent);
         }
         finish();

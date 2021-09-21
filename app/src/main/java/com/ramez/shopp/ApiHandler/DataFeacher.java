@@ -585,10 +585,11 @@ public class DataFeacher {
     public void GetMainPage(int category_id, int country_id, int city_id, String user_id) {
 
         Log.i(TAG, "Log GetMainPage");
-        Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log country_id " + country_id);
-        Log.i(TAG, "Log user_id " + user_id);
-        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log GetMainPage headerMap " + headerMap);
+        Log.i(TAG, "Log GetMainPage country_id " + country_id);
+        Log.i(TAG, "Log GetMainPage category_id " + category_id);
+        Log.i(TAG, "Log GetMainPage user_id " + user_id);
+        Log.i(TAG, "Log GetMainPage city_id " + city_id);
 
         Call call = apiService.GetMainPage(headerMap, category_id, country_id, city_id, user_id);
         call.enqueue(callbackApi);
@@ -922,15 +923,15 @@ public class DataFeacher {
         params.put("page_size", page_size);
 
         Log.i(TAG, "Log getFavorite");
-        Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log category_id " + category_id);
-        Log.i(TAG, "Log brand_id " + brand_id);
-        Log.i(TAG, "Log country_id " + country_id);
-        Log.i(TAG, "Log city_id " + city_id);
-        Log.i(TAG, "Log user_id " + user_id);
-        Log.i(TAG, "Log filter " + filter);
-        Log.i(TAG, "Log page_number " + page_number);
-        Log.i(TAG, "Log page_size " + page_size);
+        Log.i(TAG, "Log getFavorite headerMap " + headerMap);
+        Log.i(TAG, "Log getFavorite category_id " + category_id);
+        Log.i(TAG, "Log getFavorite brand_id " + brand_id);
+        Log.i(TAG, "Log getFavorite country_id " + country_id);
+        Log.i(TAG, "Log getFavorite city_id " + city_id);
+        Log.i(TAG, "Log getFavorite user_id " + user_id);
+        Log.i(TAG, "Log getFavorite filter " + filter);
+        Log.i(TAG, "Log getFavorite page_number " + page_number);
+        Log.i(TAG, "LoggetFavorite page_size " + page_size);
 
         Call call = apiService.GetFavoriteProducts(headerMap, params);
         call.enqueue(callbackApi);

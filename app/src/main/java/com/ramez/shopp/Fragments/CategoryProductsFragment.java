@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -31,6 +33,7 @@ import com.ramez.shopp.Adapter.MainCategoryAdapter;
 import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.Adapter.SubCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.AppBarStateChangeListener;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -68,15 +71,16 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
     private FragmentCategoryProductsBinding binding;
-    private String user_id = "0", filter = "";
+    private String user_id = "0";
+    private final String filter = "";
     private MemberModel user;
     private LocalModel localModel;
     private ProductCategoryAdapter adapter;
-    private int SEARCH_CODE = 2000;
+    private final int SEARCH_CODE = 2000;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryProductsBinding.inflate(inflater, container, false);
 
         productList = new ArrayList<>();
@@ -107,11 +111,35 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             user_id = String.valueOf(user.getId());
 
         }
-        city_id = localModel.getCityId() !=null ? Integer.parseInt(localModel.getCityId() ): Integer.parseInt(UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        city_id = localModel.getCityId() != null ? Integer.parseInt(localModel.getCityId()) : Integer.parseInt(UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
 
 
         getIntentExtra();
 
+        initListeners();
+
+
+        return binding.getRoot();
+
+    }
+
+    private void initListeners() {
+
+        binding.headerAppBarLY.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if (state == State.COLLAPSED) {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_SHOW_SEARCH, true));
+                } else {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_SHOW_SEARCH, false));
+                }
+            }
+
+            @Override
+            public void onBarOffsetChanged(AppBarLayout appBarLayout, int offset) {
+
+            }
+        });
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
             getProductList(selectedSubCat, country_id, city_id, user_id, filter, 0, 10);
@@ -120,17 +148,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
 
         binding.searchBut.setOnClickListener(view1 -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
-//            FragmentManager fragmentManager = getParentFragmentManager();
-//            SearchFragment searchFragment = new SearchFragment();
-//            fragmentManager.beginTransaction().replace(R.id.mainContainer, searchFragment, "searchFragment").commit();
-
-
-        });
-
-
-        binding.priceBut.setOnClickListener(view1 -> {
-            Collections.sort(productList, Collections.reverseOrder());
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search,true));
 
         });
 
@@ -140,22 +158,11 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
             checkCameraPermission();
 
         });
-
-
-        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-
-        binding.offerCountTv.setText(String.valueOf(productList.size()));
-
-        return binding.getRoot();
-
     }
 
     public void initAdapter() {
         adapter = new ProductCategoryAdapter(getActivityy(), binding.productsRv, productList, selectedSubCat, country_id, city_id, user_id, 0, "", this, numColumn, 0);
         binding.productsRv.setAdapter(adapter);
-
-        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-        binding.offerCountTv.setText(String.valueOf(productList.size()));
     }
 
     @Override
@@ -192,23 +199,9 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
 
             category_id = bundle.getInt(Constants.MAIN_CAT_ID, 0);
             selectedSubCat = bundle.getInt(Constants.SUB_CAT_ID, 0);
-//            category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
-//            CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
-//            if (categoryModel != null) {
-//                if (category_id == 0)
-//                    category_id = categoryModel.getId();
-////                if (categoryModel.getChildCat() != null)
-////                    subCategoryDMS = new ArrayList<>(categoryModel.getChildCat());
-//            }
-//            int position = bundle.getInt(Constants.position, 0);
             Log.i(getClass().getSimpleName(), "Log mainCategoryDMS " + mainCategoryDMS.size());
             Log.i(getClass().getSimpleName(), "Log category_id " + category_id);
-//            Log.i(getClass().getSimpleName(), "Log position " + position);
             Log.i(getClass().getSimpleName(), "Log sub_cat_id " + selectedSubCat);
-//            Log.i(getClass().getSimpleName(), "Log subCat " + subCat);
-
-
-//            selectedSubCat = categoryModel.getId();
             if (category_id == 0 && selectedSubCat != 0) {
                 getCatIdFromSub(selectedSubCat);
             } else {

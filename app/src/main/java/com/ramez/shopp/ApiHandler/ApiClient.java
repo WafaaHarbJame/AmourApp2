@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.TLSSocketFactory;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Utils.SharedPManger;
 
 
@@ -14,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -53,8 +55,11 @@ public class ApiClient {
 
     public static Retrofit getClient() {
 
-        if (UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        LocalModel localModel = UtilityApp.getLocalData() ;
+
+        if (localModel != null &&localModel.getShortname() != null) {
+
+            country =localModel.getShortname();
             Log.i("TAG", "Log country Local  " + country);
 
         } else {
@@ -76,8 +81,10 @@ public class ApiClient {
     }
 
     public static Retrofit getLongClient() {
-        if (UtilityApp.getLocalData().getShortname() != null) {
-            country = UtilityApp.getLocalData().getShortname();
+        LocalModel localModel = UtilityApp.getLocalData() ;
+
+        if (localModel!=null &&localModel.getShortname() != null) {
+            country = localModel.getShortname();
 
         } else {
             country = GlobalData.COUNTRY;

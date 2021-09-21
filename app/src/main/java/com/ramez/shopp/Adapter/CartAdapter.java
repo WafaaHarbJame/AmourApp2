@@ -29,6 +29,7 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
@@ -46,7 +47,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
-        this.cartDMS = cartDMS;
+        this.cartDMS = new ArrayList<>(cartDMS);
         this.onCartItemClicked = onCartItemClicked;
         this.dataCallback = dataCallback;
 
@@ -64,7 +65,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public void onBindViewHolder(final Holder holder, int position) {
 
         CartModel cartDM = cartDMS.get(position);
-         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
@@ -257,8 +258,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 }
             });
 
-
-
             binding.markBtn.setOnClickListener(view1 -> {
 
                 int position = getBindingAdapterPosition();
@@ -305,7 +304,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
             });
-
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
@@ -459,7 +457,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
                     }
-                     if (cartDMS != null && cartDMS.size() > 0) {
+                    if (cartDMS != null && cartDMS.size() > 0) {
                         cartDMS.get(position).setQuantity(cartQuantity);
                         notifyItemChanged(position);
                     }
@@ -502,9 +500,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 if (cartDMS.size() > 0 && position < cartDMS.size()) {
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
-
-
                 }
+
                 Toast.makeText(context, "" + context.getString(R.string.success_delete_from_cart), Toast.LENGTH_SHORT).show();
 
                 CartProcessModel cartProcessModel = (CartProcessModel) obj;

@@ -155,6 +155,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
+
         productBestList = new ArrayList<>();
         bookletsList = new ArrayList<>();
         sliderList = new ArrayList<>();
@@ -182,10 +184,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         }
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
 
         country_id = localModel.getCountryId();
-        city_id = Integer.parseInt(localModel.getCityId()!=null ? localModel.getCityId() : UtilityApp.getDefaultLocalData(getActivityy()).getCityId());
+        city_id = Integer.parseInt(localModel.getCityId());
 
         getCityList(country_id);
         getDeliveryTimeListNew(city_id);
@@ -348,7 +349,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         binding.searchBut.setOnClickListener(view1 -> {
 
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search));
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_search,false));
 
 
         });
@@ -464,6 +465,11 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
     public void GetHomePage() {
+
+        Log.i(TAG, "Log getSliders ");
+        Log.i(TAG, "Log getSliders country_id " + country_id);
+        Log.i(TAG, "Log getSliders  city_id " + city_id);
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -522,6 +528,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                             bannersList = UtilityApp.getBanners();
 
                         } else {
+
+                            UtilityApp.setSliderData(null);
+                            UtilityApp.setBannerData(null);
+
                             if (result.getSliders().size() > 0) {
 
                                 for (int i = 0; i < result.getSliders().size(); i++) {
@@ -538,9 +548,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                                 }
 
 
-                                UtilityApp.setSliderData(sliderList);
-                                UtilityApp.setBannerData(bannersList);
+                                if (sliderList.size() > 0) {
+                                    UtilityApp.setSliderData(sliderList);
 
+                                }
+
+                                if (bannersList.size() > 0) {
+                                    UtilityApp.setBannerData(bannersList);
+
+                                }
 
                             }
 

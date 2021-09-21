@@ -114,6 +114,7 @@
             android:visibility="gone"
             android:contentDescription="@string/app_name" />
 
+
         <ImageView
             android:id="@+id/view2But"
             android:layout_width="wrap_content"
@@ -130,6 +131,17 @@
             android:visibility="gone"
             android:contentDescription="@string/app_name" />
 
+        <ImageView
+            android:id="@+id/SearchBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:padding="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_search_t"
+            android:contentDescription="@string/app_name" />
     </RelativeLayout>
 
 </LinearLayout>

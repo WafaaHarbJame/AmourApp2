@@ -11,6 +11,8 @@ public class MessageEvent {
     public static final String TYPE_cart = "cart";
     public static final String REFRESH_CART = "REFRESH_CART";
     public static final String TYPE_search= "TYPE_search";
+    public static final String TYPE_Search_From_Cat= "TYPE_Search_From_Cat";
+    public static final String TYPE_SHOW_SEARCH= "TYPE_SHOW_SEARCH";
     public static final String TYPE_CATEGORY = "TYPE_CATEGORY";
     public static final String TYPE_main = "main";
     public static final String TYPE_UPDATE_CART = "updateCart";
