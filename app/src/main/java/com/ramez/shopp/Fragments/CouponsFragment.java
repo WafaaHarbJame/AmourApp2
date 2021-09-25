@@ -46,7 +46,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCouponsBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
@@ -96,16 +96,16 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     }
 
     private void showGenerateDialog() {
-        double points = totalPointModel != null  ? totalPointModel.points : 0;
+        double points = totalPointModel != null ? totalPointModel.points : 0;
         GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
                 userId, points,
                 settingCouponsModel.minimumPoints, (obj, func, IsSuccess) -> {
-                    if (IsSuccess) {
-                        GlobalData.refresh_points = true;
-                        callGetTotalPoints();
+            if (IsSuccess) {
+                GlobalData.refresh_points = true;
+                callGetTotalPoints();
 
-                    }
-                });
+            }
+        });
         generateDialog.show();
     }
 
@@ -145,22 +145,24 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
             if (isVisible()) {
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
                 ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
-                if (result != null && result.isSuccessful()) {
+                if (IsSuccess) {
+                    if (result != null && result.isSuccessful()) {
 
-                    if (result.data != null && result.data.size() > 0) {
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        List<CouponsModel> list = result.data;
-                        initAdapter(list);
+                        if (result.data != null && result.data.size() > 0) {
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            List<CouponsModel> list = result.data;
+                            initAdapter(list);
 
-                    } else {
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.tvErrorMessage.setText(getString(R.string.no_data));
-                        binding.noDataLY.titleTv.setText(getString(R.string.Coupons));
-                        binding.noDataLY.btnBrowseProducts.setVisibility(View.GONE);
-                        binding.dataLY.setVisibility(View.GONE);
+                        } else {
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.tvErrorMessage.setText(getString(R.string.no_data));
+                            binding.noDataLY.titleTv.setText(getString(R.string.Coupons));
+                            binding.noDataLY.btnBrowseProducts.setVisibility(View.GONE);
+                            binding.dataLY.setVisibility(View.GONE);
+                        }
+
                     }
-
                 } else {
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -187,13 +189,16 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (result != null && result.isSuccessful() && result.data != null) {
+            if (IsSuccess) {
+                if (result != null && result.isSuccessful() && result.data != null) {
 
-                totalPointModel = result.data;
-                Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
-                Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
-                DBFunction.setTotalPoints(totalPointModel);
+                    totalPointModel = result.data;
+                    Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
+                    Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
+                    DBFunction.setTotalPoints(totalPointModel);
+                }
             }
+
 
         }).getTotalPoint(userId);
 
@@ -214,7 +219,8 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-            if (result.isSuccessful()) {
+            if (IsSuccess) {
+
                 if (result != null && result.data != null && result.status == 200) {
                     settingCouponsModel = result.data;
                     DBFunction.setCouponSettings(settingCouponsModel);
@@ -222,6 +228,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
 
             }
+
 
         }).getSettings(countryId);
 

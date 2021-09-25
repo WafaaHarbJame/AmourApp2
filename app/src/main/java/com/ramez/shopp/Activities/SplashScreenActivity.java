@@ -66,8 +66,6 @@ public class SplashScreenActivity extends ActivityBase {
         setContentView(R.layout.activity_splash_screen);
 
         localModel = UtilityApp.getLocalData() ;
-        //!= null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
-        //
         lang = UtilityApp.getLanguage() == null ? Locale.getDefault().getLanguage() : UtilityApp.getLanguage();
 
 
@@ -96,15 +94,23 @@ public class SplashScreenActivity extends ActivityBase {
         new Handler().postDelayed(() -> {
 
             if (UtilityApp.isLogin()) {
-                if (UtilityApp.getUserData() != null) {
+                if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId()!=null) {
 
                     storeId = Integer.parseInt(localModel.getCityId());
                     user = UtilityApp.getUserData();
                     userId = user != null && user.getId() != null ? user.getId() : 0;
-                    getUserData(userId, storeId);
                     getTotalPoints(userId);
                     GetUserAddress(userId);
+                    getUserData(userId, storeId);
 
+
+                }
+                else {
+                    UtilityApp.logOut();
+                    Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                    intent.putExtra(Constants.LOGIN, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
 
             } else {
@@ -159,25 +165,6 @@ public class SplashScreenActivity extends ActivityBase {
         }).getUserDetails(user_id, store_id);
     }
 
-    public void getSetting() {
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
-
-            if (IsSuccess) {
-                SettingModel settingModel = new SettingModel();
-                if (result.data != null) {
-                    settingModel.setAbout(result.data.getAbout());
-                    settingModel.setConditions(result.data.getConditions());
-                    settingModel.setPrivacy(result.data.getPrivacy());
-                    UtilityApp.setSetting(settingModel);
-                }
-
-            }
-
-
-        }).getSetting();
-    }
 
     private void getTotalPoints(int userId) {
 
@@ -186,8 +173,6 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (result != null && result.isSuccessful() && result.data != null) {
                 TotalPointModel totalPointModel = result.data;
-//                Log.i(getClass().getSimpleName(), "Log  totalPointModel call " + totalPointModel.points);
-//                Log.i(getClass().getSimpleName(), "Log  totalPointModel call" + totalPointModel.value);
                 DBFunction.setTotalPoints(totalPointModel);
 
 

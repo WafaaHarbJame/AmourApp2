@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.LocalModel;
@@ -109,8 +110,11 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 photoUrl = "http";
             }
-            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+//            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
+
+            GlobalData.GlideImg(context, photoUrl
+                    , R.drawable.holder_image, holder.binding.productImg);
 
         } else if (viewHolder instanceof DiscoverViewHolder) {
             DiscoverViewHolder discoverViewHolder = (DiscoverViewHolder) viewHolder;

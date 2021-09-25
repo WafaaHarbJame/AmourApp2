@@ -140,7 +140,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         } else {
             photoUrl = "http";
         }
-        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+        GlobalData.GlideImg(context, photoUrl
+                , R.drawable.holder_image, holder.binding.productImg);
+//        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
 //        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 

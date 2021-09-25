@@ -25,6 +25,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddCommentDialog;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
@@ -44,12 +45,14 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     private final OnCartItemClicked onCartItemClicked;
     int fraction = 2;
     LocalModel localModel;
+    MemberModel memberModel;
 
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = new ArrayList<>(cartDMS);
         this.onCartItemClicked = onCartItemClicked;
         this.dataCallback = dataCallback;
+        memberModel = UtilityApp.getUserData();
 
     }
 
@@ -68,7 +71,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
-
+        memberModel = UtilityApp.getUserData();
         int quantity = cartDM.getQuantity();
 
         holder.binding.weightUnitTv.setText(cartDM.getWightName());
@@ -295,7 +298,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int position = getBindingAdapterPosition();
                 CartModel productModel = cartDMS.get(position);
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int userId = UtilityApp.getUserData().getId();
+                int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
                 int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
@@ -313,7 +316,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int count = productModel.getQuantity();
                 int stock = productModel.getProductQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int userId = UtilityApp.getUserData().getId();
+                int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
                 int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
@@ -370,7 +373,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 CartModel productModel = cartDMS.get(position);
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int userId = UtilityApp.getUserData().getId();
+                int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
                 int storeId = Integer.parseInt(localModel.getCityId());
                 int productId = productModel.getProductId();
                 int cart_id = productModel.getId();
@@ -387,7 +390,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     CartModel productModel = cartDMS.get(position);
                     if (productModel != null) {
                         int product_barcode_id = productModel.getProductBarcodeId();
-                        int userId = UtilityApp.getUserData().getId();
+                        int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
                         int storeId = Integer.parseInt(localModel.getCityId());
                         int productId = productModel.getProductId();
                         int cart_id = productModel.getId();
@@ -457,11 +460,10 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
                     }
-                    if (cartDMS != null && cartDMS.size() > 0) {
+                    if (cartDMS.size() > 0 && position >= 0 && position < cartDMS.size()) {
                         cartDMS.get(position).setQuantity(cartQuantity);
                         notifyItemChanged(position);
                     }
-
 
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
                     cartProcessModel.setTotal(calculateSubTotalPrice());

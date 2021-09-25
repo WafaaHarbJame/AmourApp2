@@ -60,8 +60,8 @@ public class CardFragment extends FragmentBase {
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivityy());
-        countryId =localModel.getCountryId() ;
-        currency=localModel.getCurrencyCode();
+        countryId = localModel.getCountryId();
+        currency = localModel.getCurrencyCode();
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
 
             getData();
@@ -70,18 +70,18 @@ public class CardFragment extends FragmentBase {
 
         binding.generateBut.setOnClickListener(v -> {
 
-            double points=totalPointModel!=null && totalPointModel.points > 0 ? totalPointModel.points : 0;
-            int minimumPoints=settingCouponsModel!=null && settingCouponsModel.minimumPoints >0 ?settingCouponsModel.minimumPoints:
+            double points = totalPointModel != null && totalPointModel.points > 0 ? totalPointModel.points : 0;
+            int minimumPoints = settingCouponsModel != null && settingCouponsModel.minimumPoints > 0 ? settingCouponsModel.minimumPoints :
                     0;
             GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
 
-                    userId,points, minimumPoints, (obj, func, IsSuccess) -> {
-                        if (IsSuccess) {
-                            GlobalData.refresh_points=true;
-                            callGetTotalPoints();
-                        }
+                    userId, points, minimumPoints, (obj, func, IsSuccess) -> {
+                if (IsSuccess) {
+                    GlobalData.refresh_points = true;
+                    callGetTotalPoints();
+                }
 
-                    });
+            });
             generateDialog.show();
 
         });
@@ -163,7 +163,7 @@ public class CardFragment extends FragmentBase {
                 }
 
                 if (IsSuccess) {
-                    if (result != null  && result.data != null) {
+                    if (result != null && result.data != null) {
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
@@ -188,8 +188,7 @@ public class CardFragment extends FragmentBase {
 
 
                     }
-                }
-                else {
+                } else {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -235,7 +234,7 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (IsSuccess && result != null  && result.data != null) {
+            if (IsSuccess && result != null && result.data != null) {
 
                 totalPointModel = result.data;
                 DBFunction.setTotalPoints(totalPointModel);
@@ -272,15 +271,15 @@ public class CardFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
-
+            if (IsSuccess) {
                 if (result != null && result.isSuccessful() && result.data != null) {
                     settingCouponsModel = result.data;
                     DBFunction.setCouponSettings(settingCouponsModel);
 
 
-
-
+                }
             }
+
 
         }).getSettings(countryId);
 

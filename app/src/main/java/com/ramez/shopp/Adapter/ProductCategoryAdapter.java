@@ -255,8 +255,11 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 photoUrl = "http";
             }
-            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+//            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
+
+            GlobalData.GlideImg(context, photoUrl
+                    , R.drawable.holder_image, holder.binding.productImg);
 
         } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;

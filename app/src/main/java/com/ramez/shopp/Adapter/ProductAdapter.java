@@ -150,12 +150,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        Picasso.get().load(photoUrl)
-                .placeholder(R.drawable.holder_image)
-                .error(R.drawable.holder_image)
-                .into(holder.binding.productImg);
+//        Picasso.get().load(photoUrl)
+//                .placeholder(R.drawable.holder_image)
+//                .error(R.drawable.holder_image)
+//                .into(holder.binding.productImg);
 
 
+        GlobalData.GlideImg(context, photoUrl
+                , R.drawable.holder_image, holder.binding.productImg);
     }
 
     @Override
