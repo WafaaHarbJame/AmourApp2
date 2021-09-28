@@ -3,19 +3,15 @@ package com.ramez.shopp.Dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.ramez.shopp.Activities.RegisterLoginActivity;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.R;
 
 public class WhatsUpDialog extends Dialog {

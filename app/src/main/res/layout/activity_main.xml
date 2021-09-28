@@ -64,16 +64,17 @@
 
 
                 <ImageView
-                    android:id="@+id/homeButn"
+                    android:id="@+id/tab1Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/home_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/tab1Txt"
+                    android:id="@+id/tab1Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/string_menu_home"
@@ -94,16 +95,17 @@
 
 
                 <ImageView
-                    android:id="@+id/categoryBut"
+                    android:id="@+id/tab2Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/category_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/tab2Txt"
+                    android:id="@+id/tab2Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category"
@@ -134,59 +136,43 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/cartBut"
+                    android:id="@+id/tab3Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/app_name"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/cart_icon_before" />
 
-                <!--                <ru.nikartm.support.ImageBadgeView-->
-                <!--                    android:id="@+id/cartBut"-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center"-->
-                <!--                    android:paddingStart="@dimen/_6sdp"-->
-                <!--                    android:paddingTop="@dimen/_4sdp"-->
-                <!--                    android:paddingEnd="@dimen/_6sdp"-->
-                <!--                    android:src="@drawable/cart_icon_before"-->
-                <!--                    app:ibv_badgeColor="@color/colorPrimaryDark"-->
-                <!--                    app:ibv_badgeLimitValue="false"-->
-                <!--                    app:ibv_badgeTextColor="#ffffff"-->
-                <!--                    app:ibv_badgeTextSize="@dimen/_8ssp"-->
-                <!--                    app:ibv_badgeTextStyle="bold"-->
-                <!--                    app:ibv_badgeValue="0"-->
-                <!--                    app:ibv_fixedBadgeRadius="@dimen/_8ssp" />-->
-
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/tab3Txt"
+                    android:id="@+id/tab3Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/cartBut"
+                    android:layout_below="@id/tab3Icon"
                     android:layout_centerHorizontal="true"
                     android:text="@string/cart"
                     android:textColor="@color/font_gray"
                     android:textSize="@dimen/bottom_nav_text" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/cartCountTv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:background="@drawable/circle_corner_primary"
                     android:gravity="center"
-                    android:paddingStart="@dimen/_3sdp"
-                    android:paddingEnd="@dimen/_3sdp"
-                    android:visibility="gone"
                     android:minWidth="@dimen/_12sdp"
                     android:minHeight="@dimen/_12sdp"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_3sdp"
                     android:text="0"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_7ssp" />
+                    android:textSize="@dimen/_7ssp"
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -202,16 +188,17 @@
 
 
                 <ImageView
-                    android:id="@+id/offerBut"
+                    android:id="@+id/tab4Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/offer_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/tab4Txt"
+                    android:id="@+id/tab4Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/offer_text"
@@ -231,16 +218,17 @@
 
 
                 <ImageView
-                    android:id="@+id/myAccountBut"
+                    android:id="@+id/tab5Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/myaccount_icon" />
 
                 <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/tab5Txt"
+                    android:id="@+id/tab5Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/myaccount"

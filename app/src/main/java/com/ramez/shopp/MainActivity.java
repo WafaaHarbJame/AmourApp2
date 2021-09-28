@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.androidnetworking.BuildConfig;
 import com.onesignal.OneSignal;
-import com.ramez.shopp.Activities.ActivityBase;
-import com.ramez.shopp.Activities.AllBookleteActivity;
-import com.ramez.shopp.Activities.ExtraRequestActivity;
+import com.ramez.shopp.activities.ActivityBase;
+import com.ramez.shopp.activities.AllBookleteActivity;
+import com.ramez.shopp.activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CategoryModel;
@@ -22,14 +22,14 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
-import com.ramez.shopp.Fragments.CartFragment;
-import com.ramez.shopp.Fragments.CategoryFragment;
-import com.ramez.shopp.Fragments.CategoryProductsFragment;
-import com.ramez.shopp.Fragments.HomeFragment;
-import com.ramez.shopp.Fragments.MyAccountFragment;
-import com.ramez.shopp.Fragments.OfferFragment;
-import com.ramez.shopp.Fragments.SearchFragment;
-import com.ramez.shopp.Fragments.SpecialOfferFragment;
+import com.ramez.shopp.fragments.CartFragment;
+import com.ramez.shopp.fragments.CategoryFragment;
+import com.ramez.shopp.fragments.CategoryProductsFragment;
+import com.ramez.shopp.fragments.HomeFragment;
+import com.ramez.shopp.fragments.MyAccountFragment;
+import com.ramez.shopp.fragments.OfferFragment;
+import com.ramez.shopp.fragments.SearchFragment;
+import com.ramez.shopp.fragments.SpecialOfferFragment;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -62,11 +62,14 @@ public class MainActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+
         getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+
         binding.toolBar.backBtn.setVisibility(View.GONE);
         binding.toolBar.view2But.setVisibility(View.GONE);
 
-        binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+        binding.tab1Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
         categoryModelList = new ArrayList<>();
 
@@ -76,7 +79,6 @@ public class MainActivity extends ActivityBase {
 
         getIntentExtra();
 
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
         if (localModel != null && localModel.getCityId() != null) {
             storeId = Integer.parseInt(localModel.getCityId());
@@ -247,16 +249,16 @@ public class MainActivity extends ActivityBase {
     }
 
     private void initBottomNav(int pos) {
-        binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 0 ? R.drawable.home_clicked : R.drawable.home_icon));
-        binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 1 ? R.drawable.category_click : R.drawable.category_icon));
-        binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 2 ? R.drawable.cart_icon_bottom : R.drawable.cart_icon_before));
-        binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 3 ? R.drawable.offer_clicked : R.drawable.offer_icon));
-        binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 4 ? R.drawable.my_account_clciked : R.drawable.myaccount_icon));
-        binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(), pos == 0 ? R.color.colorPrimary : R.color.font_gray));
-        binding.tab2Txt.setTextColor(ContextCompat.getColor(getActiviy(), pos == 1 ? R.color.colorPrimary : R.color.font_gray));
-        binding.tab3Txt.setTextColor(ContextCompat.getColor(getActiviy(), pos == 2 ? R.color.colorPrimary : R.color.font_gray));
-        binding.tab4Txt.setTextColor(ContextCompat.getColor(getActiviy(), pos == 3 ? R.color.colorPrimary : R.color.font_gray));
-        binding.tab5Txt.setTextColor(ContextCompat.getColor(getActiviy(), pos == 4 ? R.color.colorPrimary : R.color.font_gray));
+        binding.tab1Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 0 ? R.drawable.home_clicked : R.drawable.home_icon));
+        binding.tab2Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 1 ? R.drawable.category_click : R.drawable.category_icon));
+        binding.tab3Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 2 ? R.drawable.cart_icon_bottom : R.drawable.cart_icon_before));
+        binding.tab4Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 3 ? R.drawable.offer_clicked : R.drawable.offer_icon));
+        binding.tab5Icon.setImageDrawable(ContextCompat.getDrawable(getActiviy(), pos == 4 ? R.drawable.my_account_clciked : R.drawable.myaccount_icon));
+        binding.tab1Tv.setTextColor(ContextCompat.getColor(getActiviy(), pos == 0 ? R.color.colorPrimary : R.color.font_gray));
+        binding.tab2Tv.setTextColor(ContextCompat.getColor(getActiviy(), pos == 1 ? R.color.colorPrimary : R.color.font_gray));
+        binding.tab3Tv.setTextColor(ContextCompat.getColor(getActiviy(), pos == 2 ? R.color.colorPrimary : R.color.font_gray));
+        binding.tab4Tv.setTextColor(ContextCompat.getColor(getActiviy(), pos == 3 ? R.color.colorPrimary : R.color.font_gray));
+        binding.tab5Tv.setTextColor(ContextCompat.getColor(getActiviy(), pos == 4 ? R.color.colorPrimary : R.color.font_gray));
     }
 
     private void getCartsCount() {
@@ -339,7 +341,7 @@ public class MainActivity extends ActivityBase {
                 binding.toolBar.view2But.setVisibility(View.GONE);
                 binding.toolBar.sortBut.setVisibility(View.GONE);
 
-                binding.tab1Txt.setTextColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
+                binding.tab1Tv.setTextColor(ContextCompat.getColor(getActiviy(), R.color.colorPrimaryDark));
                 int position = (int) event.data;
 
                 Fragment selectedFragment;

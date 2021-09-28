@@ -7,31 +7,20 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Adapter.CountriesAdapter;
-import com.ramez.shopp.Adapter.CountryCodeAdapter;
-import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.adapter.CountryCodeAdapter;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CountryModel;
-import com.ramez.shopp.Models.CountryModelResult;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;

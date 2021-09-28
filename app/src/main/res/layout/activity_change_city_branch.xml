@@ -149,6 +149,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/branchRecycler"
                         android:layout_width="match_parent"
+                        android:paddingEnd="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:paddingStart="@dimen/_4sdp"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="3"

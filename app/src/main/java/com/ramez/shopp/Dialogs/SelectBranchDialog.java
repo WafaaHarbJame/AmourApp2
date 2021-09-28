@@ -5,32 +5,20 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ramez.shopp.Adapter.CategoryAdapter;
-import com.ramez.shopp.Adapter.CityAdapter;
-import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.adapter.CityAdapter;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CityModel;
-import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.DialogCategoryBinding;
 import com.ramez.shopp.databinding.DialogSelectBranchBinding;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class SelectBranchDialog extends Dialog {
 

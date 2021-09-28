@@ -6,7 +6,7 @@ import android.util.Log;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
-import com.ramez.shopp.Activities.MyOrderActivity;
+import com.ramez.shopp.activities.MyOrderActivity;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.RootApplication;
 
