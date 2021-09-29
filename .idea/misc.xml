@@ -13,7 +13,7 @@
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_confirm.xml" value="0.23854166666666668" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_conform_phone.xml" value="0.1160081053698075" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_edit_profile.xml" value="0.25416666666666665" />
-        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_main.xml" value="0.21851851851851853" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_order_complete.xml" value="0.23854166666666668" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_price_checker_result.xml" value="0.2105978260869565" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/activity_product_deatils.xml" value="0.20555555555555555" />
@@ -35,12 +35,16 @@
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/fragment_products.xml" value="0.20416666666666666" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/fragment_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/fragment_slider.xml" value="0.18541666666666667" />
+        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/fragment_special_offer.xml" value="0.1962962962962963" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/layout_no_data.xml" value="0.23854166666666668" />
+        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_banners_item.xml" value="0.1421875" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_cart_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_coupons_item.xml" value="0.23854166666666668" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_current_my_order_item.xml" value="0.22708333333333333" />
+        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_product_option.xml" value="0.2265625" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_products_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/row_recommend_products_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/search_fagment.xml" value="0.25416666666666665" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.2203125" />
       </map>
     </option>

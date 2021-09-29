@@ -141,13 +141,16 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                 photoUrl = "http";
             }
 
+            try {
 
-//            Picasso.get().load(photoUrl)
-//                    .placeholder(R.drawable.holder_image)
-//                    .error(R.drawable.holder_image)
-//                    .into(holder.binding.productImg);
-            GlobalData.GlideImg(context, photoUrl
-                    , R.drawable.holder_image, holder.binding.productImg);
+                GlobalData.GlideImg(context, photoUrl
+                        , R.drawable.holder_image, holder.binding.productImg);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
 
         }

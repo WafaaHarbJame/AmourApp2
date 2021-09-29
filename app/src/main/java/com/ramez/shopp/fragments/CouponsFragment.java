@@ -96,9 +96,16 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
 
     private void showGenerateDialog() {
         double points = totalPointModel != null ? totalPointModel.points : 0;
+
+        if(settingCouponsModel==null){
+            getCouponSettings();
+        }
+
+        int minimumPoints=settingCouponsModel != null  && settingCouponsModel.minimumPoints > 0 ? settingCouponsModel.minimumPoints : 0;
+
         GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
                 userId, points,
-                settingCouponsModel.minimumPoints, (obj, func, IsSuccess) -> {
+                minimumPoints, (obj, func, IsSuccess) -> {
             if (IsSuccess) {
                 GlobalData.refresh_points = true;
                 callGetTotalPoints();

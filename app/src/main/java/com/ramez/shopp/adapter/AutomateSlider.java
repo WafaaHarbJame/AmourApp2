@@ -51,7 +51,13 @@ public class AutomateSlider extends SliderViewAdapter<AutomateSlider.sliderAdapt
         }
 
 
-        GlobalData.GlideImg(context,imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
+        try {
+            GlobalData.GlideImg(context,imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
 //        Glide.with(viewHolder.itemView).load(imageUrl).error(R.drawable.holder_image).placeholder(R.drawable.holder_image).fitCenter().into(viewHolder.imageViewBackground);
 

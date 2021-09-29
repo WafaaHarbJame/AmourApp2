@@ -12,8 +12,8 @@ android {
         applicationId "com.ramez.shopp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 71
-        versionName "5.41"
+        versionCode 73
+        versionName "5.43"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

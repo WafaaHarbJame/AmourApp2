@@ -1,5 +1,7 @@
 package com.ramez.shopp.activities;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,8 +35,6 @@ import com.ramez.shopp.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
 

@@ -47,7 +47,14 @@ public class ImageFragment extends FragmentBase {
         Bundle bundle = getArguments();
         if (bundle != null) {
             imageUrl = bundle.getString(Constants.KEY_IMAGE_URL);
-            GlobalData.GlideImgWithTransform(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
+
+            try {
+                GlobalData.GlideImgWithTransform(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         }
 

@@ -59,8 +59,18 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
 
             }
         } else {
-            GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
-                    , R.drawable.holder_image, holder.catImage);
+
+
+
+            try {
+
+
+                GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
+                        , R.drawable.holder_image, holder.catImage);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 

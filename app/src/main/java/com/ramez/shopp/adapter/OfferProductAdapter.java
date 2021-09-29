@@ -242,9 +242,15 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else {
                 photoUrl = "http";
             }
+            try {
 
-            GlobalData.GlideImg(activity, photoUrl, R.drawable.holder_image, holder.binding.productImg);
-            //Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+                GlobalData.GlideImg(activity, photoUrl, R.drawable.holder_image, holder.binding.productImg);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {

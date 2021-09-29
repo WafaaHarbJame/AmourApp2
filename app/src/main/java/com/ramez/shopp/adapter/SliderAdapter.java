@@ -59,7 +59,16 @@ public class SliderAdapter extends PagerAdapter {
 
             }
 
-            GlobalData.GlideImg(context,imageUrl, R.drawable.holder_image, productImg);
+
+            try {
+
+                GlobalData.GlideImg(context,imageUrl, R.drawable.holder_image, productImg);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
             container.addView(view);
 

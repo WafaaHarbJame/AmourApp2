@@ -245,11 +245,17 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 photoUrl = "http";
             }
-//            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+
+            try {
+
+                GlobalData.GlideImg(context, photoUrl
+                        , R.drawable.holder_image, holder.binding.productImg);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
-            GlobalData.GlideImg(context, photoUrl
-                    , R.drawable.holder_image, holder.binding.productImg);
 
         } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;
@@ -600,7 +606,13 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                onItemClick.onItemClicked(getBindingAdapterPosition(), productModels.get(getBindingAdapterPosition()));
+
+                int position=getBindingAdapterPosition();
+
+                if(position >=0 && position <productModels.size()){
+                    onItemClick.onItemClicked(getBindingAdapterPosition(), productModels.get(position));
+
+                }
             }
         }
 

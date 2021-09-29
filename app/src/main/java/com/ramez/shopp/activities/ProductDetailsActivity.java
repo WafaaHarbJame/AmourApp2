@@ -922,7 +922,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
             }
 
-        }).getFavorite(categoryId, country_id, city_id, String.valueOf(user_id), filter, 0, 0, 100);;
+        }).getFavorite(categoryId, country_id, city_id, String.valueOf(user_id), filter, 0, 0, 12);;
     }
 
     private void initProductsAdapter() {

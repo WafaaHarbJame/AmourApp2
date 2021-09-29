@@ -64,13 +64,13 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
-         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
         holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-        if (productModel != null && productModel.isFavourite()) {
+        if (productModels.size() > 0 && productModel.isFavourite()) {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
         } else {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
@@ -139,11 +139,14 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             photoUrl = "http";
         }
 
-        GlobalData.GlideImg(context, photoUrl
-                , R.drawable.holder_image, holder.binding.productImg);
-//        Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+        try {
 
-//        Picasso.get().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
+            GlobalData.GlideImg(context, photoUrl
+                    , R.drawable.holder_image, holder.binding.productImg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -427,7 +430,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
 
             if (onItemClick != null) {
-                if (productModels!=null && productModels.size() > 0) {
+                if (productModels != null && productModels.size() > 0) {
                     int position = getBindingAdapterPosition();
                     onItemClick.onItemClicked(position, productModels.get(position));
                     ProductModel productModel = productModels.get(position);

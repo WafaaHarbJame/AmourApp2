@@ -85,12 +85,16 @@ public class ProductOptionAdapter extends RecyclerView.Adapter<ProductOptionAdap
                 int position = getBindingAdapterPosition();
                 selectedIndex = position;
                 lastIndex = position;
-                ProductBarcode optionModel = productBarcodes.get(position);
-                Log.i("tag", "Log 1" + optionModel.getId());
-                notifyDataSetChanged();
-                if (dataCallback != null) {
-                    dataCallback.dataResult(optionModel, "success", true);
+
+                if(position >= 0 && position < productBarcodes.size()){
+                    ProductBarcode productBarcode = productBarcodes.get(position);
+                    Log.i("tag", "Log 1" + productBarcode.getId());
+                    notifyDataSetChanged();
+                    if (dataCallback != null) {
+                        dataCallback.dataResult(productBarcode, "success", true);
+                    }
                 }
+
             });
 
 

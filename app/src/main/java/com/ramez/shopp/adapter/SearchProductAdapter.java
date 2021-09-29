@@ -142,13 +142,13 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             ProductModel productModel = productModels.get(position);
-             localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+            localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
             currency = localModel.getCurrencyCode();
             fraction = localModel.getFractional();
 
             holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-            if (productModel != null && productModel.isFavourite()) {
+            if (productModels.size()> 0 && productModel.isFavourite()) {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
             } else {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
@@ -215,9 +215,15 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 photoUrl = "http";
             }
-//            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
-            GlobalData.GlideImg(context, photoUrl
-                    , R.drawable.holder_image, holder.binding.productImg);
+
+            try {
+                GlobalData.GlideImg(context, photoUrl
+                        , R.drawable.holder_image, holder.binding.productImg);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         } else if (viewHolder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) viewHolder;

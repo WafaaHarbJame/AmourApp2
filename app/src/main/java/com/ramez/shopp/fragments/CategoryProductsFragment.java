@@ -69,7 +69,6 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     int numColumn = 2;
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
-    private FragmentCategoryProductsBinding binding;
     private String user_id = "0";
     private final String filter = "";
     private MemberModel user;
@@ -77,6 +76,7 @@ public class CategoryProductsFragment extends FragmentBase implements ProductCat
     private ProductCategoryAdapter adapter;
     private final int SEARCH_CODE = 2000;
 
+    private FragmentCategoryProductsBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

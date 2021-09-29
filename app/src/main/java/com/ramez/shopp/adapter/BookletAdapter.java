@@ -44,22 +44,15 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
     public void onBindViewHolder(final Holder holder, int position) {
         BookletsModel bookletsModel = bookletsList.get(position);
         Log.i(getClass().getSimpleName(),"Log ImageUrl"+bookletsList.get(position).getImage());
-//
-//        Glide.with(context).asBitmap().load(bookletsModel.getImage()).placeholder(R.drawable.holder_image).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).addListener(new RequestListener<Bitmap>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-//                holder.binding.loadingLY.setVisibility(View.GONE);
-//                return false;
-//            }
-//        }).into(holder.binding.ivCatImage);
+        try {
 
-        GlobalData.GlideImgGifSize(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
+            GlobalData.GlideImgGifSize(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
 
 

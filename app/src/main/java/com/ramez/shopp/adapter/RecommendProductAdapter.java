@@ -107,11 +107,15 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
             } else {
                 photoUrl = "http";
             }
-//            Picasso.get().load(photoUrl).placeholder(R.drawable.holder_image).error(R.drawable.holder_image).into(holder.binding.productImg);
 
+            try {
+                GlobalData.GlideImg(context, photoUrl
+                        , R.drawable.holder_image, holder.binding.productImg);
 
-            GlobalData.GlideImg(context, photoUrl
-                    , R.drawable.holder_image, holder.binding.productImg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         } else if (viewHolder instanceof DiscoverViewHolder) {
             DiscoverViewHolder discoverViewHolder = (DiscoverViewHolder) viewHolder;

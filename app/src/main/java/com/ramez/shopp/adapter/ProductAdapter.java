@@ -65,7 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
 
-         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
 
@@ -142,15 +142,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             photoUrl = "http";
         }
 
+        try {
 
-//        Picasso.get().load(photoUrl)
-//                .placeholder(R.drawable.holder_image)
-//                .error(R.drawable.holder_image)
-//                .into(holder.binding.productImg);
+            GlobalData.GlideImg(context, photoUrl
+                    , R.drawable.holder_image, holder.binding.productImg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-        GlobalData.GlideImg(context, photoUrl
-                , R.drawable.holder_image, holder.binding.productImg);
     }
 
     @Override

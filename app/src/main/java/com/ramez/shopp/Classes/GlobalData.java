@@ -161,8 +161,6 @@ public class GlobalData {
         }
 
         try {
-//            RequestOptions requestOptions = new RequestOptions();
-//            requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
 
             Glide.with(c).load(photoUrl)
 //                    .apply(requestOptions)

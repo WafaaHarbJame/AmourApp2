@@ -52,7 +52,13 @@ public class BannersAdapter extends RecyclerView.Adapter<BannersAdapter.Holder> 
 
         }
 
-        GlobalData.GlideImgGif(context,imageUrl,R.drawable.holder_image,holder.binding.ivCatImage);
+        try {
+            GlobalData.GlideImgGif(context,imageUrl,R.drawable.holder_image,holder.binding.ivCatImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         holder.binding.container.setOnClickListener(v -> {
             onBannersClick.onBannersClicked(position, slider);

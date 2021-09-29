@@ -38,7 +38,8 @@
                     android:layout_width="@dimen/_15sdp"
                     android:layout_gravity="bottom"
                     android:src="@drawable/edit_photo"
-                    android:layout_height="@dimen/_15sdp"/>
+                    android:layout_height="@dimen/_15sdp"
+                    android:contentDescription="@string/app_name" />
             </FrameLayout>
 
             <com.ramez.shopp.SpichalViews.STextView
@@ -54,6 +55,9 @@
                 android:text=""
                 android:layout_marginTop="@dimen/_16sdp"
                 android:textColor="@color/colorLoginText"
+                android:clickable="false"
+                android:longClickable="false"
+                android:linksClickable="false"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_12ssp" />
             <com.ramez.shopp.SpichalViews.SEditText
@@ -111,6 +115,9 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:textAlignment="viewStart"
+                android:clickable="false"
+                android:longClickable="false"
+                android:linksClickable="false"
                 android:textColor="@color/colorLoginText"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_12ssp" />

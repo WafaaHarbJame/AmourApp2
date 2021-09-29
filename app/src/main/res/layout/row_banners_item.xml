@@ -13,7 +13,7 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_4sdp"
         android:scaleType="centerCrop"
-        android:src="@drawable/banner_image"
+        android:src="@drawable/holder_image"
         app:siBorderColor="@color/gray5"
         app:siBorderWidth="@dimen/_1sdp"
         app:siRadius="@dimen/_6sdp" />

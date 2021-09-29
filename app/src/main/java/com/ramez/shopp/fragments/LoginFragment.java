@@ -156,7 +156,6 @@ public class LoginFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
-                GlobalData.hideProgressDialog();
                 LoginResultModel result = (LoginResultModel) obj;
 
                 if (func.equals(Constants.ERROR)) {
@@ -166,14 +165,19 @@ public class LoginFragment extends FragmentBase {
                     }
 
                     GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                    GlobalData.hideProgressDialog();
                 } else if (func.equals(Constants.FAIL)) {
                     String message = getString(R.string.fail_signin);
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
+                    GlobalData.hideProgressDialog();
+
                     GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
                 } else if (func.equals(Constants.NO_CONNECTION)) {
                     GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                    GlobalData.hideProgressDialog();
+
                 } else {
                     if (IsSuccess) {
 
@@ -205,6 +209,7 @@ public class LoginFragment extends FragmentBase {
                                 UpdateToken();
                             }
                         } else {
+                            GlobalData.hideProgressDialog();
 
                             String message = getString(R.string.fail_signin);
                             if (result.getMessage() != null) {
@@ -216,6 +221,8 @@ public class LoginFragment extends FragmentBase {
 
 
                     } else {
+                        GlobalData.hideProgressDialog();
+
                         Toast(getString(R.string.fail_signin));
 
                     }
@@ -284,18 +291,20 @@ public class LoginFragment extends FragmentBase {
 
     private void UpdateToken() {
 
-        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
-
-                GlobalData.hideProgressDialog();
                 ResultAPIModel<String> result = (ResultAPIModel) obj;
                 if (func.equals(Constants.ERROR)) {
                     String message = getString(R.string.fail_signin);
+                    GlobalData.hideProgressDialog();
+
                     if (result != null && result.message != null) {
                         message = result.message;
                     }
+                    GlobalData.hideProgressDialog();
+
                     Toast(message);
 
                 } else {
@@ -309,6 +318,7 @@ public class LoginFragment extends FragmentBase {
 
                     } else {
                         Toast(getString(R.string.fail_signin));
+                        GlobalData.hideProgressDialog();
 
                     }
                 }
@@ -545,7 +555,7 @@ public class LoginFragment extends FragmentBase {
 
     public void getCarts(int storeId, int userId) {
 
-        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
@@ -568,6 +578,10 @@ public class LoginFragment extends FragmentBase {
                     }
                     getActivity().finish();
 
+
+                }
+                else {
+                    GlobalData.hideProgressDialog();
 
                 }
             }

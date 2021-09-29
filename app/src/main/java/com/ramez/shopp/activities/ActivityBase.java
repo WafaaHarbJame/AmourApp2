@@ -25,6 +25,8 @@ import com.ramez.shopp.Utils.LocaleUtils;
 public class ActivityBase extends AppCompatActivity {
 
     protected boolean isMainActivity = false;
+    protected int gone = View.GONE;
+    protected int visible = View.VISIBLE;
 
     int onStartCount = 0;
 

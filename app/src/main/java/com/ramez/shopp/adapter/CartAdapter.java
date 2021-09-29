@@ -122,9 +122,16 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-        GlobalData.GlideImg(context, cartDM.getImage()
-                , R.drawable.holder_image, holder.binding.imageView1);
 
+        try {
+
+            GlobalData.GlideImg(context, cartDM.getImage()
+                    , R.drawable.holder_image, holder.binding.imageView1);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         calculateSubTotalPrice();
         calculateSavePrice();
