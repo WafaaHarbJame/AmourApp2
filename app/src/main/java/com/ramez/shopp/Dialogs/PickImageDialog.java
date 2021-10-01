@@ -4,18 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
-import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.R;
-
-import org.jetbrains.annotations.NotNull;
 
 
 public class PickImageDialog extends Dialog {

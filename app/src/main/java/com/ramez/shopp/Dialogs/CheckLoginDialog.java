@@ -11,8 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.ramez.shopp.activities.RegisterLoginActivity;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.activities.RegisterLoginActivity;
 import com.ramez.shopp.R;
 
 public class CheckLoginDialog extends Dialog {

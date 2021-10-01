@@ -15,9 +15,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.CountryCodeAdapter;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;

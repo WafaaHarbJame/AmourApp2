@@ -12,13 +12,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.androidnetworking.BuildConfig;
 import com.onesignal.OneSignal;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.activities.ActivityBase;
 import com.ramez.shopp.activities.AllBookleteActivity;
 import com.ramez.shopp.activities.ExtraRequestActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
@@ -95,6 +95,7 @@ public class MainActivity extends ActivityBase {
 
         AnalyticsHandler.APP_OPEN();
 
+        
 
     }
 

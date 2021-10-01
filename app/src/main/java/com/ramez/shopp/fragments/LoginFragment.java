@@ -18,10 +18,10 @@ import com.facebook.AccessToken;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.onesignal.OneSignal;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.activities.ConfirmActivity;
 import com.ramez.shopp.activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
@@ -45,7 +45,7 @@ public class LoginFragment extends FragmentBase {
     String country_name = "BH";
     String city_id = "7263";
     LocalModel localModel;
-    int cartNumber;
+    int cartNumber=0;
     int storeId, userId;
     MemberModel user;
     int countryId;
@@ -163,25 +163,26 @@ public class LoginFragment extends FragmentBase {
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
-
-                    GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
                     GlobalData.hideProgressDialog();
+                    GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
                 } else if (func.equals(Constants.FAIL)) {
                     String message = getString(R.string.fail_signin);
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
                     GlobalData.hideProgressDialog();
-
                     GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+
                 } else if (func.equals(Constants.NO_CONNECTION)) {
-                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+
                     GlobalData.hideProgressDialog();
+                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
 
                 } else {
                     if (IsSuccess) {
 
                         if (result.getStatus() == 106) {
+                            GlobalData.hideProgressDialog();
                             Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
                             intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                             intent.putExtra(Constants.verify_account, true);
@@ -190,13 +191,16 @@ public class LoginFragment extends FragmentBase {
 
                         } else if (result.getStatus() == 0) {
 
+                            GlobalData.hideProgressDialog();
                             String message = getString(R.string.fail_signin);
                             if (result.getMessage() != null) {
                                 message = result.getMessage();
                             }
 
                             GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+
                         } else if (result.getStatus() == 200) {
+
                             MemberModel user = result.getData();
                             if (user != null) {
                                 user.setUserType(Constants.user_type);
@@ -566,6 +570,7 @@ public class LoginFragment extends FragmentBase {
                 if (IsSuccess) {
                     if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
                         cartNumber = cartResultModel.getData().getCartCount();
+                        Log.i(getClass().getSimpleName(),"Log cartNumber"+cartNumber);
                         UtilityApp.setCartCount(cartNumber);
                         Intent intent = new Intent(getActivityy(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

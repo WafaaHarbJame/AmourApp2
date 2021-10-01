@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.androidnetworking.BuildConfig
 import com.onesignal.OneSignal
 import com.ramez.shopp.ApiHandler.DataFeacher
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.*
 import com.ramez.shopp.Dialogs.ConfirmDialog
 import com.ramez.shopp.Models.BottomNavModel
@@ -406,7 +407,7 @@ class MainActivity2 : ActivityBase() {
 
     //        System.out.println("Log cart count " + cartCount);
     private val cartsCount: Unit
-        private get() {
+        get() {
             cartCount = UtilityApp.getCartCount()
             //        System.out.println("Log cart count " + cartCount);
             putBadge(cartCount)
@@ -725,45 +726,47 @@ class MainActivity2 : ActivityBase() {
     val validation: Unit
         get() {
             DataFeacher(
-                false
-            ) { obj: Any?, func: String?, IsSuccess: Boolean ->
-                if (IsSuccess) {
-                    val result = obj as GeneralModel?
-                    if (result != null && result.message != null) {
-                        if (result.status == Constants.OK_STATUS) {
-                            Log.i(
-                                ContentValues.TAG,
-                                "Log getValidation" + result.message
-                            )
-                        } else {
-                            val click: ConfirmDialog.Click = object : ConfirmDialog.Click() {
-                                override fun click() {
-                                    ActivityHandler.OpenGooglePlay(activiy)
-                                    //finish();
+                false,object :DataFetcherCallBack{
+                    override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                        if (IsSuccess) {
+                            val result = obj as GeneralModel?
+                            if (result != null && result.message != null) {
+                                if (result.status == Constants.OK_STATUS) {
+                                    Log.i(
+                                        ContentValues.TAG,
+                                        "Log getValidation" + result.message
+                                    )
+                                } else {
+                                    val click: ConfirmDialog.Click = object : ConfirmDialog.Click() {
+                                        override fun click() {
+                                            ActivityHandler.OpenGooglePlay(activiy)
+                                            //finish();
+                                        }
+                                    }
+                                    val cancel: ConfirmDialog.Click = object : ConfirmDialog.Click() {
+                                        override fun click() {
+                                            finish()
+                                        }
+                                    }
+                                    ConfirmDialog(
+                                        activiy,
+                                        getString(R.string.updateMessage),
+                                        R.string.ok,
+                                        R.string.cancel_label,
+                                        click,
+                                        cancel,
+                                        false
+                                    )
                                 }
+                                Log.i(
+                                    ContentValues.TAG,
+                                    "Log getValidation" + result.message
+                                )
                             }
-                            val cancel: ConfirmDialog.Click = object : ConfirmDialog.Click() {
-                                override fun click() {
-                                    finish()
-                                }
-                            }
-                            ConfirmDialog(
-                                activiy,
-                                getString(R.string.updateMessage),
-                                R.string.ok,
-                                R.string.cancel_label,
-                                click,
-                                cancel,
-                                false
-                            )
                         }
-                        Log.i(
-                            ContentValues.TAG,
-                            "Log getValidation" + result.message
-                        )
                     }
                 }
-            }.getValidate(
+            ) .getValidate(
                 Constants.deviceType,
                 UtilityApp.getAppVersionStr(),
                 BuildConfig.VERSION_CODE

@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.OrderNewModel;
@@ -50,7 +50,7 @@ public class CurrentOrderFragment extends FragmentBase {
             if (UtilityApp.getUserData() != null) {
                 user_id = UtilityApp.getUserData().getId();
             }
-            getUpcomingOrders(user_id,Constants.user_type,"u");
+            getUpcomingOrders(user_id, Constants.user_type,"u");
 
         }
 

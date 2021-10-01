@@ -1,9 +1,10 @@
 package com.ramez.shopp.ApiHandler;
 
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,7 +36,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Query;
 
 
 public class DataFeacher {
@@ -104,7 +104,7 @@ public class DataFeacher {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
                 t.printStackTrace();
                 if ((t instanceof UnknownHostException || t instanceof NoRouteToHostException) && dataFetcherCallBack != null) {
                     dataFetcherCallBack.Result(null, Constants.NO_CONNECTION, false);
@@ -357,9 +357,15 @@ public class DataFeacher {
         String countryCode = "";
        LocalModel localModel = UtilityApp.getLocalData()!=null ?UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(activity);
 
-        if (localModel.getShortname() != null)
+        if (localModel.getShortname() != null){
             countryCode = localModel.getShortname();
-        else countryCode = GlobalData.COUNTRY;
+
+        }
+        else {
+            countryCode = GlobalData.COUNTRY;
+        }
+
+
 
         String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Locations/citiesByCountry";
 
@@ -761,10 +767,10 @@ public class DataFeacher {
     public void GetCarts(int sotre_id, int user_id) {
 
         Log.i(TAG, "Log GetCarts");
-        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log GetCarts headerMap " + headerMap);
 
-        Log.i(TAG, "Log sotre_id " + sotre_id);
-        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log GetCarts storeId  " + sotre_id);
+        Log.i(TAG, "Log GetCarts userId " + user_id);
 
         Call call = apiService.GetACarts(headerMap, user_id, sotre_id);
         call.enqueue(callbackApi);

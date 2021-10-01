@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;

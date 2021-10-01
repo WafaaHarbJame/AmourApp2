@@ -3,9 +3,9 @@ package com.ramez.shopp.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ramez.shopp.Classes.Constants;
-
 import static android.content.Context.MODE_PRIVATE;
+
+import com.ramez.shopp.Classes.Constants;
 
 
 public class SharedPManger {
@@ -22,7 +22,7 @@ public class SharedPManger {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
         editor.commit();
-//        editor.apply();
+        editor.apply();
 
     }
 
@@ -31,7 +31,7 @@ public class SharedPManger {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
         editor.commit();
-//        editor.apply();
+        editor.apply();
 
 
     }
@@ -40,8 +40,8 @@ public class SharedPManger {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putFloat(key, value);
+        editor.apply();
         editor.commit();
-//        editor.apply();
 
 
     }
@@ -50,8 +50,8 @@ public class SharedPManger {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(key, value);
+        editor.apply();
         editor.commit();
-//        editor.apply();
 
 
     }
@@ -88,8 +88,8 @@ public class SharedPManger {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.remove(key);
+        editor.apply();
         editor.commit();
-//        editor.apply();
 
 
     }

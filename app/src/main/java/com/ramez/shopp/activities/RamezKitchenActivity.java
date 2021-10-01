@@ -10,11 +10,11 @@ import android.view.animation.OvershootInterpolator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.RecipeAdapter;
 import com.ramez.shopp.adapter.RecipeSliderAdapter;
 import com.ramez.shopp.adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;

@@ -6,11 +6,11 @@ import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.BookletAdapter;
 import com.ramez.shopp.adapter.BrandsAdapter;
 import com.ramez.shopp.adapter.KitchenAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;

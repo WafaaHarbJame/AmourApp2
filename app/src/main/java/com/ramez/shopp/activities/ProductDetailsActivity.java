@@ -22,12 +22,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.ProductOptionAdapter;
 import com.ramez.shopp.adapter.ReviewAdapter;
 import com.ramez.shopp.adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -552,7 +552,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void getIntentExtra() {
+
         Bundle bundle = getIntent().getExtras();
+
         if(bundle!=null){
             isNotify = bundle.getBoolean(Constants.isNotify, false);
 

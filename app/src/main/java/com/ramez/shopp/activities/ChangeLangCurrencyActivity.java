@@ -7,9 +7,9 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.CurrencyAdapter;
 import com.ramez.shopp.adapter.LangAdapter;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.CurrencyModel;

@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.MainActivity;
@@ -42,7 +42,7 @@ public class PastOrderFragment extends FragmentBase {
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
         if(UtilityApp.getUserData()!=null&&UtilityApp.getUserData().getId()!=null){
             user_id = UtilityApp.getUserData().getId();
-            getOrders(user_id,Constants.user_type,Constants.past_order);
+            getOrders(user_id,Constants.user_type, Constants.past_order);
 
         }
         else {

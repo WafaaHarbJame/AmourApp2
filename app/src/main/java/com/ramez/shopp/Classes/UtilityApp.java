@@ -143,6 +143,20 @@ public class UtilityApp {
 
     public static void logOut() {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_LOGIN_PREFERANCE, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.DB_TOTAL_POINTS, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.DB_COUPON_SETTINGS, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.DB_TOTAL_POINTS, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CATEGORIES, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CATEGORIES, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_DINNERS, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_BANNER, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SLIDER, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SOCIAL, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SETTING, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.DB_loyal, null);
+
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_LOGIN_PREFERANCE);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_TOTAL_POINTS);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_COUPON_SETTINGS);
@@ -154,7 +168,6 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SOCIAL);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_loyal);
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, 0);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_MEMBER);
 
 
@@ -201,8 +214,7 @@ public class UtilityApp {
 
     public static MemberModel getUserData() {
         String userJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
-        MemberModel user = new Gson().fromJson(userJsonData, MemberModel.class);
-        return user;
+        return new Gson().fromJson(userJsonData, MemberModel.class);
     }
 
     public static void setUserData(MemberModel user) {

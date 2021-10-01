@@ -13,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -63,11 +63,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(Holder holder, int position) {
+//        holder.binding.shimmerViewContainer.startShimmer(); // If a
+
         ProductModel productModel = productModels.get(position);
 
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(context);
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
+
 
         holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
@@ -151,6 +154,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             e.printStackTrace();
         }
 
+//        holder.binding.shimmerViewContainer.stopShimmer();
 
     }
 

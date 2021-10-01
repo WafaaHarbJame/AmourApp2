@@ -2,13 +2,11 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChildCat implements Serializable {
 

@@ -6,7 +6,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class MostSearchModel implements Serializable {
     @SerializedName("h_name")

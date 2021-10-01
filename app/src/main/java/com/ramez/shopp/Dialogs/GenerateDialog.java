@@ -5,29 +5,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.DBFunction;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.ProductModel;
-import com.ramez.shopp.Models.ResultAPIModel;
-import com.ramez.shopp.Models.SettingCouponsModel;
-import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.DialogGenerateCouponsBinding;
 

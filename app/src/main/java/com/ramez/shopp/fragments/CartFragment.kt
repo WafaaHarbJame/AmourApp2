@@ -16,6 +16,7 @@ import com.ramez.shopp.activities.ProductDetailsActivity
 import com.ramez.shopp.adapter.CartAdapter
 import com.ramez.shopp.adapter.CartAdapter.OnCartItemClicked
 import com.ramez.shopp.ApiHandler.DataFeacher
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.*
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Dialogs.ConfirmDialog
@@ -53,6 +54,7 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
     private var cartResultModel: CartResultModel? = null
     private var activity: Activity? = null
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    var cartNumber = 0
 
     override fun onCreateView(
         @NonNull inflater: LayoutInflater,
@@ -72,13 +74,15 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
         fraction = localModel?.fractional ?: Constants.three
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activityy)
         user = UtilityApp.getUserData()
+
+
         if (!UtilityApp.isLogin()) {
             binding.dataLY.visibility = View.GONE
             binding.noDataLY.noDataLY.visibility = View.GONE
             binding.contBut.visibility = View.GONE
             showLoginDialog()
         } else {
-            storeId = localModel?.cityId?.toInt() ?: 0
+            storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
             userId = user?.id ?: 0
 
             linearLayoutManager = LinearLayoutManager(activityy)
@@ -86,8 +90,8 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
             binding.cartRecycler.setHasFixedSize(true)
             binding.cartRecycler.animation = null
             binding.cartRecycler.itemAnimator = null
+
             getCarts(storeId, userId)
-            //            GetUserAddress(userId);
         }
         initListeners()
         return view
@@ -103,31 +107,29 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
                     getCarts(storeId, userId)
                 } else {
                     total = NumberHandler.formatDouble(cartProcessModel.total, fraction)
-                    binding.totalTv.setText("$total $currency")
+                    binding.totalTv.text = "$total $currency"
                     if (cartProcessModel.totalSavePrice == 0.0) {
-                        binding.savePriceLy.setVisibility(View.GONE)
+                        binding.savePriceLy.visibility = View.GONE
                     } else {
-                        binding.savePriceLy.setVisibility(View.VISIBLE)
+                        binding.savePriceLy.visibility = View.VISIBLE
                     }
                     totalSavePrice =
                         NumberHandler.formatDouble(cartProcessModel.totalSavePrice, fraction)
-                    binding.saveText.setText("$totalSavePrice $currency")
+                    binding.saveText.text = "$totalSavePrice $currency"
                     if (cartProcessModel.total >= minimum_order_amount) {
-                        binding.tvFreeDelivery.setText(R.string.getFreeDelivery)
+                        binding.tvFreeDelivery.text = getString(R.string.getFreeDelivery)
                     } else {
                         val total_price =
                             minimum_order_amount - cartProcessModel.total
                         val Add_more = activityy.getString(R.string.Add_more)
                         val freeStr = activityy.getString(R.string.get_Free)
-                        binding.tvFreeDelivery.setText(
-                            Add_more + " " +
-                                    NumberHandler.formatDouble(total_price, fraction)
-                                    + " " + currency + " " + freeStr
-                        )
+                        binding.tvFreeDelivery.text = (Add_more + " " +
+                                NumberHandler.formatDouble(total_price, fraction)
+                                + " " + currency + " " + freeStr)
                     }
                 }
             })
-        binding.cartRecycler.setAdapter(cartAdapter)
+        binding.cartRecycler.adapter = cartAdapter
         productsSize = cartList?.size ?: 0
         total = NumberHandler.formatDouble(cartAdapter!!.calculateSubTotalPrice(), fraction)
         totalSavePrice = NumberHandler.formatDouble(cartAdapter!!.calculateSavePrice(), fraction)
@@ -152,96 +154,110 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+
+
     fun getCarts(storeId: Int, userId: Int) {
+
+        Log.i(javaClass.name, "Log GetCarts countryName ${localModel?.shortname} ")
+
         cartList!!.clear()
-        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE)
-        binding.dataLY.setVisibility(View.GONE)
-        binding.noDataLY.noDataLY.setVisibility(View.GONE)
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE)
-        binding.contBut.setVisibility(View.GONE)
+        binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
+        binding.dataLY.visibility = View.GONE
+        binding.noDataLY.noDataLY.visibility = View.GONE
+        binding.failGetDataLY.failGetDataLY.visibility = View.GONE
+        binding.contBut.visibility = View.GONE
+
         DataFeacher(
-            true
-        ) { obj: Any?, func: String, IsSuccess: Boolean ->
-            if (isVisible) {
-                cartResultModel = obj as CartResultModel?
-                var message: String? = getString(R.string.fail_to_get_data)
-                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE)
-                if (func == Constants.ERROR) {
-                    if (cartResultModel != null) {
-                        message = cartResultModel!!.message
-                    }
-                    binding.dataLY.setVisibility(View.GONE)
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE)
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE)
-                    binding.failGetDataLY.failTxt.setText(message)
-                } else if (func == Constants.FAIL) {
-                    binding.dataLY.setVisibility(View.GONE)
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE)
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE)
-                    binding.failGetDataLY.failTxt.setText(message)
-                } else if (func == Constants.NO_CONNECTION) {
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE)
-                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection)
-                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE)
-                    binding.dataLY.setVisibility(View.GONE)
-                } else {
-                    if (IsSuccess) {
-                        if (cartResultModel!!.data != null && cartResultModel!!.data
-                                .cartData != null && cartResultModel!!.data
-                                .cartData.size > 0
-                        ) {
-                            binding.dataLY.setVisibility(View.VISIBLE)
-                            binding.noDataLY.noDataLY.setVisibility(View.GONE)
-                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE)
-                            cartList = cartResultModel!!.data.cartData
-                            binding.contBut.setVisibility(View.VISIBLE)
-                            val data: Data = cartResultModel!!.data
-                            minimum_order_amount = data.getMinimumOrderAmount()
-                            localModel!!.minimum_order_amount = minimum_order_amount
-                            UtilityApp.setLocalData(localModel)
-                            UtilityApp.setCartCount(data.getCartCount())
-                            initAdapter()
-                            binding.cartRecycler.post { cartAdapter!!.notifyDataSetChanged() }
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log  minimum_order_amount $minimum_order_amount"
-                            )
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log deliveryFees $delivery_charges"
-                            )
-                            Log.i(javaClass.simpleName, "Log total $total")
-                            if (delivery_charges >= 0) {
-                                if (cartAdapter!!.calculateSubTotalPrice() >= minimum_order_amount) {
-                                    binding.tvFreeDelivery.setText(R.string.getFreeDelivery)
-                                } else {
-                                    val total_price =
-                                        minimum_order_amount - cartAdapter!!.calculateSubTotalPrice()
-                                    binding.tvFreeDelivery.setText(
-                                        getString(R.string.Add_more) + " " + NumberHandler.formatDouble(
-                                            total_price,
-                                            fraction
-                                        ) + " " + currency + " " + getString(R.string.get_Free)
+            true,object :DataFetcherCallBack{
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (isVisible) {
+                        cartResultModel = obj as CartResultModel?
+
+                        var message: String? = getString(R.string.fail_to_get_data)
+                        binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
+
+                        if (func == Constants.ERROR) {
+                            if (cartResultModel != null) {
+                                message = cartResultModel!!.message
+                            }
+                            binding.dataLY.visibility = View.GONE
+                            binding.noDataLY.noDataLY.visibility = View.GONE
+                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
+                            binding.failGetDataLY.failTxt.text = message
+                        } else if (func == Constants.FAIL) {
+                            binding.dataLY.visibility = View.GONE
+                            binding.noDataLY.noDataLY.visibility = View.GONE
+                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
+                            binding.failGetDataLY.failTxt.text = message
+                        } else if (func == Constants.NO_CONNECTION) {
+                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
+                            binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection)
+                            binding.failGetDataLY.noInternetIv.visibility = View.VISIBLE
+                            binding.dataLY.visibility = View.GONE
+                        } else {
+
+                            if (IsSuccess) {
+
+                                if (cartResultModel?.data != null && cartResultModel?.data!!.cartData != null
+                                    && cartResultModel!!.data.cartData.size > 0 &&
+                                    cartResultModel!!.data.cartCount > 0
+                                ) {
+
+                                    binding.dataLY.visibility = View.VISIBLE
+                                    binding.noDataLY.noDataLY.visibility = View.GONE
+                                    binding.failGetDataLY.failGetDataLY.visibility = View.GONE
+                                    cartList = cartResultModel!!.data.cartData
+                                    binding.contBut.visibility = View.VISIBLE
+                                    val data: Data = cartResultModel!!.data
+                                    minimum_order_amount = data.minimumOrderAmount
+                                    cartNumber = cartResultModel!!.data.cartCount
+                                    localModel!!.minimum_order_amount = minimum_order_amount
+
+                                    UtilityApp.setLocalData(localModel)
+                                    UtilityApp.setCartCount(cartNumber)
+                                    initAdapter()
+                                    binding.cartRecycler.post { cartAdapter!!.notifyDataSetChanged() }
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log  minimum_order_amount $minimum_order_amount"
                                     )
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log deliveryFees $delivery_charges"
+                                    )
+                                    Log.i(javaClass.simpleName, "Log total $total")
+                                    if (delivery_charges >= 0) {
+                                        if (cartAdapter!!.calculateSubTotalPrice() >= minimum_order_amount) {
+                                            binding.tvFreeDelivery.setText(R.string.getFreeDelivery)
+                                        } else {
+                                            val total_price =
+                                                minimum_order_amount - cartAdapter!!.calculateSubTotalPrice()
+                                            binding.tvFreeDelivery.text =
+                                                getString(R.string.Add_more) + " " + NumberHandler.formatDouble(
+                                                    total_price,
+                                                    fraction
+                                                ) + " " + currency + " " + getString(R.string.get_Free)
+                                        }
+                                    } else {
+                                        binding.tvFreeDelivery.setText(R.string.getFreeDelivery)
+                                    }
+                                    AnalyticsHandler.ViewCart(userId, currency, total.toDouble())
+                                } else {
+                                    binding.contBut.visibility = View.GONE
+                                    binding.dataLY.visibility = View.GONE
+                                    showEmptyCartDialog()
                                 }
                             } else {
-                                binding.tvFreeDelivery.setText(R.string.getFreeDelivery)
+                                binding.dataLY.visibility = View.GONE
+                                binding.noDataLY.noDataLY.visibility = View.GONE
+                                binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
+                                binding.failGetDataLY.failTxt.text = message
                             }
-                            AnalyticsHandler.ViewCart(userId, currency, total.toDouble())
-                        } else {
-                            binding.contBut.setVisibility(View.GONE)
-                            binding.dataLY.setVisibility(View.GONE)
-                            showEmptyCartDialog()
                         }
-                    } else {
-                        binding.dataLY.setVisibility(View.GONE)
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE)
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE)
-                        binding.failGetDataLY.failTxt.setText(message)
                     }
                 }
             }
-        }.GetCarts(storeId, userId)
+        ) .GetCarts(storeId, userId)
     }
 
     private fun showEmptyCartDialog() {
@@ -317,15 +333,17 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
     }
 
     private fun initListeners() {
-        binding.contBut.setOnClickListener { view1 ->
+
+        binding.contBut.setOnClickListener {
+
             AnalyticsHandler.checkOut("0", currency, total, total)
             var message = ""
             var allMessage: String
             val s = StringBuilder()
-            var product_name = ""
-            var product_price = ""
-            var ProductQuantity = ""
-            var can_order = true
+            var productName = ""
+            var productPrice = ""
+            var productQuantity = ""
+            var canOrder = true
             var lastPosition = 0
             for ((i, cartModel) in cartList?.withIndex() ?: mutableListOf()) {
                 GlobalData.progressDialog(
@@ -336,13 +354,13 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
 //                val cartModel = cartList!![i]
                 if (cartModel.quantity > cartModel.productQuantity && !cartModel.isExtra) {
                     message = getString(R.string.outofstock)
-                    product_name = cartModel.name
-                    product_price = cartModel.productPrice.toString()
-                    ProductQuantity = cartModel.productQuantity.toString()
+                    productName = cartModel.name
+                    productPrice = cartModel.productPrice.toString()
+                    productQuantity = cartModel.productQuantity.toString()
                     allMessage =
-                        message + " " + getString(R.string.product_Name) + " " + product_name + ", " + getString(
+                        message + " " + getString(R.string.product_Name) + " " + productName + ", " + getString(
                             R.string.product_price
-                        ) + " " + product_price + " " + currency + " , " + getString(R.string.product_quan) + " " + ProductQuantity
+                        ) + " " + productPrice + " " + currency + " , " + getString(R.string.product_quan) + " " + productQuantity
                     s.append(allMessage).append("\n")
                     val product_barcode_id = cartModel.productBarcodeId
                     val userId = UtilityApp.getUserData().id
@@ -352,19 +370,19 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
                     val count = cartModel.productQuantity
                     // updateCart(i, productId, product_barcode_id, count, userId, storeId, cart_id, "quantity");
                     // cartAdapter.updateCart(i, productId, product_barcode_id, count,count,false, userId, storeId, cart_id, "quantity");
-                    can_order = false
+                    canOrder = false
                 } else if (cartModel.productQuantity == 0 && !cartModel.isExtra) {
                     message = getString(R.string.product_not_Available)
-                    product_name = cartModel.name
+                    productName = cartModel.name
                     allMessage =
-                        message + " " + getString(R.string.product_Name) + " " + product_name
+                        message + " " + getString(R.string.product_Name) + " " + productName
                     s.append(
                         """
                             $allMessage
                             
                             """.trimIndent()
                     )
-                    can_order = false
+                    canOrder = false
                 }
                 GlobalData.hideProgressDialog()
                 if (i == cartList?.lastIndex) {
@@ -372,7 +390,7 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
                     GlobalData.hideProgressDialog()
                 }
             }
-            if (can_order) {
+            if (canOrder) {
                 GlobalData.hideProgressDialog()
                 goToCompleteOrder()
             } else {
@@ -393,6 +411,7 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
                 }
             }
         }
-        binding.failGetDataLY.refreshBtn.setOnClickListener { view1 -> getCarts(storeId, userId) }
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener { getCarts(storeId, userId) }
     }
 }

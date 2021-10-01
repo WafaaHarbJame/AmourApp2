@@ -12,8 +12,8 @@ android {
         applicationId "com.ramez.shopp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 73
-        versionName "5.43"
+        versionCode 74
+        versionName "5.74"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -177,9 +177,11 @@ dependencies {
         transitive = true;
     }
 
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
 // webpdecoder
     implementation "com.github.zjupure:webpdecoder:2.0.4.12.0"
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

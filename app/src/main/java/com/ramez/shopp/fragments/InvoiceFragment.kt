@@ -24,6 +24,7 @@ import com.ramez.shopp.adapter.*
 import com.ramez.shopp.adapter.AddressCheckAdapter.OnEditClick
 import com.ramez.shopp.adapter.AddressCheckAdapter.OnRadioAddressSelect
 import com.ramez.shopp.ApiHandler.DataFeacher
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.*
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
@@ -55,7 +56,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     var storeId = 0
     var productsSize = 0
     var total: String? = ""
-    var currency = ""
+    var currency = "BHD"
     var DayList: MutableList<DeliveryTime>? = null
     var fraction = 2
     var addressList: ArrayList<AddressModel>? = null
@@ -151,7 +152,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             //                + " " + currency + " " + getString(
 //                    R.string.get_Free )
         }
-        if (deliveryFees == 0.0 || deliveryFees == 0.0) {
+        if (deliveryFees == 0.0 || deliveryFees == 0.00 || deliveryFees == 0.000) {
             binding.deliveryFees.text = getString(R.string.free)
             binding.freeDelivery.text = getString(R.string.over1)
         } else {
@@ -263,30 +264,26 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     fraction
                 ) + " " + currency
 
-                if (expressDeliveryCharge == 0.0) {
+
+                if (expressDeliveryCharge == 0.0 || expressDeliveryCharge == 0.00 || expressDeliveryCharge == 0.00) {
                     binding.deliveryFees.text = getString(R.string.free)
                     binding.freeDelivery.text = getString(R.string.over1)
                     binding.deliveryPrice.text = getString(R.string.free)
 
                 } else {
+
+
                     binding.deliveryFees.text = NumberHandler.formatDouble(
                         expressDeliveryCharge,
-                        localModel!!.fractional
-                    ) + "" + currency
+                        fraction
+                    ).plus(" ").plus(localModel?.currencyCode)
+
+//                    binding.deliveryPrice.text = "$expressDeliveryCharge  $ currency"
 
                 }
 
             } else {
-                expressDelivery = false
-                binding.quickLy.background = ContextCompat.getDrawable(
-                    activityy,
-                    R.drawable.round_corner_gray_border_fill
-                )
-                binding.totalTv.text = NumberHandler.formatDouble(
-                    total!!.toDouble() + deliveryFees,
-                    fraction
-                ) + " " + currency
-                checkDeliveryFees()
+              removeExpress()
             }
         }
         binding.choosePaymentType.setOnClickListener {
@@ -303,6 +300,18 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
         binding.checkProductLy.setOnClickListener { showHideNoProductLY(binding.ProductCheckRecycler.visibility === View.GONE) }
     }
+
+    private fun removeExpress() {
+        expressDelivery = false
+        binding.quickLy.background = ContextCompat.getDrawable(
+            activityy,
+            R.drawable.round_corner_gray_border_fill
+        )
+        binding.totalTv.text = NumberHandler.formatDouble(
+            total!!.toDouble() + deliveryFees,
+            fraction
+        ) + " " + currency
+        checkDeliveryFees()    }
 
     private fun initTimesList() {
         initTimeAdapter(deliveryFees)
@@ -361,6 +370,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 }
                 showHidePaymentLY(false)
                 checkData()
+
+                checkDeliveryFees()
             }
         }
         binding.paymentRv.adapter = paymentAdapter
@@ -370,32 +381,33 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         paymentList!!.clear()
         binding.loadingLYPay.visibility = View.VISIBLE
         DataFeacher(
-            false
-        ) { obj: Any?, func: String, IsSuccess: Boolean ->
-            if (isVisible) {
-                var message = getString(R.string.fail_to_get_data)
-                binding.loadingLYPay.visibility = View.GONE
-                val result = obj as PaymentResultModel?
-                if (func == Constants.ERROR) {
-                    if (result != null && result.message != null) {
-                        message = result.message
-                    }
-                    GlobalData.Toast(activityy, message)
-                } else if (func == Constants.FAIL) {
-                    GlobalData.Toast(activityy, message)
-                } else if (func == Constants.NO_CONNECTION) {
-                    GlobalData.Toast(activityy, R.string.no_internet_connection)
-                } else {
-                    if (IsSuccess) {
-                        if (result!!.data != null && result.data.size > 0) {
-                            paymentList = result.data
-                            initPaymentAdapter()
-                            initData()
+            false,object :DataFetcherCallBack{
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (isVisible) {
+                        var message = getString(R.string.fail_to_get_data)
+                        binding.loadingLYPay.visibility = View.GONE
+                        val result = obj as PaymentResultModel?
+                        if (func == Constants.ERROR) {
+                            if (result != null && result.message != null) {
+                                message = result.message
+                            }
+                            GlobalData.Toast(activityy, message)
+                        } else if (func == Constants.FAIL) {
+                            GlobalData.Toast(activityy, message)
+                        } else if (func == Constants.NO_CONNECTION) {
+                            GlobalData.Toast(activityy, R.string.no_internet_connection)
+                        } else {
+                            if (IsSuccess) {
+                                if (result!!.data != null && result.data.size > 0) {
+                                    paymentList = result.data
+                                    initPaymentAdapter()
+                                    initData()
+                                }
+                            }
                         }
-                    }
-                }
+                    }                }
             }
-        }.getPaymentMethod(user_id)
+        ) .getPaymentMethod(user_id)
     }
 
     @get:SuppressLint("SetTextI18n")
@@ -437,54 +449,55 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private fun sendOrder(orderCall: OrderCall) {
         AnalyticsHandler.checkOut(couponCodeId, currency, total, total)
         GlobalData.progressDialog(activityy, R.string.make_order, R.string.please_wait_sending)
-        DataFeacher(false) { obj: Any?, func: String, IsSuccess: Boolean ->
-            GlobalData.hideProgressDialog()
-            val result = obj as OrdersResultModel?
-            if (func == Constants.ERROR) {
-                var message: String? = getString(R.string.fail_to_send_order)
-                if (result != null && result.message != null) {
-                    message = result.message
-                }
-                GlobalData.errorDialog(activityy, R.string.make_order, message)
-            } else {
-                if (IsSuccess) {
-                    if (result!!.status == 200) {
-                        UtilityApp.setCartCount(0)
-                        if (result.order_id > 0) {
-                            AnalyticsHandler.PurchaseEvent(
-                                couponCodeId,
-                                currency,
-                                selectedPaymentMethod!!.id,
-                                deliveryFees,
-                                result.order_id.toString(),
-                                total
-                            )
-                            EventBus.getDefault()
-                                .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
-                            println("Log order deliveryDate $deliveryDate")
-                            println("Log order deliveryTime $deliveryTime")
-                            val ordersDM = OrderModel()
-                            ordersDM.orderId = result.order_id
-                            ordersDM.deliveryDate = deliveryDate
-                            ordersDM.deliveryTime = deliveryTime
-                            val intent =
-                                Intent(activityy, OrderCompleteActivity::class.java)
-                            intent.putExtra(Constants.ORDER_MODEL, ordersDM)
-                            intent.putExtra(Constants.KEY_SHOW, true)
-                            startActivity(intent)
+        DataFeacher(false,object :DataFetcherCallBack{
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                GlobalData.hideProgressDialog()
+                val result = obj as OrdersResultModel?
+                if (func == Constants.ERROR) {
+                    var message: String? = getString(R.string.fail_to_send_order)
+                    if (result != null && result.message != null) {
+                        message = result.message
+                    }
+                    GlobalData.errorDialog(activityy, R.string.make_order, message)
+                } else {
+                    if (IsSuccess) {
+                        if (result!!.status == 200) {
+                            UtilityApp.setCartCount(0)
+                            if (result.order_id > 0) {
+                                AnalyticsHandler.PurchaseEvent(
+                                    couponCodeId,
+                                    currency,
+                                    selectedPaymentMethod!!.id,
+                                    deliveryFees,
+                                    result.order_id.toString(),
+                                    total
+                                )
+                                EventBus.getDefault()
+                                    .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
+                                println("Log order deliveryDate $deliveryDate")
+                                println("Log order deliveryTime $deliveryTime")
+                                val ordersDM = OrderModel()
+                                ordersDM.orderId = result.order_id
+                                ordersDM.deliveryDate = deliveryDate
+                                ordersDM.deliveryTime = deliveryTime
+                                val intent =
+                                    Intent(activityy, OrderCompleteActivity::class.java)
+                                intent.putExtra(Constants.ORDER_MODEL, ordersDM)
+                                intent.putExtra(Constants.KEY_SHOW, true)
+                                startActivity(intent)
+                            }
+                        } else {
+                            var message: String? = getString(R.string.fail_to_send_order)
+                            if (result.message != null) {
+                                message = result.message
+                            }
+                            GlobalData.errorDialog(activityy, R.string.make_order, message)
                         }
                     } else {
-                        var message: String? = getString(R.string.fail_to_send_order)
-                        if (result.message != null) {
-                            message = result.message
-                        }
-                        GlobalData.errorDialog(activityy, R.string.make_order, message)
+                        Toast(getString(R.string.fail_to_send_order))
                     }
-                } else {
-                    Toast(getString(R.string.fail_to_send_order))
-                }
-            }
-        }.makeOrder(orderCall)
+                }            }
+        }) .makeOrder(orderCall)
     }
 
     private fun initData() {
@@ -624,6 +637,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             // to hide layout when select time
             showHideDateLY(false)
             showHideNoProductLY(true)
+            toggleButton = !toggleButton
+            removeExpress()
         }
         binding.DeliverTimeRecycler.adapter = deliveryTimeAdapter
 
@@ -663,68 +678,64 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         quickCall1.country_id = countryId
         DataFeacher(
             false
-        ) { obj: Any?, func: String, IsSuccess: Boolean ->
-            if (isVisible) {
-                var message = getString(R.string.fail_to_get_data)
-                binding.loadingLYPay.visibility = View.GONE
-                val result =
-                    obj as ResultAPIModel<QuickDeliveryRespond?>?
-                if (func == Constants.ERROR) {
-                    if (result?.message != null) {
-                        message = result.message
-                    }
-                    GlobalData.Toast(activityy, message)
-                } else if (func == Constants.FAIL) {
-                    GlobalData.Toast(activityy, message)
-                } else if (func == Constants.NO_CONNECTION) {
-                    GlobalData.Toast(activityy, R.string.no_internet_connection)
-                } else {
-                    if (IsSuccess) {
-                        if (result!!.data != null) {
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log result" + result.data
-                            )
-                            val quickDeliveryRespond = result.data
-                            hasExpress = quickDeliveryRespond!!.isHasExpressDelivery
+        ,object :DataFetcherCallBack{
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (isVisible) {
+                        var message = getString(R.string.fail_to_get_data)
+                        binding.loadingLYPay.visibility = View.GONE
+                        val result =
+                            obj as ResultAPIModel<QuickDeliveryRespond?>?
+                        if (func == Constants.ERROR) {
+                            if (result?.message != null) {
+                                message = result.message
+                            }
+                            GlobalData.Toast(activityy, message)
+                        } else if (func == Constants.FAIL) {
+                            GlobalData.Toast(activityy, message)
+                        } else if (func == Constants.NO_CONNECTION) {
+                            GlobalData.Toast(activityy, R.string.no_internet_connection)
+                        } else {
+                            if (IsSuccess) {
+                                if (result!!.data != null) {
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log result" + result.data
+                                    )
+                                    val quickDeliveryRespond = result.data
+                                    hasExpress = quickDeliveryRespond!!.isHasExpressDelivery
 
-                            if (hasExpress) {
-                                binding.quickLy.visibility = View.VISIBLE
+                                    if (hasExpress) {
+                                        binding.quickLy.visibility = View.VISIBLE
 
-                                expressDeliveryCharge =
-                                    quickDeliveryRespond.expressDeliveryCharge.toDouble()
-                                binding.deliveryTime.text =
-                                    quickDeliveryRespond.expressDeliverydescription
+                                        expressDeliveryCharge =
+                                            quickDeliveryRespond.expressDeliveryCharge.toDouble()
+                                        binding.deliveryTime.text =
+                                            quickDeliveryRespond.expressDeliverydescription
 
-                                Log.i(
-                                    javaClass.simpleName,
-                                    "Log 1 deliveryFees$deliveryFees"
-                                )
-//                                if (expressDeliveryCharge == 0.0) {
-//                                    binding.deliveryFees.text = getString(R.string.free)
-//                                    binding.freeDelivery.text = getString(R.string.over1)
-//                                    binding.deliveryPrice.text = getString(R.string.free)
-//                                }
 
-//                                else {
-////                                    binding.deliveryFees.text = NumberHandler.formatDouble(
-////                                        expressDeliveryCharge,
-////                                        localModel!!.fractional
-////                                    ) + "" + currency
-//                                    binding.freeDelivery.text =
-//                                        getString(R.string.over) + " " + minimum_order_amount + " " + currency + "."
-//                                    binding.deliveryPrice.text =
-//                                        quickDeliveryRespond.expressDeliveryCharge
-//                                            .toString() + " " + localModel!!.currencyCode
-//                                }
-                            } else {
-                                binding.quickLy.visibility = View.GONE
+                                        Log.i(
+                                            javaClass.simpleName,
+                                            "Log 1 deliveryFees$deliveryFees"
+                                        )
+                                        if (expressDeliveryCharge == 0.0 || expressDeliveryCharge == 0.00 || expressDeliveryCharge == 0.000) {
+                                            binding.deliveryPrice.text = getString(R.string.free)
+                                        } else {
+
+                                            binding.deliveryPrice.text= NumberHandler.formatDouble(
+                                                expressDeliveryCharge,
+                                                fraction
+                                            ) + " " + currency
+
+
+                                        }
+                                    } else {
+                                        binding.quickLy.visibility = View.GONE
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            }
-        }.getQuickDelivery(quickCall1)
+                    }                }
+            }) .getQuickDelivery(quickCall1)
     }
 
     private fun getDeliveryInfo(storeId: Int, addressId: Int, fromAddress: Boolean) {
@@ -732,60 +743,61 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             GlobalData.progressDialog(activityy, R.string.getData, R.string.please_wait_upload)
         }
         DataFeacher(
-            false
-        ) { obj: Any?, func: String?, IsSuccess: Boolean ->
-            if (isVisible) {
-                val quickDeliveryRespond = obj as DeliveryInfo?
-                if (IsSuccess) {
-                    if (fromAddress) {
-                        GlobalData.hideProgressDialog()
-                    }
-                    if (quickDeliveryRespond != null) {
-                        Log.i(ContentValues.TAG, "Log GetDeliveryInfo")
-                        if (total!!.toDouble() >= minimum_order_amount) {
-                            deliveryFees = 0.0
-                            binding.deliveryFees.text = getString(R.string.free)
-                        } else {
-                            val total_price =
-                                minimum_order_amount - total!!.toDouble()
-                            binding.freeBut.text =
-                                getString(R.string.add).plus(" ").plus(
-                                    NumberHandler.roundDouble(
-                                        total_price
-                                    )
-                                ).plus(" ").plus(currency).plus("  ")
-                                    .plus(getString(R.string.get_Free))
-
-                            deliveryFees = quickDeliveryRespond.deliveryCharges
-                            if (deliveryFees == 0.0) {
-                                binding.deliveryFees.text = getString(R.string.free)
-                                binding.freeDelivery.text = getString(R.string.over1)
-                                binding.deliveryPrice.text = getString(R.string.free)
-                            } else {
-                                binding.deliveryFees.text = NumberHandler.formatDouble(
-                                    deliveryFees,
-                                    localModel!!.fractional
-                                ).plus(" ").plus(currency)
-                                binding.freeDelivery.text =
-                                    getString(R.string.over).plus(" ").plus(minimum_order_amount)
-                                        .plus(" ").plus(currency).plus(".")
-                                binding.deliveryPrice.text =
-                                    quickDeliveryRespond.expressDeliveryCharges.toString().plus(" ")
-                                        .plus(localModel!!.currencyCode)
+            false,object :DataFetcherCallBack{
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (isVisible) {
+                        val quickDeliveryRespond = obj as DeliveryInfo?
+                        if (IsSuccess) {
+                            if (fromAddress) {
+                                GlobalData.hideProgressDialog()
                             }
+                            if (quickDeliveryRespond != null) {
+                                Log.i(ContentValues.TAG, "Log GetDeliveryInfo")
+                                if (total!!.toDouble() >= minimum_order_amount) {
+                                    deliveryFees = 0.0
+                                    binding.deliveryFees.text = getString(R.string.free)
+                                } else {
+                                    val total_price =
+                                        minimum_order_amount - total!!.toDouble()
+                                    binding.freeBut.text =
+                                        getString(R.string.add).plus(" ").plus(
+                                            NumberHandler.roundDouble(
+                                                total_price
+                                            )
+                                        ).plus(" ").plus(currency).plus("  ")
+                                            .plus(getString(R.string.get_Free))
+
+                                    deliveryFees = quickDeliveryRespond.deliveryCharges
+                                    if (deliveryFees == 0.0 || deliveryFees == 0.00 || deliveryFees == 0.000) {
+                                        binding.deliveryFees.text = getString(R.string.free)
+                                        binding.freeDelivery.text = getString(R.string.over1)
+                                        binding.deliveryPrice.text = getString(R.string.free)
+                                    } else {
+                                        binding.deliveryFees.text = NumberHandler.formatDouble(
+                                            deliveryFees,
+                                            localModel!!.fractional
+                                        ).plus(" ").plus(currency)
+                                        binding.freeDelivery.text =
+                                            getString(R.string.over).plus(" ").plus(minimum_order_amount)
+                                                .plus(" ").plus(currency).plus(".")
+                                        binding.deliveryPrice.text =
+                                            quickDeliveryRespond.expressDeliveryCharges.toString().plus(" ")
+                                                .plus(localModel!!.currencyCode)
+                                    }
+                                }
+                                binding.totalTv.text = NumberHandler.formatDouble(
+                                    total!!.toDouble() + deliveryFees,
+                                    fraction
+                                ).plus(" ").plus(currency)
+                            } else {
+                                binding.quickLy.visibility = View.GONE
+                            }
+                        } else {
+                            GlobalData.hideProgressDialog()
                         }
-                        binding.totalTv.text = NumberHandler.formatDouble(
-                            total!!.toDouble() + deliveryFees,
-                            fraction
-                        ).plus(" ").plus(currency)
-                    } else {
-                        binding.quickLy.visibility = View.GONE
-                    }
-                } else {
-                    GlobalData.hideProgressDialog()
-                }
+                    }                }
             }
-        }.GetDeliveryInfo(storeId, addressId)
+        ) .GetDeliveryInfo(storeId, addressId)
     }
 
     override fun onStart() {
@@ -843,81 +855,83 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         binding.loadingDelivery.visibility = View.VISIBLE
         DataFeacher(
             true
-        ) { obj: Any, func: String?, IsSuccess: Boolean ->
-            if (isVisible) {
-                val result = obj as CheckOrderResponse
-                val message = getString(R.string.fail_to_get_data)
-                binding.loadingDelivery.visibility = View.GONE
-                if (IsSuccess) {
-                    if (result.data != null && result.data
-                            .deliveryTimes != null && result.data.deliveryTimes.size > 0
-                    ) {
-                        if (result.data != null && result.data
-                                .deliveryTimes.size > 0
-                        ) {
-                            val checkOrderResponse = result.data
-                            val userDefaultAddress =
-                                checkOrderResponse.userAddress
-                            if (userDefaultAddress != null && userDefaultAddress.id > 0) {
-                                addressId = userDefaultAddress.id
-                                addressTitle = userDefaultAddress.name
-                                binding.tvFullAddress.text = userDefaultAddress.fullAddress
-                                binding.delivery.text = addressTitle
-                                Log.i(
-                                    javaClass.simpleName,
-                                    "Log  CheckOrderResponse AddressId  " + result.data
-                                        .userAddress.id
-                                )
-                            }
-                            minimum_order_amount = checkOrderResponse.minimumOrderAmount
-                            deliveryFees = checkOrderResponse.deliveryCharges
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log  CheckOrderResponse deliveryFees  $deliveryFees"
-                            )
-                            checkDeliveryFees()
-                            val datesList =
-                                result.data.deliveryTimes
-                            val firstTime = datesList[0]
-                            var currentDate = firstTime.date
-                            var timesList: MutableList<DeliveryTime> =
-                                ArrayList()
-                            while (datesList.size > 0) {
-                                val deliveryTime = datesList[0]
-                                if (deliveryTime.date == currentDate) {
-                                    timesList.add(deliveryTime)
-                                    datesList.removeAt(0)
-                                    if (datesList.isEmpty()) {
-                                        datesMap[deliveryTime.date] = timesList
+        , object : DataFetcherCallBack {
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (isVisible) {
+                        val result = obj as CheckOrderResponse?
+                        val message = getString(R.string.fail_to_get_data)
+                        binding.loadingDelivery.visibility = View.GONE
+                        if (IsSuccess) {
+                            if (result?.data != null && result.data
+                                    .deliveryTimes != null && result.data.deliveryTimes.size > 0
+                            ) {
+                                if (result.data != null && result.data
+                                        .deliveryTimes.size > 0
+                                ) {
+                                    val checkOrderResponse = result.data
+                                    val userDefaultAddress =
+                                        checkOrderResponse.userAddress
+                                    if (userDefaultAddress != null && userDefaultAddress.id > 0) {
+                                        addressId = userDefaultAddress.id
+                                        addressTitle = userDefaultAddress.name
+                                        binding.tvFullAddress.text = userDefaultAddress.fullAddress
+                                        binding.delivery.text = addressTitle
+                                        Log.i(
+                                            javaClass.simpleName,
+                                            "Log  CheckOrderResponse AddressId  " + result.data
+                                                .userAddress.id
+                                        )
                                     }
+                                    minimum_order_amount = checkOrderResponse.minimumOrderAmount
+                                    deliveryFees = checkOrderResponse.deliveryCharges
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log  CheckOrderResponse deliveryFees  $deliveryFees"
+                                    )
+                                    checkDeliveryFees()
+                                    val datesList =
+                                        result.data.deliveryTimes
+                                    val firstTime = datesList[0]
+                                    var currentDate = firstTime.date
+                                    var timesList: MutableList<DeliveryTime> =
+                                        ArrayList()
+                                    while (datesList.size > 0) {
+                                        val deliveryTime = datesList[0]
+                                        if (deliveryTime.date == currentDate) {
+                                            timesList.add(deliveryTime)
+                                            datesList.removeAt(0)
+                                            if (datesList.isEmpty()) {
+                                                datesMap[deliveryTime.date] = timesList
+                                            }
+                                        } else {
+                                            datesMap[currentDate] = timesList
+                                            currentDate = deliveryTime.date
+                                            timesList = ArrayList()
+                                        }
+                                    }
+                                    deliveryTimesList = datesMap[firstTime.date]
+                                    if (deliveryTimesList != null && deliveryTimesList!!.size > 0) deliveryDateId =
+                                        deliveryTimesList!![0].id
+                                    deliveryDate = firstTime.date
+                                    deliveryTime = firstTime.time
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log deliveryTimesList click $deliveryDateId"
+                                    )
+                                    Log.i(
+                                        javaClass.simpleName,
+                                        "Log deliveryTimesList click $deliveryTime"
+                                    )
+                                    initDaysAdapter()
                                 } else {
-                                    datesMap[currentDate] = timesList
-                                    currentDate = deliveryTime.date
-                                    timesList = ArrayList()
+                                    binding.noDeliveryTv.visibility = View.VISIBLE
+                                    GlobalData.Toast(activityy, message)
                                 }
                             }
-                            deliveryTimesList = datesMap[firstTime.date]
-                            if (deliveryTimesList != null && deliveryTimesList!!.size > 0) deliveryDateId =
-                                deliveryTimesList!![0].id
-                            deliveryDate = firstTime.date
-                            deliveryTime = firstTime.time
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log deliveryTimesList click $deliveryDateId"
-                            )
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log deliveryTimesList click $deliveryTime"
-                            )
-                            initDaysAdapter()
-                        } else {
-                            binding.noDeliveryTv.visibility = View.VISIBLE
-                            GlobalData.Toast(activityy, message)
                         }
                     }
                 }
-            }
-        }.getDeliveryTimeList(storeId, user_id)
+        }).getDeliveryTimeList(storeId, user_id)
     }
 
     companion object {

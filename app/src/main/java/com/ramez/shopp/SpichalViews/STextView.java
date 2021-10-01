@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.ramez.shopp.Classes.Constants;
 
 
-    public class STextView extends AppCompatTextView {
+public class STextView extends AppCompatTextView {
     public STextView(Context context) {
         super(context);
         init();

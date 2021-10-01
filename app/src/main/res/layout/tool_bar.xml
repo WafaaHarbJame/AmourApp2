@@ -22,8 +22,8 @@
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
-            android:scaleX="@integer/scaleXInv"
-            android:src="@drawable/back_icon"
+            android:scaleX="@integer/scaleX"
+            android:src="@drawable/ic_angle_left"
             android:visibility="gone" />
 
         <ImageView
@@ -31,6 +31,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:padding="@dimen/_13sdp"
             android:visibility="gone"
@@ -40,6 +41,7 @@
             android:id="@+id/addExtra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
             android:ellipsize="end"
             android:gravity="center"
             android:maxWidth="@dimen/_160sdp"
@@ -64,8 +67,7 @@
             android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"
-            android:visibility="visible"
-            android:contentDescription="@string/app_name" />
+            android:visibility="visible" />
 
         <com.ramez.shopp.SpichalViews.STextViewBold
             android:id="@+id/mainTitleTv"
@@ -84,13 +86,13 @@
             android:visibility="gone" />
 
 
-
         <ImageView
             android:id="@+id/deleteBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
@@ -98,8 +100,7 @@
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/delete_toolbar"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone"
-            android:contentDescription="@string/app_name" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/sortBut"
@@ -107,12 +108,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/view2But"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
             android:src="@drawable/sort_icon"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone"
-            android:contentDescription="@string/app_name" />
+            android:visibility="gone" />
 
 
         <ImageView
@@ -121,6 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
@@ -128,20 +130,19 @@
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/filter_view_white"
             android:textSize="@dimen/_13ssp"
-            android:visibility="gone"
-            android:contentDescription="@string/app_name" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/SearchBtn"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:contentDescription="@string/app_name"
             android:gravity="center"
             android:padding="@dimen/_13sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_search_t"
-            android:contentDescription="@string/app_name" />
+            app:srcCompat="@drawable/ic_search_t" />
     </RelativeLayout>
 
 </LinearLayout>

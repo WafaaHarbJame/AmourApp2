@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
@@ -7,7 +8,12 @@
     android:layout_margin="@dimen/_4sdp"
     android:background="@drawable/cart_back_style"
     android:orientation="vertical">
-
+<!--    <com.facebook.shimmer.ShimmerFrameLayout-->
+<!--        android:id="@+id/shimmer_view_container"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_height="wrap_content">-->
     <FrameLayout
         android:id="@+id/cardBut"
         android:layout_width="wrap_content"
@@ -133,9 +139,9 @@
             android:textColor="@color/gray3"
             android:textSize="@dimen/_10ssp" />
 
-        <Space
+        <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
 
@@ -243,5 +249,5 @@
             app:srcCompat="@drawable/delete_icon" />
     </LinearLayout>
 
-
+<!--    </com.facebook.shimmer.ShimmerFrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

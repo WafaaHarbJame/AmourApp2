@@ -71,7 +71,7 @@ public class LocalModel {
     }
 
     public String getCityId() {
-        return cityId != null ? cityId :Constants.default_storeId;
+        return cityId != null ? cityId : Constants.default_storeId;
     }
 
     public void setCityId(String cityId) {

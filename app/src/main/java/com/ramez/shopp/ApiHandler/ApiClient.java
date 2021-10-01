@@ -55,18 +55,15 @@ public class ApiClient {
 
     public static Retrofit getClient() {
 
-        LocalModel localModel = UtilityApp.getLocalData() ;
+        LocalModel localModel = UtilityApp.getLocalData();
 
-        if (localModel != null &&localModel.getShortname() != null) {
+        if (localModel != null && localModel.getShortname() != null) {
 
-            country =localModel.getShortname();
+            country = localModel.getShortname();
             Log.i("TAG", "Log country Local  " + country);
-
         } else {
             country = GlobalData.COUNTRY;
             Log.i("TAG", "Log country " + country);
-
-
         }
         BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;
         Log.i("TAG", "Log BASE_URL " + BASE_URL);
@@ -81,9 +78,9 @@ public class ApiClient {
     }
 
     public static Retrofit getLongClient() {
-        LocalModel localModel = UtilityApp.getLocalData() ;
+        LocalModel localModel = UtilityApp.getLocalData();
 
-        if (localModel!=null &&localModel.getShortname() != null) {
+        if (localModel != null && localModel.getShortname() != null) {
             country = localModel.getShortname();
 
         } else {
@@ -95,10 +92,10 @@ public class ApiClient {
         Gson gson = new GsonBuilder().setLenient().create();
 
 
-        if (retrofitLong == null) {
-            retrofitLong = new Retrofit.Builder()
-                    .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getLongOkClient()).build();
-        }
+//        if (retrofitLong == null) {
+        retrofitLong = new Retrofit.Builder()
+                .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getLongOkClient()).build();
+//        }
         return retrofitLong;
     }
 

@@ -16,6 +16,7 @@
     <color name="gray4">#666666</color>
     <color name="gray5">#F2F2F2</color>
     <color name="gray6">#afafaf</color>
+    <color name="shimmer_color">#afafaf</color>
     <color name="gray7">#363636</color>
     <color name="gray8">#EFEFEF</color>
     <color name="gray10">#F8F8F8</color>

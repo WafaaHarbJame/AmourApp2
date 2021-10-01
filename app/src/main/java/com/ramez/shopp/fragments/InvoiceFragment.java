@@ -1,4 +1,4 @@
-//package com.ramez.shopp.Fragments;
+//package com.ramez.shopp.fragments;
 //
 //import android.annotation.SuppressLint;
 //import android.content.Intent;
@@ -18,14 +18,6 @@
 //import androidx.recyclerview.widget.LinearLayoutManager;
 //import androidx.recyclerview.widget.RecyclerView;
 //
-//import com.ramez.shopp.Activities.AddNewAddressActivity;
-//import com.ramez.shopp.Activities.AddressActivity;
-//import com.ramez.shopp.Activities.OrderCompleteActivity;
-//import com.ramez.shopp.Adapter.AddressCheckAdapter;
-//import com.ramez.shopp.Adapter.DeliveryDayAdapter;
-//import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
-//import com.ramez.shopp.Adapter.PaymentAdapter;
-//import com.ramez.shopp.Adapter.ProductCheckAdapter;
 //import com.ramez.shopp.ApiHandler.DataFeacher;
 //import com.ramez.shopp.Classes.AnalyticsHandler;
 //import com.ramez.shopp.Classes.CartModel;
@@ -52,6 +44,14 @@
 //import com.ramez.shopp.Models.UserDefaultAddress;
 //import com.ramez.shopp.R;
 //import com.ramez.shopp.Utils.NumberHandler;
+//import com.ramez.shopp.activities.AddNewAddressActivity;
+//import com.ramez.shopp.activities.AddressActivity;
+//import com.ramez.shopp.activities.OrderCompleteActivity;
+//import com.ramez.shopp.adapter.AddressCheckAdapter;
+//import com.ramez.shopp.adapter.DeliveryDayAdapter;
+//import com.ramez.shopp.adapter.DeliveryTimeAdapter;
+//import com.ramez.shopp.adapter.PaymentAdapter;
+//import com.ramez.shopp.adapter.ProductCheckAdapter;
 //import com.ramez.shopp.databinding.FragmentInvoiceBinding;
 //
 //import org.greenrobot.eventbus.EventBus;

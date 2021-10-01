@@ -3,7 +3,6 @@ package com.ramez.shopp.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -26,11 +24,11 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.activities.FullScannerActivity;
 import com.ramez.shopp.adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CategoryResultModel;
@@ -155,7 +153,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 //        bundle.putInt(Constants.position, position);
 //        bundle.putSerializable(Constants.CAT_MODEL, categoryModel);
         categoryProductsFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.mainContainer, categoryProductsFragment, "categoryProductsFragment").commit();
+        fragmentManager.beginTransaction().replace(R.id.mainContainer,
+                categoryProductsFragment, "categoryProductsFragment").commit();
 
 
     }
@@ -237,8 +236,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
 
     private void checkCameraPermission() {
-        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA)
+                .withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
                 startScan();
@@ -248,7 +247,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(getActivityy(), "" + getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -262,13 +261,6 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     private void startScan() {
 
-//        if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
-//        } else {
-//            Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
-//            startActivityForResult(intent, SEARCH_CODE);
-//
-//        }
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((getActivityy()));
             builder.addPermissions(new String[]{Manifest.permission.CAMERA});

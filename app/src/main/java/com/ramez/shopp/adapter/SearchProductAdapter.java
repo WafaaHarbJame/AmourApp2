@@ -148,7 +148,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
-            if (productModels.size()> 0 && productModel.isFavourite()) {
+            if (productModels.size() > 0 && productModel.isFavourite()) {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
             } else {
                 holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
@@ -447,62 +447,61 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             binding.cartBut.setOnClickListener(view1 -> {
 
-                if (!UtilityApp.isLogin()) {
+                if (!UtilityApp.isLogin() && UtilityApp.getUserData() == null) {
                     CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context,
                             R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
-                } else {
+                    return;
+                }
 
-                    int position = getBindingAdapterPosition();
+                int position = getBindingAdapterPosition();
 
-                    if (position > 0) {
-                        ProductModel productModel = productModels.get(position);
-                        ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
-                        int count = productBarcode.getCartQuantity();
-                        String message = "";
-                        int userId = UtilityApp.getUserData().getId();
-                        int storeId = Integer.parseInt(localModel.getCityId());
-                        int productId = productModel.getId();
-                        int product_barcode_id = productBarcode.getId();
+                if (position > 0) {
+                    ProductModel productModel = productModels.get(position);
+                    ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
+                    int count = productBarcode.getCartQuantity();
+                    String message = "";
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(localModel.getCityId());
+                    int productId = productModel.getId();
+                    int product_barcode_id = productBarcode.getId();
 
-                        int stock = productBarcode.getStockQty();
-                        int limit = productBarcode.getLimitQty();
+                    int stock = productBarcode.getStockQty();
+                    int limit = productBarcode.getLimitQty();
 
-                        if (limit == 0) {
+                    if (limit == 0) {
 
-                            if (count + 1 <= stock) {
-                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+                        if (count + 1 <= stock) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                        } else {
+                            message = context.getString(R.string.stock_empty);
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                    message);
+
+                        }
+                    } else {
+
+                        if (count + 1 <= stock && (count + 1 <= limit)) {
+                            addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
+
+                        } else {
+
+                            if (count + 1 > stock) {
+                                message = context.getString(R.string.limit) + "" + limit;
 
                             } else {
                                 message = context.getString(R.string.stock_empty);
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                        message);
 
                             }
-                        } else {
-
-                            if (count + 1 <= stock && (count + 1 <= limit)) {
-                                addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
-
-                            } else {
-
-                                if (count + 1 > stock) {
-                                    message = context.getString(R.string.limit) + "" + limit;
-
-                                } else {
-                                    message = context.getString(R.string.stock_empty);
-
-                                }
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
-                                        message);
-                            }
-
-
+                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                    message);
                         }
+
+
                     }
-
-
                 }
+
 
             });
 
