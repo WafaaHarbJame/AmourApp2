@@ -20,8 +20,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
@@ -83,7 +83,7 @@ public class MessagingService extends FirebaseMessagingService {
             setupChannels();
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -233,7 +233,7 @@ public class MessagingService extends FirebaseMessagingService {
 //     * @param messageBody FCM message body received.
 //     */
 //    private void sendNotification(String messageBody) {
-//        Intent intent = new Intent(this, MainActivity.class);
+//        Intent intent = new Intent(this, Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
 //                PendingIntent.FLAG_ONE_SHOT);

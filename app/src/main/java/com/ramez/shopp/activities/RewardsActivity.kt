@@ -1,21 +1,15 @@
 package com.ramez.shopp.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.ramez.shopp.Classes.MessageEvent
 import com.ramez.shopp.fragments.CardFragment
 import com.ramez.shopp.fragments.CouponsFragment
-import com.ramez.shopp.MainActivity
 import com.ramez.shopp.R
 import com.ramez.shopp.databinding.ActivityRewardsBinding
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 class RewardsActivity : ActivityBase() {
@@ -53,13 +47,13 @@ class RewardsActivity : ActivityBase() {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent) {
-        if (event.type == MessageEvent.TYPE_main) {
-            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
-            val intent = Intent(activiy, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun onMessageEvent(event: MessageEvent) {
+//        if (event.type == MessageEvent.TYPE_main) {
+//            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
+//            val intent = Intent(activiy, MainActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(intent)
+//        }
+//    }
 }

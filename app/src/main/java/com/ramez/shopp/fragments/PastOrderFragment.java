@@ -13,7 +13,6 @@ import com.ramez.shopp.adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrderResultModel;
 import com.ramez.shopp.R;
@@ -67,7 +66,7 @@ public class PastOrderFragment extends FragmentBase {
         });
 
         binding.noDataLY.btnBrowseProducts.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
+            Intent intent = new Intent(getActivity(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 

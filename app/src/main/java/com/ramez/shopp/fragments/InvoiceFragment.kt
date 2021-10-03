@@ -182,8 +182,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     @SuppressLint("SetTextI18n")
     private fun initListener() {
         binding.saveBut.setOnClickListener { view1 ->
-            EventBus.getDefault()
-                .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
+//            EventBus.getDefault()
+//                .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
         }
 
 
@@ -472,8 +472,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                     result.order_id.toString(),
                                     total
                                 )
-                                EventBus.getDefault()
-                                    .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
+
+//                                EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
+
                                 println("Log order deliveryDate $deliveryDate")
                                 println("Log order deliveryTime $deliveryTime")
                                 val ordersDM = OrderModel()
@@ -654,7 +655,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
     private fun initAddressData(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
-            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_invoice))
+//            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_invoice))
             if (data != null) {
                 val bundle = data.extras
                 addressId = bundle!!.getInt(Constants.ADDRESS_ID)
@@ -937,5 +938,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     companion object {
         private const val ADDRESS_CODE = 100
     }
+
+
 }
 

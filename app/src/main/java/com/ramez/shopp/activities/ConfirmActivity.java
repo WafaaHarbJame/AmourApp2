@@ -12,7 +12,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -263,7 +262,7 @@ public class ConfirmActivity extends ActivityBase {
     }
 
     public void startMain() {
-        Intent intent = new Intent(getActiviy(), MainActivity.class);
+        Intent intent = new Intent(getActiviy(),Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         getActiviy().finish();

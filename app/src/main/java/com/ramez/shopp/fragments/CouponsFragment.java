@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.CouponsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.DBFunction;
@@ -18,7 +19,6 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -86,7 +86,7 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         });
 
         binding.noDataLY.btnBrowseProducts.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
+            Intent intent = new Intent(getActivity(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 

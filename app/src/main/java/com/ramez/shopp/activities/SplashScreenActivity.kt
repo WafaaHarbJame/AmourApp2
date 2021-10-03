@@ -11,8 +11,10 @@ import android.view.Window
 import android.view.WindowManager
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
-import com.ramez.shopp.MainActivity
+import com.ramez.shopp.Classes.Constants
+import com.ramez.shopp.Classes.DBFunction
+import com.ramez.shopp.Classes.SoicalLink
+import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import java.util.*
@@ -78,7 +80,7 @@ class SplashScreenActivity : ActivityBase() {
                 }
             } else {
                 if (!UtilityApp.isFirstRun()) {
-                    val intent = Intent(activiy, MainActivity::class.java)
+                    val intent = Intent(activiy, Constants.MAIN_ACTIVITY_CLASS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -214,7 +216,7 @@ class SplashScreenActivity : ActivityBase() {
                     } else {
                         UtilityApp.setCartCount(0)
                     }
-                    val intent = Intent(activiy, MainActivity::class.java)
+                    val intent = Intent(activiy,Constants.MAIN_ACTIVITY_CLASS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()

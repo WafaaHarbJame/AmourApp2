@@ -24,7 +24,6 @@ import com.ramez.shopp.activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -286,7 +285,7 @@ public class LoginFragment extends FragmentBase {
     }
 
     public void startMain() {
-        Intent intent = new Intent(getActivityy(), MainActivity.class);
+        Intent intent = new Intent(getActivityy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         getActivityy().finish();
@@ -464,7 +463,7 @@ public class LoginFragment extends FragmentBase {
                         MemberModel user = result.getData();
                         //  user.setRegisterType(Constants.BY_SOCIAL);
                         UtilityApp.setUserData(user);
-                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        Intent intent = new Intent(getActivityy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 
@@ -572,12 +571,12 @@ public class LoginFragment extends FragmentBase {
                         cartNumber = cartResultModel.getData().getCartCount();
                         Log.i(getClass().getSimpleName(),"Log cartNumber"+cartNumber);
                         UtilityApp.setCartCount(cartNumber);
-                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        Intent intent = new Intent(getActivityy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     } else {
                         UtilityApp.setCartCount(0);
-                        Intent intent = new Intent(getActivityy(), MainActivity.class);
+                        Intent intent = new Intent(getActivityy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }

@@ -8,6 +8,7 @@ public class MessageEvent {
     public static final String TYPE_BROUSHERS = "TYPE_BROUSHERS";
     public static final String TYPE_view = "TYPE_view";
     public static final String TYPE_SORT = "TYPE_SORT";
+    public static final String TYPE_SORT_OLD = "TYPE_SORT_OLD";
     public static final String TYPE_cart = "cart";
     public static final String REFRESH_CART = "REFRESH_CART";
     public static final String TYPE_search= "TYPE_search";
@@ -18,6 +19,7 @@ public class MessageEvent {
     public static final String TYPE_UPDATE_CART = "updateCart";
     public static final String TYPE_REFRESH = "refresh";
     public static final String TYPE_POSITION = "position";
+    public static final String TYPE_FRAGMENT = "TYPE_FRAGMENT";
     public static final String TYPE_Deep_links = "TYPE_Deep_links";
 
 

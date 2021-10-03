@@ -36,7 +36,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -316,7 +315,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
     private void navigateToCartScreen() {
         GlobalData.REFRESH_CART = true;
-        Intent intent = new Intent(getActiviy(), MainActivity.class);
+        Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.putExtra(Constants.CART, true);
         startActivity(intent);
         finish();

@@ -169,6 +169,19 @@ public class ProductModel implements Serializable, Comparable<ProductModel> {
 
     @Override
     public int compareTo(ProductModel productModel) {
-        return 0;
+//        return Integer.compare((int) getFirstProductBarcodes().getPrice(),
+//                (int) productModel.getFirstProductBarcodes().getPrice());
+
+
+        if (getFirstProductBarcodes().getPrice() > productModel.getFirstProductBarcodes().getPrice()) {
+            return 1;
+        }
+        else if (productModel.getFirstProductBarcodes().getPrice() <  getFirstProductBarcodes().getPrice()) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+
     }
 }

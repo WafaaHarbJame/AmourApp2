@@ -17,7 +17,6 @@ import com.ramez.shopp.adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -72,7 +71,7 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
         }
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
 
-        country_id =localModel.getCountryId();
+        country_id = localModel.getCountryId();
 
         city_id = Integer.parseInt(localModel.getCityId());
         sliderList = new ArrayList<>();
@@ -95,14 +94,14 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
 
 
         binding.processCartBut.setOnClickListener(v -> {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.putExtra(Constants.CART, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
 
         binding.fabCart.setOnClickListener(v -> {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.putExtra(Constants.CART, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -300,19 +299,19 @@ public class RamezKitchenActivity extends ActivityBase implements SuggestedProdu
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
 
-        if (event.type.equals(MessageEvent.TYPE_main)) {
-            binding.backBtn.setOnClickListener(view -> {
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
-                startActivity(intent);
-            });
-
-        } else if (event.type.equals(MessageEvent.TYPE_READ_CART)) {
+//        if (event.type.equals(MessageEvent.TYPE_main)) {
+//            binding.backBtn.setOnClickListener(view -> {
+//                Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
+//                startActivity(intent);
+//            });
+//
+//        } else
+        if (event.type.equals(MessageEvent.TYPE_READ_CART)) {
 
             if (UtilityApp.isLogin()) {
                 binding.tVCartSize.setText(String.valueOf(UtilityApp.getCartCount()));
             }
         }
-
 
     }
 

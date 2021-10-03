@@ -41,7 +41,7 @@ class PriceCheckerResultActivity : ActivityBase(), SimilierProductAdapter.OnItem
             if (result != null && result.data != null) {
             }
         }
-        binding!!.scanAgainBut.setOnClickListener { v ->
+        binding!!.scanAgainBut.setOnClickListener {
             val intent = Intent(activiy, FullScannerActivity::class.java)
             scanLauncher!!.launch(intent)
         }

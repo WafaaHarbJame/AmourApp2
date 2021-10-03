@@ -14,7 +14,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -121,7 +120,7 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
             DiscoverViewHolder discoverViewHolder = (DiscoverViewHolder) viewHolder;
 
             discoverViewHolder.itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
                 intent.putExtra(Constants.inputType_text, filter);
                 intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_SEARCH);
                 intent.putExtra(Constants.isNotify, true);

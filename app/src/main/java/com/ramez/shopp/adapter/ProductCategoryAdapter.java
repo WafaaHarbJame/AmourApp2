@@ -68,7 +68,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     LocalModel localModel;
 
 
-    public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels, int category_id, int country_id, int city_id, String user_id, int limit, String filter, OnItemClick onItemClick, int gridNumber, int brand_id) {
+    public ProductCategoryAdapter(Context context, RecyclerView rv, List<ProductModel> productModels,
+                                  int category_id, int country_id, int city_id, String user_id,
+                                  int limit, String filter, OnItemClick onItemClick, int gridNumber, int brand_id) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = new ArrayList<>(productModels);
@@ -219,24 +221,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
 
-//            if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
-//                holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-////                if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
-//                    holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), fraction) + " " + currency);
-//                    holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())), fraction) + " " + currency);
-//                    discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-//                    DecimalFormat df = new DecimalFormat("#");
-//                    String newDiscount_str = df.format(discount);
-//                    holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
-////                }
-//
-//
-//            } else {
-//                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), fraction) + " " + currency + "");
-//                holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
-//                holder.binding.discountTv.setVisibility(View.GONE);
-//
-//            }
 
             String photoUrl = "";
 

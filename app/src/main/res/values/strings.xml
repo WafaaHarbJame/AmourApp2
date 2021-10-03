@@ -507,6 +507,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="this_not_from_your_country">This is not from your country</string>
 
 
 </resources>

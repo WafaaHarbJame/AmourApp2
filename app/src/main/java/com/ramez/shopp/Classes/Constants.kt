@@ -9,7 +9,7 @@ import com.ramez.shopp.MainActivity
 object Constants {
     const val Arabic = "ar"
     const val English = "en"
-    val MAIN_ACTIVITY_CLASS = MainActivity::class.java
+    public var MAIN_ACTIVITY_CLASS = MainActivity::class.java
     const val NORMAL_FONT = "Cairo-Regular.ttf"
     const val BOLD_FONT = "Cairo-Bold.ttf"
     const val ICON_AWSM_FONT = "fa_light_300.otf"
@@ -21,9 +21,11 @@ object Constants {
     const val Paly_Link = "http://onelink.to/k9h4jf"
     const val three = 3
     const val two = 2
+
     const val NO_CONNECTION = "no connection"
     const val ERROR = "error"
     const val FAIL = "fail"
+
     const val KEY_MEMBER = "key_member"
     const val KEY_SOCIAL = "KEY_SOCIAL"
     const val KEY_SETTING = "KEY_SETTING"
@@ -37,6 +39,7 @@ object Constants {
     const val KEY_FIRST_RUN = "key_first_run"
     const val KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN"
     const val FROM_BROSHER = "FROM_BROSHER"
+    const val KEY_FRAGMENT_ID = "KEY_FRAGMENT_ID"
 
     //    public static final String SUBCATID = "SUBCATID";
     const val TO_BROSHER = "TO_BROSHER"

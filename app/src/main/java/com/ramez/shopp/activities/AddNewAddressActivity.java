@@ -328,7 +328,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             } else {
                 if (IsSuccess) {
                     binding.dataLY.setVisibility(View.VISIBLE);
-                    if (result.getData() != null && result.getData().size() > 0) {
+                    if (result!= null && result.getData() != null  && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
                         if (addressModel != null) {
                             selectedLat = addressModel.getLatitude();

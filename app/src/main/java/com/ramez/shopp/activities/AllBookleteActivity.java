@@ -13,7 +13,6 @@ import com.ramez.shopp.adapter.KitchenAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.DinnerModel;
@@ -119,7 +118,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
     public void onBackPressed() {
         System.out.println("Log onBackPressed " + isNotify);
         if (isNotify) {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else {
@@ -358,7 +357,7 @@ public class AllBookleteActivity extends ActivityBase implements BookletAdapter.
 //        fragmentManager.beginTransaction().replace(R.id.mainContainer, specialOfferFragment, "specialOfferFragment").commit();
 
 
-        Intent intent = new Intent(getActiviy(), MainActivity.class);
+        Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.putExtra(Constants.KEY_OPEN_FRAGMENT, Constants.FRAG_BROSHORE);
         bookletsModel.setStoreID(city_id);
         intent.putExtra(Constants.bookletsModel, bookletsModel);

@@ -82,7 +82,7 @@
 //        if (event.type.equals(MessageEvent.TYPE_main)) {
 //
 //            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
-//            Intent intent = new Intent(getActiviy(), MainActivity.class);
+//            Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //            startActivity(intent);
 //

@@ -11,7 +11,6 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -190,7 +189,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     public void onBackPressed() {
         System.out.println("Log onBackPressed " + isNotify);
         if (isNotify) {
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else

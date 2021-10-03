@@ -26,7 +26,6 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.RegisterResultModel;
@@ -293,7 +292,7 @@ public class RegisterFragment extends FragmentBase {
     }
 
     public void startMain() {
-        Intent intent = new Intent(getActivityy(), MainActivity.class);
+        Intent intent = new Intent(getActivityy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 

@@ -29,13 +29,11 @@ import com.ramez.shopp.adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddRateDialog;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.fragments.ImageFragment;
 import com.ramez.shopp.fragments.SuggestedProductsFragment;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -50,10 +48,6 @@ import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityProductDeatilsBinding;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -155,7 +149,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             GlobalData.REFRESH_CART = true;
 
             if (isNotify) {
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
@@ -1071,20 +1065,20 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(@NotNull MessageEvent event) {
-
-
-        if (event.type.equals(MessageEvent.TYPE_main)) {
-            binding.backBtn.setOnClickListener(view -> {
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
-                startActivity(intent);
-            });
-
-        }
-
-
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(@NotNull MessageEvent event) {
+//
+//
+//        if (event.type.equals(MessageEvent.TYPE_main)) {
+//            binding.backBtn.setOnClickListener(view -> {
+//                Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
+//                startActivity(intent);
+//            });
+//
+//        }
+//
+//
+//    }
 
     public void getReviews(int product_id, int storeId) {
         reviewList.clear();

@@ -2,6 +2,7 @@ package com.ramez.shopp.activities;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -29,7 +30,18 @@ public class OrderCompleteActivity extends ActivityBase {
 
         getIntentData();
 
+        binding.toolBar.backBtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
+        intent.putExtra(Constants.TO_FRAG_HOME, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP /*| Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK*/);
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")
@@ -54,8 +66,8 @@ public class OrderCompleteActivity extends ActivityBase {
             }
 
 
-            binding.deliveryDayTv.setText(dayName+"");
-            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime()+"");
+            binding.deliveryDayTv.setText(dayName + "");
+            binding.deliveryTimeTv.setText(orderModel.getDeliveryTime() + "");
         }
     }
 

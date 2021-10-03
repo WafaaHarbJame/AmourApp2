@@ -11,80 +11,74 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_white_fill"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/searchLY"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/round_white_fill"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp">
 
-                <LinearLayout
-                    android:id="@+id/searchLY"
+                <com.ramez.shopp.SpichalViews.SAutoCompleteText
+                    android:id="@+id/searchEt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:background="@color/transparent"
+                    android:hint="@string/search_product"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:maxLines="1"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp"
+                    tools:ignore="NestedWeights" />
+
+                <com.ramez.shopp.SpichalViews.STextViewIcon
+                    android:id="@+id/closeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:padding="@dimen/_4sdp"
                     android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp">
-
-                    <com.ramez.shopp.SpichalViews.SAutoCompleteText
-                        android:id="@+id/searchEt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/transparent"
-                        android:hint="@string/search_product"
-                        android:imeOptions="actionSearch"
-                        android:inputType="textAutoComplete|textAutoCorrect"
-                        android:maxLines="1"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp"
-                        tools:ignore="NestedWeights" />
-
-                    <com.ramez.shopp.SpichalViews.STextViewIcon
-                        android:id="@+id/closeBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_4sdp"
-                        android:padding="@dimen/_4sdp"
-                        android:paddingStart="@dimen/_8sdp"
-                        android:paddingEnd="@dimen/_8sdp"
-                        android:text="@string/fal_search"
-                        android:textColor="@color/very_dark_gray"
-                        android:textSize="@dimen/_14ssp" />
-
-                    <ImageView
-                        android:id="@+id/barcodeBut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        android:layout_marginEnd="@dimen/_6sdp"
-                        android:src="@drawable/cat_icon" />
-                </LinearLayout>
-
+                    android:text="@string/fal_search"
+                    android:textColor="@color/very_dark_gray"
+                    android:textSize="@dimen/_14ssp" />
 
                 <ImageView
-                    android:id="@+id/sortBut"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:src="@drawable/sort"
-                    android:visibility="gone" />
-
+                    android:id="@+id/barcodeBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:src="@drawable/cat_icon" />
             </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/sortBut"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/sort"
+                android:visibility="gone" />
+
         </LinearLayout>
+
     </FrameLayout>
 
     <include

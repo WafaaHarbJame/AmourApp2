@@ -1,6 +1,5 @@
 package com.ramez.shopp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,17 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.fragments.CurrentOrderFragment;
 import com.ramez.shopp.fragments.PastOrderFragment;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityMyOrderBinding;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 public class MyOrderActivity extends ActivityBase {
     ActivityMyOrderBinding binding;
@@ -77,20 +69,20 @@ public class MyOrderActivity extends ActivityBase {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(@NotNull MessageEvent event) {
-
-        if (event.type.equals(MessageEvent.TYPE_main)) {
-
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
-            Intent intent = new Intent(getActiviy(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-
-        }
-
-
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(@NotNull MessageEvent event) {
+//
+//        if (event.type.equals(MessageEvent.TYPE_main)) {
+//
+//            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_POSITION, 0));
+//            Intent intent = new Intent(getActiviy(), .INSTANCE.getMAIN_ACTIVITY_CLASS());
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//
+//        }
+//
+//
+//    }
 
 
 }

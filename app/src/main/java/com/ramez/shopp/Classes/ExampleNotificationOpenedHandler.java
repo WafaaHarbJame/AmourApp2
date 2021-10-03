@@ -7,7 +7,6 @@ import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.activities.MyOrderActivity;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.RootApplication;
 
 import org.json.JSONObject;
@@ -16,7 +15,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ExampleNotificationOpenedHandler implements OneSignal.NotificationOpenedHandler {
     int order_id, user_id;
-    String type="";
+    String type = "";
     RootApplication rootApplication;
 
 
@@ -40,10 +39,10 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
                 Log.i("OneSignalExample", "Log type set with value: " + type);
             }
             Intent intent;
-            if (type!=null&&type.equals("order")) {
+            if (type != null && type.equals("order")) {
                 intent = new Intent(getApplicationContext(), MyOrderActivity.class);
             } else {
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
             }
 
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -56,7 +55,6 @@ public class ExampleNotificationOpenedHandler implements OneSignal.NotificationO
         if (actionType == OSNotificationAction.ActionType.ActionTaken) {
             Log.i("OneSignalExample", "Log Button pressed with id: " + result.action.actionID);
         }
-
 
 
     }
