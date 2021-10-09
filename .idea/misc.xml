@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/drawable/round_corner_green_fill.xml" value="0.18125" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_choose_nearst_city.xml" value="0.11778115501519756" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_fast_qactivity.xml" value="0.152" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_scanfast_activity.xml" value="0.176" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_home.xml" value="0.11778115501519756" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_my_account.xml" value="0.2" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.11778115501519756" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/menu/menu_scrolling.xml" value="0.12239583333333333" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/cart_back_style.xml" value="0.2203125" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/ic_angle_pointing_to_left.xml" value="0.2703125" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/ic_search_t.xml" value="0.22447916666666667" />
@@ -55,7 +63,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
