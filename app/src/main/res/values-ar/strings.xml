@@ -380,6 +380,13 @@
     <string name="discover_more">اكتشف المزيد</string>
     <string name="customer">زبون </string>
     <string name="enter_email">ادخل البريدالإلكتروني </string>
+    <string name="this_not_from_your_country">هذا ليس من دولتك </string>
+    <string name="the_fastest_way_to_shop_in_store">The fastest way to shop in-store</string>
+    <string name="start_shopping">You can start shopping in-store and using the online barcode scanner to speed up your in-store shopping experience.</string>
+    <string name="setting">setting</string>
+    <string name="History">History</string>
+    <string name="FastQ">FastQ</string>
+    <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">Ensure barcode is within white markers to scan an item</string>
 
 
 </resources>

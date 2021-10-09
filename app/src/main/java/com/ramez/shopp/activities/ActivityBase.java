@@ -96,6 +96,7 @@ public class ActivityBase extends AppCompatActivity {
     }
 
 
+
     protected Activity getActiviy() {
         return this;
     }

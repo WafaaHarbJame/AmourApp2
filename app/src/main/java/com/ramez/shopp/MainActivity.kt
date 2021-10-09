@@ -48,7 +48,7 @@ class MainActivity : ActivityBase() {
     var localModel: LocalModel? = null
     private var toggleButton = false
     private var toggleSortButton = false
-    var country_name = "BH"
+    var country_name =Constants.default_short_name
     var categoryModelList: ArrayList<CategoryModel>? = null
 
     private lateinit var tabNavArr: Array<BottomNavModel>

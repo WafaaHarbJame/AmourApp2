@@ -51,5 +51,7 @@
     <color name="blue">#007AFF</color>
     <color name="yellow">#FFC107</color>
     <color name="gray9">#E1E0E0</color>
+    <color name="fastq_color">#2BA842</color>
+
 
 </resources>

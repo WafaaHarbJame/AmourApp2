@@ -27,10 +27,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <receiver
-            android:name=".Classes.EventReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
+        <activity
+            android:name=".activities.FastQActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/FastTheme"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+             />
+        <activity
+            android:name=".activities.ScanFastActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/FastTheme"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
 
         <activity
             android:name=".activities.PriceCheckerResultActivity"
