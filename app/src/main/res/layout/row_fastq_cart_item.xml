@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:background="@color/white"
+    android:clipToPadding="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_6sdp">
+
+        <ImageView
+            android:id="@+id/productImg"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/holder_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_5sdp">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="اسم المنتج"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/priceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2332 BHD"
+                    android:textColor="@color/green1"
+                    android:textSize="@dimen/_10ssp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/quantityLy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ramez.shopp.SpichalViews.STextViewIcon
+                        android:id="@+id/minusCartBtn"
+                        android:layout_width="@dimen/cart_quantity_width"
+                        android:layout_height="@dimen/cart_quantity_height"
+                        android:background="@drawable/round_corner_green_fill"
+                        android:gravity="center"
+                        android:scaleX="@integer/scaleX"
+                        android:text="@string/fal_minus"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_12ssp"
+                        android:visibility="visible" />
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/productCartQTY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/cart_quantity_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/round_corner_green_strock_fill"
+                        android:gravity="center"
+                        android:minWidth="@dimen/cart_quantity_width"
+                        android:text="1"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp"
+                        android:visibility="visible" />
+
+
+                    <com.ramez.shopp.SpichalViews.STextViewIcon
+                        android:id="@+id/plusCartBtn"
+                        android:layout_width="@dimen/cart_quantity_width"
+                        android:layout_height="@dimen/cart_quantity_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/round_corner_green_fill_right"
+                        android:gravity="center"
+                        android:scaleX="@integer/scaleX"
+                        android:text="@string/fal_plus"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

@@ -27,20 +27,27 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+
         <activity
             android:name=".activities.FastQActivity"
             android:launchMode="singleTask"
-            android:theme="@style/FastTheme"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-             />
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <activity
             android:name=".activities.ScanFastActivity"
             android:launchMode="singleTask"
-            android:theme="@style/FastTheme"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            />
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".activities.FastQCartActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
 
         <activity

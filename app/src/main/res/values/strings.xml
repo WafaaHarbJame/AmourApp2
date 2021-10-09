@@ -428,5 +428,8 @@
     <string name="unit_price_key">Unit Price :</string>
     <string name="scanning">Scanning</string>
     <string name="product_add_to_cart">Product add to cart</string>
+    <string name="fastq_cart_hint">Please make sure that you have scanned and verified all the items in your bag</string>
+    <string name="continuee">Continue</string>
+    <string name="by_placing_this_order_agree">By placing this order I agree on</string>
 
 </resources>

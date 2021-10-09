@@ -61,8 +61,11 @@
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/shimmer_row_products_item.xml" value="0.2" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_fast_qactivity.xml" value="0.2037037037037037" />
+        <entry key="app/src/main/res/layout/activity_fastq_cart_activity.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/layout/activity_scanfast_activity.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/layout/fragment_my_account.xml" value="0.2518518518518518" />
+        <entry key="app/src/main/res/layout/row_cart_item.xml" value="0.2518518518518518" />
+        <entry key="app/src/main/res/layout/row_fastq_cart_item.xml" value="0.2518518518518518" />
       </map>
     </option>
   </component>
