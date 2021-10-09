@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
+import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.CityModelResult
@@ -43,6 +44,7 @@ class ScanFastActivity : ActivityBase() {
 //        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
 //        actionBar?.setBackgroundDrawable(colorDrawable)
 
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(

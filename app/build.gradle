@@ -181,6 +181,7 @@ dependencies {
     }
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
 // webpdecoder
     implementation "com.github.zjupure:webpdecoder:2.0.4.12.0"

@@ -29,6 +29,8 @@
     <color name="very_dark_gray">#636363</color>
     <color name="font_gray">#707070</color>
 
+    <color name="header1">#000000</color>
+    <color name="header2">#202020</color>
     <color name="header3">@color/gray13</color>
 
     <color name="black">#000000</color>
@@ -52,6 +54,8 @@
     <color name="yellow">#FFC107</color>
     <color name="gray9">#E1E0E0</color>
     <color name="fastq_color">#2BA842</color>
+    <color name="fastq_light_color">#D4EED9</color>
+    <color name="green_trans">#BF2BA842</color>
 
 
 </resources>

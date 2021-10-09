@@ -425,5 +425,8 @@
     <string name="History">History</string>
     <string name="FastQ">FastQ</string>
     <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">Ensure barcode is within white markers to scan an item</string>
+    <string name="unit_price_key">Unit Price :</string>
+    <string name="scanning">Scanning</string>
+    <string name="product_add_to_cart">Product add to cart</string>
 
 </resources>

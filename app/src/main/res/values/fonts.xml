@@ -5,6 +5,8 @@
     <string name="fal_angle_right" translatable="false">&#xf105;</string>
     <string name="fal_angle_down" translatable="false">&#xf107;</string>
     <string name="fal_info_circle" translatable="false">&#xf05a;</string>
+    <string name="fal_plus" translatable="false">&#xf067;</string>
+    <string name="fal_minus" translatable="false">&#xf068;</string>
 
     <string name="fa_refresh" translatable="false">&#xf021;</string>
     <string name="fa_camera" translatable="false">&#xf030;</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,109 +12,176 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/fastQLogoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_fastq_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_fastq_big" />
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/titleLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:text="@string/the_fastest_way_to_shop_in_store"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toBottomOf="@id/fastQLogoImg" />
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/the_fastest_way_to_shop_in_store"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_margin="@dimen/_16sdp"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_fastback" />
+        <ImageView
+            android:id="@+id/fastqHdImg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/hd_fastq_women"
+            app:layout_constraintBottom_toTopOf="@id/hintLabel"
+            app:layout_constraintTop_toBottomOf="@id/titleLabel" />
 
         <com.ramez.shopp.SpichalViews.STextView
+            android:id="@+id/hintLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="@string/start_shopping"
+            android:textColor="@color/header3"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toTopOf="@id/arrowImg" />
+
+
+        <ImageView
+            android:id="@+id/arrowImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_10sdp"
-            android:text="@string/start_shopping"
-            android:textSize="@dimen/_12ssp" />
-    </LinearLayout>
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:gravity="center"
+            android:src="@drawable/ic_click_here"
+            app:layout_constraintBottom_toTopOf="@id/scanBut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_margin="@dimen/_16sdp"
-        android:src="@drawable/ic_click_here" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/settingBut"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:id="@+id/bottomLY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_top_corner_white_fill2"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp">
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <ImageView
-                android:id="@+id/item_icon2"
+            <LinearLayout
+                android:id="@+id/settingBut"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_6sdp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_setting_red" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/setting"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/historyBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:gravity="center"
-                android:src="@drawable/ic_setting_red" />
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_6sdp">
 
-            <com.ramez.shopp.SpichalViews.STextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/setting"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:gravity="center"
+                    android:src="@drawable/ic_history"
+                    android:textSize="@dimen/_15ssp" />
 
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:text="@string/History"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10ssp" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/scanBut"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:background="@drawable/round_corner_green_fill_big"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:background="@drawable/round_corner_green_fill_big"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp">
+            android:padding="@dimen/_7sdp"
+            app:layout_constraintBottom_toTopOf="@id/bottomLY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottomLY">
 
             <LinearLayout
-                android:layout_width="@dimen/_90sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/ic_scan_border"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -134,50 +202,14 @@
                     android:text="@string/FastQ"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_12ssp" />
             </LinearLayout>
-
-
 
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/historyBut"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp">
 
-            <ImageView
-                android:id="@+id/item_icon_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:gravity="center"
-                android:src="@drawable/ic_history"
-                android:textSize="@dimen/_15ssp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.ramez.shopp.SpichalViews.STextView
-                android:id="@+id/item_title_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:text="@string/History"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_10ssp" />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

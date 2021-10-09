@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
+import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.CityModelResult
@@ -18,8 +19,6 @@ import com.ramez.shopp.R
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
 import java.util.ArrayList
-
-
 
 
 class FastQActivity : ActivityBase() {
@@ -37,12 +36,15 @@ class FastQActivity : ActivityBase() {
 
         binding = ActivityFastQactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         changeToolBarColor()
 
 //        val actionBar: ActionBar? = supportActionBar
 //        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
 //        actionBar?.setBackgroundDrawable(colorDrawable)
 
+
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
@@ -95,15 +97,15 @@ class FastQActivity : ActivityBase() {
     private fun setBranchData() {
         if (selectedCityModel != null) {
             branchName = selectedCityModel!!.cityName
-            Log.i(javaClass.name,"Log branchName $branchName")
+            Log.i(javaClass.name, "Log branchName $branchName")
             title = branchName
         }
     }
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy,R.color.fastq_color))
-        binding.toolBar.logoImg.visibility=gone
-        binding.toolBar.mainTitleTv.visibility=visible
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.logoImg.visibility = gone
+        binding.toolBar.mainTitleTv.visibility = visible
 
     }
 
