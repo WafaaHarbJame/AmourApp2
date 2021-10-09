@@ -1,11 +1,8 @@
 package com.ramez.shopp.activities
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
@@ -16,14 +13,13 @@ import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
+import com.ramez.shopp.databinding.ActivityFastqScanActivityBinding
+import java.util.*
 
-import com.ramez.shopp.databinding.ActivityFastQactivityBinding
-import java.util.ArrayList
 
+class FastqScanActivity : ActivityBase() {
 
-class FastQActivity : ActivityBase() {
-
-    private lateinit var binding: ActivityFastQactivityBinding
+    private lateinit var binding: ActivityFastqScanActivityBinding
     var localModel: LocalModel? = null
     var branchName: String = ""
     private var countryId = 0
@@ -34,15 +30,13 @@ class FastQActivity : ActivityBase() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFastQactivityBinding.inflate(layoutInflater)
+        binding = ActivityFastqScanActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         changeToolBarColor()
 
 //        val actionBar: ActionBar? = supportActionBar
 //        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
 //        actionBar?.setBackgroundDrawable(colorDrawable)
-
 
         StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
@@ -59,6 +53,16 @@ class FastQActivity : ActivityBase() {
 
         initListeners()
 
+    }
+
+    fun initListeners() {
+
+        binding.cartBtn.setOnClickListener {
+
+            val intent = Intent(activiy, FastqCartActivity::class.java)
+            startActivity(intent)
+
+        }
 
     }
 
@@ -106,15 +110,6 @@ class FastQActivity : ActivityBase() {
         binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
-
-    }
-
-    private fun initListeners(): Unit {
-        binding.scanBut.setOnClickListener {
-            val intent = Intent(activiy, ScanFastActivity::class.java)
-            activiy.startActivity(intent)
-
-        }
 
     }
 

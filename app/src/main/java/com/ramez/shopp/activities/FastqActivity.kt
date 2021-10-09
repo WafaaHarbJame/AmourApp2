@@ -1,32 +1,26 @@
 package com.ramez.shopp.activities
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.CartModel
 import com.ramez.shopp.Classes.CityModelResult
 import com.ramez.shopp.Classes.Constants
 import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
-import com.ramez.shopp.adapter.FastqCartAdapter
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
-import com.ramez.shopp.databinding.ActivityFastqCartActivityBinding
 import java.util.ArrayList
 
 
-class FastQCartActivity : ActivityBase() {
+class FastqActivity : ActivityBase() {
 
+    private lateinit var binding: ActivityFastQactivityBinding
     var localModel: LocalModel? = null
     var branchName: String = ""
     private var countryId = 0
@@ -34,18 +28,17 @@ class FastQCartActivity : ActivityBase() {
     var cityModelArrayList: ArrayList<CityModel>? = null
     private var selectedCityModel: CityModel? = null
 
-
-    private lateinit var binding: ActivityFastqCartActivityBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFastqCartActivityBinding.inflate(layoutInflater)
+        binding = ActivityFastQactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         changeToolBarColor()
 
-        binding.rv.layoutManager = LinearLayoutManager(activiy)
+//        val actionBar: ActionBar? = supportActionBar
+//        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
+//        actionBar?.setBackgroundDrawable(colorDrawable)
 
 
         StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
@@ -63,7 +56,6 @@ class FastQCartActivity : ActivityBase() {
 
         initListeners()
 
-        initAdapter()
 
     }
 
@@ -115,24 +107,25 @@ class FastQCartActivity : ActivityBase() {
     }
 
     private fun initListeners() {
-        binding.continueBtn.setOnClickListener {
-
+        binding.scanBut.setOnClickListener {
+            val intent = Intent(activiy, FastqScanActivity::class.java)
+            activiy.startActivity(intent)
 
         }
 
-    }
+        binding.settingBut.setOnClickListener {
+            val intent = Intent(activiy, PagesActivity::class.java)
+            intent.putExtra(Constants.KEY_FRAGMENT_TYPE, Constants.FRAG_FASTQ_SETTINGS)
+            activiy.startActivity(intent)
 
-    fun initAdapter() {
+        }
 
-        val list = mutableListOf(
-            CartModel(),
-            CartModel(),
-            CartModel(),
-            CartModel(),
-        )
+        binding.historyBut.setOnClickListener {
+            val intent = Intent(activiy, PagesActivity::class.java)
+            intent.putExtra(Constants.KEY_FRAGMENT_TYPE, Constants.FRAG_FASTQ_HISTORY)
+            activiy.startActivity(intent)
 
-        val adapter = FastqCartAdapter(activiy, list)
-        binding.rv.adapter = adapter
+        }
 
     }
 

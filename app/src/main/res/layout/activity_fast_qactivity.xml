@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray5"
     android:orientation="vertical"
-    tools:context=".activities.FastQActivity">
+    tools:context=".activities.FastqActivity">
 
     <include
         android:id="@+id/tool_bar"

@@ -94,9 +94,14 @@
     </style>
 
 
-    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+    <style name="checkBoxStyle" parent="Theme.AppCompat.DayNight">
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
         <item name="colorControlNormal">@color/gray6</item>
+    </style>
+
+    <style name="checkBoxGreenStyle" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlActivated">@color/green1</item>
+        <item name="colorControlNormal">@color/gray3</item>
     </style>
 
     <style name="primaryBtnStyle">

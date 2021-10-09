@@ -40,6 +40,7 @@ object Constants {
     const val KEY_FIRST_LOGIN = "KEY_FIRST_LOGIN"
     const val FROM_BROSHER = "FROM_BROSHER"
     const val KEY_FRAGMENT_ID = "KEY_FRAGMENT_ID"
+    const val KEY_FRAGMENT_TYPE = "KEY_FRAGMENT_TYPE"
 
     //    public static final String SUBCATID = "SUBCATID";
     const val TO_BROSHER = "TO_BROSHER"
@@ -140,4 +141,7 @@ object Constants {
     const val default_country_code = 973
     const val default_short_name = "BH"
     const val BHD = "BHD"
+
+    const val FRAG_FASTQ_SETTINGS = "frag_fastq_settings"
+    const val FRAG_FASTQ_HISTORY = "frag_fastq_history"
 }

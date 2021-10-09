@@ -7,24 +7,26 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
+import com.ramez.shopp.Classes.CartModel
 import com.ramez.shopp.Classes.CityModelResult
 import com.ramez.shopp.Classes.Constants
 import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
+import com.ramez.shopp.adapter.FastqCartAdapter
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
-import com.ramez.shopp.databinding.ActivityScanfastActivityBinding
+import com.ramez.shopp.databinding.ActivityFastqCartActivityBinding
 import java.util.ArrayList
 
 
-class ScanFastActivity : ActivityBase() {
+class FastqCartActivity : ActivityBase() {
 
-    private lateinit var binding: ActivityScanfastActivityBinding
     var localModel: LocalModel? = null
     var branchName: String = ""
     private var countryId = 0
@@ -32,16 +34,19 @@ class ScanFastActivity : ActivityBase() {
     var cityModelArrayList: ArrayList<CityModel>? = null
     private var selectedCityModel: CityModel? = null
 
+
+    private lateinit var binding: ActivityFastqCartActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityScanfastActivityBinding.inflate(layoutInflater)
+        binding = ActivityFastqCartActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         changeToolBarColor()
 
-//        val actionBar: ActionBar? = supportActionBar
-//        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
-//        actionBar?.setBackgroundDrawable(colorDrawable)
+        binding.rv.layoutManager = LinearLayoutManager(activiy)
+
 
         StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
@@ -58,16 +63,7 @@ class ScanFastActivity : ActivityBase() {
 
         initListeners()
 
-    }
-
-    fun initListeners() {
-
-        binding.cartBtn.setOnClickListener {
-
-            val intent = Intent(activiy, FastQCartActivity::class.java)
-            startActivity(intent)
-
-        }
+        initAdapter()
 
     }
 
@@ -115,6 +111,30 @@ class ScanFastActivity : ActivityBase() {
         binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
+
+    }
+
+    private fun initListeners() {
+        binding.continueBtn.setOnClickListener {
+
+            val intent = Intent(activiy, FastqCheckoutActivity::class.java)
+            startActivity(intent)
+
+        }
+
+    }
+
+    fun initAdapter() {
+
+        val list = mutableListOf(
+            CartModel(),
+            CartModel(),
+            CartModel(),
+            CartModel(),
+        )
+
+        val adapter = FastqCartAdapter(activiy, list)
+        binding.rv.adapter = adapter
 
     }
 

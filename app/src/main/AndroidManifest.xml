@@ -29,21 +29,42 @@
         tools:replace="android:allowBackup">
 
         <activity
-            android:name=".activities.FastQActivity"
+            android:name=".activities.FastqActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-            android:name=".activities.ScanFastActivity"
+            android:name=".activities.FastqScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
-            android:name=".activities.FastQCartActivity"
+            android:name=".activities.FastqCartActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".activities.FastqCheckoutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".activities.FastqSummaryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+        <activity
+            android:name=".activities.PagesActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"

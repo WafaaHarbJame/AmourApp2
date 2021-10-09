@@ -387,6 +387,18 @@
     <string name="History">History</string>
     <string name="FastQ">FastQ</string>
     <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">Ensure barcode is within white markers to scan an item</string>
+    <string name="unit_price_key">سعر الوحدة :</string>
+    <string name="scanning">جاري المسح</string>
+    <string name="product_add_to_cart">تم اضافة المنتج للسلة</string>
+    <string name="fastq_cart_hint">الرجاء التأكد من انك قمت بعمل مسح والتحقق من جميع العناصر في حقيبتك</string>
+    <string name="continuee">متابعة</string>
+    <string name="by_placing_this_order_agree">بتأكيد هذا الطلب انا اوافق على</string>
+    <string name="in_store_payment">الدفع داخل المتجر</string>
+    <string name="please_proceed_nearest_point">الرجاء التوجه لاقرب نقطة دفع</string>
+    <string name="our_cashier_scan_complete_purchase">سيطلب منك الكاشير مسح رمز الكيو أر لإكمال عملية الشراء</string>
+    <string name="please_finish_your_shopping_at_checkout_point">الرجاء الإنتهاء من التسوق عند نقطة البيع</string>
+    <string name="shopping_summary">ملخص التسوق</string>
+    <string name="closee">إغلاق</string>
 
 
 </resources>

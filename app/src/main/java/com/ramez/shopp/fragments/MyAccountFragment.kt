@@ -649,7 +649,7 @@ class MyAccountFragment : FragmentBase() {
         }
 
         binding.fastqLyBut.setOnClickListener {
-            val intent = Intent(activityy, FastQActivity::class.java)
+            val intent = Intent(activityy, FastqActivity::class.java)
             requireActivity().startActivity(intent)
 
         }

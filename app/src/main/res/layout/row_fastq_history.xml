@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/round_corner_white_small8"
+        app:layout_constraintBottom_toTopOf="@id/shoppingSummaryGuide"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ramez.shopp.SpichalViews.STextViewBold
+        android:id="@+id/branchNameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Riffa Branch"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/dateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:text="04.10.2021"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/branchNameTv" />
+
+
+    <LinearLayout
+        android:id="@+id/priceLy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTv">
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:text="@string/total"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:id="@+id/itemsCountTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:text="(4 Items)"
+            android:textColor="@color/header2"
+            android:textSize="@dimen/_10ssp" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/priceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2332 BHD"
+            android:textColor="@color/green1"
+            android:textSize="@dimen/_10ssp" />
+
+    </LinearLayout>
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/shoppingSummaryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/circle_corner_primary"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/shopping_summary"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceLy" />
+
+    <View
+        android:id="@+id/shoppingSummaryGuide"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/shoppingSummaryBtn"
+        app:layout_constraintEnd_toEndOf="@id/shoppingSummaryBtn"
+        app:layout_constraintStart_toStartOf="@id/shoppingSummaryBtn"
+        app:layout_constraintTop_toTopOf="@id/shoppingSummaryBtn" />
+
+    <View
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shoppingSummaryBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

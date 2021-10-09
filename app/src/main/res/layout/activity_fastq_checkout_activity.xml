@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activities.FastqActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scanner_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonVisible="true"
+        app:flashButtonColor="@android:color/white"
+        app:flashButtonVisible="true"
+        app:frameAspectRatioHeight="1"
+        app:frameAspectRatioWidth="1"
+        app:frameColor="@android:color/white"
+        app:frameCornersRadius="0dp"
+        app:frameCornersSize="50dp"
+        app:frameSize="0.75"
+        app:frameThickness="2dp"
+        app:maskColor="#77000000" />
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/inStoreLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/round_bottom_corner_green_fill"
+        android:gravity="center"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/in_store_payment"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11ssp"
+        android:visibility="visible" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/cashierIcon"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/circle_gray_fill"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_checkout_point"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/please_proceed_nearest_point"
+            android:textColor="@color/header1"
+            android:textSize="@dimen/_11ssp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/cashierIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cashierIcon"
+            app:layout_constraintTop_toTopOf="@id/cashierIcon" />
+
+
+        <View
+            android:id="@+id/stepLine"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_20sdp"
+            android:background="@color/gray1"
+            app:layout_constraintEnd_toEndOf="@id/cashierIcon"
+            app:layout_constraintStart_toStartOf="@id/cashierIcon"
+            app:layout_constraintTop_toBottomOf="@id/cashierIcon" />
+
+        <ImageView
+            android:id="@+id/scanIcon"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/circle_gray_fill"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_scanqr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stepLine" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@string/our_cashier_scan_complete_purchase"
+            android:textColor="@color/header1"
+            android:textSize="@dimen/_11ssp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/scanIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/scanIcon"
+            app:layout_constraintTop_toTopOf="@id/scanIcon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

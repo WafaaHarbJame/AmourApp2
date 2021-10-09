@@ -431,5 +431,15 @@
     <string name="fastq_cart_hint">Please make sure that you have scanned and verified all the items in your bag</string>
     <string name="continuee">Continue</string>
     <string name="by_placing_this_order_agree">By placing this order I agree on</string>
+    <string name="in_store_payment">In-store Payment</string>
+    <string name="please_proceed_nearest_point">Please proceed to the nearest checkout point</string>
+    <string name="our_cashier_scan_complete_purchase">Our cashier will ask you to scan QR code to compete your purchase</string>
+    <string name="please_finish_your_shopping_at_checkout_point">Please finish your shopping at the checkout point</string>
+    <string name="shopping_summary">Shopping Summary</string>
+    <string name="closee">Close</string>
+    <string name="continuous_scan">Continuous Scan</string>
+    <string name="continuous_scan_hint">When ON, you don\'t need to press \" Scan Again\". Items will be automatically scanned when you focus on the barcode.</string>
+    <string name="sound_alert">Sound and Alert</string>
+    <string name="sound_alert_hint">Play sound for product scan and interactions.</string>
 
 </resources>
