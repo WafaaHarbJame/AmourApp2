@@ -46,6 +46,11 @@ public class SharedPManger {
 
     }
 
+
+
+
+
+
     public void SetData(String key, boolean value) {
 
         SharedPreferences.Editor editor = preferences.edit();

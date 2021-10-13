@@ -210,13 +210,15 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
                             binding.failGetDataLY.failGetDataLY.visibility =
                                 View.VISIBLE
                             binding.failGetDataLY.failTxt.text = message
-                        } else if (func == Constants.FAIL) {
+                        }
+                        else if (func == Constants.FAIL) {
                             binding.dataLY.visibility = View.GONE
                             binding.noDataLY.noDataLY.visibility = View.GONE
                             binding.failGetDataLY.failGetDataLY.visibility =
                                 View.VISIBLE
                             binding.failGetDataLY.failTxt.text = message
-                        } else if (func == Constants.NO_CONNECTION) {
+                        }
+                        else if (func == Constants.NO_CONNECTION) {
                             binding.failGetDataLY.failGetDataLY.visibility =
                                 View.VISIBLE
                             binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection)

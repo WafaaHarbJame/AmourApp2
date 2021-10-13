@@ -8,8 +8,8 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/toolbarBack"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:background="@color/colorPrimary">
 
@@ -143,6 +143,40 @@
             android:padding="@dimen/_13sdp"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search_t" />
+
+        <FrameLayout
+            android:id="@+id/cartFastBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:minWidth="@dimen/_40sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/cartIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/cart_icon_bottom"
+                app:tint="@color/white" />
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/cartsCountTv"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:background="@drawable/circle_corner_primary"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/red3"
+                android:textSize="@dimen/_6ssp" />
+
+        </FrameLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

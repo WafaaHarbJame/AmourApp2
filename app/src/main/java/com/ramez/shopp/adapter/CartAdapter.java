@@ -38,13 +38,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     private static final String TAG = "Log CartAdapter";
     public int count;
     public String currency = "BHD";
+    int fraction = 2;
+    LocalModel localModel;
     DataCallback dataCallback;
     AddCommentDialog addCommentDialog;
     private final Context context;
     private final List<CartModel> cartDMS;
     private final OnCartItemClicked onCartItemClicked;
-    int fraction = 2;
-    LocalModel localModel;
     MemberModel memberModel;
 
     public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
@@ -300,20 +300,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
-            binding.deleteBut.setOnClickListener(view1 -> {
-
-                int position = getBindingAdapterPosition();
-                CartModel productModel = cartDMS.get(position);
-                int product_barcode_id = productModel.getProductBarcodeId();
-                int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
-                int storeId = Integer.parseInt(localModel.getCityId());
-                int productId = productModel.getProductId();
-                int cart_id = productModel.getId();
-
-                deleteCart(position, productId, product_barcode_id, cart_id, userId, storeId);
-
-
-            });
 
             binding.plusCartBtn.setOnClickListener(v -> {
                 String message;
@@ -411,6 +397,21 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
+            binding.deleteBut.setOnClickListener(view1 -> {
+
+                int position = getBindingAdapterPosition();
+                CartModel productModel = cartDMS.get(position);
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int userId = memberModel != null && memberModel.getId() != null ? memberModel.getId() : 0;
+                int storeId = Integer.parseInt(localModel.getCityId());
+                int productId = productModel.getProductId();
+                int cart_id = productModel.getId();
+
+                deleteCart(position, productId, product_barcode_id, cart_id, userId, storeId);
+
+
+            });
+
             binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
 
             binding.swipe.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -502,7 +503,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     }
 
 
-    public void deleteCart(int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
+    public void deleteCart(int position, int productId, int product_barcode_id, int cart_id,
+                           int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {

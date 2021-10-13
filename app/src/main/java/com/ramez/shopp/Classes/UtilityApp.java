@@ -94,12 +94,12 @@ public class UtilityApp {
     }
 
 
-    public  static String getToken(){
+    public static String getToken() {
         final String[] FCMToken = new String[1];
         OneSignal.idsAvailable((userId, registrationId) -> {
             Log.d("debug", "Log User:" + userId);
             if (registrationId != null)
-                  FCMToken[0] =OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+                FCMToken[0] = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
 
             Log.i("Utility", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
             Log.i("Utility", "Log token firebase:" + UtilityApp.getFCMToken());
@@ -121,11 +121,12 @@ public class UtilityApp {
     }
 
 
-    public static boolean isFirstLogin(){
+    public static boolean isFirstLogin() {
 
         boolean isFirstRun = RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_FIRST_LOGIN, true);
         return isFirstRun;
     }
+
 
     public static void setIsFirstLogin(boolean isFirstRun) {
 
@@ -133,12 +134,20 @@ public class UtilityApp {
     }
 
 
+    public static void setBranchName(String branchName) {
+
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_BRANCH_NAME, branchName);
+    }
+
+    public static String getBranchName() {
+
+        return RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_BRANCH_NAME, "");
+    }
+
     public static boolean isLogin() {
         String userToken = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         return userToken != null;
     }
-
-
 
 
     public static void logOut() {
@@ -156,6 +165,10 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SOCIAL, null);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SETTING, null);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.DB_loyal, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SCAN_SOUND, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SCAN_AGAIN, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_FASTQ_Total, null);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_FASTQ_SIZE, null);
 
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_LOGIN_PREFERANCE);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_TOTAL_POINTS);
@@ -169,8 +182,10 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SETTING);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.DB_loyal);
         RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_MEMBER);
-
-
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SCAN_SOUND);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_SCAN_AGAIN);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CART_FASTQ_Total);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_CART_FASTQ_SIZE);
 
 
     }
@@ -277,7 +292,7 @@ public class UtilityApp {
     }
 
     public static LocalModel getDefaultLocalData(Context context) {
-        LocalModel newLocal=new LocalModel();
+        LocalModel newLocal = new LocalModel();
         newLocal.setCityId(Constants.default_storeId);
         newLocal.setCountryId(Constants.default_country_id);
         newLocal.setCountryNameEn(context.getString(R.string.Bahrain));
@@ -296,11 +311,10 @@ public class UtilityApp {
     }
 
 
-
-
     public static Boolean isEnglish() {
         Boolean isEnglish = false;
-        if (UtilityApp.getLanguage().equals(Constants.English)) isEnglish = true;
+        if (UtilityApp.getLanguage().equals(Constants.English))
+            isEnglish = true;
         return isEnglish;
 
     }
@@ -313,6 +327,44 @@ public class UtilityApp {
     public static void setCartCount(int cartNumber) {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, cartNumber);
     }
+
+
+    public static int getFastQCartCount() {
+        return RootApplication.getInstance().getSharedPManger().getDataInt(Constants.KEY_CART_FASTQ_SIZE, 0);
+    }
+
+    public static void setFastQCartCount(int cartNumber) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_FASTQ_SIZE, cartNumber);
+    }
+
+
+    public static float getFastQCartTotal() {
+        return RootApplication.getInstance().getSharedPManger().getDataFloat(Constants.KEY_CART_FASTQ_Total);
+    }
+
+
+    public static void setFastQCartTotal(float total) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_FASTQ_Total, total);
+    }
+
+
+    public static boolean getContinuousScan() {
+        return RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_SCAN_AGAIN, false);
+    }
+
+    public static void setContinuousScan(boolean scanAgain) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SCAN_AGAIN, scanAgain);
+    }
+
+
+    public static boolean getScanSound() {
+        return RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_SCAN_SOUND, false);
+    }
+
+    public static void setScanSound(boolean scanSound) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SCAN_SOUND, scanSound);
+    }
+
 
     public static void updateCart(int type, int cartListSize) {
         int cartNumber = getCartCount();
@@ -348,8 +400,6 @@ public class UtilityApp {
     }
 
 
-
-
     public static void setSliderData(ArrayList<Slider> sliderData) {
         String userData = new Gson().toJson(sliderData);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_SLIDER, userData);
@@ -364,12 +414,10 @@ public class UtilityApp {
     }
 
 
-
     public static void setBannerData(ArrayList<Slider> bannerData) {
         String userData = new Gson().toJson(bannerData);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_BANNER, userData);
     }
-
 
 
     public static ArrayList<DinnerModel> getDinners() {
@@ -383,13 +431,6 @@ public class UtilityApp {
         String userData = new Gson().toJson(bannerData);
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_DINNERS, userData);
     }
-
-
-
-
-
-
-
 
 
 }

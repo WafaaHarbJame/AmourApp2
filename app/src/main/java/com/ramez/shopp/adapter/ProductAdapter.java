@@ -253,17 +253,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 } else {
 
                     int position = getBindingAdapterPosition();
-                    int userId = UtilityApp.getUserData().getId();
-                    int storeId = Integer.parseInt(localModel.getCityId());
-                    int productId = productModels.get(position).getId();
-                    boolean isFavorite = productModels.get(position).isFavourite();
-                    if (isFavorite) {
-                        removeFromFavorite(view1, position, productId, userId, storeId);
+                    if(position >=0 && position < productModels.size()){
+                        int userId = UtilityApp.getUserData().getId();
+                        int storeId = Integer.parseInt(localModel.getCityId());
+                        int productId = productModels.get(position).getId();
+                        boolean isFavorite = productModels.get(position).isFavourite();
+                        if (isFavorite) {
+                            removeFromFavorite(view1, position, productId, userId, storeId);
 
-                    } else {
-                        addToFavorite(view1, position, productId, userId, storeId);
+                        } else {
+                            addToFavorite(view1, position, productId, userId, storeId);
 
+                        }
                     }
+
                 }
 
             });

@@ -34,7 +34,6 @@ import java.util.List;
 public class CardFragment extends FragmentBase {
 
     private FragmentCardBinding binding;
-    //    private CardsTransAdapter adapter;
     private int userId, countryId;
     private String coupBarcode;
     TotalPointModel totalPointModel;
@@ -73,7 +72,6 @@ public class CardFragment extends FragmentBase {
             int minimumPoints = settingCouponsModel != null && settingCouponsModel.minimumPoints > 0 ? settingCouponsModel.minimumPoints :
                     0;
             GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
-
                     userId, points, minimumPoints, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
                     GlobalData.refresh_points = true;

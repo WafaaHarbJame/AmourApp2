@@ -158,7 +158,6 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:layout_toEndOf="@id/priceTv"
                     android:lines="1"
-
                     android:text="BHD"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_10ssp"

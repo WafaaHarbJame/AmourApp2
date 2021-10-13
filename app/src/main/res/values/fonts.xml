@@ -7,6 +7,7 @@
     <string name="fal_info_circle" translatable="false">&#xf05a;</string>
     <string name="fal_plus" translatable="false">&#xf067;</string>
     <string name="fal_minus" translatable="false">&#xf068;</string>
+    <string name="fal_delete" translatable="false">&#xf2ed;</string>
 
     <string name="fa_refresh" translatable="false">&#xf021;</string>
     <string name="fa_camera" translatable="false">&#xf030;</string>

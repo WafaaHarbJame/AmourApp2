@@ -104,6 +104,12 @@
         <item name="colorControlNormal">@color/gray3</item>
     </style>
 
+   <style name="checkBoxGreenStyle1" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlActivated">@color/green5</item>
+        <item name="colorControlNormal">@color/gray3</item>
+        <item name="background">@color/green_light</item>
+    </style>
+
     <style name="primaryBtnStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/round_corner_primary_fill</item>

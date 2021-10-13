@@ -1,23 +1,25 @@
 package com.ramez.shopp.activities
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
-import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
+import com.ramez.shopp.CallBack.DataCallback
 import com.ramez.shopp.Classes.CartModel
 import com.ramez.shopp.Classes.CityModelResult
 import com.ramez.shopp.Classes.Constants
 import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CartFastQModel
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
+import com.ramez.shopp.Models.ResultAPIModel
 import com.ramez.shopp.R
+import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.adapter.FastqCartAdapter
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
@@ -29,12 +31,13 @@ import java.util.ArrayList
 class FastqSummaryActivity : ActivityBase() {
 
     var localModel: LocalModel? = null
-    var branchName: String = ""
     private var countryId = 0
     private var cityId = 0
-    var cityModelArrayList: ArrayList<CityModel>? = null
-    private var selectedCityModel: CityModel? = null
-
+    private var list: MutableList<CartFastQModel>? = null
+    var userId = 0
+    var currency = "BHD"
+    var fraction = 2
+    var total = 0.0
 
     private lateinit var binding: ActivityFastqSummaryActivityBinding
 
@@ -48,7 +51,6 @@ class FastqSummaryActivity : ActivityBase() {
 
         binding.rv.layoutManager = LinearLayoutManager(activiy)
 
-
         StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
         localModel =
@@ -56,56 +58,47 @@ class FastqSummaryActivity : ActivityBase() {
                 activiy
             )
 
+        currency = localModel?.currencyCode ?: Constants.CURRENCY
+        fraction = localModel?.fractional ?: Constants.two
+
+
+        list = mutableListOf()
+
+        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
+            userId = UtilityApp.getUserData()?.id ?: 0
+        }
 
         countryId = localModel?.countryId ?: Constants.default_country_id
         cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
+        title = getString(R.string.shopping_summary)
 
-        getCityList(countryId)
 
         initListeners()
 
-        initAdapter()
+        cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
+
+        val list = intent.getSerializableExtra(Constants.CART_MODEL) as Array<CartFastQModel>
+        val productsList = mutableListOf<CartFastQModel>()
+        productsList.addAll(list)
+        initAdapter(productsList)
+
 
     }
 
-    private fun getCityList(country_id: Int) {
-        Log.i(javaClass.name, "Log country_id$country_id")
-        callCityListApi()
-    }
 
-    private fun callCityListApi() {
-        DataFeacher(false,
-            object : DataFetcherCallBack {
-                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                    if (IsSuccess) {
-                        val result = obj as CityModelResult
-                        if (result.data != null && result.data.size > 0) {
-                            cityModelArrayList = ArrayList(result.data)
-                            searchSelectedCity()
-                            setBranchData()
-                        }
-                    }
-                }
-
-            }).CityHandle(countryId, activiy)
-    }
-
-
-    private fun searchSelectedCity() {
-        for (cityModel in cityModelArrayList!!) {
-            if (cityId == cityModel.id) {
-                selectedCityModel = cityModel
-                break
+    private fun calculateSubTotalPrice(cartList: MutableList<CartFastQModel>?): Double {
+        var subTotal = 0.0
+        for (i in cartList!!.indices) {
+            val cartFastQModel = cartList[i]
+            if (cartFastQModel.price > 0) {
+                val price = cartFastQModel.price
+                subTotal += price * cartFastQModel.qty
             }
-        }
-    }
 
-    private fun setBranchData() {
-        if (selectedCityModel != null) {
-            branchName = selectedCityModel!!.cityName
-            Log.i(javaClass.name, "Log branchName $branchName")
-            title = branchName
         }
+        UtilityApp.setFastQCartTotal(subTotal.toFloat())
+        Log.i(javaClass.name, "Log subTotal result $subTotal")
+        return subTotal
     }
 
     private fun changeToolBarColor() {
@@ -124,17 +117,21 @@ class FastqSummaryActivity : ActivityBase() {
 
     }
 
-    fun initAdapter() {
+    fun initAdapter(cartList: MutableList<CartFastQModel>?) {
 
-        val list = mutableListOf(
-            CartModel(),
-            CartModel(),
-            CartModel(),
-            CartModel(),
-        )
+        val adapter = FastqCartAdapter(
+            activiy, cartList
+        ) { obj, func, IsSuccess ->
 
-        val adapter = FastqCartAdapter(activiy, list)
+        }
         binding.rv.adapter = adapter
+
+        binding.itemsCountTv.text =
+            "(".plus(" " + cartList?.size + " ").plus(getString(R.string.items).plus(")"))
+
+        binding.totalTv.text =
+            NumberHandler.formatDouble(calculateSubTotalPrice(cartList), fraction).plus(" $currency")
+
 
     }
 
@@ -145,5 +142,6 @@ class FastqSummaryActivity : ActivityBase() {
         startActivity(intent)
 
     }
+
 
 }

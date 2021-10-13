@@ -18,12 +18,13 @@ import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SplashScreenActivity : ActivityBase() {
     var storeId = 0
     var userId = 0
-    var country_id = 0
+    var countryId = 0
     var cartNumber = 0
     var lang: String? = null
     var shortName: String? = null
@@ -48,12 +49,12 @@ class SplashScreenActivity : ActivityBase() {
         if (localModel?.cityId != null) {
             storeId = localModel?.cityId?.toIntOrNull()
                 ?: Constants.default_storeId.toInt()
-            country_id = localModel?.countryId ?: Constants.default_country_id
+            countryId = localModel?.countryId ?: Constants.default_country_id
             shortName = localModel?.shortname ?: Constants.default_short_name
             getCategories(storeId)
             getDinners(lang)
             GetHomePage()
-            getCouponSettings(country_id)
+            getCouponSettings(countryId)
             getCountryDetail(shortName)
             getLinks(storeId)
         }
@@ -69,6 +70,7 @@ class SplashScreenActivity : ActivityBase() {
                     userId = user?.id ?: 0
                     getTotalPoints(userId)
                     GetUserAddress(userId)
+                    getFastQCarts(storeId, userId)
                     getUserData(userId, storeId)
                 } else {
                     UtilityApp.logOut()
@@ -105,14 +107,14 @@ class SplashScreenActivity : ActivityBase() {
                     val profileData = result.data
                     val name = profileData?.name ?: ""
                     val email = profileData?.email ?: ""
-                    val LoyalBarcode = profileData?.loyalBarcode ?: ""
-                    val ProfilePicture = profileData?.profilePicture ?: ""
+                    val loyalBarcode = profileData?.loyalBarcode ?: ""
+                    val profilePicture = profileData?.profilePicture ?: ""
                     memberModel.name = name
                     memberModel.email = email
-                    memberModel.loyalBarcode = LoyalBarcode
-                    memberModel.profilePicture = ProfilePicture
+                    memberModel.loyalBarcode = loyalBarcode
+                    memberModel.profilePicture = profilePicture
                     UtilityApp.setUserData(memberModel)
-                    getCarts(storeId, userId)
+
                 } else {
                     UtilityApp.logOut()
                     val intent =
@@ -181,11 +183,13 @@ class SplashScreenActivity : ActivityBase() {
     fun getDinners(lang: String?) {
         UtilityApp.setDinnersData(null)
         Log.i("TAG", "Log dinners Size")
-        Log.i("TAG", "Log country id $country_id")
+        Log.i("TAG", "Log country id $countryId")
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as ResultAPIModel<ArrayList<DinnerModel>?>
+
                 if (IsSuccess) {
+                    val result = obj as ResultAPIModel<ArrayList<DinnerModel>?>
+
                     if (result.data?.size ?: 0 > 0) {
                         Log.i("TAG", "Log dinners Size" + result.data?.size)
                         val dinnerModels = result.data
@@ -216,7 +220,7 @@ class SplashScreenActivity : ActivityBase() {
                     } else {
                         UtilityApp.setCartCount(0)
                     }
-                    val intent = Intent(activiy,Constants.MAIN_ACTIVITY_CLASS)
+                    val intent = Intent(activiy, Constants.MAIN_ACTIVITY_CLASS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -243,7 +247,7 @@ class SplashScreenActivity : ActivityBase() {
         val sliderList = ArrayList<Slider>()
         val bannersList = ArrayList<Slider>()
         Log.i(ContentValues.TAG, "Log getSliders ")
-        Log.i(ContentValues.TAG, "Log getSliders country_id $country_id")
+        Log.i(ContentValues.TAG, "Log getSliders country_id $countryId")
         Log.i(ContentValues.TAG, "Log getSliders user_id $userId")
         Log.i(ContentValues.TAG, "Log getSliders  city_id $storeId")
         DataFeacher(false, object : DataFetcherCallBack {
@@ -273,7 +277,7 @@ class SplashScreenActivity : ActivityBase() {
                 }
             }
 
-        }).GetMainPage(0, country_id, storeId, userId.toString())
+        }).GetMainPage(0, countryId, storeId, userId.toString())
     }
 
     fun GetUserAddress(user_id: Int) {
@@ -300,7 +304,56 @@ class SplashScreenActivity : ActivityBase() {
         }).GetAddressHandle(user_id)
     }
 
+
+    fun getFastQCarts(storeId: Int, userId: Int) {
+
+        DataFeacher(false, object : DataFetcherCallBack {
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                if (IsSuccess) {
+
+                    val cartFastQModel = obj as ResultAPIModel<ArrayList<CartFastQModel?>?>?
+
+                    if (cartFastQModel?.status == 200 && cartFastQModel.data?.isNotEmpty() == true) {
+
+                        val data = cartFastQModel.data
+                        val fastCartNumber = data?.size ?: 0
+                        UtilityApp.setFastQCartCount(fastCartNumber)
+
+                        calculateSubTotalPrice(data)
+                        Log.i(javaClass.name, "Log fast Cart count $fastCartNumber")
+
+
+                    } else {
+                        Log.i(javaClass.name, "Log fast Cart count 0")
+
+                        UtilityApp.setFastQCartCount(0)
+                        UtilityApp.setFastQCartTotal(0f)
+                    }
+
+                    getCarts(storeId, userId)
+
+
+                }
+            }
+
+        }).getFastQCarts(storeId, userId.toString())
+    }
+
+
     companion object {
         private const val SPLASH_TIMER = 3500
     }
+
+        fun calculateSubTotalPrice(cartList: ArrayList<CartFastQModel?>?): Double {
+        var subTotal = 0.0
+        for (product in cartList ?: mutableListOf()) {
+
+            subTotal = subTotal.plus(product?.price?.times(product.qty) ?: 0.0)
+
+        }
+        UtilityApp.setFastQCartTotal(subTotal.toFloat())
+        println("Log subTotal result $subTotal")
+        return subTotal
+    }
+
 }

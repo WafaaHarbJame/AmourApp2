@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/_7sdp"
         android:scaleType="fitCenter"
-        android:src="@drawable/slider_image" />
+        android:src="@drawable/holder_image" />
 
 
 

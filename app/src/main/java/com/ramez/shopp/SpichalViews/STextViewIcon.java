@@ -8,10 +8,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.ramez.shopp.Classes.Constants;
 
-
-/**
- * Created by ahmed barakat on 8/20/14.
- */
 public class STextViewIcon extends AppCompatTextView {
     public STextViewIcon(Context context) {
         super(context);

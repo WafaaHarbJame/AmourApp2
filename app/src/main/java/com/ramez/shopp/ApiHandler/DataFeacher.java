@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v6/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v8/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -55,7 +55,7 @@ public class DataFeacher {
 
         };
 
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
         headerMap.put("ApiKey", Constants.api_key);
         headerMap.put("device_type", Constants.deviceType);
@@ -121,7 +121,7 @@ public class DataFeacher {
         this.dataFetcherCallBack = dataFetcherCallBack;
         apiService = isLong ? ApiClient.getLongClient().create(ApiInterface.class) : ApiClient.getClient().create(ApiInterface.class);
 
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
         headerMap.put("ApiKey", Constants.api_key);
         headerMap.put("device_type", Constants.deviceType);
         headerMap.put("app_version", UtilityApp.getAppVersionStr());
@@ -194,8 +194,8 @@ public class DataFeacher {
         params.put("password", memberModel.getPassword());
         params.put("user_type", memberModel.getUserType());
         params.put("device_type", Constants.deviceType);
-        params.put("device_token", memberModel.getDeviceToken()+"");
-        params.put("device_id", memberModel.getDeviceToken()+"");
+        params.put("device_token", memberModel.getDeviceToken() + "");
+        params.put("device_id", memberModel.getDeviceToken() + "");
         params.put("city_id", memberModel.getCity());
 
         Log.i(TAG, "Log loginHandle");
@@ -251,7 +251,7 @@ public class DataFeacher {
         Log.i(TAG, "Log device_id " + memberModel.getDeviceId());
         Log.i(TAG, "Log prefix " + memberModel.getPrefix());
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
-        Log.i(TAG, "Log EMAIL " + memberModel.getEmail());
+        Log.i(TAG, "Log EMAIL " + "");
 
         Call call = apiService.registerUserHandle(headerMap, params);
         call.enqueue(callbackApi);
@@ -355,19 +355,17 @@ public class DataFeacher {
         Log.i(TAG, "Log country_id " + country_id);
 
         String countryCode = "";
-       LocalModel localModel = UtilityApp.getLocalData()!=null ?UtilityApp.getLocalData(): UtilityApp.getDefaultLocalData(activity);
+        LocalModel localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(activity);
 
-        if (localModel.getShortname() != null){
+        if (localModel.getShortname() != null) {
             countryCode = localModel.getShortname();
 
-        }
-        else {
+        } else {
             countryCode = GlobalData.COUNTRY;
         }
 
 
-
-        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v6/Locations/citiesByCountry";
+        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v8/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -863,8 +861,83 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
+
         Call call = apiService.barcodeSearch(headerMap, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
+    }
+
+    public void addToFastQCart(int city_id, String user_id, String filter) {
+
+        Log.i(TAG, "Log addToFastQCart");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log barcode " + filter);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("barcode", filter);
+        params.put("store_id", city_id);
+
+        Call call = apiService.addToFastQCart(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+
+
+    public void updateCartFastQ(int id,int qty, int city_id, String user_id) {
+
+        Log.i(TAG, "Log updateCartFastQ");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log id " + id);
+        Log.i(TAG, "Log qty " + qty);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log store_id " + city_id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("id", id);
+        params.put("qty", qty);
+        params.put("store_id", city_id);
+
+        Call call = apiService.updateFastQCart(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+
+
+    public void getFastQCarts(int city_id, String user_id) {
+
+        Log.i(TAG, "Log getFastQCarts");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("store_id", city_id);
+
+        Call call = apiService.getFastQCarts(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void generateOrders(int city_id, String user_id, String Cashier) {
+
+        Log.i(TAG, "Log generateOrders");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("store_id", city_id);
+        params.put("Cashier", Cashier);
+
+        Call call = apiService.generateOrders(headerMap, params);
+        call.enqueue(callbackApi);
+
+
     }
 
     public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
@@ -1295,7 +1368,6 @@ public class DataFeacher {
         call.enqueue(callbackApi);
 
     }
-
 
 
 }

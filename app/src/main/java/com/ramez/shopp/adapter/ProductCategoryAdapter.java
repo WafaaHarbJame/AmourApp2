@@ -451,12 +451,14 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     checkLoginDialog.show();
                 } else {
                     String message;
-                    if (productModels.size() > 0) {
-                        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+                        int position = getBindingAdapterPosition();
+
+                        if (position >=0 && productModels.size() > 0 && position < productModels.size()){
+
+                            if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
                             ProductModel productModel = productModels.get(getBindingAdapterPosition());
                             ProductBarcode productBarcode = productModel.getFirstProductBarcodes();
                             int count = productBarcode.getCartQuantity();
-                            int position = getBindingAdapterPosition();
 
                             int userId = UtilityApp.getUserData().getId();
                             int storeId = Integer.parseInt(localModel.getCityId());

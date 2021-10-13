@@ -1084,7 +1084,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         reviewList.clear();
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<ArrayList<ReviewModel>> result = (ResultAPIModel<ArrayList<ReviewModel>>) obj;
+            ResultAPIModel<ArrayList<ReviewModel>> result =
+                    (ResultAPIModel<ArrayList<ReviewModel>>) obj;
 
             if (IsSuccess) {
                 if (result.data != null && result.data.size() > 0) {

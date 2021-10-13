@@ -131,13 +131,12 @@ public class RegisterFragment extends FragmentBase {
         final String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
         final String passwordStr = NumberHandler.arabicToDecimal(binding.edtPassword.getText().toString());
         final String nameStr = NumberHandler.arabicToDecimal(binding.edtFirstName.getText().toString());
-        final String emailStr = NumberHandler.arabicToDecimal(binding.edtEmail.getText().toString());
 
         MemberModel memberModel = new MemberModel();
         memberModel.setMobileNumber(mobileStr);
         memberModel.setPassword(passwordStr);
         memberModel.setName(nameStr);
-        memberModel.setEmail(emailStr);
+        memberModel.setEmail("");
         memberModel.setCity(Integer.parseInt(city_id));
         memberModel.setCountry(country_name);
         memberModel.setDeviceToken(FCMToken);
@@ -178,7 +177,7 @@ public class RegisterFragment extends FragmentBase {
                         } else {
                             String message = getString(R.string.fail_register);
 
-                            if (result != null && result.getMessage() != null) {
+                            if (result.getMessage() != null) {
                                 message = result.getMessage();
                             }
                             GlobalData.errorDialog(getActivityy(), R.string.register, message);
@@ -212,10 +211,13 @@ public class RegisterFragment extends FragmentBase {
 
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name))).addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).
+        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name)))
+                .addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).
                 addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password))).
 
-                addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password)), new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
+                addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password))
+                        , new EqualRule(String.valueOf(binding.edtPassword.getText())
+                                , R.string.password_confirm_not_match)).validate();
 
     }
 

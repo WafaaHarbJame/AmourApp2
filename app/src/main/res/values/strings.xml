@@ -437,9 +437,19 @@
     <string name="please_finish_your_shopping_at_checkout_point">Please finish your shopping at the checkout point</string>
     <string name="shopping_summary">Shopping Summary</string>
     <string name="closee">Close</string>
+    <string name="getproduct">Get product Data</string>
+    <string name="scan_again">Scan Again</string>
+    <string name="Pay_at_Checkout">Pay at Checkout Point</string>
+    <string name="items"> Items</string>
+    <string name="product_added_to_cart">Product already Added to cart</string>
+    <string name="check_barcode">Check barcode</string>
+    <string name="check_barcode_data">please wait to check Barcode</string>
+    <string name="you_cant_scan_again">"You can't scan again  chnage it from setting to scan again "</string>
     <string name="continuous_scan">Continuous Scan</string>
     <string name="continuous_scan_hint">When ON, you don\'t need to press \" Scan Again\". Items will be automatically scanned when you focus on the barcode.</string>
     <string name="sound_alert">Sound and Alert</string>
     <string name="sound_alert_hint">Play sound for product scan and interactions.</string>
+    <string name="min_quantity_is_one">Minimum quantity is one</string>
+
 
 </resources>

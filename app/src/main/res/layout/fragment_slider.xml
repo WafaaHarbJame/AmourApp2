@@ -15,7 +15,7 @@
         app:siRadius="@dimen/_8sdp"
         app:siBorderColor="@color/gray5"
         app:siBorderWidth="@dimen/_1sdp"
-        android:src="@drawable/slider_image" />
+        android:src="@drawable/holder_image" />
 </LinearLayout>
 
 

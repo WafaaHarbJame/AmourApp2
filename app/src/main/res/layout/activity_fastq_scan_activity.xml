@@ -31,6 +31,7 @@
             app:frameCornersRadius="0dp"
             app:frameCornersSize="50dp"
             app:frameSize="0.75"
+            android:soundEffectsEnabled="false"
             app:frameThickness="2dp"
             app:maskColor="#77000000" />
 
@@ -42,7 +43,8 @@
             android:background="@drawable/round_corner_green_trans_fill"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/_30sdp">
+            android:padding="@dimen/_30sdp"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -102,6 +104,7 @@
                 android:orientation="vertical">
 
                 <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/productNameTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_3sdp"
@@ -126,6 +129,7 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/priceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="12 BHD"
@@ -144,6 +148,7 @@
                 android:orientation="vertical">
 
                 <com.ramez.shopp.SpichalViews.STextViewIcon
+                    android:id="@+id/plusBtn"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:background="@drawable/round_corner_green_fill_big"
@@ -153,6 +158,7 @@
                     android:textSize="@dimen/_11ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/quantityTv"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -162,6 +168,7 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextViewIcon
+                    android:id="@+id/minusBtn"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:background="@drawable/round_corner_green_light_fill"
@@ -169,6 +176,30 @@
                     android:text="@string/fal_minus"
                     android:textColor="@color/fastq_color"
                     android:textSize="@dimen/_11ssp" />
+
+                <com.ramez.shopp.SpichalViews.STextViewIcon
+                    android:id="@+id/deleteButton"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@drawable/round_corner_green_light_fill"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/fal_delete"
+                    android:visibility="gone"
+                    android:textColor="@color/fastq_color"
+                    android:textSize="@dimen/_11ssp" />
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/deleteBut"-->
+                <!--                    android:layout_width="@dimen/_25sdp"-->
+                <!--                    android:layout_height="@dimen/_25sdp"-->
+                <!--                    android:background="@drawable/round_corner_green_light_fill"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    android:src="@drawable/delete_icon"-->
+                <!--                    android:textColor="@color/fastq_color"-->
+                <!--                    android:textSize="@dimen/_11ssp" />-->
+
             </LinearLayout>
         </LinearLayout>
 
@@ -210,11 +241,12 @@
                 android:textSize="@dimen/_10ssp" />
 
             <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@id/totalTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="0 bhd"
+                android:text="0 BHD"
                 android:textColor="@color/fastq_color"
                 android:textSize="@dimen/_10ssp" />
 
@@ -244,6 +276,7 @@
                     android:src="@drawable/ic_barcode_white" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:id="@+id/processTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -281,7 +314,7 @@
                 android:src="@drawable/ic_cart_gray" />
 
             <com.ramez.shopp.SpichalViews.STextView
-                android:id="@+id/cartCountTv"
+                android:id="@+id/cartFastCountTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_minus5sdp"
@@ -291,9 +324,10 @@
                 android:gravity="center"
                 android:minWidth="@dimen/_12sdp"
                 android:minHeight="@dimen/_12sdp"
-                android:text="0"
+                android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/_6ssp" />
+                android:textSize="@dimen/_6ssp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

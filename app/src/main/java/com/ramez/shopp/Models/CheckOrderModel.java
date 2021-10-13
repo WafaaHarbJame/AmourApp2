@@ -30,7 +30,7 @@ public class CheckOrderModel implements Serializable {
     private double cost;
     @SerializedName("express_delivery_charges")
     @Expose
-    private int expressDeliveryCharges;
+    private double expressDeliveryCharges;
 
     public UserDefaultAddress getUserAddress() {
         return userAddress;
@@ -88,11 +88,11 @@ public class CheckOrderModel implements Serializable {
         this.cost = cost;
     }
 
-    public int getExpressDeliveryCharges() {
+    public double getExpressDeliveryCharges() {
         return expressDeliveryCharges;
     }
 
-    public void setExpressDeliveryCharges(int expressDeliveryCharges) {
+    public void setExpressDeliveryCharges(double expressDeliveryCharges) {
         this.expressDeliveryCharges = expressDeliveryCharges;
     }
 }

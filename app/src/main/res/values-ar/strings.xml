@@ -399,6 +399,17 @@
     <string name="please_finish_your_shopping_at_checkout_point">الرجاء الإنتهاء من التسوق عند نقطة البيع</string>
     <string name="shopping_summary">ملخص التسوق</string>
     <string name="closee">إغلاق</string>
-
-
+    <string name="getproduct">الحصول بيانات المنتج</string>
+    <string name="scan_again">امسح مجددا</string>
+    <string name="Pay_at_Checkout">الدفع عند  نقطة الخروج </string>
+    <string name="items"> عنصر </string>
+    <string name="product_added_to_cart">المنتج مضاف  إلى سلة التسوق</string>
+    <string name="check_barcode">تحقق من الباركود</string>
+    <string name="check_barcode_data">يرجى الانتظار للتحقق من الرمز الشريطي</string>
+    <string name="you_cant_scan_again">ا يمكنك مسحه ضوئيًا مرة أخرى ، قم بتغييره من الإعداد إلى المسح مرة أخرى "</string>
+    <string name="continuous_scan">المسح المستمر</string>
+    <string name="continuous_scan_hint">عند تشغيل ، لا تحتاج إلى الضغط على "Scan Again". سيتم فحص العناصر تلقائيًا عند التركيز على الرمز الشريطي.</string>
+    <string name="sound_alert">الصوت والتنبيه</string>
+    <string name="sound_alert_hint">تشغيل الصوت لفحص المنتج والتفاعلات.</string>
+    <string name="min_quantity_is_one">الحد الادني من الكمية واحد </string>
 </resources>

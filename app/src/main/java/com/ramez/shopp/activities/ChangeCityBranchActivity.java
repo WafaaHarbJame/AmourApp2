@@ -134,6 +134,10 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
             localModel.setCityId(String.valueOf(city_id));
             localModel.setCountryName(newCountryName);
             UtilityApp.setLocalData(localModel);
+            UtilityApp.setFastQCartCount(0);
+            UtilityApp.setFastQCartTotal(0);
+            UtilityApp.setContinuousScan(false);
+            UtilityApp.setScanSound(false);
             FirebaseMessaging.getInstance().subscribeToTopic(newCountryName)
 
                     .addOnCompleteListener(task -> {

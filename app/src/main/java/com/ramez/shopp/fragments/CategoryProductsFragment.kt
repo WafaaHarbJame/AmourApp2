@@ -28,6 +28,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
+import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.*
@@ -373,23 +375,30 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             }.onSameThread().check()
     }
 
-    private fun startScan() {
-        if (ContextCompat.checkSelfPermission(
-                    activityy,
-                    Manifest.permission.CAMERA
-                ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                activityy,
-                arrayOf(Manifest.permission.CAMERA),
-                ZBAR_CAMERA_PERMISSION
-            )
-        } else {
-            val intent = Intent(activityy, FullScannerActivity::class.java)
-            scanLauncher?.launch(intent)
 
+
+    private fun startScan() {
+        try {
+            val builder = PermissionCompat.Builder(activityy)
+            builder.addPermissions(arrayOf(Manifest.permission.CAMERA))
+            builder.addPermissionRationale(getString(R.string.should_allow_permission))
+            builder.addRequestPermissionsCallBack(object : OnRequestPermissionsCallBack {
+                override fun onGrant() {
+                    val intent = Intent(activityy, FullScannerActivity::class.java)
+                    scanLauncher?.launch(intent)
+
+                }
+
+                override fun onDenied(permission: String) {
+                    Toast(R.string.some_permission_denied)
+                }
+            })
+            builder.build().request()
+        } catch (var2: Exception) {
+            var2.printStackTrace()
         }
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {

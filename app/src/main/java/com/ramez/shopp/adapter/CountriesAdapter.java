@@ -1,5 +1,6 @@
 package com.ramez.shopp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 
@@ -69,14 +71,20 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
 
         RowItemCityBinding binding;
 
+        @SuppressLint("NotifyDataSetChanged")
         CountryViewHolder(RowItemCityBinding view) {
             super(view.getRoot());
             binding = view;
 
             itemView.setOnClickListener(v -> {
-                onItemClick.onCountryClicked(getBindingAdapterPosition(), countryModels.get(getBindingAdapterPosition()));
-                selectedPosition = countryModels.get(getBindingAdapterPosition()).getId();
-                notifyDataSetChanged();
+                int position=getBindingAdapterPosition();
+
+                if (position >=0 && position < countryModels.size()){
+                    onItemClick.onCountryClicked(getBindingAdapterPosition(), countryModels.get(getBindingAdapterPosition()));
+                    selectedPosition = countryModels.get(getBindingAdapterPosition()).getId();
+                    notifyDataSetChanged();
+                }
+
             });
 
         }

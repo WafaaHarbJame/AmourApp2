@@ -13,6 +13,7 @@ import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
+import com.ramez.shopp.Utils.NumberHandler
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
 import java.util.ArrayList
@@ -27,6 +28,7 @@ class FastqActivity : ActivityBase() {
     private var cityId = 0
     var cityModelArrayList: ArrayList<CityModel>? = null
     private var selectedCityModel: CityModel? = null
+    var cartCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +36,9 @@ class FastqActivity : ActivityBase() {
         binding = ActivityFastQactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkCart()
+
         changeToolBarColor()
-
-//        val actionBar: ActionBar? = supportActionBar
-//        val colorDrawable = ColorDrawable(Color.parseColor("#2BA842"))
-//        actionBar?.setBackgroundDrawable(colorDrawable)
-
 
         StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
 
@@ -127,6 +126,33 @@ class FastqActivity : ActivityBase() {
 
         }
 
+
+        binding.toolBar.cartFastBtn.setOnClickListener {
+
+            val intent = Intent(activiy, FastqCartActivity::class.java)
+            startActivity(intent)
+
+        }
     }
+
+
+    private fun checkCart() {
+
+        cartCount = UtilityApp.getFastQCartCount()
+
+        if (cartCount > 0) {
+            binding.toolBar.cartFastBtn.visibility=visible
+            binding.toolBar.cartsCountTv.text=cartCount.toString()
+
+        } else {
+            binding.toolBar.cartFastBtn.visibility=gone
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkCart()
+    }
+
 
 }

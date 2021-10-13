@@ -400,7 +400,7 @@ public class ExtraRequestActivity extends ActivityBase {
         String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
 
         AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v6/Carts/AddExtrat").addMultipartFile("file", photo)
+                GlobalData.Api + " v8/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
@@ -490,7 +490,7 @@ public class ExtraRequestActivity extends ActivityBase {
         String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
 
         AndroidNetworking.post(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + "v6/Carts/AddExtrat")
+                GlobalData.Api + " v8/Carts/AddExtrat")
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())

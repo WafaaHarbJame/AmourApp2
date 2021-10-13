@@ -195,7 +195,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                 val intent = Intent(activityy, RewardsActivity::class.java)
                 startActivity(intent)
             } else {
-                Toasty.warning(activityy, R.string.you_not_signin, Toast.LENGTH_SHORT, true).show()
+                Toasty.warning(activityy,R.string.you_not_signin, Toast.LENGTH_SHORT, true).show()
             }
         }
         if (UtilityApp.isLogin()) {
@@ -586,7 +586,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         var countryCode = ""
         countryCode = if (localModel?.shortname != null)
             localModel?.shortname!! else GlobalData.COUNTRY
-        val url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v6/Orders/nextDeliveryTime?"
+        val url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v8/Orders/nextDeliveryTime?"
         Log.d(ContentValues.TAG, "Log Get first $url")
         Log.d(ContentValues.TAG, "Log  store_id $storeId")
         val token = if (UtilityApp.getToken() != null) UtilityApp.getToken() else "token"
@@ -617,7 +617,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     }
 
                     override fun onError(anError: ANError) {
-                        GlobalData.Toast(activityy, anError.message)
+                        GlobalData.Toast(activityy,anError.message)
                     }
                 })
     }
@@ -725,6 +725,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private fun setBranchData() {
         if (selectedCityModel != null) {
             binding.branchNameTv.text = selectedCityModel!!.cityName
+            UtilityApp.setBranchName(selectedCityModel!!.cityName)
         }
     }
 
@@ -825,9 +826,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                 if (result!!.data != null && result.data!!.size > 0) {
                                     Log.i(ContentValues.TAG, "Log getBrands" + result.data!!.size)
                                     val allBrandList = result.data
-                                    //                            while (allBrandList.size() > 0) {
-//
-//                            }
+
                                     var i = 0
                                     while (i < allBrandList!!.size) {
                                         val brandModel = result.data!![i]
