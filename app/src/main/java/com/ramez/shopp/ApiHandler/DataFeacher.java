@@ -134,7 +134,7 @@ public class DataFeacher {
             public void onResponse(Call call, Response response) {
 
                 if (response.isSuccessful()) {
-                    System.out.println("Log url " + call.request().url().url().getPath());
+//                    System.out.println("Log url " + call.request().url().url().getPath());
 
                     String url = call.request().url().url().getPath();
                     if (url.equals(LOGIN_URL)) {
@@ -156,9 +156,11 @@ public class DataFeacher {
                     }
 
                 } else {
+                    String url = call.request().url().url().getPath();
                     ResultAPIModel errorModel = null;
                     try {
                         String error = response.errorBody().string();
+                        Log.i("Log", "Log errorApiUrl " + url);
                         Log.e("Log", "Log error " + error);
                         errorModel = new Gson().fromJson(error, new TypeToken<ResultAPIModel>() {
                         }.getType());
@@ -884,8 +886,7 @@ public class DataFeacher {
     }
 
 
-
-    public void updateCartFastQ(int id,int qty, int city_id, String user_id) {
+    public void updateCartFastQ(int id, int qty, int city_id, String user_id) {
 
         Log.i(TAG, "Log updateCartFastQ");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -903,7 +904,6 @@ public class DataFeacher {
         Call call = apiService.updateFastQCart(headerMap, params);
         call.enqueue(callbackApi);
     }
-
 
 
     public void getFastQCarts(int city_id, String user_id) {

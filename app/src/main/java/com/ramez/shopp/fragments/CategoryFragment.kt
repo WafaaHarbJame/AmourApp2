@@ -234,4 +234,7 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
             var2.printStackTrace()
         }
     }
+
+
+
 }

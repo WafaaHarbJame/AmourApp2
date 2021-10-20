@@ -482,7 +482,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 ordersDM.deliveryDate = deliveryDate
                                 ordersDM.deliveryTime = deliveryTime
                                 val intent =
-                                    Intent(activityy, OrderCompleteActivity::class.java)
+                                    Intent(requireActivity(), OrderCompleteActivity::class.java)
                                 intent.putExtra(Constants.ORDER_MODEL, ordersDM)
                                 intent.putExtra(Constants.KEY_SHOW, true)
                                 startActivity(intent)

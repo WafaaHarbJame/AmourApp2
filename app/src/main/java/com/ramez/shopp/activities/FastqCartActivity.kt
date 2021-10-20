@@ -68,8 +68,8 @@ class FastqCartActivity : ActivityBase() {
         countryId = localModel?.countryId ?: Constants.default_country_id
         cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
 
-        currency = localModel?.currencyCode ?: Constants.CURRENCY
-        fraction = localModel?.fractional ?: Constants.two
+        currency = localModel?.currencyCode ?: Constants.BHD
+        fraction = localModel?.fractional ?: Constants.three
 
         getFastQCarts(cityId, userId)
 
@@ -151,16 +151,26 @@ class FastqCartActivity : ActivityBase() {
     fun initAdapter() {
 
         val adapter = FastqCartAdapter(
-            activiy, list
+            activiy,true, list
         ) { obj, func, IsSuccess ->
             val cartProcessModel = obj as CartProcessModel
-            total = cartProcessModel.total
+            if(cartProcessModel.cartCount>0){
+                total = cartProcessModel.total
+                binding.totalPriceTv.text =
+                    NumberHandler.formatDouble(total, fraction).plus(" $currency")
 
-            binding.totalPriceTv.text =
-                NumberHandler.formatDouble(total, fraction).plus(" $currency")
+                val itemsCount = "( ${cartProcessModel.cartCount} ${getString(R.string.items)} )"
+                binding.itemsCountTv.text = itemsCount
 
-            val itemsCount = "( ${cartProcessModel.cartCount} ${getString(R.string.items)} )"
-            binding.itemsCountTv.text = itemsCount
+            }
+            else{
+
+                binding.dataLY.visibility = View.GONE
+                binding.noDataLY.noDataLY.visibility =
+                    View.VISIBLE
+                binding.failGetDataLY.failGetDataLY.visibility =
+                    View.GONE
+            }
 
 
         }

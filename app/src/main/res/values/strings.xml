@@ -170,7 +170,7 @@
     <string name="confirm_code">Confrim Code</string>
     <string name="please_wait_sending">Please wait sending ...</string>
     <string name="oman_shotname" translatable="false">OM</string>
-    <!--    <string name="bahrain_shotname" translatable="false">BH</string>-->
+<!--  <string name="bahrain_shotname" translatable="false">dm</string>-->
     <string name="bahrain_shotname" translatable="false">bh</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
     <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>

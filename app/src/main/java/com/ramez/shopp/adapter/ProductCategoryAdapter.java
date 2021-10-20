@@ -52,15 +52,15 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int totalItemCount;
     private OnLoadMoreListener mOnLoadMoreListener;
 
-    private Context context;
-    private OnItemClick onItemClick;
-    private List<ProductModel> productModels;
-    private double discount = 0.0;
+    private final Context context;
+    private final OnItemClick onItemClick;
+    private final List<ProductModel> productModels;
+    private final double discount = 0.0;
     private String currency = "BHD";
     private int limit = 2;
-    private RecyclerView rv;
-    private String filter_text;
-    private int gridNumber;
+    private final RecyclerView rv;
+    private final String filter_text;
+    private final int gridNumber;
     private int brand_id = 0;
     public boolean isCanceled;
     public Call apiCall;
@@ -118,7 +118,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     }
                 }
-                setOnloadListener();
+                setOnLoadListener();
 
             }
 
@@ -128,6 +128,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
@@ -327,7 +328,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
-    private void setOnloadListener() {
+    private void setOnLoadListener() {
 
         setOnLoadMoreListener(() -> {
             System.out.println("Log add loading item");
@@ -682,8 +683,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-
-    class LoadingViewHolder extends RecyclerView.ViewHolder {
+    static class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         RowLoadingBinding rowLoadingBinding;
 
@@ -697,8 +697,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-
-    class EmptyViewHolder extends RecyclerView.ViewHolder {
+    static class EmptyViewHolder extends RecyclerView.ViewHolder {
 
         RowEmptyBinding rowEmptyBinding;
 

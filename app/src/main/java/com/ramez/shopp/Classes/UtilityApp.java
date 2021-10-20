@@ -300,7 +300,6 @@ public class UtilityApp {
         newLocal.setCurrencyCode(Constants.BHD);
         newLocal.setShortname(context.getString(R.string.bahrain_shotname));
         newLocal.setPhonecode(Constants.default_country_code);
-
         newLocal.setFractional(Constants.three);
         return newLocal;
     }

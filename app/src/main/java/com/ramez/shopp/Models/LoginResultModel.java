@@ -64,7 +64,7 @@ public class LoginResultModel {
         this.data = data;
     }
 
-    public Object getUserAddress() {
+    public String getUserAddress() {
         return userAddress;
     }
 

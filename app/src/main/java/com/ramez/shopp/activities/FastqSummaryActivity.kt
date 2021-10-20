@@ -58,8 +58,8 @@ class FastqSummaryActivity : ActivityBase() {
                 activiy
             )
 
-        currency = localModel?.currencyCode ?: Constants.CURRENCY
-        fraction = localModel?.fractional ?: Constants.two
+        currency = localModel?.currencyCode ?: Constants.BHD
+        fraction = localModel?.fractional ?: Constants.three
 
 
         list = mutableListOf()
@@ -109,8 +109,10 @@ class FastqSummaryActivity : ActivityBase() {
     }
 
     private fun initListeners() {
-        binding.closeBtn.setOnClickListener {
 
+        binding.closeBtn.setOnClickListener {
+            UtilityApp.setFastQCartTotal(0.0F)
+            UtilityApp.setFastQCartCount(0)
             onBackPressed()
 
         }
@@ -120,7 +122,7 @@ class FastqSummaryActivity : ActivityBase() {
     fun initAdapter(cartList: MutableList<CartFastQModel>?) {
 
         val adapter = FastqCartAdapter(
-            activiy, cartList
+            activiy,false, cartList
         ) { obj, func, IsSuccess ->
 
         }

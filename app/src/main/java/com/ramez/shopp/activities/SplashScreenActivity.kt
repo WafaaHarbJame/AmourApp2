@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.Window
-import android.view.WindowManager
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.Constants
@@ -34,10 +33,10 @@ class SplashScreenActivity : ActivityBase() {
         super.onCreate(savedInstanceState)
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+//        this.window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
         startSplash()
     }
 
@@ -53,10 +52,9 @@ class SplashScreenActivity : ActivityBase() {
             shortName = localModel?.shortname ?: Constants.default_short_name
             getCategories(storeId)
             getDinners(lang)
-            GetHomePage()
-            getCouponSettings(countryId)
-            getCountryDetail(shortName)
+            getHomePage()
             getLinks(storeId)
+            getCountryDetail(shortName)
         }
         initData()
     }
@@ -68,10 +66,10 @@ class SplashScreenActivity : ActivityBase() {
                     storeId = localModel?.cityId?.toIntOrNull() ?: 0
                     user = UtilityApp.getUserData()
                     userId = user?.id ?: 0
-                    getTotalPoints(userId)
-                    GetUserAddress(userId)
+                    getUserAddress(userId)
                     getFastQCarts(storeId, userId)
                     getUserData(userId, storeId)
+
                 } else {
                     UtilityApp.logOut()
                     val intent =
@@ -100,8 +98,8 @@ class SplashScreenActivity : ActivityBase() {
     fun getUserData(user_id: Int, store_id: Int) {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val message = getString(R.string.fail_to_get_data)
                 val result = obj as ResultAPIModel<ProfileData?>?
+
                 if (IsSuccess && result != null && result.data != null) {
                     val memberModel = UtilityApp.getUserData()
                     val profileData = result.data
@@ -109,10 +107,11 @@ class SplashScreenActivity : ActivityBase() {
                     val email = profileData?.email ?: ""
                     val loyalBarcode = profileData?.loyalBarcode ?: ""
                     val profilePicture = profileData?.profilePicture ?: ""
-                    memberModel.name = name
-                    memberModel.email = email
-                    memberModel.loyalBarcode = loyalBarcode
-                    memberModel.profilePicture = profilePicture
+
+                    memberModel?.name = name
+                    memberModel?.email = email
+                    memberModel?.loyalBarcode = loyalBarcode
+                    memberModel?.profilePicture = profilePicture
                     UtilityApp.setUserData(memberModel)
 
                 } else {
@@ -128,16 +127,24 @@ class SplashScreenActivity : ActivityBase() {
     }
 
     private fun getTotalPoints(userId: Int) {
-        DataFeacher(false, object : DataFetcherCallBack {
-            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as ResultAPIModel<TotalPointModel?>?
-                if (result != null && result.isSuccessful && result.data != null) {
-                    val totalPointModel = result.data
-                    DBFunction.setTotalPoints(totalPointModel)
-                }
+        if (UtilityApp.isLogin()) {
+            if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
+                user = UtilityApp.getUserData()
+                this@SplashScreenActivity.userId = user?.id ?: 0
+                DataFeacher(false, object : DataFetcherCallBack {
+                    override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                        val result = obj as ResultAPIModel<TotalPointModel?>?
+                        if (result != null && result.isSuccessful && result.data != null) {
+                            val totalPointModel = result.data
+                            DBFunction.setTotalPoints(totalPointModel)
+                        }
+                    }
+
+                }).getTotalPoint(userId)
+
             }
 
-        }).getTotalPoint(userId)
+        }
     }
 
     private fun getCountryDetail(shortName: String?) {
@@ -147,6 +154,12 @@ class SplashScreenActivity : ActivityBase() {
                 if (result != null && result.isSuccessful && result.data != null) {
                     val countryDetailsModel = result.data
                     DBFunction.setLoyal(countryDetailsModel)
+
+                    if (countryDetailsModel?.hasLoyal == true) {
+                        getCouponSettings(countryId)
+
+                        getTotalPoints(userId)
+                    }
                 }
             }
 
@@ -167,6 +180,7 @@ class SplashScreenActivity : ActivityBase() {
     }
 
     fun getCategories(storeId: Int) {
+        UtilityApp.setCategoriesData(null)
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 val result = obj as CategoryResultModel?
@@ -180,7 +194,7 @@ class SplashScreenActivity : ActivityBase() {
         }).GetAllCategories(storeId)
     }
 
-    fun getDinners(lang: String?) {
+    private fun getDinners(lang: String?) {
         UtilityApp.setDinnersData(null)
         Log.i("TAG", "Log dinners Size")
         Log.i("TAG", "Log country id $countryId")
@@ -230,20 +244,20 @@ class SplashScreenActivity : ActivityBase() {
         }).GetCarts(storeId, userId)
     }
 
-    fun getLinks(store_id: Int) {
+    private fun getLinks(store_id: Int) {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as ResultAPIModel<SoicalLink>
                 if (IsSuccess) {
-                    val soicalLink = result.data
-                    UtilityApp.SetLinks(soicalLink)
+                    val result = obj as ResultAPIModel<SoicalLink>
+                    val socialLink = result.data
+                    UtilityApp.SetLinks(socialLink)
                 }
             }
 
         }).getLinks(store_id)
     }
 
-    fun GetHomePage() {
+    private fun getHomePage() {
         val sliderList = ArrayList<Slider>()
         val bannersList = ArrayList<Slider>()
         Log.i(ContentValues.TAG, "Log getSliders ")
@@ -252,14 +266,17 @@ class SplashScreenActivity : ActivityBase() {
         Log.i(ContentValues.TAG, "Log getSliders  city_id $storeId")
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as MainModel
                 UtilityApp.setSliderData(null)
                 UtilityApp.setBannerData(null)
                 if (IsSuccess) {
                     sliderList.clear()
                     bannersList.clear()
+                    val result = obj as MainModel
+
                     if (result.sliders.size > 0) {
+
                         for (i in result.sliders.indices) {
+
                             val slider = result.sliders[i]
                             if (slider.type == 0) {
                                 sliderList.add(slider)
@@ -280,14 +297,13 @@ class SplashScreenActivity : ActivityBase() {
         }).GetMainPage(0, countryId, storeId, userId.toString())
     }
 
-    fun GetUserAddress(user_id: Int) {
+    fun getUserAddress(user_id: Int) {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as AddressResultModel
                 if (IsSuccess) {
+                    val result = obj as AddressResultModel
                     if (result.data != null && result.data.size > 0) {
-                        var addressList: ArrayList<AddressModel>? = ArrayList()
-                        addressList = result.data
+                        val addressList: java.util.ArrayList<AddressModel>? = result.data
                         if (addressList != null && addressList.size > 0) for (i in addressList.indices) {
                             val addressModel = addressList[i]
                             if (addressModel.default) {
@@ -305,7 +321,7 @@ class SplashScreenActivity : ActivityBase() {
     }
 
 
-    fun getFastQCarts(storeId: Int, userId: Int) {
+    private fun getFastQCarts(storeId: Int, userId: Int) {
 
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
@@ -344,7 +360,7 @@ class SplashScreenActivity : ActivityBase() {
         private const val SPLASH_TIMER = 3500
     }
 
-        fun calculateSubTotalPrice(cartList: ArrayList<CartFastQModel?>?): Double {
+    fun calculateSubTotalPrice(cartList: ArrayList<CartFastQModel?>?): Double {
         var subTotal = 0.0
         for (product in cartList ?: mutableListOf()) {
 

@@ -144,9 +144,11 @@ object Constants {
     const val DB_COUPON_SETTINGS = "db_coupon_settings"
     const val default_storeId = "7263"
     const val default_country_id = 17
+//    const val default_country_id = 230
     const val default_country_code = 973
     const val default_short_name = "BH"
     const val BHD = "BHD"
+    var refresh_cart = false
 
     const val FRAG_FASTQ_SETTINGS = "frag_fastq_settings"
     const val FRAG_FASTQ_HISTORY = "frag_fastq_history"

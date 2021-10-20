@@ -159,15 +159,7 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
         binding.cartRecycler.post { cartAdapter!!.notifyDataSetChanged() }
     }
 
-    override fun onCartItemClicked(cartDM: CartModel) {
-        val intent = Intent(activityy, ProductDetailsActivity::class.java)
-        val productModel = ProductModel()
-        productModel.id = cartDM.productId
-        productModel.name = cartDM.name
-        productModel.sethName(cartDM.hProductName)
-        intent.putExtra(Constants.DB_productModel, productModel)
-        startActivity(intent)
-    }
+
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
 
@@ -486,4 +478,13 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
             )
         }
     }
+
+    override fun onCartItemClicked(cartDM: CartModel?) {
+        val intent = Intent(activityy, ProductDetailsActivity::class.java)
+        val productModel = ProductModel()
+        productModel.id = cartDM!!.productId
+        productModel.name = cartDM.name
+        productModel.sethName(cartDM.hProductName)
+        intent.putExtra(Constants.DB_productModel, productModel)
+        startActivity(intent)    }
 }

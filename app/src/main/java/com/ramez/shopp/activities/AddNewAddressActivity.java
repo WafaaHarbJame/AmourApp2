@@ -137,7 +137,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         }
 
         placeLauncher =registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result!=null &&result.getResultCode() == RESULT_OK) {
+            if (result!=null && result.getResultCode() == RESULT_OK) {
 
                 Place place = Autocomplete.getPlaceFromIntent(result.getData());
                 Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());

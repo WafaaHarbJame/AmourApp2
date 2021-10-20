@@ -119,8 +119,8 @@ class FastqCheckoutActivity : ActivityBase() {
 
         binding.inStoreLabel.setOnClickListener {
 
-            val intent = Intent(activiy, FastqSummaryActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(activiy, FastqSummaryActivity::class.java)
+//            startActivity(intent)
 
         }
 
@@ -180,8 +180,8 @@ class FastqCheckoutActivity : ActivityBase() {
                     if (result.status == 200) {
                         UtilityApp.setFastQCartTotal(0.0F)
                         UtilityApp.setFastQCartCount(0)
-
                         val productsList = list?.toTypedArray()
+
                         val intent = Intent(activiy, FastqSummaryActivity::class.java)
                         intent.putExtra(Constants.CART_MODEL, productsList)
                         startActivity(intent)

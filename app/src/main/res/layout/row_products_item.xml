@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_8sdp"
             android:gravity="center"
-            android:text="@string/_10220_aed"
+            android:text=""
             android:textColor="@color/green"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/_10220_aed"
+            android:text=""
             android:textColor="@color/gray3"
             android:textSize="@dimen/_10ssp" />
 

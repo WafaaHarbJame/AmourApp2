@@ -313,7 +313,7 @@
                 android:paddingTop="@dimen/_12sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_12sdp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/fastqBut"

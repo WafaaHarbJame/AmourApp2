@@ -33,11 +33,9 @@ import java.util.ArrayList;
 import es.dmoral.toasty.Toasty;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> {
-    //    public int count = 1;
     private Context context;
     private OnItemClick onItemClick;
     private ArrayList<ProductModel> productModels;
-    private double discount = 0.0;
     private String currency = "BHD";
     private int limit = 2;
     int fraction = 2;
@@ -52,6 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
     }
 
+    @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -63,7 +62,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-//        holder.binding.shimmerViewContainer.startShimmer(); // If a
 
         ProductModel productModel = productModels.get(position);
 
@@ -211,6 +209,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     Toast.makeText(context, context.getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
 
                     notifyItemChanged(position);
+
                     notifyDataSetChanged();
 
 

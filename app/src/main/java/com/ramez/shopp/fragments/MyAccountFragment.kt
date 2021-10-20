@@ -86,6 +86,7 @@ class MyAccountFragment : FragmentBase() {
             binding.viewLogin.visibility = View.GONE
             binding.logoutText.setText(R.string.logout)
             binding.editProfileBu.visibility = View.VISIBLE
+            binding.fastqLyBut.visibility= View.VISIBLE
             if (UtilityApp.getUserData() != null) {
                 memberModel = UtilityApp.getUserData()
                 if (memberModel != null) {

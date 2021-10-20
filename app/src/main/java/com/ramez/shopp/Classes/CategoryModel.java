@@ -27,7 +27,7 @@ public class CategoryModel implements Serializable {
     private String name;
     @SerializedName("parent_id")
     @Expose
-    private Object parentId;
+    private int parentId;
     @SerializedName("child_cat")
     @Expose
     private ArrayList<ChildCat> childCat = null;
@@ -64,11 +64,11 @@ public class CategoryModel implements Serializable {
         this.name = name;
     }
 
-    public Object getParentId() {
+    public int getParentId() {
         return parentId;
     }
 
-    public void setParentId(Object parentId) {
+    public void setParentId(int parentId) {
         this.parentId = parentId;
     }
 

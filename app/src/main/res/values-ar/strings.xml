@@ -382,15 +382,16 @@
     <string name="enter_email">ادخل البريدالإلكتروني </string>
     <string name="this_not_from_your_country">هذا ليس من دولتك </string>
     <string name="the_fastest_way_to_shop_in_store">The fastest way to shop in-store</string>
-    <string name="start_shopping">You can start shopping in-store and using the online barcode scanner to speed up your in-store shopping experience.</string>
-    <string name="setting">setting</string>
-    <string name="History">History</string>
+    <string name="start_shopping">يمكنك بدء التسوق في المتجر واستخدام ماسح الباركود عبر الإنترنت لتسريع تجربة التسوق داخل المتجر. </string>
+    <string name="setting">الاعدادات</string>
+    <string name="History">السجل</string>
     <string name="FastQ">FastQ</string>
-    <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">Ensure barcode is within white markers to scan an item</string>
+    <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">
+   تأكد من وجود الرمز الشريطي داخل علامات بيضاء لمسح عنصر ضوئيًاm</string>
     <string name="unit_price_key">سعر الوحدة :</string>
     <string name="scanning">جاري المسح</string>
     <string name="product_add_to_cart">تم اضافة المنتج للسلة</string>
-    <string name="fastq_cart_hint">الرجاء التأكد من انك قمت بعمل مسح والتحقق من جميع العناصر في حقيبتك</string>
+    <string name="fastq_cart_hint">الرجاء التأكد من انك قمت بعمل مسح والتحقق من جميع العناصر في السلة </string>
     <string name="continuee">متابعة</string>
     <string name="by_placing_this_order_agree">بتأكيد هذا الطلب انا اوافق على</string>
     <string name="in_store_payment">الدفع داخل المتجر</string>

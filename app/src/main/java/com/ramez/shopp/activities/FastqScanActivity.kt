@@ -76,8 +76,8 @@ class FastqScanActivity : ActivityBase() {
         binding.scanHintLabel.visibility = visible
         binding.productDetailsLy.visibility = gone
 
-        currency = localModel?.currencyCode ?: Constants.CURRENCY
-        fraction = localModel?.fractional ?: Constants.two
+        currency = localModel?.currencyCode ?: Constants.BHD
+        fraction = localModel?.fractional ?: Constants.three
 
         if (UtilityApp.isLogin() && UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
             user = UtilityApp.getUserData()
@@ -120,10 +120,10 @@ class FastqScanActivity : ActivityBase() {
                     }
 
 //                    checkBarcode(it.text)
-//                    checkBarcode("5711953137518")
+//                    checkBarcode("4600680000640")
 //                    checkBarcode("7010000679680")
-//                    checkBarcode("6084001011375")
-                    checkBarcode("4600680000640")
+                    checkBarcode("6084001011375")
+//                    checkBarcode("5711953137518")
 
                 } catch (e: java.lang.Exception) {
                 }
@@ -141,7 +141,6 @@ class FastqScanActivity : ActivityBase() {
         initListeners()
         getCart()
 
-        checkCart()
 
     }
 
@@ -283,6 +282,15 @@ class FastqScanActivity : ActivityBase() {
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
+
+        if(Constants.refresh_cart){
+            getCart()
+            Constants.refresh_cart=false
+
+        }
+        else{
+            checkCart()
+        }
 
     }
 
@@ -457,7 +465,7 @@ class FastqScanActivity : ActivityBase() {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     val result = obj as ResultAPIModel<ScanModel>?
 
-                    var message: String? = activiy.getString(R.string.fail_to_get_data)
+                    var message: String? = activiy.getString(R.string.fail_to_update_cart)
                     if (func == Constants.ERROR) {
                         if (result?.message != null) {
                             message = result.message
@@ -507,6 +515,7 @@ class FastqScanActivity : ActivityBase() {
     }
 
     fun getCart() {
+        cartProductsBarcodes?.clear()
 
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
@@ -518,6 +527,11 @@ class FastqScanActivity : ActivityBase() {
                     if (cartFastQModel?.status == 200 && cartFastQModel.data?.isNotEmpty() == true) {
 
                         val productsList = cartFastQModel.data ?: mutableListOf()
+
+                        val data = cartFastQModel.data
+                        val fastCartNumber = data?.size ?: 0
+                        UtilityApp.setFastQCartCount(fastCartNumber)
+                        calculateSubTotalPrice(data)
 
                         for (product in productsList) {
                             Log.i(javaClass.simpleName, "Log barcode $product ")
@@ -531,7 +545,10 @@ class FastqScanActivity : ActivityBase() {
                         Log.i(javaClass.name, "Log fast Cart count 0")
 
                         UtilityApp.setFastQCartCount(0)
+                        UtilityApp.setFastQCartTotal(0f)
                     }
+
+                    checkCart()
 
 
                 }
@@ -551,6 +568,20 @@ class FastqScanActivity : ActivityBase() {
         }
 
     }
+
+
+    fun calculateSubTotalPrice(cartList: ArrayList<CartFastQModel?>?): Double {
+        var subTotal = 0.0
+        for (product in cartList ?: mutableListOf()) {
+
+            subTotal = subTotal.plus(product?.price?.times(product.qty) ?: 0.0)
+
+        }
+        UtilityApp.setFastQCartTotal(subTotal.toFloat())
+        println("Log subTotal result $subTotal")
+        return subTotal
+    }
+
 
 
 }

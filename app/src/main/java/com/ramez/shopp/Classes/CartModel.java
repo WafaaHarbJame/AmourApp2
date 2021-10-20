@@ -96,7 +96,7 @@ public class CartModel implements Serializable {
     private String weightUnit;
     @SerializedName("minimumDate")
     @Expose
-    private Object minimumDate;
+    private String minimumDate;
     @SerializedName("isExtra")
     @Expose
     private boolean isExtra;
@@ -385,11 +385,11 @@ public class CartModel implements Serializable {
         this.weightUnit = weightUnit;
     }
 
-    public Object getMinimumDate() {
+    public String getMinimumDate() {
         return minimumDate;
     }
 
-    public void setMinimumDate(Object minimumDate) {
+    public void setMinimumDate(String minimumDate) {
         this.minimumDate = minimumDate;
     }
 

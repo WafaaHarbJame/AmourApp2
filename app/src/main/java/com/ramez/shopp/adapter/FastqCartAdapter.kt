@@ -25,8 +25,9 @@ import retrofit2.http.DELETE
 
 class FastqCartAdapter(
     private val activity: Activity,
+    private val isAllowClick: Boolean,
     private val list: MutableList<CartFastQModel>?,
-    private val dataCallback: DataCallback,
+    private val dataCallback: DataCallback
 ) :
         RecyclerView.Adapter<FastqCartAdapter.ItemViewHolder>() {
     var currency = "BHD"
@@ -50,8 +51,8 @@ class FastqCartAdapter(
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
                 activity
             )
-        currency = localModel?.currencyCode ?: Constants.CURRENCY
-        fraction = localModel?.fractional ?: Constants.two
+        currency = localModel?.currencyCode ?: Constants.BHD
+        fraction = localModel?.fractional ?: Constants.three
         storeId =
             localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
         user = UtilityApp.getUserData()
@@ -62,6 +63,14 @@ class FastqCartAdapter(
         holder.binding.priceTv.text = NumberHandler.formatDouble(
             cartModel.price, fraction
         ) + " " + currency
+
+        if (!isAllowClick) {
+            holder.binding.deleteBut.isEnabled = false
+            holder.binding.plusCartBtn.isEnabled = false
+            holder.binding.minusCartBtn.isEnabled = false
+            holder.binding.swipe.isEnabled = false
+
+        }
 
 
     }
@@ -142,7 +151,7 @@ class FastqCartAdapter(
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     val result = obj as ResultAPIModel<ScanModel>?
 
-                    var message: String? = activity.getString(R.string.fail_to_get_data)
+                    var message: String? = activity.getString(R.string.fail_to_update_cart)
                     if (func == Constants.ERROR) {
                         if (result?.message != null) {
                             message = result.message
@@ -158,6 +167,7 @@ class FastqCartAdapter(
                                 if (isDelete) {
                                     list?.removeAt(position)
                                     notifyItemRemoved(position)
+                                    Constants.refresh_cart = true
                                 } else {
                                     list?.get(position)?.qty = quantity
                                     notifyItemChanged(position)
@@ -168,6 +178,11 @@ class FastqCartAdapter(
                                 val cartProcessModel = CartProcessModel()
                                 cartProcessModel.total = calculateSubTotalPrice(list)
                                 cartProcessModel.setCartCount(size)
+                                if (size != null) {
+                                    UtilityApp.setFastQCartCount(size)
+                                    UtilityApp.setFastQCartTotal(cartProcessModel.total.toFloat())
+                                }
+
 
 
                                 dataCallback.dataResult(
@@ -178,6 +193,10 @@ class FastqCartAdapter(
 
 
                             }
+
+                        } else {
+                            Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+                                .show()
 
                         }
 

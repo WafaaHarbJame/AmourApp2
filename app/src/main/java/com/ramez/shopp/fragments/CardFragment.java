@@ -124,39 +124,41 @@ public class CardFragment extends FragmentBase {
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
                 String message = getString(R.string.fail_to_get_data);
 
-                switch (func) {
-                    case Constants.ERROR:
+                if (func != null) {
+                    switch (func) {
+                        case Constants.ERROR:
 
-                        if (result != null && result.message != null) {
-                            message = result.message;
-                        }
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failTxt.setText(message);
-                        binding.generateBut.setVisibility(View.GONE);
-
-
-                        break;
-                    case Constants.FAIL:
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failTxt.setText(message);
-                        binding.generateBut.setVisibility(View.GONE);
+                            if (result != null && result.message != null) {
+                                message = result.message;
+                            }
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                            binding.failGetDataLY.failTxt.setText(message);
+                            binding.generateBut.setVisibility(View.GONE);
 
 
-                        break;
-                    case Constants.NO_CONNECTION:
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                        binding.failGetDataLY.failTxt.setText(getString(R.string.no_internet_connection));
-                        binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.generateBut.setVisibility(View.GONE);
+                            break;
+                        case Constants.FAIL:
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                            binding.failGetDataLY.failTxt.setText(message);
+                            binding.generateBut.setVisibility(View.GONE);
 
 
-                        break;
+                            break;
+                        case Constants.NO_CONNECTION:
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                            binding.failGetDataLY.failTxt.setText(getString(R.string.no_internet_connection));
+                            binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.generateBut.setVisibility(View.GONE);
+
+
+                            break;
+                    }
                 }
 
                 if (IsSuccess) {

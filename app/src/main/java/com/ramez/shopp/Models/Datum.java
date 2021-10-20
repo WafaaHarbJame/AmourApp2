@@ -17,7 +17,7 @@ public class Datum {
     private Integer categoryId;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("favourite")
     @Expose
     private Boolean favourite;
@@ -26,10 +26,10 @@ public class Datum {
     private List<ProductBarcode> productBarcodes = null;
     @SerializedName("product_units")
     @Expose
-    private Object productUnits;
+    private String productUnits;
     @SerializedName("h_description")
     @Expose
-    private Object hDescription;
+    private String hDescription;
     @SerializedName("h_name")
     @Expose
     private String hName;
@@ -70,11 +70,11 @@ public class Datum {
         this.categoryId = categoryId;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -94,19 +94,19 @@ public class Datum {
         this.productBarcodes = productBarcodes;
     }
 
-    public Object getProductUnits() {
+    public String getProductUnits() {
         return productUnits;
     }
 
-    public void setProductUnits(Object productUnits) {
+    public void setProductUnits(String productUnits) {
         this.productUnits = productUnits;
     }
 
-    public Object getHDescription() {
+    public String getHDescription() {
         return hDescription;
     }
 
-    public void setHDescription(Object hDescription) {
+    public void setHDescription(String hDescription) {
         this.hDescription = hDescription;
     }
 
