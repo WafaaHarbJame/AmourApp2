@@ -148,7 +148,7 @@ class FastqScanActivity : ActivityBase() {
     @SuppressLint("SetTextI18n")
     private fun checkCart() {
 
-        cartCount=UtilityApp.getFastQCartCount()
+        cartCount = UtilityApp.getFastQCartCount()
 
         if (cartCount > 0) {
             binding.cartFastCountTv.visibility = visible
@@ -170,6 +170,8 @@ class FastqScanActivity : ActivityBase() {
     fun initListeners() {
 
         binding.cartBtn.setOnClickListener {
+
+            changeToScanning()
 
             val intent = Intent(activiy, FastqCartActivity::class.java)
             startActivity(intent)
@@ -283,12 +285,10 @@ class FastqScanActivity : ActivityBase() {
         super.onResume()
         codeScanner.startPreview()
 
-        if(Constants.refresh_cart){
+        if (GlobalData.refresh_cart) {
+            GlobalData.refresh_cart = false
             getCart()
-            Constants.refresh_cart=false
-
-        }
-        else{
+        } else {
             checkCart()
         }
 
@@ -515,12 +515,12 @@ class FastqScanActivity : ActivityBase() {
     }
 
     fun getCart() {
-        cartProductsBarcodes?.clear()
 
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 GlobalData.hideProgressDialog()
                 if (IsSuccess) {
+                    cartProductsBarcodes?.clear()
 
                     val cartFastQModel = obj as ResultAPIModel<ArrayList<CartFastQModel?>?>?
 
@@ -539,7 +539,6 @@ class FastqScanActivity : ActivityBase() {
                             cartProductsBarcodes?.add(product?.barcode ?: "")
 
                         }
-
 
                     } else {
                         Log.i(javaClass.name, "Log fast Cart count 0")
@@ -581,7 +580,6 @@ class FastqScanActivity : ActivityBase() {
         println("Log subTotal result $subTotal")
         return subTotal
     }
-
 
 
 }

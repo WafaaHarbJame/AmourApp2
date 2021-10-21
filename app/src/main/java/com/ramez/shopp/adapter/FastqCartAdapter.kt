@@ -167,7 +167,7 @@ class FastqCartAdapter(
                                 if (isDelete) {
                                     list?.removeAt(position)
                                     notifyItemRemoved(position)
-                                    Constants.refresh_cart = true
+                                    GlobalData.refresh_cart = true
                                 } else {
                                     list?.get(position)?.qty = quantity
                                     notifyItemChanged(position)

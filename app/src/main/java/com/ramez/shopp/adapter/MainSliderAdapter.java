@@ -61,7 +61,7 @@ public class MainSliderAdapter extends PagerAdapter {
 
             try {
 
-                GlobalData.GlideImgWeb(context,imageUrl,R.drawable.holder_image,productImg);
+                GlobalData.INSTANCE.GlideImgWeb(context,imageUrl,R.drawable.holder_image,productImg);
 
             } catch (Exception e) {
                 e.printStackTrace();

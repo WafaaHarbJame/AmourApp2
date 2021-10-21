@@ -15,10 +15,10 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -68,7 +68,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
           try {
 
-              GlobalData.GlideImg(context, orderProductsDM.getImage()
+              GlobalData.INSTANCE.GlideImg(context, orderProductsDM.getImage()
                       , R.drawable.holder_image, holder.productImage);
 
           } catch (Exception e) {

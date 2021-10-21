@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.Window
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.DBFunction
-import com.ramez.shopp.Classes.SoicalLink
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Classes.*
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import java.util.*
@@ -33,10 +30,7 @@ class SplashScreenActivity : ActivityBase() {
         super.onCreate(savedInstanceState)
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        this.window.setFlags(
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN
-//        )
+
         startSplash()
     }
 
@@ -69,6 +63,7 @@ class SplashScreenActivity : ActivityBase() {
                     getUserAddress(userId)
                     getFastQCarts(storeId, userId)
                     getUserData(userId, storeId)
+                    getFastSetting(storeId,userId.toString())
 
                 } else {
                     UtilityApp.logOut()
@@ -178,6 +173,23 @@ class SplashScreenActivity : ActivityBase() {
 
         }).getSettings(countryId)
     }
+
+    private fun getFastSetting(cityId:Int, userId1 :String) {
+        DataFeacher(false, object : DataFetcherCallBack {
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                val result = obj as ResultAPIModel<FastValidModel?>?
+                if (result?.data != null && result.status == 200) {
+                    val settingFastQModel = result.data
+                    Log.i(javaClass.name, "Log Get Fastq splash " +settingFastQModel?.isIsValid)
+
+                    DBFunction.setFastSetting(settingFastQModel)
+                }
+            }
+
+        }).GetSetting(cityId,userId1)
+    }
+
+
 
     fun getCategories(storeId: Int) {
         UtilityApp.setCategoriesData(null)

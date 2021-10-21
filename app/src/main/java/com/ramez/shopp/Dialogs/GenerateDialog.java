@@ -90,7 +90,7 @@ public class GenerateDialog extends Dialog {
 
                     binding.countTV.setText(String.valueOf(count));
                 } else {
-                    GlobalData.Toast(activity, R.string.you_reach_max_point);
+                    GlobalData.INSTANCE.Toast(activity, R.string.you_reach_max_point);
                 }
 
 
@@ -104,7 +104,7 @@ public class GenerateDialog extends Dialog {
                 binding.countTV.setText(String.valueOf(count));
             } else {
                 String message = activity.getString(R.string.minimum_points_needed) + " " + minimumPoints;
-                GlobalData.Toast(activity, message);
+                GlobalData.INSTANCE.INSTANCE.Toast(activity, message);
             }
 
 
@@ -114,7 +114,7 @@ public class GenerateDialog extends Dialog {
 
             if (count < minimumPoints) {
                 String message = activity.getString(R.string.minimum_points_needed) + " " + minimumPoints;
-                GlobalData.Toast(activity, message);
+                GlobalData.INSTANCE.Toast(activity, message);
                 return;
             }
             sendGenerateCoupon(count);
@@ -127,15 +127,15 @@ public class GenerateDialog extends Dialog {
 
     private void sendGenerateCoupon(int points) {
 
-        GlobalData.progressDialog(activity, R.string.Generate_Coupons, R.string.please_wait_sending);
+        GlobalData.INSTANCE.progressDialog(activity, R.string.Generate_Coupons, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
 
             GeneralModel result = (GeneralModel) obj;
             if (result!=null && result.isSuccessful()) {
 //                callGetTotalPoints();
-//                GlobalData.refresh_points = true;
-                GlobalData.Toast(activity, R.string.success_generate_coupon);
+//                GlobalData.INSTANCE.refresh_points = true;
+                GlobalData.INSTANCE.Toast(activity, R.string.success_generate_coupon);
                 dismiss();
                 dataFetcherCallBack.Result("", Constants.success, true);
             } else {
@@ -143,7 +143,7 @@ public class GenerateDialog extends Dialog {
                 if (result != null && result.getMessage() != null && !result.getMessage().isEmpty()){
                     message = result.getMessage();
                 }
-                GlobalData.Toast(activity, message);
+                GlobalData.INSTANCE.Toast(activity, message);
             }
 
         }).generateCoupon(userId, points);

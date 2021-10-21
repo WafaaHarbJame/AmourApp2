@@ -9,10 +9,10 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.adapter.BranchAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CityModelResult;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -82,12 +82,12 @@ public class ChooseNearCity extends ActivityBase {
         list.clear();
         Log.i("TAG", "Log country_id" + country_id);
 
-        GlobalData.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
             CityModelResult result = (CityModelResult) obj;
 
             if (func.equals(Constants.ERROR)) {
@@ -100,11 +100,11 @@ public class ChooseNearCity extends ActivityBase {
 
 
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
 
-                GlobalData.Toast(getActiviy(), getString(R.string.no_internet_connection));
+                GlobalData.INSTANCE.Toast(getActiviy(), getString(R.string.no_internet_connection));
 
 
             } else {

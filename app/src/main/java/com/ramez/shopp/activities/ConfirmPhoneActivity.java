@@ -21,7 +21,7 @@ import com.ramez.shopp.databinding.ActivityConformPhoneBinding;
 public class ConfirmPhoneActivity extends ActivityBase {
     private ActivityConformPhoneBinding binding;
     String mobileStr;
-    boolean reset_account=false;
+    boolean reset_account = false;
     LocalModel localModel;
     String CountryCode = "+966";
 
@@ -33,9 +33,9 @@ public class ConfirmPhoneActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
         localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
-        CountryCode= String.valueOf(localModel.getPhonecode());
-        String intro=GlobalData.getIntro(CountryCode);
-        Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
+        CountryCode = String.valueOf(localModel.getPhonecode());
+        String intro = GlobalData.INSTANCE.getIntro(CountryCode);
+        Log.i(getClass().getSimpleName(), "Log get  Intro " + intro);
         binding.edtPhoneNumber.setHint(intro);
 
 
@@ -46,7 +46,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mobileStr = getIntent().getStringExtra(Constants.KEY_MOBILE);
-            reset_account = getIntent().getBooleanExtra(Constants.reset_account,false);
+            reset_account = getIntent().getBooleanExtra(Constants.reset_account, false);
 
 
         }
@@ -55,19 +55,17 @@ public class ConfirmPhoneActivity extends ActivityBase {
         binding.confirmBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
                 String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
-                    MemberModel memberModel=new MemberModel();
-                    memberModel.setUserType(Constants.user_type);
-                    memberModel.setMobileNumber(mobileStr);
-                    ForgetPassword(memberModel);
-                }
+                MemberModel memberModel = new MemberModel();
+                memberModel.setUserType(Constants.user_type);
+                memberModel.setMobileNumber(mobileStr);
+                ForgetPassword(memberModel);
+            }
 
 
         });
 
 
-
         setTitle(R.string.forget_pass);
-
 
 
     }
@@ -98,18 +96,16 @@ public class ConfirmPhoneActivity extends ActivityBase {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
 
-                    if(otpModel.getStatus()==200 ) {
+                    if (otpModel.getStatus() == 200) {
                         Log.i("TAG", "Log otp " + otpModel.getData());
                         GoToConfirm();
+                    } else {
+
+                        String message = otpModel.getMessage() != null ? otpModel.getMessage() : getString(R.string.fail_to_sen_otp);
+                        Toast(message);
+
+
                     }
-                    else {
-
-                    String message= otpModel.getMessage() != null ?otpModel.getMessage() : getString(R.string.fail_to_sen_otp);
-                            Toast(message);
-
-
-                    }
-
 
 
                 } else {
@@ -121,31 +117,27 @@ public class ConfirmPhoneActivity extends ActivityBase {
     }
 
     public void ForgetPassword(MemberModel memberModel) {
-        GlobalData.progressDialog(
+        GlobalData.INSTANCE.progressDialog(
                 getActiviy(),
                 R.string.forget_pass,
                 R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_rest_password);
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
-            }
-            else {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.INSTANCE.Toast(getActiviy(), R.string.no_internet_connection);
+            } else {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
-                    Log.i(getClass().getSimpleName(), "Log OtpModel status " +otpModel.getStatus());
+                    Log.i(getClass().getSimpleName(), "Log OtpModel status " + otpModel.getStatus());
 
-                    if(otpModel.getStatus()==200 ) {
+                    if (otpModel.getStatus() == 200) {
                         SendOtp(memberModel.getMobileNumber());
-                    }
-                    else {
-                        String message= otpModel.getMessage() != null ?otpModel.getMessage() : getString(R.string.fail_to_rest_password);
+                    } else {
+                        String message = otpModel.getMessage() != null ? otpModel.getMessage() : getString(R.string.fail_to_rest_password);
                         Toast(message);
 
                     }

@@ -327,13 +327,13 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 checkLoginDialog.show()
             } else {
                 val message: String
-                val cartId1 = selectedProductBarcode!!.cartId
+                val cartId1 = selectedProductBarcode?.cartId?:0
                 if (cartId1 > 0) {
                     val count = binding.productCartQTY.text.toString().toInt()
-                    val stock = selectedProductBarcode!!.stockQty
+                    val stock = selectedProductBarcode?.stockQty?:0
                     val userId = UtilityApp.getUserData().id
-                    val storeId = localModel!!.cityId.toInt()
-                    val productId = productModel!!.id
+                    val storeId = localModel?.cityId ?.toInt()?:Constants.default_storeId.toInt()
+                    val productId = productModel?.id ?:0
                     val cartId = selectedProductBarcode!!.cartId
                     val limit = selectedProductBarcode!!.limitQty
                     Log.i("limit", "Log limit  $limit")
@@ -344,7 +344,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             updateCart(
                                 view1,
                                 productId,
-                                selectedProductBarcode!!.id,
+                                selectedProductBarcode?.id?:0,
                                 count + 1,
                                 userId,
                                 storeId,
@@ -1176,24 +1176,23 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 )
             println("Log diff $diff")
             val day = (diff / (24 * 60 * 60)).toInt()
-            diff = diff % (24 * 60 * 60)
+            diff %= (24 * 60 * 60)
             println("Log day $day")
             println("Log diff $diff")
             val hour = (diff / (60 * 60)).toInt()
-            diff = diff % (60 * 60)
+            diff %= (60 * 60)
             println("Log hour $hour")
             println("Log diff $diff")
             val minutes = (diff / 60).toInt()
             println("Log minutes $minutes")
-            var formatedOfferTime = ""
-            if (day > 0) formatedOfferTime += day.toString() + " " + getString(R.string.day) + ","
-            if (hour > 0) formatedOfferTime += hour.toString() + " " + getString(R.string.hour) + ","
-            if (minutes > 0) formatedOfferTime += minutes.toString() + " " + getString(R.string.minute)
-            if (formatedOfferTime.endsWith(",")) formatedOfferTime =
-                formatedOfferTime.substring(0, formatedOfferTime.length - 1)
-            binding.endOfferTv.text = formatedOfferTime
+            var formattedOfferTime = ""
+            if (day > 0) formattedOfferTime += day.toString() + " " + getString(R.string.day) + ","
+            if (hour > 0) formattedOfferTime += hour.toString() + " " + getString(R.string.hour) + ","
+            if (minutes > 0) formattedOfferTime += minutes.toString() + " " + getString(R.string.minute)
+            if (formattedOfferTime.endsWith(",")) formattedOfferTime =
+                formattedOfferTime.substring(0, formattedOfferTime.length - 1)
+            binding.endOfferTv.text = formattedOfferTime
 
-//            }
         } else {
 
             binding.productPriceTv.text =
@@ -1209,7 +1208,6 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-//        add list of photos fragments
         for (image in productModel!!.images) {
             val imageBundle = Bundle()
             imageBundle.putString(Constants.KEY_IMAGE_URL, image)

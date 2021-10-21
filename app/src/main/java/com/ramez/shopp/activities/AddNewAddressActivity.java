@@ -136,8 +136,8 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             fragment.getMapAsync(this);
         }
 
-        placeLauncher =registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result!=null && result.getResultCode() == RESULT_OK) {
+        placeLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result != null && result.getResultCode() == RESULT_OK) {
 
                 Place place = Autocomplete.getPlaceFromIntent(result.getData());
                 Log.i("TAG", "Place: " + place.getName() + ", " + place.getId());
@@ -257,10 +257,10 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
         addressModel.setUserId(userId);
         addressModel.setGoogleAddress(binding.addressTV.getText().toString());
 
-        GlobalData.progressDialog(getActiviy(), R.string.add_new_address, R.string.please_wait_creat);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_new_address, R.string.please_wait_creat);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
             AddressResultModel result = (AddressResultModel) obj;
             String message = "error_in_data";
 
@@ -270,13 +270,13 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
                     message = result.getMessage();
 
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.fail_to_addAddress, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_to_addAddress, message);
 
 
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_get_data);
             } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActiviy(), getString(R.string.no_internet_connection));
+                GlobalData.INSTANCE.Toast(getActiviy(), getString(R.string.no_internet_connection));
 
             } else {
                 if (IsSuccess) {
@@ -328,7 +328,7 @@ public class AddNewAddressActivity extends ActivityBase implements OnMapReadyCal
             } else {
                 if (IsSuccess) {
                     binding.dataLY.setVisibility(View.VISIBLE);
-                    if (result!= null && result.getData() != null  && result.getData().size() > 0) {
+                    if (result != null && result.getData() != null && result.getData().size() > 0) {
                         addressModel = result.getData().get(0);
                         if (addressModel != null) {
                             selectedLat = addressModel.getLatitude();

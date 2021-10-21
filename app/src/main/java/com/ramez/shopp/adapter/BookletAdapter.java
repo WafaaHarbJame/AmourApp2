@@ -46,7 +46,7 @@ public class BookletAdapter extends RecyclerView.Adapter<BookletAdapter.Holder> 
         Log.i(getClass().getSimpleName(),"Log ImageUrl"+bookletsList.get(position).getImage());
         try {
 
-            GlobalData.GlideImgGifSize(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
+            GlobalData.INSTANCE.GlideImgGifSize(context,bookletsModel.getImage(),R.drawable.holder_image,holder.binding.ivCatImage);
 
         } catch (Exception e) {
             e.printStackTrace();

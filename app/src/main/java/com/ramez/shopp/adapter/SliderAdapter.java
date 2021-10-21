@@ -62,7 +62,7 @@ public class SliderAdapter extends PagerAdapter {
 
             try {
 
-                GlobalData.GlideImg(context,imageUrl, R.drawable.holder_image, productImg);
+                GlobalData.INSTANCE.GlideImg(context,imageUrl, R.drawable.holder_image, productImg);
 
 
             } catch (Exception e) {

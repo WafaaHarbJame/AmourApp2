@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.AnalyticsHandler;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CartProcessModel;
@@ -143,7 +143,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
 
             try {
 
-                GlobalData.GlideImg(context, photoUrl
+                GlobalData.INSTANCE.INSTANCE.GlideImg(context, photoUrl
                         , R.drawable.holder_image, holder.binding.productImg);
 
 
@@ -170,12 +170,12 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
             } else {
@@ -188,7 +188,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                     notifyDataSetChanged();
 
                 } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_favorite));
 
                 }
@@ -200,10 +200,10 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_remove_favorite),
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_remove_favorite),
                         context.getString(R.string.fail_to_delete_cart));
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_remove_favorite),
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_remove_favorite),
                         context.getString(R.string.fail_to_delete_cart));
             } else {
                 if (IsSuccess) {
@@ -216,7 +216,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_remove_favorite));
 
                 }
@@ -298,7 +298,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                                 addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                             } else {
                                 message = context.getString(R.string.stock_empty);
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                         message);
                             }
                         } else {
@@ -313,7 +313,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                                     message = context.getString(R.string.limit) + "" + limit;
 
                                 }
-                                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                         message);
 
                             }
@@ -356,7 +356,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                        GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
                 } else {
 
@@ -376,7 +376,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                             message = context.getString(R.string.limit) + "" + limit;
                         }
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                        GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
                     }
 
                 }
@@ -460,7 +460,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
+                        GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
                                 context.getString(R.string.fail_to_update_cart));
 
                     }
@@ -485,7 +485,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                         notifyItemChanged(position);
 
                     } else {
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
+                        GlobalData.INSTANCE.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart),
                                 context.getString(R.string.fail_to_update_cart));
 
 
@@ -511,7 +511,7 @@ public class SimilierProductAdapter extends RecyclerView.Adapter<SimilierProduct
                     AnalyticsHandler.RemoveFromCart(cart_id, currency, 0);
 
                 } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.delete_product),
                             context.getString(R.string.fail_to_delete_cart));
                 }
 

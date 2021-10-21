@@ -52,7 +52,7 @@ public class AutomateSlider extends SliderViewAdapter<AutomateSlider.sliderAdapt
 
 
         try {
-            GlobalData.GlideImg(context,imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
+            GlobalData.INSTANCE.GlideImg(context,imageUrl,R.drawable.holder_image,viewHolder.imageViewBackground);
 
         } catch (Exception e) {
             e.printStackTrace();

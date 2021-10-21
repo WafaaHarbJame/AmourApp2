@@ -65,7 +65,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
             try {
 
 
-                GlobalData.GlideImg(context, mainMainCategoryDM.getCatImage()
+                GlobalData.INSTANCE.GlideImg(context, mainMainCategoryDM.getCatImage()
                         , R.drawable.holder_image, holder.catImage);
 
             } catch (Exception e) {

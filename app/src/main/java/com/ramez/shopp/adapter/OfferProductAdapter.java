@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
@@ -244,7 +244,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
             try {
 
-                GlobalData.GlideImg(activity, photoUrl, R.drawable.holder_image, holder.binding.productImg);
+                GlobalData.INSTANCE.GlideImg(activity, photoUrl, R.drawable.holder_image, holder.binding.productImg);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -273,11 +273,11 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
 
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
             } else {
                 if (IsSuccess) {
@@ -289,7 +289,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
+                    GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_favorite));
 
 
                 }
@@ -303,11 +303,11 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
 
             } else {
@@ -320,7 +320,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
+                    GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_remove_favorite));
 
                 }
             }
@@ -493,7 +493,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                             } else {
                                 message = activity.getString(R.string.stock_empty);
-                                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), message);
 
                             }
                         } else {
@@ -510,7 +510,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                     message = activity.getString(R.string.stock_empty);
 
                                 }
-                                GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                                GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                             }
 
 
@@ -550,7 +550,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     } else {
                         message = activity.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                        GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                     }
                 } else {
 
@@ -571,7 +571,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                         }
 
-                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), message);
+                        GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), message);
                     }
 
                 }
@@ -645,7 +645,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_cart));
+                        GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_add_cart));
 
                     }
 
@@ -671,7 +671,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_update_cart));
+                        GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.error), activity.getString(R.string.fail_to_update_cart));
 
                     }
 
@@ -696,7 +696,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(activity, activity.getString(R.string.delete_product),
+                    GlobalData.INSTANCE.errorDialogWithButton(activity, activity.getString(R.string.delete_product),
                             activity.getString(R.string.fail_to_delete_cart));
                 }
 

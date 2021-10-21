@@ -130,7 +130,7 @@ public class EditProfileActivity extends ActivityBase {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
         }
     }
@@ -166,7 +166,7 @@ public class EditProfileActivity extends ActivityBase {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                        GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
 
                     }
 
@@ -230,9 +230,9 @@ public class EditProfileActivity extends ActivityBase {
             memberModel.setEmail(email);
         }
 
-        GlobalData.progressDialog(getActiviy(), R.string.update_profile, R.string.please_wait_sending);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.update_profile, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
 
             if (func.equals(Constants.ERROR)) {
                 ResultAPIModel result = (ResultAPIModel) obj;
@@ -240,9 +240,9 @@ public class EditProfileActivity extends ActivityBase {
                 if (result != null && result.message != null && !result.message.isEmpty()) {
                     message = result.message;
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
             } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, getString(R.string.no_internet_connection));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.failtoupdate_profile, getString(R.string.no_internet_connection));
             } else {
                 if (IsSuccess) {
                     LoginResultModel result = (LoginResultModel) obj;
@@ -250,7 +250,7 @@ public class EditProfileActivity extends ActivityBase {
                     MemberModel user = result.getData();
                     UtilityApp.setUserData(user);
 
-                    GlobalData.successDialog(getActiviy(), getString(R.string.update_profile), getString(R.string.success_update));
+                    GlobalData.INSTANCE.successDialog(getActiviy(), getString(R.string.update_profile), getString(R.string.success_update));
 
                 } else {
                     Toast(getString(R.string.failtoupdate_profile));
@@ -267,21 +267,21 @@ public class EditProfileActivity extends ActivityBase {
 
         Log.i("tag", "Log  userId " + userId);
 
-        GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
 
         if (localModel != null) {
             country = localModel.getShortname();
 
         } else {
-            country = GlobalData.COUNTRY;
+            country = GlobalData.INSTANCE.COUNTRY;
 
         }
 
         String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
 
-        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+        AndroidNetworking.upload(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery +
+                GlobalData.INSTANCE.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
@@ -294,13 +294,13 @@ public class EditProfileActivity extends ActivityBase {
                 }).getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 Log.i("tag", "Log data response " + response);
 
                 String message = getString(R.string.failtoupdate_profile);
 
                 if (response.equals(Constants.ERROR)) {
-                    GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
                 } else {
 
                     String data = null;
@@ -315,14 +315,14 @@ public class EditProfileActivity extends ActivityBase {
                             if (data != null) {
                                 memberModel.setProfilePicture(data);
                                 UtilityApp.setUserData(memberModel);
-                                GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
+                                GlobalData.INSTANCE.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
 
                             }
 
 
                         } else {
                             message = jsonObject.getString("message");
-                            GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
+                            GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
 
                         }
 

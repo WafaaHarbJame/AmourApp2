@@ -48,7 +48,7 @@ public class RecipeSliderAdapter extends PagerAdapter {
 
             try {
 
-                GlobalData.GlideImg(context,sliderList.get(position)
+                GlobalData.INSTANCE.GlideImg(context,sliderList.get(position)
                         ,R.drawable.holder_image,productImg);
 
             } catch (Exception e) {

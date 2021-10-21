@@ -238,7 +238,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                        GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
 
                     }
 
@@ -264,13 +264,13 @@ public class ExtraRequestActivity extends ActivityBase {
 
 
 //    public void uploadPhoto(AddExtraCall addExtraCall, File photo) {
-//        GlobalData.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
+//        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 //
 //        new DataFeacher(false, (obj, func, IsSuccess) -> {
 //            AddExtraResponse result = (AddExtraResponse) obj;
 //            String message = getString(R.string.fail_to_get_data);
 //
-//            GlobalData.hideProgressDialog();
+//            GlobalData.INSTANCE.hideProgressDialog();
 //
 //            if (func.equals(Constants.ERROR)) {
 //
@@ -278,11 +278,11 @@ public class ExtraRequestActivity extends ActivityBase {
 //                    message = result.getMessage();
 //                }
 //
-//                GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+//                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
 //
 //            } else if (func.equals(Constants.FAIL)) {
 //
-//                GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+//                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
 //
 //
 //            } else if (func.equals(Constants.NO_CONNECTION)) {
@@ -304,7 +304,7 @@ public class ExtraRequestActivity extends ActivityBase {
 //
 //                } else {
 //
-//                    GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+//                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
 //
 //
 //                }
@@ -314,7 +314,7 @@ public class ExtraRequestActivity extends ActivityBase {
 //    }
 
     private void navigateToCartScreen() {
-        GlobalData.REFRESH_CART = true;
+        GlobalData.INSTANCE.setREFRESH_CART(true);
         Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.putExtra(Constants.CART, true);
         startActivity(intent);
@@ -353,7 +353,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
         } else if (requestCode == SEARCH_CODE) {
 
@@ -379,13 +379,13 @@ public class ExtraRequestActivity extends ActivityBase {
 
         Log.i("tag", "Log  userId " + addExtraCall.userId);
 
-        GlobalData.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 
         if (localModel.getShortname() != null) {
-            country =localModel.getShortname();
+            country = localModel.getShortname();
 
         } else {
-            country = GlobalData.COUNTRY;
+            country = GlobalData.INSTANCE.COUNTRY;
 
         }
 
@@ -397,104 +397,15 @@ public class ExtraRequestActivity extends ActivityBase {
                 .build();
 
 //AndroidNetworking.initialize(getActiviy(),okHttpClient);
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
-        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + " v8/Carts/AddExtrat").addMultipartFile("file", photo)
+        AndroidNetworking.upload(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery +
+                GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
                 .addHeaders("token", token)
 
-                .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
-                .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
-                .addQueryParameter("description", String.valueOf(addExtraCall.description))
-                .addQueryParameter("user_id", String.valueOf(addExtraCall.userId))
-                .addQueryParameter("store_id", String.valueOf(addExtraCall.storeId))
-                .setPriority(Priority.HIGH)
-                .setOkHttpClient(okHttpClient)
-                .build().
-
-                        setUploadProgressListener((bytesUploaded, totalBytes) -> {
-                            // do anything with progress
-                        }).getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        GlobalData.hideProgressDialog();
-                        Log.i("tag", "Log data response " + response);
-
-                        String message = getString(R.string.fail_to_add_extra_order);
-
-
-                        try {
-                            JSONObject jsonObject = response;
-                            int status = jsonObject.getInt("status");
-                            if (status == 200) {
-                                UtilityApp.updateCart(1, 1);
-
-                                AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
-                                successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
-                                        .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-                                    navigateToCartScreen();
-                                });
-                                successDialog.show();
-
-
-                            } else {
-                                message = jsonObject.getString("message");
-                                GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
-
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        if (error.getMessage() != null) {
-                            GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
-
-                        }
-
-                    }
-                });
-    }
-
-
-    private void AddRequestWithOutPhoto(AddExtraCall addExtraCall) {
-
-        Log.i("tag", "Log  userId " + addExtraCall.userId);
-
-        GlobalData.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
-
-        if (localModel.getShortname() != null) {
-            country = localModel.getShortname();
-
-        } else {
-            country = GlobalData.COUNTRY;
-
-        }
-
-
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
-                .writeTimeout(120, TimeUnit.SECONDS)
-                .build();
-
-        String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
-
-        AndroidNetworking.post(GlobalData.BetaBaseURL + country + GlobalData.grocery +
-                GlobalData.Api + " v8/Carts/AddExtrat")
-                .addHeaders("ApiKey", Constants.api_key)
-                .addHeaders("device_type", Constants.deviceType)
-                .addHeaders("app_version", UtilityApp.getAppVersionStr())
-                .addHeaders("token", token)
                 .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
                 .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
                 .addQueryParameter("description", String.valueOf(addExtraCall.description))
@@ -509,7 +420,7 @@ public class ExtraRequestActivity extends ActivityBase {
                 }).getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 Log.i("tag", "Log data response " + response);
 
                 String message = getString(R.string.fail_to_add_extra_order);
@@ -531,7 +442,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
                     } else {
                         message = jsonObject.getString("message");
-                        GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, message);
+                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
 
                     }
 
@@ -546,7 +457,96 @@ public class ExtraRequestActivity extends ActivityBase {
             @Override
             public void onError(ANError error) {
                 if (error.getMessage() != null) {
-                    GlobalData.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
+
+                }
+
+            }
+        });
+    }
+
+
+    private void AddRequestWithOutPhoto(AddExtraCall addExtraCall) {
+
+        Log.i("tag", "Log  userId " + addExtraCall.userId);
+
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
+
+        if (localModel.getShortname() != null) {
+            country = localModel.getShortname();
+
+        } else {
+            country = GlobalData.INSTANCE.COUNTRY;
+
+        }
+
+
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(120, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .build();
+
+        String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
+
+        AndroidNetworking.post(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery +
+                GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat")
+                .addHeaders("ApiKey", Constants.api_key)
+                .addHeaders("device_type", Constants.deviceType)
+                .addHeaders("app_version", UtilityApp.getAppVersionStr())
+                .addHeaders("token", token)
+                .addQueryParameter("qty", String.valueOf(addExtraCall.qty))
+                .addQueryParameter("barcode", String.valueOf(addExtraCall.barcode))
+                .addQueryParameter("description", String.valueOf(addExtraCall.description))
+                .addQueryParameter("user_id", String.valueOf(addExtraCall.userId))
+                .addQueryParameter("store_id", String.valueOf(addExtraCall.storeId))
+                .setPriority(Priority.HIGH)
+                .setOkHttpClient(okHttpClient)
+                .build().
+
+                setUploadProgressListener((bytesUploaded, totalBytes) -> {
+                    // do anything with progress
+                }).getAsJSONObject(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                GlobalData.INSTANCE.hideProgressDialog();
+                Log.i("tag", "Log data response " + response);
+
+                String message = getString(R.string.fail_to_add_extra_order);
+
+
+                try {
+                    JSONObject jsonObject = response;
+                    int status = jsonObject.getInt("status");
+                    if (status == 200) {
+                        UtilityApp.updateCart(1, 1);
+
+                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
+                        successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
+                                .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
+                            navigateToCartScreen();
+                        });
+                        successDialog.show();
+
+
+                    } else {
+                        message = jsonObject.getString("message");
+                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(ANError error) {
+                if (error.getMessage() != null) {
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
 
                 }
 

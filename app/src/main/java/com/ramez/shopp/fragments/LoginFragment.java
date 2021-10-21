@@ -19,10 +19,10 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.activities.ConfirmActivity;
 import com.ramez.shopp.activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -73,7 +73,7 @@ public class LoginFragment extends FragmentBase {
         getDeviceToken();
 
         CountryCode= String.valueOf(localModel.getPhonecode());
-        String intro=GlobalData.getIntro(CountryCode);
+        String intro= GlobalData.INSTANCE.INSTANCE.getIntro(CountryCode);
         Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
         binding.edtPhoneNumber.setHint(intro);
 
@@ -150,7 +150,7 @@ public class LoginFragment extends FragmentBase {
         memberModel.setStoreId(Integer.parseInt(localModel.getCityId()));
         memberModel.setCity(Integer.parseInt(localModel.getCityId()));
 
-        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
@@ -164,21 +164,21 @@ public class LoginFragment extends FragmentBase {
                         if (result != null && result.getMessage() != null) {
                             message = result.getMessage();
                         }
-                        GlobalData.hideProgressDialog();
-                        GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                        GlobalData.INSTANCE.hideProgressDialog();
+                        GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
                         break;
                     }
                     case Constants.NO_CONNECTION:
 
-                        GlobalData.hideProgressDialog();
-                        GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                        GlobalData.INSTANCE.hideProgressDialog();
+                        GlobalData.INSTANCE.Toast(getActivityy(), R.string.no_internet_connection);
 
                         break;
                     default:
                         if (IsSuccess) {
 
                             if (result.getStatus() == 106) {
-                                GlobalData.hideProgressDialog();
+                                GlobalData.INSTANCE.hideProgressDialog();
                                 Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
                                 intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                                 intent.putExtra(Constants.verify_account, true);
@@ -187,13 +187,13 @@ public class LoginFragment extends FragmentBase {
 
                             } else if (result.getStatus() == 0) {
 
-                                GlobalData.hideProgressDialog();
+                                GlobalData.INSTANCE.hideProgressDialog();
                                 String message = getString(R.string.fail_signin);
                                 if (result.getMessage() != null) {
                                     message = result.getMessage();
                                 }
 
-                                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
 
                             } else if (result.getStatus() == 200) {
 
@@ -209,19 +209,19 @@ public class LoginFragment extends FragmentBase {
                                     UpdateToken();
                                 }
                             } else {
-                                GlobalData.hideProgressDialog();
+                                GlobalData.INSTANCE.hideProgressDialog();
 
                                 String message = getString(R.string.fail_signin);
                                 if (result.getMessage() != null) {
                                     message = result.getMessage();
                                 }
 
-                                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
                             }
 
 
                         } else {
-                            GlobalData.hideProgressDialog();
+                            GlobalData.INSTANCE.hideProgressDialog();
 
                             Toast(getString(R.string.fail_signin));
 
@@ -292,19 +292,19 @@ public class LoginFragment extends FragmentBase {
 
     private void UpdateToken() {
 
-//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
                 ResultAPIModel<String> result = (ResultAPIModel) obj;
                 if (func.equals(Constants.ERROR)) {
                     String message = getString(R.string.fail_signin);
-                    GlobalData.hideProgressDialog();
+                    GlobalData.INSTANCE.hideProgressDialog();
 
                     if (result != null && result.message != null) {
                         message = result.message;
                     }
-                    GlobalData.hideProgressDialog();
+                    GlobalData.INSTANCE.hideProgressDialog();
 
                     Toast(message);
 
@@ -319,7 +319,7 @@ public class LoginFragment extends FragmentBase {
 
                     } else {
                         Toast(getString(R.string.fail_signin));
-                        GlobalData.hideProgressDialog();
+                        GlobalData.INSTANCE.hideProgressDialog();
 
                     }
                 }
@@ -442,19 +442,19 @@ public class LoginFragment extends FragmentBase {
         memberModel.setUserType(Constants.user_type);
 
 
-        GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
+        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 LoginResultModel result = (LoginResultModel) obj;
                 if (func.equals(Constants.ERROR)) {
                     String message = getString(R.string.fail_register);
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
-                    GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
+                    GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.fail_register, message);
                 } else {
                     if (IsSuccess) {
                         Log.i("TAG", "Log otp " + result.getOtp());
@@ -480,11 +480,11 @@ public class LoginFragment extends FragmentBase {
 
     private void firebaseAuthWithGoogle(String idToken) {
 //
-//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
 //
 //        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
 //        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
-//            GlobalData.hideProgressDialog();
+//            GlobalData.INSTANCE.hideProgressDialog();
 //
 //            if (task.isSuccessful()) {
 //
@@ -502,11 +502,11 @@ public class LoginFragment extends FragmentBase {
 //            } else {
 //
 //                Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+//                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
 //
 //            }
 //
-//            GlobalData.hideProgressDialog();
+//            GlobalData.INSTANCE.hideProgressDialog();
 //        });
     }
 
@@ -526,7 +526,7 @@ public class LoginFragment extends FragmentBase {
 //                // If sign in fails, display a message to the user.
 //                Log.w(TAG, "Log signInWithCredential:failure", task.getException());
 //                Toast("Authentication failed");
-//                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+//                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
 //
 //            }
 //
@@ -556,11 +556,11 @@ public class LoginFragment extends FragmentBase {
 
     public void getCarts(int storeId, int userId) {
 
-//        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+//        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 CartResultModel cartResultModel = (CartResultModel) obj;
                 String message = getString(R.string.fail_to_get_data);
 
@@ -583,7 +583,7 @@ public class LoginFragment extends FragmentBase {
 
                 }
                 else {
-                    GlobalData.hideProgressDialog();
+                    GlobalData.INSTANCE.hideProgressDialog();
 
                 }
             }

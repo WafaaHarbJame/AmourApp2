@@ -57,7 +57,7 @@ public class BrandsAdapter extends RecyclerView.Adapter<BrandsAdapter.Holder> {
         try {
 
 
-            GlobalData.GlideImg(context,imageUrl
+            GlobalData.INSTANCE.GlideImg(context,imageUrl
                     ,R.drawable.holder_image,holder.binding.ivCatImage);
 
         } catch (Exception e) {

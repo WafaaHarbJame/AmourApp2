@@ -70,7 +70,7 @@ public class RatingActivity extends ActivityBase {
 
     private void addRate(ReviewModel reviewModel) {
 
-        GlobalData.progressDialog(getActiviy(), R.string.rate_app, R.string.please_wait_sending);
+        GlobalData.INSTANCE.INSTANCE.progressDialog(getActiviy(), R.string.rate_app, R.string.please_wait_sending);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
@@ -85,33 +85,33 @@ public class RatingActivity extends ActivityBase {
             }
 
 
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
 
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialog(getActiviy(), R.string.rate_app, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.rate_app, message);
 
 
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialog(getActiviy(), R.string.rate_app, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.rate_app, message);
 
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.no_internet_connection));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.no_internet_connection));
 
             } else {
 
                 if (IsSuccess) {
 
-                    GlobalData.hideProgressDialog();
+                    GlobalData.INSTANCE.hideProgressDialog();
                     binding.rateEt.setText("");
                     binding.ratingBr.setRating(0);
-                    GlobalData.successDialog(getActiviy(), getString(R.string.rate_app), getString(R.string.success_rate_app));
+                    GlobalData.INSTANCE.successDialog(getActiviy(), getString(R.string.rate_app), getString(R.string.success_rate_app));
 
 
                 } else {
-                    GlobalData.hideProgressDialog();
-                    GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.fail_add_comment));
+                    GlobalData.INSTANCE.hideProgressDialog();
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.fail_add_comment));
                 }
 
             }

@@ -37,9 +37,9 @@ import es.dmoral.toasty.Toasty
 class MyAccountFragment : FragmentBase() {
     var isLogin = false
     var memberModel: MemberModel? = null
-    var user_id = 0
+    var fastValidModel: FastValidModel? = null
+    var userId = 0
     lateinit var binding: FragmentMyAccountBinding
-    private val checkLoginDialog: CheckLoginDialog? = null
     private var soicalLink: SoicalLink? = null
     private var whatsLink: String? = ""
     private var facebookLink: String? = ""
@@ -86,7 +86,7 @@ class MyAccountFragment : FragmentBase() {
             binding.viewLogin.visibility = View.GONE
             binding.logoutText.setText(R.string.logout)
             binding.editProfileBu.visibility = View.VISIBLE
-            binding.fastqLyBut.visibility= View.VISIBLE
+            getFastQSetting()
             if (UtilityApp.getUserData() != null) {
                 memberModel = UtilityApp.getUserData()
                 if (memberModel != null) {
@@ -111,7 +111,7 @@ class MyAccountFragment : FragmentBase() {
 
     private fun initData(memberModel: MemberModel?) {
         if (memberModel != null && memberModel.id != null) {
-            user_id = memberModel.id
+            userId = memberModel.id
             binding.usernameTV.text = memberModel.name
             binding.emailTv.text = memberModel.email
             Glide.with(activityy).asBitmap().load(memberModel.profilePicture).placeholder(R.drawable.avatar)
@@ -657,4 +657,44 @@ class MyAccountFragment : FragmentBase() {
 
 
     }
+
+
+    private fun getFastQSetting() {
+        fastValidModel = DBFunction.getFastQSettings()
+        if (fastValidModel == null) {
+            getFastSetting(cityId,userId.toString())
+        }
+        else{
+           checkFast()
+        }
+
+    }
+
+    private fun checkFast() {
+        Log.i("TAG", "Log fastValidModel isIsValid " +fastValidModel?.isIsValid)
+
+        if(fastValidModel?.isIsValid == true){
+            binding.fastqLyBut.visibility= View.VISIBLE
+
+        }
+        else{
+            binding.fastqLyBut.visibility= View.GONE
+
+        }    }
+
+    private fun getFastSetting(cityId:Int, userId1 :String) {
+        DataFeacher(false, object : DataFetcherCallBack {
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                val result = obj as ResultAPIModel<FastValidModel?>?
+                if (result?.data != null && result.status == 200) {
+                    val settingFastQModel = result.data
+                    fastValidModel=settingFastQModel
+                    DBFunction.setFastSetting(settingFastQModel)
+                    checkFast()
+                }
+            }
+
+        }).GetSetting(cityId,userId1)
+    }
+
 }

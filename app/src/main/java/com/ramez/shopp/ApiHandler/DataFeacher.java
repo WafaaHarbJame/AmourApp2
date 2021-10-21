@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v8/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.INSTANCE.COUNTRY + "/GroceryStoreApi/api/v8/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -940,6 +940,23 @@ public class DataFeacher {
 
     }
 
+
+    public void GetSetting(int city_id, String user_id) {
+
+        Log.i(TAG, "Log Get Fastq Setting");
+        Log.i(TAG, "Log Get Fastq headerMap " + headerMap);
+        Log.i(TAG, "Log Get Fastq store_id " + city_id);
+        Log.i(TAG, "Log Get Fastq  user_id " + user_id);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", user_id);
+        params.put("store_id", city_id);
+
+        Call call = apiService.GetSetting(headerMap, params);
+        call.enqueue(callbackApi);
+
+
+    }
     public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log searchTxt");

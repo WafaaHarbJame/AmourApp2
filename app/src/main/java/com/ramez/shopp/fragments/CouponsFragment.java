@@ -12,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.adapter.CouponsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.DBFunction;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
@@ -97,17 +97,17 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     private void showGenerateDialog() {
         double points = totalPointModel != null ? totalPointModel.points : 0;
 
-        if(settingCouponsModel==null){
+        if (settingCouponsModel == null) {
             getCouponSettings();
         }
 
-        int minimumPoints=settingCouponsModel != null  && settingCouponsModel.minimumPoints > 0 ? settingCouponsModel.minimumPoints : 0;
+        int minimumPoints = settingCouponsModel != null && settingCouponsModel.minimumPoints > 0 ? settingCouponsModel.minimumPoints : 0;
 
         GenerateDialog generateDialog = new GenerateDialog(getActivityy(),
                 userId, points,
                 minimumPoints, (obj, func, IsSuccess) -> {
             if (IsSuccess) {
-                GlobalData.refresh_points = true;
+                GlobalData.INSTANCE.setREFRESH_CART(true);
                 callGetTotalPoints();
 
             }
@@ -250,9 +250,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     @Override
     public void onResume() {
         super.onResume();
-        if (GlobalData.refresh_points) {
+        if (GlobalData.INSTANCE.getRefresh_points()) {
             callGetTotalPoints();
-            GlobalData.refresh_points = false;
+            GlobalData.INSTANCE.setRefresh_points(false);
 
         }
     }

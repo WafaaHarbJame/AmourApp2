@@ -233,7 +233,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             try {
 
-                GlobalData.GlideImg(context, photoUrl
+                GlobalData.INSTANCE.GlideImg(context, photoUrl
                         , R.drawable.holder_image, holder.binding.productImg);
 
             } catch (Exception e) {
@@ -266,9 +266,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
             } else {
                 if (IsSuccess) {
                     Toast.makeText(context, "" + context.getString(R.string.success_add), Toast.LENGTH_SHORT).show();
@@ -277,7 +277,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     notifyDataSetChanged();
 
                 } else {
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_add_favorite));
                 }
             }
 
@@ -288,9 +288,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
 
             } else {
                 if (IsSuccess) {
@@ -302,7 +302,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), context.getString(R.string.fail_to_remove_favorite));
                 }
             }
 
@@ -475,7 +475,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                     addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
                                 } else {
                                     message = context.getString(R.string.stock_empty);
-                                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
                                 }
                             } else {
 
@@ -489,7 +489,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                         message = context.getString(R.string.limit) + "" + limit;
 
                                     }
-                                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                                 }
 
@@ -530,7 +530,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, message, context.getString(R.string.fail_to_delete_cart));
+                        GlobalData.INSTANCE.errorDialogWithButton(context, message, context.getString(R.string.fail_to_delete_cart));
                     }
                 } else {
 
@@ -546,7 +546,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     }
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
 
                 }
 
@@ -623,7 +623,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart), context.getString(R.string.fail_to_delete_cart));
+                        GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_add_cart), context.getString(R.string.fail_to_delete_cart));
 
                     }
 
@@ -648,7 +648,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
+                        GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.fail_to_update_cart), context.getString(R.string.fail_to_delete_cart));
 
                     }
 
@@ -673,7 +673,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                    GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.delete_product),
                             context.getString(R.string.fail_to_delete_cart));
                 }
 

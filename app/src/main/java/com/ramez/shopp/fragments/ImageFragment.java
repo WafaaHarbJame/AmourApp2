@@ -49,7 +49,7 @@ public class ImageFragment extends FragmentBase {
             imageUrl = bundle.getString(Constants.KEY_IMAGE_URL);
 
             try {
-                GlobalData.GlideImgWithTransform(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
+                GlobalData.INSTANCE.GlideImgWithTransform(getActivityy(), imageUrl, R.drawable.holder_image, binding.slideImg);
 
             } catch (Exception e) {
                 e.printStackTrace();

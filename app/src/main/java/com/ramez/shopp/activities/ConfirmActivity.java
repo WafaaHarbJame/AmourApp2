@@ -98,9 +98,9 @@ public class ConfirmActivity extends ActivityBase {
     }
 
     public void VerifyOtp(String mobile, String otp) {
-        GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
 
             String message = getString(R.string.fail_to_get_data);
             GeneralModel result = (GeneralModel) obj;
@@ -110,7 +110,7 @@ public class ConfirmActivity extends ActivityBase {
                     message = result.getMessage();
 
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.confirm_code, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.confirm_code, message);
 
 
             } else if (func.equals(Constants.FAIL)) {
@@ -118,11 +118,11 @@ public class ConfirmActivity extends ActivityBase {
                     message = result.getMessage();
 
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.confirm_code, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.confirm_code, message);
 
             } else if (func.equals(Constants.NO_CONNECTION)) {
 
-                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+                GlobalData.INSTANCE.Toast(getActiviy(), R.string.no_internet_connection);
 
             } else {
                 if (IsSuccess) {
@@ -150,14 +150,14 @@ public class ConfirmActivity extends ActivityBase {
                             }
                         } else {
                             message = otpModel.getMessage();
-                            GlobalData.errorDialog(getActiviy(), R.string.confirm_code, message);
+                            GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.confirm_code, message);
 
                         }
                     }
 
 
                 } else {
-                    GlobalData.errorDialog(getActiviy(), R.string.confirm_code, getString(R.string.fail_to_sen_otp));
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.confirm_code, getString(R.string.fail_to_sen_otp));
 
 
                 }
@@ -169,13 +169,13 @@ public class ConfirmActivity extends ActivityBase {
 
     public void SendOtp(String mobile, boolean isLoad) {
         if (isLoad) {
-            GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
+            GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
 
         }
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isLoad) {
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
 
             }
             if (func.equals(Constants.ERROR)) {
@@ -232,13 +232,13 @@ public class ConfirmActivity extends ActivityBase {
 
     private void UpdateToken() {
 
-        GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
 
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
 
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
             ResultAPIModel<String> result = (ResultAPIModel) obj;
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_signin);
@@ -281,10 +281,10 @@ public class ConfirmActivity extends ActivityBase {
         memberModel.setUserType(Constants.user_type);
         memberModel.setCity(Integer.parseInt(localModel.getCityId()));
 
-        GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
+            GlobalData.INSTANCE.hideProgressDialog();
             LoginResultModel result = (LoginResultModel) obj;
 
             if (func.equals(Constants.ERROR)) {
@@ -293,15 +293,15 @@ public class ConfirmActivity extends ActivityBase {
                     message = result.getMessage();
                 }
 
-                GlobalData.errorDialog(getActiviy(), R.string.fail_signin, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_signin, message);
             } else if (func.equals(Constants.FAIL)) {
                 String message = getString(R.string.fail_signin);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.errorDialog(getActiviy(), R.string.fail_signin, message);
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_signin, message);
             } else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+                GlobalData.INSTANCE.Toast(getActiviy(), R.string.no_internet_connection);
             } else {
                 if (IsSuccess) {
 

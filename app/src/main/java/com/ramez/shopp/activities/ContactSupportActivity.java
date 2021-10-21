@@ -25,8 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.adapter.ChatAdapter;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.adapter.ChatAdapter;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.Models.ChatModel;
@@ -298,7 +298,7 @@ public class ContactSupportActivity extends ActivityBase {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
         }
 
@@ -316,7 +316,7 @@ public class ContactSupportActivity extends ActivityBase {
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.d("TAG", "onActivityResult: Exception GALLERY_CONSTANT: " + e.getMessage());
-                GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
 
         }
@@ -332,19 +332,19 @@ public class ContactSupportActivity extends ActivityBase {
         Log.i("tag", "Log  photo " + photo.getName());
         Log.i("tag", "Log  uploadPhoto " + photo.getName());
 
-        GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
+        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
 
         if (localModel.getShortname() != null) {
             country = localModel.getShortname();
 
         } else {
-            country = GlobalData.COUNTRY;
+            country = GlobalData.INSTANCE.COUNTRY;
 
         }
 
         String token=UtilityApp.getToken()!=null ?  UtilityApp.getToken(): "token";
 
-        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
+        AndroidNetworking.upload(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery + GlobalData.INSTANCE.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
@@ -358,13 +358,13 @@ public class ContactSupportActivity extends ActivityBase {
                 }).getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 Log.i("tag", "Log data response " + response);
 
                 String message = getString(R.string.fail_to_load);
 
                 if (response.equals(Constants.ERROR)) {
-                    GlobalData.errorDialog(getActiviy(), R.string.fail_to_load, message);
+                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_to_load, message);
                 } else {
 
                     String data = null;
@@ -377,11 +377,11 @@ public class ContactSupportActivity extends ActivityBase {
                             Log.i("tag", "Log data result " + data);
                             imageUrl = data;
                             sendChatMessage();
-                            GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_upload));
+                            GlobalData.INSTANCE.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_upload));
 
                         } else {
                             message = jsonObject.getString("message");
-                            GlobalData.errorDialog(getActiviy(), R.string.fail_to_load, message);
+                            GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.fail_to_load, message);
 
                         }
 

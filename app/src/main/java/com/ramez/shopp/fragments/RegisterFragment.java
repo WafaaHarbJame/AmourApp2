@@ -18,12 +18,12 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.activities.ChooseCityActivity;
 import com.ramez.shopp.activities.ConditionActivity;
 import com.ramez.shopp.activities.ConfirmActivity;
 import com.ramez.shopp.activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
@@ -60,7 +60,7 @@ public class RegisterFragment extends FragmentBase {
         CountryCode = String.valueOf(localModel.getPhonecode());
         city_id = localModel.getCityId();
 
-        String intro=GlobalData.getIntro(CountryCode);
+        String intro= GlobalData.INSTANCE.INSTANCE.getIntro(CountryCode);
         Log.i(getClass().getSimpleName(),"Log get  Intro "+intro);
         binding.edtPhoneNumber.setHint(intro);
 
@@ -145,21 +145,21 @@ public class RegisterFragment extends FragmentBase {
         memberModel.setPrefix(CountryCode);
         memberModel.setUserType(Constants.user_type);
 
-        GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
+        GlobalData.INSTANCE.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
 
-                GlobalData.hideProgressDialog();
+                GlobalData.INSTANCE.hideProgressDialog();
                 RegisterResultModel result = (RegisterResultModel) obj;
                 if (func.equals(Constants.ERROR)) {
                     String message = getString(R.string.fail_register);
                     if (result != null && result.getMessage() != null) {
                         message = result.getMessage();
                     }
-                    GlobalData.errorDialog(getActivityy(), R.string.register, message);
+                    GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.register, message);
                 } else if (func.equals(Constants.NO_CONNECTION)) {
-                    GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                    GlobalData.INSTANCE.Toast(getActivityy(), R.string.no_internet_connection);
                 } else {
                     if (IsSuccess) {
                         Log.i("TAG", "Log getStatus " + result.getStatus());
@@ -180,7 +180,7 @@ public class RegisterFragment extends FragmentBase {
                             if (result.getMessage() != null) {
                                 message = result.getMessage();
                             }
-                            GlobalData.errorDialog(getActivityy(), R.string.register, message);
+                            GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.register, message);
 
 
                         }

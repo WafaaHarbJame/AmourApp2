@@ -142,10 +142,12 @@ object Constants {
     const val DB_TOTAL_POINTS = "db_total_points"
     const val DB_loyal = "db_loyal"
     const val DB_COUPON_SETTINGS = "db_coupon_settings"
+    const val DB_FAST_SETTINGS = "db_fast_settings"
     const val default_storeId = "7263"
     const val default_country_id = 17
 //    const val default_country_id = 230
     const val default_country_code = 973
+//    const val default_short_name = "dm"
     const val default_short_name = "BH"
     const val BHD = "BHD"
     var refresh_cart = false

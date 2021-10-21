@@ -179,7 +179,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             }
         }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     private fun initListener() {
         binding.saveBut.setOnClickListener { view1 ->
 //            EventBus.getDefault()
@@ -252,8 +252,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                 expressDelivery = true
                 if (deliveryDayAdapter != null) deliveryDayAdapter!!.lastIndex = -1
-
-                deliveryDayAdapter!!.notifyDataSetChanged()
+                deliveryDayAdapter?.notifyDataSetChanged()
                 binding.DeliverTimeRecycler.visibility = View.GONE
                 binding.quickLy.background = ContextCompat.getDrawable(
                     activityy,

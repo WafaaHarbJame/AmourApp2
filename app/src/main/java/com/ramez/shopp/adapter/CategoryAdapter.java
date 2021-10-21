@@ -46,7 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
         CategoryModel categoryModel = categoryDMS.get(position);
         try {
-            GlobalData.GlideImg(context,categoryModel.getCatImage()
+            GlobalData.INSTANCE.GlideImg(context,categoryModel.getCatImage()
                     ,R.drawable.holder_image,holder.binding.ivCatImage);
 
         } catch (Exception e) {

@@ -217,7 +217,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
 
             try {
-                GlobalData.GlideImg(context, photoUrl
+                  GlobalData.INSTANCE.INSTANCE.GlideImg(context, photoUrl
                         , R.drawable.holder_image, holder.binding.productImg);
 
             } catch (Exception e) {
@@ -248,12 +248,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                  GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
 
             } else if (func.equals(Constants.FAIL)) {
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                  GlobalData.INSTANCE.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_add_favorite));
 
             } else {
@@ -267,7 +267,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                      GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_add_favorite));
 
 
@@ -282,12 +282,12 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                  GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_remove_favorite));
 
             } else if (func.equals(Constants.FAIL)) {
 
-                GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                  GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                         context.getString(R.string.fail_to_remove_favorite));
 
 
@@ -301,7 +301,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 } else {
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                      GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                             context.getString(R.string.fail_to_remove_favorite));
 
                 }
@@ -476,7 +476,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                         } else {
                             message = context.getString(R.string.stock_empty);
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                              GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
 
                         }
@@ -494,7 +494,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 message = context.getString(R.string.stock_empty);
 
                             }
-                            GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                              GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                     message);
                         }
 
@@ -531,7 +531,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     } else {
                         message = context.getString(R.string.stock_empty);
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                          GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                 message);
                     }
                 } else {
@@ -548,7 +548,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     }
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.error), message);
+                      GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error), message);
 
 
                 }
@@ -625,7 +625,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                          GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                 context.getString(R.string.fail_to_add_cart));
 
                     }
@@ -651,7 +651,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     } else {
 
-                        GlobalData.errorDialogWithButton(context, context.getString(R.string.error),
+                          GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.error),
                                 context.getString(R.string.fail_to_update_cart));
 
                     }
@@ -677,7 +677,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                 } else {
 
 
-                    GlobalData.errorDialogWithButton(context, context.getString(R.string.delete_product),
+                      GlobalData.INSTANCE.errorDialogWithButton(context, context.getString(R.string.delete_product),
                             context.getString(R.string.fail_to_delete_cart));
                 }
 

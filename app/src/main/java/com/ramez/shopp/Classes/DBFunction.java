@@ -45,6 +45,17 @@ public class DBFunction {
         }
     }
 
+    public static FastValidModel getFastQSettings() {
+
+        String json = getFromDB(Constants.DB_FAST_SETTINGS);
+        if (json != null) {
+            return new Gson().fromJson(json, new TypeToken<FastValidModel>() {
+            }.getType());
+        } else {
+            return null;
+        }
+    }
+
     /*************************************************************/
 
     public static void setTotalPoints(TotalPointModel model) {
@@ -73,6 +84,14 @@ public class DBFunction {
     }
 
 
+
+    public static void setFastSetting(FastValidModel model) {
+
+        String json = new Gson().toJson(model);
+
+        setDB(Constants.DB_FAST_SETTINGS, json);
+
+    }
     /**********************************************************************/
     private static String getFromDB(String type) {
         return UtilityApp.getFromShPref(type);

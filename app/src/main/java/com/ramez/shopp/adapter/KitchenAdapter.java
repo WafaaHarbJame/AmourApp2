@@ -55,7 +55,7 @@ public class KitchenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof HolderLinear) {
             HolderLinear holderLinear = (HolderLinear) holder;
             try {
-                GlobalData.GlideImg(context,imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
+                GlobalData.INSTANCE.GlideImg(context,imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -70,7 +70,7 @@ public class KitchenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (holder instanceof HolderGrid) {
             HolderGrid holderLinear = (HolderGrid) holder;
             try {
-                GlobalData.GlideImg(context,imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
+                GlobalData.INSTANCE.GlideImg(context,imageUrl, R.drawable.holder_image, holderLinear.binding.kitchenImg);
 
             } catch (Exception e) {
                 e.printStackTrace();

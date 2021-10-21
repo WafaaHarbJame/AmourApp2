@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -108,7 +108,7 @@ public class RecommendProductAdapter extends RecyclerView.Adapter<RecyclerView.V
             }
 
             try {
-                GlobalData.GlideImg(context, photoUrl
+                GlobalData.INSTANCE.GlideImg(context, photoUrl
                         , R.drawable.holder_image, holder.binding.productImg);
 
             } catch (Exception e) {
