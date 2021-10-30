@@ -138,7 +138,19 @@ public class ChooseNearCity extends ActivityBase {
         UtilityApp.setIsFirstRun(false);
         city_id = cityModel.getId();
         localModel.setCityId(String.valueOf(city_id));
+        String branchName="";
+
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            branchName=cityModel.getName();
+
+        } else {
+            branchName=cityModel.getNameAr();
+        }
+        localModel.setBranchName(branchName);
+        UtilityApp.setBranchName(branchName);
+
         UtilityApp.setLocalData(localModel);
+
         if (getCallingActivity() != null) {
             setResult(RESULT_OK);
         } else {

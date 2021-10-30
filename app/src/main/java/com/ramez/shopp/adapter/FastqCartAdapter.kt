@@ -193,8 +193,17 @@ class FastqCartAdapter(
 
 
                             }
+                            else{
+                                message = result?.message ?: activity.getString(R.string.fail_to_get_data)
+
+                                Toast.makeText(activity, message, Toast.LENGTH_SHORT)
+                                    .show()
+                            }
 
                         } else {
+
+                                message = result?.message ?: activity.getString(R.string.fail_to_get_data)
+
                             Toast.makeText(activity, message, Toast.LENGTH_SHORT)
                                 .show()
 

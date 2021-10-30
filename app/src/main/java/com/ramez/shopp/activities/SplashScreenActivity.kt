@@ -292,10 +292,16 @@ class SplashScreenActivity : ActivityBase() {
                             val slider = result.sliders[i]
                             if (slider.type == 0) {
                                 sliderList.add(slider)
-                            } else {
+                            }
+                            else  if (slider.type == 1) {
                                 bannersList.add(slider)
                             }
                         }
+
+                        Log.i(javaClass.name, "Log sliderList ${sliderList.size}")
+                        Log.i(javaClass.name, "Log sliderList banner ${bannersList.size}")
+
+
                         if (sliderList.size > 0) {
                             UtilityApp.setSliderData(sliderList)
                         }

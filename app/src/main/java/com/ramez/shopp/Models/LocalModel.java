@@ -10,6 +10,7 @@ public class LocalModel {
     private String countryName;
     private String countryNameAr;
     private String shortname = "BH";
+    private String branchName = "";
     private Integer phonecode;
     private String currencyCode;
     private String cityId;
@@ -102,4 +103,14 @@ public class LocalModel {
             return countryNameAr;
         }
     }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+
 }

@@ -140,10 +140,19 @@ class FastqCartActivity : ActivityBase() {
 
     private fun initListeners() {
         binding.continueBtn.setOnClickListener {
+            if(!binding.checkTermsBut.isChecked){
+               Toast(getString(R.string.accept_terms))
+                return@setOnClickListener
+            }
 
             val intent = Intent(activiy, FastqCheckoutActivity::class.java)
             startActivity(intent)
 
+        }
+
+
+        binding.termsBtn.setOnClickListener {
+            startTermsActivity()
         }
 
     }
@@ -275,5 +284,10 @@ class FastqCartActivity : ActivityBase() {
         Log.i(javaClass.name, "Log subTotal result$subTotal")
 
         return subTotal
+    }
+
+    private fun startTermsActivity() {
+        val intent = Intent(activiy, TermsActivity::class.java)
+        startActivity(intent)
     }
 }

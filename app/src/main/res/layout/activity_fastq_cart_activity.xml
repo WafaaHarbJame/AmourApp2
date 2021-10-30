@@ -76,6 +76,7 @@
 
             <com.ramez.shopp.SpichalViews.SCheckBox
                 android:layout_width="wrap_content"
+                android:id="@+id/checkTermsBut"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:text="@string/by_placing_this_order_agree"

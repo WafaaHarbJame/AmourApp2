@@ -175,8 +175,6 @@ ApiInterface {
     @GET("v8/Products/categoryList")
     Call<MainModel> GetMainPage(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id);
 
-
-
     @GET("v8/Products/AllCategories")
     Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 

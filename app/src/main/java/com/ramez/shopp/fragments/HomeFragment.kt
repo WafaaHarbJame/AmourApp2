@@ -426,6 +426,8 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     } else {
                         if (IsSuccess) {
 //                        binding.searchLY.setVisibility(View.VISIBLE);
+                            bannersList?.clear()
+                            sliderList?.clear()
                             if (UtilityApp.getDinners() != null && UtilityApp.getDinners().size > 0) {
                                 list = UtilityApp.getDinners()
                                 initKitchenAdapter()
@@ -439,13 +441,16 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                             } else {
                                 UtilityApp.setSliderData(null)
                                 UtilityApp.setBannerData(null)
+                                bannersList?.clear()
+                                sliderList?.clear()
                                 if (result!!.sliders.size > 0) {
                                     for (i in result.sliders.indices) {
                                         val slider =
                                             result.sliders[i]
                                         if (slider.type == 0) {
                                             sliderList!!.add(slider)
-                                        } else {
+                                        }
+                                        else  if (slider.type == 1) {
                                             bannersList!!.add(slider)
                                         }
                                     }
@@ -457,6 +462,10 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                     }
                                 }
                             }
+                            Log.i(javaClass.name, "Log sliderList ${sliderList?.size}")
+                            Log.i(javaClass.name, "Log sliderList banner ${bannersList?.size}")
+
+
                             initSliderAdapter()
                             initBannersAdapter()
                             getBooklets(cityId)
@@ -724,8 +733,9 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
 
     private fun setBranchData() {
         if (selectedCityModel != null) {
-            binding.branchNameTv.text = selectedCityModel!!.cityName
-            UtilityApp.setBranchName(selectedCityModel!!.cityName)
+//            UtilityApp.setBranchName(selectedCityModel!!.cityName)
+//            binding.branchNameTv.text = selectedCityModel!!.cityName
+            binding.branchNameTv.text = UtilityApp.getBranchName()
         }
     }
 

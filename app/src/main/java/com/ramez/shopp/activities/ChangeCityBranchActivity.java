@@ -190,6 +190,17 @@ public class ChangeCityBranchActivity extends ActivityBase implements CountriesA
         city_id = cityModel.getId();
         localModel.setCityId(String.valueOf(cityModel.getId()));
         localModel.setCountryName(newCountryName);
+        String branchName="";
+
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            branchName=cityModel.getName();
+
+        } else {
+            branchName=cityModel.getNameAr();
+        }
+
+        localModel.setBranchName(branchName);
+        UtilityApp.setBranchName(branchName);
         UtilityApp.setLocalData(localModel);
 
 

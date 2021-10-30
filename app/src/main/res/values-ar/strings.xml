@@ -387,7 +387,7 @@
     <string name="History">السجل</string>
     <string name="FastQ">FastQ</string>
     <string name="ensure_barcode_is_within_white_markers_to_scan_an_item">
-   تأكد من وجود الرمز الشريطي داخل علامات بيضاء لمسح عنصر ضوئيًاm</string>
+   تأكد من وجود الرمز الشريطي داخل علامات بيضاء لمسح عنصر ضوئيًاً</string>
     <string name="unit_price_key">سعر الوحدة :</string>
     <string name="scanning">جاري المسح</string>
     <string name="product_add_to_cart">تم اضافة المنتج للسلة</string>
@@ -413,4 +413,6 @@
     <string name="sound_alert">الصوت والتنبيه</string>
     <string name="sound_alert_hint">تشغيل الصوت لفحص المنتج والتفاعلات.</string>
     <string name="min_quantity_is_one">الحد الادني من الكمية واحد </string>
+    <string name="accept_terms">الرجاء الموافقة على شروط الخصوصية </string>
+
 </resources>

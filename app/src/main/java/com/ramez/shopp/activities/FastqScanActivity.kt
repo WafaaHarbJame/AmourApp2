@@ -119,11 +119,17 @@ class FastqScanActivity : ActivityBase() {
                         r.play()
                     }
 
-//                    checkBarcode(it.text)
+                    checkBarcode(it.text)
 //                    checkBarcode("4600680000640")
-//                    checkBarcode("7010000679680")
-                    checkBarcode("6084001011375")
-//                    checkBarcode("5711953137518")
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        checkBarcode("7010000679680")
+//                    },3000)
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        checkBarcode("6084001011375")
+//                    },6000)
+////                    checkBarcode("7010000679680")
+////                    checkBarcode("6084001011375")
+////                    checkBarcode("5711953137518")
 
                 } catch (e: java.lang.Exception) {
                 }
