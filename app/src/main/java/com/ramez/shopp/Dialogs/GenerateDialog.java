@@ -22,10 +22,6 @@ import com.ramez.shopp.databinding.DialogGenerateCouponsBinding;
 public class GenerateDialog extends Dialog {
 
 
-//    ConstraintLayout parentLy;
-//    TextView countTV, minPointTv, totalPointTv;
-//    ImageView minusBtn, plusBtn;
-
     Activity activity;
     LocalModel localModel;
     int countryId, userId, count;
@@ -49,29 +45,14 @@ public class GenerateDialog extends Dialog {
         binding = DialogGenerateCouponsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        getWindow().setDimAmount(0);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//        getWindow().setGravity(Gravity.CENTER);
         setCancelable(true);
 
-
-//        parentLy = findViewById(R.id.parentLy);
-//        plusBtn = findViewById(R.id.plusBtn);
-//        minusBtn = findViewById(R.id.minusBtn);
-//        minPointTv = findViewById(R.id.minimum_pointsTv);
-//        countTV = findViewById(R.id.countTV);
-//        totalPointTv = findViewById(R.id.totalPointTv);
-
-        // GetSettings(countryId);
         count = total < minimumPoints ? (int) total : minimumPoints;
 
         binding.minPointTv.setText(String.valueOf(minimumPoints));
         binding.totalPointTv.setText(String.valueOf(total));
         binding.countTV.setText(String.valueOf(count));
-
-//        parentLy.setOnClickListener(v -> {
-//            dismiss();
-//        });
 
         try {
             if (activity != null && !activity.isFinishing()) show();
@@ -104,7 +85,7 @@ public class GenerateDialog extends Dialog {
                 binding.countTV.setText(String.valueOf(count));
             } else {
                 String message = activity.getString(R.string.minimum_points_needed) + " " + minimumPoints;
-                GlobalData.INSTANCE.INSTANCE.Toast(activity, message);
+                GlobalData.INSTANCE.Toast(activity, message);
             }
 
 
@@ -130,26 +111,31 @@ public class GenerateDialog extends Dialog {
         GlobalData.INSTANCE.progressDialog(activity, R.string.Generate_Coupons, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.INSTANCE.hideProgressDialog();
-
-            GeneralModel result = (GeneralModel) obj;
-            if (result!=null && result.isSuccessful()) {
-//                callGetTotalPoints();
-//                GlobalData.INSTANCE.refresh_points = true;
-                GlobalData.INSTANCE.Toast(activity, R.string.success_generate_coupon);
-                dismiss();
-                dataFetcherCallBack.Result("", Constants.success, true);
-            } else {
-                String message = activity.getString(R.string.fail_generate_coupon);
-                if (result != null && result.getMessage() != null && !result.getMessage().isEmpty()){
-                    message = result.getMessage();
+            if (IsSuccess) {
+                GeneralModel result = (GeneralModel) obj;
+                if (result != null && result.isSuccessful()) {
+                    GlobalData.INSTANCE.Toast(activity, R.string.success_generate_coupon);
+                    dismiss();
+                    dataFetcherCallBack.Result("", Constants.success, true);
+                } else {
+                    String message = activity.getString(R.string.fail_generate_coupon);
+                    if (result != null && result.getMessage() != null && !result.getMessage().isEmpty()) {
+                        message = result.getMessage();
+                    }
+                    GlobalData.INSTANCE.Toast(activity, message);
                 }
+            } else {
+
+                String message = activity.getString(R.string.fail_generate_coupon);
+
                 GlobalData.INSTANCE.Toast(activity, message);
+
             }
+
 
         }).generateCoupon(userId, points);
 
     }
-
 
 
 }

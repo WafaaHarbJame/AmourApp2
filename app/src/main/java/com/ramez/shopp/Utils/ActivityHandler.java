@@ -97,7 +97,7 @@ public class ActivityHandler {
             share.setPackage(shareChannel);
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
-        String appStr = RootApplication.getInstance().getString(R.string.by_app) + "\n" + Constants.Paly_Link;
+        String appStr = RootApplication.Companion.getInstance().getString(R.string.by_app) + "\n" + Constants.Paly_Link;
         // Add data to the intent, the receiving app will decide
         // what to do with it.
 //        share.putExtra(Intent.EXTRA_SUBJECT, title + "");

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+
 import androidx.core.content.ContextCompat;
 
 import com.ramez.shopp.R;
@@ -38,10 +39,9 @@ public class PinEntryEditText extends EditText {
     };
 
     int[] mColors = new int[]{
-            ContextCompat.getColor(RootApplication.getInstance(), R.color.colorPrimaryDark),
+            ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark),
 //            Color.GREEN,
-            ContextCompat.getColor(RootApplication.getInstance(), R.color.black),
-            ContextCompat.getColor(RootApplication.getInstance(), R.color.colorPrimaryDark)
+            ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark)
     };
 
     ColorStateList mColorStates = new ColorStateList(mStates, mColors);

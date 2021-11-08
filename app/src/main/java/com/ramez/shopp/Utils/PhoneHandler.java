@@ -26,7 +26,7 @@ public class PhoneHandler {
     }
 
     public static boolean validateUsing_libphonenumber(String countryCode, String phNumber) {
-        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.getInstance());
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.Companion.getInstance());
         String isoCode = phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
         Phonenumber.PhoneNumber phoneNumber = null;
         try {
@@ -50,13 +50,13 @@ public class PhoneHandler {
     }
 
     public static List<String> getRegionCodesForCountryCode(String countryCode) {
-        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.getInstance());
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.Companion.getInstance());
         List<String> regionCodes = phoneNumberUtil.getRegionCodesForCountryCode(Integer.parseInt(countryCode));
         return regionCodes;
     }
 
     public static void getSupportedCallingCodes(String countryCode) {
-        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.getInstance());
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(RootApplication.Companion.getInstance());
 //        Set<Integer> callingCodes = phoneNumberUtil.getSupportedCallingCodes();
         String regionCode = phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
 //        System.out.println("Log callingCodes " + callingCodes);

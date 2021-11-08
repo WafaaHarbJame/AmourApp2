@@ -251,12 +251,7 @@ class SearchFragment : FragmentBase(), SearchProductAdapter.OnItemClick, OnTagCl
         if (searchCall?.isExecuted == true) searchCall?.cancel()
     }
 
-    override fun onItemClicked(position: Int, productModel: ProductModel) {
-        AnalyticsHandler.selectItem(productModel.name)
-        val intent = Intent(activity, ProductDetailsActivity::class.java)
-        intent.putExtra(Constants.DB_productModel, productModel)
-        startActivity(intent)
-    }
+
 
     private fun searchBarcode(
         country_id: Int,
@@ -635,4 +630,10 @@ class SearchFragment : FragmentBase(), SearchProductAdapter.OnItemClick, OnTagCl
     companion object {
         private const val ZBAR_CAMERA_PERMISSION = 1
     }
+
+    override fun onItemClicked(position: Int, productModel: ProductModel?) {
+        AnalyticsHandler.selectItem(productModel?.name)
+        val intent = Intent(activity, ProductDetailsActivity::class.java)
+        intent.putExtra(Constants.DB_productModel, productModel)
+        startActivity(intent)    }
 }

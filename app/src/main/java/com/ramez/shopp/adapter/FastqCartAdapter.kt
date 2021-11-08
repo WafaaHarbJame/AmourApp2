@@ -55,6 +55,7 @@ class FastqCartAdapter(
         fraction = localModel?.fractional ?: Constants.three
         storeId =
             localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
+
         user = UtilityApp.getUserData()
 
         userId = user?.id ?: 0

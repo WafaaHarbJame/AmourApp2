@@ -331,7 +331,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 if (cartId1 > 0) {
                     val count = binding.productCartQTY.text.toString().toInt()
                     val stock = selectedProductBarcode?.stockQty?:0
-                    val userId = UtilityApp.getUserData().id
+                    val userId = UtilityApp.getUserData()?.id?:0
                     val storeId = localModel?.cityId ?.toInt()?:Constants.default_storeId.toInt()
                     val productId = productModel?.id ?:0
                     val cartId = selectedProductBarcode!!.cartId

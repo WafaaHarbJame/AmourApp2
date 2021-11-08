@@ -36,6 +36,7 @@ class FastqCartActivity : ActivityBase() {
     var userId = 0
     var cartCount = 0
     var total: Double = 0.0
+    var user: MemberModel? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +47,13 @@ class FastqCartActivity : ActivityBase() {
 
         list = mutableListOf()
 
+
         if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
             userId = UtilityApp.getUserData()?.id ?: 0
         }
 
-
+        user = UtilityApp.getUserData()
+        userId = user?.id ?: 0
 
         changeToolBarColor()
 
