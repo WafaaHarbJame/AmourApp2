@@ -5,9 +5,13 @@ buildscript {
     }
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         gradlePluginPortal()
+        maven {
+            url "https://maven.google.com"
+        }
 
+        jcenter()
 
     }
     dependencies {
@@ -17,10 +21,10 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
 
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.13.4'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -30,9 +34,10 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-        maven { url 'https://jitpack.io' }
         mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.google.com'}
+        jcenter()
     }
 }
 

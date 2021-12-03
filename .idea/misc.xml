@@ -4,10 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/drawable/round_corner_green_fill.xml" value="0.18125" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_add_balance.xml" value="0.17864583333333334" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_add_new_address.xml" value="0.2" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_address.xml" value="0.2421875" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_all_booklete.xml" value="0.17291666666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_change_city_branch.xml" value="0.1" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_change_language.xml" value="0.264" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_choose_nearst_city.xml" value="0.11778115501519756" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_confirm.xml" value="0.2421875" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_edit_profile.xml" value="0.10885416666666667" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_extra_request.xml" value="0.12916666666666668" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_fast_qactivity.xml" value="0.152" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_fastq_cart_activity.xml" value="0.264" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_fastq_checkout_activity.xml" value="0.11778115501519756" />
@@ -16,11 +22,14 @@
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_main.xml" value="0.22291666666666668" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_order_complete.xml" value="0.19791666666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_product_deatils.xml" value="0.176" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_rewards.xml" value="0.22962962962962963" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_scan_barcode.xml" value="0.21197916666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_scanfast_activity.xml" value="0.176" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/activity_test.xml" value="0.10729166666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_cart.xml" value="0.125" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_fastq_history.xml" value="0.17291666666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_login.xml" value="0.17222222222222222" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_my_account.xml" value="0.2" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_product_image.xml" value="0.11822916666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/fragment_register.xml" value="0.4" />
@@ -30,6 +39,7 @@
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/layout_pre_loading.xml" value="0.17291666666666666" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/row_cart_item.xml" value="0.11778115501519756" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/row_fastq_cart_item.xml" value="0.176" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/show_image_dialog.xml" value="0.23846153846153847" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.4" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/menu/menu_scrolling.xml" value="0.12239583333333333" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/cart_back_style.xml" value="0.2203125" />
