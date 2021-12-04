@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
@@ -29,6 +28,7 @@ import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
+import com.ramez.shopp.activities.RegisterLoginActivity;
 import com.ramez.shopp.databinding.RowEmptyBinding;
 import com.ramez.shopp.databinding.RowLoadingBinding;
 import com.ramez.shopp.databinding.RowSearchProductItemBinding;

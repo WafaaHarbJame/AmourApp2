@@ -68,14 +68,14 @@ class SplashScreenActivity : ActivityBase() {
                 } else {
                     UtilityApp.logOut()
                     val intent =
-                        Intent(activiy, RegisterLoginActivity::class.java)
+                        Intent(activity, RegisterLoginActivity::class.java)
                     intent.putExtra(Constants.LOGIN, true)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
             } else {
                 if (!UtilityApp.isFirstRun()) {
-                    val intent = Intent(activiy, Constants.MAIN_ACTIVITY_CLASS)
+                    val intent = Intent(activity, Constants.MAIN_ACTIVITY_CLASS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -87,7 +87,7 @@ class SplashScreenActivity : ActivityBase() {
     }
 
     private fun startWelcomeActivity() {
-        startActivity(Intent(activiy, ChangeLanguageActivity::class.java))
+        startActivity(Intent(activity, ChangeLanguageActivity::class.java))
     }
 
     fun getUserData(user_id: Int, store_id: Int) {
@@ -112,7 +112,7 @@ class SplashScreenActivity : ActivityBase() {
                 } else {
                     UtilityApp.logOut()
                     val intent =
-                        Intent(activiy, RegisterLoginActivity::class.java)
+                        Intent(activity, RegisterLoginActivity::class.java)
                     intent.putExtra(Constants.LOGIN, true)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
@@ -246,7 +246,7 @@ class SplashScreenActivity : ActivityBase() {
                     } else {
                         UtilityApp.setCartCount(0)
                     }
-                    val intent = Intent(activiy, Constants.MAIN_ACTIVITY_CLASS)
+                    val intent = Intent(activity, Constants.MAIN_ACTIVITY_CLASS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()

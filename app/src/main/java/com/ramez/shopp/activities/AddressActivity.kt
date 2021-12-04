@@ -48,7 +48,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
         user = UtilityApp.getUserData()
         setTitle(R.string.address)
         addressList = ArrayList()
-        linearLayoutManager = LinearLayoutManager(activiy)
+        linearLayoutManager = LinearLayoutManager(activity)
         binding.addressRecycler.layoutManager = linearLayoutManager
 
         address
@@ -104,13 +104,13 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
             }
         }
         val canSelect = callingActivity != null
-        addressAdapter = AddressAdapter(activiy, addressList, canSelect, this, this)
+        addressAdapter = AddressAdapter(activity, addressList, canSelect, this, this)
         binding.addressRecycler.adapter = addressAdapter
         addressAdapter?.notifyDataSetChanged()
     }
 
     private fun addNewAddress() {
-        val intent = Intent(activiy, AddNewAddressActivity::class.java)
+        val intent = Intent(activity, AddNewAddressActivity::class.java)
         addAddressLauncher?.launch(intent)
 
     }
@@ -125,7 +125,6 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 binding.dataLY.visibility = View.VISIBLE
                 binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
-                val result = obj as AddressResultModel
                 if (func == Constants.ERROR || func == Constants.FAIL) {
                     binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
                     binding.failGetDataLY.failTxt.setText(R.string.error_in_data)
@@ -137,6 +136,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
                     binding.dataLY.visibility = View.GONE
                 } else {
                     if (IsSuccess) {
+                        val result = obj as AddressResultModel
                         binding.dataLY.visibility = View.VISIBLE
                         if (result.data != null && result.data.size > 0) {
                             addressList = result.data
@@ -171,7 +171,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
             setResult(RESULT_OK, intent)
             finish()
         } else {
-            val intent = Intent(activiy, AddNewAddressActivity::class.java)
+            val intent = Intent(activity, AddNewAddressActivity::class.java)
             intent.putExtra(Constants.KEY_EDIT, true)
             intent.putExtra(Constants.KEY_ADDRESS_ID, addressesDM.id)
             startActivity(intent)
@@ -179,7 +179,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
     }
 
     private fun setDefaultAddress(user_id: Int, address_id: Int) {
-        GlobalData.progressDialog(activiy, R.string.default_address, R.string.please_wait_sending)
+        GlobalData.progressDialog(activity, R.string.default_address, R.string.please_wait_sending)
         DataFeacher(false, object :DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
@@ -192,7 +192,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
                     if (IsSuccess) {
                         GlobalData.hideProgressDialog()
                         GlobalData.successDialog(
-                            activiy,
+                            activity,
                             getString(R.string.default_address),
                             getString(R.string.address_default)
                         )
@@ -215,19 +215,19 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
                         override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                             if (func == Constants.ERROR) {
                                 Toast.makeText(
-                                    activiy,
+                                    activity,
                                     getString(R.string.error_in_data),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else if (func == Constants.FAIL) {
                                 Toast.makeText(
-                                    activiy,
+                                    activity,
                                     getString(R.string.fail_delete_address),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else if (func == Constants.NO_CONNECTION) {
                                 Toast.makeText(
-                                    activiy,
+                                    activity,
                                     getString(R.string.no_internet_connection),
                                     Toast.LENGTH_SHORT
                                 ).show()
@@ -252,7 +252,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
                                     }
                                 } else {
                                     Toast.makeText(
-                                        activiy,
+                                        activity,
                                         getString(R.string.fail_to_get_data),
                                         Toast.LENGTH_SHORT
                                     ).show()
@@ -263,7 +263,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
             }
         }
         ConfirmDialog(
-            activiy,
+            activity,
             getString(R.string.want_to_delete_address),
             R.string.ok,
             R.string.cancel_label,
@@ -281,7 +281,7 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
 
     private fun showDialogs(message: Int) {
         val checkLoginDialog =
-            CheckLoginDialog(activiy, R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null)
+            CheckLoginDialog(activity, R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null)
         checkLoginDialog.show()
         checkLoginDialog.show()
     }

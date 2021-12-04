@@ -57,14 +57,14 @@ class FastqCartActivity : ActivityBase() {
 
         changeToolBarColor()
 
-        binding.rv.layoutManager = LinearLayoutManager(activiy)
+        binding.rv.layoutManager = LinearLayoutManager(activity)
 
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
 
@@ -108,7 +108,7 @@ class FastqCartActivity : ActivityBase() {
                     }
                 }
 
-            }).CityHandle(countryId, activiy)
+            }).CityHandle(countryId, activity)
     }
 
 
@@ -135,7 +135,7 @@ class FastqCartActivity : ActivityBase() {
 
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 
@@ -148,7 +148,7 @@ class FastqCartActivity : ActivityBase() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(activiy, FastqCheckoutActivity::class.java)
+            val intent = Intent(activity, FastqCheckoutActivity::class.java)
             startActivity(intent)
 
         }
@@ -163,7 +163,7 @@ class FastqCartActivity : ActivityBase() {
     fun initAdapter() {
 
         val adapter = FastqCartAdapter(
-            activiy,true, list
+            activity,true, list
         ) { obj, func, IsSuccess ->
             val cartProcessModel = obj as CartProcessModel
             if(cartProcessModel.cartCount>0){
@@ -290,7 +290,7 @@ class FastqCartActivity : ActivityBase() {
     }
 
     private fun startTermsActivity() {
-        val intent = Intent(activiy, TermsActivity::class.java)
+        val intent = Intent(activity, TermsActivity::class.java)
         startActivity(intent)
     }
 }

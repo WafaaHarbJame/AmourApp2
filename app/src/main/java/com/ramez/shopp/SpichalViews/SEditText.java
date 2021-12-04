@@ -2,6 +2,7 @@ package com.ramez.shopp.SpichalViews;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -23,7 +24,11 @@ public class SEditText extends AppCompatEditText {
     }
 
     private void init(){
-       Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), Constants.NORMAL_FONT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            this.setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS);
+        }
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), Constants.NORMAL_FONT);
 
         setTypeface(typeface);
     }

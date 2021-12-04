@@ -59,11 +59,11 @@ class FastqScanActivity : ActivityBase() {
         setContentView(binding.root)
         changeToolBarColor()
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
         cartCount = UtilityApp.getFastQCartCount()
@@ -112,10 +112,10 @@ class FastqScanActivity : ActivityBase() {
 
                     if (UtilityApp.getScanSound()) {
                         val sound = Uri.parse(
-                            "android.resource://" + activiy.packageName
+                            "android.resource://" + activity.packageName
                                 .toString() + "/" + R.raw.beep_04
                         )
-                        val r = RingtoneManager.getRingtone(activiy, sound)
+                        val r = RingtoneManager.getRingtone(activity, sound)
                         r.play()
                     }
 
@@ -179,7 +179,7 @@ class FastqScanActivity : ActivityBase() {
 
             changeToScanning()
 
-            val intent = Intent(activiy, FastqCartActivity::class.java)
+            val intent = Intent(activity, FastqCartActivity::class.java)
             startActivity(intent)
 
         }
@@ -187,7 +187,7 @@ class FastqScanActivity : ActivityBase() {
 
         binding.toolBar.cartFastBtn.setOnClickListener {
 
-            val intent = Intent(activiy, FastqCartActivity::class.java)
+            val intent = Intent(activity, FastqCartActivity::class.java)
             startActivity(intent)
 
         }
@@ -255,7 +255,7 @@ class FastqScanActivity : ActivityBase() {
                     }
                 }
 
-            }).CityHandle(countryId, activiy)
+            }).CityHandle(countryId, activity)
     }
 
     private fun searchSelectedCity() {
@@ -281,7 +281,7 @@ class FastqScanActivity : ActivityBase() {
 
     private fun changeToolBarColor() {
 
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 
@@ -307,7 +307,7 @@ class FastqScanActivity : ActivityBase() {
 
     private fun startScan() {
         try {
-            val builder = PermissionCompat.Builder(activiy)
+            val builder = PermissionCompat.Builder(activity)
             builder.addPermissions(arrayOf(Manifest.permission.CAMERA))
             builder.addPermissionRationale(getString(R.string.should_allow_permission))
             builder.addRequestPermissionsCallBack(object : OnRequestPermissionsCallBack {
@@ -330,7 +330,7 @@ class FastqScanActivity : ActivityBase() {
         user_id: String?,
         barcode: String?
     ) {
-        GlobalData.progressDialog(activiy, R.string.getproduct, R.string.please_wait_upload)
+        GlobalData.progressDialog(activity, R.string.getproduct, R.string.please_wait_upload)
 
         DataFeacher(false,
             object : DataFetcherCallBack {
@@ -341,7 +341,7 @@ class FastqScanActivity : ActivityBase() {
                     GlobalData.hideProgressDialog()
 
                     val result = obj as ScanResult?
-                    var message: String? = activiy.getString(R.string.fail_to_get_data)
+                    var message: String? = activity.getString(R.string.fail_to_get_data)
                     if (func == Constants.ERROR) {
                         message = result?.message ?: getString(R.string.fail_to_get_data)
 
@@ -440,7 +440,7 @@ class FastqScanActivity : ActivityBase() {
 
     private fun changeToScanAgain() {
         isMakeScan = true
-        binding.scanBut.background = ContextCompat.getDrawable(activiy, R.drawable.round_corner_red_fill_big)
+        binding.scanBut.background = ContextCompat.getDrawable(activity, R.drawable.round_corner_red_fill_big)
         binding.processTv.text = getString(R.string.scan_again)
     }
 
@@ -450,7 +450,7 @@ class FastqScanActivity : ActivityBase() {
         binding.productDetailsLy.visibility = gone
         binding.successAddProductLy.visibility = gone
         binding.scanBut.background =
-            ContextCompat.getDrawable(activiy, R.drawable.round_corner_green_fill_big)
+            ContextCompat.getDrawable(activity, R.drawable.round_corner_green_fill_big)
         binding.processTv.text = getString(R.string.scanning)
     }
 
@@ -471,7 +471,7 @@ class FastqScanActivity : ActivityBase() {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     val result = obj as ResultAPIModel<ScanModel>?
 
-                    var message: String? = activiy.getString(R.string.fail_to_update_cart)
+                    var message: String? = activity.getString(R.string.fail_to_update_cart)
                     if (func == Constants.ERROR) {
                         if (result?.message != null) {
                             message = result.message
@@ -566,7 +566,7 @@ class FastqScanActivity : ActivityBase() {
     private fun checkBarcode(barcode: String) {
 
         if (cartProductsBarcodes?.contains(barcode) == true) {
-            Toasty.error(activiy, getString(R.string.product_added_to_cart), Toast.LENGTH_SHORT, true).show()
+            Toasty.error(activity, getString(R.string.product_added_to_cart), Toast.LENGTH_SHORT, true).show()
             startScan()
         } else {
             addToCartUsingBarcode(cityId, userId, barcode)

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.AutoFocusMode
@@ -25,7 +24,6 @@ import com.ramez.shopp.Models.CartFastQModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Models.ResultAPIModel
 import com.ramez.shopp.R
-import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.databinding.ActivityFastqCheckoutActivityBinding
 import java.lang.Exception
 
@@ -52,11 +50,11 @@ class FastqCheckoutActivity : ActivityBase() {
             userId = UtilityApp.getUserData()?.id ?: 0
         }
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
 
@@ -83,10 +81,10 @@ class FastqCheckoutActivity : ActivityBase() {
 
                     if(UtilityApp.getScanSound()){
                         val sound = Uri.parse(
-                            "android.resource://" + activiy.packageName
+                            "android.resource://" + activity.packageName
                                 .toString() + "/" + R.raw.beep_04
                         )
-                        val r = RingtoneManager.getRingtone(activiy, sound)
+                        val r = RingtoneManager.getRingtone(activity, sound)
                         r.play()
                     }
 
@@ -128,7 +126,7 @@ class FastqCheckoutActivity : ActivityBase() {
 
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 
@@ -136,7 +134,7 @@ class FastqCheckoutActivity : ActivityBase() {
 
     private fun startScan() {
         try {
-            val builder = PermissionCompat.Builder(activiy)
+            val builder = PermissionCompat.Builder(activity)
             builder.addPermissions(arrayOf(Manifest.permission.CAMERA))
             builder.addPermissionRationale(getString(R.string.should_allow_permission))
             builder.addRequestPermissionsCallBack(object : OnRequestPermissionsCallBack {
@@ -167,7 +165,7 @@ class FastqCheckoutActivity : ActivityBase() {
 
     private fun generateOrder(cityId: Int, userId: Int, cashierBarcode: String) {
 
-        GlobalData.progressDialog(activiy, R.string.make_order, R.string.please_wait_sending)
+        GlobalData.progressDialog(activity, R.string.make_order, R.string.please_wait_sending)
 
         DataFeacher(false, object : DataFetcherCallBack {
 
@@ -182,7 +180,7 @@ class FastqCheckoutActivity : ActivityBase() {
                         UtilityApp.setFastQCartCount(0)
                         val productsList = list?.toTypedArray()
 
-                        val intent = Intent(activiy, FastqSummaryActivity::class.java)
+                        val intent = Intent(activity, FastqSummaryActivity::class.java)
                         intent.putExtra(Constants.CART_MODEL, productsList)
                         startActivity(intent)
 

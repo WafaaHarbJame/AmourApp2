@@ -96,7 +96,11 @@ public class DataFeacher {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                    if (response.code() == 404) {
+                        System.out.println("Log 404 notfound change url");
+                        String url = call.request().url().url().getPath();
+                        changeUrl();
+                    }
                     dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
 
                 }
@@ -106,6 +110,7 @@ public class DataFeacher {
             @Override
             public void onFailure(@NonNull Call call, @NonNull Throwable t) {
                 t.printStackTrace();
+
                 if ((t instanceof UnknownHostException || t instanceof NoRouteToHostException) && dataFetcherCallBack != null) {
                     dataFetcherCallBack.Result(null, Constants.NO_CONNECTION, false);
                 } else {
@@ -137,6 +142,8 @@ public class DataFeacher {
 //                    System.out.println("Log url " + call.request().url().url().getPath());
 
                     String url = call.request().url().url().getPath();
+                    Log.i("Log", "Log errorApiUrl " + url);
+
                     if (url.equals(LOGIN_URL)) {
                         LoginResultModel result = (LoginResultModel) response.body();
 
@@ -167,7 +174,10 @@ public class DataFeacher {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                    if (response.code() == 404) {
+                        System.out.println("Log 404 not found change url");
+                        changeUrl();
+                    }
                     dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
 
                 }
@@ -185,6 +195,20 @@ public class DataFeacher {
                 }
             }
         };
+
+
+    }
+
+    private void changeUrl() {
+
+        String url = UtilityApp.getUrl();
+        if (url.equals(GlobalData.BetaBaseURL1)) {
+            UtilityApp.setUrl(GlobalData.BetaBaseURL2);
+
+        } else {
+            UtilityApp.setUrl(GlobalData.BetaBaseURL1);
+
+        }
 
 
     }
@@ -957,6 +981,7 @@ public class DataFeacher {
 
 
     }
+
     public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log searchTxt");

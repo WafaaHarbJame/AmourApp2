@@ -99,46 +99,46 @@ class CartFragment : FragmentBase(), OnCartItemClicked {
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun initAdapter() {
-        cartAdapter = CartAdapter(activityy, cartList, this,
-            { obj: Any, func: String?, IsSuccess: Boolean ->
-                val cartProcessModel = obj as CartProcessModel
-                productSize = cartProcessModel.cartCount
-                if (cartProcessModel.cartCount == 0) {
-                    getCarts(storeId, userId)
+        cartAdapter = CartAdapter(activityy, cartList, this
+        ) { obj: Any, func: String?, IsSuccess: Boolean ->
+            val cartProcessModel = obj as CartProcessModel
+            productSize = cartProcessModel.cartCount
+            if (cartProcessModel.cartCount == 0) {
+                getCarts(storeId, userId)
+            } else {
+                total = NumberHandler.formatDouble(
+                    cartProcessModel.total,
+                    fraction
+                )
+                binding.totalTv.text = "$total $currency"
+                if (cartProcessModel.totalSavePrice == 0.0) {
+                    binding.savePriceLy.visibility = View.GONE
                 } else {
-                    total = NumberHandler.formatDouble(
-                        cartProcessModel.total,
+                    binding.savePriceLy.visibility = View.VISIBLE
+                }
+                totalSavePrice =
+                    NumberHandler.formatDouble(
+                        cartProcessModel.totalSavePrice,
                         fraction
                     )
-                    binding.totalTv.text = "$total $currency"
-                    if (cartProcessModel.totalSavePrice == 0.0) {
-                        binding.savePriceLy.visibility = View.GONE
-                    } else {
-                        binding.savePriceLy.visibility = View.VISIBLE
-                    }
-                    totalSavePrice =
-                        NumberHandler.formatDouble(
-                            cartProcessModel.totalSavePrice,
-                            fraction
-                        )
-                    binding.saveText.text = "$totalSavePrice $currency"
-                    if (cartProcessModel.total >= minimum_order_amount) {
-                        binding.tvFreeDelivery.text =
-                            getString(R.string.getFreeDelivery)
-                    } else {
-                        val total_price =
-                            minimum_order_amount - cartProcessModel.total
-                        val Add_more = activityy.getString(R.string.Add_more)
-                        val freeStr = activityy.getString(R.string.get_Free)
-                        binding.tvFreeDelivery.text = (Add_more + " " +
-                                NumberHandler.formatDouble(
-                                    total_price,
-                                    fraction
-                                )
-                                + " " + currency + " " + freeStr)
-                    }
+                binding.saveText.text = "$totalSavePrice $currency"
+                if (cartProcessModel.total >= minimum_order_amount) {
+                    binding.tvFreeDelivery.text =
+                        getString(R.string.getFreeDelivery)
+                } else {
+                    val total_price =
+                        minimum_order_amount - cartProcessModel.total
+                    val Add_more = activityy.getString(R.string.Add_more)
+                    val freeStr = activityy.getString(R.string.get_Free)
+                    binding.tvFreeDelivery.text = (Add_more + " " +
+                            NumberHandler.formatDouble(
+                                total_price,
+                                fraction
+                            )
+                            + " " + currency + " " + freeStr)
                 }
-            })
+            }
+        }
         binding.cartRecycler.adapter = cartAdapter
         productsSize = cartList?.size ?: 0
         total = NumberHandler.formatDouble(

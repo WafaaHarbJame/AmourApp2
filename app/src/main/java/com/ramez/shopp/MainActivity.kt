@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.androidnetworking.BuildConfig
 import com.bumptech.glide.manager.SupportRequestManagerFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.onesignal.OneSignal
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
@@ -60,13 +62,32 @@ class MainActivity : ActivityBase() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Log Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.d("TAG", "Log token firebase manin  $token")
+        })
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
         fragmentManager = supportFragmentManager
+        val UUID = OneSignal.getDeviceState()?.userId
+        val UUID1 = OneSignal.getDeviceState()?.pushToken
 
+        if (UUID != null) {
+            UtilityApp.setFCMToken(UUID)
+        }
+        Log.d("debug", "Log token one signal main: $UUID")
+        Log.d("debug", "Log token one signal2  main: $UUID1")
         tabNavArr = arrayOf(
             BottomNavModel(
                 R.id.homeButton,
@@ -151,7 +172,7 @@ class MainActivity : ActivityBase() {
 
             println("Log main backStack fragments ${fragmentManager?.fragments}")
             if (oldFragment is SearchFragment) {
-                hideSoftKeyboard(activiy)
+                hideSoftKeyboard(activity)
             }
             currFragment = fragmentManager?.fragments?.last()
             when (currFragment) {
@@ -259,7 +280,7 @@ class MainActivity : ActivityBase() {
                     .post(MessageEvent(MessageEvent.TYPE_view, 1))
                 binding.toolBar.view2But.setImageDrawable(
                     ContextCompat.getDrawable(
-                        activiy,
+                        activity,
                         R.drawable.filter_view2
                     )
                 )
@@ -268,7 +289,7 @@ class MainActivity : ActivityBase() {
                     .post(MessageEvent(MessageEvent.TYPE_view, 2))
                 binding.toolBar.view2But.setImageDrawable(
                     ContextCompat.getDrawable(
-                        activiy,
+                        activity,
                         R.drawable.filter_view_white
                     )
                 )
@@ -299,7 +320,7 @@ class MainActivity : ActivityBase() {
         }
 
         binding.toolBar.addExtra.setOnClickListener {
-            val intent = Intent(activiy, ExtraRequestActivity::class.java)
+            val intent = Intent(activity, ExtraRequestActivity::class.java)
             startActivity(intent)
         }
 
@@ -307,16 +328,19 @@ class MainActivity : ActivityBase() {
             onBackPressed()
         }
 
-        OneSignal.idsAvailable { userId: String, registrationId: String? ->
-            Log.d("debug", "Log User:$userId")
-            if (registrationId != null) Log.d(
-                "debug",
-                "Log token one signal first :" + OneSignal.getPermissionSubscriptionState()
-                    .subscriptionStatus.userId
-            )
-            Log.d("debug", "Log token one signal second  :$registrationId")
-            Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken())
-        }
+//        val deviceState: OSDeviceState = OneSignal.getDeviceState()
+//        val userId: String? = if (deviceState != null) deviceState.getUserId() else null
+//
+//        OneSignal.idsAvailable { userId: String, registrationId: String? ->
+//            Log.d("debug", "Log User:$userId")
+//            if (registrationId != null) Log.d(
+//                "debug",
+//                "Log token one signal first :" + OneSignal.getPermissionSubscriptionState()
+//                    .subscriptionStatus.userId
+//            )
+//            Log.d("debug", "Log token one signal second  :$registrationId")
+//            Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken())
+//        }
     }
 
     private fun selectBottomTab(resId: Int, bundle: Bundle?) {
@@ -375,22 +399,22 @@ class MainActivity : ActivityBase() {
         for (tab in tabNavArr) {
             if (tab.id == id) {
                 tab.tabIcon?.setImageDrawable(
-                    ContextCompat.getDrawable(activiy, tab.tabActiveRes!!)
+                    ContextCompat.getDrawable(activity, tab.tabActiveRes!!)
                 )
                 tab.tabText?.setTextColor(
                     ContextCompat.getColor(
-                        activiy,
+                        activity,
                         R.color.colorPrimary
                     )
                 )
                 hasSelectTab = true
             } else {
                 tab.tabIcon?.setImageDrawable(
-                    ContextCompat.getDrawable(activiy, tab.tabInActiveRes!!)
+                    ContextCompat.getDrawable(activity, tab.tabInActiveRes!!)
                 )
                 tab.tabText?.setTextColor(
                     ContextCompat.getColor(
-                        activiy,
+                        activity,
                         R.color.font_gray
                     )
                 )
@@ -429,7 +453,7 @@ class MainActivity : ActivityBase() {
         super.onStop()
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this)
-        println("Log main eventBus onStop ${EventBus.getDefault().isRegistered(activiy)}")
+        println("Log main eventBus onStop ${EventBus.getDefault().isRegistered(activity)}")
     }
 
 
@@ -512,7 +536,7 @@ class MainActivity : ActivityBase() {
                         .post(MessageEvent(MessageEvent.TYPE_FRAGMENT, specialOfferBundle))
                     binding.toolBar.backBtn.setOnClickListener {
                         if (fromInsideApp) {
-                            val intent = Intent(activiy, AllBookleteActivity::class.java)
+                            val intent = Intent(activity, AllBookleteActivity::class.java)
                             intent.putExtra(Constants.Activity_type, Constants.BOOKLETS)
                             startActivity(intent)
                         } else {
@@ -554,7 +578,7 @@ class MainActivity : ActivityBase() {
                                         object : ConfirmDialog.Click() {
                                             override fun click() {
                                                 ActivityHandler.OpenGooglePlay(
-                                                    activiy
+                                                    activity
                                                 )
                                             }
                                         }
@@ -565,7 +589,7 @@ class MainActivity : ActivityBase() {
                                             }
                                         }
                                     ConfirmDialog(
-                                        activiy,
+                                        activity,
                                         getString(R.string.updateMessage),
                                         R.string.ok,
                                         R.string.cancel_label,

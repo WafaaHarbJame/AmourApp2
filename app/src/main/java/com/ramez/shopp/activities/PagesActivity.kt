@@ -30,7 +30,7 @@ class PagesActivity : ActivityBase() {
         setContentView(binding.root)
 
         changeToolBarColor()
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         bundle = intent.extras
         if (bundle != null) {
@@ -68,7 +68,7 @@ class PagesActivity : ActivityBase() {
     }
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 

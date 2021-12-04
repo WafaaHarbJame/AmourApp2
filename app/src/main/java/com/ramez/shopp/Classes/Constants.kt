@@ -113,6 +113,7 @@ object Constants {
     const val KEY_CART_FASTQ_Total = "KEY_CART_FASTQ_Total"
     const val KEY_SCAN_AGAIN = "KEY_SCAN_AGAIN"
     const val KEY_SCAN_SOUND = "KEY_SCAN_SOUND"
+    const val KEY_URL = "KEY_URL"
     const val Sender = "Sender"
     const val Receiver = "Receiver"
     const val inputType_text = "text"

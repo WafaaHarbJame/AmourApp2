@@ -17,12 +17,11 @@ import com.ramez.shopp.databinding.RowProductOptionBinding
 class ProductOptionAdapter(
     var context: Context,
     var productBarcodes: List<ProductBarcode>,
-    dataCallback: DataCallback?
+    var dataCallback: DataCallback?
 ) :
         RecyclerView.Adapter<ProductOptionAdapter.MyHolder>() {
     var inflater: LayoutInflater = LayoutInflater.from(context)
     var selectedIndex = -1
-    var dataCallback: DataCallback? = dataCallback
     private var lastIndex = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val view =
@@ -34,8 +33,6 @@ class ProductOptionAdapter(
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         val productOptionModel = productBarcodes[position]
         val wightName = productOptionModel.productUnits?.unitName?:""
-        //NumberHandler.formatDouble(productOptionModel.getWeight(), 0)
-        //                + " " +
         holder.binding.btnCategory.text = wightName
         if (lastIndex == position) {
             holder.binding.btnCategory.background =
@@ -66,7 +63,7 @@ class ProductOptionAdapter(
                     Log.i("tag", "Log 1" + productBarcode.id)
                     notifyDataSetChanged()
                     if (dataCallback != null) {
-                        dataCallback!!.dataResult(productBarcode, "success", true)
+                        dataCallback?.dataResult(productBarcode, "success", true)
                     }
                 }
             }

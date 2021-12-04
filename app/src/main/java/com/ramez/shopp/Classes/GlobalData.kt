@@ -22,9 +22,10 @@ import java.util.HashMap
 
 
 object GlobalData {
-    const val BetaBaseURL = "https://risteh.com/"
+    const val BetaBaseURL1 = "https://risteh.com/"
+    const val BetaBaseURL2 = "https://ramezbahrain.com/"
     const val grocery = "/GroceryStoreApi/"
-    const val BaseURL = BetaBaseURL
+    const val BaseURL = BetaBaseURL1
 
     //public static final String ApiURL = BaseURL + "api/";
     const val Api = "api/"
@@ -47,7 +48,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         val finalPhotoUrl = photoUrl
         Picasso.get().load(finalPhotoUrl).placeholder(placeholder).error(R.drawable.holder_image)
@@ -59,7 +60,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         val finalPhotoUrl = photoUrl
         Picasso.get().load(photoUrl).placeholder(placeholder).error(R.drawable.holder_image)
@@ -78,7 +79,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         try {
             Glide.with(c!!).asBitmap().load(photoUrl)
@@ -96,7 +97,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         try {
             Glide.with(c!!).load(photoUrl).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
@@ -113,7 +114,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         try {
             Glide.with(c!!).load(photoUrl)
@@ -130,7 +131,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         try {
             Glide.with(c!!).load(photoUrl) //                    .apply(requestOptions)
@@ -148,7 +149,7 @@ object GlobalData {
         photoUrl = if (image != null && !image.isEmpty()) {
             image
         } else {
-            BetaBaseURL
+            UtilityApp.getUrl()
         }
         try {
             Glide.with(c).load(photoUrl).placeholder(placeholder).apply(

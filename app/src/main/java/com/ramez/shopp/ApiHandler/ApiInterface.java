@@ -72,7 +72,8 @@ public interface
 ApiInterface {
 
     @POST("v8/Account/userRegister")
-    Call<RegisterResultModel> registerUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<RegisterResultModel> registerUserHandle(@HeaderMap() Map<String, Object> headerParams,
+                                                 @Body Map<String, Object> params);
 
     @POST("v8/Account/driverRegister")
     Call<LoginResultModel> registerDriverHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);

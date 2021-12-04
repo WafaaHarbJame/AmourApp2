@@ -36,21 +36,29 @@ public class MessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         super.onNewToken(token);
         Log.i("TAG", "Log  onNewToken token " + token);
+        String FCMToken= OneSignal.getDeviceState().getUserId();
 
-        OneSignal.idsAvailable((userId, registrationId) -> {
-            Log.d("debug", "Log User:" + userId);
-            if (registrationId != null)
-                UtilityApp.setFCMToken(OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
-
-            if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
-                String updateToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
-                MemberModel memberModel = UtilityApp.getUserData();
-                memberModel.setDeviceToken(updateToken);
-                UtilityApp.setUserData(memberModel);
-                UpdateToken(memberModel);
-            }
-
-        });
+        if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+            String updateToken = OneSignal.getDeviceState().getUserId();
+            MemberModel memberModel = UtilityApp.getUserData();
+            memberModel.setDeviceToken(updateToken);
+            UtilityApp.setUserData(memberModel);
+            UpdateToken(memberModel);
+        }
+//        OneSignal.idsAvailable((userId, registrationId) -> {
+//            Log.d("debug", "Log User:" + userId);
+//            if (registrationId != null)
+//                UtilityApp.setFCMToken(OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+//
+//            if (UtilityApp.getUserData() != null && UtilityApp.getUserData().getId() != null) {
+//                String updateToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+//                MemberModel memberModel = UtilityApp.getUserData();
+//                memberModel.setDeviceToken(updateToken);
+//                UtilityApp.setUserData(memberModel);
+//                UpdateToken(memberModel);
+//            }
+//
+//        });
 
     }
 

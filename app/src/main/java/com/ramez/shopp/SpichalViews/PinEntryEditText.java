@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
 
+import java.util.Objects;
+
 @SuppressLint("AppCompatCustomView")
 public class PinEntryEditText extends EditText {
 
@@ -39,8 +41,7 @@ public class PinEntryEditText extends EditText {
     };
 
     int[] mColors = new int[]{
-            ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark),
-//            Color.GREEN,
+            ContextCompat.getColor(Objects.requireNonNull(RootApplication.Companion.getInstance()), R.color.colorPrimaryDark),
             ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark)
     };
 

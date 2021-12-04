@@ -20,8 +20,6 @@ import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.activities.ConfirmActivity;
-import com.ramez.shopp.activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartResultModel;
@@ -31,6 +29,8 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
+import com.ramez.shopp.activities.ConfirmActivity;
+import com.ramez.shopp.activities.ConfirmPhoneActivity;
 import com.ramez.shopp.databinding.FragmentLoginBinding;
 
 import java.util.Random;
@@ -266,17 +266,19 @@ public class LoginFragment extends FragmentBase {
 
         FCMToken = UtilityApp.getFCMToken();
         if (FCMToken == null) {
+            String FCMToken= OneSignal.getDeviceState().getUserId();
+            UtilityApp.setFCMToken(FCMToken);
 
-            OneSignal.idsAvailable((userId, registrationId) -> {
-                Log.d("debug", "Log User:" + userId);
-                if (registrationId != null)
-                    FCMToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
-                UtilityApp.setFCMToken(FCMToken);
-
-                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
-                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
-
-            });
+//            OneSignal.idsAvailable((userId, registrationId) -> {
+//                Log.d("debug", "Log User:" + userId);
+//                if (registrationId != null)
+//                    FCMToken = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+//                UtilityApp.setFCMToken(FCMToken);
+//
+//                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+//                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+//
+//            });
 
         }
 

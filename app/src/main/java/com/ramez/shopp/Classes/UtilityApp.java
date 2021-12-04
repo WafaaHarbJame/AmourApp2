@@ -88,17 +88,21 @@ public class UtilityApp {
 
 
     public static String getToken() {
-        final String[] FCMToken = new String[1];
-        OneSignal.idsAvailable((userId, registrationId) -> {
-            Log.d("debug", "Log User:" + userId);
-            if (registrationId != null)
-                FCMToken[0] = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+//        final String[] FCMToken = new String[1];
+//        OneSignal.idsAvailable((userId, registrationId) -> {
+//            Log.d("debug", "Log User:" + userId);
+//            if (registrationId != null)
+//                FCMToken[0] = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+//
+//            Log.i("Utility", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+//            Log.i("Utility", "Log token firebase:" + UtilityApp.getFCMToken());
+//
+//        });
+//        return FCMToken[0];
 
-            Log.i("Utility", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
-            Log.i("Utility", "Log token firebase:" + UtilityApp.getFCMToken());
-
-        });
-        return FCMToken[0];
+        String FCMToken= OneSignal.getDeviceState().getUserId();
+        UtilityApp.setFCMToken(FCMToken);
+        return FCMToken;
 
     }
 
@@ -348,6 +352,13 @@ public class UtilityApp {
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_SCAN_AGAIN, scanAgain);
     }
 
+    public static String getUrl() {
+        return RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_URL,GlobalData.BetaBaseURL1);
+    }
+
+    public static void setUrl(String url) {
+        RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_URL, url);
+    }
 
     public static boolean getScanSound() {
         return RootApplication.Companion.getInstance().getSharedPManger().getDataBool(Constants.KEY_SCAN_SOUND, false);

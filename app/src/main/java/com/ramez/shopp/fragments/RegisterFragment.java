@@ -226,16 +226,19 @@ public class RegisterFragment extends FragmentBase {
         FCMToken = UtilityApp.getFCMToken();
         if (FCMToken == null) {
 
-            OneSignal.idsAvailable((userId, registrationId) -> {
-                Log.d("debug", "Log User:" + userId);
-                if (registrationId != null)
-                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
-                UtilityApp.setFCMToken(FCMToken);
+            String FCMToken= OneSignal.getDeviceState().getUserId();
+            UtilityApp.setFCMToken(FCMToken);
 
-                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
-                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
-
-            });
+//            OneSignal.idsAvailable((userId, registrationId) -> {
+                Log.d("debug", "Log User:" + FCMToken);
+//                if (registrationId != null)
+//                    FCMToken=OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+//                UtilityApp.setFCMToken(FCMToken);
+//
+//                Log.d("debug", "Log token one signal first :" + OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId());
+//                Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken());
+//
+//            });
 
         }
 

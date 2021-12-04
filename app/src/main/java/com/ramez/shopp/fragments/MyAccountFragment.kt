@@ -40,7 +40,7 @@ class MyAccountFragment : FragmentBase() {
     var fastValidModel: FastValidModel? = null
     var userId = 0
     lateinit var binding: FragmentMyAccountBinding
-    private var soicalLink: SoicalLink? = null
+    private var stoicalLink: SoicalLink? = null
     private var whatsLink: String? = ""
     private var facebookLink: String? = ""
     private var instagramLinks: String? = ""
@@ -65,16 +65,16 @@ class MyAccountFragment : FragmentBase() {
             )
         countryId = localModel?.countryId ?: Constants.default_country_id
         cityId =
-            if (localModel != null && localModel!!.cityId != null)
-                localModel?.cityId!!.toInt() else UtilityApp.getDefaultLocalData(
+            if (localModel != null && localModel?.cityId != null)
+                localModel?.cityId?.toInt()!! else UtilityApp.getDefaultLocalData(
                 activityy
             ).cityId.toInt()
         if (UtilityApp.getLinks() != null) {
-            soicalLink = UtilityApp.getLinks()
-            twitterLinks = soicalLink?.twitterLink
-            facebookLink = soicalLink?.facebookLink
-            instagramLinks = soicalLink?.instagramLink
-            whatsLink = soicalLink?.whatsappLink
+            stoicalLink = UtilityApp.getLinks()
+            twitterLinks = stoicalLink?.twitterLink
+            facebookLink = stoicalLink?.facebookLink
+            instagramLinks = stoicalLink?.instagramLink
+            whatsLink = stoicalLink?.whatsappLink
         } else {
             if (localModel?.shortname != null) {
                 getLinks(cityId)
@@ -93,8 +93,9 @@ class MyAccountFragment : FragmentBase() {
                     initData(memberModel)
                 }
             } else {
-                if (memberModel != null && memberModel!!.id != null) {
-                    getUserData(memberModel!!.id, memberModel!!.storeId)
+                if (memberModel != null && memberModel?.id != null) {
+                    getUserData(memberModel?.id?:0,
+                        memberModel?.storeId?:Constants.default_storeId.toInt())
                 }
             }
         } else {
@@ -287,19 +288,19 @@ class MyAccountFragment : FragmentBase() {
                 if (isVisible) {
                     if (IsSuccess) {
                         if (result.data != null) {
-                            soicalLink = result.data
-                            UtilityApp.SetLinks(soicalLink)
-                            if (soicalLink!!.twitterLink != null) {
-                                twitterLinks = soicalLink!!.twitterLink
+                            stoicalLink = result.data
+                            UtilityApp.SetLinks(stoicalLink)
+                            if (stoicalLink?.twitterLink != null) {
+                                twitterLinks = stoicalLink?.twitterLink
                             }
-                            if (soicalLink!!.facebookLink != null) {
-                                facebookLink = soicalLink!!.facebookLink
+                            if (stoicalLink?.facebookLink != null) {
+                                facebookLink = stoicalLink?.facebookLink
                             }
-                            if (soicalLink!!.instagramLink != null) {
-                                instagramLinks = soicalLink!!.instagramLink
+                            if (stoicalLink?.instagramLink != null) {
+                                instagramLinks = stoicalLink?.instagramLink
                             }
-                            if (soicalLink!!.whatsappLink != null) {
-                                whatsLink = soicalLink!!.whatsappLink
+                            if (stoicalLink?.whatsappLink != null) {
+                                whatsLink = stoicalLink?.whatsappLink
                             }
                         }
                     }
@@ -373,7 +374,7 @@ class MyAccountFragment : FragmentBase() {
     private fun CheckLoyal() {
         val countryDetailsModel = DBFunction.getLoyal()
         if (countryDetailsModel == null) {
-            if (localModel != null && localModel!!.shortname != null) getCountryDetail(localModel!!.shortname)
+            if (localModel != null && localModel?.shortname != null) getCountryDetail(localModel?.shortname?:Constants.default_short_name)
         } else {
             val hasLoyal = countryDetailsModel.hasLoyal
             if (hasLoyal) {
@@ -391,7 +392,7 @@ class MyAccountFragment : FragmentBase() {
                         val countryDetailsModel = result.data
                         Log.i(
                             javaClass.simpleName,
-                            "Log  getCountryDetail call hasLoyal " + countryDetailsModel!!.hasLoyal
+                            "Log  getCountryDetail call hasLoyal " + countryDetailsModel?.hasLoyal
                         )
                         DBFunction.setLoyal(countryDetailsModel)
                     }

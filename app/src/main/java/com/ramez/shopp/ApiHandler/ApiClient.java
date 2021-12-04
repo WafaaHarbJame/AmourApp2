@@ -53,7 +53,8 @@ public class ApiClient {
             country = GlobalData.COUNTRY;
             Log.i("TAG", "Log country " + country);
         }
-        BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;
+        // will read from shared
+        BASE_URL = UtilityApp.getUrl() + country + GlobalData.grocery + GlobalData.Api;
         Log.i("TAG", "Log BASE_URL " + BASE_URL);
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -75,7 +76,7 @@ public class ApiClient {
             country = GlobalData.COUNTRY;
 
         }
-        BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;
+        BASE_URL = UtilityApp.getUrl() + country + GlobalData.grocery + GlobalData.Api;
 
         Gson gson = new GsonBuilder().setLenient().create();
 

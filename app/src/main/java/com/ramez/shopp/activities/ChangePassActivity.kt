@@ -102,7 +102,7 @@ class ChangePassActivity : ActivityBase() {
         memberModel.password = oldPasswordStr
         memberModel.new_password = newPasswordStr
         GlobalData.progressDialog(
-            activiy,
+            activity,
             R.string.text_registration_change_password,
             R.string.please_wait_sending
         )
@@ -115,7 +115,7 @@ class ChangePassActivity : ActivityBase() {
                 } else if (func == Constants.FAIL) {
                     Toast(R.string.fail_to_change_password)
                 } else if (func == Constants.NO_CONNECTION) {
-                    GlobalData.Toast(activiy, R.string.no_internet_connection)
+                    GlobalData.Toast(activity, R.string.no_internet_connection)
                 } else {
                     if (IsSuccess) {
                         if (result!!.status == 200) {
@@ -123,7 +123,7 @@ class ChangePassActivity : ActivityBase() {
                                 val memberModel1 = UtilityApp.getUserData()
                                 signOut(memberModel1)
                             } else {
-                                val intent = Intent(activiy, SplashScreenActivity::class.java)
+                                val intent = Intent(activity, SplashScreenActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                                 startActivity(intent)
                             }
@@ -132,7 +132,7 @@ class ChangePassActivity : ActivityBase() {
                             if (result != null && result.message != null) {
                                 message = result.message
                             }
-                            GlobalData.errorDialog(activiy, R.string.reset_pass, message)
+                            GlobalData.errorDialog(activity, R.string.reset_pass, message)
                         }
                     } else {
                         Toast(R.string.fail_to_change_password)
@@ -150,7 +150,7 @@ class ChangePassActivity : ActivityBase() {
         memberModel.new_password = newPasswordStr
         memberModel.mobileNumber = mobileStr
         GlobalData.progressDialog(
-            activiy,
+            activity,
             R.string.text_registration_change_password,
             R.string.please_wait_sending
         )
@@ -162,18 +162,18 @@ class ChangePassActivity : ActivityBase() {
                 } else if (func == Constants.FAIL) {
                     Toast(R.string.fail_to_change_password)
                 } else if (func == Constants.NO_CONNECTION) {
-                    GlobalData.Toast(activiy, R.string.no_internet_connection)
+                    GlobalData.Toast(activity, R.string.no_internet_connection)
                 } else {
                     if (IsSuccess) {
                         val result = obj as GeneralModel?
                         if (result!!.status == 200) {
                             Toasty.success(
-                                activiy,
+                                activity,
                                 getString(R.string.success_update),
                                 Toast.LENGTH_SHORT,
                                 true
                             ).show()
-                            val intent = Intent(activiy, RegisterLoginActivity::class.java)
+                            val intent = Intent(activity, RegisterLoginActivity::class.java)
                             intent.putExtra(Constants.LOGIN, true)
                             startActivity(intent)
                         } else {
@@ -181,7 +181,7 @@ class ChangePassActivity : ActivityBase() {
                             if (result != null && result.message != null) {
                                 message = result.message
                             }
-                            GlobalData.errorDialog(activiy, R.string.reset_pass, message)
+                            GlobalData.errorDialog(activity, R.string.reset_pass, message)
                         }
                     } else {
                         Toast(R.string.fail_to_change_password)
@@ -228,17 +228,17 @@ class ChangePassActivity : ActivityBase() {
                 } else if (func == Constants.FAIL) {
                     Toast(R.string.fail_to_sign_out)
                 } else if (func == Constants.NO_CONNECTION) {
-                    GlobalData.Toast(activiy, R.string.no_internet_connection)
+                    GlobalData.Toast(activity, R.string.no_internet_connection)
                 } else {
                     if (IsSuccess) {
                         UtilityApp.logOut()
                         GlobalData.Position = 0
-                        val intent = Intent(activiy, SplashScreenActivity::class.java)
+                        val intent = Intent(activity, SplashScreenActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     } else {
                         Toast(R.string.fail_to_sign_out)
-                        val intent = Intent(activiy, SplashScreenActivity::class.java)
+                        val intent = Intent(activity, SplashScreenActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     }

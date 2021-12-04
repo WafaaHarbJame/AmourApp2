@@ -2,30 +2,19 @@ package com.ramez.shopp.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jaeger.library.StatusBarUtil
-import com.ramez.shopp.ApiHandler.DataFeacher
-import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.CallBack.DataCallback
-import com.ramez.shopp.Classes.CartModel
-import com.ramez.shopp.Classes.CityModelResult
 import com.ramez.shopp.Classes.Constants
 import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CartFastQModel
-import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
-import com.ramez.shopp.Models.ResultAPIModel
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.adapter.FastqCartAdapter
 
-import com.ramez.shopp.databinding.ActivityFastQactivityBinding
-import com.ramez.shopp.databinding.ActivityFastqCartActivityBinding
 import com.ramez.shopp.databinding.ActivityFastqSummaryActivityBinding
-import java.util.ArrayList
 
 
 class FastqSummaryActivity : ActivityBase() {
@@ -49,13 +38,13 @@ class FastqSummaryActivity : ActivityBase() {
 
         changeToolBarColor()
 
-        binding.rv.layoutManager = LinearLayoutManager(activiy)
+        binding.rv.layoutManager = LinearLayoutManager(activity)
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
         currency = localModel?.currencyCode ?: Constants.BHD
@@ -102,7 +91,7 @@ class FastqSummaryActivity : ActivityBase() {
     }
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 
@@ -122,7 +111,7 @@ class FastqSummaryActivity : ActivityBase() {
     fun initAdapter(cartList: MutableList<CartFastQModel>?) {
 
         val adapter = FastqCartAdapter(
-            activiy,false, cartList
+            activity,false, cartList
         ) { obj, func, IsSuccess ->
 
         }
@@ -139,7 +128,7 @@ class FastqSummaryActivity : ActivityBase() {
 
     override fun onBackPressed() {
 
-        val intent = Intent(activiy, FastqActivity::class.java)
+        val intent = Intent(activity, FastqActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
 

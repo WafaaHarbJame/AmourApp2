@@ -29,7 +29,7 @@ class OrderCompleteActivity : ActivityBase() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(activiy, MAIN_ACTIVITY_CLASS)
+        val intent = Intent(activity, MAIN_ACTIVITY_CLASS)
         intent.putExtra(Constants.TO_FRAG_HOME, true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP /*| Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK*/)
         startActivity(intent)
@@ -42,22 +42,22 @@ class OrderCompleteActivity : ActivityBase() {
             val bundle = intent.extras
             if (bundle != null) {
                 orderModel = bundle.getSerializable(Constants.ORDER_MODEL) as OrderModel?
-                orderId = orderModel!!.orderCode
+                orderId = orderModel?.orderCode?:""
                 binding.orderIDTv.text = orderId
                 val dayName: String
                 val today = DateHandler.GetDateNowString()
-                dayName = if (today == orderModel!!.deliveryDate) {
+                dayName = if (today == orderModel?.deliveryDate) {
                     getString(R.string.today)
                 } else {
                     if (UtilityApp.getLanguage() == Constants.Arabic) DateHandler.FormatDate4(
-                        orderModel!!.deliveryDate, "yyyy-MM-dd", "EEEE"
+                        orderModel?.deliveryDate, "yyyy-MM-dd", "EEEE"
                     ) else DateHandler.FormatDate4(
-                        orderModel!!.deliveryDate, "yyyy-MM-dd", "EEE"
+                        orderModel?.deliveryDate, "yyyy-MM-dd", "EEE"
                     )
                     //                    dayName = (DateHandler.FormatDate4(orderModel.getDeliveryDate(), "yyyy-MM-dd", "EEEE")).substring(0, 3);
                 }
                 binding.deliveryDayTv.text = dayName + ""
-                binding.deliveryTimeTv.text = orderModel!!.deliveryTime + ""
+                binding.deliveryTimeTv.text = orderModel?.deliveryTime + ""
             }
         }
 }

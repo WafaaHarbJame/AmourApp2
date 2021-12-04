@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.androidnetworking.AndroidNetworking
 import com.google.android.libraries.places.api.Places
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ramez.shopp.ApiHandler.DataFeacher
@@ -46,20 +47,30 @@ class RootApplication : Application() {
         super.onCreate()
         instance = this
         sharedPManger = SharedPManger(this)
+        FirebaseApp.initializeApp(this);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         Places.initialize(applicationContext, this.getString(R.string.mapKey), Locale.US)
+
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
-        OneSignal.init(this, "", ONESIGNAL_APP_ID)
-        OneSignal.startInit(this)
-            .setNotificationOpenedHandler(ExampleNotificationOpenedHandler(this))
-            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-            .init()
-        val UUID = OneSignal.getPermissionSubscriptionState().subscriptionStatus.userId
+
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+        OneSignal.setNotificationOpenedHandler(ExampleNotificationOpenedHandler(this))
+
+        val UUID = OneSignal.getDeviceState()?.userId
+        val UUID1 = OneSignal.getDeviceState()?.pushToken
+    
         if (UUID != null) {
             UtilityApp.setFCMToken(UUID)
         }
+        Log.d("debug", "Log token one signal   :$UUID")
+        Log.d("debug", "Log token one signal2   :$UUID1")
+
         if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
-            val updateToken = OneSignal.getPermissionSubscriptionState().subscriptionStatus.userId
+            val updateToken = OneSignal.getDeviceState()?.userId
             val memberModel = UtilityApp.getUserData()
             memberModel.deviceToken = updateToken
             UtilityApp.setUserData(memberModel)

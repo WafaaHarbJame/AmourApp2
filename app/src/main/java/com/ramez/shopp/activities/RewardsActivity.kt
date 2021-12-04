@@ -23,8 +23,8 @@ class RewardsActivity : ActivityBase() {
         binding!!.viewPager.adapter = MyViewPagerAdapter(supportFragmentManager)
         binding!!.tabs.setupWithViewPager(binding!!.viewPager)
         binding!!.tabs.setTabTextColors(
-            ContextCompat.getColor(activiy, R.color.black),
-            ContextCompat.getColor(activiy, R.color.black)
+            ContextCompat.getColor(activity, R.color.black),
+            ContextCompat.getColor(activity, R.color.black)
         )
     }
 

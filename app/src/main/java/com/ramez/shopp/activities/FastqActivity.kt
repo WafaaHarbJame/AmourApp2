@@ -13,7 +13,6 @@ import com.ramez.shopp.Classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
-import com.ramez.shopp.Utils.NumberHandler
 
 import com.ramez.shopp.databinding.ActivityFastQactivityBinding
 import java.util.ArrayList
@@ -40,11 +39,11 @@ class FastqActivity : ActivityBase() {
 
         changeToolBarColor()
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(activiy, R.color.fastq_color), 0)
+        StatusBarUtil.setColor(this, ContextCompat.getColor(activity, R.color.fastq_color), 0)
 
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
 
 
@@ -77,7 +76,7 @@ class FastqActivity : ActivityBase() {
                     }
                 }
 
-            }).CityHandle(countryId, activiy)
+            }).CityHandle(countryId, activity)
     }
 
 
@@ -99,7 +98,7 @@ class FastqActivity : ActivityBase() {
     }
 
     private fun changeToolBarColor() {
-        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activiy, R.color.fastq_color))
+        binding.toolBar.toolbarBack.setBackgroundColor(ContextCompat.getColor(activity, R.color.fastq_color))
         binding.toolBar.logoImg.visibility = gone
         binding.toolBar.mainTitleTv.visibility = visible
 
@@ -107,29 +106,29 @@ class FastqActivity : ActivityBase() {
 
     private fun initListeners() {
         binding.scanBut.setOnClickListener {
-            val intent = Intent(activiy, FastqScanActivity::class.java)
-            activiy.startActivity(intent)
+            val intent = Intent(activity, FastqScanActivity::class.java)
+            activity.startActivity(intent)
 
         }
 
         binding.settingBut.setOnClickListener {
-            val intent = Intent(activiy, PagesActivity::class.java)
+            val intent = Intent(activity, PagesActivity::class.java)
             intent.putExtra(Constants.KEY_FRAGMENT_TYPE, Constants.FRAG_FASTQ_SETTINGS)
-            activiy.startActivity(intent)
+            activity.startActivity(intent)
 
         }
 
         binding.historyBut.setOnClickListener {
-            val intent = Intent(activiy, PagesActivity::class.java)
+            val intent = Intent(activity, PagesActivity::class.java)
             intent.putExtra(Constants.KEY_FRAGMENT_TYPE, Constants.FRAG_FASTQ_HISTORY)
-            activiy.startActivity(intent)
+            activity.startActivity(intent)
 
         }
 
 
         binding.toolBar.cartFastBtn.setOnClickListener {
 
-            val intent = Intent(activiy, FastqCartActivity::class.java)
+            val intent = Intent(activity, FastqCartActivity::class.java)
             startActivity(intent)
 
         }

@@ -80,7 +80,7 @@ public class ExtraRequestActivity extends ActivityBase {
         setTitle("");
 
         user = UtilityApp.getUserData();
-        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActiviy());
+        localModel = UtilityApp.getLocalData() != null ? UtilityApp.getLocalData() : UtilityApp.getDefaultLocalData(getActivity());
 
         if (UtilityApp.getUserData() != null) {
             store_id = Integer.parseInt(localModel.getCityId());
@@ -157,7 +157,7 @@ public class ExtraRequestActivity extends ActivityBase {
                 }
             } else {
                 UtilityApp.logOut();
-                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                Intent intent = new Intent(getActivity(), RegisterLoginActivity.class);
                 intent.putExtra(Constants.LOGIN, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -180,7 +180,7 @@ public class ExtraRequestActivity extends ActivityBase {
         binding.scanBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideSoftKeyboard(getActiviy());
+                Companion.hideSoftKeyboard(getActivity());
                 checkCameraPermission();
             }
         });
@@ -190,7 +190,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
     private final void openPicker() {
         try {
-            PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
+            PermissionCompat.Builder builder = new PermissionCompat.Builder((getActivity()));
             builder.addPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
             builder.addPermissionRationale(getString(R.string.should_allow_permission));
 
@@ -213,20 +213,20 @@ public class ExtraRequestActivity extends ActivityBase {
     }
 
     private void pickImage() {
-        pickImageDialog = new PickImageDialog(getActiviy(), (obj, func, IsSuccess) -> {
+        pickImageDialog = new PickImageDialog(getActivity(), (obj, func, IsSuccess) -> {
 
             if (func.equals(Constants.CAPTURE)) {
 
-                choosePhotoHelper = ChoosePhotoHelper.with(getActiviy()).asUri().build(uri -> {
+                choosePhotoHelper = ChoosePhotoHelper.with(getActivity()).asUri().build(uri -> {
 
                     selectedPhotoUri = uri;
                     try {
 
-                        selectedPhotoFil = FileUtil.from(getActiviy(), uri);
+                        selectedPhotoFil = FileUtil.from(getActivity(), uri);
 
-                        Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
+                        Glide.with(getActivity()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 
-                        selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
+                        selectedPhotoFil = new Compressor(getActivity()).setQuality(65).compressToFile(selectedPhotoFil);
 //                        Log.i(getClass().getSimpleName(), "Log Image Size "+selectedPhotoFil.getPath().length());
 //
 //                        long length = selectedPhotoFil.length();
@@ -238,7 +238,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
                     } catch (IOException e) {
                         e.printStackTrace();
-                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                        GlobalData.INSTANCE.errorDialog(getActivity(), R.string.upload_photo, getString(R.string.textTryAgain));
 
                     }
 
@@ -315,7 +315,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
     private void navigateToCartScreen() {
         GlobalData.INSTANCE.setREFRESH_CART(true);
-        Intent intent = new Intent(getActiviy(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
+        Intent intent = new Intent(getActivity(), Constants.INSTANCE.getMAIN_ACTIVITY_CLASS());
         intent.putExtra(Constants.CART, true);
         startActivity(intent);
         finish();
@@ -336,8 +336,8 @@ public class ExtraRequestActivity extends ActivityBase {
                 if (data.getData() != null) {
                     selectedPhotoUri = data.getData();
 
-                    selectedPhotoFil = FileUtil.from(getActiviy(), selectedPhotoUri);
-                    selectedPhotoFil = new Compressor(getActiviy()).setQuality(65).compressToFile(selectedPhotoFil);
+                    selectedPhotoFil = FileUtil.from(getActivity(), selectedPhotoUri);
+                    selectedPhotoFil = new Compressor(getActivity()).setQuality(65).compressToFile(selectedPhotoFil);
 
 
                     long length = selectedPhotoFil.length();
@@ -346,14 +346,14 @@ public class ExtraRequestActivity extends ActivityBase {
                     Log.i(getClass().getSimpleName(), "Log File Path " + selectedPhotoFil.getPath() + ", File size : " + length + " KB");
                     Log.i(getClass().getSimpleName(), "Log Image Size " + selectedPhotoFil.getPath().length());
 
-                    Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
+                    Glide.with(getActivity()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.addImage);
 
                 }
 
 
             } catch (Exception e) {
                 e.printStackTrace();
-                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+                GlobalData.INSTANCE.errorDialog(getActivity(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
         } else if (requestCode == SEARCH_CODE) {
 
@@ -379,7 +379,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
         Log.i("tag", "Log  userId " + addExtraCall.userId);
 
-        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
+        GlobalData.INSTANCE.progressDialog(getActivity(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 
         if (localModel.getShortname() != null) {
             country = localModel.getShortname();
@@ -399,7 +399,7 @@ public class ExtraRequestActivity extends ActivityBase {
 //AndroidNetworking.initialize(getActiviy(),okHttpClient);
         String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
-        AndroidNetworking.upload(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery +
+        AndroidNetworking.upload(UtilityApp.getUrl() + country + GlobalData.INSTANCE.grocery +
                 GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
@@ -432,7 +432,7 @@ public class ExtraRequestActivity extends ActivityBase {
                     if (status == 200) {
                         UtilityApp.updateCart(1, 1);
 
-                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
+                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivity());
                         successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
                                 .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
                             navigateToCartScreen();
@@ -442,7 +442,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
                     } else {
                         message = jsonObject.getString("message");
-                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
+                        GlobalData.INSTANCE.errorDialog(getActivity(), R.string.add_specail_order, message);
 
                     }
 
@@ -457,7 +457,7 @@ public class ExtraRequestActivity extends ActivityBase {
             @Override
             public void onError(ANError error) {
                 if (error.getMessage() != null) {
-                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
+                    GlobalData.INSTANCE.errorDialog(getActivity(), R.string.add_specail_order, error.getMessage());
 
                 }
 
@@ -470,7 +470,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
         Log.i("tag", "Log  userId " + addExtraCall.userId);
 
-        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
+        GlobalData.INSTANCE.progressDialog(getActivity(), R.string.add_specail_order, R.string.please_wait_to_add_request);
 
         if (localModel.getShortname() != null) {
             country = localModel.getShortname();
@@ -489,7 +489,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
         String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
-        AndroidNetworking.post(GlobalData.INSTANCE.BetaBaseURL + country + GlobalData.INSTANCE.grocery +
+        AndroidNetworking.post(UtilityApp.getUrl() + country + GlobalData.INSTANCE.grocery +
                 GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat")
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
@@ -521,7 +521,7 @@ public class ExtraRequestActivity extends ActivityBase {
                     if (status == 200) {
                         UtilityApp.updateCart(1, 1);
 
-                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
+                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivity());
                         successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
                                 .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
                             navigateToCartScreen();
@@ -531,7 +531,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
                     } else {
                         message = jsonObject.getString("message");
-                        GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
+                        GlobalData.INSTANCE.errorDialog(getActivity(), R.string.add_specail_order, message);
 
                     }
 
@@ -546,7 +546,7 @@ public class ExtraRequestActivity extends ActivityBase {
             @Override
             public void onError(ANError error) {
                 if (error.getMessage() != null) {
-                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, error.getMessage());
+                    GlobalData.INSTANCE.errorDialog(getActivity(), R.string.add_specail_order, error.getMessage());
 
                 }
 
@@ -555,7 +555,7 @@ public class ExtraRequestActivity extends ActivityBase {
     }
 
     private void checkCameraPermission() {
-        Dexter.withContext(getActiviy()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onPermissionGranted(PermissionGrantedResponse response) {
@@ -566,7 +566,7 @@ public class ExtraRequestActivity extends ActivityBase {
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(getActiviy(), "" + getActiviy().getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + getActivity().getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -574,16 +574,16 @@ public class ExtraRequestActivity extends ActivityBase {
                 token.continuePermissionRequest();
 
             }
-        }).withErrorListener(error -> Toast.makeText(getActiviy(), "" + getActiviy().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
+        }).withErrorListener(error -> Toast.makeText(getActivity(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
     }
 
     private void startScan() {
 
-        if (ContextCompat.checkSelfPermission(getActiviy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActiviy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
         } else {
 
-            Intent intent = new Intent(getActiviy(), FullScannerActivity.class);
+            Intent intent = new Intent(getActivity(), FullScannerActivity.class);
             startActivityForResult(intent, SEARCH_CODE);
 
         }

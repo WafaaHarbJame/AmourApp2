@@ -24,7 +24,7 @@ class PriceCheckerResultActivity : ActivityBase(), SimilierProductAdapter.OnItem
         binding = ActivityPriceCheckerResultBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         title = ""
-        val linearLayoutManager = LinearLayoutManager(activiy, RecyclerView.HORIZONTAL, false)
+        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         binding!!.offerRecycler.layoutManager = linearLayoutManager
         binding!!.offerRecycler.setHasFixedSize(true)
         binding!!.offerRecycler.itemAnimator = null
@@ -42,14 +42,14 @@ class PriceCheckerResultActivity : ActivityBase(), SimilierProductAdapter.OnItem
             }
         }
         binding!!.scanAgainBut.setOnClickListener {
-            val intent = Intent(activiy, FullScannerActivity::class.java)
+            val intent = Intent(activity, FullScannerActivity::class.java)
             scanLauncher!!.launch(intent)
         }
     }
 
 
     private fun initAdapter() {
-        adapter = SimilierProductAdapter(activiy, productList, this, 0)
+        adapter = SimilierProductAdapter(activity, productList, this, 0)
         binding!!.offerRecycler.adapter = adapter
     }
 

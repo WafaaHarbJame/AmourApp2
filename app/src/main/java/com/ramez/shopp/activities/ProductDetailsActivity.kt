@@ -1,6 +1,5 @@
 package com.ramez.shopp.activities
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -45,7 +44,6 @@ import es.dmoral.toasty.Toasty
 import java.text.DecimalFormat
 import java.util.ArrayList
 
-
 class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemClick {
     private lateinit var binding: ActivityProductDeatilsBinding
     var userId1 = 0
@@ -81,7 +79,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         val memberModel = UtilityApp.getUserData()
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
-                activiy
+                activity
             )
         countryId = localModel?.countryId ?: Constants.default_country_id
         cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
@@ -91,11 +89,11 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         fraction = localModel?.fractional ?: Constants.three
         storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        productLayoutManager = LinearLayoutManager(activiy, RecyclerView.HORIZONTAL, false)
+        productLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         binding.offerRecycler.layoutManager = productLayoutManager
         binding.offerRecycler.setHasFixedSize(true)
         binding.offerRecycler.itemAnimator = null
-        val productOptionLayoutManager = LinearLayoutManager(activiy, RecyclerView.HORIZONTAL, false)
+        val productOptionLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         binding.productOptionRv.layoutManager = productOptionLayoutManager
         binding.productOptionRv.setHasFixedSize(true)
         binding.offerRecycler.setHasFixedSize(true)
@@ -103,7 +101,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         binding.productOptionRv.itemAnimator = null
         binding.offerRecycler.itemAnimator = null
         binding.reviewRecycler.itemAnimator = null
-        reviewManger = LinearLayoutManager(activiy, RecyclerView.VERTICAL, false)
+        reviewManger = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.reviewRecycler.layoutManager = reviewManger
         binding.reviewRecycler.setHasFixedSize(true)
         if (UtilityApp.isLogin()) {
@@ -121,14 +119,14 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
             GlobalData.REFRESH_CART = true
             if (isNotify) {
                 val intent =
-                    Intent(activiy, MAIN_ACTIVITY_CLASS)
+                    Intent(activity, MAIN_ACTIVITY_CLASS)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
             } else onBackPressed()
         }
         binding.moreBoughtBut.setOnClickListener { v ->
-            val intent = Intent(activiy, AllListActivity::class.java)
+            val intent = Intent(activity, AllListActivity::class.java)
             intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_sell))
             intent.putExtra(
                 Constants.FILTER_NAME,
@@ -143,7 +141,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         binding.addRateBut.setOnClickListener { view ->
             if (!UtilityApp.isLogin()) {
                 val checkLoginDialog = CheckLoginDialog(
-                    activiy,
+                    activity,
                     R.string.LoginFirst,
                     R.string.to_add_comment,
                     R.string.ok,
@@ -158,7 +156,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     override fun click() {
                         if (!UtilityApp.isLogin()) {
                             val checkLoginDialog = CheckLoginDialog(
-                                activiy,
+                                activity,
                                 R.string.LoginFirst,
                                 R.string.to_add_comment,
                                 R.string.ok,
@@ -177,20 +175,24 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             reviewModel.storeId = storeId
                             reviewModel.user_id = userId1
                             reviewModel.rate = ratingBar.rating.toInt()
-                            if (ratingBar.rating == 0f) {
-                                Toasty.error(
-                                    activiy,
-                                    R.string.please_fill_rate,
-                                    Toast.LENGTH_SHORT,
-                                    true
-                                ).show()
-                                YoYo.with(Techniques.Shake).playOn(ratingBar)
-                                ratingBar.requestFocus()
-                            } else if (note.text.toString().isEmpty()) {
-                                note.requestFocus()
-                                note.error = getString(R.string.please_fill_comment)
-                            } else {
-                                addComment(view, reviewModel)
+                            when {
+                                ratingBar.rating == 0f -> {
+                                    Toasty.error(
+                                        activity,
+                                        R.string.please_fill_rate,
+                                        Toast.LENGTH_SHORT,
+                                        true
+                                    ).show()
+                                    YoYo.with(Techniques.Shake).playOn(ratingBar)
+                                    ratingBar.requestFocus()
+                                }
+                                note.text.toString().isEmpty() -> {
+                                    note.requestFocus()
+                                    note.error = getString(R.string.please_fill_comment)
+                                }
+                                else -> {
+                                    addComment(view, reviewModel)
+                                }
                             }
                         }
                     }
@@ -201,7 +203,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     }
                 }
                 addCommentDialog = AddRateDialog(
-                    activiy,
+                    activity,
                     getString(R.string.add_comment),
                     R.string.ok,
                     R.string.cancel_label,
@@ -213,7 +215,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         }
         binding.shareBtn.setOnClickListener { v ->
             ActivityHandler.shareTextUrlDeep(
-                activiy,
+                activity,
                 getString(R.string.share_note) + "  https://ramezshopping.com/product/" + productId1 + "/store/" + storeId,
                 null, null
             )
@@ -222,7 +224,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
             Log.i("tag", "Log isFavorite$isFavorite")
             if (!UtilityApp.isLogin()) {
                 val checkLoginDialog = CheckLoginDialog(
-                    activiy,
+                    activity,
                     R.string.LoginFirst,
                     R.string.to_add_favorite,
                     R.string.ok,
@@ -240,10 +242,10 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
             }
         }
         binding.ratingBar.setOnTouchListener { v, event ->
-            if (event.action === MotionEvent.ACTION_UP) {
+            if (event.action == MotionEvent.ACTION_UP) {
                 if (!UtilityApp.isLogin()) {
                     val checkLoginDialog = CheckLoginDialog(
-                        activiy,
+                        activity,
                         R.string.LoginFirst,
                         R.string.to_add_comment,
                         R.string.ok,
@@ -258,7 +260,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                         override fun click() {
                             if (!UtilityApp.isLogin()) {
                                 val checkLoginDialog = CheckLoginDialog(
-                                    activiy,
+                                    activity,
                                     R.string.LoginFirst,
                                     R.string.to_add_comment,
                                     R.string.ok,
@@ -277,20 +279,24 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                                 reviewModel.storeId = storeId
                                 reviewModel.user_id = userId1
                                 reviewModel.rate = ratingBar.rating.toInt()
-                                if (ratingBar.rating == 0f) {
-                                    Toasty.error(
-                                        activiy,
-                                        R.string.please_fill_rate,
-                                        Toast.LENGTH_SHORT,
-                                        true
-                                    ).show()
-                                    YoYo.with(Techniques.Shake).playOn(ratingBar)
-                                    ratingBar.requestFocus()
-                                } else if (note.text.toString().isEmpty()) {
-                                    note.requestFocus()
-                                    note.error = getString(R.string.please_fill_comment)
-                                } else {
-                                    addComment(v, reviewModel)
+                                when {
+                                    ratingBar.rating == 0f -> {
+                                        Toasty.error(
+                                            activity,
+                                            R.string.please_fill_rate,
+                                            Toast.LENGTH_SHORT,
+                                            true
+                                        ).show()
+                                        YoYo.with(Techniques.Shake).playOn(ratingBar)
+                                        ratingBar.requestFocus()
+                                    }
+                                    note.text.toString().isEmpty() -> {
+                                        note.requestFocus()
+                                        note.error = getString(R.string.please_fill_comment)
+                                    }
+                                    else -> {
+                                        addComment(v, reviewModel)
+                                    }
                                 }
                             }
                         }
@@ -301,7 +307,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                         }
                     }
                     addCommentDialog = AddRateDialog(
-                        activiy,
+                        activity,
                         getString(R.string.add_comment),
                         R.string.ok,
                         R.string.cancel_label,
@@ -316,7 +322,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         binding.cartBut.setOnClickListener { view1 ->
             if (!UtilityApp.isLogin()) {
                 val checkLoginDialog = CheckLoginDialog(
-                    activiy,
+                    activity,
                     R.string.LoginFirst,
                     R.string.to_add_cart,
                     R.string.ok,
@@ -353,14 +359,14 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             )
                         } else {
                             message = getString(R.string.stock_empty)
-                            GlobalData.errorDialogWithButton(activiy, getString(R.string.error), message)
+                            GlobalData.errorDialogWithButton(activity, getString(R.string.error), message)
                         }
                     } else {
                         if (count + 1 <= stock && count + 1 <= limit) {
                             updateCart(
                                 view1,
                                 productId,
-                                selectedProductBarcode!!.id,
+                                selectedProductBarcode?.id?:0,
                                 count + 1,
                                 userId,
                                 storeId,
@@ -375,17 +381,17 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             } else {
                                 getString(R.string.limit) + "" + limit
                             }
-                            GlobalData.errorDialogWithButton(activiy, getString(R.string.error), message)
+                            GlobalData.errorDialogWithButton(activity, getString(R.string.error), message)
                         }
                     }
                 } else {
-                    val count = selectedProductBarcode!!.cartQuantity
+                    val count = selectedProductBarcode?.cartQuantity?:0
                     if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
                         val userId = UtilityApp.getUserData().id
-                        val storeId = localModel!!.cityId.toInt()
-                        val productId = productModel!!.id
-                        val stock = selectedProductBarcode!!.stockQty
-                        val limit = selectedProductBarcode!!.limitQty
+                        val storeId = localModel?.cityId?.toInt()?:Constants.default_storeId.toInt()
+                        val productId = productModel?.id?:0
+                        val stock = selectedProductBarcode?.stockQty?:0
+                        val limit = selectedProductBarcode?.limitQty?:0
                         Log.i("limit", "Log limit  $limit")
                         Log.i("stock", "Log stock  $stock")
                         if (limit == 0) {
@@ -400,7 +406,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             } else {
                                 message = getString(R.string.stock_empty)
                                 GlobalData.errorDialogWithButton(
-                                    activiy,
+                                    activity,
                                     getString(R.string.error),
                                     message
                                 )
@@ -421,7 +427,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                                     getString(R.string.limit) + "" + limit
                                 }
                                 GlobalData.errorDialogWithButton(
-                                    activiy,
+                                    activity,
                                     getString(R.string.error),
                                     message
                                 )
@@ -434,7 +440,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         binding.plusCartBtn.setOnClickListener { v ->
             if (!UtilityApp.isLogin()) {
                 val checkLoginDialog = CheckLoginDialog(
-                    activiy,
+                    activity,
                     R.string.LoginFirst,
                     R.string.to_add_cart,
                     R.string.ok,
@@ -447,12 +453,12 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 if (UtilityApp.getUserData() != null && UtilityApp.getUserData().id != null) {
                     var message = ""
                     val count = binding.productCartQTY.text.toString().toInt()
-                    val stock = selectedProductBarcode!!.stockQty
-                    val userId = UtilityApp.getUserData().id
-                    val storeId = localModel!!.cityId.toInt()
-                    val productId = productModel!!.id
-                    val cartId = selectedProductBarcode!!.cartId
-                    val limit = selectedProductBarcode!!.limitQty
+                    val stock = selectedProductBarcode?.stockQty?:0
+                    val userId = UtilityApp.getUserData()?.id ?:0
+                    val storeId = localModel?.cityId?.toInt()?:Constants.default_storeId.toInt()
+                    val productId = productModel?.id?:0
+                    val cartId = selectedProductBarcode?.cartId?:0
+                    val limit = selectedProductBarcode?.limitQty?:0
                     Log.i("limit", "Log limit  $limit")
                     Log.i("limit", "Log limit  $limit")
                     Log.i("stock", "Log cartId  $cartId")
@@ -473,7 +479,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             } else {
                                 message = getString(R.string.stock_empty)
                                 GlobalData.errorDialogWithButton(
-                                    activiy, getString(R.string.error),
+                                    activity, getString(R.string.error),
                                     message
                                 )
                             }
@@ -482,7 +488,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                                 updateCart(
                                     v,
                                     productId,
-                                    selectedProductBarcode!!.id,
+                                    selectedProductBarcode?.id?:0,
                                     count + 1,
                                     userId,
                                     storeId,
@@ -498,7 +504,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                                     getString(R.string.limit) + "" + limit
                                 }
                                 GlobalData.errorDialogWithButton(
-                                    activiy, getString(R.string.error),
+                                    activity, getString(R.string.error),
                                     message
                                 )
                             }
@@ -513,7 +519,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         binding.minusCartBtn.setOnClickListener { v ->
             if (!UtilityApp.isLogin()) {
                 val checkLoginDialog = CheckLoginDialog(
-                    activiy,
+                    activity,
                     R.string.LoginFirst,
                     R.string.to_add_cart,
                     R.string.ok,
@@ -524,10 +530,10 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 checkLoginDialog.show()
             } else {
                 val count = binding.productCartQTY.text.toString().toInt()
-                val userId = UtilityApp.getUserData().id
-                val storeId = localModel!!.cityId.toInt()
-                val productId = productModel!!.id
-                val cart_id = selectedProductBarcode!!.cartId
+                val userId = UtilityApp.getUserData()?.id ?:0
+                val storeId = localModel?.cityId?.toInt()?:Constants.default_storeId.toInt()
+                val productId = productModel?.id?:0
+                val cartId = selectedProductBarcode?.cartId?:0
                 updateCart(
                     v,
                     productId,
@@ -535,17 +541,17 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     count - 1,
                     userId,
                     storeId,
-                    cart_id,
+                    cartId,
                     "quantity"
                 )
             }
         }
         binding.deleteCartBtn.setOnClickListener { v ->
             val userId = UtilityApp.getUserData().id
-            val storeId = localModel!!.cityId.toInt()
-            val productId = productModel!!.id
-            val cart_id = selectedProductBarcode!!.cartId
-            deleteCart(v, productId, selectedProductBarcode!!.id, cart_id, userId, storeId)
+            val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
+            val productId = productModel?.id?:0
+            val cartId = selectedProductBarcode?.cartId?:0
+            deleteCart(v, productId, selectedProductBarcode?.id?:0, cartId, userId, storeId)
         }
     }
 
@@ -560,7 +566,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 } else {
                     val productModel = bundle.getSerializable(Constants.DB_productModel) as ProductModel?
                     if (productModel != null) {
-                        productId1 = productModel.id
+                        productId1 = productModel?.id?:0
                         productName = if (UtilityApp.getLanguage() == Constants.Arabic) {
                             productModel.gethName()
                         } else {
@@ -575,12 +581,12 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
 
     private fun checkProductToAdd() {
         var message = ""
-        val count = selectedProductBarcode!!.cartQuantity
+        val count = selectedProductBarcode?.cartQuantity?:0
         val userId = UtilityApp.getUserData().id
-        val storeId = localModel!!.cityId.toInt()
-        val productId = productModel!!.id
-        val stock = selectedProductBarcode!!.stockQty
-        val limit = selectedProductBarcode!!.limitQty
+        val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
+        val productId = productModel?.id ?:0
+        val stock = selectedProductBarcode?.stockQty?:0
+        val limit = selectedProductBarcode?.limitQty?:0
         Log.i("limit", "Log limit  $limit")
         Log.i("stock", "Log stock  $stock")
         if (limit == 0) {
@@ -589,7 +595,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
             } else {
                 message = getString(R.string.stock_empty)
                 GlobalData.errorDialogWithButton(
-                    activiy, getString(R.string.error),
+                    activity, getString(R.string.error),
                     message
                 )
             }
@@ -603,7 +609,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     getString(R.string.limit) + "" + limit
                 }
                 GlobalData.errorDialogWithButton(
-                    activiy, getString(R.string.error),
+                    activity, getString(R.string.error),
                     message
                 )
             }
@@ -611,13 +617,13 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     }
 
     fun initReviewAdapter() {
-        reviewAdapter = ReviewAdapter(activiy, reviewList)
+        reviewAdapter = ReviewAdapter(activity, reviewList)
         binding.reviewRecycler.adapter = reviewAdapter
-        reviewAdapter!!.notifyDataSetChanged()
+        reviewAdapter?.notifyDataSetChanged()
     }
 
 
-    fun getSingleProduct(country_id: Int, city_id: Int, product_id: Int, user_id: String?) {
+    private fun getSingleProduct(country_id: Int, city_id: Int, product_id: Int, user_id: String?) {
         AnalyticsHandler.ViewItem(product_id, currency, 0.0)
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
         binding.dataLY.visibility = View.GONE
@@ -719,14 +725,14 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             if (productModel != null && isFavorite) {
                                 binding.favBut.setImageDrawable(
                                     ContextCompat.getDrawable(
-                                        activiy,
+                                        activity,
                                         R.drawable.favorite_icon
                                     )
                                 )
                             } else {
                                 binding.favBut.setImageDrawable(
                                     ContextCompat.getDrawable(
-                                        activiy,
+                                        activity,
                                         R.drawable.empty_fav
                                     )
                                 )
@@ -756,12 +762,12 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (func == Constants.ERROR) {
                         GlobalData.errorDialogWithButton(
-                            activiy, getString(R.string.error),
+                            activity, getString(R.string.error),
                             getString(R.string.fail_to_add_favorite)
                         )
                     } else if (func == Constants.FAIL) {
                         GlobalData.errorDialogWithButton(
-                            activiy, getString(R.string.error),
+                            activity, getString(R.string.error),
                             getString(R.string.fail_to_add_favorite)
                         )
                     } else {
@@ -769,15 +775,15 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             AnalyticsHandler.AddToWishList(productId, currency, productId.toDouble())
                             binding.favBut.setImageDrawable(
                                 ContextCompat.getDrawable(
-                                    activiy,
+                                    activity,
                                     R.drawable.favorite_icon
                                 )
                             )
-                            Toasty.success(activiy, R.string.success_add, Toast.LENGTH_SHORT, true).show()
+                            Toasty.success(activity, R.string.success_add, Toast.LENGTH_SHORT, true).show()
                             isFavorite = true
                         } else {
                             GlobalData.errorDialogWithButton(
-                                activiy, getString(R.string.error),
+                                activity, getString(R.string.error),
                                 getString(R.string.fail_to_add_favorite)
                             )
                         }
@@ -793,27 +799,27 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (func == Constants.ERROR) {
                         GlobalData.errorDialogWithButton(
-                            activiy, getString(R.string.error),
+                            activity, getString(R.string.error),
                             getString(R.string.fail_to_remove_favorite)
                         )
                     } else if (func == Constants.FAIL) {
                         GlobalData.errorDialogWithButton(
-                            activiy, getString(R.string.error),
+                            activity, getString(R.string.error),
                             getString(R.string.fail_to_remove_favorite)
                         )
                     } else {
                         if (IsSuccess) {
                             binding.favBut.setImageDrawable(
                                 ContextCompat.getDrawable(
-                                    activiy,
+                                    activity,
                                     R.drawable.empty_fav
                                 )
                             )
                             isFavorite = false
-                            Toasty.success(activiy, R.string.success_delete, Toast.LENGTH_SHORT, true).show()
+                            Toasty.success(activity, R.string.success_delete, Toast.LENGTH_SHORT, true).show()
                         } else {
                             GlobalData.errorDialogWithButton(
-                                activiy, getString(R.string.error),
+                                activity, getString(R.string.error),
                                 getString(R.string.fail_to_remove_favorite)
                             )
                         }
@@ -869,13 +875,13 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         }
 
     private fun initProductsAdapter() {
-        productOfferAdapter = SuggestedProductAdapter(activiy, productList, this, 0)
+        productOfferAdapter = SuggestedProductAdapter(activity, productList, this, 0)
         binding.offerRecycler.adapter = productOfferAdapter
     }
 
     private fun initOptionAdapter() {
         val productOptionAdapter = ProductOptionAdapter(
-            activiy, productModel!!.productBarcodes
+            activity, productModel!!.productBarcodes
         ) { obj: Any?, func: String?, IsSuccess: Boolean ->
             selectedProductBarcode = obj as ProductBarcode?
             initProductData()
@@ -914,7 +920,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                         UtilityApp.updateCart(1, productList!!.size)
                     } else {
                         GlobalData.errorDialogWithButton(
-                            activiy, getString(R.string.error),
+                            activity, getString(R.string.error),
                             getString(R.string.fail_to_add_cart)
                         )
                     }
@@ -927,7 +933,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     }
 
     private fun initSnackBar(message: String, viewBar: View) {
-        Toasty.success(activiy, message, Toast.LENGTH_SHORT, true).show()
+        Toasty.success(activity, message, Toast.LENGTH_SHORT, true).show()
     }
 
     private fun deleteCart(
@@ -955,7 +961,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     binding.plusCartBtn.visibility = View.VISIBLE
                 } else {
                     GlobalData.errorDialogWithButton(
-                        activiy, getString(R.string.error),
+                        activity, getString(R.string.error),
                         getString(R.string.fail_to_delete_cart)
                     )
                 }
@@ -996,7 +1002,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                             }
                         } else {
                             GlobalData.errorDialogWithButton(
-                                activiy, getString(R.string.error),
+                                activity, getString(R.string.error),
                                 getString(R.string.fail_to_update_cart)
                             )
                         }
@@ -1077,7 +1083,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     }
 
     private fun addComment(v: View, reviewModel: ReviewModel) {
-        GlobalData.progressDialog(activiy, R.string.add_comm, R.string.please_wait_sending)
+        GlobalData.progressDialog(activity, R.string.add_comm, R.string.please_wait_sending)
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 var message = getString(R.string.fail_add_comment)
@@ -1086,12 +1092,12 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     message = result.message
                 }
                 if (func == Constants.ERROR) {
-                    GlobalData.errorDialog(activiy, R.string.rate_app, message)
+                    GlobalData.errorDialog(activity, R.string.rate_app, message)
                 } else if (func == Constants.FAIL) {
-                    GlobalData.errorDialog(activiy, R.string.rate_app, message)
+                    GlobalData.errorDialog(activity, R.string.rate_app, message)
                 } else if (func == Constants.NO_CONNECTION) {
                     GlobalData.errorDialog(
-                        activiy,
+                        activity,
                         R.string.rate_app,
                         getString(R.string.no_internet_connection)
                     )
@@ -1101,7 +1107,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                         GlobalData.hideProgressDialog()
                         getReviews(productId1, storeId)
                         GlobalData.successDialog(
-                            activiy,
+                            activity,
                             getString(R.string.rate_product),
                             getString(R.string.success_rate_product)
                         )
@@ -1109,7 +1115,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                         addCommentDialog!!.dismiss()
                         GlobalData.hideProgressDialog()
                         GlobalData.errorDialog(
-                            activiy,
+                            activity,
                             R.string.rate_product,
                             getString(R.string.fail_add_comment)
                         )
@@ -1137,7 +1143,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         }
         if (selectedProductBarcode?.isSpecial == true) {
             binding.productPriceBeforeTv.background = ContextCompat.getDrawable(
-                activiy, R.drawable.itlatic_red_line
+                activity, R.drawable.itlatic_red_line
             )
 
 //            if (selectedProductBarcode.getSpecialPrice() != null) {
