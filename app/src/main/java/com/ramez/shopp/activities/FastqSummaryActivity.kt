@@ -66,10 +66,14 @@ class FastqSummaryActivity : ActivityBase() {
 
         cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
 
-        val list = intent.getSerializableExtra(Constants.CART_MODEL) as Array<CartFastQModel>
-        val productsList = mutableListOf<CartFastQModel>()
-        productsList.addAll(list)
-        initAdapter(productsList)
+        if(intent!=null){
+            val list = intent?.getSerializableExtra(Constants.CART_MODEL) as Array<CartFastQModel>
+            val productsList = mutableListOf<CartFastQModel>()
+            productsList.addAll(list)
+            initAdapter(productsList)
+        }
+
+
 
 
     }
