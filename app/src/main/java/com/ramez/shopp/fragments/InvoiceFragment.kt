@@ -34,10 +34,16 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
+import android.os.Environment
+import com.google.android.gms.common.api.Api
+import mobi.foo.benefitinapp.data.Transaction
+import mobi.foo.benefitinapp.listener.BenefitInAppButtonListener
+import mobi.foo.benefitinapp.listener.CheckoutListener
+import mobi.foo.benefitinapp.utils.BenefitInAppCheckout as BenefitInAppCheckout1
 
 
 class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect,
-    OnEditClick {
+        OnEditClick {
     var userId: Int? = 0
     var couponCodeId = "0"
     var deliveryDate: String? = null
@@ -282,7 +288,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 }
 
             } else {
-              removeExpress()
+                removeExpress()
             }
         }
         binding.choosePaymentType.setOnClickListener {
@@ -310,7 +316,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             total!!.toDouble() + deliveryFees,
             fraction
         ) + " " + currency
-        checkDeliveryFees()    }
+        checkDeliveryFees()
+    }
 
     private fun initTimesList() {
         initTimeAdapter(deliveryFees)
@@ -342,30 +349,37 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             selectedPaymentMethod = obj as PaymentModel?
             Log.i(
                 javaClass.simpleName,
-                "Log selectedPaymentMethod " + selectedPaymentMethod!!.shortname
+                "Log selectedPaymentMethod " + selectedPaymentMethod?.shortname
             )
             if (selectedPaymentMethod != null) {
-                if (selectedPaymentMethod!!.shortname == "CC") {
-                    binding.chooseDelivery.visibility = View.GONE
-                    initTimeAdapter(0.0)
-                    binding.deliveryFees.text = getString(R.string.free)
-                    binding.totalTv.text = NumberHandler.formatDouble(
-                        NumberHandler.formatDouble(
-                            total!!.toDouble(), fraction
-                        ).toDouble() + 0.0, fraction
-                    ).plus(" ").plus(currency)
-                } else {
-                    binding.chooseDelivery.visibility = View.VISIBLE
-                    initTimeAdapter(deliveryFees)
-                    binding.deliveryFees.text = NumberHandler.formatDouble(
-                        deliveryFees,
-                        localModel!!.fractional
-                    ).plus(" ").plus(currency)
 
-                    binding.totalTv.text = NumberHandler.formatDouble(
-                        total!!.toDouble() + deliveryFees,
-                        fraction
-                    ).plus(" ").plus(currency)
+                when (selectedPaymentMethod?.shortname) {
+                    "CC" -> {
+                        binding.chooseDelivery.visibility = View.GONE
+                        initTimeAdapter(0.0)
+                        binding.deliveryFees.text = getString(R.string.free)
+                        binding.totalTv.text = NumberHandler.formatDouble(
+                            NumberHandler.formatDouble(
+                                total!!.toDouble(), fraction
+                            ).toDouble() + 0.0, fraction
+                        ).plus(" ").plus(currency)
+                    }
+                    "BN" -> {
+                        payUsingBenefit()
+                    }
+                    else -> {
+                        binding.chooseDelivery.visibility = View.VISIBLE
+                        initTimeAdapter(deliveryFees)
+                        binding.deliveryFees.text = NumberHandler.formatDouble(
+                            deliveryFees,
+                            localModel!!.fractional
+                        ).plus(" ").plus(currency)
+
+                        binding.totalTv.text = NumberHandler.formatDouble(
+                            total!!.toDouble() + deliveryFees,
+                            fraction
+                        ).plus(" ").plus(currency)
+                    }
                 }
                 showHidePaymentLY(false)
                 checkData()
@@ -376,11 +390,50 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         binding.paymentRv.adapter = paymentAdapter
     }
 
+    private fun payUsingBenefit() {
+        object : BenefitInAppButtonListener {
+            override fun onButtonClicked() {
+                Toast("onButtonClicked")
+                val appId = "3741654329"
+                val referenceId = "5411"
+                val merchantId = "302000290"
+                val secret = "14ynm983ql47jxr4yh3vi36zbtmjt10378zse0jfazasi"
+                val amount = "50"
+                val country = "BH"
+                val currency = "bhd"
+                val merchantCategoryCode = ""
+                val merchantName = "RAMEZ"
+                val merchantCity = "Manama"
+                BenefitInAppCheckout1.newInstance(
+                    activityy,
+                    appId, referenceId, merchantId, secret, amount, country, currency,
+                    merchantCategoryCode, merchantName, merchantCity, object : CheckoutListener {
+                        override fun onTransactionSuccess(transaction: Transaction?) {
+                            Log.i(javaClass.name,"Log onTransaction Success ${transaction?.merchantId}")
+                        }
+
+                        override fun onTransactionFail(transaction: Transaction?) {
+                            Log.i(javaClass.name,"Log onTransaction Fail  ${transaction?.merchantId}")
+                        }
+                    }).checkParams()
+
+
+            }
+
+            override fun onFail(p0: Int) {
+
+                Log.i(javaClass.name,"Log onFail  ${p0}")
+            }
+        }
+
+
+    }
+
     private fun getPaymentMethod(user_id: Int) {
         paymentList!!.clear()
         binding.loadingLYPay.visibility = View.VISIBLE
         DataFeacher(
-            false,object :DataFetcherCallBack{
+            false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         var message = getString(R.string.fail_to_get_data)
@@ -404,9 +457,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 }
                             }
                         }
-                    }                }
+                    }
+                }
             }
-        ) .getPaymentMethod(user_id)
+        ).getPaymentMethod(user_id)
     }
 
     @get:SuppressLint("SetTextI18n")
@@ -448,7 +502,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private fun sendOrder(orderCall: OrderCall) {
         AnalyticsHandler.checkOut(couponCodeId, currency, total, total)
         GlobalData.progressDialog(activityy, R.string.make_order, R.string.please_wait_sending)
-        DataFeacher(false,object :DataFetcherCallBack{
+        DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 GlobalData.hideProgressDialog()
                 val result = obj as OrdersResultModel?
@@ -496,8 +550,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     } else {
                         Toast(getString(R.string.fail_to_send_order))
                     }
-                }            }
-        }) .makeOrder(orderCall)
+                }
+            }
+        }).makeOrder(orderCall)
     }
 
     private fun initData() {
@@ -677,8 +732,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         quickCall1.store_id = storeId
         quickCall1.country_id = countryId
         DataFeacher(
-            false
-        ,object :DataFetcherCallBack{
+            false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         var message = getString(R.string.fail_to_get_data)
@@ -721,7 +775,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                             binding.deliveryPrice.text = getString(R.string.free)
                                         } else {
 
-                                            binding.deliveryPrice.text= NumberHandler.formatDouble(
+                                            binding.deliveryPrice.text = NumberHandler.formatDouble(
                                                 expressDeliveryCharge,
                                                 fraction
                                             ) + " " + currency
@@ -734,8 +788,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 }
                             }
                         }
-                    }                }
-            }) .getQuickDelivery(quickCall1)
+                    }
+                }
+            }).getQuickDelivery(quickCall1)
     }
 
     private fun getDeliveryInfo(storeId: Int, addressId: Int, fromAddress: Boolean) {
@@ -743,7 +798,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             GlobalData.progressDialog(activityy, R.string.getData, R.string.please_wait_upload)
         }
         DataFeacher(
-            false,object :DataFetcherCallBack{
+            false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         val quickDeliveryRespond = obj as DeliveryInfo?
@@ -795,9 +850,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         } else {
                             GlobalData.hideProgressDialog()
                         }
-                    }                }
+                    }
+                }
             }
-        ) .GetDeliveryInfo(storeId, addressId)
+        ).GetDeliveryInfo(storeId, addressId)
     }
 
     override fun onStart() {
@@ -854,8 +910,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         datesMap.clear()
         binding.loadingDelivery.visibility = View.VISIBLE
         DataFeacher(
-            true
-        , object : DataFetcherCallBack {
+            true, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         val result = obj as CheckOrderResponse?
@@ -863,10 +918,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         binding.loadingDelivery.visibility = View.GONE
                         if (IsSuccess) {
                             if (result?.data != null && result.data
-                                    .deliveryTimes != null && result.data.deliveryTimes.size > 0
+                                        .deliveryTimes != null && result.data.deliveryTimes.size > 0
                             ) {
                                 if (result.data != null && result.data
-                                        .deliveryTimes.size > 0
+                                            .deliveryTimes.size > 0
                                 ) {
                                     val checkOrderResponse = result.data
                                     val userDefaultAddress =
@@ -931,7 +986,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         }
                     }
                 }
-        }).getDeliveryTimeList(storeId, user_id)
+            }).getDeliveryTimeList(storeId, user_id)
     }
 
     companion object {

@@ -243,6 +243,7 @@
             android:padding="@dimen/_5sdp"
             android:visibility="gone"
             app:srcCompat="@drawable/delete_icon" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
