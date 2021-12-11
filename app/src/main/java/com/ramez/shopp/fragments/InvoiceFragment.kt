@@ -17,29 +17,29 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ramez.shopp.activities.AddNewAddressActivity
-import com.ramez.shopp.activities.AddressActivity
-import com.ramez.shopp.activities.OrderCompleteActivity
-import com.ramez.shopp.adapter.*
-import com.ramez.shopp.adapter.AddressCheckAdapter.OnEditClick
-import com.ramez.shopp.adapter.AddressCheckAdapter.OnRadioAddressSelect
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Classes.*
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
+import com.ramez.shopp.activities.AddNewAddressActivity
+import com.ramez.shopp.activities.AddressActivity
+import com.ramez.shopp.activities.OrderCompleteActivity
+import com.ramez.shopp.adapter.*
+import com.ramez.shopp.adapter.AddressCheckAdapter.OnEditClick
+import com.ramez.shopp.adapter.AddressCheckAdapter.OnRadioAddressSelect
 import com.ramez.shopp.databinding.FragmentInvoiceBinding
+import mobi.foo.benefitinapp.data.Transaction
+import mobi.foo.benefitinapp.listener.BenefitInAppButtonListener
+import mobi.foo.benefitinapp.listener.CheckoutListener
+import mobi.foo.benefitinapp.utils.BenefitInAppHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import android.os.Environment
-import com.google.android.gms.common.api.Api
-import mobi.foo.benefitinapp.data.Transaction
-import mobi.foo.benefitinapp.listener.BenefitInAppButtonListener
-import mobi.foo.benefitinapp.listener.CheckoutListener
-import mobi.foo.benefitinapp.utils.BenefitInAppCheckout as BenefitInAppCheckout1
+import mobi.foo.benefitinapp.utils.BenefitInAppCheckout
+import mobi.foo.benefitinapp.utils.CurrencyUtil
 
 
 class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect,
@@ -80,6 +80,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private var addressId = 0
     var deliveryDateId = 0
     var itemNotFoundId = 0
+
 
     lateinit var binding: FragmentInvoiceBinding
 
@@ -304,6 +305,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         binding.chooseDeliveryTime.setOnClickListener { showHideDateLY(binding.DeliverDayRecycler.visibility === View.GONE) }
 
         binding.checkProductLy.setOnClickListener { showHideNoProductLY(binding.ProductCheckRecycler.visibility === View.GONE) }
+
+        binding.btnBenefitBay.setListener(payUsingBenefit())
     }
 
     private fun removeExpress() {
@@ -365,7 +368,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         ).plus(" ").plus(currency)
                     }
                     "BN" -> {
-                        payUsingBenefit()
+                        println("Log BN payment")
+                        binding.btnBenefitBay.performClick()
                     }
                     else -> {
                         binding.chooseDelivery.visibility = View.VISIBLE
@@ -390,39 +394,47 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         binding.paymentRv.adapter = paymentAdapter
     }
 
-    private fun payUsingBenefit() {
-        object : BenefitInAppButtonListener {
+    private fun payUsingBenefit(): BenefitInAppButtonListener {
+        return object : BenefitInAppButtonListener {
             override fun onButtonClicked() {
                 Toast("onButtonClicked")
                 val appId = "3741654329"
                 val referenceId = "5411"
                 val merchantId = "302000290"
                 val secret = "14ynm983ql47jxr4yh3vi36zbtmjt10378zse0jfazasi"
-                val amount = "50"
+                val amount = total
                 val country = "BH"
-                val currency = "bhd"
-                val merchantCategoryCode = ""
+                val currency = "048"
+                val merchantCategoryCode = "22"
                 val merchantName = "RAMEZ"
                 val merchantCity = "Manama"
-                BenefitInAppCheckout1.newInstance(
+                BenefitInAppCheckout.newInstance(
                     activityy,
                     appId, referenceId, merchantId, secret, amount, country, currency,
                     merchantCategoryCode, merchantName, merchantCity, object : CheckoutListener {
                         override fun onTransactionSuccess(transaction: Transaction?) {
-                            Log.i(javaClass.name,"Log onTransaction Success ${transaction?.merchantId}")
+                            Log.i(javaClass.name, "Log referenceNumber ${transaction?.referenceNumber}")
+                            Log.i(javaClass.name, "Log terminalId ${transaction?.terminalId}")
+                            Log.i(javaClass.name, "Log transactionMessage ${transaction?.transactionMessage}")
                         }
 
                         override fun onTransactionFail(transaction: Transaction?) {
-                            Log.i(javaClass.name,"Log onTransaction Fail  ${transaction?.merchantId}")
+                            Log.i(
+                                javaClass.name,
+                                "Log Fail transactionMessage ${transaction?.transactionMessage}"
+                            )
                         }
                     }).checkParams()
+
+//                   if (benefitInAppCheckout.checkParams() == -1)
+//                       benefitInAppCheckout.
 
 
             }
 
             override fun onFail(p0: Int) {
 
-                Log.i(javaClass.name,"Log onFail  ${p0}")
+                Log.i(javaClass.name, "Log onFail  ${p0}")
             }
         }
 
@@ -993,6 +1005,11 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         private const val ADDRESS_CODE = 100
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK)
+            BenefitInAppHelper.handleResult(data)
+    }
 
 }
 

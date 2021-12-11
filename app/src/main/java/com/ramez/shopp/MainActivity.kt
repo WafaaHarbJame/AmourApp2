@@ -34,6 +34,8 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 import com.ramez.shopp.Classes.MessageEvent
 import com.ramez.shopp.activities.AllBookleteActivity
+import mobi.foo.benefitinapp.Application
+import mobi.foo.benefitinapp.utils.CurrencyUtil
 
 
 class MainActivity : ActivityBase() {
@@ -50,7 +52,7 @@ class MainActivity : ActivityBase() {
     var localModel: LocalModel? = null
     private var toggleButton = false
     private var toggleSortButton = false
-    var country_name =Constants.default_short_name
+    var country_name = Constants.default_short_name
     var categoryModelList: ArrayList<CategoryModel>? = null
 
     private lateinit var tabNavArr: Array<BottomNavModel>
@@ -61,6 +63,15 @@ class MainActivity : ActivityBase() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val currencyKey = Application.ujco("ᨸ⠜繇")
+        println("Log currencyKey $currencyKey")
+
+
+        println("Log Currency currencyCode ${getString(CurrencyUtil.getCurrencyFromNumericCode("048").currencyCode)}")
+        println("Log Currency currencyName ${getString(CurrencyUtil.getCurrencyFromNumericCode("048").currencyName)}")
+        println("Log Currency numericCurrencyCode ${CurrencyUtil.getCurrencyFromNumericCode("048").numericCurrencyCode}")
+
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
