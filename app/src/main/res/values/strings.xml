@@ -365,6 +365,7 @@
     <string name="whats_note">Dear User, our Whatsapp Live Support is Active. Go to your profile and click the Whatsapp icon whenever you will need support.</string>
     <string name="share_note">Let me recommend  to you this product \n\n\</string>
     <string name="payment_success">Payment Successful</string>
+    <string name="payment_fail">Payment Fail</string>
     <string name="order_confirmed">Order Confirmed</string>
     <string name="order_note">Your order Has been  confirmed . You can check the status of this order from  order page </string>
     <string name="will_be_deliverd">Will be delivered on </string>

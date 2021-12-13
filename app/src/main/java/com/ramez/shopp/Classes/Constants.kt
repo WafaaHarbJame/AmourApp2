@@ -21,6 +21,14 @@ object Constants {
     const val Paly_Link = "http://onelink.to/k9h4jf"
     const val three = 3
     const val two = 2
+    const val appId = "9459017518"
+    const val referenceId = "OD0989"
+    const val merchantId = "302000290"
+    const val secret = "r0nt1z801gt5xrvmgutm06quz85ti6yfaduz0oobxyys3"
+    const val currency = "048"
+    const val merchantName = "RAMEZ"
+    const val merchantCity = "Manama"
+
 
     const val NO_CONNECTION = "no connection"
     const val ERROR = "error"

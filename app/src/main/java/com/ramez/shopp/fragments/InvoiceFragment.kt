@@ -397,28 +397,31 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private fun payUsingBenefit(): BenefitInAppButtonListener {
         return object : BenefitInAppButtonListener {
             override fun onButtonClicked() {
-                Toast("onButtonClicked")
-                val appId = "3741654329"
-                val referenceId = "5411"
-                val merchantId = "302000290"
-                val secret = "14ynm983ql47jxr4yh3vi36zbtmjt10378zse0jfazasi"
+//                Toast("onButtonClicked")
+                val appId = Constants.appId
+                val referenceId = Constants.referenceId
+                val merchantId = Constants.merchantId
+                val secret = Constants.secret
                 val amount = total
-                val country = "BH"
-                val currency = "048"
-                val merchantCategoryCode = "22"
-                val merchantName = "RAMEZ"
-                val merchantCity = "Manama"
+                val country = Constants.default_short_name
+                val currency = Constants.currency
+                val merchantCategoryCode = userId.toString()
+                val merchantName = Constants.merchantName
+                val merchantCity = Constants.merchantCity
                 BenefitInAppCheckout.newInstance(
                     activityy,
                     appId, referenceId, merchantId, secret, amount, country, currency,
                     merchantCategoryCode, merchantName, merchantCity, object : CheckoutListener {
                         override fun onTransactionSuccess(transaction: Transaction?) {
-                            Log.i(javaClass.name, "Log referenceNumber ${transaction?.referenceNumber}")
+                            Toast(transaction?.transactionMessage)
+                            Log.i(javaClass.name, "Log referenceNumber ${transaction?.transactionMessage}")
                             Log.i(javaClass.name, "Log terminalId ${transaction?.terminalId}")
                             Log.i(javaClass.name, "Log transactionMessage ${transaction?.transactionMessage}")
                         }
 
                         override fun onTransactionFail(transaction: Transaction?) {
+                            Toast(transaction?.transactionMessage)
+
                             Log.i(
                                 javaClass.name,
                                 "Log Fail transactionMessage ${transaction?.transactionMessage}"
@@ -1007,8 +1010,19 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK)
-            BenefitInAppHelper.handleResult(data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                BenefitInAppHelper.handleResult(data)
+            }
+            Activity.RESULT_CANCELED -> {
+                Toast(getString(R.string.cancel))
+            }
+            else -> {
+                Toast(getString(R.string.payment_fail))
+
+            }
+        }
+
     }
 
 }
