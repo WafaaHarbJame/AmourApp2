@@ -150,8 +150,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()) {
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-                ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
                 if (IsSuccess) {
+                    ResultAPIModel<List<CouponsModel>> result = (ResultAPIModel<List<CouponsModel>>) obj;
+
                     if (result != null && result.isSuccessful()) {
 
                         if (result.data != null && result.data.size() > 0) {
@@ -223,9 +224,9 @@ public class CouponsFragment extends FragmentBase implements CouponsAdapter.OnIt
     private void callGetCouponSettings() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (IsSuccess) {
+                ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
                 if (result != null && result.data != null && result.status == 200) {
                     settingCouponsModel = result.data;

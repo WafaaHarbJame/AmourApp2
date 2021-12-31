@@ -344,6 +344,12 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 4 -> {
                     paymentModel.image = R.drawable.card
                 }
+                5 -> {
+                    paymentModel.image = R.drawable.beneift_pay
+                    paymentModel.methodAr=getString(R.string.beneit_using_app_AR)
+                    paymentModel.methodEn=getString(R.string.beneit_using_app_EN)
+                }
+
             }
         }
         paymentAdapter = PaymentAdapter(
@@ -367,8 +373,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                             ).toDouble() + 0.0, fraction
                         ).plus(" ").plus(currency)
                     }
-                    "BN" -> {
-                        println("Log BN payment")
+//                    "BN" -> {
+//                        println("Log BN payment")
+//                        binding.btnBenefitBay.performClick()
+//                    }
+
+                    "BNP" -> {
+                        println("Log BNP payment")
                         binding.btnBenefitBay.performClick()
                     }
                     else -> {
@@ -445,7 +456,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     }
 
     private fun getPaymentMethod(user_id: Int) {
-        paymentList!!.clear()
+        paymentList?.clear()
         binding.loadingLYPay.visibility = View.VISIBLE
         DataFeacher(
             false, object : DataFetcherCallBack {

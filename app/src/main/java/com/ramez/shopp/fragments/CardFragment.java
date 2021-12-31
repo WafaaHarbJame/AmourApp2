@@ -51,7 +51,7 @@ public class CardFragment extends FragmentBase {
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable  Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -231,14 +231,15 @@ public class CardFragment extends FragmentBase {
     private void callGetTotalPoints() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
 
-            if (IsSuccess && result != null && result.data != null) {
+            if (IsSuccess) {
+                ResultAPIModel<TotalPointModel> result = (ResultAPIModel<TotalPointModel>) obj;
+                if (result != null && result.data != null) {
+                    totalPointModel = result.data;
+                    DBFunction.setTotalPoints(totalPointModel);
 
-                totalPointModel = result.data;
-                DBFunction.setTotalPoints(totalPointModel);
-
-                setTotalPointsData();
+                    setTotalPointsData();
+                }
             }
 
         }).getTotalPoint(userId);
@@ -268,9 +269,10 @@ public class CardFragment extends FragmentBase {
     private void callGetCouponSettings() {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
 
             if (IsSuccess) {
+                ResultAPIModel<SettingCouponsModel> result = (ResultAPIModel<SettingCouponsModel>) obj;
+
                 if (result != null && result.isSuccessful() && result.data != null) {
                     settingCouponsModel = result.data;
                     DBFunction.setCouponSettings(settingCouponsModel);

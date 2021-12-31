@@ -68,6 +68,7 @@ class MainActivity : ActivityBase() {
         println("Log currencyKey $currencyKey")
 
 
+
         println("Log Currency currencyCode ${getString(CurrencyUtil.getCurrencyFromNumericCode("048").currencyCode)}")
         println("Log Currency currencyName ${getString(CurrencyUtil.getCurrencyFromNumericCode("048").currencyName)}")
         println("Log Currency numericCurrencyCode ${CurrencyUtil.getCurrencyFromNumericCode("048").numericCurrencyCode}")
@@ -632,6 +633,7 @@ class MainActivity : ActivityBase() {
             binding.cartCountTv.visibility = View.VISIBLE
             binding.cartCountTv.text = cartCount.toString()
         }
+
     }
 
 

@@ -177,46 +177,48 @@ public class LoginFragment extends FragmentBase {
                     default:
                         if (IsSuccess) {
 
-                            if (result.getStatus() == 106) {
-                                GlobalData.INSTANCE.hideProgressDialog();
-                                Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
-                                intent.putExtra(Constants.KEY_MOBILE, mobileStr);
-                                intent.putExtra(Constants.verify_account, true);
-                                intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
-                                startActivity(intent);
+                            if (result != null) {
+                                if (result.getStatus() == 106) {
+                                    GlobalData.INSTANCE.hideProgressDialog();
+                                    Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
+                                    intent.putExtra(Constants.KEY_MOBILE, mobileStr);
+                                    intent.putExtra(Constants.verify_account, true);
+                                    intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
+                                    startActivity(intent);
 
-                            } else if (result.getStatus() == 0) {
+                                } else if (result.getStatus() == 0) {
 
-                                GlobalData.INSTANCE.hideProgressDialog();
-                                String message = getString(R.string.fail_signin);
-                                if (result.getMessage() != null) {
-                                    message = result.getMessage();
+                                    GlobalData.INSTANCE.hideProgressDialog();
+                                    String message = getString(R.string.fail_signin);
+                                    if (result.getMessage() != null) {
+                                        message = result.getMessage();
+                                    }
+
+                                    GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
+
+                                } else if (result.getStatus() == 200) {
+
+                                    MemberModel user = result.getData();
+                                    if (user != null) {
+                                        user.setUserType(Constants.user_type);
+
+                                    }
+
+                                    UtilityApp.setUserData(user);
+                                    UtilityApp.setIsFirstLogin(true);
+                                    if (UtilityApp.getUserData() != null) {
+                                        UpdateToken();
+                                    }
+                                } else {
+                                    GlobalData.INSTANCE.hideProgressDialog();
+
+                                    String message = getString(R.string.fail_signin);
+                                    if (result.getMessage() != null) {
+                                        message = result.getMessage();
+                                    }
+
+                                    GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
                                 }
-
-                                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
-
-                            } else if (result.getStatus() == 200) {
-
-                                MemberModel user = result.getData();
-                                if (user != null) {
-                                    user.setUserType(Constants.user_type);
-
-                                }
-
-                                UtilityApp.setUserData(user);
-                                UtilityApp.setIsFirstLogin(true);
-                                if (UtilityApp.getUserData() != null) {
-                                    UpdateToken();
-                                }
-                            } else {
-                                GlobalData.INSTANCE.hideProgressDialog();
-
-                                String message = getString(R.string.fail_signin);
-                                if (result.getMessage() != null) {
-                                    message = result.getMessage();
-                                }
-
-                                GlobalData.INSTANCE.errorDialog(getActivityy(), R.string.text_login_login, message);
                             }
 
 

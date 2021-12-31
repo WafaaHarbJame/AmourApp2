@@ -237,6 +237,7 @@ class CartAdapter(
                 addCommentDialog!!.show()
             }
             binding.plusCartBtn.setOnClickListener { v ->
+
                 val message: String
                 val position = bindingAdapterPosition
                 val productModel = cartDMS!![position]
@@ -361,7 +362,7 @@ class CartAdapter(
                 val productBarcodeId = productModel.productBarcodeId
                 val userId =
                     if (memberModel != null && memberModel!!.id != null) memberModel!!.id else 0
-                val storeId = localModel!!.cityId.toInt()
+                val storeId = localModel?.cityId?.toInt() ?:Constants.default_storeId.toInt()
                 val productId = productModel.productId
                 val cartId = productModel.id
                 deleteCart(position, productId, productBarcodeId, cartId, userId, storeId)

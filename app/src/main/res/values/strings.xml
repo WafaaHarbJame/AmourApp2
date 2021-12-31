@@ -452,6 +452,8 @@
     <string name="sound_alert_hint">Play sound for product scan and interactions.</string>
     <string name="min_quantity_is_one">Minimum quantity is one</string>
     <string name="accept_terms">Please Accept the Terms </string>
+    <string name="beneit_using_app_EN" translatable="false">benefit On app</string>
+    <string name="beneit_using_app_AR" translatable="false">بنفت بالتطبيق</string>
 
 
 </resources>

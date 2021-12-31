@@ -1040,10 +1040,9 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         reviewList!!.clear()
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result =
-                    obj as ResultAPIModel<ArrayList<ReviewModel>?>
                 if (IsSuccess) {
-                    if (result.data != null && result.data!!.size > 0) {
+                    val result = obj as ResultAPIModel<ArrayList<ReviewModel>?>
+                    if (result.data != null && result.data?.size?:0 > 0) {
                         reviewList = result.data
                         binding.productReviewTv.visibility = View.VISIBLE
                         binding.reviewRecycler.visibility = View.VISIBLE
