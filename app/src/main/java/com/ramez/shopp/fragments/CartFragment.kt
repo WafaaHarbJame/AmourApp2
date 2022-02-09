@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Dialogs.ConfirmDialog
 import com.ramez.shopp.Dialogs.EmptyCartDialog

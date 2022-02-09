@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.TransactionModel;
 import com.ramez.shopp.Utils.DateHandler;

@@ -13,13 +13,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.CityModelResult
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CityModelResult
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.CountryModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
+import com.ramez.shopp.SplashScreenActivity
 import com.ramez.shopp.adapter.BranchAdapter
 import com.ramez.shopp.adapter.CountriesAdapter
 import com.ramez.shopp.adapter.CountriesAdapter.OnCountryClick

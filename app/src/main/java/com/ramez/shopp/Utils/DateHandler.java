@@ -3,8 +3,8 @@ package com.ramez.shopp.Utils;
 import android.app.Activity;
 import android.util.Log;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.UtilityApp;
 
 import java.text.DateFormat;
 import java.text.ParseException;

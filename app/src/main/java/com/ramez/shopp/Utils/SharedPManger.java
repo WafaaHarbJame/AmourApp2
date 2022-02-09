@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 
 
 public class SharedPManger {
@@ -21,7 +21,7 @@ public class SharedPManger {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
         editor.apply();
 
     }

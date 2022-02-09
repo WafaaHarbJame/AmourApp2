@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 
 
 public class AutoCompleteDropDown extends AppCompatAutoCompleteTextView {

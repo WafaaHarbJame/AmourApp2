@@ -14,12 +14,12 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.AnalyticsHandler;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.AnalyticsHandler;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.OrderItemDetail;

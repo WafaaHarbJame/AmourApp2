@@ -3,9 +3,9 @@ package com.ramez.shopp.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.ramez.shopp.Classes.CategoryModel
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CategoryModel
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.BookletsModel
 import com.ramez.shopp.Models.ProductModel
 import com.ramez.shopp.R

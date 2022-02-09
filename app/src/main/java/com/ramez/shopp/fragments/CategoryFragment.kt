@@ -5,6 +5,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,16 +26,20 @@ import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.CategoryModel
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.MessageEvent
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CategoryModel
 import com.ramez.shopp.Models.CategoryResultModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
 import com.ramez.shopp.activities.FullScannerActivity
 import com.ramez.shopp.adapter.CategoryAdapter
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.MessageEvent
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.databinding.FragmentCategoryBinding
+import io.nlopez.smartlocation.SmartLocation
+import io.nlopez.smartlocation.location.config.LocationAccuracy
+import io.nlopez.smartlocation.location.config.LocationParams
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
@@ -185,44 +190,74 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
     }
 
     private fun checkCameraPermission() {
-        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                    startScan()
-                }
+        val builder = PermissionCompat.Builder(activity)
+        builder.addPermissions(
+            arrayOf(
+                Manifest.permission.CAMERA)
+        )
+        builder.addPermissionRationale(getString(R.string.should_allow_permission))
+        builder.addRequestPermissionsCallBack(object : OnRequestPermissionsCallBack {
+            override fun onGrant() {
+                startScan()
+            }
 
-                override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                    Toast.makeText(
-                        getActivity(),
-                        "" + getString(R.string.permission_camera_rationale),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest,
-                    token: PermissionToken
-                ) {
-                    token.continuePermissionRequest()
-                }
-            }).withErrorListener {
+            override fun onDenied(permission: String) {
                 Toast.makeText(
-                    activityy,
-                    "" + getString(R.string.error_in_data),
+                    getActivity(),
+                    "" + getString(R.string.permission_camera_rationale),
                     Toast.LENGTH_SHORT
                 ).show()
-            }.onSameThread().check()
+            }
+        })
+        builder.build().request()
+
+
+//        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA)
+//            .withListener(object : PermissionListener {
+//                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+//                    startScan()
+//                }
+//
+//                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+//                    Toast.makeText(
+//                        getActivity(),
+//                        "" + getString(R.string.permission_camera_rationale),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//
+//                override fun onPermissionRationaleShouldBeShown(
+//                    permission: PermissionRequest,
+//                    token: PermissionToken
+//                ) {
+//                    token.continuePermissionRequest()
+//                }
+//            }).withErrorListener {
+//                Toast.makeText(
+//                    activityy,
+//                    "" + getString(R.string.error_in_data),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }.onSameThread().check()
     }
 
     private fun startScan() {
+
         try {
-            val builder = PermissionCompat.Builder(activityy)
-            builder.addPermissions(arrayOf(Manifest.permission.CAMERA))
+            val builder = PermissionCompat.Builder(activity)
+            builder.addPermissions(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                )
+            )
             builder.addPermissionRationale(getString(R.string.should_allow_permission))
             builder.addRequestPermissionsCallBack(object : OnRequestPermissionsCallBack {
                 override fun onGrant() {
-                    val intent = Intent(activityy, FullScannerActivity::class.java)
-                    scanLauncher!!.launch(intent)
+
+                    Thread {
+                        val intent = Intent(activityy, FullScannerActivity::class.java)
+                        scanLauncher!!.launch(intent)
+                    }.start()
                 }
 
                 override fun onDenied(permission: String) {
@@ -230,8 +265,8 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
                 }
             })
             builder.build().request()
-        } catch (var2: Exception) {
-            var2.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

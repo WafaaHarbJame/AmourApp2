@@ -1,6 +1,5 @@
 package com.ramez.shopp.adapter
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -13,10 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Models.CartProcessModel
 import com.ramez.shopp.Models.LocalModel
+import com.ramez.shopp.Models.MemberModel
 import com.ramez.shopp.Models.ProductModel
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
@@ -156,9 +156,12 @@ class SuggestedProductAdapter(
                         if (IsSuccess) {
                             Toast.makeText(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT)
                                 .show()
-                            productModels!![position].isFavourite = true
-                            notifyItemChanged(position)
-                            notifyDataSetChanged()
+                            if(productModels?.size ?:0 >0){
+                                productModels!![position].isFavourite = true
+                                notifyItemChanged(position)
+                                notifyDataSetChanged()
+                            }
+
                         } else {
                             GlobalData.errorDialogWithButton(
                                 context, context.getString(R.string.error),
@@ -350,9 +353,9 @@ class SuggestedProductAdapter(
                     )
                     checkLoginDialog.show()
                 } else {
-                    val position = bindingAdapterPosition
-                    val userId = UtilityApp.getUserData().id
-                    val storeId = localModel!!.cityId.toInt()
+                    val position = absoluteAdapterPosition
+                    val userId = UtilityApp.getUserData()?.id ?: 0
+                    val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
                     val productId = productModels!![position].id
                     val isFavorite = productModels[position].isFavourite
                     if (isFavorite) {
@@ -360,6 +363,7 @@ class SuggestedProductAdapter(
                     } else {
                         addToFavorite(view1, position, productId, userId, storeId)
                     }
+
                 }
             }
             binding.cartBut.setOnClickListener { view1 ->
@@ -380,8 +384,8 @@ class SuggestedProductAdapter(
                     val productModel = productModels!![position]
                     val productBarcode = productModel.firstProductBarcodes
                     val count = productBarcode.cartQuantity
-                    val userId = UtilityApp.getUserData().id
-                    val storeId = localModel!!.cityId.toInt()
+                    val userId = UtilityApp.getUserData()?.id ?: 0
+                    val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
                     val productId = productModel.id
                     val productBarcodeId = productBarcode.id
                     val limit = productBarcode.limitQty
@@ -437,8 +441,8 @@ class SuggestedProductAdapter(
                 val productModel = productModels!![position]
                 val productBarcode = productModel.firstProductBarcodes
                 val count = productBarcode.cartQuantity
-                val userId = UtilityApp.getUserData().id
-                val storeId = localModel!!.cityId.toInt()
+                val userId = UtilityApp.getUserData()?.id ?: 0
+                val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
                 val productId = productModel.id
                 val productBarcodeId = productBarcode.id
                 val cartId = productBarcode.cartId
@@ -497,8 +501,8 @@ class SuggestedProductAdapter(
                 val productModel = productModels!![position]
                 val productBarcode = productModel.firstProductBarcodes
                 val count = productBarcode.cartQuantity
-                val userId = UtilityApp.getUserData().id
-                val storeId = localModel!!.cityId.toInt()
+                val userId = UtilityApp.getUserData()?.id ?: 0
+                val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
                 val productId = productModel.id
                 val productBarcodeId = productBarcode.id
                 val cartId = productBarcode.cartId
@@ -519,8 +523,8 @@ class SuggestedProductAdapter(
                 val productModel = productModels!![position]
                 val productBarcode = productModel.firstProductBarcodes
                 onItemClick!!.onItemClicked(position, productModels[position])
-                val userId = UtilityApp.getUserData().id
-                val storeId = localModel!!.cityId.toInt()
+                val userId = UtilityApp.getUserData()?.id ?: 0
+                val storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
                 val productId = productModel.id
                 val productBarcodeId = productBarcode.id
                 val cartId = productBarcode.cartId

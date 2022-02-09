@@ -13,11 +13,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.onesignal.OneSignal
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.ExampleNotificationOpenedHandler
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.ExampleNotificationOpenedHandler
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.MemberModel
-import com.ramez.shopp.Models.ResultAPIModel
 import com.ramez.shopp.Utils.LocaleUtils
 import com.ramez.shopp.Utils.SharedPManger
 import java.util.*

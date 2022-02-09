@@ -12,12 +12,12 @@ import android.view.Window;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.CategoryModel;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;

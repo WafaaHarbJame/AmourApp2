@@ -17,23 +17,20 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.onesignal.OneSignal
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.ConfirmDialog
-import com.ramez.shopp.Models.BookletsModel
-import com.ramez.shopp.Models.BottomNavModel
-import com.ramez.shopp.Models.GeneralModel
-import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.activities.ActivityBase
-import com.ramez.shopp.activities.ExtraRequestActivity
 import com.ramez.shopp.databinding.ActivityMainBinding
 import com.ramez.shopp.fragments.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import com.ramez.shopp.Classes.MessageEvent
+import com.ramez.shopp.classes.MessageEvent
+import com.ramez.shopp.Models.*
 import com.ramez.shopp.activities.AllBookleteActivity
+import com.ramez.shopp.activities.ExtraRequestActivity
 import mobi.foo.benefitinapp.Application
 import mobi.foo.benefitinapp.utils.CurrencyUtil
 

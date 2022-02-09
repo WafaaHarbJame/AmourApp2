@@ -5,9 +5,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.Constants.MAIN_ACTIVITY_CLASS
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.Constants.MAIN_ACTIVITY_CLASS
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.OrderModel
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.DateHandler

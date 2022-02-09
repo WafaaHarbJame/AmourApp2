@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 
 
 /**

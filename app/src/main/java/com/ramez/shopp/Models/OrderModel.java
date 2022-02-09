@@ -70,6 +70,24 @@ public class OrderModel implements Serializable {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    private String Message;
+    private String trackid;
+
+    public String getTrackid() {
+        return trackid;
+    }
+
+    public void setTrackid(String trackid) {
+        this.trackid = trackid;
+    }
+
+    public String getMessage() {
+        return Message;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
+    }
 
     public String getCreatedAt() {
         return createdAt;

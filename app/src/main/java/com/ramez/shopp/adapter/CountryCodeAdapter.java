@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCountryCodeBinding;

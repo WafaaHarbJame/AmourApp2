@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 
 
 public class STextInputLayout extends TextInputLayout {

@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.Models.AreasModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCityBinding;

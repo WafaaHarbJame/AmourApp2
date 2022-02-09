@@ -9,7 +9,7 @@ import android.widget.NumberPicker;
 
 import androidx.core.content.ContextCompat;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.R;
 
 public class SNumberPicker extends NumberPicker {

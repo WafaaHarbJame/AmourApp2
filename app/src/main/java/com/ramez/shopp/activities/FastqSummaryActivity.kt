@@ -6,8 +6,8 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jaeger.library.StatusBarUtil
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.CartFastQModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R

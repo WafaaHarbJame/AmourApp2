@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.R;
 import com.ramez.shopp.RootApplication;
 

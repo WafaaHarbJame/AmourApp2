@@ -17,8 +17,9 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.CallBack.DataCallback
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.AddCommentDialog
+import com.ramez.shopp.Models.CartModel
 import com.ramez.shopp.Models.CartProcessModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Models.MemberModel

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowKitchenGridBinding;

@@ -1,6 +1,6 @@
 package com.ramez.shopp.Models;
 
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 
 public class CardModel {
     private int id;

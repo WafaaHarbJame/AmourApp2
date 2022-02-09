@@ -11,9 +11,9 @@ import android.view.WindowManager;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;

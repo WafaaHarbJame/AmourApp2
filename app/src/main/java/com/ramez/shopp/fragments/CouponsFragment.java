@@ -11,12 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.adapter.CouponsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.DBFunction;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.DBFunction;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.GenerateDialog;
 import com.ramez.shopp.Models.CouponsModel;

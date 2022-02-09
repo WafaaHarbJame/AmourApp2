@@ -9,10 +9,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.ramez.shopp.Classes.CategoryModel;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.CategoryModel;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.R;
 
 import java.util.ArrayList;

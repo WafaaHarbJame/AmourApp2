@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
 
 

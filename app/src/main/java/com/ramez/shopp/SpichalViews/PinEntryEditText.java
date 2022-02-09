@@ -35,13 +35,13 @@ public class PinEntryEditText extends EditText {
     private Paint mLinesPaint;
 
     int[][] mStates = new int[][]{
-            new int[]{android.R.attr.state_selected}, // selected
+//            new int[]{android.R.attr.state_selected}, // selected
             new int[]{android.R.attr.state_focused}, // focused
             new int[]{-android.R.attr.state_focused}, // unfocused
     };
 
     int[] mColors = new int[]{
-            ContextCompat.getColor(Objects.requireNonNull(RootApplication.Companion.getInstance()), R.color.colorPrimaryDark),
+            ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark),
             ContextCompat.getColor(RootApplication.Companion.getInstance(), R.color.colorPrimaryDark)
     };
 

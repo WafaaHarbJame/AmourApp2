@@ -13,9 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Dialogs.ConfirmDialog
 import com.ramez.shopp.Models.AddressModel

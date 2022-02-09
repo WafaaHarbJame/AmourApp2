@@ -329,7 +329,10 @@
     <string name="Whatsapp_Live_Support">دعم Whatsapp المباشر</string>
     <string name="share_note">اخترنا لك هذا المنتج \n </string>
     <string name="payment_success">تم الدفع بنجاح </string>
+    <string name="benefitpay">دفع بنفت</string>
+
     <string name="payment_fail">فشل  الدفع  </string>
+    <string name="payment_cancle">تم الغاءالدفع</string>
     <string name="order_confirmed">تم الطلب  بنجاح </string>
     <string name="order_note">تم استلام طلبك  بنجاج ويمكنك  معرفة حالة الطلب من  صفحة الطلبات </string>
     <string name="will_be_deliverd">سوف تستلم طلبك </string>
@@ -415,5 +418,6 @@
     <string name="sound_alert_hint">تشغيل الصوت لفحص المنتج والتفاعلات.</string>
     <string name="min_quantity_is_one">الحد الادني من الكمية واحد </string>
     <string name="accept_terms">الرجاء الموافقة على شروط الخصوصية </string>
+    <string name="failto_save">Fail to save Data</string>
 
 </resources>

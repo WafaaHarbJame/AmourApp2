@@ -8,40 +8,106 @@ import java.util.List;
 
 public class OrdersResultModel {
 
-    @SerializedName("data")
-    @Expose
-    private List<OrderProductModel> data = null;
-    @SerializedName("status")
-    @Expose
-    private Integer status;
     @SerializedName("order_id")
     @Expose
-    private Integer order_id;
+    private int orderId;
+    @SerializedName("amount")
+    @Expose
+    private int amount;
+    @SerializedName("cart_count")
+    @Expose
+    private int cartCount;
+    @SerializedName("fav_count")
+    @Expose
+    private int favCount;
+    @SerializedName("order_code")
+    @Expose
+    private String orderCode;
+    @SerializedName("paymentResp")
+    @Expose
+    private PaymentResp paymentResp;
+    @SerializedName("data")
+    @Expose
+    private Object data;
+    @SerializedName("status")
+    @Expose
+    private int status;
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("trackid")
+    @Expose
+    private String trackid;
 
-    public Integer getOrder_id() {
-        return order_id;
+    public String getTrackid() {
+        return trackid;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setTrackid(String trackid) {
+        this.trackid = trackid;
     }
 
-    public List<OrderProductModel> getData() {
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getCartCount() {
+        return cartCount;
+    }
+
+    public void setCartCount(int cartCount) {
+        this.cartCount = cartCount;
+    }
+
+    public int getFavCount() {
+        return favCount;
+    }
+
+    public void setFavCount(int favCount) {
+        this.favCount = favCount;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public PaymentResp getPaymentResp() {
+        return paymentResp;
+    }
+
+    public void setPaymentResp(PaymentResp paymentResp) {
+        this.paymentResp = paymentResp;
+    }
+
+    public Object getData() {
         return data;
     }
 
-    public void setData(List<OrderProductModel> data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -52,5 +118,4 @@ public class OrdersResultModel {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }

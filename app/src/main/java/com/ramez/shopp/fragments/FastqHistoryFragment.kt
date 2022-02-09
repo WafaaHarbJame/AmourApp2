@@ -1,22 +1,14 @@
 package com.ramez.shopp.fragments
 
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.Constants.MAIN_ACTIVITY_CLASS
 import com.ramez.shopp.Models.FastqHistoryModel
-import com.ramez.shopp.Models.OrderNewModel
 import com.ramez.shopp.adapter.FastqHistoryAdapter
-import com.ramez.shopp.adapter.MyOrdersAdapter
-import com.ramez.shopp.databinding.FragmentCategoryBinding
 import com.ramez.shopp.databinding.FragmentFastqHistoryBinding
-import com.ramez.shopp.databinding.FragmentFastqSettingsBinding
 
 
 class FastqHistoryFragment : FragmentBase() {

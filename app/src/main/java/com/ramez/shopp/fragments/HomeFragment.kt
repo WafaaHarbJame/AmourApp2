@@ -28,14 +28,13 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.ParsedRequestListener
-import com.google.android.material.appbar.AppBarLayout
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.*
 import com.karumi.dexter.listener.single.PermissionListener
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.WhatsUpDialog
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
@@ -195,7 +194,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                 val intent = Intent(activityy, RewardsActivity::class.java)
                 startActivity(intent)
             } else {
-                Toasty.warning(activityy,R.string.you_not_signin, Toast.LENGTH_SHORT, true).show()
+                Toasty.warning(activityy, R.string.you_not_signin, Toast.LENGTH_SHORT, true).show()
             }
         }
         if (UtilityApp.isLogin()) {
@@ -278,7 +277,6 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     }
 
     private fun initListener() {
-
 
 
         binding.searchBut.setOnClickListener {
@@ -449,8 +447,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                             result.sliders[i]
                                         if (slider.type == 0) {
                                             sliderList!!.add(slider)
-                                        }
-                                        else  if (slider.type == 1) {
+                                        } else if (slider.type == 1) {
                                             bannersList!!.add(slider)
                                         }
                                     }
@@ -595,7 +592,8 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         var countryCode = ""
         countryCode = if (localModel?.shortname != null)
             localModel?.shortname!! else GlobalData.COUNTRY
-        val url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v8/Orders/nextDeliveryTime?"
+
+        val url = GlobalData.BaseURL + countryCode + "/GroceryStoreApi/api/v9/Orders/nextDeliveryTime?"
         Log.d(ContentValues.TAG, "Log Get first $url")
         Log.d(ContentValues.TAG, "Log  store_id $storeId")
         val token = if (UtilityApp.getToken() != null) UtilityApp.getToken() else "token"
@@ -626,7 +624,17 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     }
 
                     override fun onError(anError: ANError) {
-                        GlobalData.Toast(activityy,anError.message)
+                        if(anError.errorCode==400||anError.errorCode==443)
+                        {
+                            changeUrl()
+
+                        }
+                        else{
+                            GlobalData.Toast(activityy, anError.message)
+
+                        }
+
+
                     }
                 })
     }
@@ -809,11 +817,12 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
             object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
-                        val result =
-                            obj as ResultAPIModel<ArrayList<BrandModel>?>?
                         var message: String? = getString(R.string.fail_to_get_data)
                         binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
                         if (func == Constants.ERROR) {
+                            val result =
+                                obj as ResultAPIModel<ArrayList<BrandModel>?>?
+
                             if (result != null) {
                                 message = result.message
                             }
@@ -833,6 +842,8 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                             binding.dataLY.visibility = View.GONE
                         } else {
                             if (IsSuccess) {
+                                val result = obj as ResultAPIModel<ArrayList<BrandModel>?>?
+
                                 if (result!!.data != null && result.data!!.size > 0) {
                                     Log.i(ContentValues.TAG, "Log getBrands" + result.data!!.size)
                                     val allBrandList = result.data
@@ -887,9 +898,9 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         bookletsList?.clear()
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result =
-                    obj as ResultAPIModel<ArrayList<BookletsModel>?>
                 if (IsSuccess) {
+                    val result =
+                        obj as ResultAPIModel<ArrayList<BookletsModel>?>
                     if (result.data != null && result.data!!.size > 0) {
                         Log.i(ContentValues.TAG, "Log getBooklets" + result.data!!.size)
                         binding.BookletRecycler.visibility = View.VISIBLE
@@ -912,9 +923,9 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         list?.clear()
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result =
-                    obj as ResultAPIModel<ArrayList<DinnerModel>?>
                 if (IsSuccess) {
+                    val result =
+                        obj as ResultAPIModel<ArrayList<DinnerModel>?>
                     if (result.data != null && result.data!!.size > 0) {
                         Log.i(ContentValues.TAG, "Log getDinners size " + result.data?.size)
                         binding.kitchenRecycler.visibility = View.VISIBLE
@@ -1143,5 +1154,32 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         private const val SELECTED_FORMATS = "SELECTED_FORMATS"
         private const val CAMERA_ID = "CAMERA_ID"
         private const val ZBAR_CAMERA_PERMISSION = 1
+    }
+
+    private fun loginAgain() {
+        val intent = Intent(activity, RegisterLoginActivity::class.java)
+        intent.putExtra(Constants.LOGIN, true)
+        startActivity(intent)
+
+    }
+
+//    private fun checkToken() {
+//        val userToken = UtilityApp.getUserToken()
+//        val refreshToken = UtilityApp.getRefreshToken()
+//
+//        if (userToken.isNullOrBlank() && refreshToken.isNullOrEmpty()) {
+//            loginAgain()
+//        } else {
+//            refreshToken(userToken, refreshToken)
+//        }
+//    }
+
+    fun changeUrl() {
+        val url = UtilityApp.getUrl()
+        if (url == GlobalData.BetaBaseURL1) {
+            UtilityApp.setUrl(GlobalData.BetaBaseURL2)
+        } else {
+            UtilityApp.setUrl(GlobalData.BetaBaseURL1)
+        }
     }
 }

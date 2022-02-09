@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.R;
 import com.smarteist.autoimageslider.SliderViewAdapter;

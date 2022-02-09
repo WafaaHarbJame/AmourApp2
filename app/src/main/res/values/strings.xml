@@ -170,7 +170,7 @@
     <string name="confirm_code">Confrim Code</string>
     <string name="please_wait_sending">Please wait sending ...</string>
     <string name="oman_shotname" translatable="false">OM</string>
-<!--  <string name="bahrain_shotname" translatable="false">dm</string>-->
+    <!--  <string name="bahrain_shotname" translatable="false">dm</string>-->
     <string name="bahrain_shotname" translatable="false">bh</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
     <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
@@ -245,7 +245,7 @@
     <!-- Twitter consumer key and secret -->
 
     <string name="twitter_consumer_key" translatable="false">358358461-CQcJHqppXF9UHhJcLLtNqpRXDOsbPj2EujKjNzKk</string>
-    <string name="twitter_consumer_secret" translatable="false">9gOURv8rUAfBbt1XnC8cnWYU8W5qiOrhpbUrY6Q8dRzg9</string>
+    <string name="twitter_consumer_secret" translatable="false">9gOURv9rUAfBbt1XnC8cnWYU8W5qiOrhpbUrY6Q8dRzg9</string>
 
     <string name="LoginFirst">You Must Login </string>
     <string name="to_add_cart">to adding to Cart </string>
@@ -306,7 +306,7 @@
     <string name="limit">The Limit of product is</string>
     <string name="Add_more"> Add more product with </string>
     <string name="get_Free"> to get Free Delivery </string>
-    <string name="cancel_tex">Cancle</string>
+    <string name="cancel_tex">Cancel</string>
     <string name="over1">Free delivery on any Order  </string>
     <string name="error">Error</string>
     <string name="textErrorMessage">Something went wrong, try again</string>
@@ -365,7 +365,9 @@
     <string name="whats_note">Dear User, our Whatsapp Live Support is Active. Go to your profile and click the Whatsapp icon whenever you will need support.</string>
     <string name="share_note">Let me recommend  to you this product \n\n\</string>
     <string name="payment_success">Payment Successful</string>
+    <string name="benefitpay">BenefitPay</string>
     <string name="payment_fail">Payment Fail</string>
+    <string name="payment_cancle">Payment canceled</string>
     <string name="order_confirmed">Order Confirmed</string>
     <string name="order_note">Your order Has been  confirmed . You can check the status of this order from  order page </string>
     <string name="will_be_deliverd">Will be delivered on </string>
@@ -452,8 +454,11 @@
     <string name="sound_alert_hint">Play sound for product scan and interactions.</string>
     <string name="min_quantity_is_one">Minimum quantity is one</string>
     <string name="accept_terms">Please Accept the Terms </string>
-    <string name="beneit_using_app_EN" translatable="false">benefit On app</string>
+    <string name="beneit_using_app_EN" translatable="false">benefit By app</string>
     <string name="beneit_using_app_AR" translatable="false">بنفت بالتطبيق</string>
+    <string name="beneit_using_Web_AR" translatable="false">بنفت بالويب</string>
+    <string name="beneit_using_Web_En" translatable="false">benefit By Web</string>
+    <string name="failto_save">Fail to save Data</string>
 
 
 </resources>

@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 
 
 public class SAutoCompleteText extends AppCompatAutoCompleteTextView {

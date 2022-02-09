@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowBandItemBinding;

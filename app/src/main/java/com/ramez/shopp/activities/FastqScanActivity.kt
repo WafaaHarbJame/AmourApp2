@@ -18,10 +18,10 @@ import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.CityModelResult
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CityModelResult
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler

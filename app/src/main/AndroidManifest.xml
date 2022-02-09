@@ -32,38 +32,44 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-
-
+        <activity
+            android:name=".activities.PayFailActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FastTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activities.PayWebViewActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activities.FastqActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.FastqScanActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.FastqCartActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.FastqCheckoutActivity"
             android:exported="false"
@@ -71,19 +77,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.FastqSummaryActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.PagesActivity"
             android:exported="false"
@@ -91,42 +93,33 @@
             android:screenOrientation="portrait"
             android:theme="@style/FastTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.PriceCheckerResultActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.RewardsActivity"
             android:exported="false"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-          />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".activities.OrderCompleteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.DeepLinksActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity"
-         >
+            tools:ignore="IntentFilterExportedReceiver,LockedOrientationActivity">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -182,28 +175,22 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ExtraRequestActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AllBookleteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
 
         <service
             android:name=".Firebase.MessagingService"
@@ -220,28 +207,23 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AllListActivity"
             android:exported="false"
             android:launchMode="singleTask"
-
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.WelcomeActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -259,237 +241,183 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ChangePassActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ConfirmActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:hardwareAccelerated="false"
-
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.NoBalanceActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AddBalanceActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AddCardActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.InvoiceInfoActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ContactSupportActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ChangeLangCurrencyActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ChangeCityBranchActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AddNewAddressActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AddressActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.EditProfileActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.MyOrderActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.FavoriteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.RatingActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.AboutActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ConditionActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.TermsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ProductDetailsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.RegisterLoginActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ChooseNearCity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-
-          />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".activities.ChooseCityActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity"
-          />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activities.ChangeLanguageActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
-
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-          />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:exported="false"
-
-            android:label="@string/app_name"
-          /> <!-- <activity -->
-
+            android:label="@string/app_name" /> <!-- <activity -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />

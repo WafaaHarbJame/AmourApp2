@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.adapter.BrouchersrAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.Models.BrochuresModel;
 import com.ramez.shopp.Models.LocalModel;

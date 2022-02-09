@@ -2,7 +2,6 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ramez.shopp.Classes.CartModel;
 
 import java.util.ArrayList;
 

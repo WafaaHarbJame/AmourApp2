@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.CountryModel
 import com.ramez.shopp.Models.CurrencyModel
 import com.ramez.shopp.Models.LanguageModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
+import com.ramez.shopp.SplashScreenActivity
 import com.ramez.shopp.adapter.CurrencyAdapter
 import com.ramez.shopp.adapter.CurrencyAdapter.OnCurrencyClick
 import com.ramez.shopp.adapter.LangAdapter

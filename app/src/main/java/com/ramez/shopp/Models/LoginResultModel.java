@@ -1,12 +1,16 @@
 package com.ramez.shopp.Models;
 
-import android.widget.SearchView;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResultModel {
 
+    @SerializedName("status")
+    @Expose
+    private int status;
+    @SerializedName("message")
+    @Expose
+    private String message;
     @SerializedName("cart_count")
     @Expose
     private int cartCount;
@@ -16,21 +20,34 @@ public class LoginResultModel {
     @SerializedName("otp")
     @Expose
     private String otp;
-    @SerializedName("data")
-    @Expose
-    private MemberModel data;
-    @SerializedName("user_address")
-    @Expose
-    private String userAddress;
     @SerializedName("refer_message")
     @Expose
     private String referMessage;
-    @SerializedName("status")
+    @SerializedName("token")
     @Expose
-    private int status;
-    @SerializedName("message")
+    private String token;
+    @SerializedName("refreshToken")
     @Expose
-    private String message;
+    private String refreshToken;
+    @SerializedName("data")
+    @Expose
+    private MemberModel data;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getCartCount() {
         return cartCount;
@@ -56,22 +73,6 @@ public class LoginResultModel {
         this.otp = otp;
     }
 
-    public MemberModel getData() {
-        return data;
-    }
-
-    public void setData(MemberModel data) {
-        this.data = data;
-    }
-
-    public String getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
     public String getReferMessage() {
         return referMessage;
     }
@@ -80,20 +81,28 @@ public class LoginResultModel {
         this.referMessage = referMessage;
     }
 
-    public int getStatus() {
-        return status;
+    public String getToken() {
+        return token;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public String getMessage() {
-        return message;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public MemberModel getData() {
+        return data;
+    }
+
+    public void setData(MemberModel data) {
+        this.data = data;
     }
 }
 

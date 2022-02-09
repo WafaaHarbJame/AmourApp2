@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.Recipe;

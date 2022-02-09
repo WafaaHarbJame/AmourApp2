@@ -23,11 +23,12 @@ import com.karumi.dexter.listener.*
 import com.karumi.dexter.listener.single.PermissionListener
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Dialogs.ConfirmDialog
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
+import com.ramez.shopp.SplashScreenActivity
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.activities.*
 import com.ramez.shopp.databinding.FragmentMyAccountBinding

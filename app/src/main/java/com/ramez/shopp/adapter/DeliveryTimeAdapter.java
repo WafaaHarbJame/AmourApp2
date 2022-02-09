@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.CallBack.DataCallback;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;

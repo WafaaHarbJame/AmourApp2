@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.jaeger.library.StatusBarUtil
-import com.ramez.shopp.Classes.Constants
+import com.ramez.shopp.classes.Constants
 import com.ramez.shopp.R
 import com.ramez.shopp.databinding.ActivityPagesBinding
 import com.ramez.shopp.fragments.FastqHistoryFragment

@@ -7,9 +7,9 @@ import androidx.core.content.ContextCompat
 import com.jaeger.library.StatusBarUtil
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.CityModelResult
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.Models.CityModelResult
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.CityModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R

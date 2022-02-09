@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.*
-import com.ramez.shopp.Classes.GlobalData.GlideImg
-import com.ramez.shopp.Classes.GlobalData.errorDialogWithButton
+import com.ramez.shopp.classes.*
+import com.ramez.shopp.classes.GlobalData.GlideImg
+import com.ramez.shopp.classes.GlobalData.errorDialogWithButton
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R

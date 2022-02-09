@@ -9,8 +9,8 @@ import android.net.Uri;
 import android.util.Log;
 
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.R;
 
 import java.io.IOException;

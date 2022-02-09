@@ -7,20 +7,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.daimajia.swipe.SwipeLayout
-import com.daimajia.swipe.SwipeLayout.SwipeListener
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.CallBack.DataCallback
-import com.ramez.shopp.Classes.CartModel
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.databinding.RowFastqCartItemBinding
-import retrofit2.http.DELETE
 
 
 class FastqCartAdapter(

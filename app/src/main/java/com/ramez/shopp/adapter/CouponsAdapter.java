@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.CouponsModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.databinding.RowCouponsItemBinding;

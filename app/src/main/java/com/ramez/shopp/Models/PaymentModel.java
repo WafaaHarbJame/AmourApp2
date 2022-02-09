@@ -2,7 +2,7 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 
 public class PaymentModel {
     @SerializedName("id")
@@ -21,6 +21,14 @@ public class PaymentModel {
     @SerializedName("image")
     @Expose
     private int image;
+
+    public PaymentModel(Integer id, String shortname, String methodEn, String methodAr, int image) {
+        this.id = id;
+        this.shortname = shortname;
+        this.methodEn = methodEn;
+        this.methodAr = methodAr;
+        this.image = image;
+    }
 
     public Integer getId() {
         return id;

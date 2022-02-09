@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.SettingModel
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.Models.SettingModel
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.ResultAPIModel
 import com.ramez.shopp.databinding.ActivityChangeLanguageBinding
 

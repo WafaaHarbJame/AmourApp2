@@ -12,13 +12,12 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.validation.FormValidator.Companion.getInstance
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.OtpModel
-import com.ramez.shopp.Classes.UtilityApp
-import com.ramez.shopp.Models.GeneralModel
-import com.ramez.shopp.Models.MemberModel
+import com.ramez.shopp.Models.*
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.R
+import com.ramez.shopp.SplashScreenActivity
 import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.databinding.ActivityChangePassBinding
 import es.dmoral.toasty.Toasty
@@ -108,7 +107,6 @@ class ChangePassActivity : ActivityBase() {
         )
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as OtpModel?
                 GlobalData.hideProgressDialog()
                 if (func == Constants.ERROR) {
                     Toast(R.string.error_in_data)
@@ -118,7 +116,8 @@ class ChangePassActivity : ActivityBase() {
                     GlobalData.Toast(activity, R.string.no_internet_connection)
                 } else {
                     if (IsSuccess) {
-                        if (result!!.status == 200) {
+                        val result = obj as ResultAPIModel<RefreshTokenModel?>?
+                        if (result?.status == 200) {
                             if (UtilityApp.getUserData() != null) {
                                 val memberModel1 = UtilityApp.getUserData()
                                 signOut(memberModel1)
@@ -129,7 +128,7 @@ class ChangePassActivity : ActivityBase() {
                             }
                         } else {
                             var message: String? = getString(R.string.fail_to_change_password)
-                            if (result != null && result.message != null) {
+                            if (result?.message != null) {
                                 message = result.message
                             }
                             GlobalData.errorDialog(activity, R.string.reset_pass, message)

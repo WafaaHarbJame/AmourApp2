@@ -32,9 +32,9 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.LocalModel;
@@ -258,60 +258,21 @@ public class ExtraRequestActivity extends ActivityBase {
             }
 
         });
-        pickImageDialog.show();
+
+        try {
+            getActivity();
+            if (!getActivity().isFinishing()) {
+                pickImageDialog.show();
+            }
+
+        } catch (Exception e) {
+            pickImageDialog.dismiss();
+        }
+
 
     }
 
 
-//    public void uploadPhoto(AddExtraCall addExtraCall, File photo) {
-//        GlobalData.INSTANCE.progressDialog(getActiviy(), R.string.add_specail_order, R.string.please_wait_to_add_request);
-//
-//        new DataFeacher(false, (obj, func, IsSuccess) -> {
-//            AddExtraResponse result = (AddExtraResponse) obj;
-//            String message = getString(R.string.fail_to_get_data);
-//
-//            GlobalData.INSTANCE.hideProgressDialog();
-//
-//            if (func.equals(Constants.ERROR)) {
-//
-//                if (result.getMessage() != null) {
-//                    message = result.getMessage();
-//                }
-//
-//                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
-//
-//            } else if (func.equals(Constants.FAIL)) {
-//
-//                GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
-//
-//
-//            } else if (func.equals(Constants.NO_CONNECTION)) {
-//                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-//                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-//                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-//
-//            } else {
-//                if (IsSuccess) {
-//
-//
-//                    AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActiviy());
-//                    successDialog.setTitle(R.string.add_specail_order).setMessage(R.string.success_update)
-//                            .setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-//                        navigateToCartScreen();
-//                    });
-//                    successDialog.show();
-//
-//
-//                } else {
-//
-//                    GlobalData.INSTANCE.errorDialog(getActiviy(), R.string.add_specail_order, message);
-//
-//
-//                }
-//            }
-//
-//        }).AddExtrat(addExtraCall, photo);
-//    }
 
     private void navigateToCartScreen() {
         GlobalData.INSTANCE.setREFRESH_CART(true);
@@ -400,7 +361,7 @@ public class ExtraRequestActivity extends ActivityBase {
         String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
         AndroidNetworking.upload(UtilityApp.getUrl() + country + GlobalData.INSTANCE.grocery +
-                GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat").addMultipartFile("file", photo)
+                GlobalData.INSTANCE.Api + " v9/Carts/AddExtrat").addMultipartFile("file", photo)
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())
@@ -490,7 +451,7 @@ public class ExtraRequestActivity extends ActivityBase {
         String token = UtilityApp.getToken() != null ? UtilityApp.getToken() : "token";
 
         AndroidNetworking.post(UtilityApp.getUrl() + country + GlobalData.INSTANCE.grocery +
-                GlobalData.INSTANCE.Api + " v8/Carts/AddExtrat")
+                GlobalData.INSTANCE.Api + "v9/Carts/AddExtrat")
                 .addHeaders("ApiKey", Constants.api_key)
                 .addHeaders("device_type", Constants.deviceType)
                 .addHeaders("app_version", UtilityApp.getAppVersionStr())

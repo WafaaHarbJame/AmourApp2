@@ -2,17 +2,18 @@ package com.ramez.shopp.ApiHandler;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.OtpModel;
-import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Classes.orderListCall;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
+import com.ramez.shopp.Models.OtpModel;
+import com.ramez.shopp.classes.UtilityApp;
+import com.ramez.shopp.Models.orderListCall;
 import com.ramez.shopp.Models.AddExtraCall;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -22,6 +23,7 @@ import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.QuickCall;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
+import com.ramez.shopp.activities.RegisterLoginActivity;
 
 import java.io.File;
 import java.net.NoRouteToHostException;
@@ -30,6 +32,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import mobi.foo.benefitinapp.data.Transaction;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -40,14 +43,14 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.INSTANCE.COUNTRY + "/GroceryStoreApi/api/v8/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.INSTANCE.COUNTRY + "/GroceryStoreApi/api/v9/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
-    String accessToken;
     String lang;
     Map<String, Object> headerMap = new HashMap<>();
     private Callback callbackApi;
+    private Activity activity;
 
     public DataFeacher() {
         apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -63,6 +66,11 @@ public class DataFeacher {
         headerMap.put("token", token);
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
+        String accessToken = UtilityApp.getUserToken();
+        if (!accessToken.isEmpty()) {
+            headerMap.put("Authorization",Constants.TOKEN_PREFIX.concat(accessToken));
+
+        }
 
         callbackApi = new Callback() {
             @Override
@@ -96,13 +104,19 @@ public class DataFeacher {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (response.code() == 404) {
-                        System.out.println("Log 404 notfound change url");
-                        String url = call.request().url().url().getPath();
-                        changeUrl();
-                    }
-                    dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
 
+                    if (response.code() == 404|| response.code() == 443) {
+                        System.out.println("Log 404 not found change url");
+                        changeUrl();
+                        dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
+                    }
+
+                    else if (response.code() == 401) {
+                        dataFetcherCallBack.Result(errorModel, Constants.UnAuthorize, false);
+
+                    } else {
+                        dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
+                    }
                 }
 
             }
@@ -133,15 +147,20 @@ public class DataFeacher {
         headerMap.put("token", token);
         headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
+        String accessToken = UtilityApp.getUserToken();
+        if (!accessToken.isEmpty()) {
+            headerMap.put("Authorization",Constants.TOKEN_PREFIX.concat(accessToken));
+//            headerMap.put("Authorization",Constants.TOKEN_PREFIX +"euuJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhbGFsLmF3YWRpMkBnbWFpbC5jb20iLCJuYW1lIjoiMzMzMTA0ODgiLCJuYW1laWQiOiIxMTgiLCJqdGkiOiI1MmYyZmM5ZS0yNjhlLTQ4OWEtYjJhYi0wYjhjODkwNzNmMTkiLCJuYmYiOjE2NDEzODI4NDksImV4cCI6MTY0MTQwMjY0OSwiaWF0IjoxNjQxMzgyODQ5LCJpc3MiOiJodHRwczovL3Jpc3RlaC5jb20iLCJhdWQiOiJodHRwczovL3Jpc3RlaC5jb20vIn0.7eL6bF9uVQ3a6b6QH9QoNq1BY2nYhFLvxYnDV2D_5V8");
 
+        }
         callbackApi = new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
 
+                String url = call.request().url().url().getPath();
                 if (response.isSuccessful()) {
 //                    System.out.println("Log url " + call.request().url().url().getPath());
 
-                    String url = call.request().url().url().getPath();
                     Log.i("Log", "Log errorApiUrl " + url);
 
                     if (url.equals(LOGIN_URL)) {
@@ -163,22 +182,28 @@ public class DataFeacher {
                     }
 
                 } else {
-                    String url = call.request().url().url().getPath();
                     ResultAPIModel errorModel = null;
                     try {
                         String error = response.errorBody().string();
                         Log.i("Log", "Log errorApiUrl " + url);
                         Log.e("Log", "Log error " + error);
+                        Log.e("Log", "Log error code  " + response.code());
                         errorModel = new Gson().fromJson(error, new TypeToken<ResultAPIModel>() {
                         }.getType());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (response.code() == 404) {
+
+                    if (response.code() == 404|| response.code() == 443) {
                         System.out.println("Log 404 not found change url");
                         changeUrl();
+                        dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
+                    } else if (response.code() == 401) {
+                        dataFetcherCallBack.Result(errorModel, Constants.UnAuthorize, false);
+
+                    } else {
+                        dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
                     }
-                    dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
 
                 }
 
@@ -239,6 +264,22 @@ public class DataFeacher {
 
     }
 
+
+    public void RefreshToken(String token,String refreshToken ) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("token", token);
+        params.put("refreshToken", refreshToken);
+
+        Log.i(TAG, "Log RefreshToken");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log token " +token);
+        Log.i(TAG, "Log refreshToken " + refreshToken);
+
+        Call call = apiService.RefreshToken(headerMap, params);
+        call.enqueue(callbackApi);
+
+    }
     public void logOut(MemberModel memberModel) {
 
         Log.i(TAG, "Log logOut");
@@ -350,6 +391,7 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + memberModel.getId());
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
+        Log.i(TAG, "Log headerMap " + headerMap);
 
         Call call = apiService.UpdateTokenHandle(headerMap, params);
         call.enqueue(callbackApi);
@@ -391,7 +433,7 @@ public class DataFeacher {
         }
 
 
-        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v8/Locations/citiesByCountry";
+        String url = UtilityApp.getUrl()  + countryCode + "/GroceryStoreApi/api/v9/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -1296,6 +1338,54 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+
+    public void saveSucessTransactionD(Transaction transaction,Integer orderId) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("terminalId", transaction.getTerminalId());
+        params.put("cardNumber", transaction.getCardNumber());
+        params.put("transactionMessage", transaction.getTransactionMessage());
+        params.put("referenceNumber", transaction.getReferenceNumber());
+        params.put("amount", transaction.getAmount());
+        params.put("orderid",orderId);
+
+
+
+        Log.i(TAG, "Log saveTransactionData");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log merchant " + transaction.getMerchant());
+        Log.i(TAG, "Log transactionMessage " + transaction.getTransactionMessage());
+        Log.i(TAG, "Log reference number " + transaction.getReferenceNumber());
+        Log.i(TAG, "Log amount " + transaction.getAmount());
+        Log.i(TAG, "Log ordeId " + orderId);
+
+
+        Call call = apiService.PaySuccess(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+    public void saveFailTransaction(Transaction transaction,Integer orderId) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("terminalId", transaction.getTerminalId());
+        params.put("cardNumber", transaction.getCardNumber());
+        params.put("transactionMessage", transaction.getTransactionMessage());
+        params.put("referenceNumber", transaction.getReferenceNumber());
+        params.put("amount", transaction.getAmount());
+        params.put("orderid",orderId);
+        Log.i(TAG, "Log saveTransactionData");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log merchant " + transaction.getMerchant());
+        Log.i(TAG, "Log transactionMessage " + transaction.getTransactionMessage());
+        Log.i(TAG, "Log reference number " + transaction.getReferenceNumber());
+        Log.i(TAG, "Log amount " + transaction.getAmount());
+        Log.i(TAG, "Log ordeId " + orderId);
+
+
+        Call call = apiService.PayError(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
     public void setAppRate(ReviewModel reviewModel) {
 
         Map<String, Object> params = new HashMap<>();
@@ -1408,6 +1498,40 @@ public class DataFeacher {
 
         Call call = apiService.GetDeliveryInfo(headerMap, params);
         call.enqueue(callbackApi);
+
+    }
+
+    private void loginUser(MemberModel memberModel) {
+
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+
+            if (IsSuccess) {
+                LoginResultModel result = (LoginResultModel) obj;
+
+                if (result != null) {
+                    if (result.getStatus() == 200) {
+
+                        MemberModel user = result.getData();
+                        user.setPassword(memberModel.getPassword());
+                        user.setMobileNumber(memberModel.getMobileNumber());
+                        UtilityApp.setUserData(user);
+                        UtilityApp.setUserToken(result.getToken());
+                        UtilityApp.setRefreshToken(result.getRefreshToken());
+
+
+                    } else {
+                        Intent intent = new Intent(activity, RegisterLoginActivity.class);
+                        intent.putExtra(Constants.LOGIN, true);
+                        activity.startActivity(intent);
+
+                    }
+                }
+            }
+
+
+        }).loginHandle(memberModel);
 
     }
 

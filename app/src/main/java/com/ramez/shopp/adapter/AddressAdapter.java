@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.MemberModel;

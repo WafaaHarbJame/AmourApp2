@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.Models.BookletsModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowBookletItemBinding;

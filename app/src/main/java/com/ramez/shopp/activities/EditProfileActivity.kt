@@ -19,13 +19,13 @@ import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.GlobalData.errorDialog
-import com.ramez.shopp.Classes.GlobalData.hideProgressDialog
-import com.ramez.shopp.Classes.GlobalData.progressDialog
-import com.ramez.shopp.Classes.GlobalData.successDialog
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.GlobalData.errorDialog
+import com.ramez.shopp.classes.GlobalData.hideProgressDialog
+import com.ramez.shopp.classes.GlobalData.progressDialog
+import com.ramez.shopp.classes.GlobalData.successDialog
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Dialogs.PickImageDialog
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
@@ -240,7 +240,7 @@ class EditProfileActivity : ActivityBase() {
         val token = if (UtilityApp.getToken() != null) UtilityApp.getToken() else "token"
         AndroidNetworking.upload(
             UtilityApp.getUrl() + country + GlobalData.grocery +
-                    GlobalData.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId
+                    GlobalData.Api + " v9/Account/UploadPhoto" + "?user_id=" + userId
         ).addMultipartFile("file", photo)
             .addHeaders("ApiKey", Constants.api_key)
             .addHeaders("device_type", Constants.deviceType)
@@ -325,7 +325,7 @@ class EditProfileActivity : ActivityBase() {
     private fun initData() {
         userId = memberModel?.id?:0
         binding.userNameTv.text = memberModel?.name
-        binding.edtUserName.setText(memberModel?.name)
+        binding.edtUserName.setText(memberModel?.name?:"")
         binding.etEmail.setText(memberModel?.email)
         binding.edtPhoneNumber.text = memberModel?.mobileNumber
         Glide.with(activity).asBitmap().load(memberModel?.profilePicture).placeholder(R.drawable.avatar).into(

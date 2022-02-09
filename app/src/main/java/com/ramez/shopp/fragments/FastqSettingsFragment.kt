@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.onesignal.OneSignal
-import com.ramez.shopp.Classes.UtilityApp
-import com.ramez.shopp.databinding.FragmentCategoryBinding
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.databinding.FragmentFastqSettingsBinding
 
 

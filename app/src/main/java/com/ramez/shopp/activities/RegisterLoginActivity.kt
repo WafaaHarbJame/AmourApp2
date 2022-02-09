@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
-import com.ramez.shopp.Classes.Constants
+import com.ramez.shopp.classes.Constants
 import com.ramez.shopp.R
 import com.ramez.shopp.adapter.RegisterLoginAdapter
 import com.ramez.shopp.databinding.ActivityRegisteLoginBinding

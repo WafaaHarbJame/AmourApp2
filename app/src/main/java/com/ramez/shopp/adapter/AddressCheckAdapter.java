@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;

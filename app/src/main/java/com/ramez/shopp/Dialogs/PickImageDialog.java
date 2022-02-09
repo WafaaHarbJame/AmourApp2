@@ -8,7 +8,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.R;
 
 

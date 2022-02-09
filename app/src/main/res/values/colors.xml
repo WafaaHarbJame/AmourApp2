@@ -4,6 +4,7 @@
     <color name="colorPrimary1">#EE1D23</color>
     <color name="colorPrimaryDark">#EE1D23</color>
     <color name="colorAccent">#000000</color>
+    <color name="colorPrimaryLight">#edfbfd</color>
     <color name="colorAppRed">#f1292d</color>
     <color name="colorLoginText">#4c4c4c</color>
     <color name="colorTextHint">#9e9e9e</color>

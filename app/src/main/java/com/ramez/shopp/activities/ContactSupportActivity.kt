@@ -19,9 +19,9 @@ import com.google.firebase.database.*
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Dialogs.PickImageDialog
 import com.ramez.shopp.Models.ChatModel
 import com.ramez.shopp.Models.LocalModel
@@ -287,7 +287,7 @@ class ContactSupportActivity : ActivityBase() {
             GlobalData.COUNTRY
         }
         val token = if (UtilityApp.getToken() != null) UtilityApp.getToken() else "token"
-        AndroidNetworking.upload(UtilityApp.getUrl() + country + GlobalData.grocery + GlobalData.Api + " v8/Account/UploadPhoto" + "?user_id=" + userId)
+        AndroidNetworking.upload(UtilityApp.getUrl() + country + GlobalData.grocery + GlobalData.Api + " v9/Account/UploadPhoto" + "?user_id=" + userId)
             .addMultipartFile("file", photo)
             .addHeaders("ApiKey", Constants.api_key)
             .addHeaders("device_type", Constants.deviceType)

@@ -22,11 +22,11 @@ import com.daimajia.androidanimations.library.YoYo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.AnalyticsHandler
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.Constants.MAIN_ACTIVITY_CLASS
-import com.ramez.shopp.Classes.GlobalData
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.AnalyticsHandler
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.Constants.MAIN_ACTIVITY_CLASS
+import com.ramez.shopp.classes.GlobalData
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Dialogs.AddRateDialog
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Models.*

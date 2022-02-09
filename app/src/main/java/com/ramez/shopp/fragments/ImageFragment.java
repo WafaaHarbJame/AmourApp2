@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.Dialogs.ShowImageDialog;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentProductImageBinding;

@@ -1,25 +1,15 @@
 package com.ramez.shopp.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.OnLoadMoreListener
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.OnLoadMoreListener
 import com.ramez.shopp.Models.FastqHistoryModel
-import com.ramez.shopp.Models.OrderNewModel
-import com.ramez.shopp.Utils.DateHandler
 import com.ramez.shopp.activities.FastqSummaryActivity
-import com.ramez.shopp.activities.InvoiceInfoActivity
-import com.ramez.shopp.activities.RatingActivity
 import com.ramez.shopp.databinding.RowFastqHistoryBinding
 import com.ramez.shopp.databinding.RowLoadingBinding
 

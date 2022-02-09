@@ -9,9 +9,9 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.Classes.Constants
-import com.ramez.shopp.Classes.Constants.MAIN_ACTIVITY_CLASS
-import com.ramez.shopp.Classes.UtilityApp
+import com.ramez.shopp.classes.Constants
+import com.ramez.shopp.classes.Constants.MAIN_ACTIVITY_CLASS
+import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Models.FavouriteResultModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Models.MemberModel

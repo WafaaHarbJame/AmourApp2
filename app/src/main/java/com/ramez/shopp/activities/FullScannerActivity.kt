@@ -8,7 +8,7 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
-import com.ramez.shopp.Classes.Constants
+import com.ramez.shopp.classes.Constants
 import com.ramez.shopp.databinding.ActivityScanBarcodeBinding
 
 class FullScannerActivity : ActivityBase() {

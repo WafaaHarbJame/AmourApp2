@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.ramez.shopp.Classes.Constants;
 
 import androidx.fragment.app.Fragment;
 

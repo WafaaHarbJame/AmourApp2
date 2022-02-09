@@ -13,9 +13,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.OnLoadMoreListener;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.OnLoadMoreListener;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.DateHandler;

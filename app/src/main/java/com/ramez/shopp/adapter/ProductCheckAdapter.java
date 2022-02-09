@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.CallBack.DataCallback;
-import com.ramez.shopp.Classes.ProductChecker;
+import com.ramez.shopp.Models.ProductChecker;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowProductCheckBinding;

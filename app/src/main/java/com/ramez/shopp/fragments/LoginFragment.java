@@ -18,10 +18,10 @@ import com.facebook.AccessToken;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.onesignal.OneSignal;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -201,12 +201,21 @@ public class LoginFragment extends FragmentBase {
                                     MemberModel user = result.getData();
                                     if (user != null) {
                                         user.setUserType(Constants.user_type);
+                                        user.setPassword(passwordStr);
 
                                     }
 
+
+
                                     UtilityApp.setUserData(user);
+                                    UtilityApp.setUserToken(result.getToken());
+                                    UtilityApp.setRefreshToken(result.getRefreshToken());
+                                    Log.i(TAG, "Log token  user token " + UtilityApp.getUserToken());
+                                    Log.i(TAG, "Log token refersh token " + UtilityApp.getRefreshToken());
+
                                     UtilityApp.setIsFirstLogin(true);
-                                    if (UtilityApp.getUserData() != null) {
+                                    if (UtilityApp.getUserData() != null)
+                                    {
                                         UpdateToken();
                                     }
                                 } else {
