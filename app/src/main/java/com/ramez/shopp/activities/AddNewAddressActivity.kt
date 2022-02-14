@@ -92,6 +92,7 @@ class AddNewAddressActivity : ActivityBase(), OnMapReadyCallback {
         stateNames = ArrayList()
         setTitle(R.string.new_address)
 
+
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
                 activity

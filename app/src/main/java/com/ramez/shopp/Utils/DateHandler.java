@@ -82,6 +82,34 @@ public class DateHandler {
         return "";
     }
 
+    public static String GetMonthOnlyString() {
+        try {
+            DateFormat parser = new SimpleDateFormat("MM");
+
+            Date date = new Date();
+            String dateStr = parser.format(date);
+
+            return dateStr;
+        } catch (Exception e) {
+
+        }
+        return "";
+    }
+
+    public static String GetYearOnlyString() {
+        try {
+            DateFormat parser = new SimpleDateFormat("yy");
+
+            Date date = new Date();
+            String dateStr = parser.format(date);
+
+            return dateStr;
+        } catch (Exception e) {
+
+        }
+        return "";
+    }
+
     public static long GetDateTimeLong(String data) {
         try {
             DateFormat parser = new SimpleDateFormat("yyyy-MM-dd HH:mm");

@@ -110,6 +110,7 @@ object Constants {
     const val ADDRESS_ID = "ADDRESS_ID"
     const val ADDRESS_TITLE = "ADDRESS_TITLE"
     const val ADDRESS_FULL = "ADDRESS_FULL"
+    const val PAY_TOKEN = "PAY_TOKEN"
     const val CART_PRODUCT_COUNT = "CART_PRODUCT_COUNT"
     const val CART_SUM = "CAT_LIST"
     const val delivery_charges = "delivery_charges"

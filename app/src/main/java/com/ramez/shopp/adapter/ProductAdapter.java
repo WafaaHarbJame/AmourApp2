@@ -451,6 +451,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     if (IsSuccess) {
                         int cartId = result.getId();
                         Log.i("tag", "Log " + UtilityApp.getCartCount());
+                        Log.i("tag", "Log Status " +result.getStatus());
                         UtilityApp.updateCart(1, productModels.size());
                         binding.cartBut.setVisibility(View.GONE);
                         productModels.get(position).getFirstProductBarcodes().setCartId(cartId);

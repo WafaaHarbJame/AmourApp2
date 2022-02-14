@@ -43,7 +43,7 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/" + GlobalData.INSTANCE.COUNTRY + "/GroceryStoreApi/api/v9/Account/login";
+    final String LOGIN_URL = "/" + GlobalData.COUNTRY + "/GroceryStoreApi/api/v9/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -159,7 +159,7 @@ public class DataFeacher {
 
                 String url = call.request().url().url().getPath();
                 if (response.isSuccessful()) {
-//                    System.out.println("Log url " + call.request().url().url().getPath());
+                    System.out.println("Log url " + call.request().url());
 
                     Log.i("Log", "Log errorApiUrl " + url);
 
@@ -1147,7 +1147,7 @@ public class DataFeacher {
 
         Log.i(TAG, "Log makeOrder");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log user_id " + orderCalls.user_id);
+//        Log.i(TAG, "Log user_id " + orderCalls.user_id);
         Log.i(TAG, "Log store_ID " + orderCalls.store_ID);
         Log.i(TAG, "Log addressId " + orderCalls.address_id);
         Log.i(TAG, "Log payment_method " + orderCalls.payment_method);
@@ -1155,6 +1155,7 @@ public class DataFeacher {
         Log.i(TAG, "Log delivery_date_id " + orderCalls.delivery_date_id);
         Log.i(TAG, "Log expressDelivery " + orderCalls.expressDelivery);
         Log.i(TAG, "Log itemNotFoundAction " + orderCalls.itemNotFoundAction);
+        Log.i(TAG, "Log payToken " + orderCalls.pay_token);
 
         Call call = apiService.makeOrder(headerMap, orderCalls);
         call.enqueue(callbackApi);

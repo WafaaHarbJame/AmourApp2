@@ -90,7 +90,7 @@ public class CardTypesAdapter extends RecyclerView.Adapter<CardTypesAdapter.Coun
     }
 
     public interface OnCardTypeClick {
-        void OnCardTypeClicked(int position,CardModel cardModel);
+        void OnCardTypeClicked(int position, CardModel cardModel);
     }
 
 }

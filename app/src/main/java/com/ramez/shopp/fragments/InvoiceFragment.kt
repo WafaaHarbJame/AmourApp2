@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.manojbhadane.PaymentCardView
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.classes.*
@@ -79,7 +80,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     var deliveryDateId = 0
     var itemNotFoundId = 0
     var countryCode = ""
+    var payToken :String? =null
     private var paymentLauncher: ActivityResultLauncher<Intent>? = null
+    private  var ccmLauncher: ActivityResultLauncher<Intent>? = null
     var ordersDM: OrderModel? = null
     lateinit var binding: FragmentInvoiceBinding
 
@@ -94,6 +97,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         selectAddressLauncher = registerForActivityResult(
             StartActivityForResult()
         ) { result: ActivityResult ->
@@ -101,6 +105,21 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 result.resultCode,
                 result.data
             )
+        }
+
+
+        ccmLauncher = registerForActivityResult(
+            StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                val bundle = result.data?.extras
+                 payToken = bundle?.getString(Constants.PAY_TOKEN)
+
+            } else {
+                showFailPage()
+            }
+
+
         }
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
@@ -234,7 +253,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
 
             val orderCall = OrderCall()
-            orderCall.user_id = userId!!
+//            orderCall.user_id = userId!!
             orderCall.store_ID = storeId
             orderCall.address_id = addressId
             orderCall.payment_method = selectedPaymentMethod?.shortname
@@ -242,6 +261,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             orderCall.delivery_date_id = deliveryDateId
             orderCall.itemNotFoundAction = itemNotFoundId
             orderCall.expressDelivery = expressDelivery
+            orderCall.pay_token = payToken
             sendOrder(orderCall)
         }
 
@@ -376,6 +396,12 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     paymentModel.methodAr = getString(R.string.beneit_using_app_AR)
                     paymentModel.methodEn = getString(R.string.beneit_using_app_EN)
                 }
+
+                7 -> {
+                    paymentModel.image = R.drawable.card
+                    paymentModel.methodAr = getString(R.string.credit_card_ar)
+                    paymentModel.methodEn = getString(R.string.credit_card_en)
+                }
             }
         }
         paymentAdapter = PaymentAdapter(
@@ -400,10 +426,16 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         ).plus(" ").plus(currency)
                     }
 
-//                    "BNM" -> {
-////                       binding.sendOrder.performClick()
+                    "CCM" -> {
+
+//                       binding.sendOrder.performClick()
 //                       binding.btnBenefitBay.performClick()
-//                    }
+
+                        val intent = Intent(activityy, PayUsingCardActivity::class.java)
+                        ccmLauncher!!.launch(intent)
+
+
+                    }
                     else -> {
                         binding.chooseDelivery.visibility = View.VISIBLE
                         initTimeAdapter(deliveryFees)
@@ -566,11 +598,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     GlobalData.errorDialog(activityy, R.string.make_order, message)
                 } else {
                     if (IsSuccess) {
+                        Log.i(tag, "Log status " + result?.status)
+
                         if (result?.status == 200) {
 
 //                            UtilityApp.setCartCount(0)
 
-                            Log.i(tag, "Log " + result.status)
+                            Log.i(tag, "Log status " + result.status)
 
                             AnalyticsHandler.PurchaseEvent(
                                 couponCodeId,
