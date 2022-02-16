@@ -693,6 +693,14 @@ public class DataFeacher {
     }
 
 
+    public void getAllKindsList() {
+
+        Log.i(TAG, "Log getAllKindsList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+
+        Call call = apiService.getAllKindsList(headerMap);
+        call.enqueue(callbackApi);
+    }
     public void GetAllBrands(int sotre_id) {
 
         Log.i(TAG, "Log GetAllBrands");

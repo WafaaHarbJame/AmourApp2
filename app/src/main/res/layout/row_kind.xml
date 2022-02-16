@@ -24,7 +24,7 @@
         android:id="@+id/ivCatImage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/holder_image"
         app:riv_border_color="@color/gray18"
         app:riv_border_width="@dimen/_1sdp"

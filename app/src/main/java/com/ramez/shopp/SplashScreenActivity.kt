@@ -48,6 +48,7 @@ class SplashScreenActivity : ActivityBase() {
             countryId = localModel?.countryId ?: Constants.default_country_id
             shortName = localModel?.shortname ?: Constants.default_short_name
             getCategories(storeId)
+            getKinds()
             getDinners(lang)
             getHomePage()
             getLinks(storeId)
@@ -313,6 +314,22 @@ class SplashScreenActivity : ActivityBase() {
         } else {
             loginAgain()
         }
+    }
+
+    fun getKinds() {
+        UtilityApp.setCategoriesData(null)
+        DataFeacher(false, object : DataFetcherCallBack {
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                if (IsSuccess) {
+                    val result =
+                        obj as ResultAPIModel<ArrayList<CategoryModel?>?>
+                    if (result.data?.size ?: 0 > 0) {
+                        val categoryModelList = result.data
+                        UtilityApp.setAllKindsData(categoryModelList)
+                    }
+                }
+            }
+        }).getAllKindsList()
     }
 
 }

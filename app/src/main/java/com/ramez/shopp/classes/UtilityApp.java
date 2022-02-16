@@ -279,10 +279,27 @@ public class UtilityApp {
 
     }
 
+
     public static void setCategoriesData(ArrayList<CategoryModel> countryModelList) {
         String userData = new Gson().toJson(countryModelList);
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_CATEGORIES, userData);
     }
+
+    public static void setAllKindsData(ArrayList<CategoryModel> countryModelList) {
+        String userData = new Gson().toJson(countryModelList);
+        RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_ALL_KINDS, userData);
+    }
+
+
+
+    public static ArrayList<CategoryModel> getAllKinds() {
+        String dataString = RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_ALL_KINDS);
+        return new Gson().fromJson(dataString, new TypeToken<List<CategoryModel>>() {
+        }.getType());
+
+    }
+
+
 
     public static void setSetting(SettingModel user) {
         String settingData = new Gson().toJson(user);

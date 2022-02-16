@@ -10,6 +10,7 @@ public class OrderCall {
     public Boolean expressDelivery;
     public int itemNotFoundAction;
     public String pay_token;
+    public int delivery_type;
 
 }
 

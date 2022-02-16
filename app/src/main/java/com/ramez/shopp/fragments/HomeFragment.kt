@@ -53,7 +53,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter.OnItemClick,
-        OnBookletClick, AutomateSlider.OnSliderClick, OnBrandClick, OnBannersClick,
+        OnBookletClick, AutomateSlider.OnSliderClick, OnBrandClick, OnBannersClick,KindAdapter.OnKindClick,
         MainSliderAdapter.OnSliderClick,
         OnKitchenClick {
     var countryCode = ""
@@ -67,6 +67,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     var recentLayoutManager: LinearLayoutManager? = null
     var userId = "0"
     var categoryModelList: ArrayList<CategoryModel>? = null
+    var kindModelList: ArrayList<CategoryModel>? = null
     var sliderList: ArrayList<Slider>? = null
     var bannersList: ArrayList<Slider>? = null
     var brandsList: ArrayList<BrandModel>? = null
@@ -89,6 +90,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private var mSelectedIndices: ArrayList<Int>? = null
     private var mCameraId = -1
     private var categoryAdapter: CategoryAdapter? = null
+    private var kindAdapter: KindAdapter? = null
     private var bookletAdapter: BookletAdapter? = null
     private var activity: Activity? = null
     private var bookletsList: ArrayList<BookletsModel>? = null
@@ -118,6 +120,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
             )
         productBestList = ArrayList()
         bookletsList = ArrayList()
+        kindModelList = ArrayList()
         sliderList = ArrayList()
         bannersList = ArrayList()
         productRecentsList = ArrayList()
@@ -149,6 +152,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         bookletManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         brandManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         val bannersManger = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
+        val kindManger = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
         val categoryManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         val kitchenLy = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
         binding.kitchenRecycler.layoutManager = kitchenLy
@@ -157,6 +161,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         binding.recentlyRecycler.itemAnimator = null
         binding.recentlyRecycler.setHasFixedSize(true)
         binding.recentlyRecycler.layoutManager = recentLayoutManager
+        binding.kindRecycler.layoutManager = kindManger
         binding.offerRecycler.itemAnimator = null
         binding.bestProductRecycler.itemAnimator = null
         binding.bestSellerRecycler.itemAnimator = null
@@ -165,6 +170,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         binding.brandsRecycler.itemAnimator = null
         binding.brandsRecycler.setHasFixedSize(true)
         binding.catRecycler.setHasFixedSize(true)
+        binding.kindRecycler.setHasFixedSize(true)
         binding.bannersRv.itemAnimator = null
         binding.bannersRv.setHasFixedSize(true)
         binding.bestSellerRecycler.layoutManager = bestSellerLayoutManager
@@ -513,6 +519,15 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                 } else {
                                     getCategories(cityId)
                                 }
+
+
+                                if (UtilityApp.getAllKinds() != null && UtilityApp.getAllKinds().size > 0) {
+                                    kindModelList = UtilityApp.getAllKinds()
+                                    initKindAdapter()
+                                } else {
+                                    getKinds()
+                                }
+
                                 initAdapter()
                             } else {
                                 if (productOffersList!!.size == 0) {
@@ -1163,6 +1178,23 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
 
     }
 
+    fun getKinds() {
+        UtilityApp.setCategoriesData(null)
+        DataFeacher(false, object : DataFetcherCallBack {
+            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                if (IsSuccess) {
+                    val result = obj as ResultAPIModel<ArrayList<CategoryModel?>?>
+                    if (result.data?.size ?: 0 > 0) {
+                        val categoryModelList = result?.data
+                        UtilityApp.setAllKindsData(categoryModelList)
+                        initKindAdapter()
+
+                    }
+                }
+            }
+        }).getAllKindsList()
+    }
+
 //    private fun checkToken() {
 //        val userToken = UtilityApp.getUserToken()
 //        val refreshToken = UtilityApp.getRefreshToken()
@@ -1182,4 +1214,14 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
             UtilityApp.setUrl(GlobalData.BetaBaseURL1)
         }
     }
+    private fun initKindAdapter() {
+        kindAdapter = KindAdapter(activityy, kindModelList, 10, this, false)
+        binding.kindRecycler.adapter = kindAdapter
+    }
+
+    override fun onKindClicked(position: Int, categoryModel: CategoryModel?) {
+
+    }
+
+
 }

@@ -81,6 +81,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     var itemNotFoundId = 0
     var countryCode = ""
     var payToken: String? = null
+    var deliveryType: Int = 0
     private var paymentLauncher: ActivityResultLauncher<Intent>? = null
     private var ccmLauncher: ActivityResultLauncher<Intent>? = null
     var ordersDM: OrderModel? = null
@@ -262,6 +263,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             orderCall.itemNotFoundAction = itemNotFoundId
             orderCall.expressDelivery = expressDelivery
             orderCall.pay_token = payToken
+            orderCall.delivery_type = deliveryType
             sendOrder(orderCall)
         }
 
@@ -295,6 +297,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             if (toggleButton) {
 
                 expressDelivery = true
+                deliveryType=2
                 if (deliveryDayAdapter != null) deliveryDayAdapter!!.lastIndex = -1
                 deliveryDayAdapter?.notifyDataSetChanged()
                 binding.DeliverTimeRecycler.visibility = View.GONE
@@ -426,7 +429,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 total!!.toDouble(), fraction
                             ).toDouble() + 0.0, fraction
                         ).plus(" ").plus(currency)
+                        deliveryType=1
+
                     }
+
 
                     "CCM" -> {
 
@@ -620,6 +626,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                             ordersDM?.orderId = result.orderId
                             ordersDM?.orderCode = result.orderCode
                             ordersDM?.deliveryDate = deliveryDate
+                            ordersDM?.deliveryTime = deliveryTime
                             ordersDM?.deliveryTime = deliveryTime
                             Log.i(javaClass.name, "Log referenceId after  ${result.orderCode}")
                             Log.i(
@@ -918,10 +925,12 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                             binding.deliveryPrice.text = getString(R.string.free)
                                         } else {
 
-                                            binding.deliveryPrice.text = NumberHandler.formatDouble(
-                                                expressDeliveryCharge,
-                                                fraction
-                                            ) + " " + currency
+                                            binding.deliveryPrice.text =  NumberHandler.formatDouble(expressDeliveryCharge,fraction).plus(""+currency)
+
+//                                                NumberHandler.formatDouble(
+//                                                expressDeliveryCharge,
+//                                                fraction
+//                                            ) + " " + currency
 
 
                                         }

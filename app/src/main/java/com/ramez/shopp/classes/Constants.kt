@@ -41,6 +41,7 @@ object Constants {
     const val KEY_SETTING = "KEY_SETTING"
     const val KEY_COUNTRIES = "key_countries"
     const val KEY_CATEGORIES = "KEY_CATEGORIES"
+    const val KEY_ALL_KINDS = "KEY_ALL_KINDS"
     const val KEY_SLIDER = "KEY_SLIDER"
     const val KEY_BARCODE = "KEY_BARCODE"
     const val KEY_BANNER = "KEY_BANNER"

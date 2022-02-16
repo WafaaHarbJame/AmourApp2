@@ -416,6 +416,16 @@
                 app:spanCount="3"
                 tools:itemCount="3"
                 tools:listitem="@layout/row_category" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/kindRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_kind" />
 
             <LinearLayout
                 android:id="@+id/recentlyLy"
