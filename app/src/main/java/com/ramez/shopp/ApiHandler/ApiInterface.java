@@ -2,6 +2,7 @@ package com.ramez.shopp.ApiHandler;
 
 
 import com.ramez.shopp.Models.AddExtraResponse;
+import com.ramez.shopp.Models.CategoryModel;
 import com.ramez.shopp.Models.CityModelResult;
 import com.ramez.shopp.Models.DeliveryInfo;
 import com.ramez.shopp.Models.FastValidModel;
@@ -269,8 +270,14 @@ ApiInterface {
     @GET("v9/Products/categoryList")
     Call<MainModel> GetMainPage(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id);
 
+    @GET("v9/Products/AllKinds")
+    Call<ResultAPIModel<ArrayList<CategoryModel>>> getAllKindsList(@HeaderMap() Map<String, Object> headerParams);
+
+
+
     @GET("v9/Products/AllCategories")
     Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
+
 
 
     @GET("v9/Products/productRecipeList")

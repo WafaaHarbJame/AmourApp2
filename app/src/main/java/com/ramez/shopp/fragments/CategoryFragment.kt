@@ -5,7 +5,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,13 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.recyclerview.widget.GridLayoutManager
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
@@ -31,25 +24,20 @@ import com.ramez.shopp.Models.CategoryResultModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.R
 import com.ramez.shopp.activities.FullScannerActivity
-import com.ramez.shopp.adapter.CategoryAdapter
+import com.ramez.shopp.adapter.CategoryNewAdapter
 import com.ramez.shopp.classes.Constants
 import com.ramez.shopp.classes.MessageEvent
 import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.databinding.FragmentCategoryBinding
-import io.nlopez.smartlocation.SmartLocation
-import io.nlopez.smartlocation.location.config.LocationAccuracy
-import io.nlopez.smartlocation.location.config.LocationParams
-import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 
-class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
+class CategoryFragment : FragmentBase(), CategoryNewAdapter.OnItemClick {
     var categoryModelList: ArrayList<CategoryModel>? = null
-    var gridLayoutManager: GridLayoutManager? = null
+    var layoutManager: LinearLayoutManager? = null
     var localModel: LocalModel? = null
     lateinit var binding: FragmentCategoryBinding
-    private var categoryAdapter: CategoryAdapter? = null
+    private var categoryAdapter: CategoryNewAdapter? = null
     private var activity: Activity? = null
     var cityId = 0
     private var scanLauncher: ActivityResultLauncher<Intent>? = null
@@ -61,9 +49,9 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
         val view: View = binding.root
         activity = getActivity()
-        gridLayoutManager = GridLayoutManager(activityy, 3)
+        layoutManager = LinearLayoutManager(activityy)
         binding.catRecycler.setHasFixedSize(true)
-        binding.catRecycler.layoutManager = gridLayoutManager
+        binding.catRecycler.layoutManager = layoutManager
         localModel =
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
                 activityy
@@ -117,18 +105,11 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
     }
 
     private fun initAdapter() {
-        categoryAdapter = CategoryAdapter(activity, categoryModelList, 0, this, false)
+        categoryAdapter = CategoryNewAdapter(activity, categoryModelList, 0, this, false)
         binding.catRecycler.adapter = categoryAdapter
     }
 
-    override fun onItemClicked(position: Int, categoryModel: CategoryModel) {
-        val bundle = Bundle()
-        bundle.putSerializable(Constants.CAT_LIST, categoryModelList)
-        bundle.putInt(Constants.MAIN_CAT_ID, categoryModelList!![position].id)
-        bundle.putInt(Constants.position, position)
-        bundle.putInt(Constants.KEY_FRAGMENT_ID, R.id.categoryProductsFragment)
-        EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_FRAGMENT, bundle))
-    }
+
 
     fun getCategories(storeId: Int) {
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
@@ -270,6 +251,14 @@ class CategoryFragment : FragmentBase(), CategoryAdapter.OnItemClick {
         }
     }
 
+    override fun onItemClicked(position: Int, categoryModel: CategoryModel?) {
+        val bundle = Bundle()
+        bundle.putSerializable(Constants.CAT_LIST, categoryModelList)
+        bundle.putInt(Constants.MAIN_CAT_ID, categoryModelList!![position].id)
+        bundle.putInt(Constants.position, position)
+        bundle.putInt(Constants.KEY_FRAGMENT_ID, R.id.categoryProductsFragment)
+        EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_FRAGMENT, bundle))
+    }
 
 
 }

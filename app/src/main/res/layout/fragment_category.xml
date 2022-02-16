@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray5"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:id="@+id/searchLY"
             android:background="@drawable/round_white_fill"
             android:orientation="vertical">
@@ -106,10 +107,10 @@
                             android:layout_marginStart="@dimen/_4sdp"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
-                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:spanCount="3"
                             tools:itemCount="9"
-                            tools:listitem="@layout/row_category" />
+                            tools:listitem="@layout/row_new_category" />
 
                     </LinearLayout>
 

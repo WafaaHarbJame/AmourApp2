@@ -2,6 +2,7 @@ package com.ramez.shopp.fragments
 
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -58,6 +59,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     var categoryId = 0
     var countryId = 0
     var cityId = 0
+    private var sortByPrice = 0
     private var userId = "0"
     private var catPosition = 0
     private val filter = ""
@@ -186,21 +188,18 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             "",
             this,
             numColumn,
-            0
+            0,
+            sortByPrice
         )
         binding.productsRv.adapter = adapter
     }
 
-    override fun onItemClicked(position: Int, productModel: ProductModel) {
-        val intent = Intent(activityy, ProductDetailsActivity::class.java)
-        intent.putExtra(Constants.DB_productModel, productModel)
-        startActivity(intent)
-    }
+
 
     private fun cancelAPiCall() {
-        if (adapter != null && adapter!!.apiCall != null && adapter!!.apiCall.isExecuted) {
+        if (adapter != null && adapter!!.apiCall != null && adapter!!.apiCall?.isExecuted == true) {
             adapter!!.isCanceled = true
-            adapter!!.apiCall.cancel()
+            adapter!!.apiCall?.cancel()
         }
     }
 
@@ -397,6 +396,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageEvent) {
         if (event.type == MessageEvent.TYPE_view) {
@@ -404,6 +404,13 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             initAdapter()
             gridLayoutManager!!.spanCount = numColumn
             adapter!!.notifyDataSetChanged()
+        }
+
+        if (event.type == MessageEvent.TYPE_SORT2) {
+            sortByPrice = event.data as Int
+            sortByPrice()
+
+
         }
     }
 
@@ -489,6 +496,33 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
 
     }
+
+    private fun sortByPrice() {
+        if (sortByPrice == 1) {
+            //ascending
+          //  sortByPrice = 1
+            productList?.sortBy { it.firstProductBarcodes.price }
+            initAdapter()
+            adapter?.notifyDataSetChanged()
+
+
+        } else if (sortByPrice == 2) {
+            //Descending
+           // sortByPrice = 0
+            productList?.sortByDescending { it.firstProductBarcodes.price }
+            initAdapter()
+            adapter?.notifyDataSetChanged()
+
+
+
+        }
+
+    }
+
+    override fun onItemClicked(position: Int, productModel: ProductModel?) {
+        val intent = Intent(activityy, ProductDetailsActivity::class.java)
+        intent.putExtra(Constants.DB_productModel, productModel)
+        startActivity(intent)    }
 
 
 }

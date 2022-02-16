@@ -19,6 +19,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.ConfirmDialog
+import com.ramez.shopp.Dialogs.FilterDialog
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.activities.ActivityBase
 import com.ramez.shopp.databinding.ActivityMainBinding
@@ -175,6 +176,8 @@ class MainActivity : ActivityBase() {
             binding.toolBar.backBtn.visibility = gone
             binding.toolBar.sortBut.visibility = gone
             binding.toolBar.view2But.visibility = gone
+            binding.toolBar.sort2But.visibility = gone
+            binding.toolBar.filterBut.visibility = gone
             binding.toolBar.mainSearchBtn.visibility = gone
             binding.toolBar.SearchBtn.visibility = gone
             binding.toolBar.addExtra.visibility = gone
@@ -228,6 +231,8 @@ class MainActivity : ActivityBase() {
 
                     binding.toolBar.backBtn.visibility = visible
                     binding.toolBar.view2But.visibility = visible
+                    binding.toolBar.sort2But.visibility = visible
+                    binding.toolBar.filterBut.visibility = visible
                 }
                 is SpecialOfferFragment -> {
                     selectedFragmentId = R.id.specialOffersFragment
@@ -328,6 +333,7 @@ class MainActivity : ActivityBase() {
 
         }
 
+
         binding.toolBar.addExtra.setOnClickListener {
             val intent = Intent(activity, ExtraRequestActivity::class.java)
             startActivity(intent)
@@ -350,6 +356,20 @@ class MainActivity : ActivityBase() {
 //            Log.d("debug", "Log token one signal second  :$registrationId")
 //            Log.d("debug", "Log token firebase:" + UtilityApp.getFCMToken())
 //        }
+
+
+        binding.toolBar.filterBut.setOnClickListener {
+            val filterDialog =
+                FilterDialog(
+                    activity,object:DataFetcherCallBack{
+                        override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                            val sortType:Int= obj as Int
+                            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_SORT2, sortType))
+
+                        }
+                    })
+            filterDialog.show()
+        }
     }
 
     private fun selectBottomTab(resId: Int, bundle: Bundle?) {
@@ -632,6 +652,9 @@ class MainActivity : ActivityBase() {
         }
 
     }
+
+
+
 
 
 }

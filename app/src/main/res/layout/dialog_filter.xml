@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_top_corner_white_fill2"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/_20sdp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_8sdp">
+
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/sort"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <com.ramez.shopp.SpichalViews.STextViewIcon
+                android:id="@+id/closeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/fal_times"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rbSelectAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:checked="true"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="Sugested"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rb_PriceHL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:checked="true"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="Price High to Low"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rb_PriceLH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:checked="true"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="Price Low to High"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rbNewest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="Newest"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:background="@color/gray5" />
+
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/applyBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:minWidth="@dimen/_100sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/apply"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

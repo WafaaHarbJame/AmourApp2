@@ -89,16 +89,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             filter,
             this,
             Constants.twoRow,
-            brandId
+            brandId,0
         )
         binding.recycler.adapter = adapter
     }
 
-    override fun onItemClicked(position: Int, productModel: ProductModel) {
-        val intent = Intent(activity, ProductDetailsActivity::class.java)
-        intent.putExtra(Constants.DB_productModel, productModel)
-        startActivity(intent)
-    }
 
     private val getIntentExtra: Unit
         get() {
@@ -182,5 +177,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else super.onBackPressed()
+    }
+
+    override fun onItemClicked(position: Int, productModel: ProductModel?) {
+        val intent = Intent(activity, ProductDetailsActivity::class.java)
+        intent.putExtra(Constants.DB_productModel, productModel)
+        startActivity(intent)
     }
 }

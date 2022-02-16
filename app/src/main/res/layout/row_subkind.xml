@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:layout_marginEnd="@dimen/_4sdp"
+    android:layout_marginStart="@dimen/_6sdp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/categoryLy"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_gravity="center"
+
+        android:background="@drawable/round_corner_green_fill_big"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/ivCatImage"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/holder_image"
+            android:layout_gravity="center"
+            app:riv_border_color="@color/gray18"
+            app:riv_border_width="@dimen/_1sdp"
+            app:riv_corner_radius="@dimen/_10sdp" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/categoryNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:text="@string/category"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

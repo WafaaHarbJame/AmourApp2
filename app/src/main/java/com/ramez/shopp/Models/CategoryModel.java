@@ -113,4 +113,14 @@ public class CategoryModel implements Serializable {
 
     public CategoryModel() {
     }
-}
+
+    public String getCategoryName() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            return name;
+
+        } else {
+            return hName;
+        }
+    }
+
+    }

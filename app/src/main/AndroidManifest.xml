@@ -33,6 +33,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activities.PayUsingCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.PayFailActivity"
             android:exported="false"
             android:launchMode="singleTask"

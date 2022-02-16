@@ -29,12 +29,12 @@
 
         <ImageView
             android:id="@+id/mainSearchBtn"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:contentDescription="@string/app_name"
             android:gravity="center"
-            android:padding="@dimen/_13sdp"
+            android:padding="@dimen/_5sdp"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search_t" />
 
@@ -111,7 +111,22 @@
             android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
+            android:padding="@dimen/_5sdp"
             android:src="@drawable/sort_icon"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/filterBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/view2But"
+            android:contentDescription="@string/app_name"
+            android:gravity="center"
+            android:minHeight="@dimen/_40sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/filter_icon"
             android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
 
@@ -129,18 +144,28 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/filter_view_white"
-            android:textSize="@dimen/_13ssp"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/sort2But"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:gravity="center"
+            android:minHeight="@dimen/_40sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_toStartOf="@id/filterBut"
+            android:src="@drawable/sort_icon2"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/SearchBtn"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_30sdp"
             android:contentDescription="@string/app_name"
             android:gravity="center"
-            android:padding="@dimen/_13sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_toStartOf="@id/sort2But"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search_t" />
 

@@ -125,6 +125,11 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
+    <style name="MyRadioButton2" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray6</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/cairo</item>
         <item name="android:textStyle">bold</item>

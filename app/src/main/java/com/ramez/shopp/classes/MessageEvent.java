@@ -8,6 +8,7 @@ public class MessageEvent {
     public static final String TYPE_BROUSHERS = "TYPE_BROUSHERS";
     public static final String TYPE_view = "TYPE_view";
     public static final String TYPE_SORT = "TYPE_SORT";
+    public static final String TYPE_SORT2 = "TYPE_SORT2";
     public static final String TYPE_SORT_OLD = "TYPE_SORT_OLD";
     public static final String TYPE_cart = "cart";
     public static final String REFRESH_CART = "REFRESH_CART";

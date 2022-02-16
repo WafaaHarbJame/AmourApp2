@@ -80,9 +80,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     var deliveryDateId = 0
     var itemNotFoundId = 0
     var countryCode = ""
-    var payToken :String? =null
+    var payToken: String? = null
     private var paymentLauncher: ActivityResultLauncher<Intent>? = null
-    private  var ccmLauncher: ActivityResultLauncher<Intent>? = null
+    private var ccmLauncher: ActivityResultLauncher<Intent>? = null
     var ordersDM: OrderModel? = null
     lateinit var binding: FragmentInvoiceBinding
 
@@ -113,7 +113,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         ) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 val bundle = result.data?.extras
-                 payToken = bundle?.getString(Constants.PAY_TOKEN)
+                payToken = bundle?.getString(Constants.PAY_TOKEN)
 
             } else {
                 showFailPage()
@@ -302,9 +302,11 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     activityy,
                     R.drawable.round_corner_white_fill_green_border
                 )
-                
-                
-                binding.totalTv.text=NumberHandler.formatDouble(total?.toDouble() ?: 0 .plus(expressDeliveryCharge),fraction).plus( " "+currency)
+
+
+                binding.totalTv.text =
+                    NumberHandler.formatDouble(total?.toDouble() ?: 0.plus(expressDeliveryCharge), fraction)
+                        .plus(" " + currency)
 //                binding.totalTv.text = NumberHandler.formatDouble(
 //                    total!!.toDouble() + expressDeliveryCharge,
 //                    fraction
@@ -322,7 +324,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     binding.deliveryFees.text = NumberHandler.formatDouble(
                         expressDeliveryCharge,
                         fraction
-                    ).plus(" "+localModel?.currencyCode)
+                    ).plus(" " + localModel?.currencyCode)
 
 //                    binding.deliveryPrice.text = "$expressDeliveryCharge  $ currency"
 
@@ -398,7 +400,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 }
 
                 7 -> {
-                    paymentModel.image = R.drawable.card
+                    paymentModel.image = R.drawable.ic_credit_card
                     paymentModel.methodAr = getString(R.string.credit_card_ar)
                     paymentModel.methodEn = getString(R.string.credit_card_en)
                 }
@@ -558,9 +560,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 productList = cartResultModel!!.data.cartData
                 binding.productsSizeTv.text = "$total $currency"
                 binding.totalTv.text = NumberHandler.formatDouble(
-                        total!!.toDouble() .plus(deliveryFees),
-                        fraction
-                    ) .plus("  $currency")
+                    total!!.toDouble().plus(deliveryFees),
+                    fraction
+                ).plus("  $currency")
 
                 minimum_order_amount = cartResultModel!!.data.minimumOrderAmount
                 Log.i(
@@ -659,6 +661,12 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                             }
                             GlobalData.errorDialog(activityy, R.string.make_order, message)
 
+                        } else {
+                            message = getString(R.string.fail_create_order)
+                            if (result?.message?.isNotEmpty() == true) {
+                                message = result.message
+                            }
+                            GlobalData.errorDialog(activityy, R.string.make_order, message)
                         }
 
                     } else {
@@ -1151,7 +1159,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             RESULT_OK -> {
 
                 val messageFromResponse: String? = data?.getStringExtra(
-                    Application.ujco("倴鱝栝澵擿뽺鷶")?:getString(R.string.payment_success)
+                    Application.ujco("倴鱝栝澵擿뽺鷶") ?: getString(R.string.payment_success)
                 )
                 Toast(messageFromResponse)
 

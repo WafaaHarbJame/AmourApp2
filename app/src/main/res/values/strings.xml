@@ -456,9 +456,15 @@
     <string name="accept_terms">Please Accept the Terms </string>
     <string name="beneit_using_app_EN" translatable="false">benefit By app</string>
     <string name="beneit_using_app_AR" translatable="false">بنفت بالتطبيق</string>
+    <string name="credit_card_ar" translatable="false">credit Card</string>
+    <string name="credit_card_en" translatable="false">credit Card</string>
     <string name="beneit_using_Web_AR" translatable="false">بنفت بالويب</string>
     <string name="beneit_using_Web_En" translatable="false">benefit By Web</string>
     <string name="failto_save">Fail to save Data</string>
+    <string name="invalid_input">invalid Input</string>
+    <string name="fail_create_order">Fail create order</string>
+    <string name="sort">Sort</string>
+    <string name="apply">Apply</string>
 
 
 </resources>

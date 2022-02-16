@@ -419,5 +419,8 @@
     <string name="min_quantity_is_one">الحد الادني من الكمية واحد </string>
     <string name="accept_terms">الرجاء الموافقة على شروط الخصوصية </string>
     <string name="failto_save">Fail to save Data</string>
+    <string name="invalid_input">invalid Input</string>
+    <string name="sort">Sort</string>
+    <string name="apply">Apply</string>
 
 </resources>

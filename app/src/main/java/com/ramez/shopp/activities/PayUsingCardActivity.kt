@@ -42,7 +42,7 @@ class PayUsingCardActivity : ActivityBase() {
 //        ) else currentMonth
         binding.btnDone.setOnClickListener {
             try {
-                var monthStr = NumberHandler.arabicToDecimal(binding.sprmonth.text.toString())
+                val monthStr = NumberHandler.arabicToDecimal(binding.sprmonth.text.toString())
                 val yearStr = NumberHandler.arabicToDecimal(binding.spryear.text.toString())
                 val cardNumberStr = NumberHandler.arabicToDecimal(binding.edtCardNumber.text.toString())
                 val cvvStr = NumberHandler.arabicToDecimal(binding.edtCvvNumber.text.toString())
@@ -112,9 +112,10 @@ class PayUsingCardActivity : ActivityBase() {
     private fun sendData(cardModel: CreditCardModel) {
         val gson = Gson()
         val json = gson.toJson(cardModel)
+//        val EncryptedString: String = Encrypt("{\"number\":\"0123456789123456\",\"month\":\"12\",\"year\":\"22\",\"securityCode\":\"123\"}")
         val EncryptedString: String = Encrypt(json)
-        println("Log [EncryptedString]:$EncryptedString")
-        println("Log  [json]:$json")
+        Log.i(javaClass.name,"Log [EncryptedString]:$EncryptedString")
+        Log.i(javaClass.name,"Log  [json]:$json")
         val intent = Intent()
         intent.putExtra(Constants.PAY_TOKEN,EncryptedString)
         setResult(RESULT_OK, intent)
@@ -123,10 +124,12 @@ class PayUsingCardActivity : ActivityBase() {
 
     }
 
+
     @Throws(java.lang.Exception::class)
     fun Encrypt(text: String?): String {
         val ivkey = "CDDAMQOTMYIAZEPQ"
         val key: String? = generateRandomPassword(32)
+//        key="h3tTWAYJ55EGWMgZFs5gW5mquCIsgLhE";
         val cipher: Cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         val keyBytes = ByteArray(32)
         var b = key?.toByteArray(charset("UTF-8"))
@@ -142,10 +145,10 @@ class PayUsingCardActivity : ActivityBase() {
         val ivSpec = IvParameterSpec(ivBytes)
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec)
         val results: ByteArray = cipher.doFinal(text?.toByteArray(charset("UTF-8")))
-        val EncryptedString: String =  Base64.encodeToString(results,0)
-        return (EncryptedString.substring(0, EncryptedString.length / 2)
+        val encryptedString: String =  Base64.encodeToString(results, Base64.DEFAULT).trimEnd()
+        return (encryptedString.substring(0, encryptedString.length / 2)
                 + key
-                + EncryptedString.substring(EncryptedString.length / 2))
+                + encryptedString.substring(encryptedString.length / 2))
     }
 
     fun generateRandomPassword(len: Int?): String {
@@ -156,4 +159,5 @@ class PayUsingCardActivity : ActivityBase() {
         for (i in 0 until len) sb.append(chars[rnd.nextInt(chars.length)])
         return sb.toString()
     }
+
 }
