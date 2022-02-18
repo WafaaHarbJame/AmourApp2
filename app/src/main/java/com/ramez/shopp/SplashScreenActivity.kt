@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.view.Window
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
@@ -48,6 +49,7 @@ class SplashScreenActivity : ActivityBase() {
             countryId = localModel?.countryId ?: Constants.default_country_id
             shortName = localModel?.shortname ?: Constants.default_short_name
             getCategories(storeId)
+            getPaymentMethod(storeId)
             getKinds()
             getDinners(lang)
             getHomePage()
@@ -316,8 +318,8 @@ class SplashScreenActivity : ActivityBase() {
         }
     }
 
-    fun getKinds() {
-        UtilityApp.setCategoriesData(null)
+    private fun getKinds() {
+        UtilityApp.setAllKindsData(null)
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 if (IsSuccess) {
@@ -331,5 +333,60 @@ class SplashScreenActivity : ActivityBase() {
             }
         }).getAllKindsList()
     }
+
+    private fun getPaymentMethod(storeId: Int) {
+        UtilityApp.setPaymentsData(null)
+        DataFeacher(
+            false, object : DataFetcherCallBack {
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+
+                            if (IsSuccess) {
+                                val result = obj as PaymentResultModel?
+                                if (result?.data != null && result.data.size > 0) {
+                                    var paymentList: ArrayList<PaymentModel>? =null
+                                    paymentList = result.data
+                                    for (i in paymentList!!.indices) {
+
+                                        val paymentModel = paymentList[i]
+
+                                        when (paymentModel.id) {
+                                            1 -> {
+                                                paymentModel.image = R.drawable.cash
+                                            }
+                                            2 -> {
+                                                paymentModel.image = R.drawable.card
+                                            }
+                                            3 -> {
+                                                paymentModel.image = R.drawable.benefit
+                                            }
+                                            4 -> {
+                                                paymentModel.image = R.drawable.card
+                                            }
+                                            5 -> {
+                                                paymentModel.image = R.drawable.benefit_web
+                                            }
+
+                                            6 -> {
+                                                paymentModel.image = R.drawable.benefit
+                                            }
+
+                                            7 -> {
+                                                paymentModel.image = R.drawable.benefit_web
+                                            }
+                                        }
+                                    }
+                                    Log.i(javaClass.name, "Log paymentList ${paymentList.size}")
+
+                                    UtilityApp.setPaymentsData(paymentList)
+                                }
+                            }
+                        }
+
+
+            }
+        ).getPaymentMethod(storeId)
+    }
+
+
 
 }

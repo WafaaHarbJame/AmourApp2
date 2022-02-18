@@ -1081,17 +1081,19 @@ public class DataFeacher {
     }
 
 
-    public Call getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+    public Call getFavorite(int kind_id,String srots,int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("category_id", category_id);
         params.put("country_id", country_id);
         params.put("city_id", city_id);
-        params.put("user_id", user_id);
         params.put("filter", filter);
         params.put("brand_id", brand_id);
         params.put("page_number", page_number);
         params.put("page_size", page_size);
+        params.put("kind_id", kind_id);
+        params.put("srots", srots);
+
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log getFavorite headerMap " + headerMap);
@@ -1164,6 +1166,7 @@ public class DataFeacher {
         Log.i(TAG, "Log expressDelivery " + orderCalls.expressDelivery);
         Log.i(TAG, "Log itemNotFoundAction " + orderCalls.itemNotFoundAction);
         Log.i(TAG, "Log payToken " + orderCalls.pay_token);
+        Log.i(TAG, "Log delivery_type " + orderCalls.delivery_type);
 
         Call call = apiService.makeOrder(headerMap, orderCalls);
         call.enqueue(callbackApi);

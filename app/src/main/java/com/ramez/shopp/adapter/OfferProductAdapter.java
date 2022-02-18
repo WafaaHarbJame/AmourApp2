@@ -45,8 +45,8 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public boolean isLoading = false;
     public int visibleThreshold = 5;
     public boolean show_loading = true;
-    public int categoryId, countryId, cityId, subId;
-    String userId;
+    public int categoryId, countryId, cityId, subId,kind_id=0;
+    String userId,sortType="";
     private int nextPage = 1;
     private int lastVisibleItem;
     private int totalItemCount;
@@ -408,7 +408,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-        }).getFavorite(categoryId, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 
     @Override

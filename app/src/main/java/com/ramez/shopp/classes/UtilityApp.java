@@ -15,6 +15,7 @@ import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.DinnerModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.PaymentModel;
 import com.ramez.shopp.Models.SettingModel;
 import com.ramez.shopp.Models.Slider;
 import com.ramez.shopp.Models.SoicalLink;
@@ -285,8 +286,8 @@ public class UtilityApp {
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_CATEGORIES, userData);
     }
 
-    public static void setAllKindsData(ArrayList<CategoryModel> countryModelList) {
-        String userData = new Gson().toJson(countryModelList);
+    public static void setAllKindsData(ArrayList<CategoryModel> categoryModels) {
+        String userData = new Gson().toJson(categoryModels);
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_ALL_KINDS, userData);
     }
 
@@ -299,6 +300,19 @@ public class UtilityApp {
 
     }
 
+
+    public static ArrayList<PaymentModel> getPaymentsData() {
+        String dataString = RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_PAYMENT);
+        return new Gson().fromJson(dataString, new TypeToken<List<PaymentModel>>() {
+        }.getType());
+
+    }
+
+
+    public static void setPaymentsData(ArrayList<PaymentModel> paymentsData) {
+        String paymentData = new Gson().toJson(paymentsData);
+        RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_PAYMENT, paymentData);
+    }
 
 
     public static void setSetting(SettingModel user) {

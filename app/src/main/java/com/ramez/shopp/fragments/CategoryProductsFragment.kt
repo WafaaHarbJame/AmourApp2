@@ -69,7 +69,8 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private val searchCode = 2000
     lateinit var binding: FragmentCategoryProductsBinding
     private var scanLauncher: ActivityResultLauncher<Intent>? = null
-
+    private var kind_id = 0
+    private var sortType:String = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -177,6 +178,8 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     fun initAdapter() {
         adapter = ProductCategoryAdapter(
+            kind_id,
+            sortType,
             activityy,
             binding.productsRv,
             productList,
@@ -328,7 +331,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                     }
                 }
 
-            }).getFavorite(category_id, country_id, city_id, user_id, filter, 0, page_number, page_size)
+            }).getFavorite(kind_id,sortType,category_id, country_id, city_id, user_id, filter, 0, page_number, page_size)
     }
 
     override fun OnMainCategoryItemClicked(mainCategoryDM: CategoryModel, position: Int) {

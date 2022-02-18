@@ -25,6 +25,8 @@ import com.ramez.shopp.databinding.RowSearchProductItemBinding
 import retrofit2.Call
 
 class ProductCategoryAdapter(
+    kind_id:Int,
+    sortType:String,
     private val context: Context,
     rv: RecyclerView,
     productModels: List<ProductModel?>?,
@@ -38,6 +40,7 @@ class ProductCategoryAdapter(
     gridNumber: Int,
     brand_id: Int,
     sortByPrice: Int
+
 ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var isLoading = false
@@ -47,6 +50,8 @@ class ProductCategoryAdapter(
     var country_id: Int
     var city_id: Int
     var user_id: String
+    private var kind_id = 0
+    private var sortType:String = ""
     private var nextPage = 1
     private var lastVisibleItem = 0
     private var totalItemCount = 0
@@ -289,6 +294,8 @@ class ProductCategoryAdapter(
                 println("Log productDMS size " + productModels.size)
                 notifyItemInserted(productModels.size - 1)
                 LoadAllData(
+                    kind_id,
+                    sortType,
                     category_id,
                     country_id,
                     city_id,
@@ -303,6 +310,8 @@ class ProductCategoryAdapter(
     }
 
     private fun LoadAllData(
+        kind_id: Int,
+        sortType: String,
         category_id: Int,
         country_id: Int,
         city_id: Int,
@@ -354,6 +363,8 @@ class ProductCategoryAdapter(
 
             })
         apiCall = dataFeacher.getFavorite(
+            kind_id,
+            sortType,
             category_id,
             country_id,
             city_id,

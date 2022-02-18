@@ -49,7 +49,8 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
     private MainCategoryAdapter categoryAdapter;
     private OfferProductAdapter productOfferAdapter;
-
+    private int kind_id = 0;
+    private String sortType = "";
     int numColumn = 2;
 
     String user_id = "0";
@@ -239,7 +240,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             }
 
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        }).getFavorite(kind_id,sortType,category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
     }
 
 

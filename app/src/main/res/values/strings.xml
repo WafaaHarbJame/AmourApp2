@@ -144,7 +144,7 @@
     <string name="product_total">Item Total</string>
     <string name="deliver_fees">Delivery Fees</string>
     <string name="choose_payment_type">Choose a payment Method </string>
-    <string name="delivery_send">Place Order</string>
+    <string name="delivery_send">Pay</string>
     <string name="save_update">Continue Editing</string>
     <string name="textFromtime">9 A.m  9 P.M </string>
     <string name="delete">delete</string>
@@ -454,17 +454,20 @@
     <string name="sound_alert_hint">Play sound for product scan and interactions.</string>
     <string name="min_quantity_is_one">Minimum quantity is one</string>
     <string name="accept_terms">Please Accept the Terms </string>
-    <string name="beneit_using_app_EN" translatable="false">benefit By app</string>
-    <string name="beneit_using_app_AR" translatable="false">بنفت بالتطبيق</string>
+    <string name="beneit_using_app_EN" translatable="false">benefitPay Mobile</string>
+    <string name="beneit_using_app_AR" translatable="false">بنفت موبايل</string>
     <string name="credit_card_ar" translatable="false">credit Card</string>
     <string name="credit_card_en" translatable="false">credit Card</string>
-    <string name="beneit_using_Web_AR" translatable="false">بنفت بالويب</string>
-    <string name="beneit_using_Web_En" translatable="false">benefit By Web</string>
+    <string name="beneit_using_Web_AR" translatable="false">بطاقة الصراف الآلي (البحرين)</string>
+    <string name="beneit_using_Web_En" translatable="false">Debit Card (Bahrain)</string>
     <string name="failto_save">Fail to save Data</string>
     <string name="invalid_input">invalid Input</string>
     <string name="fail_create_order">Fail create order</string>
     <string name="sort">Sort</string>
     <string name="apply">Apply</string>
+    <string name="Delivery_Method">Delivery Method</string>
+    <string name="normal_delivery">Delivery</string>
+    <string name="click_collect">Click &amp; Collect</string>
 
 
 </resources>

@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/_4sdp"
-    android:background="@drawable/round_medium_corner_red"
+    android:background="@drawable/round_medium_corner_unselected_gray"
     android:gravity="center_vertical"
     android:minWidth="@dimen/_80sdp"
     android:orientation="vertical"
@@ -22,7 +22,7 @@
         android:textAllCaps="true"
         android:layout_marginBottom="@dimen/_5sdp"
         android:text="sat"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 
     <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/dateTxt"
@@ -31,7 +31,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="5555555555555555555"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 
 
 </LinearLayout>

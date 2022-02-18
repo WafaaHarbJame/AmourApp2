@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
 
     }
 
+    @NonNull
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -51,15 +53,11 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
 
         if (selectedIndex == paymentMethod.getId()) {
 
-            holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_red));
-            holder.binding.paymentTv.setTextColor(ContextCompat.getColor(context, R.color.white));
-            holder.binding.paymentIv.setColorFilter(ContextCompat.getColor(context, R.color.white));
+            holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_selected));
 
 
         } else {
             holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_unselected));
-            holder.binding.paymentTv.setTextColor(ContextCompat.getColor(context, R.color.black));
-            holder.binding.paymentIv.setColorFilter(ContextCompat.getColor(context, R.color.black));
 
 
         }

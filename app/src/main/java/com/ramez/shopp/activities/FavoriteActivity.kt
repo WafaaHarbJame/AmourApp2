@@ -33,6 +33,9 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
     private var user: MemberModel? = null
     private var localModel: LocalModel? = null
     private val brandId1 = 0
+    private var kind_id = 0
+    private var sortType:String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
@@ -150,6 +153,6 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
                     }
                 }            }
 
-        }).getFavorite(categoryId, country_id, city_id, user_id, filter, brandId, pageNumber, pageSize)
+        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brandId, pageNumber, pageSize)
     }
 }

@@ -306,8 +306,8 @@ ApiInterface {
                                        @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
 
-    @GET("v9/Products/productList")
-    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
+    @POST("v9/Products/productList")
+    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap Map<String, Object> headerParams, @Body Map<String, Object> queryParams);
 
 
     @GET("v9/Products/search")

@@ -95,9 +95,9 @@ public class DeliveryDayAdapter extends RecyclerView.Adapter<DeliveryDayAdapter.
 
 
         } else {
-            viewHolder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_unselected));
+            viewHolder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_unselected_gray));
             viewHolder.binding.dayTxt.setTextColor(ContextCompat.getColor(context, R.color.black));
-            viewHolder.binding.dateTxt.setTextColor(ContextCompat.getColor(context, R.color.gray6));
+            viewHolder.binding.dateTxt.setTextColor(ContextCompat.getColor(context, R.color.black));
 
         }
 

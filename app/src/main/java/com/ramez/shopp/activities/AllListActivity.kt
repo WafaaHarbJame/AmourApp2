@@ -36,6 +36,8 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
     private var localModel: LocalModel? = null
     private var brandId = 0
     private var isNotify = false
+    private var sortType:String = ""
+    private var kind_id = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllListBinding.inflate(layoutInflater)
@@ -78,6 +80,8 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
 
     fun initAdapter() {
         adapter = ProductCategoryAdapter(
+            kind_id,
+            sortType,
             activity,
             binding.recycler,
             list,
@@ -167,7 +171,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                     }
                 }            }
 
-        }).getFavorite(categoryId, country_id, city_id, user_id, filter, brand_id, pageNumber, pageSize)
+        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, pageNumber, pageSize)
     }
 
     override fun onBackPressed() {

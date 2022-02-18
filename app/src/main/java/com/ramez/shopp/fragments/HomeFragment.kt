@@ -83,7 +83,8 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private val categoryId = 0
     private var countryId = 0
     private var cityId = 0
-
+    private var kind_id = 0
+    private var sortType:String = ""
     private var mScannerView: ZXingScannerView? = null
     private var mFlash = false
     private var mAutoFocus = false
@@ -1105,10 +1106,10 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
             object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
-                        val result = obj as FavouriteResultModel?
                         var message: String? = getString(R.string.fail_to_get_data)
                         binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
                         if (func == Constants.ERROR) {
+                            val result = obj as FavouriteResultModel?
                             if (result != null && result.message != null) {
                                 message = result.message
                             }
@@ -1128,6 +1129,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                             binding.dataLY.visibility = View.GONE
                         } else {
                             if (IsSuccess) {
+                                val result = obj as FavouriteResultModel?
                                 if (result!!.data != null && result.data.size > 0) {
                                     binding.recentlyRecycler.visibility = View.VISIBLE
                                     binding.dataLY.visibility = View.VISIBLE
@@ -1151,7 +1153,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     }
                 }
 
-            }).getFavorite(
+            }).getFavorite(kind_id,sortType,
             category_id,
             country_id,
             city_id,
@@ -1220,7 +1222,9 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     }
 
     override fun onKindClicked(position: Int, categoryModel: CategoryModel?) {
-
+        val intent = Intent(activityy, AllListActivity::class.java)
+        intent.putExtra(Constants.kind_id,categoryModel?.id)
+        startActivity(intent)
     }
 
 

@@ -71,6 +71,8 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     private var fraction = 2
     private var categoryId = 0
     var filter: String? = null
+    private var kind_id = 0
+    private var sortType:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductDeatilsBinding.inflate(layoutInflater)
@@ -871,7 +873,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     }
                 }
 
-            }).getFavorite(categoryId, countryId, cityId, userId1.toString(), filter, 0, 0, 12)
+            }).getFavorite(kind_id,sortType,categoryId, countryId, cityId, userId1.toString(), filter, 0, 0, 12)
         }
 
     private fun initProductsAdapter() {

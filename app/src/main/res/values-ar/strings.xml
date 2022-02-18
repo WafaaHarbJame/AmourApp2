@@ -141,7 +141,7 @@
     <string name="product_total">اجمالي المنتج</string>
     <string name="deliver_fees">رسوم التوصيل</string>
     <string name="choose_payment_type">اختر طريقة دفع</string>
-    <string name="delivery_send"> ارسال الطلب </string>
+    <string name="delivery_send"> الدفع </string>
     <string name="save_update">متابعة التعديل</string>
     <string name="textFromtime">9 A.m  9 P.M</string>
     <string name="delete">حذف </string>
@@ -422,5 +422,8 @@
     <string name="invalid_input">invalid Input</string>
     <string name="sort">Sort</string>
     <string name="apply">Apply</string>
+    <string name="Delivery_Method">Delivery Method</string>
+    <string name="normal_delivery">Delivery</string>
+    <string name="click_collect">Click &amp; Collect</string>
 
 </resources>

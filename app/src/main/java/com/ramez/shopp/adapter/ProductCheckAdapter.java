@@ -67,11 +67,13 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
 
 
         if (productChecker.getId() == selectedPosition) {
-            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
+//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
+            viewHolder.binding.selectTxt.setChecked(true);
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
         } else {
-            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
+//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
+            viewHolder.binding.selectTxt.setChecked(false);
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
 
         }

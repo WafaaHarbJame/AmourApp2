@@ -8,11 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <!--    <mobi.foo.benefitinapp.utils.BenefitInAppButton-->
-    <!--        android:id="@+id/checkout_btn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="center_horizontal" />-->
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
@@ -28,7 +24,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/choosePaymentType"
+                android:id="@+id/chooseDeliverytType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -45,7 +41,7 @@
                     android:drawableStart="@drawable/ic_payment"
                     android:drawablePadding="10dp"
                     android:gravity="start|center_vertical"
-                    android:text="@string/choose_payment_type"
+                    android:text="@string/Delivery_Method"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
@@ -57,26 +53,18 @@
                     android:src="@drawable/ic_angle_down" />
 
             </LinearLayout>
-
-
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/loadingLYPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:indicatorColor="@color/colorPrimaryDark"
-                app:indicatorName="LineSpinFadeLoaderIndicator" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/paymentRv"
+                android:id="@+id/deliveryTypeRv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingStart="@dimen/_8sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp" />
+                tools:itemCount="2"
+                android:paddingBottom="@dimen/_8sdp"
+                tools:listitem="@layout/row_delivery_type" />
 
             <mobi.foo.benefitinapp.utils.BenefitInAppButton
                 android:id="@+id/btnBenefitBay"
