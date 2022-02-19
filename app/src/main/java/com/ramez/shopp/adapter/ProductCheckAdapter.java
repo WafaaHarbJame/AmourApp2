@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -27,6 +30,7 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
     private List<ProductChecker> list;
     public int selectedPosition;
     private boolean isSelected = false;
+    private RadioButton lastCheckedRB = null;
 
     public ProductCheckAdapter(Context context, List<ProductChecker> checkerList, int selectedPosition, DataCallback dataCallback) {
         this.list = checkerList;
@@ -52,31 +56,24 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
         ProductChecker productChecker = list.get(position);
         viewHolder.binding.productCheckTxt.setText(productChecker.getName());
 
-
-
-
-//        if (lastIndex == position) {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
-//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-//
-//        } else {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
-//            viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
-//
-//        }
-
-
-        if (productChecker.getId() == selectedPosition) {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
+        if (selectedPosition==productChecker.getId() ) {
             viewHolder.binding.selectTxt.setChecked(true);
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
         } else {
-//            viewHolder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
             viewHolder.binding.selectTxt.setChecked(false);
             viewHolder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
 
         }
+
+        viewHolder.binding.selectTxt.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (lastCheckedRB != null) {
+                lastCheckedRB.setChecked(false);
+            }
+            //store the clicked radiobutton
+            lastCheckedRB =   viewHolder.binding.selectTxt;
+
+        });
 
 
     }
@@ -86,23 +83,19 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
         return list.size();
     }
 
-    public interface onTimeSelected {
-        void onTimeSelected(DeliveryTime deliveryTime, int position);
-    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         RowProductCheckBinding binding;
 
+        @SuppressLint("NotifyDataSetChanged")
         ViewHolder(RowProductCheckBinding view) {
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(view1 -> {
                 ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
-//                lastIndex = getBindingAdapterPosition();
-                notifyDataSetChanged();
                 selectedPosition = deliveryTime.getId();
-
+                notifyDataSetChanged();
 
                 if (dataCallback != null) {
                     dataCallback.dataResult(deliveryTime, "result", true);

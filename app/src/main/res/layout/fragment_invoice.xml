@@ -265,7 +265,7 @@
             <!--  end free layout-->
 
             <!--  start express layout-->
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/quickLy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -273,39 +273,25 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/round_corner_gray_border_fill"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
+                android:paddingTop="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_8sdp"
                 android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/quickIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_express" />
-                <!--                android:id="@+id/quickDeliveryLy"-->
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/quickLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_toEndOf="@id/quickIcon"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/express_delivery"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_12ssp"
-                    android:visibility="visible" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/delivery_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/quickLabel"
-                    android:layout_alignStart="@id/quickLabel"
-                    android:layout_marginTop="-2dp"
                     android:text="20 - 30 mins"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
@@ -344,7 +330,7 @@
                 <!--                </LinearLayout>-->
 
 
-            </RelativeLayout>
+            </LinearLayout>
             <!--  end express layout-->
 
             <androidx.recyclerview.widget.RecyclerView

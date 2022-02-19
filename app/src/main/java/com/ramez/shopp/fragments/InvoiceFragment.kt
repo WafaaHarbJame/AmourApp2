@@ -219,6 +219,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 addressId = UtilityApp.getUserData().lastSelectedAddress
                 Log.i(javaClass.simpleName, "Log addressId$addressId")
                 getDeliveryInfo(storeId, addressId, false)
+                binding.changeAddressBtu.setText(R.string.change_address)
+
             } else {
                 Log.i(javaClass.simpleName, "Log addressId$addressId")
                 binding.changeAddressBtu.setText(R.string.choose_address)
