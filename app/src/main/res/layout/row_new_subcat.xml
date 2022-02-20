@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_4sdp"
     android:layout_marginEnd="@dimen/_4sdp"
-    android:layout_marginStart="@dimen/_6sdp"
+    android:layout_marginStart="@dimen/_4sdp"
     android:gravity="center"
     android:orientation="vertical">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/ivCatImage"
         android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="@dimen/_70sdp"
         android:scaleType="fitXY"
         android:src="@drawable/holder_image"
         app:riv_border_color="@color/gray18"

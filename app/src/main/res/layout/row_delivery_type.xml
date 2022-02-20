@@ -12,35 +12,119 @@
     android:paddingTop="@dimen/_15sdp"
     android:background="@drawable/round_medium_corner_unselected_gray"
     android:layout_height="wrap_content">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:src="@drawable/normal_delivery"
-        android:id="@+id/paymentIv"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"/>
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:src="@drawable/normal_delivery"-->
+<!--        android:id="@+id/paymentIv"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/deliveryNameTv"
-        android:layout_width="0dp"
-        android:layout_weight="1"
+<!--    <com.ramez.shopp.SpichalViews.STextViewBold-->
+<!--        android:id="@+id/deliveryNameTv"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingBottom="@dimen/_8sdp"-->
+<!--        android:paddingTop="@dimen/_8sdp"-->
+<!--        android:paddingEnd="@dimen/_8sdp"-->
+<!--        android:paddingStart="@dimen/_8sdp"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/_8ssp"-->
+<!--        android:text="Sub item title"/>-->
+<!--    <com.ramez.shopp.SpichalViews.SRadioButton-->
+<!--        android:id="@+id/rbDeliveryType"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:checked="false"-->
+<!--        android:clickable="false"-->
+<!--        android:paddingEnd="@dimen/_5sdp"-->
+<!--        android:textAlignment="viewStart"-->
+<!--        android:theme="@style/MyRadioButton2" />-->
+    <RelativeLayout
+        android:id="@+id/quickLy"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_8sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:paddingStart="@dimen/_8sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_8ssp"
-        android:text="Sub item title"/>
-    <com.ramez.shopp.SpichalViews.SRadioButton
-        android:id="@+id/rbDeliveryType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:clickable="false"
-        android:paddingEnd="@dimen/_5sdp"
-        android:textAlignment="viewStart"
-        android:theme="@style/MyRadioButton2" />
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/deliveryIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_express_black" />
+        <!--                android:id="@+id/quickDeliveryLy"-->
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/deliveryNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toEndOf="@id/deliveryIcon"
+            android:gravity="start|center_vertical"
+            android:text="@string/express_delivery"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="visible" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:id="@+id/delivery_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deliveryNameTv"
+            android:layout_alignStart="@id/deliveryNameTv"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-2dp"
+            android:text="20 - 30 mins"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"
+            android:visibility="gone" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/delivery_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
+            android:layout_toStartOf="@id/rbDeliveryType"
+            android:text="20 BHD"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <!--                <LinearLayout-->
+        <!--                    android:id="@+id/expressTimeTv"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginStart="@dimen/_8sdp"-->
+        <!--                    android:layout_marginEnd="@dimen/_8sdp"-->
+        <!--                    android:gravity="center_vertical"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:paddingStart="@dimen/_10sdp"-->
+        <!--                    android:paddingTop="@dimen/_8sdp"-->
+        <!--                    android:paddingEnd="@dimen/_10sdp"-->
+        <!--                    android:paddingBottom="@dimen/_8sdp">-->
+
+
+        <!--                    <Space-->
+        <!--                        android:layout_width="0dp"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_weight="1" />-->
+
+
+        <!--                </LinearLayout>-->
+        <com.ramez.shopp.SpichalViews.SRadioButton
+            android:id="@+id/rbDeliveryType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:clickable="false"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textAlignment="viewStart"
+            android:theme="@style/MyRadioButton2" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:scaleX="@integer/scaleX"
             android:text="@string/fal_angle_right"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_6sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_18ssp" />
 

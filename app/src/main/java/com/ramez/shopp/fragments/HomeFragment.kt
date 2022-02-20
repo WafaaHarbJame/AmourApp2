@@ -632,9 +632,22 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                     "EEE",
                                     UtilityApp.getLanguage()
                                 )
-                                if (UtilityApp.getLanguage() == Constants.Arabic) binding.deliveryTimeTv.text =
-                                    firstTime.time + " " + deliveryDay else binding.deliveryTimeTv.text =
+                                val normalDelivery= if (UtilityApp.getLanguage() == Constants.Arabic){
+                                    firstTime.time + " " + deliveryDay
+                                }
+                                else{
                                     deliveryDay + " " + firstTime.time
+                                }
+
+                                binding.deliveryTimeTv.text=normalDelivery
+                                UtilityApp.setNormalDelivery(normalDelivery)
+                                Log.i(javaClass.name, "Log normalDelivery $normalDelivery")
+                                Log.i(javaClass.name, "Log normalDelivery UtilityApp  ${UtilityApp.getNormalDelivery()}")
+
+//                                if (UtilityApp.getLanguage() == Constants.Arabic) binding.deliveryTimeTv.text =
+//                                    firstTime.time + " " + deliveryDay else binding.deliveryTimeTv.text =
+//                                    deliveryDay + " " + firstTime.time
+
                             }
                         }
                     }

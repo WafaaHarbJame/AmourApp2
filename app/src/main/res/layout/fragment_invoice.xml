@@ -47,12 +47,20 @@
 
 
                 <ImageView
-                    android:id="@+id/paymentArrowImg"
+                    android:id="@+id/deliveryTypeArrowImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_angle_down" />
 
             </LinearLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loadingLYDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimaryDark"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/deliveryTypeRv"
                 android:layout_width="match_parent"
@@ -265,72 +273,86 @@
             <!--  end free layout-->
 
             <!--  start express layout-->
-            <LinearLayout
-                android:id="@+id/quickLy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/round_corner_gray_border_fill"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_8sdp"
-                android:visibility="gone">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/quickLy"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/_10sdp"-->
+<!--                android:layout_marginEnd="@dimen/_10sdp"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:background="@drawable/round_corner_gray_border_fill"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingStart="@dimen/_10sdp"-->
+<!--                android:paddingTop="@dimen/_5sdp"-->
+<!--                android:paddingEnd="@dimen/_10sdp"-->
+<!--                android:paddingBottom="@dimen/_5sdp"-->
+<!--                android:visibility="gone">-->
 
-                <ImageView
-                    android:id="@+id/quickIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_express" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/quickIcon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:src="@drawable/ic_express" />-->
+<!--                &lt;!&ndash;                android:id="@+id/quickDeliveryLy"&ndash;&gt;-->
+<!--                <com.ramez.shopp.SpichalViews.STextViewBold-->
+<!--                    android:id="@+id/quickLabel"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/_10sdp"-->
+<!--                    android:layout_toEndOf="@id/quickIcon"-->
+<!--                    android:gravity="start|center_vertical"-->
+<!--                    android:text="@string/express_delivery"-->
+<!--                    android:textColor="@color/green"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    android:visibility="visible" />-->
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/delivery_time"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_height="wrap_content"
-                    android:text="20 - 30 mins"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp" />
+<!--                <com.ramez.shopp.SpichalViews.STextViewBold-->
+<!--                    android:id="@+id/delivery_time"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@id/quickLabel"-->
+<!--                    android:layout_alignStart="@id/quickLabel"-->
+<!--                    android:layout_marginTop="-2dp"-->
+<!--                    android:text="20 - 30 mins"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="@dimen/_10ssp" />-->
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/delivery_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:text="20 BHD"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_12ssp" />
+<!--                <com.ramez.shopp.SpichalViews.STextViewBold-->
+<!--                    android:id="@+id/delivery_price"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="@dimen/_8sdp"-->
+<!--                    android:text="20 BHD"-->
+<!--                    android:textColor="@color/green"-->
+<!--                    android:textSize="@dimen/_12ssp" />-->
 
-                <!--                <LinearLayout-->
-                <!--                    android:id="@+id/expressTimeTv"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginStart="@dimen/_8sdp"-->
-                <!--                    android:layout_marginEnd="@dimen/_8sdp"-->
-                <!--                    android:gravity="center_vertical"-->
-                <!--                    android:orientation="horizontal"-->
-                <!--                    android:paddingStart="@dimen/_10sdp"-->
-                <!--                    android:paddingTop="@dimen/_8sdp"-->
-                <!--                    android:paddingEnd="@dimen/_10sdp"-->
-                <!--                    android:paddingBottom="@dimen/_8sdp">-->
-
-
-                <!--                    <Space-->
-                <!--                        android:layout_width="0dp"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_weight="1" />-->
+<!--                &lt;!&ndash;                <LinearLayout&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:id="@+id/expressTimeTv"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:layout_marginEnd="@dimen/_8sdp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:gravity="center_vertical"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:orientation="horizontal"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:paddingStart="@dimen/_10sdp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:paddingTop="@dimen/_8sdp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:paddingEnd="@dimen/_10sdp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                    android:paddingBottom="@dimen/_8sdp">&ndash;&gt;-->
 
 
-                <!--                </LinearLayout>-->
+<!--                &lt;!&ndash;                    <Space&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_width="0dp"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                &lt;!&ndash;                        android:layout_weight="1" />&ndash;&gt;-->
 
 
-            </LinearLayout>
+<!--                &lt;!&ndash;                </LinearLayout>&ndash;&gt;-->
+
+
+<!--            </RelativeLayout>-->
             <!--  end express layout-->
 
             <androidx.recyclerview.widget.RecyclerView

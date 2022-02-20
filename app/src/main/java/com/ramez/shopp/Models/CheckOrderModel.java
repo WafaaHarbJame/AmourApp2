@@ -9,7 +9,7 @@ import java.util.List;
 public class CheckOrderModel implements Serializable {
     @SerializedName("user_address")
     @Expose
-    private UserDefaultAddress userAddress;
+    private UserAddress userAddress;
     @SerializedName("delivery_times")
     @Expose
     private List<DeliveryTime> deliveryTimes = null;
@@ -30,13 +30,13 @@ public class CheckOrderModel implements Serializable {
     private double cost;
     @SerializedName("express_delivery_charges")
     @Expose
-    private double expressDeliveryCharges;
+    private int expressDeliveryCharges;
 
-    public UserDefaultAddress getUserAddress() {
+    public UserAddress getUserAddress() {
         return userAddress;
     }
 
-    public void setUserAddress(UserDefaultAddress userAddress) {
+    public void setUserAddress(UserAddress userAddress) {
         this.userAddress = userAddress;
     }
 
@@ -88,11 +88,11 @@ public class CheckOrderModel implements Serializable {
         this.cost = cost;
     }
 
-    public double getExpressDeliveryCharges() {
+    public int getExpressDeliveryCharges() {
         return expressDeliveryCharges;
     }
 
-    public void setExpressDeliveryCharges(double expressDeliveryCharges) {
+    public void setExpressDeliveryCharges(int expressDeliveryCharges) {
         this.expressDeliveryCharges = expressDeliveryCharges;
     }
 }

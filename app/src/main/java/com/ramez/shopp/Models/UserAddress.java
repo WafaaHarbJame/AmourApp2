@@ -6,44 +6,30 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class UserAddress implements Serializable {
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("id")
     @Expose
-    private Integer id;
-    @SerializedName("address_type")
-    @Expose
-    private String addressType;
-    @SerializedName("default_address")
-    @Expose
-    private Integer defaultAddress;
+    private int id;
     @SerializedName("full_address")
     @Expose
     private String fullAddress;
-    @SerializedName("mobile_number")
-    @Expose
-    private String mobileNumber;
 
-    public Integer getId() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getAddressType() {
-        return addressType;
-    }
-
-    public void setAddressType(String addressType) {
-        this.addressType = addressType;
-    }
-
-    public Integer getDefaultAddress() {
-        return defaultAddress;
-    }
-
-    public void setDefaultAddress(Integer defaultAddress) {
-        this.defaultAddress = defaultAddress;
     }
 
     public String getFullAddress() {
@@ -53,13 +39,4 @@ public class UserAddress implements Serializable {
     public void setFullAddress(String fullAddress) {
         this.fullAddress = fullAddress;
     }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
 }

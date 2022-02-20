@@ -37,7 +37,9 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
     private var brandId = 0
     private var isNotify = false
     private var sortType:String = ""
-    private var kind_id = 0
+    private var kindId = 0
+    private var sortBySuggest = 0
+    private var sortByNew = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllListBinding.inflate(layoutInflater)
@@ -62,10 +64,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
         getIntentExtra
         binding.swipeDataContainer.setOnRefreshListener {
             binding.swipeDataContainer.isRefreshing = false
-            getProductList(0, countryId, cityId, userId, filter, brandId, 0, 10)
+            getProductList(kindId,sortType,0, countryId, cityId, userId, filter, brandId, 0, 10)
         }
         binding.failGetDataLY.refreshBtn.setOnClickListener { view1 ->
             getProductList(
+                kindId,sortType,
                 0,
                 countryId,
                 cityId,
@@ -80,7 +83,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
 
     fun initAdapter() {
         adapter = ProductCategoryAdapter(
-            kind_id,
+            kindId,
             sortType,
             activity,
             binding.recycler,
@@ -108,11 +111,14 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                 brandId = bundle.getInt(Constants.brand_id)
                 isNotify = bundle.getBoolean(Constants.isNotify)
                 title = name
-                getProductList(0, countryId, cityId, userId, filter, brandId, 0, 10)
+                kindId=bundle.getInt(Constants.kind_id)
+                    getProductList(kindId,sortType,0, countryId, cityId, userId, filter, brandId, 0, 10)
             }
         }
 
     private fun getProductList(
+        kindId: Int,
+        sortType: String,
         categoryId: Int,
         country_id: Int,
         city_id: Int,
@@ -171,7 +177,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                     }
                 }            }
 
-        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, pageNumber, pageSize)
+        }).getFavorite(kindId,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, pageNumber, pageSize)
     }
 
     override fun onBackPressed() {

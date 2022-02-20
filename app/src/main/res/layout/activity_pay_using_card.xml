@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:lines="2"
                 android:maxLines="2"
-                android:text=""
+                android:text="@string/credit_card"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="visible" />
@@ -144,7 +144,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="30dp"
                         android:background="@drawable/rounded_button_selector"
-                        android:text="pay"
+                        android:text="@string/pay"
                         android:textColor="@color/white" />
                 </RelativeLayout>
 

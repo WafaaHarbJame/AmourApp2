@@ -407,7 +407,7 @@
     <string name="shop_more_earn_more">Shop more earn more</string>
     <string name="please_select_branch">Please select branch</string>
     <string name="you_not_signin">You are not sign in</string>
-    <string name="express_delivery">Express Delivery</string>
+    <string name="express_delivery">Fast Delivery</string>
     <string name="if_item_not_available">If an item is not available?</string>
     <string name="no_active">Loyalty program is currently inactive</string>
     <string name="Branch">Branch</string>
@@ -456,8 +456,7 @@
     <string name="accept_terms">Please Accept the Terms </string>
     <string name="beneit_using_app_EN" translatable="false">benefitPay Mobile</string>
     <string name="beneit_using_app_AR" translatable="false">بنفت موبايل</string>
-    <string name="credit_card_ar" translatable="false">credit Card</string>
-    <string name="credit_card_en" translatable="false">credit Card</string>
+    <string name="credit_card" >Credit Card</string>
     <string name="beneit_using_Web_AR" translatable="false">بطاقة الصراف الآلي (البحرين)</string>
     <string name="beneit_using_Web_En" translatable="false">Debit Card (Bahrain)</string>
     <string name="failto_save">Fail to save Data</string>
@@ -466,8 +465,12 @@
     <string name="sort">Sort</string>
     <string name="apply">Apply</string>
     <string name="Delivery_Method">Delivery Method</string>
-    <string name="normal_delivery">Delivery</string>
+    <string name="normal_delivery">Schedule a time</string>
     <string name="click_collect">Click &amp; Collect</string>
+    <string name="pay">pay</string>
+    <string name="suggsted">Suggested</string>
+    <string name="price_high_to_low">Price High to Low</string>
+    <string name="price_low_to_high">Price Low to High</string>
 
 
 </resources>

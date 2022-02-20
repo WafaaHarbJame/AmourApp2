@@ -25,7 +25,7 @@ import com.ramez.shopp.databinding.RowSearchProductItemBinding
 import retrofit2.Call
 
 class ProductCategoryAdapter(
-    kind_id:Int,
+    kindId:Int,
     sortType:String,
     private val context: Context,
     rv: RecyclerView,
@@ -39,18 +39,18 @@ class ProductCategoryAdapter(
     private val onItemClick: OnItemClick?,
     gridNumber: Int,
     brand_id: Int,
-    sortByPrice: Int
+    sortByTypes: Int,
 
-) :
+    ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var isLoading = false
     var visibleThreshold = 5
     var show_loading = true
-    var category_id: Int
-    var country_id: Int
-    var city_id: Int
-    var user_id: String
-    private var kind_id = 0
+    var categoryId: Int
+    var countryId: Int
+    var cityId: Int
+    var userId1: String
+    private var kindId = 0
     private var sortType:String = ""
     private var nextPage = 1
     private var lastVisibleItem = 0
@@ -61,31 +61,35 @@ class ProductCategoryAdapter(
     private var currency = "BHD"
     private var limit = 2
     private val rv: RecyclerView
-    private val filter_text: String?
+    private val filterText: String?
     private val gridNumber: Int
-    private var brand_id = 0
+    private var brandId = 0
     var isCanceled: Boolean
     var apiCall: Call<*>? = null
     var fraction = 2
     var localModel: LocalModel? = null
-    private var sortByPrice = 0
+    private var sortByTypes = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var vh: RecyclerView.ViewHolder? = null
-        if (viewType == VIEW_TYPE_ITEM) {
-            val itemView: RowSearchProductItemBinding = RowSearchProductItemBinding.inflate(
-                LayoutInflater.from(
-                    context
-                ), parent, false
-            )
-            vh = Holder(itemView)
-        } else if (viewType == VIEW_TYPE_LOADING) {
-            val itemView: RowLoadingBinding =
-                RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false)
-            vh = LoadingViewHolder(itemView)
-        } else if (viewType == VIEW_TYPE_EMPTY) {
-            val itemView: RowEmptyBinding =
-                RowEmptyBinding.inflate(LayoutInflater.from(context), parent, false)
-            vh = EmptyViewHolder(itemView)
+        when (viewType) {
+            VIEW_TYPE_ITEM -> {
+                val itemView: RowSearchProductItemBinding = RowSearchProductItemBinding.inflate(
+                    LayoutInflater.from(
+                        context
+                    ), parent, false
+                )
+                vh = Holder(itemView)
+            }
+            VIEW_TYPE_LOADING -> {
+                val itemView: RowLoadingBinding =
+                    RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false)
+                vh = LoadingViewHolder(itemView)
+            }
+            VIEW_TYPE_EMPTY -> {
+                val itemView: RowEmptyBinding =
+                    RowEmptyBinding.inflate(LayoutInflater.from(context), parent, false)
+                vh = EmptyViewHolder(itemView)
+            }
         }
         return vh!!
     }
@@ -294,14 +298,14 @@ class ProductCategoryAdapter(
                 println("Log productDMS size " + productModels.size)
                 notifyItemInserted(productModels.size - 1)
                 LoadAllData(
-                    kind_id,
+                    kindId,
                     sortType,
-                    category_id,
-                    country_id,
-                    city_id,
-                    user_id,
-                    filter_text,
-                    brand_id,
+                    categoryId,
+                    countryId,
+                    cityId,
+                    userId1,
+                    filterText,
+                    brandId,
                     nextPage,
                     10
                 )
@@ -343,11 +347,21 @@ class ProductCategoryAdapter(
                                 //notifyItemRangeInserted(pos, products.size)
                                 nextPage++
 
-                                if (sortByPrice == 1) {
-                                    productModels.sortBy { it?.firstProductBarcodes?.price }
-                                } else if (sortByPrice == 2) {
-                                    productModels.sortByDescending { it?.firstProductBarcodes?.price  }
+                                when {
+                                    sortByTypes == 1 -> {
+                                        productModels.sortBy { it?.firstProductBarcodes?.price }
+                                    }
+                                    sortByTypes == 2 -> {
+                                        productModels.sortByDescending { it?.firstProductBarcodes?.price  }
 
+                                    }
+                                    sortByTypes == 3 -> {
+                                        productModels.sortBy { it?.id }
+
+                                    }
+                                    sortByTypes == 4 -> {
+                                        productModels.sortByDescending { it?.id  }
+                                    }
                                 }
 
                                 notifyDataSetChanged()
@@ -727,16 +741,18 @@ class ProductCategoryAdapter(
     init {
         this.productModels = ArrayList(productModels)
         this.limit = limit
-        this.category_id = category_id
-        this.city_id = city_id
-        this.country_id = country_id
-        this.user_id = user_id
+        this.categoryId = category_id
+        this.cityId = city_id
+        this.countryId = country_id
+        this.userId1 = user_id
+        this.kindId=kindId
+        this.sortType=sortType
         this.rv = rv
-        filter_text = filter
+        filterText = filter
         this.gridNumber = gridNumber
         isCanceled = false
-        this.brand_id = brand_id
-        this.sortByPrice = sortByPrice
+        this.brandId = brand_id
+        this.sortByTypes = sortByTypes
         val gridLayoutManager = rv.layoutManager as GridLayoutManager?
         gridLayoutManager!!.spanSizeLookup = object : SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

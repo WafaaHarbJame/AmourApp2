@@ -6,15 +6,19 @@ import com.ramez.shopp.classes.UtilityApp;
 
 public class DeliveryTypeModel {
     private int id;
-    private String methodEn;
-    private String methodAr;
-    private int image;
+    private String methodName;
+    private int UnselectedImage;
+    private int selectedImage;
+    private String deliveryTime;
+    private Double deliveryPrice;
 
-    public DeliveryTypeModel(int id, String methodEn, String methodAr, int image) {
+    public DeliveryTypeModel(int id, String methodName, int unselectedImage, int selectedImage, String deliveryTime, Double deliveryPrice) {
         this.id = id;
-        this.methodEn = methodEn;
-        this.methodAr = methodAr;
-        this.image = image;
+        this.methodName = methodName;
+        UnselectedImage = unselectedImage;
+        this.selectedImage = selectedImage;
+        this.deliveryTime = deliveryTime;
+        this.deliveryPrice = deliveryPrice;
     }
 
     public int getId() {
@@ -25,31 +29,43 @@ public class DeliveryTypeModel {
         this.id = id;
     }
 
-    public String getMethodEn() {
-        return methodEn;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public void setMethodEn(String methodEn) {
-        this.methodEn = methodEn;
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
-    public String getMethodAr() {
-        return methodAr;
+    public int getUnselectedImage() {
+        return UnselectedImage;
     }
 
-    public void setMethodAr(String methodAr) {
-        this.methodAr = methodAr;
+    public void setUnselectedImage(int unselectedImage) {
+        UnselectedImage = unselectedImage;
     }
 
-    public int getImage() {
-        return image;
+    public int getSelectedImage() {
+        return selectedImage;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setSelectedImage(int selectedImage) {
+        this.selectedImage = selectedImage;
     }
-    public String getName() {
 
-        return UtilityApp.isEnglish()? methodEn : methodAr;
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public Double getDeliveryPrice() {
+        return deliveryPrice;
+    }
+
+    public void setDeliveryPrice(Double deliveryPrice) {
+        this.deliveryPrice = deliveryPrice;
     }
 }

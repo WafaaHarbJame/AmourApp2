@@ -59,7 +59,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     var categoryId = 0
     var countryId = 0
     var cityId = 0
-    private var sortByPrice = 0
+    private var sortByTypes = 0
     private var userId = "0"
     private var catPosition = 0
     private val filter = ""
@@ -69,8 +69,9 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private val searchCode = 2000
     lateinit var binding: FragmentCategoryProductsBinding
     private var scanLauncher: ActivityResultLauncher<Intent>? = null
-    private var kind_id = 0
+    private var kindId = 0
     private var sortType:String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -178,7 +179,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     fun initAdapter() {
         adapter = ProductCategoryAdapter(
-            kind_id,
+            kindId,
             sortType,
             activityy,
             binding.productsRv,
@@ -192,7 +193,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             this,
             numColumn,
             0,
-            sortByPrice
+            sortByTypes
         )
         binding.productsRv.adapter = adapter
     }
@@ -331,7 +332,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                     }
                 }
 
-            }).getFavorite(kind_id,sortType,category_id, country_id, city_id, user_id, filter, 0, page_number, page_size)
+            }).getFavorite(kindId,sortType,category_id, country_id, city_id, user_id, filter, 0, page_number, page_size)
     }
 
     override fun OnMainCategoryItemClicked(mainCategoryDM: CategoryModel, position: Int) {
@@ -410,8 +411,8 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         }
 
         if (event.type == MessageEvent.TYPE_SORT2) {
-            sortByPrice = event.data as Int
-            sortByPrice()
+            sortByTypes = event.data as Int
+            sortByType()
 
 
         }
@@ -500,25 +501,49 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     }
 
-    private fun sortByPrice() {
-        if (sortByPrice == 1) {
-            //ascending
-          //  sortByPrice = 1
-            productList?.sortBy { it.firstProductBarcodes.price }
-            initAdapter()
-            adapter?.notifyDataSetChanged()
+    private fun sortByType() {
+        when (sortByTypes) {
+            1 -> {
+                //ascending
+                //  sortByPrice = 1
+                productList?.sortBy { it.firstProductBarcodes.price }
+                initAdapter()
+                adapter?.notifyDataSetChanged()
 
 
-        } else if (sortByPrice == 2) {
-            //Descending
-           // sortByPrice = 0
-            productList?.sortByDescending { it.firstProductBarcodes.price }
-            initAdapter()
-            adapter?.notifyDataSetChanged()
+            }
+            2 -> {
+                //Descending
+                // sortByPrice = 0
+                productList?.sortByDescending { it.firstProductBarcodes.price }
+                initAdapter()
+                adapter?.notifyDataSetChanged()
 
 
 
+            }
+            3 -> {
+                //Descending
+                // sortByPrice = 0
+                productList?.sortBy { it.id }
+                initAdapter()
+                adapter?.notifyDataSetChanged()
+
+
+
+            }
+            4 -> {
+                //Descending
+                // sortByPrice = 0
+                productList?.sortByDescending { it.id }
+                initAdapter()
+                adapter?.notifyDataSetChanged()
+
+
+
+            }
         }
+
 
     }
 

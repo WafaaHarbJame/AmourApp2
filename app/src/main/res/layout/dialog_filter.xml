@@ -51,13 +51,13 @@
             android:orientation="vertical">
 
             <com.ramez.shopp.SpichalViews.SRadioButton
-                android:id="@+id/rbSelectAddress"
+                android:id="@+id/rbSuggested"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:checked="true"
+                android:checked="false"
                 android:paddingEnd="@dimen/_5sdp"
-                android:text="Sugested"
+                android:text="@string/suggsted"
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
 
@@ -66,9 +66,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:checked="true"
+                android:checked="false"
                 android:paddingEnd="@dimen/_5sdp"
-                android:text="Price High to Low"
+                android:text="@string/price_high_to_low"
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
 
@@ -77,9 +77,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:checked="true"
+                android:checked="false"
                 android:paddingEnd="@dimen/_5sdp"
-                android:text="Price Low to High"
+                android:text="@string/price_low_to_high"
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
 

@@ -418,12 +418,18 @@
     <string name="sound_alert_hint">تشغيل الصوت لفحص المنتج والتفاعلات.</string>
     <string name="min_quantity_is_one">الحد الادني من الكمية واحد </string>
     <string name="accept_terms">الرجاء الموافقة على شروط الخصوصية </string>
-    <string name="failto_save">Fail to save Data</string>
-    <string name="invalid_input">invalid Input</string>
-    <string name="sort">Sort</string>
-    <string name="apply">Apply</string>
-    <string name="Delivery_Method">Delivery Method</string>
-    <string name="normal_delivery">Delivery</string>
-    <string name="click_collect">Click &amp; Collect</string>
+    <string name="failto_save">فشل حفظ البيانات</string>
+    <string name="invalid_input">غير صحيح</string>
+    <string name="sort">ترتيب</string>
+    <string name="apply">تطبيق</string>
+    <string name="Delivery_Method">طريقة التوصيل </string>
+    <string name="normal_delivery">التوصيل المجدول</string>
+    <string name="click_collect">اطلب واستلم من الفرع</string>
+    <string name="credit_card" >كريدت كارد</string>
+    <string name="fail_create_order">فشل انشاء الطلب</string>
+    <string name="pay">دفع </string>
+    <string name="suggsted">مقترحة</string>
+    <string name="price_high_to_low">Price High to Low</string>
+    <string name="price_low_to_high">Price Low to High</string>
 
 </resources>

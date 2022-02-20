@@ -56,7 +56,8 @@ object Constants {
     const val KEY_FRAGMENT_TYPE = "KEY_FRAGMENT_TYPE"
     const val KEY_TOKEN = "KEY_TOKEN"
     const val KEY_REFRESH_TOKEN = "KEY_REFRESH_TOKEN"
-    const val TOKEN_PREFIX = "Bearer  "
+    const val TOKEN_PREFIX = "Bearer "
+    const val KEY_NORMAL_DELIVERY = "KEY_NORMAL_DELIVERY "
 
     //    public static final String SUBCATID = "SUBCATID";
     const val TO_BROSHER = "TO_BROSHER"

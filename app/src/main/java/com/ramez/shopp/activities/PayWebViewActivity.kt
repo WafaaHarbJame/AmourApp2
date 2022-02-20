@@ -57,7 +57,7 @@ class PayWebViewActivity : ActivityBase() {
         }
         binding.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
-        binding.webView.loadUrl(webUrl!!)
+        binding.webView.loadUrl(webUrl.toString())
 
         initListeners()
 

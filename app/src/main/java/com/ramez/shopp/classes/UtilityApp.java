@@ -242,6 +242,14 @@ public class UtilityApp {
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER_LANGUAGE, language);
     }
 
+    public static String getNormalDelivery() {
+        return RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_NORMAL_DELIVERY);
+    }
+
+    public static void setNormalDelivery(String normalDelivery) {
+        RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_NORMAL_DELIVERY, normalDelivery);
+    }
+
     public static void setAppLanguage() {
         String lang = getLanguage();
         if (lang == null) lang = Constants.English;

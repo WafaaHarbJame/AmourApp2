@@ -20,7 +20,8 @@ import javax.crypto.spec.SecretKeySpec
 
 class PayUsingCardActivity : ActivityBase() {
     lateinit var binding: ActivityPayUsingCardBinding
-
+    var currentMonth: String? = null
+    var currentYear: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +29,7 @@ class PayUsingCardActivity : ActivityBase() {
         val view: View = binding.root
         setContentView(view)
 
-        var currentMonth: String? = null
-        var currentYear: String? = null
+
 
         currentMonth= DateHandler.GetMonthOnlyString()
         currentYear=DateHandler.GetYearOnlyString()
@@ -40,6 +40,17 @@ class PayUsingCardActivity : ActivityBase() {
 //            "0",
 //            ""
 //        ) else currentMonth
+
+        initListeners()
+
+
+
+    }
+
+    private fun initListeners() {
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
         binding.btnDone.setOnClickListener {
             try {
                 val monthStr = NumberHandler.arabicToDecimal(binding.sprmonth.text.toString())
@@ -74,7 +85,7 @@ class PayUsingCardActivity : ActivityBase() {
                     hasError = true
                 }
 
-                if (yearStr.toInt() < currentYear.toInt()) {
+                if (yearStr.toInt() < currentYear?.toInt()?:0) {
                     binding.spryear.error = getString(R.string.invalid_input)
                     hasError = true
                 }
@@ -105,8 +116,6 @@ class PayUsingCardActivity : ActivityBase() {
             }
 
         }
-
-
     }
 
     private fun sendData(cardModel: CreditCardModel) {
