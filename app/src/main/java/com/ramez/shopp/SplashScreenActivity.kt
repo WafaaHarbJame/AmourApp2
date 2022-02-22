@@ -324,7 +324,7 @@ class SplashScreenActivity : ActivityBase() {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 if (IsSuccess) {
                     val result =
-                        obj as ResultAPIModel<ArrayList<CategoryModel?>?>
+                        obj as ResultAPIModel<ArrayList<KindCategoryModel?>?>
                     if (result.data?.size ?: 0 > 0) {
                         val categoryModelList = result.data
                         UtilityApp.setAllKindsData(categoryModelList)

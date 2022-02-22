@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Models.request.ProductRequest;
 import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -64,6 +65,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private DataCallback dataCallback;
     private int fraction = 2;
     LocalModel localModel;
+    private ProductRequest productRequest ;
 
     public OfferProductAdapter(Context context, List<ProductModel> productList, int category_id, int subID,
                                int country_id, int city_id, String user_id, int limit, RecyclerView rv,
@@ -365,15 +367,16 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 productModels.add(null);
 //                System.out.println("Log productDMS size " + productModels.size());
                 notifyItemInserted(productModels.size() - 1);
+                productRequest=new ProductRequest(categoryId, countryId, cityId, filter_text, brand_id, nextPage, 10, kind_id, null, null);
 
-                LoadAllData(categoryId, countryId, cityId, userId, filter_text, nextPage, 10);
+                LoadAllData(productRequest);
             }
 
         });
 
     }
 
-    private void LoadAllData(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    private void LoadAllData(ProductRequest  productRequest) {
 
 //        categoryId = 233;
 //        System.out.println("Log LoadAllData category_id: " + categoryId);
@@ -408,7 +411,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        }).getFavorite(productRequest);
     }
 
     @Override

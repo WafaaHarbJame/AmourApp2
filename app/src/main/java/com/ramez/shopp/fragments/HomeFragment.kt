@@ -37,6 +37,7 @@ import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.WhatsUpDialog
 import com.ramez.shopp.Models.*
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.Utils.DateHandler
@@ -53,7 +54,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter.OnItemClick,
-        OnBookletClick, AutomateSlider.OnSliderClick, OnBrandClick, OnBannersClick,KindAdapter.OnKindClick,
+        OnBookletClick, AutomateSlider.OnSliderClick, OnBrandClick, OnBannersClick, KindAdapter.OnKindClick,
         MainSliderAdapter.OnSliderClick,
         OnKitchenClick {
     var countryCode = ""
@@ -67,7 +68,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     var recentLayoutManager: LinearLayoutManager? = null
     var userId = "0"
     var categoryModelList: ArrayList<CategoryModel>? = null
-    var kindModelList: ArrayList<CategoryModel>? = null
+    var kindModelList: ArrayList<KindCategoryModel>? = null
     var sliderList: ArrayList<Slider>? = null
     var bannersList: ArrayList<Slider>? = null
     var brandsList: ArrayList<BrandModel>? = null
@@ -84,7 +85,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private var countryId = 0
     private var cityId = 0
     private var kind_id = 0
-    private var sortType:String = ""
+    private var sortType: String = ""
     private var mScannerView: ZXingScannerView? = null
     private var mFlash = false
     private var mAutoFocus = false
@@ -106,6 +107,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private var countryDetailsModel: CountryDetailsModel? = null
     private var changeBranchLauncher: ActivityResultLauncher<Intent>? = null
     private var searchLauncher: ActivityResultLauncher<Intent>? = null
+
 
 
     override fun onCreateView(
@@ -153,7 +155,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         bookletManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         brandManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         val bannersManger = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
-        val kindManger = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
+        val kindManger = LinearLayoutManager(activityy, RecyclerView.VERTICAL, false)
         val categoryManger = GridLayoutManager(activityy, 2, RecyclerView.HORIZONTAL, false)
         val kitchenLy = LinearLayoutManager(activityy, RecyclerView.HORIZONTAL, false)
         binding.kitchenRecycler.layoutManager = kitchenLy
@@ -174,6 +176,10 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         binding.kindRecycler.setHasFixedSize(true)
         binding.bannersRv.itemAnimator = null
         binding.bannersRv.setHasFixedSize(true)
+//        binding.kindRecycler.isNestedScrollingEnabled = true
+
+        binding.kindRecycler.isNestedScrollingEnabled = false
+
         binding.bestSellerRecycler.layoutManager = bestSellerLayoutManager
         binding.bestProductRecycler.layoutManager = bestProductGridLayoutManager
         binding.offerRecycler.layoutManager = bestOfferGridLayoutManager
@@ -411,9 +417,9 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     var message: String? = getString(R.string.fail_to_get_data)
                     binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
                     if (func == Constants.ERROR) {
-                        if (result != null && result.message != null) {
-                            message = result.message
-                        }
+//                        if (result != null && result.message != null) {
+//                            message = result.message
+//                        }
                         binding.dataLY.visibility = View.GONE
                         binding.noDataLY.noDataLY.visibility = View.GONE
                         binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
@@ -430,119 +436,116 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                         binding.dataLY.visibility = View.GONE
                     } else {
                         if (IsSuccess) {
-//                        binding.searchLY.setVisibility(View.VISIBLE);
-                            bannersList?.clear()
-                            sliderList?.clear()
-                            if (UtilityApp.getDinners() != null && UtilityApp.getDinners().size > 0) {
-                                list = UtilityApp.getDinners()
-                                initKitchenAdapter()
-                            } else {
-                                getDinners(lang)
-                            }
-                            if (UtilityApp.getSliders() != null && UtilityApp.getSliders().size > 0 && UtilityApp.getBanners() != null && UtilityApp.getBanners().size > 0
-                            ) {
-                                sliderList = UtilityApp.getSliders()
-                                bannersList = UtilityApp.getBanners()
-                            } else {
-                                UtilityApp.setSliderData(null)
-                                UtilityApp.setBannerData(null)
+                            if (result?.status == 200) {
+                                //  binding.searchLY.setVisibility(View.VISIBLE);
                                 bannersList?.clear()
                                 sliderList?.clear()
-                                if (result!!.sliders.size > 0) {
-                                    for (i in result.sliders.indices) {
-                                        val slider =
-                                            result.sliders[i]
-                                        if (slider.type == 0) {
-                                            sliderList!!.add(slider)
-                                        } else if (slider.type == 1) {
-                                            bannersList!!.add(slider)
+                                if (UtilityApp.getDinners() != null && UtilityApp.getDinners().size > 0) {
+                                    list = UtilityApp.getDinners()
+                                    initKitchenAdapter()
+                                } else {
+                                    getDinners(lang)
+                                }
+                                if (UtilityApp.getSliders() != null && UtilityApp.getSliders().size > 0 && UtilityApp.getBanners() != null && UtilityApp.getBanners().size > 0
+                                ) {
+                                    sliderList = UtilityApp.getSliders()
+                                    bannersList = UtilityApp.getBanners()
+                                } else {
+                                    UtilityApp.setSliderData(null)
+                                    UtilityApp.setBannerData(null)
+                                    bannersList?.clear()
+                                    sliderList?.clear()
+                                    if (result.sliders.size > 0) {
+                                        for (i in result.sliders.indices) {
+                                            val slider =
+                                                result.sliders[i]
+                                            if (slider.type == 0) {
+                                                sliderList!!.add(slider)
+                                            } else if (slider.type == 1) {
+                                                bannersList!!.add(slider)
+                                            }
+                                        }
+                                        if (sliderList!!.size > 0) {
+                                            UtilityApp.setSliderData(sliderList)
+                                        }
+                                        if (bannersList!!.size > 0) {
+                                            UtilityApp.setBannerData(bannersList)
                                         }
                                     }
-                                    if (sliderList!!.size > 0) {
-                                        UtilityApp.setSliderData(sliderList)
+                                }
+                                Log.i(javaClass.name, "Log sliderList ${sliderList?.size}")
+                                Log.i(javaClass.name, "Log sliderList banner ${bannersList?.size}")
+
+
+                                initSliderAdapter()
+                                initBannersAdapter()
+                                getBooklets(cityId)
+                                getAllBrands(cityId)
+
+                                val productRequest = ProductRequest(categoryId,countryId,cityId,Constants.new_filter,0,0,10,kind_id,null,null)
+
+                                getProductList(productRequest)
+                                if (result.featured != null && result.featured.size > 0 || result.quickProducts != null && result.quickProducts.size > 0 || result.offeredProducts != null && result.offeredProducts.size > 0
+                                ) {
+                                    binding.dataLY.visibility = View.VISIBLE
+                                    //                            binding.searchLY.setVisibility(View.VISIBLE);
+                                    binding.noDataLY.noDataLY.visibility = View.GONE
+                                    binding.failGetDataLY.failGetDataLY.visibility = View.GONE
+                                    productBestList = result.featured
+                                    productSellerList = result.quickProducts
+                                    productOffersList = result.offeredProducts
+                                    if (productOffersList?.size == 0) {
+                                        binding.offerLy.visibility = View.GONE
                                     }
-                                    if (bannersList!!.size > 0) {
-                                        UtilityApp.setBannerData(bannersList)
+                                    if (productSellerList?.size == 0) {
+                                        binding.bestSellerLy.visibility = View.GONE
                                     }
+                                    if (productBestList?.size == 0) {
+                                        binding.bestProductLy.visibility = View.GONE
+                                    }
+                                    Log.i(
+                                        ContentValues.TAG,
+                                        "Log productBestList" + productOffersList?.size
+                                    )
+                                    Log.i(
+                                        ContentValues.TAG,
+                                        "Log productSellerList" + productSellerList?.size
+                                    )
+                                    Log.i(
+                                        ContentValues.TAG,
+                                        "Log productOffersList" + productOffersList?.size
+                                    )
+                                    if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size > 0) {
+                                        categoryModelList = UtilityApp.getCategories()
+                                        initCatAdapter()
+                                    } else {
+                                        getCategories(cityId)
+                                    }
+
+
+                                    if (UtilityApp.getAllKinds() != null && UtilityApp.getAllKinds().size > 0) {
+                                        kindModelList = UtilityApp.getAllKinds()
+                                        initKindAdapter()
+                                    } else {
+                                        getKinds()
+                                    }
+
+                                    initAdapter()
+                                } else {
+                                    if (productOffersList!!.size == 0) {
+                                        binding.offerLy.visibility = View.GONE
+                                    }
+                                    if (productSellerList!!.size == 0) {
+                                        binding.bestSellerLy.visibility = View.GONE
+                                    }
+                                    if (productBestList!!.size == 0) {
+                                        binding.bestProductLy.visibility = View.GONE
+                                    }
+                                    binding.dataLY.visibility = View.VISIBLE
+                                    binding.noDataLY.noDataLY.visibility = View.GONE
                                 }
                             }
-                            Log.i(javaClass.name, "Log sliderList ${sliderList?.size}")
-                            Log.i(javaClass.name, "Log sliderList banner ${bannersList?.size}")
 
-
-                            initSliderAdapter()
-                            initBannersAdapter()
-                            getBooklets(cityId)
-                            getAllBrands(cityId)
-                            getProductList(
-                                categoryId,
-                                countryId,
-                                cityId,
-                                userId,
-                                Constants.new_filter,
-                                0,
-                                0,
-                                10
-                            )
-                            if (result!!.featured != null && result.featured.size > 0 || result.quickProducts != null && result.quickProducts.size > 0 || result.offeredProducts != null && result.offeredProducts.size > 0
-                            ) {
-                                binding.dataLY.visibility = View.VISIBLE
-                                //                            binding.searchLY.setVisibility(View.VISIBLE);
-                                binding.noDataLY.noDataLY.visibility = View.GONE
-                                binding.failGetDataLY.failGetDataLY.visibility = View.GONE
-                                productBestList = result.featured
-                                productSellerList = result.quickProducts
-                                productOffersList = result.offeredProducts
-                                if (productOffersList?.size == 0) {
-                                    binding.offerLy.visibility = View.GONE
-                                }
-                                if (productSellerList?.size == 0) {
-                                    binding.bestSellerLy.visibility = View.GONE
-                                }
-                                if (productBestList?.size == 0) {
-                                    binding.bestProductLy.visibility = View.GONE
-                                }
-                                Log.i(
-                                    ContentValues.TAG,
-                                    "Log productBestList" + productOffersList?.size
-                                )
-                                Log.i(
-                                    ContentValues.TAG,
-                                    "Log productSellerList" + productSellerList?.size
-                                )
-                                Log.i(
-                                    ContentValues.TAG,
-                                    "Log productOffersList" + productOffersList?.size
-                                )
-                                if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size > 0) {
-                                    categoryModelList = UtilityApp.getCategories()
-                                    initCatAdapter()
-                                } else {
-                                    getCategories(cityId)
-                                }
-
-
-                                if (UtilityApp.getAllKinds() != null && UtilityApp.getAllKinds().size > 0) {
-                                    kindModelList = UtilityApp.getAllKinds()
-                                    initKindAdapter()
-                                } else {
-                                    getKinds()
-                                }
-
-                                initAdapter()
-                            } else {
-                                if (productOffersList!!.size == 0) {
-                                    binding.offerLy.visibility = View.GONE
-                                }
-                                if (productSellerList!!.size == 0) {
-                                    binding.bestSellerLy.visibility = View.GONE
-                                }
-                                if (productBestList!!.size == 0) {
-                                    binding.bestProductLy.visibility = View.GONE
-                                }
-                                binding.dataLY.visibility = View.VISIBLE
-                                binding.noDataLY.noDataLY.visibility = View.GONE
-                            }
                         } else {
                             binding.dataLY.visibility = View.GONE
                             binding.noDataLY.noDataLY.visibility = View.GONE
@@ -632,17 +635,19 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                     "EEE",
                                     UtilityApp.getLanguage()
                                 )
-                                val normalDelivery= if (UtilityApp.getLanguage() == Constants.Arabic){
+                                val normalDelivery = if (UtilityApp.getLanguage() == Constants.Arabic) {
                                     firstTime.time + " " + deliveryDay
-                                }
-                                else{
+                                } else {
                                     deliveryDay + " " + firstTime.time
                                 }
 
-                                binding.deliveryTimeTv.text=normalDelivery
+                                binding.deliveryTimeTv.text = normalDelivery
                                 UtilityApp.setNormalDelivery(normalDelivery)
                                 Log.i(javaClass.name, "Log normalDelivery $normalDelivery")
-                                Log.i(javaClass.name, "Log normalDelivery UtilityApp  ${UtilityApp.getNormalDelivery()}")
+                                Log.i(
+                                    javaClass.name,
+                                    "Log normalDelivery UtilityApp  ${UtilityApp.getNormalDelivery()}"
+                                )
 
 //                                if (UtilityApp.getLanguage() == Constants.Arabic) binding.deliveryTimeTv.text =
 //                                    firstTime.time + " " + deliveryDay else binding.deliveryTimeTv.text =
@@ -653,12 +658,10 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     }
 
                     override fun onError(anError: ANError) {
-                        if(anError.errorCode==400||anError.errorCode==443)
-                        {
+                        if (anError.errorCode == 400 || anError.errorCode == 443) {
                             changeUrl()
 
-                        }
-                        else{
+                        } else {
                             GlobalData.Toast(activityy, anError.message)
 
                         }
@@ -1100,82 +1103,69 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         startActivity(intent)
     }
 
-    fun getProductList(
-        category_id: Int,
-        country_id: Int,
-        city_id: Int,
-        user_id: String?,
-        filter: String?,
-        brand_id: Int,
-        page_number: Int,
-        page_size: Int
-    ) {
+    fun getProductList(productRequest: ProductRequest?) {
         productRecentsList?.clear()
-        binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
-        binding.dataLY.visibility = View.GONE
-        binding.noDataLY.noDataLY.visibility = View.GONE
-        binding.failGetDataLY.failGetDataLY.visibility = View.GONE
+        binding.loadingLYRecent.visibility = View.VISIBLE
+
         DataFeacher(false,
             object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         var message: String? = getString(R.string.fail_to_get_data)
-                        binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
+                        binding.loadingLYRecent.visibility = View.GONE
                         if (func == Constants.ERROR) {
-                            val result = obj as FavouriteResultModel?
-                            if (result != null && result.message != null) {
-                                message = result.message
-                            }
-                            binding.dataLY.visibility = View.GONE
-                            binding.noDataLY.noDataLY.visibility = View.GONE
-                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
-                            binding.failGetDataLY.failTxt.text = message
+//                            val result = obj as FavouriteResultModel?
+//                            if (result != null && result.message != null) {
+//                                message = result.message
+//                            }
+                            binding.noRecentTv.visibility = View.VISIBLE
+                            binding.noRecentTv.text = message
                         } else if (func == Constants.FAIL) {
-                            binding.dataLY.visibility = View.GONE
-                            binding.noDataLY.noDataLY.visibility = View.GONE
-                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
-                            binding.failGetDataLY.failTxt.text = message
+                            binding.noRecentTv.visibility = View.VISIBLE
+                            binding.noRecentTv.text = message
                         } else if (func == Constants.NO_CONNECTION) {
-                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
-                            binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection)
-                            binding.failGetDataLY.noInternetIv.visibility = View.VISIBLE
-                            binding.dataLY.visibility = View.GONE
+                            binding.noRecentTv.visibility = View.VISIBLE
+                            binding.noRecentTv.visibility = View.VISIBLE
                         } else {
                             if (IsSuccess) {
                                 val result = obj as FavouriteResultModel?
-                                if (result!!.data != null && result.data.size > 0) {
-                                    binding.recentlyRecycler.visibility = View.VISIBLE
-                                    binding.dataLY.visibility = View.VISIBLE
-                                    binding.noDataLY.noDataLY.visibility = View.GONE
-                                    binding.failGetDataLY.failGetDataLY.visibility = View.GONE
-                                    productRecentsList = result.data
-                                    Log.i(
-                                        ContentValues.TAG,
-                                        "Log productList new " + productRecentsList?.size
-                                    )
-                                    initRecentAdapter()
+                                if (result?.status == 200) {
+                                    if (result.data != null && result.data.size > 0) {
+
+                                        binding.recentlyRecycler.visibility = View.VISIBLE
+                                        binding.noRecentTv.visibility = View.GONE
+                                        productRecentsList = result.data
+                                        Log.i(
+                                            ContentValues.TAG,
+                                            "Log productList new " + productRecentsList?.size
+                                        )
+                                        initRecentAdapter()
+                                    } else {
+                                        binding.recentlyRecycler.visibility = View.GONE
+                                        binding.recentlyLy.visibility = View.GONE
+                                        //  binding.noRecentTv.text = getString(R.string.no_data)
+
+                                    }
                                 } else {
                                     binding.recentlyRecycler.visibility = View.GONE
                                     binding.recentlyLy.visibility = View.GONE
+                                    binding.noRecentTv.visibility = View.VISIBLE
+                                    binding.noRecentTv.text = getString(R.string.fail_to_get_data)
+
                                 }
+
+
                             } else {
                                 binding.recentlyRecycler.visibility = View.GONE
                                 binding.recentlyLy.visibility = View.GONE
+                                binding.noRecentTv.visibility = View.VISIBLE
+                                binding.noRecentTv.text = getString(R.string.fail_to_get_data)
                             }
                         }
                     }
                 }
 
-            }).getFavorite(kind_id,sortType,
-            category_id,
-            country_id,
-            city_id,
-            user_id,
-            filter,
-            brand_id,
-            page_number,
-            page_size
-        )
+            }).getFavorite(productRequest)
     }
 
     companion object {
@@ -1194,13 +1184,13 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     }
 
     fun getKinds() {
-        UtilityApp.setCategoriesData(null)
+        UtilityApp.setAllKindsData(null)
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 if (IsSuccess) {
-                    val result = obj as ResultAPIModel<ArrayList<CategoryModel?>?>
+                    val result = obj as ResultAPIModel<ArrayList<KindCategoryModel?>?>
                     if (result.data?.size ?: 0 > 0) {
-                        val categoryModelList = result?.data
+                        val categoryModelList = result.data
                         UtilityApp.setAllKindsData(categoryModelList)
                         initKindAdapter()
 
@@ -1229,14 +1219,17 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
             UtilityApp.setUrl(GlobalData.BetaBaseURL1)
         }
     }
+
     private fun initKindAdapter() {
         kindAdapter = KindAdapter(activityy, kindModelList, 10, this, false)
         binding.kindRecycler.adapter = kindAdapter
     }
 
-    override fun onKindClicked(position: Int, categoryModel: CategoryModel?) {
+    override fun onKindClicked(position: Int, categoryModel: KindCategoryModel?) {
         val intent = Intent(activityy, AllListActivity::class.java)
-        intent.putExtra(Constants.kind_id,categoryModel?.id)
+        intent.putExtra(Constants.LIST_MODEL_NAME, categoryModel?.categoryName)
+        intent.putExtra(Constants.kind_id, categoryModel?.id)
+
         startActivity(intent)
     }
 

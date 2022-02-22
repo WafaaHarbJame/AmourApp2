@@ -30,6 +30,7 @@ import com.ramez.shopp.classes.UtilityApp
 import com.ramez.shopp.Dialogs.AddRateDialog
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Models.*
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.Utils.DateHandler
@@ -73,6 +74,8 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     var filter: String? = null
     private var kind_id = 0
     private var sortType:String = ""
+    var productRequest: ProductRequest? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductDeatilsBinding.inflate(layoutInflater)
@@ -106,6 +109,8 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         reviewManger = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.reviewRecycler.layoutManager = reviewManger
         binding.reviewRecycler.setHasFixedSize(true)
+        productRequest = ProductRequest(categoryId, countryId, cityId, filter, 0, 0, 12, kind_id, null, null)
+
         if (UtilityApp.isLogin()) {
             if (memberModel != null) {
                 userId1 = memberModel.id.toString().toInt()
@@ -873,7 +878,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     }
                 }
 
-            }).getFavorite(kind_id,sortType,categoryId, countryId, cityId, userId1.toString(), filter, 0, 0, 12)
+            }).getFavorite(productRequest)
         }
 
     private fun initProductsAdapter() {

@@ -6,6 +6,7 @@ import com.ramez.shopp.Models.CategoryModel;
 import com.ramez.shopp.Models.CityModelResult;
 import com.ramez.shopp.Models.DeliveryInfo;
 import com.ramez.shopp.Models.FastValidModel;
+import com.ramez.shopp.Models.KindCategoryModel;
 import com.ramez.shopp.Models.OtpModel;
 import com.ramez.shopp.Models.RefreshTokenModel;
 import com.ramez.shopp.Models.SettingModel;
@@ -271,7 +272,7 @@ ApiInterface {
     Call<MainModel> GetMainPage(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id);
 
     @GET("v9/Products/AllKinds")
-    Call<ResultAPIModel<ArrayList<CategoryModel>>> getAllKindsList(@HeaderMap() Map<String, Object> headerParams);
+    Call<ResultAPIModel<ArrayList<KindCategoryModel>>> getAllKindsList(@HeaderMap() Map<String, Object> headerParams);
 
 
 

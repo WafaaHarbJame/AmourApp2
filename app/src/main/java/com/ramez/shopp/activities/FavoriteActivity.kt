@@ -15,6 +15,7 @@ import com.ramez.shopp.Models.FavouriteResultModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Models.MemberModel
 import com.ramez.shopp.Models.ProductModel
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.adapter.OfferProductAdapter
 import com.ramez.shopp.databinding.ActivityFavoriteBinding
@@ -35,6 +36,7 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
     private val brandId1 = 0
     private var kind_id = 0
     private var sortType:String = ""
+    var productRequest: ProductRequest? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,17 +60,13 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
         cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
         binding.favoriteRecycler.setHasFixedSize(true)
         binding.favoriteRecycler.itemAnimator = null
-        getFavoriteProducts(categoryId1, countryId, cityId, userId, filter, brandId1, 0, 10)
+        productRequest = ProductRequest(categoryId1, countryId, cityId, filter, brandId1, 0, 10, kind_id, null, null)
+
+        getFavoriteProducts(productRequest)
+
         binding.failGetDataLY.refreshBtn.setOnClickListener {
             getFavoriteProducts(
-                categoryId1,
-                countryId,
-                cityId,
-                userId,
-                filter,
-                brandId1,
-                0,
-                10
+               productRequest
             )
         }
     }
@@ -95,14 +93,7 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
     }
 
     private fun getFavoriteProducts(
-        categoryId: Int,
-        country_id: Int,
-        city_id: Int,
-        user_id: String?,
-        filter: String?,
-        brandId: Int,
-        pageNumber: Int,
-        pageSize: Int
+        productRequest: ProductRequest?
     ) {
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
         binding.dataLY.visibility = View.GONE
@@ -153,6 +144,6 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
                     }
                 }            }
 
-        }).getFavorite(kind_id,sortType,categoryId, country_id, city_id, user_id, filter, brandId, pageNumber, pageSize)
+        }).getFavorite(productRequest)
     }
 }

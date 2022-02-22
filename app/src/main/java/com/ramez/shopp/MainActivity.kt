@@ -370,6 +370,12 @@ class MainActivity : ActivityBase() {
                     })
             filterDialog.show()
         }
+
+
+        binding.toolBar.sort2But.setOnClickListener {
+            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_SORT2, 5))
+
+        }
     }
 
     private fun selectBottomTab(resId: Int, bundle: Bundle?) {

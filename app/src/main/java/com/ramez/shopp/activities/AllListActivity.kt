@@ -16,6 +16,7 @@ import com.ramez.shopp.Models.FavouriteResultModel
 import com.ramez.shopp.Models.LocalModel
 import com.ramez.shopp.Models.MemberModel
 import com.ramez.shopp.Models.ProductModel
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.adapter.ProductCategoryAdapter
 import com.ramez.shopp.databinding.ActivityAllListBinding
@@ -36,10 +37,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
     private var localModel: LocalModel? = null
     private var brandId = 0
     private var isNotify = false
-    private var sortType:String = ""
+    private var sortType: String = ""
     private var kindId = 0
     private var sortBySuggest = 0
     private var sortByNew = 0
+    var productRequest: ProductRequest? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllListBinding.inflate(layoutInflater)
@@ -53,8 +55,8 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
                 activity
             )
-        countryId = localModel?.countryId ?:Constants.default_country_id
-        cityId = localModel?.cityId?.toInt()?:Constants.default_storeId.toInt()
+        countryId = localModel?.countryId ?: Constants.default_country_id
+        cityId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
         user = UtilityApp.getUserData()
         binding.recycler.setHasFixedSize(true)
         binding.recycler.itemAnimator = null
@@ -62,22 +64,13 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             userId = user?.id.toString()
         }
         getIntentExtra
+
         binding.swipeDataContainer.setOnRefreshListener {
             binding.swipeDataContainer.isRefreshing = false
-            getProductList(kindId,sortType,0, countryId, cityId, userId, filter, brandId, 0, 10)
+            getProductList(productRequest)
         }
         binding.failGetDataLY.refreshBtn.setOnClickListener { view1 ->
-            getProductList(
-                kindId,sortType,
-                0,
-                countryId,
-                cityId,
-                userId,
-                filter,
-                brandId,
-                0,
-                10
-            )
+            getProductList(productRequest)
         }
     }
 
@@ -92,11 +85,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             countryId,
             cityId,
             userId,
-            list?.size?:0,
+            list?.size ?: 0,
             filter,
             this,
             Constants.twoRow,
-            brandId,0
+            brandId, 0
         )
         binding.recycler.adapter = adapter
     }
@@ -111,29 +104,23 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                 brandId = bundle.getInt(Constants.brand_id)
                 isNotify = bundle.getBoolean(Constants.isNotify)
                 title = name
-                kindId=bundle.getInt(Constants.kind_id)
-                    getProductList(kindId,sortType,0, countryId, cityId, userId, filter, brandId, 0, 10)
+                kindId = bundle.getInt(Constants.kind_id)
+                productRequest =
+                    ProductRequest(0, countryId, cityId, Constants.new_filter, 0, 0, 10, kindId, null, null)
+
+                getProductList(productRequest)
             }
         }
 
     private fun getProductList(
-        kindId: Int,
-        sortType: String,
-        categoryId: Int,
-        country_id: Int,
-        city_id: Int,
-        user_id: String?,
-        filter: String?,
-        brand_id: Int,
-        pageNumber: Int,
-        pageSize: Int
+        productRequest: ProductRequest?
     ) {
         list?.clear()
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
         binding.dataLY.visibility = View.GONE
         binding.noDataLY.noDataLY.visibility = View.GONE
         binding.failGetDataLY.failGetDataLY.visibility = View.GONE
-        DataFeacher(false,object :DataFetcherCallBack {
+        DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 val result = obj as FavouriteResultModel?
                 var message: String? = getString(R.string.fail_to_get_data)
@@ -175,9 +162,10 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                         binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
                         binding.failGetDataLY.failTxt.text = message
                     }
-                }            }
+                }
+            }
 
-        }).getFavorite(kindId,sortType,categoryId, country_id, city_id, user_id, filter, brand_id, pageNumber, pageSize)
+        }).getFavorite(productRequest)
     }
 
     override fun onBackPressed() {

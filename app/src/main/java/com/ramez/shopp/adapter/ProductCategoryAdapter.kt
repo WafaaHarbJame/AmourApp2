@@ -14,6 +14,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Dialogs.CheckLoginDialog
 import com.ramez.shopp.Models.*
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
 import com.ramez.shopp.classes.*
@@ -297,35 +298,14 @@ class ProductCategoryAdapter(
                 productModels.add(null)
                 println("Log productDMS size " + productModels.size)
                 notifyItemInserted(productModels.size - 1)
-                LoadAllData(
-                    kindId,
-                    sortType,
-                    categoryId,
-                    countryId,
-                    cityId,
-                    userId1,
-                    filterText,
-                    brandId,
-                    nextPage,
-                    10
-                )
+               val productRequest = ProductRequest(categoryId, countryId, cityId, "", brandId, nextPage, 10, kindId, null, null)
+                LoadAllData(productRequest)
             }
         }
     }
 
-    private fun LoadAllData(
-        kind_id: Int,
-        sortType: String,
-        category_id: Int,
-        country_id: Int,
-        city_id: Int,
-        user_id: String,
-        filter: String?,
-        brand_id: Int,
-        page_number: Int,
-        page_size: Int
-    ) {
-        println("Log category_id: $category_id")
+    private fun LoadAllData(productRequest: ProductRequest?) {
+        println("Log category_id: ${productRequest?.categoryId}")
         println("Log LoadAllData  page $nextPage")
         val dataFeacher =
             DataFeacher(false, object : DataFetcherCallBack {
@@ -344,27 +324,27 @@ class ProductCategoryAdapter(
                             val pos = productModels.size
                             if (products != null && products.size > 0) {
                                 productModels.addAll(products)
-                                //notifyItemRangeInserted(pos, products.size)
+                                notifyItemRangeInserted(pos, products.size)
                                 nextPage++
 
-                                when {
-                                    sortByTypes == 1 -> {
-                                        productModels.sortBy { it?.firstProductBarcodes?.price }
-                                    }
-                                    sortByTypes == 2 -> {
-                                        productModels.sortByDescending { it?.firstProductBarcodes?.price  }
-
-                                    }
-                                    sortByTypes == 3 -> {
-                                        productModels.sortBy { it?.id }
-
-                                    }
-                                    sortByTypes == 4 -> {
-                                        productModels.sortByDescending { it?.id  }
-                                    }
-                                }
-
-                                notifyDataSetChanged()
+//                                when {
+//                                    sortByTypes == 1 -> {
+//                                        productModels.sortBy { it?.firstProductBarcodes?.price }
+//                                    }
+//                                    sortByTypes == 2 -> {
+//                                        productModels.sortByDescending { it?.firstProductBarcodes?.price  }
+//
+//                                    }
+//                                    sortByTypes == 3 -> {
+//                                        productModels.sortBy { it?.id }
+//
+//                                    }
+//                                    sortByTypes == 4 -> {
+//                                        productModels.sortByDescending { it?.id  }
+//                                    }
+//                                }
+//
+//                                notifyDataSetChanged()
 
                             }
                         } else {
@@ -376,17 +356,7 @@ class ProductCategoryAdapter(
                 }
 
             })
-        apiCall = dataFeacher.getFavorite(
-            kind_id,
-            sortType,
-            category_id,
-            country_id,
-            city_id,
-            user_id,
-            filter,
-            brand_id,
-            page_number,
-            page_size
+        apiCall = dataFeacher.getFavorite(productRequest
         )
     }
 

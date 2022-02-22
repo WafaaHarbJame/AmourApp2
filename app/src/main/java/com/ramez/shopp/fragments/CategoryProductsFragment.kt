@@ -32,6 +32,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.classes.*
 import com.ramez.shopp.Models.*
+import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.activities.FullScannerActivity
 import com.ramez.shopp.activities.ProductDetailsActivity
@@ -71,6 +72,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private var scanLauncher: ActivityResultLauncher<Intent>? = null
     private var kindId = 0
     private var sortType:String = ""
+    var productRequest: ProductRequest? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -159,13 +161,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         })
         binding.failGetDataLY.refreshBtn.setOnClickListener {
             getProductList(
-                selectedSubCat,
-                countryId,
-                cityId,
-                userId,
-                filter,
-                0,
-                10
+               productRequest
             )
         }
         binding.searchBut.setOnClickListener {
@@ -245,7 +241,9 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private fun initData() {
         initMainCategoryAdapter()
         initSubCatList()
-        getProductList(selectedSubCat, countryId, cityId, userId, filter, 0, 10)
+        productRequest = ProductRequest(selectedSubCat, countryId, cityId, filter, 0, 0, 10, kindId, null, null)
+
+        getProductList(productRequest)
     }
 
     private fun initSubCatList() {
@@ -265,7 +263,9 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         ) { `object`: ChildCat ->
             selectedSubCat = `object`.id
             cancelAPiCall()
-            getProductList(selectedSubCat, countryId, cityId, userId, "", 0, 10)
+            productRequest = ProductRequest(selectedSubCat, countryId, cityId, filter, 0, 0, 10, kindId, null, null)
+
+            getProductList(productRequest)
         }
         binding.listSubCategory.adapter = subCategoryAdapter
     }
@@ -277,15 +277,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     }
 
-    private fun getProductList(
-        category_id: Int,
-        country_id: Int,
-        city_id: Int,
-        user_id: String?,
-        filter: String?,
-        page_number: Int,
-        page_size: Int
-    ) {
+    private fun getProductList(productRequest: ProductRequest?) {
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
         binding.productsRv.visibility = View.GONE
         binding.noDataLY.noDataLY.visibility = View.GONE
@@ -332,7 +324,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                     }
                 }
 
-            }).getFavorite(kindId,sortType,category_id, country_id, city_id, user_id, filter, 0, page_number, page_size)
+            }).getFavorite(productRequest)
     }
 
     override fun OnMainCategoryItemClicked(mainCategoryDM: CategoryModel, position: Int) {
@@ -341,7 +333,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         subCategoryDMS = ArrayList(mainCategoryDM.childCat)
         initSubCatList()
         cancelAPiCall()
-        getProductList(selectedSubCat, countryId, cityId, userId, filter, 0, 10)
+        getProductList(productRequest)
     }
 
     private fun checkCameraPermission() {
@@ -536,6 +528,17 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                 //Descending
                 // sortByPrice = 0
                 productList?.sortByDescending { it.id }
+                initAdapter()
+                adapter?.notifyDataSetChanged()
+
+
+
+            }
+
+            5 -> {
+                //Descending
+                // sortByPrice = 0
+                productList?.sortBy { it.firstProductBarcodes.price }
                 initAdapter()
                 adapter?.notifyDataSetChanged()
 

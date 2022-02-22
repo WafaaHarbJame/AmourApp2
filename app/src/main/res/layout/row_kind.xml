@@ -9,36 +9,40 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
     <com.ramez.shopp.SpichalViews.STextViewBold
         android:id="@+id/categoryNameTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/category"
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:text="@string/category"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp" />
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivCatImage"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/holder_image"
-        app:riv_border_color="@color/gray18"
-        app:riv_border_width="@dimen/_1sdp"
-        app:riv_corner_radius="@dimen/_10sdp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subCatRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/row_subkind" />
+        android:layout_height="wrap_content" />
+
+<!--    <com.makeramen.roundedimageview.RoundedImageView-->
+<!--        android:id="@+id/ivCatImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/_100sdp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/holder_image"-->
+<!--        app:riv_border_color="@color/gray18"-->
+<!--        app:riv_border_width="@dimen/_1sdp"-->
+<!--        app:riv_corner_radius="@dimen/_10sdp" />-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/subCatRecycler"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_8sdp"-->
+<!--        android:layout_marginBottom="@dimen/_8sdp"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--        tools:listitem="@layout/row_subkind" />-->
 
 </LinearLayout>
 

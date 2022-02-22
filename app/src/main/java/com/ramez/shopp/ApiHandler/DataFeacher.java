@@ -8,10 +8,18 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.ramez.shopp.Models.CategoryModel;
+import com.ramez.shopp.Models.CountryModel;
+import com.ramez.shopp.Models.request.ProductRequest;
 import com.ramez.shopp.classes.Constants;
+import com.ramez.shopp.classes.FilterModel;
 import com.ramez.shopp.classes.GlobalData;
 import com.ramez.shopp.Models.OtpModel;
+import com.ramez.shopp.classes.SortModel;
 import com.ramez.shopp.classes.UtilityApp;
 import com.ramez.shopp.Models.orderListCall;
 import com.ramez.shopp.Models.AddExtraCall;
@@ -25,10 +33,17 @@ import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.activities.RegisterLoginActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.lang.reflect.Type;
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,7 +83,7 @@ public class DataFeacher {
         headerMap.put("Content-Type", "application/json");
         String accessToken = UtilityApp.getUserToken();
         if (!accessToken.isEmpty()) {
-            headerMap.put("Authorization",Constants.TOKEN_PREFIX.concat(accessToken));
+            headerMap.put("Authorization", Constants.TOKEN_PREFIX.concat(accessToken));
 
         }
 
@@ -105,13 +120,11 @@ public class DataFeacher {
                         e.printStackTrace();
                     }
 
-                    if (response.code() == 404|| response.code() == 443) {
+                    if (response.code() == 404 || response.code() == 443) {
                         System.out.println("Log 404 not found change url");
                         changeUrl();
                         dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
-                    }
-
-                    else if (response.code() == 401) {
+                    } else if (response.code() == 401) {
                         dataFetcherCallBack.Result(errorModel, Constants.UnAuthorize, false);
 
                     } else {
@@ -149,7 +162,7 @@ public class DataFeacher {
         headerMap.put("Content-Type", "application/json");
         String accessToken = UtilityApp.getUserToken();
         if (!accessToken.isEmpty()) {
-            headerMap.put("Authorization",Constants.TOKEN_PREFIX.concat(accessToken));
+            headerMap.put("Authorization", Constants.TOKEN_PREFIX.concat(accessToken));
 //            headerMap.put("Authorization",Constants.TOKEN_PREFIX +"euuJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRhbGFsLmF3YWRpMkBnbWFpbC5jb20iLCJuYW1lIjoiMzMzMTA0ODgiLCJuYW1laWQiOiIxMTgiLCJqdGkiOiI1MmYyZmM5ZS0yNjhlLTQ4OWEtYjJhYi0wYjhjODkwNzNmMTkiLCJuYmYiOjE2NDEzODI4NDksImV4cCI6MTY0MTQwMjY0OSwiaWF0IjoxNjQxMzgyODQ5LCJpc3MiOiJodHRwczovL3Jpc3RlaC5jb20iLCJhdWQiOiJodHRwczovL3Jpc3RlaC5jb20vIn0.7eL6bF9uVQ3a6b6QH9QoNq1BY2nYhFLvxYnDV2D_5V8");
 
         }
@@ -194,7 +207,7 @@ public class DataFeacher {
                         e.printStackTrace();
                     }
 
-                    if (response.code() == 404|| response.code() == 443) {
+                    if (response.code() == 404 || response.code() == 443) {
                         System.out.println("Log 404 not found change url");
                         changeUrl();
                         dataFetcherCallBack.Result(errorModel, Constants.ERROR, false);
@@ -265,7 +278,7 @@ public class DataFeacher {
     }
 
 
-    public void RefreshToken(String token,String refreshToken ) {
+    public void RefreshToken(String token, String refreshToken) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("token", token);
@@ -273,13 +286,14 @@ public class DataFeacher {
 
         Log.i(TAG, "Log RefreshToken");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log token " +token);
+        Log.i(TAG, "Log token " + token);
         Log.i(TAG, "Log refreshToken " + refreshToken);
 
         Call call = apiService.RefreshToken(headerMap, params);
         call.enqueue(callbackApi);
 
     }
+
     public void logOut(MemberModel memberModel) {
 
         Log.i(TAG, "Log logOut");
@@ -433,7 +447,7 @@ public class DataFeacher {
         }
 
 
-        String url = UtilityApp.getUrl()  + countryCode + "/GroceryStoreApi/api/v9/Locations/citiesByCountry";
+        String url = UtilityApp.getUrl() + countryCode + "/GroceryStoreApi/api/v9/Locations/citiesByCountry";
 
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
@@ -701,6 +715,7 @@ public class DataFeacher {
         Call call = apiService.getAllKindsList(headerMap);
         call.enqueue(callbackApi);
     }
+
     public void GetAllBrands(int sotre_id) {
 
         Log.i(TAG, "Log GetAllBrands");
@@ -1081,30 +1096,49 @@ public class DataFeacher {
     }
 
 
-    public Call getFavorite(int kind_id,String srots,int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+    public Call getFavorite(ProductRequest productRequest) {
+        //int kind_id, String srots, int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size
 
         Map<String, Object> params = new HashMap<>();
-        params.put("category_id", category_id);
-        params.put("country_id", country_id);
-        params.put("city_id", city_id);
-        params.put("filter", filter);
-        params.put("brand_id", brand_id);
-        params.put("page_number", page_number);
-        params.put("page_size", page_size);
-        params.put("kind_id", kind_id);
-        params.put("srots", srots);
 
+        FilterModel filterModel = new FilterModel();
+        List<FilterModel> filtersList = new ArrayList<FilterModel>();
+        filtersList.add(filterModel);
+
+        String filtersJson = new Gson().toJson(filtersList);
+        JSONArray filtersJsonArr = null;
+        try {
+            filtersJsonArr = new JSONArray(filtersJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        SortModel sortModel = new SortModel();
+        List<SortModel> sortList = new ArrayList<SortModel>();
+        sortList.add(sortModel);
+        String sortJson = new Gson().toJson(sortList);
+        JSONArray sortJsonArr = null;
+        try {
+            sortJsonArr = new JSONArray(sortJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        params.put("category_id", productRequest.getCategoryId());
+        params.put("country_id", productRequest.getCountryId());
+        params.put("city_id", productRequest.getCityId());
+        params.put("filter", productRequest.getFilter());
+        params.put("brand_id", productRequest.getBrandId());
+        params.put("page_number", productRequest.getPageNumber());
+        params.put("page_size", productRequest.getPageSize());
+        params.put("kind_id", productRequest.getKindId());
+//        if (filtersList != null && !filtersList.isEmpty())
+//        params.put("filters", filtersJsonArr);
+//        params.put("srots", sortJsonArr);
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log getFavorite headerMap " + headerMap);
-        Log.i(TAG, "Log getFavorite category_id " + category_id);
-        Log.i(TAG, "Log getFavorite brand_id " + brand_id);
-        Log.i(TAG, "Log getFavorite country_id " + country_id);
-        Log.i(TAG, "Log getFavorite city_id " + city_id);
-        Log.i(TAG, "Log getFavorite user_id " + user_id);
-        Log.i(TAG, "Log getFavorite filter " + filter);
-        Log.i(TAG, "Log getFavorite page_number " + page_number);
-        Log.i(TAG, "LoggetFavorite page_size " + page_size);
+        Log.i(TAG, "Log params " + params);
 
         Call call = apiService.GetFavoriteProducts(headerMap, params);
         call.enqueue(callbackApi);
@@ -1351,7 +1385,7 @@ public class DataFeacher {
     }
 
 
-    public void saveSucessTransactionD(Transaction transaction,Integer orderId) {
+    public void saveSucessTransactionD(Transaction transaction, Integer orderId) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("terminalId", transaction.getTerminalId());
@@ -1359,8 +1393,7 @@ public class DataFeacher {
         params.put("transactionMessage", transaction.getTransactionMessage());
         params.put("referenceNumber", transaction.getReferenceNumber());
         params.put("amount", transaction.getAmount());
-        params.put("orderid",orderId);
-
+        params.put("orderid", orderId);
 
 
         Log.i(TAG, "Log saveTransactionData");
@@ -1376,7 +1409,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void saveFailTransaction(Transaction transaction,Integer orderId) {
+    public void saveFailTransaction(Transaction transaction, Integer orderId) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("terminalId", transaction.getTerminalId());
@@ -1384,7 +1417,7 @@ public class DataFeacher {
         params.put("transactionMessage", transaction.getTransactionMessage());
         params.put("referenceNumber", transaction.getReferenceNumber());
         params.put("amount", transaction.getAmount());
-        params.put("orderid",orderId);
+        params.put("orderid", orderId);
         Log.i(TAG, "Log saveTransactionData");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log merchant " + transaction.getMerchant());

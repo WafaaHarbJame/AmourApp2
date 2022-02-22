@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Models.request.ProductRequest;
 import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.activities.ProductDetailsActivity;
 import com.ramez.shopp.adapter.MainCategoryAdapter;
@@ -55,6 +56,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
     String user_id = "0";
     private int brand_id;
+     private ProductRequest productRequest ;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         binding.offerRecycler.setHasFixedSize(true);
         binding.offerRecycler.setItemAnimator(null);
+        productRequest=new ProductRequest(category_id, country_id, city_id, Constants.offered_filter, brand_id, 0, 10, kind_id, null, null);
 
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
@@ -102,7 +105,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             mainCategoryDMS.add(new CategoryModel(0));
             CategoryModel all = new CategoryModel();
             all.setId(0);
-            all.setHName(getString(R.string.all));
+            all.sethName(getString(R.string.all));
             all.setName(getString(R.string.all));
             mainCategoryDMS.add(0, all);
 
@@ -113,17 +116,17 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         }
 
-        getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
+        getOfferList(productRequest);
 
         binding.dataLY.setOnRefreshListener(() -> {
 //            binding.dataLY.setRefreshing(false);
-            getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
+            getOfferList(productRequest);
 
 
         });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
+            getOfferList(productRequest);
         });
 
 
@@ -158,7 +161,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
     }
 
-    public void getOfferList(int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size) {
+    public void getOfferList(ProductRequest  productRequest) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -240,7 +243,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             }
 
 
-        }).getFavorite(kind_id,sortType,category_id, country_id, city_id, user_id, filter, brand_id, page_number, page_size);
+        }).getFavorite(productRequest);
     }
 
 
@@ -379,7 +382,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
         Log.i(TAG, "Log MainItem category_id " + category_id);
 //        if (productOfferAdapter != null)
 //            productOfferAdapter.categoryId = category_id;
-        getOfferList(category_id, country_id, city_id, user_id, Constants.offered_filter, brand_id, 0, 10);
+        getOfferList(productRequest);
 
     }
 }

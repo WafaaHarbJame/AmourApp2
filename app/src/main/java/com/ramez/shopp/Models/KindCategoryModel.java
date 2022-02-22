@@ -8,7 +8,7 @@ import com.ramez.shopp.classes.UtilityApp;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CategoryModel implements Serializable {
+public class KindCategoryModel implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
@@ -26,7 +26,7 @@ public class CategoryModel implements Serializable {
     private Integer parentId;
     @SerializedName("child_cat")
     @Expose
-    private ArrayList<ChildCat> childCat = null;
+    private ArrayList<KindCategoryModel> childCat = null;
     @SerializedName("image2")
     @Expose
     private String image2;
@@ -77,11 +77,11 @@ public class CategoryModel implements Serializable {
         this.parentId = parentId;
     }
 
-    public ArrayList<ChildCat> getChildCat() {
+    public ArrayList<KindCategoryModel> getChildCat() {
         return childCat;
     }
 
-    public void setChildCat(ArrayList<ChildCat> childCat) {
+    public void setChildCat(ArrayList<KindCategoryModel> childCat) {
         this.childCat = childCat;
     }
 
@@ -109,12 +109,12 @@ public class CategoryModel implements Serializable {
         this.image4 = image4;
     }
 
-    public CategoryModel(Integer id) {
+    public KindCategoryModel(Integer id) {
         this.id = id;
 
     }
 
-    public CategoryModel() {
+    public KindCategoryModel() {
     }
 
     public String getCategoryName() {

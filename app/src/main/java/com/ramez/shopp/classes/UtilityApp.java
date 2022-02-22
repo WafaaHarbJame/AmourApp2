@@ -13,6 +13,7 @@ import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Models.CategoryModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.DinnerModel;
+import com.ramez.shopp.Models.KindCategoryModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.PaymentModel;
@@ -294,16 +295,16 @@ public class UtilityApp {
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_CATEGORIES, userData);
     }
 
-    public static void setAllKindsData(ArrayList<CategoryModel> categoryModels) {
+    public static void setAllKindsData(ArrayList<KindCategoryModel> categoryModels) {
         String userData = new Gson().toJson(categoryModels);
         RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_ALL_KINDS, userData);
     }
 
 
 
-    public static ArrayList<CategoryModel> getAllKinds() {
+    public static ArrayList<KindCategoryModel> getAllKinds() {
         String dataString = RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_ALL_KINDS);
-        return new Gson().fromJson(dataString, new TypeToken<List<CategoryModel>>() {
+        return new Gson().fromJson(dataString, new TypeToken<List<KindCategoryModel>>() {
         }.getType());
 
     }
