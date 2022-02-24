@@ -41,6 +41,7 @@ class DeliveryTypeAdapter(
                 context
             )
 
+        Log.i(javaClass.simpleName, "Log deliveryFeesonBindViewHolder ${paymentMethod?.deliveryPrice}")
 
         currency = localModel?.currencyCode ?: Constants.BHD
         fraction = localModel?.fractional ?: Constants.two

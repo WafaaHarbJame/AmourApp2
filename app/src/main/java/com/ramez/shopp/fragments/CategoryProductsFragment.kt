@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -30,21 +31,21 @@ import com.kcode.permissionslib.main.OnRequestPermissionsCallBack
 import com.kcode.permissionslib.main.PermissionCompat
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
-import com.ramez.shopp.classes.*
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
+import com.ramez.shopp.activities.FilterActivity
 import com.ramez.shopp.activities.FullScannerActivity
 import com.ramez.shopp.activities.ProductDetailsActivity
 import com.ramez.shopp.adapter.MainCategoryAdapter
 import com.ramez.shopp.adapter.MainCategoryAdapter.OnMainCategoryItemClicked
 import com.ramez.shopp.adapter.ProductCategoryAdapter
 import com.ramez.shopp.adapter.SubCategoryAdapter
+import com.ramez.shopp.classes.*
 import com.ramez.shopp.databinding.FragmentCategoryProductsBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 
 class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemClick,
@@ -71,8 +72,11 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     lateinit var binding: FragmentCategoryProductsBinding
     private var scanLauncher: ActivityResultLauncher<Intent>? = null
     private var kindId = 0
-    private var sortType:String = ""
-    var productRequest: ProductRequest? = null
+    private var sortType: String = ""
+    private var productRequest: ProductRequest? = null
+    private var sortList: MutableList<SortModel>? = null
+    private var filterList: MutableList<FilterModel>? = null
+    private var openFilterLauncher: ActivityResultLauncher<Intent>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,6 +86,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         binding = FragmentCategoryProductsBinding.inflate(inflater, container, false)
         productList = ArrayList()
         mainCategoryDMS = ArrayList()
+
         gridLayoutManager = GridLayoutManager(activityy, numColumn)
         binding.productsRv.layoutManager = gridLayoutManager
         binding.listShopCategories.layoutManager =
@@ -106,6 +111,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
         intentExtra
         initListeners()
+
 
         return binding.root
     }
@@ -160,9 +166,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             override fun onBarOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {}
         })
         binding.failGetDataLY.refreshBtn.setOnClickListener {
-            getProductList(
-               productRequest
-            )
+            callGetProducts()
         }
         binding.searchBut.setOnClickListener {
             val bundle = Bundle()
@@ -171,6 +175,31 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                 .post(MessageEvent(MessageEvent.TYPE_FRAGMENT, bundle))
         }
         binding.barcodeBut.setOnClickListener { checkCameraPermission() }
+
+        openFilterLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult? ->
+
+
+            if (result?.resultCode == Activity.RESULT_OK) {
+                if (result.data != null) {
+                    filterList = mutableListOf()
+                    val filterModel: FilterListModel =
+                        result.data?.getSerializableExtra(Constants.KEY_FILTER_LIST) as FilterListModel
+                    filterList = filterModel.list
+                    Log.i(javaClass.name, "Log filterList ${filterList?.size} ")
+                    Log.i(javaClass.name, "Log filterList ${filterList?.toList().toString()} ")
+                    if (filterList?.size ?: 0 > 0) {
+                        callGetProducts()
+//                        getProductList(productRequest)
+                    }
+
+                }
+            }
+
+        }
+
+
     }
 
     fun initAdapter() {
@@ -189,11 +218,11 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             this,
             numColumn,
             0,
-            sortByTypes
+            sortList,
+            filterList
         )
         binding.productsRv.adapter = adapter
     }
-
 
 
     private fun cancelAPiCall() {
@@ -241,9 +270,10 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private fun initData() {
         initMainCategoryAdapter()
         initSubCatList()
-        productRequest = ProductRequest(selectedSubCat, countryId, cityId, filter, 0, 0, 10, kindId, null, null)
-
-        getProductList(productRequest)
+//        productRequest =
+//            ProductRequest(selectedSubCat, countryId, cityId, filter, 0, 0, 10, kindId, sortList, filterList)
+//        getProductList(productRequest)
+        callGetProducts()
     }
 
     private fun initSubCatList() {
@@ -263,11 +293,28 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         ) { `object`: ChildCat ->
             selectedSubCat = `object`.id
             cancelAPiCall()
-            productRequest = ProductRequest(selectedSubCat, countryId, cityId, filter, 0, 0, 10, kindId, null, null)
-
-            getProductList(productRequest)
+            callGetProducts()
         }
         binding.listSubCategory.adapter = subCategoryAdapter
+    }
+
+    private fun callGetProducts() {
+
+        productRequest =
+            ProductRequest(
+                selectedSubCat,
+                countryId,
+                cityId,
+                filter,
+                0,
+                0,
+                10,
+                kindId,
+                sortList,
+                filterList
+            )
+
+        getProductList(productRequest)
     }
 
     private fun initMainCategoryAdapter() {
@@ -286,14 +333,15 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
             object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
-                        val result = obj as FavouriteResultModel?
                         var message: String? = getString(R.string.fail_to_get_data)
                         binding.loadingProgressLY.loadingProgressLY.visibility = View.GONE
                         if (func == Constants.ERROR) {
-                            if (result != null && result.message != null) {
-                                message = result.message
-                            }
-                            binding.productsRv.visibility = View.GONE
+                            // val result = obj as FavouriteResultModel?
+
+//                            if (result != null && result.message != null) {
+//                                message = result.message
+//                            }
+//                            binding.productsRv.visibility = View.GONE
                             binding.noDataLY.noDataLY.visibility = View.GONE
                             binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
                             binding.failGetDataLY.failTxt.text = message
@@ -304,7 +352,9 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                             binding.productsRv.visibility = View.GONE
                         } else {
                             if (IsSuccess) {
-                                if (result!!.data != null && result.data.size > 0) {
+                                val result = obj as FavouriteResultModel?
+
+                                if (result?.data != null && result.data.size > 0) {
                                     binding.productsRv.visibility = View.VISIBLE
                                     binding.noDataLY.noDataLY.visibility = View.GONE
                                     binding.failGetDataLY.failGetDataLY.visibility = View.GONE
@@ -324,7 +374,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                     }
                 }
 
-            }).getFavorite(productRequest)
+            }).getProductList(productRequest)
     }
 
     override fun OnMainCategoryItemClicked(mainCategoryDM: CategoryModel, position: Int) {
@@ -333,7 +383,8 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         subCategoryDMS = ArrayList(mainCategoryDM.childCat)
         initSubCatList()
         cancelAPiCall()
-        getProductList(productRequest)
+//        getProductList(productRequest)
+        callGetProducts()
     }
 
     private fun checkCameraPermission() {
@@ -366,7 +417,6 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
                 ).show()
             }.onSameThread().check()
     }
-
 
 
     private fun startScan() {
@@ -408,6 +458,17 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
 
         }
+        if (event.type == MessageEvent.type_filter) {
+            openFiltersPage()
+
+
+        }
+    }
+
+    private fun openFiltersPage() {
+        val intent = Intent(requireActivity(), FilterActivity::class.java)
+        openFilterLauncher?.launch(intent)
+
     }
 
     override fun onStart() {
@@ -496,64 +557,61 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     private fun sortByType() {
         when (sortByTypes) {
             1 -> {
-                //ascending
-                //  sortByPrice = 1
-                productList?.sortBy { it.firstProductBarcodes.price }
-                initAdapter()
-                adapter?.notifyDataSetChanged()
-
+                sortType(true)
 
             }
             2 -> {
-                //Descending
-                // sortByPrice = 0
-                productList?.sortByDescending { it.firstProductBarcodes.price }
-                initAdapter()
-                adapter?.notifyDataSetChanged()
 
+                sortType(false)
 
 
             }
             3 -> {
-                //Descending
-                // sortByPrice = 0
-                productList?.sortBy { it.id }
-                initAdapter()
-                adapter?.notifyDataSetChanged()
-
-
-
+                sortTypeName(true)
             }
+
             4 -> {
-                //Descending
-                // sortByPrice = 0
-                productList?.sortByDescending { it.id }
-                initAdapter()
-                adapter?.notifyDataSetChanged()
-
-
+                sortTypeName(false)
 
             }
 
-            5 -> {
-                //Descending
-                // sortByPrice = 0
-                productList?.sortBy { it.firstProductBarcodes.price }
-                initAdapter()
-                adapter?.notifyDataSetChanged()
 
-
-
-            }
         }
 
+
+    }
+
+    private fun sortType(isDescending: Boolean) {
+        sortList = mutableListOf()
+        sortList?.clear()
+        val sortModel = SortModel()
+        sortModel.key = "price"
+        sortModel.isDescending = isDescending
+        sortList?.add(sortModel)
+        callGetProducts()
+    }
+
+    private fun sortTypeName(isDescending: Boolean) {
+        sortList = mutableListOf()
+        sortList?.clear()
+        val sortModel = SortModel()
+        val name:String=if (UtilityApp.getLanguage() == Constants.English) {
+           "name"
+        } else {
+           "h_name"
+        }
+        sortModel.key =name
+        sortModel.isDescending = isDescending
+        sortList?.add(sortModel)
+        callGetProducts()
 
     }
 
     override fun onItemClicked(position: Int, productModel: ProductModel?) {
         val intent = Intent(activityy, ProductDetailsActivity::class.java)
         intent.putExtra(Constants.DB_productModel, productModel)
-        startActivity(intent)    }
+        startActivity(intent)
+    }
 
 
 }

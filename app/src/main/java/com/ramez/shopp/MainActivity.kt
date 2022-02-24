@@ -19,7 +19,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.classes.*
 import com.ramez.shopp.Dialogs.ConfirmDialog
-import com.ramez.shopp.Dialogs.FilterDialog
+import com.ramez.shopp.Dialogs.SortDialog
 import com.ramez.shopp.Utils.ActivityHandler
 import com.ramez.shopp.activities.ActivityBase
 import com.ramez.shopp.databinding.ActivityMainBinding
@@ -181,6 +181,7 @@ class MainActivity : ActivityBase() {
             binding.toolBar.mainSearchBtn.visibility = gone
             binding.toolBar.SearchBtn.visibility = gone
             binding.toolBar.addExtra.visibility = gone
+            binding.toolBar.cleanBut.visibility = gone
 
             println("Log main backStack fragments ${fragmentManager?.fragments}")
             if (oldFragment is SearchFragment) {
@@ -358,12 +359,12 @@ class MainActivity : ActivityBase() {
 //        }
 
 
-        binding.toolBar.filterBut.setOnClickListener {
+        binding.toolBar.sort2But.setOnClickListener {
             val filterDialog =
-                FilterDialog(
-                    activity,object:DataFetcherCallBack{
+                SortDialog(
+                    activity, object : DataFetcherCallBack {
                         override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                            val sortType:Int= obj as Int
+                            val sortType: Int = obj as Int
                             EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_SORT2, sortType))
 
                         }
@@ -372,8 +373,12 @@ class MainActivity : ActivityBase() {
         }
 
 
-        binding.toolBar.sort2But.setOnClickListener {
-            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_SORT2, 5))
+        binding.toolBar.filterBut.setOnClickListener {
+            EventBus.getDefault().post(MessageEvent(MessageEvent.type_filter, 5))
+
+        }
+        binding.toolBar.cleanBut.setOnClickListener {
+            EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_CLEAN))
 
         }
     }

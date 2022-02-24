@@ -7,69 +7,37 @@ import com.ramez.shopp.classes.FilterModel
 import com.ramez.shopp.classes.SortModel
 
 
-class ProductRequest {
-    constructor(
-        categoryId: Int,
-        countryId: Int,
-        cityId: Int,
-        filter: String?,
-        brandId: Int,
-        pageNumber: Int,
-        pageSize: Int,
-        kindId: Int,
-        srots: List<SortModel>?,
-        filters: List<FilterModel>?
-    ) {
-        this.categoryId = categoryId
-        this.countryId = countryId
-        this.cityId = cityId
-        this.filter = filter
-        this.brandId = brandId
-        this.pageNumber = pageNumber
-        this.pageSize = pageSize
-        this.kindId = kindId
-        this.srots = srots
-        this.filters = filters
-    }
-
+class ProductRequest(
     @SerializedName("category_id")
     @Expose
-   var categoryId = 0
-
+    var categoryId: Int,
     @SerializedName("country_id")
     @Expose
-   var countryId = 0
-
+    var countryId: Int,
     @SerializedName("city_id")
     @Expose
-   var cityId = 0
-
+    var cityId: Int,
     @SerializedName("filter")
     @Expose
-   var filter: String? = null
-
+    var filter: String?,
     @SerializedName("brand_id")
     @Expose
-   var brandId = 0
-
+    var brandId: Int,
     @SerializedName("page_number")
     @Expose
-   var pageNumber = 0
-
+    var pageNumber: Int,
     @SerializedName("page_size")
     @Expose
-   var pageSize = 0
-
+    var pageSize: Int,
     @SerializedName("kind_id")
     @Expose
-   var kindId = 0
-
+    var kindId: Int,
     @SerializedName("srots")
     @Expose
-   var srots: List<SortModel>? = null
-
+    var srots: List<SortModel>?,
     @SerializedName("filters")
     @Expose
-   var filters: List<FilterModel>? = null
+    var filters: List<FilterModel>?
+) {
 
 }

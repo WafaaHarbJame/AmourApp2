@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activities.BrandsActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/brandsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="1"
+        tools:itemCount="3"
+        tools:listitem="@layout/row_band_filter_item" />
+
+    <com.ramez.shopp.SpichalViews.STextViewBold
+        android:id="@+id/applyBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:background="@drawable/round_corner_next"
+        android:gravity="center"
+        android:minWidth="@dimen/_100sdp"
+        android:padding="@dimen/_8sdp"
+        android:text="@string/apply"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp" />
+</LinearLayout>

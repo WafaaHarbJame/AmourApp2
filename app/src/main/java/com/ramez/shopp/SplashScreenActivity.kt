@@ -51,6 +51,7 @@ class SplashScreenActivity : ActivityBase() {
             getCategories(storeId)
             getPaymentMethod(storeId)
             getKinds()
+            getAllBrands(storeId)
             getDinners(lang)
             getHomePage()
             getLinks(storeId)
@@ -385,6 +386,24 @@ class SplashScreenActivity : ActivityBase() {
 
             }
         ).getPaymentMethod(storeId)
+    }
+
+    fun getAllBrands(storeId: Int) {
+        UtilityApp.setBannerData(null)
+        DataFeacher(false,
+            object : DataFetcherCallBack {
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                            if (IsSuccess) {
+                                val result = obj as ResultAPIModel<ArrayList<BrandModel>?>?
+                                if (result?.data != null && result.data?.size?:0 > 0) {
+                                    val allBrandList = result.data
+                                    UtilityApp.setBrandsData(allBrandList)
+                               }
+                            }
+
+
+                }
+            }).GetAllBrands(storeId)
     }
 
 

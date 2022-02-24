@@ -877,9 +877,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                     if (isVisible) {
                         var message = getString(R.string.fail_to_get_data)
-                        val result =
-                            obj as ResultAPIModel<QuickDeliveryRespond?>?
                         if (func == Constants.ERROR) {
+                            val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
+
                             if (result?.message != null) {
                                 message = result.message
                             }
@@ -895,6 +895,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         } else {
                             if (IsSuccess) {
                                 binding.loadingLYDelivery.visibility = View.GONE
+                                val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
 
                                 if (result?.data != null) {
                                     Log.i(
@@ -935,11 +936,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 //                                        binding.quickLy.visibility = View.GONE
                                     }
 
-                                    getDeliveryTypes()
 
                                 }
                             }
                         }
+
+                        getDeliveryTypes()
+
                     }
                 }
             }).getQuickDelivery(quickCall1)
@@ -953,13 +956,14 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
-                        val quickDeliveryRespond = obj as DeliveryInfo?
                         if (IsSuccess) {
+                            val quickDeliveryRespond = obj as DeliveryInfo?
+
                             if (fromAddress) {
                                 GlobalData.hideProgressDialog()
                             }
                             if (quickDeliveryRespond != null) {
-                                Log.i(ContentValues.TAG, "Log GetDeliveryInfo")
+                                Log.i(javaClass.name, "Log GetDeliveryInfo")
                                 if (total!!.toDouble() >= minimum_order_amount) {
                                     deliveryFees = 0.0
                                     binding.deliveryFees.text = getString(R.string.free)
@@ -982,7 +986,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                     } else {
                                         binding.deliveryFees.text = NumberHandler.formatDouble(
                                             deliveryFees,
-                                            localModel!!.fractional
+                                           fraction
                                         ).plus(" ").plus(currency)
                                         binding.freeDelivery.text =
                                             getString(R.string.over).plus(" ").plus(minimum_order_amount)
@@ -1023,19 +1027,19 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     }
 
     private fun getProductCheckerList() {
-        productCheckerList!!.add(
+        productCheckerList?.add(
             ProductChecker(
                 1,
                 getString(R.string.product_not_found_1)
             )
         )
-        productCheckerList!!.add(
+        productCheckerList?.add(
             ProductChecker(
                 2,
                 getString(R.string.product_not_found_2)
             )
         )
-        productCheckerList!!.add(
+        productCheckerList?.add(
             ProductChecker(
                 3,
                 getString(R.string.product_not_found_3)
@@ -1080,10 +1084,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             true, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
-                        val result = obj as CheckOrderResponse?
                         val message = getString(R.string.fail_to_get_data)
                         binding.loadingDelivery.visibility = View.GONE
                         if (IsSuccess) {
+                            val result = obj as CheckOrderResponse?
                             if(result?.status==200){
                                 if (result.data != null && result.data
                                             .deliveryTimes != null && result.data.deliveryTimes.size > 0
@@ -1152,8 +1156,20 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                     }
                                 }
                             }
+                            else {
+                                binding.noDeliveryTv.visibility = View.VISIBLE
+                                binding.noDeliveryTv.text = message
+                                GlobalData.Toast(activityy, message)
+                            }
+
 
                         }
+                        else {
+                            binding.noDeliveryTv.visibility = View.VISIBLE
+                            binding.noDeliveryTv.text = message
+                            GlobalData.Toast(activityy, message)
+                        }
+
                     }
                 }
             }).getDeliveryTimeList(storeId, user_id)

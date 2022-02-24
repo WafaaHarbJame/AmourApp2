@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4sdp"
+    android:background="@drawable/round_corner_white_small8"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_2sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:orientation="horizontal">
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/brandNameTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:text="Brand Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:layout_weight="1"
+            android:visibility="visible" />
+        <com.ramez.shopp.SpichalViews.STextViewIcon2
+            android:id="@+id/chBrandName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_15ssp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/green5"
+            android:text="@string/fa_check" />
+<!--        <com.ramez.shopp.SpichalViews.SCheckBox-->
+<!--            android:id="@+id/chBrandName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checked="false"-->
+<!--            android:textStyle="bold"-->
+<!--            android:paddingEnd="@dimen/_5sdp"-->
+<!--            android:textAlignment="viewStart"-->
+<!--            android:theme="@style/MyRadioButton2" />-->
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_view" />
+
+</LinearLayout>
+

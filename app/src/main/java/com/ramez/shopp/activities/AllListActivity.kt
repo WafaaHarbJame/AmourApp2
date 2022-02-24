@@ -19,6 +19,8 @@ import com.ramez.shopp.Models.ProductModel
 import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.adapter.ProductCategoryAdapter
+import com.ramez.shopp.classes.FilterModel
+import com.ramez.shopp.classes.SortModel
 import com.ramez.shopp.databinding.ActivityAllListBinding
 import java.util.ArrayList
 
@@ -39,8 +41,8 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
     private var isNotify = false
     private var sortType: String = ""
     private var kindId = 0
-    private var sortBySuggest = 0
-    private var sortByNew = 0
+    private var sortList: ArrayList<SortModel>? = null
+    private var filterList: ArrayList<FilterModel>? = null
     var productRequest: ProductRequest? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +91,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
             filter,
             this,
             Constants.twoRow,
-            brandId, 0
+            brandId, sortList,filterList
         )
         binding.recycler.adapter = adapter
     }
@@ -106,7 +108,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                 title = name
                 kindId = bundle.getInt(Constants.kind_id)
                 productRequest =
-                    ProductRequest(0, countryId, cityId, Constants.new_filter, 0, 0, 10, kindId, null, null)
+                    ProductRequest(0, countryId, cityId, Constants.new_filter, 0, 0, 10, kindId, sortList, filterList)
 
                 getProductList(productRequest)
             }
@@ -165,7 +167,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                 }
             }
 
-        }).getFavorite(productRequest)
+        }).getProductList(productRequest)
     }
 
     override fun onBackPressed() {

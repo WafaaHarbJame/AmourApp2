@@ -8,12 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.ramez.shopp.Models.CategoryModel;
-import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.request.ProductRequest;
 import com.ramez.shopp.classes.Constants;
 import com.ramez.shopp.classes.FilterModel;
@@ -35,10 +30,8 @@ import com.ramez.shopp.activities.RegisterLoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -173,8 +166,6 @@ public class DataFeacher {
                 String url = call.request().url().url().getPath();
                 if (response.isSuccessful()) {
                     System.out.println("Log url " + call.request().url());
-
-                    Log.i("Log", "Log errorApiUrl " + url);
 
                     if (url.equals(LOGIN_URL)) {
                         LoginResultModel result = (LoginResultModel) response.body();
@@ -1096,51 +1087,83 @@ public class DataFeacher {
     }
 
 
-    public Call getFavorite(ProductRequest productRequest) {
+    public Call getProductList(ProductRequest productRequest) {
         //int kind_id, String srots, int category_id, int country_id, int city_id, String user_id, String filter, int brand_id, int page_number, int page_size
 
-        Map<String, Object> params = new HashMap<>();
+//        Map<String, Object> params = new HashMap<>();
 
-        FilterModel filterModel = new FilterModel();
-        List<FilterModel> filtersList = new ArrayList<FilterModel>();
-        filtersList.add(filterModel);
+//        FilterModel filterModel = new FilterModel();
+//        filterModel.setKey("brand");
+//        filterModel.setValue("1,4,24");
+//        List<FilterModel> filtersList = new ArrayList<>();
+//        filtersList.add(filterModel);
 
-        String filtersJson = new Gson().toJson(filtersList);
-        JSONArray filtersJsonArr = null;
-        try {
-            filtersJsonArr = new JSONArray(filtersJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        SortModel sortModel = new SortModel();
-        List<SortModel> sortList = new ArrayList<SortModel>();
-        sortList.add(sortModel);
-        String sortJson = new Gson().toJson(sortList);
-        JSONArray sortJsonArr = null;
-        try {
-            sortJsonArr = new JSONArray(sortJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        SortModel sortModel = new SortModel();
+//        sortModel.setKey("price");
+//        sortModel.setDescending(true);
 
-        params.put("category_id", productRequest.getCategoryId());
-        params.put("country_id", productRequest.getCountryId());
-        params.put("city_id", productRequest.getCityId());
-        params.put("filter", productRequest.getFilter());
-        params.put("brand_id", productRequest.getBrandId());
-        params.put("page_number", productRequest.getPageNumber());
-        params.put("page_size", productRequest.getPageSize());
-        params.put("kind_id", productRequest.getKindId());
-//        if (filtersList != null && !filtersList.isEmpty())
-//        params.put("filters", filtersJsonArr);
-//        params.put("srots", sortJsonArr);
+//        List<SortModel> sortList = new ArrayList<>();
+//        sortList.add(sortModel);
 
-        Log.i(TAG, "Log getFavorite");
-        Log.i(TAG, "Log getFavorite headerMap " + headerMap);
-        Log.i(TAG, "Log params " + params);
 
-        Call call = apiService.GetFavoriteProducts(headerMap, params);
+//        String sortJson = new Gson().toJson(sortList);
+
+//        try {
+//            JSONArray sortJsonArr = new JSONArray(sortJson);
+//            params.put("srots", sortJsonArr);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Log.i(TAG, "Log sortJson " + sortJson);
+//        Log.i(TAG, "Log filtersJson " + filtersJson);
+
+//        params.put("category_id", productRequest.getCategoryId());
+//        params.put("country_id", productRequest.getCountryId());
+//        params.put("city_id", productRequest.getCityId());
+//        params.put("filter", productRequest.getFilter());
+//        params.put("brand_id", productRequest.getBrandId());
+//        params.put("page_number", productRequest.getPageNumber());
+//        params.put("page_size", productRequest.getPageSize());
+//        params.put("kind_id", productRequest.getKindId());
+//
+//        if (productRequest.getFilters() != null && !productRequest.getFilters().isEmpty()) {
+//            String filtersJson = new Gson().toJson(productRequest.getFilters());
+//            System.out.println("Log filtersJson " + filtersJson);
+//            try {
+//                JSONArray filtersJsonArr = new JSONArray(filtersJson);
+////                params.put("filters", filtersJsonArr);
+//                params.put("filters", productRequest.getFilters());
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        if (productRequest.getSrots() != null && !productRequest.getSrots().isEmpty()) {
+//            String sortJson = new Gson().toJson(productRequest.getSrots());
+//            System.out.println("Log sortJson " + sortJson);
+//            try {
+//                JSONArray sortJsonArr = new JSONArray(sortJson);
+////                params.put("srots", sortJsonArr);
+//                params.put("srots", productRequest.getSrots());
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        String paramsJson = new Gson().toJson(productRequest);
+
+        Log.i(TAG, "Log getProductList");
+        Log.i(TAG, "Log getProductList headerMap " + headerMap);
+//        Log.i(TAG, "Log params " + params);
+        System.out.println("Log paramsJson " + paramsJson);
+
+
+        Call call = apiService.GetProductsList(headerMap, productRequest);
         call.enqueue(callbackApi);
         return call;
     }
@@ -1200,6 +1223,7 @@ public class DataFeacher {
         Log.i(TAG, "Log expressDelivery " + orderCalls.expressDelivery);
         Log.i(TAG, "Log itemNotFoundAction " + orderCalls.itemNotFoundAction);
         Log.i(TAG, "Log payToken " + orderCalls.pay_token);
+        Log.i(TAG, "Log delivery_type " + orderCalls.delivery_type);
         Log.i(TAG, "Log delivery_type " + orderCalls.delivery_type);
 
         Call call = apiService.makeOrder(headerMap, orderCalls);

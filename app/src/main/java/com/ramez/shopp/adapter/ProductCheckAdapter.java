@@ -66,14 +66,7 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
 
         }
 
-        viewHolder.binding.selectTxt.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (lastCheckedRB != null) {
-                lastCheckedRB.setChecked(false);
-            }
-            //store the clicked radiobutton
-            lastCheckedRB =   viewHolder.binding.selectTxt;
 
-        });
 
 
     }
@@ -103,6 +96,20 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
             });
 
 
+           binding.selectTxt.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (lastCheckedRB != null) {
+                    lastCheckedRB.setChecked(false);
+                }
+                //store the clicked radiobutton
+                lastCheckedRB =   binding.selectTxt;
+               ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
+               selectedPosition = deliveryTime.getId();
+               notifyDataSetChanged();
+
+               if (dataCallback != null) {
+                   dataCallback.dataResult(deliveryTime, "result", true);
+               }
+           });
 
         }
     }

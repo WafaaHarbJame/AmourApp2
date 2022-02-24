@@ -40,7 +40,8 @@ class ProductCategoryAdapter(
     private val onItemClick: OnItemClick?,
     gridNumber: Int,
     brand_id: Int,
-    sortByTypes: Int,
+    sortList: MutableList<SortModel>?,
+    filterList: MutableList<FilterModel>?,
 
     ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -69,6 +70,8 @@ class ProductCategoryAdapter(
     var apiCall: Call<*>? = null
     var fraction = 2
     var localModel: LocalModel? = null
+    var sortList: MutableList<SortModel>?=null
+    var filterList: MutableList<FilterModel>?=null
     private var sortByTypes = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var vh: RecyclerView.ViewHolder? = null
@@ -298,7 +301,7 @@ class ProductCategoryAdapter(
                 productModels.add(null)
                 println("Log productDMS size " + productModels.size)
                 notifyItemInserted(productModels.size - 1)
-               val productRequest = ProductRequest(categoryId, countryId, cityId, "", brandId, nextPage, 10, kindId, null, null)
+               val productRequest = ProductRequest(categoryId, countryId, cityId, "", brandId, nextPage, 10, kindId, sortList, filterList)
                 LoadAllData(productRequest)
             }
         }
@@ -356,7 +359,7 @@ class ProductCategoryAdapter(
                 }
 
             })
-        apiCall = dataFeacher.getFavorite(productRequest
+        apiCall = dataFeacher.getProductList(productRequest
         )
     }
 
@@ -722,6 +725,8 @@ class ProductCategoryAdapter(
         this.gridNumber = gridNumber
         isCanceled = false
         this.brandId = brand_id
+        this.sortList = sortList
+        this.filterList = filterList
         this.sortByTypes = sortByTypes
         val gridLayoutManager = rv.layoutManager as GridLayoutManager?
         gridLayoutManager!!.spanSizeLookup = object : SpanSizeLookup() {

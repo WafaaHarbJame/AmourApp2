@@ -109,7 +109,6 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     private var searchLauncher: ActivityResultLauncher<Intent>? = null
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -133,6 +132,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         productOffersList = ArrayList()
         brandsList = ArrayList()
         mScannerView = ZXingScannerView(getActivity())
+
         lang =
             if (UtilityApp.getLanguage() == null) Locale.getDefault().language else UtilityApp.getLanguage()
         activity = getActivity()
@@ -480,9 +480,27 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                 initSliderAdapter()
                                 initBannersAdapter()
                                 getBooklets(cityId)
-                                getAllBrands(cityId)
+                                if (UtilityApp.getBrandsData() != null && UtilityApp.getBrandsData().size > 0) {
 
-                                val productRequest = ProductRequest(categoryId,countryId,cityId,Constants.new_filter,0,0,10,kind_id,null,null)
+                                    initBrandsAdapter(UtilityApp.getBrandsData())
+                                } else {
+                                    getAllBrands(cityId)
+
+                                }
+
+
+                                val productRequest = ProductRequest(
+                                    categoryId,
+                                    countryId,
+                                    cityId,
+                                    Constants.new_filter,
+                                    0,
+                                    0,
+                                    10,
+                                    kind_id,
+                                    null,
+                                    null
+                                )
 
                                 getProductList(productRequest)
                                 if (result.featured != null && result.featured.size > 0 || result.quickProducts != null && result.quickProducts.size > 0 || result.offeredProducts != null && result.offeredProducts.size > 0
@@ -840,7 +858,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     }
 
     fun getAllBrands(storeId: Int) {
-        brandsList!!.clear()
+        brandsList?.clear()
         binding.loadingProgressLY.loadingProgressLY.visibility = View.VISIBLE
         binding.dataLY.visibility = View.GONE
         binding.noDataLY.noDataLY.visibility = View.GONE
@@ -876,24 +894,11 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                             if (IsSuccess) {
                                 val result = obj as ResultAPIModel<ArrayList<BrandModel>?>?
 
-                                if (result!!.data != null && result.data!!.size > 0) {
-                                    Log.i(ContentValues.TAG, "Log getBrands" + result.data!!.size)
+                                if (result?.data != null && result.data?.size ?: 0 > 0) {
+                                    Log.i(ContentValues.TAG, "Log getBrands" + result.data?.size)
                                     val allBrandList = result.data
-
-                                    var i = 0
-                                    while (i < allBrandList!!.size) {
-                                        val brandModel = result.data!![i]
-                                        if (brandModel.image != null || brandModel.image2 != null) {
-                                            brandsList!!.add(brandModel)
-                                            allBrandList.removeAt(i)
-                                            i--
-                                        }
-                                        i++
-                                    }
-                                    if (brandsList!!.size == 0) {
-                                        binding.brandLy.visibility = View.GONE
-                                    }
-                                    initBrandsAdapter()
+                                    UtilityApp.setBrandsData(allBrandList)
+                                    initBrandsAdapter(allBrandList)
                                 } else {
                                     binding.brandLy.visibility = View.GONE
                                 }
@@ -994,7 +999,21 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         binding.bannersRv.adapter = bannerAdapter
     }
 
-    fun initBrandsAdapter() {
+    fun initBrandsAdapter(allBrandList: ArrayList<BrandModel>?) {
+
+        var i = 0
+        while (i < allBrandList!!.size) {
+            val brandModel = allBrandList[i]
+            if (brandModel.image != null || brandModel.image2 != null) {
+                brandsList!!.add(brandModel)
+                allBrandList.removeAt(i)
+                i--
+            }
+            i++
+        }
+        if (brandsList?.size == 0) {
+            binding.brandLy.visibility = View.GONE
+        }
         brandsAdapter = BrandsAdapter(activityy, brandsList, this, 10)
         binding.brandsRecycler.adapter = brandsAdapter
     }
@@ -1165,7 +1184,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                     }
                 }
 
-            }).getFavorite(productRequest)
+            }).getProductList(productRequest)
     }
 
     companion object {
@@ -1200,16 +1219,6 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
         }).getAllKindsList()
     }
 
-//    private fun checkToken() {
-//        val userToken = UtilityApp.getUserToken()
-//        val refreshToken = UtilityApp.getRefreshToken()
-//
-//        if (userToken.isNullOrBlank() && refreshToken.isNullOrEmpty()) {
-//            loginAgain()
-//        } else {
-//            refreshToken(userToken, refreshToken)
-//        }
-//    }
 
     fun changeUrl() {
         val url = UtilityApp.getUrl()

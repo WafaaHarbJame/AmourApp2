@@ -243,7 +243,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
             }
 
 
-        }).getFavorite(productRequest);
+        }).getProductList(productRequest);
     }
 
 

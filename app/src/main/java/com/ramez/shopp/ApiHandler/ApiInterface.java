@@ -51,6 +51,7 @@ import com.ramez.shopp.Models.SettingCouponsModel;
 import com.ramez.shopp.Models.SingleDinnerModel;
 import com.ramez.shopp.Models.TotalPointModel;
 import com.ramez.shopp.Models.TransactionModel;
+import com.ramez.shopp.Models.request.ProductRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ ApiInterface {
     Call<OtpModel> GetOptHandle(@HeaderMap() Map<String, Object> headerParams, @Query("mobile_number") String mobile_number);
 
     @POST("v9/Account/refresh-token")
-    Call<ResultAPIModel<RefreshTokenModel>> RefreshToken(@HeaderMap() Map<String, Object> headerParams,@Body Map<String, Object> params);
+    Call<ResultAPIModel<RefreshTokenModel>> RefreshToken(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v9/Account/getUserDetail")
     Call<ResultAPIModel<ProfileData>> getUserDetail(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_id") int store_id);
@@ -149,6 +150,7 @@ ApiInterface {
     @POST("v9/Dinners/Dinner")
     Call<ResultAPIModel<SingleDinnerModel>> getSingleDinner(@HeaderMap() Map<String, Object> headerParams, @Query("dinner_id") int dinner_id,
                                                             @Query("lan") String lan);
+
     @POST("v9/Booklets/BookletsList")
     Call<ResultAPIModel<ArrayList<BookletsModel>>> getBookletsList(@HeaderMap() Map<String, Object> headerParams, @Query("store_id") int store_id);
 
@@ -204,7 +206,6 @@ ApiInterface {
     Call<OrdersResultModel> makeOrder(@HeaderMap() Map<String, Object> headerParams, @Body OrderCall param);
 
 
-
     @POST("v9/Orders/GetOrdersList")
     Call<OrderResultModel> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
 
@@ -215,7 +216,6 @@ ApiInterface {
 
     @POST("v9/ScanAndGo/GetItem")
     Call<ResultAPIModel<ScanModel>> updateFastQCart(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
-
 
 
     @POST("v9/ScanAndGo/GetCarts")
@@ -275,10 +275,8 @@ ApiInterface {
     Call<ResultAPIModel<ArrayList<KindCategoryModel>>> getAllKindsList(@HeaderMap() Map<String, Object> headerParams);
 
 
-
     @GET("v9/Products/AllCategories")
     Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
-
 
 
     @GET("v9/Products/productRecipeList")
@@ -289,8 +287,6 @@ ApiInterface {
 
     @GET("v9/Products/allbrands")
     Call<ResultAPIModel<ArrayList<BrandModel>>> GetAllBrands(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
-
-
 
 
     @GET("v9/Company/AboutAs")
@@ -308,7 +304,7 @@ ApiInterface {
 
 
     @POST("v9/Products/productList")
-    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap Map<String, Object> headerParams, @Body Map<String, Object> queryParams);
+    Call<FavouriteResultModel> GetProductsList(@HeaderMap Map<String, Object> headerParams, @Body ProductRequest bodyParams);
 
 
     @GET("v9/Products/search")
@@ -329,6 +325,7 @@ ApiInterface {
 
     @GET("v9/Orders/GetDeliveryInfo")
     Call<DeliveryInfo> GetDeliveryInfo(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
+//    Call<ResultAPIModel<DeliveryInfo>> GetDeliveryInfo(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
 
 
     @GET("v9/Orders/getUpcomingOrders")
@@ -349,14 +346,11 @@ ApiInterface {
     Call<ScanResult> addToFastQCart(@HeaderMap() Map<String, Object> headerParams, @QueryMap Map<String, Object> queryParams);
 
 
-
-
     @GET("v9/ScanAndGo/GetSetting")
     Call<ResultAPIModel<FastValidModel>> GetSetting
             (@HeaderMap() Map<String, Object> headerParams,
              @QueryMap Map<String, Object> queryParams);
 
-    
 
 }
 

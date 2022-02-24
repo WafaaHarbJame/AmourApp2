@@ -101,6 +101,21 @@
             android:src="@drawable/delete_toolbar"
             android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/cleanBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/Clean"
+            android:minHeight="@dimen/_40sdp"
+            android:textColor="@color/white"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_15ssp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/sortBut"

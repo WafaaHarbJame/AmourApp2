@@ -144,6 +144,6 @@ class FavoriteActivity : ActivityBase(), OfferProductAdapter.OnItemClick {
                     }
                 }            }
 
-        }).getFavorite(productRequest)
+        }).getProductList(productRequest)
     }
 }

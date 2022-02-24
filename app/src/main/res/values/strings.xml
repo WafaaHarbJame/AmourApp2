@@ -456,7 +456,7 @@
     <string name="accept_terms">Please Accept the Terms </string>
     <string name="beneit_using_app_EN" translatable="false">benefitPay Mobile</string>
     <string name="beneit_using_app_AR" translatable="false">بنفت موبايل</string>
-    <string name="credit_card" >Credit Card</string>
+    <string name="credit_card">Credit Card</string>
     <string name="beneit_using_Web_AR" translatable="false">بطاقة الصراف الآلي (البحرين)</string>
     <string name="beneit_using_Web_En" translatable="false">Debit Card (Bahrain)</string>
     <string name="failto_save">Fail to save Data</string>
@@ -468,9 +468,14 @@
     <string name="normal_delivery">Schedule a time</string>
     <string name="click_collect">Click &amp; Collect</string>
     <string name="pay">pay</string>
-    <string name="suggsted">Suggested</string>
     <string name="price_high_to_low">Price High to Low</string>
     <string name="price_low_to_high">Price Low to High</string>
+    <string name="name_high_to_low">Name High to Low</string>
+    <string name="name_low_to_high">Name Low to High</string>
+    <string name="filter">Filter</string>
+    <string name="price_range">Price Range</string>
+    <string name="to">To</string>
+    <string name="Clean">clean</string>
 
 
 </resources>

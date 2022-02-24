@@ -878,7 +878,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     }
                 }
 
-            }).getFavorite(productRequest)
+            }).getProductList(productRequest)
         }
 
     private fun initProductsAdapter() {

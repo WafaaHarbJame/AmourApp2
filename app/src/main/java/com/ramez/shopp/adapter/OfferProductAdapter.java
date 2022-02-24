@@ -411,7 +411,7 @@ public class OfferProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
 
-        }).getFavorite(productRequest);
+        }).getProductList(productRequest);
     }
 
     @Override

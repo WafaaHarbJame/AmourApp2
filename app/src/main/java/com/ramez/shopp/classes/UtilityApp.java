@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.onesignal.OneSignal;
 import com.ramez.shopp.BuildConfig;
+import com.ramez.shopp.Models.BrandModel;
 import com.ramez.shopp.Models.CategoryModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.DinnerModel;
@@ -315,6 +316,20 @@ public class UtilityApp {
         return new Gson().fromJson(dataString, new TypeToken<List<PaymentModel>>() {
         }.getType());
 
+    }
+
+
+
+    public static ArrayList<BrandModel> getBrandsData() {
+        String dataString = RootApplication.Companion.getInstance().getSharedPManger().getDataString(Constants.KEY_BRANDS);
+        return new Gson().fromJson(dataString, new TypeToken<List<BrandModel>>() {
+        }.getType());
+
+    }
+
+    public static void setBrandsData(ArrayList<BrandModel> brandsData) {
+        String paymentData = new Gson().toJson(brandsData);
+        RootApplication.Companion.getInstance().getSharedPManger().SetData(Constants.KEY_BRANDS, paymentData);
     }
 
 

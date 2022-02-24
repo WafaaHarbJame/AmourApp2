@@ -76,6 +76,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="-2dp"
             android:text="20 - 30 mins"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp"
             android:visibility="gone" />
@@ -92,27 +93,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
 
-        <!--                <LinearLayout-->
-        <!--                    android:id="@+id/expressTimeTv"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginStart="@dimen/_8sdp"-->
-        <!--                    android:layout_marginEnd="@dimen/_8sdp"-->
-        <!--                    android:gravity="center_vertical"-->
-        <!--                    android:orientation="horizontal"-->
-        <!--                    android:paddingStart="@dimen/_10sdp"-->
-        <!--                    android:paddingTop="@dimen/_8sdp"-->
-        <!--                    android:paddingEnd="@dimen/_10sdp"-->
-        <!--                    android:paddingBottom="@dimen/_8sdp">-->
-
-
-        <!--                    <Space-->
-        <!--                        android:layout_width="0dp"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_weight="1" />-->
-
-
-        <!--                </LinearLayout>-->
         <com.ramez.shopp.SpichalViews.SRadioButton
             android:id="@+id/rbDeliveryType"
             android:layout_width="wrap_content"
