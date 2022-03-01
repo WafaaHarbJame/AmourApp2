@@ -62,6 +62,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private var addressTitle: String? = null
     private var addressFullAddress: String? = null
     private var deliveryFees = 0.0
+    private var isGetDeliveryInfo = false
     private var expressDeliveryCharge = 0.0
     private var hasExpress: Boolean = false
     private var cartResultModel: CartResultModel? = null
@@ -178,78 +179,84 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     }
 
     private fun checkDeliveryFees() {
-        Log.i(javaClass.name, "Log checkDeliveryFees deliveryFees $deliveryFees")
+
         Log.i(javaClass.name, "Log checkDeliveryFees deliveryType $deliveryType")
 
         //check total with minimumOrderAmount
         if (total?.toDouble() ?: 0.0 >= minimumOrderAmount) {
             deliveryFees = 0.0
-
         } else {
 
-            val totalPrice = minimumOrderAmount - total!!.toDouble()
+            val totalPrice = minimumOrderAmount - (total?.toDouble() ?: 0.0)
             binding.freeBut.text = getString(R.string.add).plus(" ")
                 .plus(NumberHandler.roundDouble(totalPrice)).plus(" ")
                 .plus(currency).plus(" ")
                 .plus(getString(R.string.get_Free))
         }
 
-        if (deliveryFees == 0.0) {
-            binding.deliveryFees.text = getString(R.string.free)
-            binding.freeDelivery.text = getString(R.string.over1)
-        } else {
-            binding.deliveryFees.text = NumberHandler.formatDouble(
-                deliveryFees,
-                fraction
-            ).plus(" ").plus(currency)
-            binding.freeDelivery.text =
-                getString(R.string.over).plus(" ").plus(minimumOrderAmount)
-                    .plus(" ").plus(currency).plus(".")
-        }
-
         //check deliveryTyp
 
+        var deliveryFeesStr = ""
+        var totalStr = ""
         when (deliveryType) {
+            0 -> {
+                if (deliveryFees == 0.0) {
+                    deliveryFeesStr = getString(R.string.free)
+                    binding.freeDelivery.text = getString(R.string.over1)
+                } else {
+                    deliveryFeesStr = NumberHandler.formatDouble(
+                        deliveryFees,
+                        fraction
+                    ).plus(" $currency")
+                    binding.freeDelivery.text =
+                        getString(R.string.over).plus(" $minimumOrderAmount $currency.")
+                }
+                totalStr =
+                    NumberHandler.formatDouble((total?.toDouble() ?: 0.0).plus(deliveryFees), fraction)
+            }
             1 -> {
                 binding.chooseDelivery.visibility = View.GONE
-                binding.deliveryFees.text = getString(R.string.free)
-                binding.totalTv.text = NumberHandler.formatDouble(
-                    NumberHandler.formatDouble(
-                        total?.toDouble(), fraction
-                    ).toDouble() + 0.0, fraction
-                ).plus(" ").plus(currency)
+                deliveryFeesStr = getString(R.string.free)
+                totalStr =
+                    NumberHandler.formatDouble((total?.toDouble() ?: 0.0), fraction)
                 initTimeAdapter(0.0)
-
             }
             2 -> {
-                binding.deliveryFees.text = NumberHandler.formatDouble(
-                    expressDeliveryCharge,
-                    fraction
-                ).plus(" " + localModel?.currencyCode)
-                binding.totalTv.text = NumberHandler.formatDouble(
-                    total?.toDouble() ?: 0.0 + expressDeliveryCharge,
-                    fraction
-                ).plus(" ").plus(currency)
+                if (expressDeliveryCharge == 0.0) {
+                    deliveryFeesStr = getString(R.string.free)
+//                    binding.freeDelivery.text = getString(R.string.over1)
+                }
+                else {
+                    deliveryFeesStr = NumberHandler.formatDouble(
+                        deliveryFees,
+                        fraction
+                    ).plus(" $currency")
+//                    binding.freeDelivery.text = getString(R.string.over).plus(" $minimumOrderAmount $currency.")
+                }
+
+//                deliveryFeesStr = NumberHandler.formatDouble(
+//                    expressDeliveryCharge,
+//                    fraction
+//                ).plus(" $currency")
+                totalStr =
+                    NumberHandler.formatDouble(
+                        (total?.toDouble() ?: 0.0).plus(expressDeliveryCharge),
+                        fraction
+                    )
+//                binding.totalTv.text = NumberHandler.formatDouble(
+//                    total?.toDouble() ?: 0.0 + expressDeliveryCharge,
+//                    fraction
+//                ).plus(" $currency")
                 initTimeAdapter(expressDeliveryCharge)
 
             }
-//            else -> {
-//
-//                initTimeAdapter(deliveryFees)
-//                binding.deliveryFees.text =
-//                    NumberHandler.formatDouble(deliveryFees,fraction).plus(" ")
-//                        .plus(currency)
-//                binding.freeDelivery.text =
-//                    getString(R.string.over).plus(" ").plus(minimumOrderAmount).plus(" ")
-//                        .plus(currency).plus(".")
-//                binding.totalTv.text = NumberHandler.formatDouble(
-//                    total?.toDouble() ?: 0 + deliveryFees,
-//                    fraction
-//                ).plus(" ").plus(currency)
-//
-//            }
-        }
 
+        }
+        binding.deliveryFees.text = deliveryFeesStr
+        binding.totalTv.text = totalStr.plus(" $currency")
+
+        println("Log deliveryFees checkDeliveryFees $deliveryFees")
+//        Log.i(javaClass.name, "Log deliveryFees checkDeliveryFees $deliveryFees")
     }
 
 
@@ -472,11 +479,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 minimumOrderAmount = cartResultModel?.data?.minimumOrderAmount ?: 0
                 Log.i(
                     javaClass.simpleName,
-                    "Log minimum_order_amount $minimumOrderAmount"
+                    "Log intent minimum_order_amount $minimumOrderAmount"
                 )
-                Log.i(javaClass.simpleName, "Log deliveryFees $deliveryFees")
-                Log.i(javaClass.simpleName, "Log total $total")
-                Log.i(javaClass.simpleName, "Log deliveryFees $deliveryFees")
+                println("Log deliveryFees intent $deliveryFees")
+                Log.i(javaClass.simpleName, "Log intent total $total")
 
                 checkDeliveryFees()
             }
@@ -834,7 +840,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                             }
                         }
 
-                        getDeliveryTypes()
+                        if (isGetDeliveryInfo){
+                            getDeliveryTypes()
+                            checkDeliveryFees()
+                        }
 
                     }
                 }
@@ -850,6 +859,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
                         if (IsSuccess) {
+                            isGetDeliveryInfo = true
                             val quickDeliveryRespond = obj as DeliveryInfo?
 
                             if (fromAddress) {
@@ -858,13 +868,17 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                             if (quickDeliveryRespond != null) {
                                 deliveryFees = quickDeliveryRespond.deliveryCharges
-                                checkDeliveryFees()
+                                println("Log deliveryFees getDeliveryInfo $deliveryFees")
+
                             }
 
 
                         } else {
                             GlobalData.hideProgressDialog()
                         }
+
+                        getDeliveryTypes()
+                        checkDeliveryFees()
                     }
                 }
             }
@@ -969,7 +983,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                         }
                                         minimumOrderAmount = checkOrderResponse.minimumOrderAmount
                                         deliveryFees = checkOrderResponse.deliveryCharges
-
+                                        println("Log deliveryFees getDeliveryTimeList $deliveryFees")
                                         checkDeliveryFees()
                                         val datesList =
                                             result.data.deliveryTimes
@@ -1143,14 +1157,16 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private fun getDeliveryTypes() {
         deliveryTypeList?.clear()
         val normal = UtilityApp.getNormalDelivery()
+//        val fees= binding.deliveryFees.text.toString().replace(currency," ").toDouble()
+
         deliveryTypeList?.add(
             DeliveryTypeModel(
                 0,
                 getString(R.string.normal_delivery),
                 R.drawable.normal_delivery_black,
                 R.drawable.normal_delivery_red,
-                normal,
-                deliveryFees
+                normal, deliveryFees
+
             )
         )
         deliveryTypeList?.add(
@@ -1190,15 +1206,15 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             Log.i(javaClass.name, "Log deliveryType $deliveryType")
 
             when (deliveryType) {
+                0 -> {
+                    binding.chooseDelivery.visibility = View.VISIBLE
+                    expressDelivery = false
+                }
                 1 -> {
                     binding.chooseDelivery.visibility = View.GONE
                     expressDelivery = false
                 }
                 2 -> {
-                    expressDelivery = false
-                    binding.chooseDelivery.visibility = View.VISIBLE
-                }
-                3 -> {
                     binding.chooseDelivery.visibility = View.VISIBLE
                     expressDelivery = true
                 }
