@@ -178,24 +178,21 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     }
 
     private fun checkDeliveryFees() {
-        Log.i(javaClass.name,"Log checkDeliveryFees deliveryFees $deliveryFees")
-        Log.i(javaClass.name,"Log checkDeliveryFees deliveryType $deliveryType")
+        Log.i(javaClass.name, "Log checkDeliveryFees deliveryFees $deliveryFees")
+        Log.i(javaClass.name, "Log checkDeliveryFees deliveryType $deliveryType")
 
         //check total with minimumOrderAmount
         if (total?.toDouble() ?: 0.0 >= minimumOrderAmount) {
             deliveryFees = 0.0
-            binding.deliveryFees.text = getString(R.string.free)
+
         } else {
 
             val totalPrice = minimumOrderAmount - total!!.toDouble()
-
             binding.freeBut.text = getString(R.string.add).plus(" ")
                 .plus(NumberHandler.roundDouble(totalPrice)).plus(" ")
                 .plus(currency).plus(" ")
                 .plus(getString(R.string.get_Free))
         }
-
-        //check deliveryFees with 0
 
         if (deliveryFees == 0.0) {
             binding.deliveryFees.text = getString(R.string.free)
@@ -203,11 +200,14 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         } else {
             binding.deliveryFees.text = NumberHandler.formatDouble(
                 deliveryFees,
-                fraction).plus(" ").plus(currency)
+                fraction
+            ).plus(" ").plus(currency)
             binding.freeDelivery.text =
                 getString(R.string.over).plus(" ").plus(minimumOrderAmount)
                     .plus(" ").plus(currency).plus(".")
         }
+
+        //check deliveryTyp
 
         when (deliveryType) {
             1 -> {
@@ -227,7 +227,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     fraction
                 ).plus(" " + localModel?.currencyCode)
                 binding.totalTv.text = NumberHandler.formatDouble(
-                    total?.toDouble()?:0.0 + expressDeliveryCharge,
+                    total?.toDouble() ?: 0.0 + expressDeliveryCharge,
                     fraction
                 ).plus(" ").plus(currency)
                 initTimeAdapter(expressDeliveryCharge)
