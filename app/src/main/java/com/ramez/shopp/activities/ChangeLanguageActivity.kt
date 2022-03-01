@@ -26,16 +26,17 @@ class ChangeLanguageActivity : ActivityBase() {
         binding.containerArabic.setOnClickListener {
             binding.imgEnglishTick.visibility = View.INVISIBLE
             binding.imgArabicTick.visibility = View.VISIBLE
-            UtilityApp.setLanguage(Constants.Arabic)
-            UtilityApp.setAppLanguage()
-            setting
+
+            navigateChooseCityActivity(Constants.Arabic)
+
+
         }
         binding.containerEnglish.setOnClickListener {
             binding.imgEnglishTick.visibility = View.VISIBLE
             binding.imgArabicTick.visibility = View.INVISIBLE
-            UtilityApp.setLanguage(Constants.English)
-            UtilityApp.setAppLanguage()
-            setting
+
+            navigateChooseCityActivity(Constants.English)
+
         }
         binding.toolBar.backBtn.visibility = View.GONE
     }
@@ -53,16 +54,16 @@ class ChangeLanguageActivity : ActivityBase() {
                             settingModel.conditions = result.data?.conditions + ""
                             settingModel.privacy = result.data?.privacy + ""
                             UtilityApp.setSetting(settingModel)
-                            navigateChooseCityActivity()
                         }
-                    } else {
-                        navigateChooseCityActivity()
-                    }                }
+                    }             }
 
             }).getSetting()
         }
 
-    fun navigateChooseCityActivity() {
+    fun navigateChooseCityActivity(lang:String) {
+        UtilityApp.setLanguage(lang)
+        UtilityApp.setAppLanguage()
+        setting
         startActivity(Intent(this@ChangeLanguageActivity, ChooseCityActivity::class.java))
         finish()
     }

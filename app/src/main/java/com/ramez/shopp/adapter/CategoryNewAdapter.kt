@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ramez.shopp.Models.CategoryModel
-import com.ramez.shopp.databinding.RowCategoryBinding
+import com.ramez.shopp.R
+import com.ramez.shopp.classes.GlobalData.GlideImg
 import com.ramez.shopp.databinding.RowNewCategoryBinding
 
 internal class CategoryNewAdapter(
@@ -28,7 +29,9 @@ internal class CategoryNewAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val categoryModel = categoryDMS?.get(position)
         try {
-            holder.binding.categoryNameTv.text = categoryModel?.categoryName
+            GlideImg(
+                context, categoryModel?.newCat, R.drawable.holder_image, holder.binding.ivCatImage
+            )
             val lln: RecyclerView.LayoutManager = LinearLayoutManager(context,RecyclerView.HORIZONTAL,false)
             holder.binding.subCatRecycler.layoutManager = lln
             val subCategoryNewAdapter = SubCategoryNewAdapter(

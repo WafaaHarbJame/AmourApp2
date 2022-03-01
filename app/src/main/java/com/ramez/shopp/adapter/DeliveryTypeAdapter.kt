@@ -51,7 +51,7 @@ class DeliveryTypeAdapter(
 
         val deliveryPrice: Double = paymentMethod?.deliveryPrice ?: 0.0
 
-        if (deliveryPrice == 0.0 || deliveryPrice == 0.00 || deliveryPrice == 0.00) {
+        if (deliveryPrice == 0.0 /*|| deliveryPrice == 0.00 || deliveryPrice == 0.000*/) {
             holder.binding.deliveryPrice.text = context.getString(R.string.free)
 
         } else {

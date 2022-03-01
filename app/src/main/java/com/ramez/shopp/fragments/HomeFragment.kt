@@ -540,13 +540,7 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
                                         getCategories(cityId)
                                     }
 
-
-                                    if (UtilityApp.getAllKinds() != null && UtilityApp.getAllKinds().size > 0) {
-                                        kindModelList = UtilityApp.getAllKinds()
-                                        initKindAdapter()
-                                    } else {
-                                        getKinds()
-                                    }
+                                    getKinds()
 
                                     initAdapter()
                                 } else {
@@ -1203,20 +1197,25 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
     }
 
     fun getKinds() {
-        UtilityApp.setAllKindsData(null)
-        DataFeacher(false, object : DataFetcherCallBack {
-            override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                if (IsSuccess) {
-                    val result = obj as ResultAPIModel<ArrayList<KindCategoryModel?>?>
-                    if (result.data?.size ?: 0 > 0) {
-                        val categoryModelList = result.data
-                        UtilityApp.setAllKindsData(categoryModelList)
-                        initKindAdapter()
-
+//        UtilityApp.setAllKindsData(null)
+        kindModelList = UtilityApp.getAllKinds()
+        if (kindModelList == null) {
+            DataFeacher(false, object : DataFetcherCallBack {
+                override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
+                    if (IsSuccess) {
+                        val result = obj as ResultAPIModel<ArrayList<KindCategoryModel>?>
+                        if (result.data?.size ?: 0 > 0) {
+                            kindModelList = result.data
+                            UtilityApp.setAllKindsData(kindModelList)
+                            initKindAdapter()
+                        }
                     }
                 }
-            }
-        }).getAllKindsList()
+            }).getAllKindsList()
+
+        } else {
+            initKindAdapter()
+        }
     }
 
 

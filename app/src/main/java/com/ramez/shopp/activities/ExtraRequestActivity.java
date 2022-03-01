@@ -177,12 +177,9 @@ public class ExtraRequestActivity extends ActivityBase {
 
         });
 
-        binding.scanBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Companion.hideSoftKeyboard(getActivity());
-                checkCameraPermission();
-            }
+        binding.scanBarcode.setOnClickListener(v -> {
+            Companion.hideSoftKeyboard(getActivity());
+            checkCameraPermission();
         });
 
 

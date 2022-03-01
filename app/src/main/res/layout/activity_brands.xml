@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray5"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".activities.BrandsActivity">
@@ -27,28 +28,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/brandsRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_weight="1"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="1"
         tools:itemCount="3"
         tools:listitem="@layout/row_band_filter_item" />
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/applyBut"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/round_corner_next"
-        android:gravity="center"
-        android:minWidth="@dimen/_100sdp"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/apply"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp" />
+        android:background="@color/white">
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/applyBut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_corner_next"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:minWidth="@dimen/_100sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/apply"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
+
+
 </LinearLayout>

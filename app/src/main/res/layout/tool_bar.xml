@@ -40,10 +40,11 @@
 
         <ImageView
             android:id="@+id/addExtra"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:gravity="center"
+            android:minWidth="@dimen/_50sdp"
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
             android:paddingStart="@dimen/_10sdp"
@@ -160,16 +161,17 @@
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/filter_view_white"
             android:visibility="gone" />
+
         <ImageView
             android:id="@+id/sort2But"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/filterBut"
             android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
-            android:layout_toStartOf="@id/filterBut"
             android:src="@drawable/sort_icon2"
             android:visibility="gone" />
 

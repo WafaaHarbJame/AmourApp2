@@ -72,7 +72,7 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     private var fraction = 2
     private var categoryId = 0
     var filter: String? = null
-    private var kind_id = 0
+    private var kindId = 0
     private var sortType:String = ""
     var productRequest: ProductRequest? = null
 
@@ -109,7 +109,6 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
         reviewManger = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.reviewRecycler.layoutManager = reviewManger
         binding.reviewRecycler.setHasFixedSize(true)
-        productRequest = ProductRequest(categoryId, countryId, cityId, filter, 0, 0, 12, kind_id, null, null)
 
         if (UtilityApp.isLogin()) {
             if (memberModel != null) {
@@ -668,95 +667,102 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
                     binding.dataLY.visibility = View.GONE
                 } else {
                     if (IsSuccess) {
-                        if (result!!.data != null && result.data.size > 0) {
-                            binding.dataLY.visibility = View.VISIBLE
-                            binding.noDataLY.noDataLY.visibility = View.GONE
-                            binding.failGetDataLY.failGetDataLY.visibility = View.GONE
-                            productModel = result.data[0]
-                            binding.CartLy.visibility = View.VISIBLE
-                            categoryId = productModel?.categoryId ?: 0
-                            Log.i(
-                                javaClass.simpleName,
-                                "Log getSingleProduct categoryId $categoryId"
-                            )
-                            productName = if (UtilityApp.getLanguage() == Constants.Arabic) {
-                                productModel?.gethName()
-                            } else {
-                                productModel?.getName()
-                            }
-                            binding.productNameTv.text = productName
-                            if (productModel?.getDescription() != null && productModel?.gethDescription() != null) {
-                                if (UtilityApp.getLanguage() == Constants.Arabic) {
-                                    binding.productDesc1Tv.text =
-                                        Html.fromHtml(productModel?.gethDescription())
+                        Log.i(
+                            javaClass.simpleName,
+                            "Log getSingleProduct status ${result?.status}"
+                        )
+                        if(result?.status==200){
+                            if (result.data.isNotEmpty()) {
+                                binding.dataLY.visibility = View.VISIBLE
+                                binding.noDataLY.noDataLY.visibility = View.GONE
+                                binding.failGetDataLY.failGetDataLY.visibility = View.GONE
+                                productModel = result.data[0]
+                                binding.CartLy.visibility = View.VISIBLE
+                                categoryId = productModel?.categoryId ?: 0
+                                Log.i(
+                                    javaClass.simpleName,
+                                    "Log getSingleProduct categoryId $categoryId"
+                                )
+                                productName = if (UtilityApp.getLanguage() == Constants.Arabic) {
+                                    productModel?.gethName()
                                 } else {
-                                    binding.productDesc1Tv.text =
-                                        Html.fromHtml(productModel?.getDescription())
+                                    productModel?.name
                                 }
-                            }
+                                binding.productNameTv.text = productName
+                                if (productModel?.description != null && productModel?.gethDescription() != null) {
+                                    if (UtilityApp.getLanguage() == Constants.Arabic) {
+                                        binding.productDesc1Tv.text =
+                                            Html.fromHtml(productModel?.gethDescription())
+                                    } else {
+                                        binding.productDesc1Tv.text =
+                                            Html.fromHtml(productModel?.getDescription())
+                                    }
+                                }
 
 
 //                        sliderList = productModel.getImages();
-                            val list = productName?.split(" ")?.toTypedArray()
-                            filter = list?.get(0)
-                            Log.i(javaClass.simpleName, "Log  productName $productName")
-                            Log.i(javaClass.simpleName, "Log search filter $filter")
-                            binding.ratingBar.rating = productModel?.rate?.toFloat() ?: 0f
+                                val list = productName?.split(" ")?.toTypedArray()
+                                filter = list?.get(0)
+                                Log.i(javaClass.simpleName, "Log  productName $productName")
+                                Log.i(javaClass.simpleName, "Log search filter $filter")
+                                binding.ratingBar.rating = productModel?.rate?.toFloat() ?: 0f
 
-                            if (productModel?.images?.size ?: 0 > 0) {
-                                setupViewPager(binding.viewPager)
-                                binding.pager.setViewPager(binding.viewPager)
-                            }
-
-                            if (productModel?.productBarcodes != null && productModel?.productBarcodes?.size ?: 0 > 0) {
-                                selectedProductBarcode = productModel?.firstProductBarcodes
-                                for (i in productModel?.productBarcodes!!.indices) {
-                                    val productBarcode1 = productModel!!.productBarcodes?.get(i)
-
-                                    if (selectedProductPos == 0 && productBarcode1?.cartId != 0) {
-                                        selectedProductBarcode = productBarcode1;
-                                        selectedProductPos = i;
-                                    }
+                                if (productModel?.images?.size ?: 0 > 0) {
+                                    setupViewPager(binding.viewPager)
+                                    binding.pager.setViewPager(binding.viewPager)
                                 }
-                                initProductData()
-                            }
-                            if (productModel?.productBarcodes != null && productModel?.productBarcodes?.size ?: 0 > 0) {
-                                initOptionAdapter()
-                                binding.productOptionTv.visibility = View.VISIBLE
-                                binding.productOptionRv.visibility = View.VISIBLE
-                            } else {
-                                binding.productOptionTv.visibility = View.GONE
-                                binding.productOptionRv.visibility = View.GONE
-                            }
-                            isFavorite = productModel?.isFavourite ?: false
-                            if (productModel != null && isFavorite) {
-                                binding.favBut.setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        activity,
-                                        R.drawable.favorite_icon
+
+                                if (productModel?.firstProductBarcodes != null) {
+                                    selectedProductBarcode = productModel?.firstProductBarcodes
+                                    for (i in productModel?.productBarcodes!!.indices) {
+                                        val productBarcode1 = productModel!!.productBarcodes?.get(i)
+
+                                        if (selectedProductPos == 0 && productBarcode1?.cartId != 0) {
+                                            selectedProductBarcode = productBarcode1;
+                                            selectedProductPos = i;
+                                        }
+                                    }
+                                    initProductData()
+                                }
+                                if (productModel?.productBarcodes != null && productModel?.productBarcodes?.size ?: 0 > 0) {
+                                    initOptionAdapter()
+                                    binding.productOptionTv.visibility = View.VISIBLE
+                                    binding.productOptionRv.visibility = View.VISIBLE
+                                } else {
+                                    binding.productOptionTv.visibility = View.GONE
+                                    binding.productOptionRv.visibility = View.GONE
+                                }
+                                isFavorite = productModel?.isFavourite ?: false
+                                if (productModel != null && isFavorite) {
+                                    binding.favBut.setImageDrawable(
+                                        ContextCompat.getDrawable(
+                                            activity,
+                                            R.drawable.favorite_icon
+                                        )
                                     )
-                                )
-                            } else {
-                                binding.favBut.setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        activity,
-                                        R.drawable.empty_fav
+                                } else {
+                                    binding.favBut.setImageDrawable(
+                                        ContextCompat.getDrawable(
+                                            activity,
+                                            R.drawable.empty_fav
+                                        )
                                     )
-                                )
+                                }
+                                callGetProducts()
+                                getReviews(product_id, storeId)
+                            } else {
+                                binding.dataLY.visibility = View.GONE
+                                binding.noDataLY.noDataLY.visibility = View.VISIBLE
                             }
-                            suggestedProduct
-                            getReviews(product_id, storeId)
                         } else {
                             binding.dataLY.visibility = View.GONE
-                            binding.noDataLY.noDataLY.visibility = View.VISIBLE
+                            binding.noDataLY.noDataLY.visibility = View.GONE
+                            binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
+                            binding.failGetDataLY.failTxt.text = message
+                            binding.cartBut.visibility = View.GONE
                         }
-                    } else {
-                        binding.dataLY.visibility = View.GONE
-                        binding.noDataLY.noDataLY.visibility = View.GONE
-                        binding.failGetDataLY.failGetDataLY.visibility = View.VISIBLE
-                        binding.failGetDataLY.failTxt.text = message
-                        binding.cartBut.visibility = View.GONE
-                    }
+                        }
+
                 }
             }
 
@@ -1264,5 +1270,10 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
     }
 
     override fun onItemClicked(position: Int, productModel: ProductModel?) {
+    }
+
+    private fun callGetProducts() {
+        productRequest = ProductRequest(categoryId, countryId, cityId, filter, 0, 0, 12, kindId, null, null)
+        suggestedProduct
     }
 }

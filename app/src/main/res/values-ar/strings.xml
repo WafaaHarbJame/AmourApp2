@@ -431,10 +431,14 @@
     <string name="price_high_to_low">من السعر الأعلى الى الاقل</string>
     <string name="price_low_to_high">من السعر الأقل الى الأعلى</string>
     <string name="filter">تصفية</string>
-    <string name="price_range">Price Range</string>
-    <string name="to">To</string>
-    <string name="Clean">clean</string>
-    <string name="name_high_to_low"> الاسم من الألف الى الياء</string>
-    <string name="name_low_to_high">من الياء  الى الألف</string>
+    <string name="price_range">نطاقاسعر</string>
+    <string name="to">إلي</string>
+    <string name="Clean">مسح</string>
+    <string name="name_high_to_low"> الاسم من الألف إلي الياء</string>
+    <string name="name_low_to_high">من الياء إلي الألف</string>
+    <string name="expiration">تاريخ الانتهاء</string>
+    <string name="card_number">رقم البطاقة </string>
+    <string name="cvv_code">الكود</string>
+    <string name="pay_now">ادفع الان</string>
 
 </resources>

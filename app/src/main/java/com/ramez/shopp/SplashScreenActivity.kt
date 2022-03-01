@@ -320,7 +320,7 @@ class SplashScreenActivity : ActivityBase() {
     }
 
     private fun getKinds() {
-        UtilityApp.setAllKindsData(null)
+//        UtilityApp.setAllKindsData(null)
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 if (IsSuccess) {

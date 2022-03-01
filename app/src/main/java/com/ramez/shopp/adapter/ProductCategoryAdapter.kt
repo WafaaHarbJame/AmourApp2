@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
 import com.ramez.shopp.Dialogs.CheckLoginDialog
-import com.ramez.shopp.Models.*
+import com.ramez.shopp.Models.CartProcessModel
+import com.ramez.shopp.Models.FavouriteResultModel
+import com.ramez.shopp.Models.LocalModel
+import com.ramez.shopp.Models.ProductModel
 import com.ramez.shopp.Models.request.ProductRequest
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
@@ -24,10 +27,11 @@ import com.ramez.shopp.databinding.RowEmptyBinding
 import com.ramez.shopp.databinding.RowLoadingBinding
 import com.ramez.shopp.databinding.RowSearchProductItemBinding
 import retrofit2.Call
+import kotlin.math.roundToInt
 
 class ProductCategoryAdapter(
-    kindId:Int,
-    sortType:String,
+    kindId: Int,
+    sortType: String,
     private val context: Context,
     rv: RecyclerView,
     productModels: List<ProductModel?>?,
@@ -53,7 +57,7 @@ class ProductCategoryAdapter(
     var cityId: Int
     var userId1: String
     private var kindId = 0
-    private var sortType:String = ""
+    private var sortType: String = ""
     private var nextPage = 1
     private var lastVisibleItem = 0
     private var totalItemCount = 0
@@ -70,8 +74,8 @@ class ProductCategoryAdapter(
     var apiCall: Call<*>? = null
     var fraction = 2
     var localModel: LocalModel? = null
-    var sortList: MutableList<SortModel>?=null
-    var filterList: MutableList<FilterModel>?=null
+    var sortList: MutableList<SortModel>? = null
+    var filterList: MutableList<FilterModel>? = null
     private var sortByTypes = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var vh: RecyclerView.ViewHolder? = null
@@ -100,25 +104,30 @@ class ProductCategoryAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        localModel =
+            if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
+                context
+            )
+        currency = localModel?.currencyCode ?: Constants.BHD
+        fraction = localModel?.fractional ?: Constants.two
+
         if (viewHolder is Holder) {
-            val holder = viewHolder
             val productModel = productModels[position]
             localModel =
                 if (UtilityApp.getLocalData() != null) UtilityApp.getLocalData() else UtilityApp.getDefaultLocalData(
                     context
                 )
-            currency = localModel?.currencyCode ?: Constants.BHD
-            fraction = localModel?.fractional ?: Constants.two
-            holder.binding.productNameTv.text = productModel!!.productName.trim { it <= ' ' }
+
+            viewHolder.binding.productNameTv.text = productModel!!.productName.trim { it <= ' ' }
             if (productModel.isFavourite) {
-                holder.binding.favBut.setImageDrawable(
+                viewHolder.binding.favBut.setImageDrawable(
                     ContextCompat.getDrawable(
                         context,
                         R.drawable.favorite_icon
                     )
                 )
             } else {
-                holder.binding.favBut.setImageDrawable(
+                viewHolder.binding.favBut.setImageDrawable(
                     ContextCompat.getDrawable(
                         context,
                         R.drawable.empty_fav
@@ -127,55 +136,56 @@ class ProductCategoryAdapter(
             }
             val quantity = productModel.firstProductBarcodes.cartQuantity
             if (quantity > 0) {
-                holder.binding.productCartQTY.text = quantity.toString()
-                holder.binding.CartLy.visibility = View.VISIBLE
-                holder.binding.cartBut.visibility = View.GONE
+                viewHolder.binding.productCartQTY.text = quantity.toString()
+                viewHolder.binding.CartLy.visibility = View.VISIBLE
+                viewHolder.binding.cartBut.visibility = View.GONE
                 if (quantity == 1) {
-                    holder.binding.deleteCartBtn.visibility = View.VISIBLE
-                    holder.binding.minusCartBtn.visibility = View.GONE
+                    viewHolder.binding.deleteCartBtn.visibility = View.VISIBLE
+                    viewHolder.binding.minusCartBtn.visibility = View.GONE
                 } else {
-                    holder.binding.minusCartBtn.visibility = View.VISIBLE
-                    holder.binding.deleteCartBtn.visibility = View.GONE
+                    viewHolder.binding.minusCartBtn.visibility = View.VISIBLE
+                    viewHolder.binding.deleteCartBtn.visibility = View.GONE
                 }
             } else {
-                holder.binding.CartLy.visibility = View.GONE
-                holder.binding.cartBut.visibility = View.VISIBLE
+                viewHolder.binding.CartLy.visibility = View.GONE
+                viewHolder.binding.cartBut.visibility = View.VISIBLE
             }
             if (productModel.firstProductBarcodes.isSpecial) {
                 val productBarcode = productModel.firstProductBarcodes
                 val originalPrice = productBarcode.price
                 val specialPrice = productBarcode.specialPrice
-                holder.binding.productPriceBeforeTv.background = ContextCompat.getDrawable(
+                viewHolder.binding.productPriceBeforeTv.background = ContextCompat.getDrawable(
                     context, R.drawable.itlatic_red_line
                 )
-                holder.binding.productPriceBeforeTv.text = NumberHandler.formatDouble(
+                viewHolder.binding.productPriceBeforeTv.text = NumberHandler.formatDouble(
                     originalPrice,
                     fraction
                 ) + " " + currency
-                holder.binding.productPriceTv.text = NumberHandler.formatDouble(
+                viewHolder.binding.productPriceTv.text = NumberHandler.formatDouble(
                     specialPrice,
                     fraction
                 ) + " " + currency
                 val discountValue = originalPrice - specialPrice
+//                val discountPercent = NumberHandler.roundDouble(discountValue / originalPrice * 100)
                 val discountPercent = discountValue / originalPrice * 100
                 if (originalPrice > 0) {
-                    holder.binding.discountTv.text = NumberHandler.arabicToDecimal(
-                        "$discountPercent % OFF"
+                    viewHolder.binding.discountTv.text = NumberHandler.arabicToDecimal(
+                        "${discountPercent.roundToInt()} % OFF"
                     )
                 } else {
-                    holder.binding.discountTv.text = NumberHandler.arabicToDecimal(
+                    viewHolder.binding.discountTv.text = NumberHandler.arabicToDecimal(
                         0.toString() + " % " + "OFF"
                     )
                 }
             } else {
                 val price =
                     if (productModel.firstProductBarcodes != null) productModel.firstProductBarcodes.price else 0.0
-                holder.binding.productPriceTv.text = NumberHandler.formatDouble(
+                viewHolder.binding.productPriceTv.text = NumberHandler.formatDouble(
                     price,
                     fraction
                 ) + " " + currency + ""
-                holder.binding.productPriceBeforeTv.visibility = View.GONE
-                holder.binding.discountTv.visibility = View.GONE
+                viewHolder.binding.productPriceBeforeTv.visibility = View.GONE
+                viewHolder.binding.discountTv.visibility = View.GONE
             }
             var photoUrl: String? = ""
             photoUrl =
@@ -186,7 +196,7 @@ class ProductCategoryAdapter(
                 }
             try {
                 GlideImg(
-                    context, photoUrl, R.drawable.holder_image, holder.binding.productImg
+                    context, photoUrl, R.drawable.holder_image, viewHolder.binding.productImg
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -301,7 +311,18 @@ class ProductCategoryAdapter(
                 productModels.add(null)
                 println("Log productDMS size " + productModels.size)
                 notifyItemInserted(productModels.size - 1)
-               val productRequest = ProductRequest(categoryId, countryId, cityId, "", brandId, nextPage, 10, kindId, sortList, filterList)
+                val productRequest = ProductRequest(
+                    categoryId,
+                    countryId,
+                    cityId,
+                    "",
+                    brandId,
+                    nextPage,
+                    10,
+                    kindId,
+                    sortList,
+                    filterList
+                )
                 LoadAllData(productRequest)
             }
         }
@@ -359,7 +380,8 @@ class ProductCategoryAdapter(
                 }
 
             })
-        apiCall = dataFeacher.getProductList(productRequest
+        apiCall = dataFeacher.getProductList(
+            productRequest
         )
     }
 
@@ -718,8 +740,8 @@ class ProductCategoryAdapter(
         this.cityId = city_id
         this.countryId = country_id
         this.userId1 = user_id
-        this.kindId=kindId
-        this.sortType=sortType
+        this.kindId = kindId
+        this.sortType = sortType
         this.rv = rv
         filterText = filter
         this.gridNumber = gridNumber

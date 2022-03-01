@@ -69,10 +69,10 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
 
         binding.swipeDataContainer.setOnRefreshListener {
             binding.swipeDataContainer.isRefreshing = false
-            getProductList(productRequest)
+            callGetProducts()
         }
         binding.failGetDataLY.refreshBtn.setOnClickListener { view1 ->
-            getProductList(productRequest)
+            callGetProducts()
         }
     }
 
@@ -107,10 +107,7 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
                 isNotify = bundle.getBoolean(Constants.isNotify)
                 title = name
                 kindId = bundle.getInt(Constants.kind_id)
-                productRequest =
-                    ProductRequest(0, countryId, cityId, Constants.new_filter, 0, 0, 10, kindId, sortList, filterList)
-
-                getProductList(productRequest)
+               callGetProducts()
             }
         }
 
@@ -184,4 +181,11 @@ class AllListActivity : ActivityBase(), ProductCategoryAdapter.OnItemClick {
         intent.putExtra(Constants.DB_productModel, productModel)
         startActivity(intent)
     }
+    private fun callGetProducts() {
+
+        productRequest = ProductRequest(0, countryId, cityId, filter, brandId, 0, 10, kindId, sortList, filterList)
+
+        getProductList(productRequest)
+    }
+
 }

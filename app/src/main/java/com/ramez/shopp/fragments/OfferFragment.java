@@ -96,7 +96,6 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         binding.offerRecycler.setHasFixedSize(true);
         binding.offerRecycler.setItemAnimator(null);
-        productRequest=new ProductRequest(category_id, country_id, city_id, Constants.offered_filter, brand_id, 0, 10, kind_id, null, null);
 
 
         if (UtilityApp.getCategories() != null && UtilityApp.getCategories().size() > 0) {
@@ -116,17 +115,12 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
         }
 
-        getOfferList(productRequest);
+        getProductsList();
 
-        binding.dataLY.setOnRefreshListener(() -> {
-//            binding.dataLY.setRefreshing(false);
-            getOfferList(productRequest);
-
-
-        });
+        binding.dataLY.setOnRefreshListener(this::getProductsList);
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getOfferList(productRequest);
+            getProductsList();
         });
 
 
@@ -324,7 +318,7 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
                 } else {
                     if (IsSuccess) {
-                        if (result.getData() != null && result.getData().size() > 0) {
+                        if (result!=null && result.getData() != null && result.getData().size() > 0) {
 
                             binding.dataLY.setVisibility(View.VISIBLE);
                             binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -361,15 +355,6 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
 
     private void initCateAdapter() {
 
-//        CategoryModel categoryModel = new CategoryModel();
-//        categoryModel.setId(category_id);
-//        categoryModel.setHName(getString(R.string.all));
-//        categoryModel.setName(getString(R.string.all));
-//        categoryModel.setImage("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
-//        categoryModel.setImage2("https://www.vskills.in/certification/blog/wp-content/uploads/2015/04/2_The-cons-of-the-word-%E2%80%9CALL%E2%80%9D.gif");
-//        ArrayList<CategoryModel> allCategoryDMS = new ArrayList<>(mainCategoryDMS);
-//        allCategoryDMS.add(0, categoryModel);
-
         categoryAdapter = new MainCategoryAdapter(getActivityy(), mainCategoryDMS, this, category_id);
         binding.catRecycler.setAdapter(categoryAdapter);
 
@@ -380,11 +365,16 @@ public class OfferFragment extends FragmentBase implements OfferProductAdapter.O
     public void OnMainCategoryItemClicked(CategoryModel categoryModel, int position) {
         category_id = categoryModel.getId();
         Log.i(TAG, "Log MainItem category_id " + category_id);
-//        if (productOfferAdapter != null)
-//            productOfferAdapter.categoryId = category_id;
+        getProductsList();
+    }
+
+    private void getProductsList(){
+        productRequest=new ProductRequest(category_id, country_id, city_id, Constants.offered_filter, brand_id, 0, 10, kind_id, null, null);
         getOfferList(productRequest);
 
     }
+
+
 }
 
 

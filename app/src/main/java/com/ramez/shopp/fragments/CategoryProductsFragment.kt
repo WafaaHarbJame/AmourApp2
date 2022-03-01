@@ -561,9 +561,7 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
             }
             2 -> {
-
                 sortType(false)
-
 
             }
             3 -> {

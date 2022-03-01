@@ -2,11 +2,13 @@ package com.ramez.shopp.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
+import android.view.View
+import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.ramez.shopp.Models.FilterListModel
 import com.ramez.shopp.R
 import com.ramez.shopp.Utils.NumberHandler
@@ -17,6 +19,7 @@ import com.ramez.shopp.databinding.ActivityFilterBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 class FilterActivity : ActivityBase() {
     private lateinit var binding: ActivityFilterBinding
@@ -31,6 +34,9 @@ class FilterActivity : ActivityBase() {
         filterList = mutableListOf()
 
         brandsStrList = ArrayList()
+
+        binding.minPriceET.requestFocus()
+        showSoftKeyboard(activity, binding.minPriceET)
 
         showButton()
         initListener()
@@ -47,6 +53,7 @@ class FilterActivity : ActivityBase() {
         binding.toolBar.backBtn.setOnClickListener { onBackPressed() }
 
         binding.brandly.setOnClickListener {
+            hideSoftKeyboard(activity)
             val intent = Intent(activity, BrandsActivity::class.java)
             openBrandsLauncher?.launch(intent)
         }
@@ -54,6 +61,8 @@ class FilterActivity : ActivityBase() {
         openBrandsLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result: ActivityResult? ->
+            hideSoftKeyboard(activity)
+
             if (result != null && result.data != null) {
 
                 if (result.resultCode == RESULT_OK) {
@@ -74,6 +83,7 @@ class FilterActivity : ActivityBase() {
         }
 
         binding.applyBut.setOnClickListener {
+            hideSoftKeyboard(activity)
             getFilterList()
             val intent = Intent()
             val filterModel = FilterListModel()
@@ -84,6 +94,32 @@ class FilterActivity : ActivityBase() {
 
 
         }
+
+        binding.minPriceET.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                binding.minPriceLY.background =
+                    ContextCompat.getDrawable(activity, R.drawable.round_corner_white_fill_border_green)
+
+            } else {
+                binding.minPriceLY.background =
+                    ContextCompat.getDrawable(activity, R.drawable.round_corner_white_fill_border_gray)
+
+
+            }
+        }
+
+        binding.maxPriceET.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                binding.maxPriceLY.background =
+                    ContextCompat.getDrawable(activity, R.drawable.round_corner_white_fill_border_green)
+
+            } else {
+                binding.maxPriceLY.background =
+                    ContextCompat.getDrawable(activity, R.drawable.round_corner_white_fill_border_gray)
+
+
+            }
+        }
     }
 
 
@@ -91,7 +127,7 @@ class FilterActivity : ActivityBase() {
         binding.brandsCountTv.text = "(".plus(brandsStrList?.size).plus(")")
     }
 
-    fun getFilterList() {
+    private fun getFilterList() {
 
         val minPrice = NumberHandler.arabicToDecimal(binding.minPriceET.text.toString())
         val maxPrice = NumberHandler.arabicToDecimal(binding.maxPriceET.text.toString())
@@ -135,8 +171,9 @@ class FilterActivity : ActivityBase() {
     }
 
     private fun cleanField() {
-        binding.minPriceET.text = "0" as Editable
-        binding.maxPriceET.text = "0" as Editable
+        binding.minPriceET.setText("")
+        binding.maxPriceET.setText("")
+        brandsStrList?.clear()
         binding.brandsCountTv.text = "0"
     }
 

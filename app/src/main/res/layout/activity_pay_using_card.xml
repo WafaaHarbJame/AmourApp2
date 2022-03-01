@@ -3,297 +3,276 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/colorPrimary">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
-            android:background="@color/colorPrimary">
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:scaleX="@integer/scaleXInv"
+            android:src="@drawable/back_icon"
+            android:textSize="@dimen/_15ssp"
+            android:visibility="visible"
+            tools:targetApi="m" />
 
-            <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:gravity="center"
-                android:padding="@dimen/_5sdp"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:scaleX="@integer/scaleXInv"
-                android:src="@drawable/back_icon"
-                android:textSize="@dimen/_15ssp"
-                android:visibility="visible"
-                tools:targetApi="m" />
-
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/mainTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/backBtn"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="2"
-                android:maxLines="2"
-                android:text="@string/credit_card"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                android:visibility="visible" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-<!--    <com.manojbhadane.PaymentCardView-->
-<!--        android:id="@+id/creditCard"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:cv_submitBtnText="Pay"-->
-<!--        app:cv_cardTitle="Pay Now"-->
-<!--        />-->
-
-    <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_margin="10dp"
-            android:elevation="10dp"
-            app:cardCornerRadius="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/layFirst"
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_rounded_white"
-                    android:padding="@dimen/_8sdp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/iconCancel"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@android:drawable/ic_menu_close_clear_cancel"/>
-
-                        <ImageView
-                            android:id="@+id/imgCard"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/ic_credit_card"
-                            app:tint="@color/colorPrimary" />
-
-                        <com.ramez.shopp.SpichalViews.STextViewBold
-                            android:id="@+id/txtCardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:text="Pay Now"
-                            android:textColor="@color/black"
-                            android:textSize="17sp"/>
-
-                        <com.manojbhadane.CustomTextView
-                            android:id="@+id/labelName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:singleLine="true"
-                            android:text="Name"
-                            android:textSize="12sp"
-                            android:visibility="gone"
-                            app:textAllCaps="true"/>
-
-                        <com.manojbhadane.CustomTextView
-                            android:id="@+id/txtPayeeName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:singleLine="true"
-                            android:text="Manoj Bhadane"
-                            android:textSize="14sp"
-                            android:visibility="gone"/>
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnDone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="30dp"
-                        android:background="@drawable/rounded_button_selector"
-                        android:text="@string/pay"
-                        android:textColor="@color/white" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="match_parent"
-                    android:visibility="visible"
-                    android:background="@color/colorPrimary"/>
-
-                <RelativeLayout
-                    android:id="@+id/laySecond"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:background="@drawable/shape_rounded"
-                   >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <com.ramez.shopp.SpichalViews.STextViewBold
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Expiration"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/label_textsize"
-                            app:textAllCaps="true" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp">
-
-                            <com.ramez.shopp.SpichalViews.SEditText
-                                android:id="@+id/sprmonth"
-                                android:layout_width="@dimen/_50sdp"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/shape_card_number"
-                                android:digits="1234567890"
-                                android:gravity="center"
-                                android:hint="MM"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:padding="@dimen/_3sdp"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/edt_txtsize" />
-
-                            <com.ramez.shopp.SpichalViews.STextViewBold
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:text=" / "
-                                android:textColor="@color/black" />
-
-                            <com.ramez.shopp.SpichalViews.SEditText
-                                android:id="@+id/spryear"
-                                android:layout_width="@dimen/_50sdp"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/shape_card_number"
-                                android:digits="1234567890"
-                                android:gravity="center"
-                                android:hint="YY"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:padding="@dimen/_3sdp"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/edt_txtsize" />
-
-                            <!-- <Spinner
-                                     android:id="@+id/sprmonth"
-                                     android:layout_width="0dp"
-                                     android:backgroundTint="@color/white"
-                                     android:layout_weight="0.9"
-                                     android:layout_height="wrap_content"/>
-                             <Spinner
-                                     android:id="@+id/spryear"
-                                     android:layout_marginLeft="5dp"
-                                     android:layout_width="0dp"
-                                     android:backgroundTint="@color/white"
-                                     android:layout_weight="1.1"
-                                     android:layout_height="wrap_content"/>-->
-
-
-                        </LinearLayout>
-
-                        <com.ramez.shopp.SpichalViews.STextViewBold
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:text="card Number"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/label_textsize"
-                            app:textAllCaps="true" />
-
-                        <com.ramez.shopp.SpichalViews.SEditText
-                            android:id="@+id/edtCardNumber"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:background="@drawable/shape_card_number"
-                            android:digits="1234567890 "
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="16"
-                            android:padding="@dimen/_3sdp"
-                            android:paddingLeft="@dimen/_8sdp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/edt_txtsize" />
-
-                        <com.ramez.shopp.SpichalViews.STextViewBold
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="CVV CODE"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/label_textsize"
-                            app:textAllCaps="true" />
-
-                        <com.ramez.shopp.SpichalViews.SEditText
-                            android:id="@+id/edtCvvNumber"
-                            android:layout_width="@dimen/_80sdp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:background="@drawable/shape_card_number"
-                            android:digits="1234567890 "
-                            android:inputType="number"
-                            android:maxLength="3"
-                            android:padding="@dimen/_3sdp"
-                            android:paddingLeft="@dimen/_8sdp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/edt_txtsize" />
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/mainTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/backBtn"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="@string/credit_card"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/layFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_rounded_white"
+                android:orientation="vertical"
+                android:padding="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iconCancel"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+                    <ImageView
+                        android:id="@+id/imgCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_credit_card"
+                        app:tint="@color/colorPrimary" />
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/txtCardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="@string/pay_now"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+
+                    <com.manojbhadane.CustomTextView
+                        android:id="@+id/labelName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:singleLine="true"
+                        android:text="Name"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:textAllCaps="true" />
+
+                    <com.manojbhadane.CustomTextView
+                        android:id="@+id/txtPayeeName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:singleLine="true"
+                        android:text="Manoj Bhadane"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/btnDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:background="@drawable/round_corner_primary_fill"
+                    android:paddingHorizontal="@dimen/_17sdp"
+                    android:paddingVertical="@dimen/_4sdp"
+                    android:text="@string/pay"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/laySecond"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rounded"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp">
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/expiration"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/label_textsize"
+                    app:textAllCaps="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/sprmonth"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_card_number"
+                        android:digits="1234567890"
+                        android:gravity="center"
+                        android:hint="MM"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:padding="@dimen/_3sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/edt_txtsize" />
+
+                    <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text=" / "
+                        android:textColor="@color/black" />
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/spryear"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_card_number"
+                        android:digits="1234567890"
+                        android:gravity="center"
+                        android:hint="YY"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:padding="@dimen/_3sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/edt_txtsize" />
+
+                    <!-- <Spinner
+                             android:id="@+id/sprmonth"
+                             android:layout_width="0dp"
+                             android:backgroundTint="@color/white"
+                             android:layout_weight="0.9"
+                             android:layout_height="wrap_content"/>
+                     <Spinner
+                             android:id="@+id/spryear"
+                             android:layout_marginLeft="5dp"
+                             android:layout_width="0dp"
+                             android:backgroundTint="@color/white"
+                             android:layout_weight="1.1"
+                             android:layout_height="wrap_content"/>-->
+
+
+                </LinearLayout>
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/card_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/label_textsize"
+                    app:textAllCaps="true" />
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/edtCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/shape_card_number"
+                    android:digits="1234567890 "
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:padding="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/edt_txtsize" />
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/cvv_code"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/label_textsize"
+                    app:textAllCaps="true" />
+
+                <com.ramez.shopp.SpichalViews.SEditText
+                    android:id="@+id/edtCvvNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/shape_card_number"
+                    android:digits="1234567890 "
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:minWidth="@dimen/_80sdp"
+                    android:padding="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/edt_txtsize" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

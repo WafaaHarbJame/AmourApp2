@@ -32,10 +32,10 @@ public class CategoryModel implements Serializable {
     private String image2;
     @SerializedName("image3")
     @Expose
-    private Object image3;
+    private String image3;
     @SerializedName("image4")
     @Expose
-    private Object image4;
+    private String image4;
 
     public int getId() {
         return id;
@@ -93,19 +93,19 @@ public class CategoryModel implements Serializable {
         this.image2 = image2;
     }
 
-    public Object getImage3() {
+    public String getImage3() {
         return image3;
     }
 
-    public void setImage3(Object image3) {
+    public void setImage3(String image3) {
         this.image3 = image3;
     }
 
-    public Object getImage4() {
+    public String getImage4() {
         return image4;
     }
 
-    public void setImage4(Object image4) {
+    public void setImage4(String image4) {
         this.image4 = image4;
     }
 
@@ -135,4 +135,14 @@ public class CategoryModel implements Serializable {
         }
     }
 
+    public String getNewCat() {
+        if (UtilityApp.getLanguage().equals(Constants.English)) {
+            return image4==null?getCatImage():image4;
+
+        } else {
+            return image3==null?getCatImage():image3;
+        }
     }
+
+
+}

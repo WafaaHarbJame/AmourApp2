@@ -476,6 +476,10 @@
     <string name="price_range">Price Range</string>
     <string name="to">To</string>
     <string name="Clean">clean</string>
+    <string name="expiration">Expiration</string>
+    <string name="card_number">card Number</string>
+    <string name="cvv_code">CVV CODE</string>
+    <string name="pay_now">Pay Now</string>
 
 
 </resources>

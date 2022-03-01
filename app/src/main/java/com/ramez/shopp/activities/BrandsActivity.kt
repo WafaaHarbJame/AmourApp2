@@ -49,6 +49,7 @@ class BrandsActivity : ActivityBase(), BrandsFilterAdapter.OnBrandClick {
                 ?: Constants.default_storeId.toInt()
         }
 
+
         initData()
         initListener()
     }
@@ -69,8 +70,7 @@ class BrandsActivity : ActivityBase(), BrandsFilterAdapter.OnBrandClick {
 
         binding.applyBut.setOnClickListener {
             val brandsArr = arrayListOf<String>()
-            brandsArr.addAll(brandsStrList!!)
-
+            brandsStrList?.let { it1 -> brandsArr.addAll(it1) }
             val intent = Intent()
             intent.putStringArrayListExtra(Constants.KEY_BRANDS_LIST, brandsArr)
             setResult(RESULT_OK, intent)

@@ -428,7 +428,7 @@ class MainActivity : ActivityBase() {
             newFragment.arguments = bundle
             ft = fragmentManager?.beginTransaction()
             ft?.addToBackStack(newFragment.javaClass.simpleName)
-            ft?.add(R.id.mainContainer, newFragment)?.commit()
+            ft?.replace(R.id.mainContainer, newFragment)?.commit()
             println("Log main fragments ${fragmentManager?.fragments}")
         }
 
