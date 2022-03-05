@@ -1,6 +1,5 @@
 package com.ramez.shopp.fragments
 
-
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -16,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ramez.shopp.ApiHandler.DataFeacher
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack
+import com.ramez.shopp.Dialogs.ErrorMessagesDialog
 import com.ramez.shopp.Dialogs.PaymentDialog
 import com.ramez.shopp.Models.*
 import com.ramez.shopp.R
@@ -26,7 +26,6 @@ import com.ramez.shopp.adapter.AddressCheckAdapter.OnEditClick
 import com.ramez.shopp.adapter.AddressCheckAdapter.OnRadioAddressSelect
 import com.ramez.shopp.classes.*
 import com.ramez.shopp.databinding.FragmentInvoiceBinding
-import mobi.foo.benefitinapp.Application
 import mobi.foo.benefitinapp.data.Transaction
 import mobi.foo.benefitinapp.listener.BenefitInAppButtonListener
 import mobi.foo.benefitinapp.listener.CheckoutListener
@@ -35,42 +34,50 @@ import mobi.foo.benefitinapp.utils.BenefitInAppHelper
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect,
         OnEditClick {
+
+    var addressList: ArrayList<AddressModel>? = null
+    var deliveryTypeList: MutableList<DeliveryTypeModel>? = null
+    var deliveryTimesList: List<DeliveryTime>? = null
+    var productList: ArrayList<CartModel>? = null
+    var productCheckerList: MutableList<ProductChecker>? = null
+    var dayList: MutableList<DeliveryTime>? = null
+    val datesMap = LinkedHashMap<String, List<DeliveryTime>>()
+
+    var deliveryDayAdapter: DeliveryDayAdapter? = null
+    var deliveryTimeAdapter: DeliveryTimeAdapter? = null
+    var productCheckerAdapter: ProductCheckAdapter? = null
+
+    private var selectAddressLauncher: ActivityResultLauncher<Intent>? = null
+    private var paymentLauncher: ActivityResultLauncher<Intent>? = null
+    private var ccmLauncher: ActivityResultLauncher<Intent>? = null
+
+    var selectedPaymentMethod: PaymentModel? = null
+    var selectedDeliveryType: DeliveryTypeModel? = null
+    var cartResultModel: CartResultModel? = null
+    var paymentDialog: PaymentDialog? = null
+
     var userId: Int? = 0
     var couponCodeId = "0"
     var deliveryDate: String? = null
     var deliveryTime: String? = null
     var expressDelivery = false
-    var deliveryDayAdapter: DeliveryDayAdapter? = null
-    var deliveryTimeAdapter: DeliveryTimeAdapter? = null
-    var productCheckerAdapter: ProductCheckAdapter? = null
-    var deliveryTimesList: List<DeliveryTime>? = null
-    var productList: ArrayList<CartModel>? = null
-    var productCheckerList: MutableList<ProductChecker>? = null
     var localModel: LocalModel? = null
     var storeId = 0
     var productsSize = 0
     var total: String? = ""
     var currency = "BHD"
-    private var dayList: MutableList<DeliveryTime>? = null
     var fraction = 2
-    var addressList: ArrayList<AddressModel>? = null
-    var deliveryTypeList: MutableList<DeliveryTypeModel>? = null
+
     private var addressTitle: String? = null
     private var addressFullAddress: String? = null
     private var deliveryFees = 0.0
     private var isGetDeliveryInfo = false
     private var expressDeliveryCharge = 0.0
     private var hasExpress: Boolean = false
-    private var cartResultModel: CartResultModel? = null
     private var minimumOrderAmount = 0
-    private val datesMap = LinkedHashMap<String, List<DeliveryTime>>()
-    private var selectAddressLauncher: ActivityResultLauncher<Intent>? = null
-    var selectedPaymentMethod: PaymentModel? = null
-    var selectedDeliveryType: DeliveryTypeModel? = null
     private var addressId = 0
     var deliveryDateId = 0
     var itemNotFoundId = 0
@@ -78,11 +85,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     var countryId: Int = 0
     var payToken: String? = ""
     var deliveryType: Int = 0
-    private var paymentLauncher: ActivityResultLauncher<Intent>? = null
-    private var ccmLauncher: ActivityResultLauncher<Intent>? = null
     var ordersDM: OrderModel? = null
     lateinit var binding: FragmentInvoiceBinding
-    var paymentDialog: PaymentDialog? = null
     var deliveryTimeDesc: String = ""
 
     override fun onCreateView(
@@ -135,30 +139,35 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         deliveryTimesList = ArrayList()
         dayList = ArrayList()
         productCheckerList = ArrayList()
+
         fraction = localModel?.fractional ?: Constants.three
         minimumOrderAmount = localModel?.minimum_order_amount ?: 0
         storeId = localModel?.cityId?.toInt() ?: Constants.default_storeId.toInt()
         countryId = localModel?.countryId?.toInt() ?: Constants.default_country_id
         currency = localModel?.currencyCode ?: Constants.BHD
         userId = UtilityApp.getUserData().id ?: 0
-        binding.DeliverDayRecycler.setHasFixedSize(true)
+
         val deliverDayLlm = LinearLayoutManager(activityy)
+        val deliverTimeLlm = LinearLayoutManager(activityy)
+        val checkProductLlm = LinearLayoutManager(activityy)
+        val deliveryLinearLayoutManager = LinearLayoutManager(activity)
+
         deliverDayLlm.orientation = LinearLayoutManager.HORIZONTAL
+        checkProductLlm.orientation = LinearLayoutManager.VERTICAL
+        deliverTimeLlm.orientation = LinearLayoutManager.VERTICAL
+
+
+        binding.DeliverTimeRecycler.layoutManager = deliverTimeLlm
         binding.DeliverDayRecycler.layoutManager = deliverDayLlm
+        binding.ProductCheckRecycler.layoutManager = checkProductLlm
+        binding.deliveryTypeRv.layoutManager = deliveryLinearLayoutManager
+        binding.deliveryTypeRv.layoutManager = deliveryLinearLayoutManager
+
+        binding.DeliverDayRecycler.setHasFixedSize(true)
         binding.DeliverTimeRecycler.setHasFixedSize(true)
         binding.ProductCheckRecycler.setHasFixedSize(true)
-        val deliverTimeLlm = LinearLayoutManager(activityy)
-        deliverTimeLlm.orientation = LinearLayoutManager.VERTICAL
-        binding.DeliverTimeRecycler.layoutManager = deliverTimeLlm
-        val checkProductLlm = LinearLayoutManager(activityy)
-        checkProductLlm.orientation = LinearLayoutManager.VERTICAL
-        binding.ProductCheckRecycler.layoutManager = checkProductLlm
-
-        val deliveryLinearLayoutManager = LinearLayoutManager(activity)
-        binding.deliveryTypeRv.layoutManager = deliveryLinearLayoutManager
         binding.deliveryTypeRv.setHasFixedSize(true)
         binding.deliveryTypeRv.animation = null
-        binding.deliveryTypeRv.layoutManager = deliveryLinearLayoutManager
 
 
         extraIntent
@@ -178,15 +187,22 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         }
     }
 
+    fun initDeliveryFees(feesValue: Double?): Double {
+        val result: Double? = if (total?.toDouble() ?: 0.0 >= minimumOrderAmount) {
+            0.0
+        } else {
+            feesValue
+        }
+        return result ?: 0.0
+    }
+
     private fun checkDeliveryFees() {
 
         Log.i(javaClass.name, "Log checkDeliveryFees deliveryType $deliveryType")
 
         //check total with minimumOrderAmount
-        if (total?.toDouble() ?: 0.0 >= minimumOrderAmount) {
-            deliveryFees = 0.0
-        } else {
-
+        if (total?.toDouble() ?: 0.0 < minimumOrderAmount) {
+//            deliveryFees = 0.0
             val totalPrice = minimumOrderAmount - (total?.toDouble() ?: 0.0)
             binding.freeBut.text = getString(R.string.add).plus(" ")
                 .plus(NumberHandler.roundDouble(totalPrice)).plus(" ")
@@ -213,6 +229,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 }
                 totalStr =
                     NumberHandler.formatDouble((total?.toDouble() ?: 0.0).plus(deliveryFees), fraction)
+                initTimeAdapter(deliveryFees)
+
             }
             1 -> {
                 binding.chooseDelivery.visibility = View.GONE
@@ -222,31 +240,23 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 initTimeAdapter(0.0)
             }
             2 -> {
-                if (expressDeliveryCharge == 0.0) {
-                    deliveryFeesStr = getString(R.string.free)
-//                    binding.freeDelivery.text = getString(R.string.over1)
-                }
-                else {
-                    deliveryFeesStr = NumberHandler.formatDouble(
-                        deliveryFees,
+                deliveryFeesStr = if (expressDeliveryCharge == 0.0) {
+                    getString(R.string.free)
+                    //                    binding.freeDelivery.text = getString(R.string.over1)
+                } else {
+                    NumberHandler.formatDouble(
+                        expressDeliveryCharge,
                         fraction
                     ).plus(" $currency")
-//                    binding.freeDelivery.text = getString(R.string.over).plus(" $minimumOrderAmount $currency.")
+                    //                    binding.freeDelivery.text = getString(R.string.over).plus(" $minimumOrderAmount $currency.")
                 }
 
-//                deliveryFeesStr = NumberHandler.formatDouble(
-//                    expressDeliveryCharge,
-//                    fraction
-//                ).plus(" $currency")
                 totalStr =
                     NumberHandler.formatDouble(
                         (total?.toDouble() ?: 0.0).plus(expressDeliveryCharge),
                         fraction
                     )
-//                binding.totalTv.text = NumberHandler.formatDouble(
-//                    total?.toDouble() ?: 0.0 + expressDeliveryCharge,
-//                    fraction
-//                ).plus(" $currency")
+
                 initTimeAdapter(expressDeliveryCharge)
 
             }
@@ -256,9 +266,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         binding.totalTv.text = totalStr.plus(" $currency")
 
         println("Log deliveryFees checkDeliveryFees $deliveryFees")
-//        Log.i(javaClass.name, "Log deliveryFees checkDeliveryFees $deliveryFees")
     }
-
 
     private val defaultAddress: Unit
         get() {
@@ -277,7 +285,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         }
 
     private fun initListener() {
-        binding.saveBut.setOnClickListener { view1 ->
+        binding.saveBut.setOnClickListener {
 //            EventBus.getDefault()
 //                .post(MessageEvent(MessageEvent.TYPE_POSITION, 0))
         }
@@ -285,10 +293,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
         binding.sendOrder.setOnClickListener {
 
-//            if (selectedPaymentMethod == null) {
-//                Toast(R.string.please_select_payment_method)
-//                return@setOnClickListener
-//            }
             if (deliveryType == 1 && addressId == 0) {
                 Toast(R.string.choose_address)
                 binding.tvFullAddress.isFocusable = true
@@ -366,31 +370,18 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 "CCM" -> {
                                     val intent = Intent(activityy, PayUsingCardActivity::class.java)
                                     ccmLauncher!!.launch(intent)
-
-
-                                }
-                                else -> {
-                                    binding.chooseDelivery.visibility = View.VISIBLE
-                                    initTimeAdapter(deliveryFees)
-                                    binding.deliveryFees.text = NumberHandler.formatDouble(
-                                        deliveryFees,
-                                        fraction
-                                    ).plus(" ").plus(currency)
-
-                                    binding.totalTv.text = NumberHandler.formatDouble(
-                                        total?.toDouble() ?: 0.0 + deliveryFees,
-                                        fraction
-                                    ).plus(" ").plus(currency)
                                 }
                             }
                             checkData()
                             sendOrder()
+                        } else {
+                            Toast(R.string.please_select_payment_method)
                         }
+
                     }
                 })
         paymentDialog?.show()
     }
-
 
     private fun payUsingBenefit(): BenefitInAppButtonListener {
         return object : BenefitInAppButtonListener {
@@ -399,7 +390,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 val referenceId = ordersDM?.orderCode
                 val merchantId = Constants.merchantId
                 val secret = Constants.secret
-                val amount = total
+                val amount = binding.totalTv.toString().replace(currency, " ")
+                Log.i(javaClass.name, "Log amount $amount")
+
                 val country = Constants.default_short_name
                 val currency = Constants.currency
                 val merchantCategoryCode = userId.toString()
@@ -410,7 +403,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                     appId, referenceId, merchantId, secret, amount, country, currency,
                     merchantCategoryCode, merchantName, merchantCity, object : CheckoutListener {
                         override fun onTransactionSuccess(transaction: Transaction?) {
-
                             Log.i(javaClass.name, "Log transactionMessage ${transaction?.transactionMessage}")
                             Toast(transaction?.transactionMessage)
                             saveSuccessTransaction(transaction, ordersDM?.orderId)
@@ -429,18 +421,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                         }
                     }).checkParams()
 
-//                   if (benefitInAppCheckout.checkParams() == -1)
-//                       benefitInAppCheckout.
-
-
             }
 
             override fun onFail(p0: Int) {
                 Toast(getString(R.string.error))
                 Log.i(javaClass.name, "Log referenceId ${ordersDM?.orderCode}")
                 Log.i(javaClass.name, "Log referenceId Constants  ${Constants.referenceId}")
-
-                Log.i(javaClass.name, "Log onFail  ${p0}")
+                Log.i(javaClass.name, "Log onFail  $p0")
             }
         }
 
@@ -449,7 +436,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
     fun sendOrder() {
         val orderCall = OrderCall()
-//            orderCall.user_id = userId!!
         orderCall.store_ID = storeId
         orderCall.address_id = addressId
         orderCall.payment_method = selectedPaymentMethod?.shortname
@@ -470,7 +456,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0)
                 cartResultModel = bundle.getSerializable(Constants.CART_MODEL) as CartResultModel?
                 productList = cartResultModel?.data?.cartData
-                binding.productsSizeTv.text = "$total $currency"
+                binding.productsSizeTv.text = total.plus("  $currency")
+
                 binding.totalTv.text = NumberHandler.formatDouble(
                     total?.toDouble() ?: 0.0.plus(deliveryFees),
                     fraction
@@ -489,6 +476,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         }
 
     private fun sendOrder(orderCall: OrderCall) {
+
         AnalyticsHandler.checkOut(couponCodeId, currency, total, total)
         GlobalData.progressDialog(activityy, R.string.make_order, R.string.please_wait_sending)
         DataFeacher(false, object : DataFetcherCallBack {
@@ -595,7 +583,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         }).makeOrder(orderCall)
     }
 
-
     private fun showCompletePay() {
         UtilityApp.setCartCount(0)
         val intent = Intent(requireActivity(), OrderCompleteActivity::class.java)
@@ -603,7 +590,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         intent.putExtra(Constants.KEY_SHOW, true)
         startActivity(intent)
     }
-
 
     private fun showFailPage() {
 //        UtilityApp.setCartCount(0)
@@ -718,11 +704,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             val deliveryTime = obj as DeliveryTime
             deliveryTimesList = datesMap[deliveryTime.time]
             binding.DeliverTimeRecycler.visibility = View.VISIBLE
-//            binding.quickLy.background = ContextCompat.getDrawable(
-//                activityy,
-//                R.drawable.round_corner_gray_border_fill
-//            )
             initTimesList()
+
         }
         binding.DeliverDayRecycler.adapter = deliveryDayAdapter
         initTimesList()
@@ -745,11 +728,8 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                 javaClass.simpleName,
                 "Log deliveryTimesList click " + selectedTime.time
             )
-
-            // to hide layout when select time
             showHideDateLY(false)
             showHideNoProductLY(true)
-            //removeExpress()
         }
         binding.DeliverTimeRecycler.adapter = deliveryTimeAdapter
         deliveryTimeAdapter?.notifyDataSetChanged()
@@ -767,9 +747,9 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 val bundle = data.extras
-                addressId = bundle!!.getInt(Constants.ADDRESS_ID)
-                addressTitle = bundle.getString(Constants.ADDRESS_TITLE)
-                addressFullAddress = bundle.getString(Constants.ADDRESS_FULL)
+                addressId = bundle?.getInt(Constants.ADDRESS_ID) ?: 0
+                addressTitle = bundle?.getString(Constants.ADDRESS_TITLE)
+                addressFullAddress = bundle?.getString(Constants.ADDRESS_FULL)
                 binding.delivery.text = addressTitle
                 binding.tvFullAddress.text = addressFullAddress
                 binding.changeAddressBtu.setText(R.string.change_address)
@@ -792,58 +772,58 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                     if (isVisible) {
                         var message = getString(R.string.fail_to_get_data)
-                        if (func == Constants.ERROR) {
+//                        if (func == Constants.ERROR) {
+//                            val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
+//
+//                            if (result?.message != null) {
+//                                message = result.message
+//                            }
+//                            GlobalData.Toast(activityy, message)
+//                            binding.loadingLYDelivery.visibility = View.GONE
+//
+//                        } else if (func == Constants.FAIL) {
+//                            GlobalData.Toast(activityy, message)
+//                        } else if (func == Constants.NO_CONNECTION) {
+//                            GlobalData.Toast(activityy, R.string.no_internet_connection)
+//                            binding.loadingLYDelivery.visibility = View.GONE
+//
+//                        } else {
+//                        }
+
+                        if (IsSuccess) {
+                            binding.loadingLYDelivery.visibility = View.GONE
                             val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
+                            if (result?.data != null) {
+                                Log.i(
+                                    javaClass.simpleName,
+                                    "Log result" + result.data
+                                )
+                                val quickDeliveryRespond = result.data
+                                hasExpress = quickDeliveryRespond?.isHasExpressDelivery ?: false
 
-                            if (result?.message != null) {
-                                message = result.message
-                            }
-                            GlobalData.Toast(activityy, message)
-                            binding.loadingLYDelivery.visibility = View.GONE
 
-                        } else if (func == Constants.FAIL) {
-                            GlobalData.Toast(activityy, message)
-                        } else if (func == Constants.NO_CONNECTION) {
-                            GlobalData.Toast(activityy, R.string.no_internet_connection)
-                            binding.loadingLYDelivery.visibility = View.GONE
+                                Log.i(javaClass.simpleName, "Log hasExpress  $hasExpress")
+                                if (hasExpress) {
+                                    expressDeliveryCharge =
+                                        quickDeliveryRespond?.expressDeliveryCharge?.toDouble() ?: 0.0
+                                    deliveryTimeDesc =
+                                        quickDeliveryRespond?.expressDeliverydescription ?: ""
 
-                        } else {
-                            if (IsSuccess) {
-                                binding.loadingLYDelivery.visibility = View.GONE
-                                val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
-
-                                if (result?.data != null) {
                                     Log.i(
-                                        javaClass.simpleName,
-                                        "Log result" + result.data
+                                        javaClass.simpleName, "Log  deliveryFees$deliveryFees"
                                     )
-                                    val quickDeliveryRespond = result.data
-                                    hasExpress = quickDeliveryRespond?.isHasExpressDelivery ?: false
-
-
-                                    Log.i(javaClass.simpleName, "Log hasExpress  $hasExpress")
-                                    if (hasExpress) {
-                                        expressDeliveryCharge =
-                                            quickDeliveryRespond?.expressDeliveryCharge?.toDouble() ?: 0.0
-                                        deliveryTimeDesc =
-                                            quickDeliveryRespond?.expressDeliverydescription ?: ""
-
-                                        Log.i(
-                                            javaClass.simpleName,
-                                            "Log 1 deliveryFees$deliveryFees"
-                                        )
-
-                                    }
-
 
                                 }
+
                             }
+                            if (isGetDeliveryInfo) {
+                                getDeliveryTypes()
+                                checkDeliveryFees()
+                            }
+                        } else {
+                            showErrorDialog(2)
                         }
 
-                        if (isGetDeliveryInfo){
-                            getDeliveryTypes()
-                            checkDeliveryFees()
-                        }
 
                     }
                 }
@@ -858,28 +838,29 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (isVisible) {
+                        if (fromAddress) {
+                            GlobalData.hideProgressDialog()
+                        }
                         if (IsSuccess) {
                             isGetDeliveryInfo = true
                             val quickDeliveryRespond = obj as DeliveryInfo?
 
-                            if (fromAddress) {
-                                GlobalData.hideProgressDialog()
-                            }
-
                             if (quickDeliveryRespond != null) {
-                                deliveryFees = quickDeliveryRespond.deliveryCharges
+//                                deliveryFees = quickDeliveryRespond.deliveryCharges
+                                deliveryFees = initDeliveryFees(quickDeliveryRespond.deliveryCharges)
                                 println("Log deliveryFees getDeliveryInfo $deliveryFees")
-
+                                getDeliveryTypes()
+                                checkDeliveryFees()
                             }
-
-
                         } else {
-                            GlobalData.hideProgressDialog()
+                            showErrorDialog(1)
                         }
+//                        getDeliveryTypes()
+//                        checkDeliveryFees()
 
-                        getDeliveryTypes()
-                        checkDeliveryFees()
                     }
+
+
                 }
             }
         ).GetDeliveryInfo(storeId, addressId)
@@ -982,15 +963,16 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                             )
                                         }
                                         minimumOrderAmount = checkOrderResponse.minimumOrderAmount
-                                        deliveryFees = checkOrderResponse.deliveryCharges
+//                                        deliveryFees = checkOrderResponse.deliveryCharges
+                                        deliveryFees = initDeliveryFees(checkOrderResponse.deliveryCharges)
                                         println("Log deliveryFees getDeliveryTimeList $deliveryFees")
                                         checkDeliveryFees()
                                         val datesList =
                                             result.data.deliveryTimes
                                         val firstTime = datesList[0]
                                         var currentDate = firstTime.date
-                                        var timesList: MutableList<DeliveryTime> =
-                                            ArrayList()
+                                        var timesList: MutableList<DeliveryTime> = ArrayList()
+
                                         while (datesList.size > 0) {
                                             val deliveryTime = datesList[0]
                                             if (deliveryTime.date == currentDate) {
@@ -1036,23 +1018,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
             }).getDeliveryTimeList(storeId, user_id)
     }
 
-    companion object {
-        private const val ADDRESS_CODE = 100
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         BenefitInAppHelper.handleResult(data)
         Toast("onActivityResult")
         when (resultCode) {
             RESULT_OK -> {
-
-                val messageFromResponse: String? = data?.getStringExtra(
-                    Application.ujco("倴鱝栝澵擿뽺鷶") ?: getString(R.string.payment_success)
-                )
-                Toast(messageFromResponse)
-
-
+                Toast(getString(R.string.payment_success))
             }
 
             Activity.RESULT_CANCELED -> {
@@ -1065,7 +1037,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
         }
 
     }
-
 
     private fun saveSuccessTransaction(transaction: Transaction?, orderId: Int?) {
         GlobalData.progressDialog(activity, R.string.text_save, R.string.please_wait_sending)
@@ -1094,7 +1065,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                         showCompletePay()
 
-
                     } else {
                         GlobalData.hideProgressDialog()
                         GlobalData.errorDialog(
@@ -1108,7 +1078,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
         }).saveSucessTransactionD(transaction, orderId)
     }
-
 
     private fun saveFailTransaction(transaction: Transaction?, orderId: Int?) {
         GlobalData.progressDialog(activity, R.string.text_save, R.string.please_wait_sending)
@@ -1139,7 +1108,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                         }
 
-
                     } else {
                         GlobalData.hideProgressDialog()
                         GlobalData.errorDialog(
@@ -1157,7 +1125,6 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private fun getDeliveryTypes() {
         deliveryTypeList?.clear()
         val normal = UtilityApp.getNormalDelivery()
-//        val fees= binding.deliveryFees.text.toString().replace(currency," ").toDouble()
 
         deliveryTypeList?.add(
             DeliveryTypeModel(
@@ -1226,6 +1193,30 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
         }
         binding.deliveryTypeRv.adapter = deliveryTypeAdapter
+    }
+
+    private fun showErrorDialog(i: Int) {
+        val okClick: ErrorMessagesDialog.Click = object : ErrorMessagesDialog.Click() {
+            override fun click() {
+                if (i == 1) {
+                    getDeliveryInfo(storeId, addressId, false)
+
+                } else if (i == 2) {
+                    getQuickDelivery(storeId, countryId)
+
+                }
+
+
+            }
+        }
+
+        val errorMessagesDialog = ErrorMessagesDialog(
+            activityy,
+            R.string.fail_to_get_data,
+            R.string.try_again,
+            okClick,
+        )
+        errorMessagesDialog.show()
     }
 
 }

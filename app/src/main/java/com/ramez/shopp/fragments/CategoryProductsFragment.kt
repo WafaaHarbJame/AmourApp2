@@ -448,8 +448,8 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
         if (event.type == MessageEvent.TYPE_view) {
             numColumn = event.data as Int
             initAdapter()
-            gridLayoutManager!!.spanCount = numColumn
-            adapter!!.notifyDataSetChanged()
+            gridLayoutManager?.spanCount = numColumn
+            adapter?.notifyDataSetChanged()
         }
 
         if (event.type == MessageEvent.TYPE_SORT2) {
@@ -556,6 +556,14 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     private fun sortByType() {
         when (sortByTypes) {
+
+            0 -> {
+                sortList?.clear()
+                filterList?.clear()
+                callGetProducts()
+
+            }
+
             1 -> {
                 sortType(true)
 
@@ -570,6 +578,10 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
             4 -> {
                 sortTypeName(false)
+
+            }
+            5 -> {
+                sortTypeId(true)
 
             }
 
@@ -605,10 +617,27 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
 
     }
 
+    private fun sortTypeId(isDescending: Boolean) {
+        sortList = mutableListOf()
+        sortList?.clear()
+        val sortModel = SortModel()
+        sortModel.key ="id"
+        sortModel.isDescending = isDescending
+        sortList?.add(sortModel)
+        callGetProducts()
+
+    }
+
     override fun onItemClicked(position: Int, productModel: ProductModel?) {
         val intent = Intent(activityy, ProductDetailsActivity::class.java)
         intent.putExtra(Constants.DB_productModel, productModel)
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        GlobalData.sortType=0
+
     }
 
 

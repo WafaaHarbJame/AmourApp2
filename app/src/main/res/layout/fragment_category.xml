@@ -103,10 +103,8 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/catRecycler"
                             android:layout_width="match_parent"
+                            android:layout_marginTop="@dimen/_4sdp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:layout_marginEnd="@dimen/_4sdp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:spanCount="3"
                             tools:itemCount="9"

@@ -12,8 +12,8 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/ivCatImage"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_70sdp"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="@dimen/_60sdp"
         android:scaleType="fitXY"
         android:src="@drawable/holder_image"
         app:riv_border_color="@color/gray18"

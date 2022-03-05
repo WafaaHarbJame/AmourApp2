@@ -38,7 +38,7 @@ internal class KindAdapter(
 //                context, categoryModel?.image, R.drawable.holder_image, holder.binding.ivCatImage
 //            )
             val childsList = mutableListOf<KindCategoryModel?>()
-            childsList.add(categoryModel)
+           /// childsList.add(categoryModel)
             categoryModel?.childCat?.let {
                 childsList.addAll(it)
             }
@@ -51,7 +51,7 @@ internal class KindAdapter(
                 4 -> 3
                 5 -> 4
                 6 -> 2
-                else -> 3
+                else -> 2
             }
             val lln = GridLayoutManager(context, spanCount)
             holder.binding.subCatRecycler.isNestedScrollingEnabled = false

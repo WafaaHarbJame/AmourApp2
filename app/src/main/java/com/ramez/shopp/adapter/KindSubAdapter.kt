@@ -25,7 +25,8 @@ internal class KindSubAdapter(
             override fun getSpanSize(position: Int): Int {
                 return when (categoryDMS?.size) {
                     3 -> when (position) {
-                        0 -> layoutManager.spanCount
+                        0,1-> 1
+                        2->layoutManager.spanCount
                         else -> 1
                     }
                     4 -> when (position) {

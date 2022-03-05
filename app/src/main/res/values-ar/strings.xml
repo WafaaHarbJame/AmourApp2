@@ -440,5 +440,8 @@
     <string name="card_number">رقم البطاقة </string>
     <string name="cvv_code">الكود</string>
     <string name="pay_now">ادفع الان</string>
+    <string name="suggested">المقترحة</string>
+    <string name="newest">الحديثة</string>
+    <string name="try_again">حاول مرة أخرى</string>
 
 </resources>

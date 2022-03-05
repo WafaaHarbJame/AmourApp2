@@ -49,6 +49,26 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:orientation="vertical">
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rb_suggestedHL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="@string/suggested"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+            <com.ramez.shopp.SpichalViews.SRadioButton
+                android:id="@+id/rb_newest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:checked="false"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="@string/newest"
+                android:textAlignment="viewStart"
+                android:theme="@style/MyRadioButton2" />
+
 
 
             <com.ramez.shopp.SpichalViews.SRadioButton

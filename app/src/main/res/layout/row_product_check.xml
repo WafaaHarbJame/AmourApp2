@@ -11,13 +11,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-<!--        <com.ramez.shopp.SpichalViews.STextViewIcon2-->
-<!--            android:id="@+id/selectTxt"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="@dimen/_10sdp"-->
-<!--            android:layout_marginStart="@dimen/_5sdp"-->
-<!--            android:text="@string/fal_info_circle" />-->
         <com.ramez.shopp.SpichalViews.SRadioButton
             android:id="@+id/selectTxt"
             android:layout_width="wrap_content"

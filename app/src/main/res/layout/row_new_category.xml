@@ -13,8 +13,11 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/ivCatImage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:scaleType="fitXY"
         android:src="@drawable/holder_image"
         app:riv_corner_radius="@dimen/_10sdp" />
@@ -25,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_6sdp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_new_subcat" />

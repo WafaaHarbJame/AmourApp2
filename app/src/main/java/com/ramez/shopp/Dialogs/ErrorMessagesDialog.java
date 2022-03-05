@@ -12,88 +12,59 @@ import android.widget.TextView;
 import com.ramez.shopp.R;
 
 
-public class ErrorMessagesDialog {
-//        Activity activity;
+public class ErrorMessagesDialog extends Dialog {
 
-    static ErrorDialog errorDialog;
 
-    public static ErrorDialog with(Activity activity) {
+    private TextView messageTxt, okTxt;
+    private LinearLayout okBtn;
+    private TextView closeBtn;
 
-        if (errorDialog == null) {
-            errorDialog = new ErrorDialog(activity);
-            return errorDialog;
-        } else {
-            return errorDialog;
+    public ErrorMessagesDialog(Activity activity, int message, int okStr, Click okCall) {
+        super(activity);
+
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+
+        setContentView(R.layout.dialog_my_info);
+
+        messageTxt = findViewById(R.id.messageTxt);
+        okBtn = findViewById(R.id.okBtn);
+        okTxt = findViewById(R.id.okTxt);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        okTxt.setText(okStr);
+        messageTxt.setText(message);
+
+        initListener();
+
+        okBtn.setOnClickListener(view -> {
+            if (okCall != null)
+                okCall.click();
+            dismiss();
+        });
+
+
+
+        try {
+            if (activity != null && !activity.isFinishing())
+                show();
+        } catch (Exception e) {
+            dismiss();
         }
 
     }
 
+    private void initListener() {
 
-    public static class ErrorDialog extends Dialog {
+        closeBtn.setOnClickListener(view -> {
 
-        private TextView messageTxt;
-        private LinearLayout okBtn;
-        static Activity activity;
-
-        protected ErrorDialog(Activity activity) {
-            super(activity);
-
-            ErrorDialog.activity = activity;
-
-            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            requestWindowFeature(Window.FEATURE_NO_TITLE); //before
-
-            setContentView(R.layout.dialog_my_info);
-
-            messageTxt = findViewById(R.id.messageTxt);
-            okBtn = findViewById(R.id.okBtn);
-
-            okBtn.setOnClickListener(view -> dismiss());
-
-            try {
-                if (activity != null && !activity.isFinishing())
-                    show();
-            } catch (Exception e) {
-                dismiss();
-            }
-
-        }
-
-        private ErrorDialog getDialog() {
-            return this;
-        }
-
-        public static ErrorDialog setMessages(String... messages) {
-            String msg = "";
-            if (msg != null) {
-                for (String message : messages) {
-                    msg += message + "\n";
-                }
-                errorDialog.messageTxt.setText(msg);
-            } else {
-                errorDialog.messageTxt.setText(activity.getString(R.string.fail_to_get_data));
-            }
-
-//            if (customeDialog == null) {
-//                return customeDialog;
-//            } else {
-            return errorDialog;
-//            }
-
-        }
-
-        public static void build() {
-            if (errorDialog != null && !activity.isFinishing()) {
-                errorDialog.show();
-                errorDialog.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        errorDialog = null;
-                    }
-                });
-            }
-
-        }
-
+            dismiss();
+        });
     }
+
+    public static abstract class Click {
+        public abstract void click();
+    }
+
+
 }

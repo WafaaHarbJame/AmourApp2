@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="@dimen/_10sdp"
-                android:text="tubas"
+                android:text="@string/fail_to_get_data"
                 android:textSize="@dimen/_12ssp" />
         </ScrollView>
 
@@ -64,6 +64,7 @@
                <com.ramez.shopp.SpichalViews.STextView
 
                     android:layout_width="match_parent"
+                   android:id="@+id/okTxt"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/ok"

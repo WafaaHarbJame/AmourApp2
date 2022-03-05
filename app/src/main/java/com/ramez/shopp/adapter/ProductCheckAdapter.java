@@ -3,6 +3,7 @@ package com.ramez.shopp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -55,6 +56,7 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
         ProductChecker productChecker = list.get(position);
         viewHolder.binding.productCheckTxt.setText(productChecker.getName());
+        viewHolder.binding.selectTxt.setOnCheckedChangeListener(null);
 
         if (selectedPosition==productChecker.getId() ) {
             viewHolder.binding.selectTxt.setChecked(true);
@@ -85,6 +87,7 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
         ViewHolder(RowProductCheckBinding view) {
             super(view.getRoot());
             binding = view;
+
             itemView.setOnClickListener(view1 -> {
                 ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
                 selectedPosition = deliveryTime.getId();
@@ -95,21 +98,23 @@ public class ProductCheckAdapter extends RecyclerView.Adapter<ProductCheckAdapte
                 }
             });
 
-
-           binding.selectTxt.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            binding.selectTxt.setOnClickListener(v -> {
                 if (lastCheckedRB != null) {
                     lastCheckedRB.setChecked(false);
                 }
                 //store the clicked radiobutton
                 lastCheckedRB =   binding.selectTxt;
-               ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
-               selectedPosition = deliveryTime.getId();
-               notifyDataSetChanged();
+                ProductChecker deliveryTime = list.get(getBindingAdapterPosition());
+                selectedPosition = deliveryTime.getId();
+                notifyDataSetChanged();
 
-               if (dataCallback != null) {
-                   dataCallback.dataResult(deliveryTime, "result", true);
-               }
-           });
+                if (dataCallback != null) {
+                    dataCallback.dataResult(deliveryTime, "result", true);
+                }
+
+            });
+
+
 
         }
     }

@@ -34,6 +34,7 @@ object GlobalData {
     const val Api = "api/"
     const val COUNTRY = "BH"
     var refresh_cart = false
+    var sortType:Int = 0
     var refresh_points = false
     var Position = 0
     var EDIT_PROFILE = false

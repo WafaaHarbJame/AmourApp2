@@ -366,9 +366,11 @@ class MainActivity : ActivityBase() {
                         override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                             val sortType: Int = obj as Int
                             EventBus.getDefault().post(MessageEvent(MessageEvent.TYPE_SORT2, sortType))
+                            GlobalData.sortType=sortType
 
                         }
                     })
+
             filterDialog.show()
         }
 

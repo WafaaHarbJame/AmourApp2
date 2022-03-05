@@ -472,6 +472,8 @@
     <string name="price_low_to_high">Price Low to High</string>
     <string name="name_high_to_low">Name High to Low</string>
     <string name="name_low_to_high">Name Low to High</string>
+    <string name="suggested">suggested</string>
+    <string name="newest">Newest</string>
     <string name="filter">Filter</string>
     <string name="price_range">Price Range</string>
     <string name="to">To</string>
@@ -480,6 +482,7 @@
     <string name="card_number">card Number</string>
     <string name="cvv_code">CVV CODE</string>
     <string name="pay_now">Pay Now</string>
+    <string name="try_again">try again</string>
 
 
 </resources>
