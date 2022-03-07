@@ -75,6 +75,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
     private var addressFullAddress: String? = null
     private var deliveryFees = 0.0
     private var isGetDeliveryInfo = false
+    private var isGetExpressInfo = false
     private var expressDeliveryCharge = 0.0
     private var hasExpress: Boolean = false
     private var minimumOrderAmount = 0
@@ -791,6 +792,7 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 //                        }
 
                         if (IsSuccess) {
+                            isGetExpressInfo = true
                             binding.loadingLYDelivery.visibility = View.GONE
                             val result = obj as ResultAPIModel<QuickDeliveryRespond?>?
                             if (result?.data != null) {
@@ -808,14 +810,10 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                         quickDeliveryRespond?.expressDeliveryCharge?.toDouble() ?: 0.0
                                     deliveryTimeDesc =
                                         quickDeliveryRespond?.expressDeliverydescription ?: ""
-
-                                    Log.i(
-                                        javaClass.simpleName, "Log  deliveryFees$deliveryFees"
-                                    )
-
                                 }
 
                             }
+                            println("Log isGetDeliveryInfo $isGetDeliveryInfo")
                             if (isGetDeliveryInfo) {
                                 getDeliveryTypes()
                                 checkDeliveryFees()
@@ -849,8 +847,13 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 //                                deliveryFees = quickDeliveryRespond.deliveryCharges
                                 deliveryFees = initDeliveryFees(quickDeliveryRespond.deliveryCharges)
                                 println("Log deliveryFees getDeliveryInfo $deliveryFees")
-                                getDeliveryTypes()
-                                checkDeliveryFees()
+                                println("Log isGetExpressInfo $isGetExpressInfo")
+                                if (isGetExpressInfo) {
+                                    getDeliveryTypes()
+                                    checkDeliveryFees()
+                                }
+                            } else {
+                                showErrorDialog(1)
                             }
                         } else {
                             showErrorDialog(1)
@@ -946,59 +949,59 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
                                 if (result.data != null && result.data
                                             .deliveryTimes != null && result.data.deliveryTimes.size > 0
                                 ) {
-                                    if (result.data != null && result.data
-                                                .deliveryTimes.size > 0
-                                    ) {
-                                        val checkOrderResponse = result.data
-                                        val userDefaultAddress =
-                                            checkOrderResponse.userAddress
-                                        if (userDefaultAddress != null && userDefaultAddress.id > 0) {
-                                            addressId = userDefaultAddress.id
-                                            addressTitle = userDefaultAddress.name
-                                            binding.tvFullAddress.text = userDefaultAddress.fullAddress
-                                            binding.delivery.text = addressTitle
-                                            Log.i(
-                                                javaClass.simpleName,
-                                                "Log  CheckOrderResponse AddressId  " + result.data.userAddress.id
-                                            )
-                                        }
-                                        minimumOrderAmount = checkOrderResponse.minimumOrderAmount
-//                                        deliveryFees = checkOrderResponse.deliveryCharges
-                                        deliveryFees = initDeliveryFees(checkOrderResponse.deliveryCharges)
-                                        println("Log deliveryFees getDeliveryTimeList $deliveryFees")
-                                        checkDeliveryFees()
-                                        val datesList =
-                                            result.data.deliveryTimes
-                                        val firstTime = datesList[0]
-                                        var currentDate = firstTime.date
-                                        var timesList: MutableList<DeliveryTime> = ArrayList()
-
-                                        while (datesList.size > 0) {
-                                            val deliveryTime = datesList[0]
-                                            if (deliveryTime.date == currentDate) {
-                                                timesList.add(deliveryTime)
-                                                datesList.removeAt(0)
-                                                if (datesList.isEmpty()) {
-                                                    datesMap[deliveryTime.date] = timesList
-                                                }
-                                            } else {
-                                                datesMap[currentDate] = timesList
-                                                currentDate = deliveryTime.date
-                                                timesList = ArrayList()
-                                            }
-                                        }
-
-                                        deliveryTimesList = datesMap[firstTime.date]
-                                        if (deliveryTimesList != null && deliveryTimesList?.size ?: 0 > 0) deliveryDateId =
-                                            deliveryTimesList!![0].id
-                                        deliveryDate = firstTime.date
-                                        deliveryTime = firstTime.time
-
-                                        initDaysAdapter()
-                                    } else {
-                                        binding.noDeliveryTv.visibility = View.VISIBLE
-                                        GlobalData.Toast(activityy, message)
+                                    isGetDeliveryInfo = true
+                                    val checkOrderResponse = result.data
+                                    val userDefaultAddress =
+                                        checkOrderResponse.userAddress
+                                    if (userDefaultAddress != null && userDefaultAddress.id > 0) {
+                                        addressId = userDefaultAddress.id
+                                        addressTitle = userDefaultAddress.name
+                                        binding.tvFullAddress.text = userDefaultAddress.fullAddress
+                                        binding.delivery.text = addressTitle
+                                        Log.i(
+                                            javaClass.simpleName,
+                                            "Log  CheckOrderResponse AddressId  " + result.data.userAddress.id
+                                        )
                                     }
+                                    minimumOrderAmount = checkOrderResponse.minimumOrderAmount
+//                                        deliveryFees = checkOrderResponse.deliveryCharges
+                                    deliveryFees = initDeliveryFees(checkOrderResponse.deliveryCharges)
+                                    println("Log deliveryFees getDeliveryTimeList $deliveryFees")
+                                    if (isGetExpressInfo) {
+                                        getDeliveryTypes()
+                                        checkDeliveryFees()
+                                    }
+                                    val datesList =
+                                        result.data.deliveryTimes
+                                    val firstTime = datesList[0]
+                                    var currentDate = firstTime.date
+                                    var timesList: MutableList<DeliveryTime> = ArrayList()
+
+                                    while (datesList.size > 0) {
+                                        val deliveryTime = datesList[0]
+                                        if (deliveryTime.date == currentDate) {
+                                            timesList.add(deliveryTime)
+                                            datesList.removeAt(0)
+                                            if (datesList.isEmpty()) {
+                                                datesMap[deliveryTime.date] = timesList
+                                            }
+                                        } else {
+                                            datesMap[currentDate] = timesList
+                                            currentDate = deliveryTime.date
+                                            timesList = ArrayList()
+                                        }
+                                    }
+
+                                    deliveryTimesList = datesMap[firstTime.date]
+                                    if (deliveryTimesList != null && deliveryTimesList?.size ?: 0 > 0) deliveryDateId =
+                                        deliveryTimesList!![0].id
+                                    deliveryDate = firstTime.date
+                                    deliveryTime = firstTime.time
+
+                                    initDaysAdapter()
+                                } else {
+                                    binding.noDeliveryTv.visibility = View.VISIBLE
+                                    GlobalData.Toast(activityy, message)
                                 }
                             } else {
                                 binding.noDeliveryTv.visibility = View.VISIBLE
@@ -1206,17 +1209,16 @@ class InvoiceFragment : FragmentBase(), OnRadioAddressSelect, AddressCheckAdapte
 
                 }
 
-
             }
         }
 
-        val errorMessagesDialog = ErrorMessagesDialog(
+        ErrorMessagesDialog(
             activityy,
             R.string.fail_to_get_data,
             R.string.try_again,
             okClick,
         )
-        errorMessagesDialog.show()
+//        errorMessagesDialog.show()
     }
 
 }

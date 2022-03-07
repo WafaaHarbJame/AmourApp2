@@ -56,10 +56,7 @@ class DeliveryTypeAdapter(
 
         } else {
 
-            holder.binding.deliveryPrice.text =
-                NumberHandler.roundDouble(paymentMethod?.deliveryPrice ?: 0.0).plus(" ")
-                    .plus(localModel?.currencyCode)
-
+            holder.binding.deliveryPrice.text = NumberHandler.formatDouble(paymentMethod?.deliveryPrice ?: 0.0,fraction).plus(" $currency")
 
         }
 

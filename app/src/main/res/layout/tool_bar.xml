@@ -38,20 +38,22 @@
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search_t" />
 
-        <ImageView
+        <com.ramez.shopp.SpichalViews.STextViewIcon
             android:id="@+id/addExtra"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/circle_white"
             android:contentDescription="@string/app_name"
             android:gravity="center"
-            android:minWidth="@dimen/_50sdp"
-            android:minHeight="@dimen/_40sdp"
-            android:padding="@dimen/_5sdp"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:scaleX="@integer/scaleXInv"
-            android:src="@drawable/plus_toolbar"
-            android:visibility="gone"
+            android:text="@string/fal_plus"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_18ssp"
+            android:visibility="visible"
             tools:targetApi="m" />
 
         <ImageView
@@ -129,7 +131,6 @@
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
             android:src="@drawable/sort_icon"
-            android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
 
         <ImageView
@@ -143,7 +144,6 @@
             android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
             android:src="@drawable/filter_icon"
-            android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
 
 
@@ -156,8 +156,6 @@
             android:contentDescription="@string/app_name"
             android:gravity="center"
             android:minHeight="@dimen/_40sdp"
-            android:padding="@dimen/_5sdp"
-            android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/filter_view_white"
             android:visibility="gone" />
@@ -178,9 +176,10 @@
         <ImageView
             android:id="@+id/SearchBtn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:gravity="center"
+            android:minHeight="@dimen/_40sdp"
             android:padding="@dimen/_5sdp"
             android:layout_toStartOf="@id/sort2But"
             android:visibility="gone"
