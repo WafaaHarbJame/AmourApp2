@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_express_black" />
         <!--                android:id="@+id/quickDeliveryLy"-->
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/deliveryNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textSize="@dimen/_12ssp"
             android:visibility="visible" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/delivery_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:textSize="@dimen/_10ssp"
             android:visibility="gone" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/delivery_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
 
-        <com.ramez.shopp.SpichalViews.SRadioButton
+        <com.amour.shop.SpichalViews.SRadioButton
             android:id="@+id/rbDeliveryType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

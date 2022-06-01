@@ -52,7 +52,7 @@
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:src="@drawable/ic_check_white" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -66,7 +66,7 @@
 
     </FrameLayout>
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/scanHintLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/productNameTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -121,14 +121,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/unit_price_key"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/priceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:id="@+id/plusBtn"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
@@ -157,7 +157,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/quantityTv"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -167,7 +167,7 @@
                     android:textColor="@color/header1"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:id="@+id/minusBtn"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
@@ -177,7 +177,7 @@
                     android:textColor="@color/fastq_color"
                     android:textSize="@dimen/_11ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:id="@+id/deleteButton"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
@@ -230,7 +230,7 @@
             android:paddingEnd="@dimen/_5sdp"
             android:paddingBottom="@dimen/_6sdp">
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -240,7 +240,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@id/totalTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -275,7 +275,7 @@
                     android:gravity="center"
                     android:src="@drawable/ic_barcode_white" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/processTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -313,7 +313,7 @@
                 android:layout_gravity="center"
                 android:src="@drawable/ic_cart_gray" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/cartFastCountTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

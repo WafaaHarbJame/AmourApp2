@@ -28,7 +28,7 @@
                 android:visibility="visible">
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/searchBut"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

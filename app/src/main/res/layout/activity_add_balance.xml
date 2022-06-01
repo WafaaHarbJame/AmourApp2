@@ -33,7 +33,7 @@
                 android:src="@drawable/visa_image"
                 app:riv_corner_radius="@dimen/_16sdp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -47,7 +47,7 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:layout_height="wrap_content">
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:id="@+id/cardHolderED"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                     android:textColor="@color/colorLoginText"
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -77,7 +77,7 @@
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />
             </LinearLayout>
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/followBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

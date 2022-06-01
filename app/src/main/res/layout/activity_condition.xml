@@ -23,7 +23,7 @@
             android:padding="@dimen/_16sdp">
 
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/textTv"
                 android:justificationMode="inter_word"
@@ -33,7 +33,7 @@
                 android:textSize="@dimen/_12ssp"
                 android:textAlignment="viewStart"
                 android:lineSpacingExtra="@dimen/_4sdp"
-                android:text="@string/dummy_text"
+                android:text=""
                 android:textColor="@color/colorLoginText"
                 tools:targetApi="o" />
 

@@ -4,7 +4,7 @@
     android:id="@+id/cardView"
     android:layout_height="wrap_content">
 
-    <com.ramez.shopp.SpichalViews.SButton
+    <com.amour.shop.SpichalViews.SButton
         android:id="@+id/btnCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

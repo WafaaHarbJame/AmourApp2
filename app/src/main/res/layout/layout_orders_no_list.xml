@@ -26,7 +26,7 @@
                 app:srcCompat="@drawable/ic_choices"
                 app:tint="@color/colorAppRed" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/titleTv"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/tvErrorMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                 android:orientation="vertical"
                 android:text="@string/textNoXadoxOrder" />
 
-            <com.ramez.shopp.SpichalViews.SButton
+            <com.amour.shop.SpichalViews.SButton
                 android:id="@+id/btnBrowseProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

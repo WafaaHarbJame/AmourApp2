@@ -73,7 +73,7 @@
                         android:orientation="horizontal"
                         android:padding="@dimen/_6sdp">
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
@@ -81,7 +81,7 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:id="@+id/totalPointTv"
                             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                             android:background="@color/transparent"
                             android:src="@drawable/two_arrows_white" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_4sdp"
@@ -109,7 +109,7 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/_12ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/currencyPriceTv"
@@ -140,7 +140,7 @@
                         app:barcode_format="code_128"
                         app:barcode_text="10000000000009" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/textCouponCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                         android:textAlignment="center" />
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -191,7 +191,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/generateBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

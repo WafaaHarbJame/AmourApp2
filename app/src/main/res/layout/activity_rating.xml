@@ -24,7 +24,7 @@
             android:paddingEnd="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16ssp"
             android:paddingStart="@dimen/_16sdp">
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -52,18 +52,21 @@
                 android:background="@color/white"
                 app:cardUseCompatPadding="true"
                 android:layout_height="wrap_content">
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:id="@+id/rateEt"
+                    android:paddingHorizontal="@dimen/_6sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text=""
                     android:inputType="textMultiLine"
                     android:minHeight="@dimen/_100sdp"
                     android:background="@color/transparent"
                     />
             </androidx.cardview.widget.CardView>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/rateBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -19,7 +19,7 @@
         android:padding="@dimen/_16sdp">
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -32,7 +32,7 @@
             android:textColor="@color/colorPrimary"
             />
 
-        <com.ramez.shopp.SpichalViews.SEditText
+        <com.amour.shop.SpichalViews.SEditText
             android:id="@+id/edtPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:background="#d8d8d8" />
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/confirmBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/invoiceFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/dataLY"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/chooseDeliverytType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:padding="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_payment"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/Delivery_Method"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <ImageView
+                    android:id="@+id/deliveryTypeArrowImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angle_down" />
+
+            </LinearLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loadingLYDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimaryDark"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/deliveryTypeRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:visibility="gone"
+                android:paddingStart="@dimen/_8sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                tools:itemCount="2"
+                android:paddingBottom="@dimen/_8sdp"
+                tools:listitem="@layout/row_delivery_type" />
+
+            <mobi.foo.benefitinapp.utils.BenefitInAppButton
+                android:id="@+id/btnBenefitBay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:id="@+id/chooseDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/chooseDeliveryBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+
+                    <com.amour.shop.SpichalViews.STextViewBold
+                        android:id="@+id/delivery"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:text="@string/choose_delivery_address"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp" />
+
+
+                    <ImageView
+                        android:id="@+id/deliveryArrowImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_angle_down" />
+
+                </LinearLayout>
+                <com.amour.shop.SpichalViews.STextView
+                    android:id="@+id/addNewAddressBut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:drawableStart="@drawable/addnew_address"
+                    android:background="@drawable/round_corner_white_fill_border_gray"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:text="@string/add_new_address"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/green" />
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/loadingAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/colorPrimaryDark"
+                    app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addressRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:clipToPadding="false"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/row_address_item" />
+
+                <LinearLayout
+                    android:id="@+id/DeliverLY"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <com.amour.shop.SpichalViews.STextView
+                        android:id="@+id/tvFullAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_8ssp"
+                        android:paddingStart="@dimen/_8ssp"
+                        android:paddingEnd="@dimen/_8ssp"
+                        android:text="@string/no_default_address"
+                        android:textAlignment="viewStart" />
+
+                    <com.amour.shop.SpichalViews.STextViewBold
+                        android:id="@+id/changeAddressBtu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_16ssp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:visibility="gone"
+                        android:layout_marginEnd="@dimen/_16ssp"
+                        android:background="@drawable/round_corner_next"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/change_address"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/chooseDeliveryTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_delivery_time"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/choose_delivery_time"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <ImageView
+                    android:id="@+id/toggleDeliveryBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angle_down" />
+
+            </LinearLayout>
+
+            <!--  start free layout-->
+            <RelativeLayout
+                android:id="@+id/freeLY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/round_corner_grey_small"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_10sdp">
+
+                    <com.amour.shop.SpichalViews.STextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:background="@android:color/transparent"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/Get_FREE_delivery"
+                        android:textColor="@color/colorPrimary1"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.amour.shop.SpichalViews.STextView
+                        android:id="@+id/freeDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:background="@android:color/transparent"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/over"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <com.amour.shop.SpichalViews.STextViewBold
+                        android:id="@+id/freeBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:background="@drawable/round_corner_next"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_16sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_16sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/Get_FREE_Delivery"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:src="@drawable/free_delivery" />
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/DeliverDayRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/DeliverTimeRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_delivery_times" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loadingDelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimaryDark"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+
+            <com.amour.shop.SpichalViews.STextView
+                android:id="@+id/noDeliveryTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:text="@string/no_delivery_times"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/checkProductLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_change"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/if_item_not_available"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <ImageView
+                    android:id="@+id/toggleCheckerBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angle_down" />
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ProductCheckRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_product_check" />
+
+
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d8d8d8" />
+            <com.amour.shop.SpichalViews.STextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end|center"
+                android:lines="1"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/orderDetails"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center"
+                    android:lines="1"
+                    android:text="@string/product_total"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:id="@+id/productsSizeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
+                    android:lines="1"
+                    android:text=""
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_4sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center"
+                    android:lines="1"
+                    android:text="@string/deliver_fees"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_10ssp" />
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:id="@+id/deliveryFees"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text=""
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_4sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_8sdp">
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center"
+                    android:lines="1"
+                    android:text="@string/total"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.amour.shop.SpichalViews.STextViewBold
+                    android:id="@+id/totalTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text=""
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.amour.shop.SpichalViews.STextViewBold
+            android:id="@+id/saveBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/save_update"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <com.amour.shop.SpichalViews.STextViewBold
+            android:id="@+id/sendOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/delivery_send"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

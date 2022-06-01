@@ -20,7 +20,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             app:srcCompat="@drawable/no_connection" />
 
-       <com.ramez.shopp.SpichalViews.STextView
+       <com.amour.shop.SpichalViews.STextView
 
             android:id="@+id/messageTxt"
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:background="@drawable/round_corner_primary_small"
             android:visibility="visible">
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

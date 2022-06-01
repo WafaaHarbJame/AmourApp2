@@ -30,7 +30,7 @@
         app:frameThickness="2dp"
         app:maskColor="#77000000" />
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/inStoreLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
@@ -96,7 +96,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stepLine" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"

@@ -25,9 +25,10 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true">
 
         <LinearLayout
@@ -50,7 +51,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -112,7 +113,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -162,22 +163,22 @@
 
             </LinearLayout>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/saveBut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:background="@drawable/round_corner_next"
-                android:gravity="center"
-                android:padding="@dimen/_12sdp"
-                android:text="@string/accept"
-                android:textColor="@android:color/white" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
+    <com.amour.shop.SpichalViews.STextViewBold
+        android:id="@+id/saveBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/round_corner_next"
+        android:gravity="center"
+        android:padding="@dimen/_12sdp"
+        android:text="@string/accept"
+        android:textColor="@android:color/white" />
 </LinearLayout>
 

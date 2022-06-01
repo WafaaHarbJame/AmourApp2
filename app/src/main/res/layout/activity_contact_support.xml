@@ -89,7 +89,7 @@
                 android:padding="@dimen/_9sdp"
                 app:srcCompat="@drawable/ic_send" />
 
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.amour.shop.SpichalViews.SEditText
                 android:id="@+id/messageTxt"
                 style="@style/editTextStyle"
                 android:layout_width="0dp"

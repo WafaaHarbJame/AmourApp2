@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:padding="@dimen/_8sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -30,7 +30,7 @@
                 android:textSize="@dimen/_14ssp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:textColor="@color/colorPrimary" />
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/textTv"
                 android:layout_height="match_parent"
@@ -41,9 +41,9 @@
                 android:textAlignment="viewStart"
                 android:lineSpacingExtra="@dimen/_4sdp"
                 android:scrollbars="vertical"
-                android:text="@string/dummy_text"
+                android:text=""
                 android:textColor="@color/colorLoginText" />
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/appVersionTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

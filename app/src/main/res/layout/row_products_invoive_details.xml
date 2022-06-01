@@ -37,7 +37,7 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content">
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/item_text"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -50,7 +50,7 @@
                     android:textStyle="bold" />
 
 
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/price_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 
             </LinearLayout>
 
-           <com.ramez.shopp.SpichalViews.STextView
+           <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/qty_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
 
                 </Space>
 
-                <com.ramez.shopp.SpichalViews.SButton
+                <com.amour.shop.SpichalViews.SButton
                     android:id="@+id/reOrderProductBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"

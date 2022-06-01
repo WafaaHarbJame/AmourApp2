@@ -86,7 +86,7 @@
                     app:layout_constraintStart_toEndOf="@id/imageView1"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/tvName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
 
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/weight_unitTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                     app:layout_constraintStart_toStartOf="@id/nameLy"
                     app:layout_constraintTop_toBottomOf="@id/nameLy" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/markTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                     app:layout_constraintTop_toBottomOf="@id/weight_unitTv" />
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/priceTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                     app:layout_constraintStart_toStartOf="@id/nameLy"
                     app:layout_constraintTop_toTopOf="@id/quantityLy" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/currencyPriceTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                     app:layout_constraintStart_toEndOf="@id/priceTv"
                     app:layout_constraintTop_toTopOf="@id/priceTv" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/productPriceBeforeTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/markTv">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:id="@+id/plusCartBtn"
                         android:layout_width="@dimen/cart_quantity_width"
                         android:layout_height="@dimen/cart_quantity_height"
@@ -209,7 +209,7 @@
                         android:visibility="visible"
                         app:tint="@color/white" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:id="@+id/productCartQTY"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/cart_quantity_height"

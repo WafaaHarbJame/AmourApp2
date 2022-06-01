@@ -3,6 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/drawable/plus_toolbar.xml" value="0.1" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/drawable/rating_style.xml" value="0.1995" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/drawable/shimmer_card_bg.xml" value="0.1645" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/drawable/shimmer_round_bottom_corner.xml" value="0.1645" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_add_new_address.xml" value="0.15520833333333334" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_address.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_change_city_branch.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_change_lang_and_currency.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_change_language.xml" value="0.23541666666666666" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_choose_city.xml" value="0.1515625" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_choose_nearst_city.xml" value="0.1515625" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_invoice.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_order_complete.xml" value="0.15520833333333334" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_pay_fail.xml" value="0.15520833333333334" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/activity_splash_screen.xml" value="0.134375" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/fragment_category_products.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/fragment_login.xml" value="0.1515625" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/row_address_item.xml" value="0.15520833333333334" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/row_delivery_times.xml" value="0.10729166666666666" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/row_payment_type.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/layout/row_products_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1925" />
+        <entry key="..\:/Andriod/Projects/Amour app New/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1995" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/drawable/cart_back_style.xml" value="0.2455" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/drawable/cart_button_style.xml" value="0.2455" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/drawable/circle_corner_primary_light.xml" value="0.2703125" />
@@ -106,7 +130,7 @@
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/search_fagment.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/shimmer_row_products_item.xml" value="0.1203125" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/show_image_dialog.xml" value="0.23846153846153847" />
-        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.4" />
+        <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/layout/tool_bar.xml" value="0.264" />
         <entry key="..\:/Andriod/Projects/RamezApp/app/src/main/res/menu/menu_scrolling.xml" value="0.12239583333333333" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/cart_back_style.xml" value="0.2203125" />
         <entry key="..\:/Android Projects/RamezApp/app/src/main/res/drawable/ic_angle_pointing_to_left.xml" value="0.2703125" />

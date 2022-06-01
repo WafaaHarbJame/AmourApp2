@@ -67,14 +67,14 @@
                     android:orientation="horizontal">
 
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
                         android:text="@string/total"
                         android:textColor="@color/gray4" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/tvTotalPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 </LinearLayout>
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:id="@+id/reOrderBut"
                     android:layout_height="wrap_content"

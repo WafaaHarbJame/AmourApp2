@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
@@ -28,7 +28,7 @@
             android:textColor="@color/black"
             android:visibility="gone" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/orderIDTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,20 +46,21 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/declined" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_8sdp"
             android:gravity="center"
-            android:text="@string/payment_fail"
+            android:text="@string/payment_status"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/messageTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_16sdp"
+            android:textSize="@dimen/_14ssp"
             android:gravity="center"
             android:text="@string/payment_fail" />
 
@@ -90,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -103,7 +104,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/deliveryDayTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
                         android:text="Monday"
                         android:textColor="@color/black" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/deliveryTimeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

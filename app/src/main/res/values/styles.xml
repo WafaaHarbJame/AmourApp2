@@ -95,17 +95,17 @@
 
 
     <style name="checkBoxStyle" parent="Theme.AppCompat.DayNight">
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/gray6</item>
     </style>
 
     <style name="checkBoxGreenStyle" parent="Theme.AppCompat.DayNight">
-        <item name="colorControlActivated">@color/green1</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/gray3</item>
     </style>
 
    <style name="checkBoxGreenStyle1" parent="Theme.AppCompat.DayNight">
-        <item name="colorControlActivated">@color/green5</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/gray3</item>
         <item name="background">@color/green_light</item>
     </style>

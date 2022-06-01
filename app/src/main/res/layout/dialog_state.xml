@@ -26,7 +26,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:padding="@dimen/_10sdp">
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
 
                 android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 tools:targetApi="m" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
                 android:visibility="visible" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/okBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,13 +82,13 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fal_search"
                 android:textColor="@color/gray_dark" />
 
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.amour.shop.SpichalViews.SEditText
                 android:id="@+id/searchTxt"
                 style="@style/editTextStyle"
                 android:layout_width="match_parent"

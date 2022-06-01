@@ -28,7 +28,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -42,7 +42,7 @@
                 android:textColor="@color/text_color" />
         </LinearLayout>
 
-        <com.ramez.shopp.SpichalViews.PinEntryEditText
+        <com.amour.shop.SpichalViews.PinEntryEditText
             android:id="@+id/codeTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:visibility="visible" />
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/confirmBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:textColor="@android:color/white" />
 
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/resendCodeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

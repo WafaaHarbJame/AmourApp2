@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/discoverLb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:textAlignment="viewStart"
         android:textColor="@color/gray4"
         android:textSize="@dimen/_12ssp" />
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/noProductsTv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

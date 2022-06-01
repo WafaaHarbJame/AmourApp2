@@ -93,7 +93,7 @@
                 android:layout_alignParentEnd="true"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.STextInputLayout
+                <com.amour.shop.SpichalViews.STextInputLayout
                     android:id="@+id/addressInput"
                     style="@style/WhiteFillTextInputStyle"
                     android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:hint="@string/address">
 
-                    <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
+                    <com.amour.shop.SpichalViews.AutoCompleteDropDown
                         android:id="@+id/addressTV"
                         style="@style/editTextStyle1"
                         android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                         android:maxLines="1"
                         android:nextFocusForward="@id/nameEt" />
 
-                </com.ramez.shopp.SpichalViews.STextInputLayout>
+                </com.amour.shop.SpichalViews.STextInputLayout>
 
 
                 <LinearLayout
@@ -123,7 +123,7 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/nameEtInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -133,7 +133,7 @@
                         android:layout_weight="1"
                         android:hint="@string/Address_Name">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/nameEt"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -143,9 +143,9 @@
                             android:maxLines="1"
                             android:nextFocusForward="@id/stateSpinner1Input" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/stateSpinner1Input"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -156,7 +156,7 @@
                         android:layout_weight="1"
                         android:hint="@string/select_area">
 
-                        <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
+                        <com.amour.shop.SpichalViews.AutoCompleteDropDown
                             android:id="@+id/stateSpinnerTv"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -165,7 +165,7 @@
                             android:inputType="none"
                             android:maxLines="1" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
                 </LinearLayout>
@@ -177,7 +177,7 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/blockEtInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -187,7 +187,7 @@
                         android:layout_weight="1"
                         android:hint="@string/block_no">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/blockEt"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -197,10 +197,10 @@
                             android:maxLines="1"
                             android:nextFocusForward="@id/streetEt" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/streetEtInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -211,7 +211,7 @@
                         android:layout_weight="1"
                         android:hint="@string/street_num">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/streetEt"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -221,7 +221,7 @@
                             android:maxLines="1"
                             android:nextFocusForward="@id/buildingEt" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
                 </LinearLayout>
@@ -233,7 +233,7 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/buildingEtInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -243,7 +243,7 @@
                         android:layout_weight="1"
                         android:hint="@string/building">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/buildingEt"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -253,10 +253,10 @@
                             android:maxLines="1"
                             android:nextFocusForward="@id/flatEt" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/flatEtInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -267,7 +267,7 @@
                         android:layout_weight="1"
                         android:hint="@string/flat">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/flatEt"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -277,7 +277,7 @@
                             android:maxLines="1"
                             android:nextFocusForward="@id/codeSpinnerInput" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
                 </LinearLayout>
@@ -289,7 +289,7 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/codeSpinnerInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -299,7 +299,7 @@
                         android:layout_weight="1"
                         android:hint="@string/code">
 
-                        <com.ramez.shopp.SpichalViews.AutoCompleteDropDown
+                        <com.amour.shop.SpichalViews.AutoCompleteDropDown
                             android:id="@+id/codeSpinner"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -307,10 +307,10 @@
                             android:inputType="none"
                             android:drawableEnd="@drawable/bottom_arrow_red" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
-                    <com.ramez.shopp.SpichalViews.STextInputLayout
+                    <com.amour.shop.SpichalViews.STextInputLayout
                         android:id="@+id/phoneInput"
                         style="@style/WhiteFillTextInputStyle"
                         android:layout_width="0dp"
@@ -321,7 +321,7 @@
                         android:layout_weight="1"
                         android:hint="@string/text_profile_phone_number">
 
-                        <com.ramez.shopp.SpichalViews.SEditText
+                        <com.amour.shop.SpichalViews.SEditText
                             android:id="@+id/phoneTv"
                             style="@style/editTextStyle1"
                             android:layout_width="match_parent"
@@ -331,7 +331,7 @@
                             android:inputType="number"
                             android:maxLines="1" />
 
-                    </com.ramez.shopp.SpichalViews.STextInputLayout>
+                    </com.amour.shop.SpichalViews.STextInputLayout>
 
 
                 </LinearLayout>
@@ -342,7 +342,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/addNewAddressBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

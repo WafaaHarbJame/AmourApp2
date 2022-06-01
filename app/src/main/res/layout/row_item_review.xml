@@ -20,7 +20,7 @@
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 
     </RatingBar>
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/reviewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/reviewTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

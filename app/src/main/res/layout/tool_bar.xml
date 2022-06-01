@@ -38,7 +38,7 @@
             android:visibility="gone"
             app:srcCompat="@drawable/ic_search_t" />
 
-        <com.ramez.shopp.SpichalViews.STextViewIcon
+        <com.amour.shop.SpichalViews.STextViewIcon
             android:id="@+id/addExtra"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
@@ -53,7 +53,7 @@
             android:text="@string/fal_plus"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_18ssp"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:targetApi="m" />
 
         <ImageView
@@ -72,7 +72,7 @@
             android:textSize="@dimen/_13ssp"
             android:visibility="visible" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/mainTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:src="@drawable/delete_toolbar"
             android:textSize="@dimen/_13ssp"
             android:visibility="gone" />
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/cleanBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                 android:src="@drawable/cart_icon_bottom"
                 app:tint="@color/white" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/cartsCountTv"
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"

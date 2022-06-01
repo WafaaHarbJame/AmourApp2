@@ -21,7 +21,7 @@
             android:orientation="horizontal"
             android:paddingStart="@dimen/_8sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -30,7 +30,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:orientation="vertical">
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_suggestedHL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:text="@string/suggested"
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_newest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 
 
 
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_PriceHL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
 
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_PriceLH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
 
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_nameHL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 android:text="@string/name_high_to_low"
                 android:textAlignment="viewStart"
                 android:theme="@style/MyRadioButton2" />
-            <com.ramez.shopp.SpichalViews.SRadioButton
+            <com.amour.shop.SpichalViews.SRadioButton
                 android:id="@+id/rb_nameLH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             android:background="@color/gray5" />
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/applyBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

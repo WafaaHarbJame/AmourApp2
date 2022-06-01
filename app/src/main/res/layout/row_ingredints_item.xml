@@ -10,14 +10,14 @@
         android:gravity="start"
         android:orientation="horizontal"
         android:padding="@dimen/_10ssp">
-        <com.ramez.shopp.SpichalViews.STextViewIcon2
+        <com.amour.shop.SpichalViews.STextViewIcon2
             android:id="@+id/selectTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_10sdp"
             android:text="@string/fal_info_circle" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/nameTxt"
             android:layout_width="wrap_content"
             android:layout_weight="1"
@@ -27,7 +27,7 @@
             android:textAlignment="viewStart"
             android:textColor="@color/gray4"
             android:textSize="@dimen/_12ssp" />
-        <com.ramez.shopp.SpichalViews.STextViewIcon2
+        <com.amour.shop.SpichalViews.STextViewIcon2
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_18sdp"
             android:layout_marginEnd="@dimen/_10sdp"

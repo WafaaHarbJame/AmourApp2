@@ -13,7 +13,7 @@
     android:paddingEnd="@dimen/_10sdp"
     android:paddingBottom="@dimen/_8sdp">
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/dayTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:text="sat"
         android:textColor="@color/black" />
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/dateTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

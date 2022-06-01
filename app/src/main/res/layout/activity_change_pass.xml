@@ -32,7 +32,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                 <com.ramez.shopp.SpichalViews.SEditText
+                 <com.amour.shop.SpichalViews.SEditText
                      android:id="@+id/edtPassword"
                      android:layout_width="0dp"
                      android:layout_weight="1"
@@ -74,7 +74,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                   <com.ramez.shopp.SpichalViews.SEditText
+                   <com.amour.shop.SpichalViews.SEditText
                        android:id="@+id/edtNewPassword"
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                 <com.ramez.shopp.SpichalViews.SEditText
+                 <com.amour.shop.SpichalViews.SEditText
                      android:id="@+id/edtConfirmPassword"
                      android:layout_width="0dp"
                      android:layout_weight="1"
@@ -144,7 +144,7 @@
                 android:background="#d8d8d8" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/confirmBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

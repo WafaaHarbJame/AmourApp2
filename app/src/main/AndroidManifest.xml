@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ramez.shopp">
+    package="com.amour.shop">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -20,7 +20,7 @@
         android:protectionLevel="signature" />
 
     <application
-        android:name=".RootApplication"
+        android:name="com.amour.shop.RootApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,27 +33,36 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".activities.BrandsActivity"
-            android:exported="false" android:launchMode="singleTask"
+            android:name="com.amour.shop.activities.BrandsActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
         </activity>
         <activity
-            android:name=".activities.FilterActivity"
-            android:exported="false"  android:launchMode="singleTask"
+            android:name="com.amour.shop.activities.FilterActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
 
         </activity>
         <activity
-            android:name=".activities.PayUsingCardActivity" android:launchMode="singleTask"
+            android:name="com.amour.shop.activities.PayUsingCardActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
-        </activity>
         <activity
-            android:name=".activities.PayFailActivity"
+            android:name=".activities.InvoiceActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
+        <activity
+            android:name="com.amour.shop.activities.PayFailActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -61,13 +70,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.PayWebViewActivity"
+            android:name="com.amour.shop.activities.PayWebViewActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".activities.FastqActivity"
+            android:name="com.amour.shop.activities.FastqActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -75,7 +84,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.FastqScanActivity"
+            android:name="com.amour.shop.activities.FastqScanActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -83,7 +92,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.FastqCartActivity"
+            android:name="com.amour.shop.activities.FastqCartActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -91,7 +100,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.FastqCheckoutActivity"
+            android:name="com.amour.shop.activities.FastqCheckoutActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -99,7 +108,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.FastqSummaryActivity"
+            android:name="com.amour.shop.activities.FastqSummaryActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -107,7 +116,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.PagesActivity"
+            android:name="com.amour.shop.activities.PagesActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -115,26 +124,26 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.PriceCheckerResultActivity"
+            android:name="com.amour.shop.activities.PriceCheckerResultActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.RewardsActivity"
+            android:name="com.amour.shop.activities.RewardsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".activities.OrderCompleteActivity"
+            android:name="com.amour.shop.activities.OrderCompleteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.DeepLinksActivity"
+            android:name="com.amour.shop.activities.DeepLinksActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -191,21 +200,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RamezKitchenActivity"
+            android:name="com.amour.shop.activities.RamezKitchenActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ExtraRequestActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".activities.AllBookleteActivity"
+            android:name="com.amour.shop.activities.AllBookleteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -213,7 +215,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <service
-            android:name=".Firebase.MessagingService"
+            android:name="com.amour.shop.Firebase.MessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -222,28 +224,28 @@
         </service>
 
         <activity
-            android:name=".activities.FullScannerActivity"
+            android:name="com.amour.shop.activities.FullScannerActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AllListActivity"
+            android:name="com.amour.shop.activities.AllListActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name="com.amour.shop.activities.WelcomeActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.amour.shop.SplashScreenActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -256,28 +258,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ConfirmPhoneActivity"
+            android:name="com.amour.shop.activities.ConfirmPhoneActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ChangePassActivity"
+            android:name="com.amour.shop.activities.ChangePassActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ConfirmActivity"
+            android:name="com.amour.shop.activities.ConfirmActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.amour.shop.MainActivity"
             android:exported="false"
             android:hardwareAccelerated="false"
             android:label="@string/app_name"
@@ -286,146 +288,146 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.NoBalanceActivity"
+            android:name="com.amour.shop.activities.NoBalanceActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AddBalanceActivity"
+            android:name="com.amour.shop.activities.AddBalanceActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name="com.amour.shop.activities.AddCardActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.InvoiceInfoActivity"
+            android:name="com.amour.shop.activities.InvoiceInfoActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ContactSupportActivity"
+            android:name="com.amour.shop.activities.ContactSupportActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ChangeLangCurrencyActivity"
+            android:name="com.amour.shop.activities.ChangeLangCurrencyActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ChangeCityBranchActivity"
+            android:name="com.amour.shop.activities.ChangeCityBranchActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AddNewAddressActivity"
+            android:name="com.amour.shop.activities.AddNewAddressActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AddressActivity"
+            android:name="com.amour.shop.activities.AddressActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="com.amour.shop.activities.EditProfileActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.MyOrderActivity"
+            android:name="com.amour.shop.activities.MyOrderActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.FavoriteActivity"
+            android:name="com.amour.shop.activities.FavoriteActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.RatingActivity"
+            android:name="com.amour.shop.activities.RatingActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.AboutActivity"
+            android:name="com.amour.shop.activities.AboutActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ConditionActivity"
+            android:name="com.amour.shop.activities.ConditionActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.TermsActivity"
+            android:name="com.amour.shop.activities.TermsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ProductDetailsActivity"
+            android:name="com.amour.shop.activities.ProductDetailsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.RegisterLoginActivity"
+            android:name="com.amour.shop.activities.RegisterLoginActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ChooseNearCity"
+            android:name="com.amour.shop.activities.ChooseNearCity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".activities.ChooseCityActivity"
+            android:name="com.amour.shop.activities.ChooseCityActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activities.ChangeLanguageActivity"
+            android:name="com.amour.shop.activities.ChangeLanguageActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"

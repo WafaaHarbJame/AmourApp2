@@ -58,7 +58,7 @@
                         android:src="@drawable/edit_photo" />
                 </FrameLayout>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/usernameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/emailTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/editBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                             android:gravity="center"
                             android:src="@drawable/my_order_menu" />
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -162,7 +162,7 @@
                             android:src="@drawable/favorite_menu_icon"
                             android:textSize="@dimen/_15ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/item_title_user"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
                             android:src="@drawable/ic_price_checker"
                             android:textSize="@dimen/_15ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/item_title_price_checker"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
                             android:src="@drawable/ic_rewards"
                             android:textSize="@dimen/_15ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/item_ramezReward"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
                     android:src="@drawable/support_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/customer_service"
@@ -280,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -355,7 +355,7 @@
                     android:src="@drawable/change_pass_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/item_title3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -368,7 +368,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -401,7 +401,7 @@
                     android:src="@drawable/choose_lang_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lang_setting"
@@ -413,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -449,7 +449,7 @@
                     android:src="@drawable/change_city"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change_city_branch"
@@ -461,7 +461,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -495,7 +495,7 @@
                     android:src="@drawable/my_address_menu"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/addressTxt"
@@ -507,7 +507,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -543,7 +543,7 @@
                     android:src="@drawable/terms_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/terms2"
@@ -555,7 +555,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -589,7 +589,7 @@
                     android:src="@drawable/condition_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/conditions"
@@ -601,7 +601,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -635,7 +635,7 @@
                     android:src="@drawable/about_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_title_about_us"
@@ -647,7 +647,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -681,7 +681,7 @@
                     android:src="@drawable/share_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share_with"
@@ -693,7 +693,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -727,7 +727,7 @@
                     android:src="@drawable/rate_app"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_app"
@@ -739,7 +739,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextViewIcon
+                <com.amour.shop.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -773,7 +773,7 @@
                     android:src="@drawable/exit_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/logoutText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

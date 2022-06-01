@@ -11,7 +11,7 @@
         app:layout_constraintBottom_toTopOf="@id/shoppingSummaryGuide"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/branchNameTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:textSize="@dimen/_10ssp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/dateTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTv">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_4sdp"
@@ -59,7 +59,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/itemsCountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:textColor="@color/header2"
             android:textSize="@dimen/_10ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/priceTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
 
     </LinearLayout>
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/shoppingSummaryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

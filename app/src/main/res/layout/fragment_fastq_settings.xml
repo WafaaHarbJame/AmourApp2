@@ -25,14 +25,14 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/continuous_scan"
                 android:textColor="@color/header2"
                 android:textSize="@dimen/_12ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -43,7 +43,7 @@
 
         </LinearLayout>
 
-        <com.ramez.shopp.SpichalViews.SSwitch
+        <com.amour.shop.SpichalViews.SSwitch
             android:id="@+id/continuousScanSW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,14 +73,14 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sound_alert"
                 android:textColor="@color/header2"
                 android:textSize="@dimen/_12ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sound_alert_hint"
@@ -90,7 +90,7 @@
 
         </LinearLayout>
 
-        <com.ramez.shopp.SpichalViews.SSwitch
+        <com.amour.shop.SpichalViews.SSwitch
             android:id="@+id/soundSW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

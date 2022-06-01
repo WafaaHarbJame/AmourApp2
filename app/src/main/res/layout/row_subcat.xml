@@ -10,7 +10,7 @@
     android:layout_marginTop="@dimen/_4sdp"
     android:orientation="vertical">
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/btnCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

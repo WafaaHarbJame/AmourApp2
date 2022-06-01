@@ -29,7 +29,7 @@
         android:paddingEnd="@dimen/_10sdp"
         android:paddingBottom="@dimen/_8sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/messageTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:paddingEnd="8dp"
             android:paddingBottom="4dp">
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/dateTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

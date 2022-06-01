@@ -23,7 +23,7 @@
             tools:itemCount="3"
             tools:listitem="@layout/row_item_cities" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/confirmBut"
             style="@style/primaryBtnStyle"
             android:layout_width="match_parent"

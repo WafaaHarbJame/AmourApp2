@@ -29,7 +29,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:src="@drawable/hd_shopping_summary" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -38,7 +38,7 @@
                 android:textColor="@color/header3"
                 android:textSize="@dimen/_11ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -48,7 +48,7 @@
                 android:textColor="@color/header1"
                 android:textSize="@dimen/_10ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -95,7 +95,7 @@
             android:layout_marginBottom="@dimen/_15sdp"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -103,7 +103,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/itemsCountTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/totalTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
         </LinearLayout>
 
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/closeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

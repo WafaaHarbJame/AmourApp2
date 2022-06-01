@@ -1,8 +1,10 @@
 <resources>
+    <string name="app_name">Amour</string>
+    <string name="app_name_for_deep" translatable="false">Amour</string>
 
-    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyCGhao5aYDhzVLZHHx49BGQWoeqGjuVP1c</string>
-    <string name="app_name">Ramez</string>
-    <string name="app_name_for_deep" translatable="false">ramez</string>
+<!--    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyD18uI7fjwfYO5sYTY0DbaDF1WUxwy1e4g</string>-->
+    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyCrl3IPvHk2S58hJcKeNgOmF2g0hhr8YHk</string>
+    <string name="ONESIGNAL_APP_ID" templateMergeStrategy="preserve" translatable="false">d509d6cb-ebf0-49ff-9db6-a4f8a9c70c9b</string>
     <string name="message_yes">Yes</string>
     <string name="message_no">No</string>
     <string name="text_save">Save</string>
@@ -47,7 +49,7 @@
     <string name="terms1"> By clicking on Register and Accept, you acknowledge that you have read </string>
     <string name="terms2">Privacy policy</string>
     <string name="terms3">and agree to</string>
-    <string name="terms4">the terms of  Ramez</string>
+    <string name="terms4">the terms of  Amour</string>
     <string name="confirm">Confirm</string>
     <string name="reset_pass">Reset Password</string>
     <string name="forget_pass">Forget Password</string>
@@ -56,7 +58,7 @@
     <string name="search_product">Search Product Here</string>
     <string name="view_all">View All</string>
     <string name="best_products">Featured Product</string>
-    <string name="best_sell">Quick Grabs</string>
+    <string name="best_sell">Most Selling Products</string>
     <string name="offers">Offered Products </string>
     <string name="product_name">product name product name product name</string>
     <string name="_10220_aed">1.935</string>
@@ -170,8 +172,8 @@
     <string name="confirm_code">Confrim Code</string>
     <string name="please_wait_sending">Please wait sending ...</string>
     <string name="oman_shotname" translatable="false">OM</string>
-    <!--  <string name="bahrain_shotname" translatable="false">dm</string>-->
-    <string name="bahrain_shotname" translatable="false">bh</string>
+    <string name="amour_shotname" translatable="false">DM</string>
+    <string name="bahrain_shotname" translatable="false">BH</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
     <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
     <string name="Qatar_shotname" translatable="false">QA</string>
@@ -231,7 +233,7 @@
     <string name="no_delivery_times">No Delivery Times</string>
     <string name="sending_order">Sending Order Success</string>
     <string name="textEmptyOrders">No orders found</string>
-    <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
+    <string name="textNoXadoxOrder">You have not ordered products from Amour yet</string>
     <string name="textStartShopping">Start Shopping</string>
     <string name="searchaddress">Search the address </string>
     <string name="send_orders"> Your request has been received ,Thank you for shopping with us.\n  We are always happy to serve you </string>
@@ -269,7 +271,7 @@
     <string name="to_contact_support">To contact with support</string>
     <string name="to_rate_app">To rate App</string>
     <string name="to_change_pass">To change password</string>
-    <string name="updateMessage">A new version of Ramez is available.\n Update now ?</string>
+    <string name="updateMessage">A new version of Amour  is available.\n Update now ?</string>
     <string name="user">User</string>
     <string name="fail_delete_address">Fail to delete address</string>
     <string name="no_offers">No Offers</string>
@@ -299,7 +301,7 @@
     <string name="Completed">Completed</string>
     <string name="delivery">Shipped</string>
     <string name="app_share_text1">
-‏Grocery shopping has never been easier. With our user friendly mobile app, you can now shop your home essentials with a click. Save time by ordering groceries and your home essentials from RAMEZ , any time, and a personal shopper will deliver from store, to your door.
+‏Grocery shopping has never been easier. With our user friendly mobile app, you can now shop your home essentials with a click. Save time by ordering groceries and your home essentials from Amour  , any time, and a personal shopper will deliver from store, to your door.
  </string>
     <string name="android">Android App</string>
     <string name="ios">Ios App</string>
@@ -323,7 +325,7 @@
     <string name="know_price">You can know the price of product when Delivery Order</string>
     <string name="add_specail_order">Add Specail Order</string>
     <string name="fail_to_add_extra_order">Fail to add  Specail Order</string>
-    <string name="ramezKitchen">Ramez Kitchen</string>
+    <string name="ramezKitchen">Amour  Kitchen</string>
     <string name="serving_for_4_people">Serving for 4 people</string>
     <string name="cooking_time">Cooking Time</string>
     <string name="recipe">Recipe</string>
@@ -367,23 +369,26 @@
     <string name="payment_success">Payment Successful</string>
     <string name="benefitpay">BenefitPay</string>
     <string name="payment_fail">Payment Fail</string>
+    <string name="payment_status">Payment Status</string>
     <string name="payment_cancle">Payment canceled</string>
     <string name="order_confirmed">Order Confirmed</string>
     <string name="order_note">Your order Has been  confirmed . You can check the status of this order from  order page </string>
     <string name="will_be_deliverd">Will be delivered on </string>
+    <string name="will_be_deliverd_soon">will arrive soon </string>
     <string name="verify_phone_number">Verify Phone Number</string>
     <string name="product_not_found">When an item not available </string>
-    <string name="product_not_found_1">Allow Ramez to offer close  alternatives</string>
+    <string name="product_not_found_1">Allow Amour  to offer close  alternatives</string>
     <string name="product_not_found_2">Remove out of stock from the order</string>
     <string name="product_not_found_3">call me before change in order </string>
     <string name="TEXT_FROM">From </string>
     <string name="page">page </string>
     <string name="check_product">Please Select When an item not available</string>
+    <string name="select_delivery_method">Please select Delivery Method </string>
     <string name="please_select_payment_method">Please select payment method</string>
     <string name="select_delivery_time">Please select Delivery time </string>
     <string name="recently">Newly arrived</string>
     <string name="Price_Checker">Price Checker</string>
-    <string name="Ramez_Rewards">Ramez Rewards</string>
+    <string name="Ramez_Rewards">Amour  Rewards</string>
     <string name="Card">Card</string>
     <string name="Coupons">Coupons</string>
     <string name="Generate_Coupons">Generate Coupons</string>
@@ -483,6 +488,56 @@
     <string name="cvv_code">CVV CODE</string>
     <string name="pay_now">Pay Now</string>
     <string name="try_again">try again</string>
+    <string name="canceled">canceled </string>
+    <string name="amour_condition">Welcome to Amour application, what follows are the terms and conditions that govern you usage of all the webpages and links associated with the application.\r\nBy using the application, you are unconditionally consenting and adhering to the terms and conditions of this agreement, this includes all of the below mentioned details and you hereby concur to have had read, understood and consented to all of its content which will be here forward referred to as “the terms and conditions” with regards to the usage of the application and hereby referred to as “Us”, “We” and also as “Amour”, this agreement will be considered active once acknowledged by you and an associated account has been activated.\r\n\r\nApplication’s content \r\nThe application may undergo updates from time to time, it may also experience some changes at any time as well. However, please note that we are not obligated to update the content on the application, and although we try to update its information, we do not provide any endorsement, undertaking, or guarantee of the accuracy, completeness or updating of the content on the application. There may be a difference in the appearance of the product from the display in the application due to the difference in the packaging, for example but not limited to (Ramadan offers - holidays - and events) All rights will be consequently owned by Amour, including but not limited to any intellectual property rights in any data On the application, or any part of the application that is presented by us, including but not limited to the content, images, shopping list and data on the Amour application.\r\n</string>
+    <string name="amour_privacy">1- An assortment of goods\r\nOver 25 thousand items from a variety of categories; from produce to fresh meat, fish, frozen foods, dairy products, baked foods, beverages, house and personal care products, detergents, infant care products, garments, carpets, antiques and electronics.\r \n 2- A speedy delivery service\r\nOur flexible, customized delivery service will have your order at your door on the same day it has been placed or at your preferred day, and time. We also offer a swift delivery service which will get you your order within 90 minutes, there is also the option of placing your order through the application and picking it up from your nearest branch. All of our delivery vehicles are equipped with a cooling unit to ensure the freshness of your order.\r\n3- Best prices\r\nAll of the items are offered at the same in-store prices along with unmatched weekly and monthly offers.\r\n4- Start shopping with 3 easy steps:\r\n- Add items to your shopping cart.\r\n- Choose time, location and payment method.\r\n- Confirm purchase.\r\n5- Multiple and simple payment methods\r\n- Through the application using your debit or credit cards.\r\n- Upon delivery via any of the following: cash, debit or credit cards or other payment applications. \r\n6- 24/7 Technical support to answer any inquiries or providing assistance, our technical support team are here to help deliver services of the utmost quality.\r\n</string>
+    <string name="amour_about_us">SHIPPING &amp; DELIVERY \n
+1. Amour de Paris is pleased to deliver all customer orders to the address registered on the website.\n
+
+2. All orders will be delivered within 48 hours of receiving the confirmation email.\n
+
+3. During the official holidays of the Kingdom of Bahrain, the delivery of the order may be delayed until the official working days.\n
+
+4. Perfume orders may not be delivered to postal addresses or po box.\n
+
+5. Delivery fees will be shown during the last step before the payment process.\n
+
+6. We may have some difficulties with delivery in case of any wrong in addresses.\n
+
+7. Delivery of orders to the Kingdom of Saudi Arabia, please send your orders to the WhatsApp numbers or to the e-mail shown in the communication section.\n
+
+<b>Return or exchange </b>\n
+According to the exchange or return policy of Amour de Paris. \n
+
+1. You can return the product within three days from the date of purchase and you will get a coupon for the full amount and you can use it at any time, and the coupon will be valid until the end of the calendar year.\n
+
+2. You can replace the product with another product within three days from the date of purchase.\n
+
+Provisions in the process of return and exchange \n
+1. The original purchase invoice must be presented. \n
+
+2. The product is in the original condition of purchase and there are no signs of opening or damage. \n
+
+3. If there is a manufacturing defect in the product, you have the right to replace the product or return it within 3 days from the date of purchase, and you must return the product with all its accessories such as the box and the plastic wrap. \n
+
+4. Gifts related to the sale of the product must be returned in order for the return or exchange process to take place. \n
+
+5. If the product has been delivered and you want to replace the product with delivery, delivery fees will be charged again. \n
+
+6. If the product is delivered and a manufacturing defect is discovered in the product, the product will be replaced with a product of the same type, and no delivery fees will be charged. \n
+
+7. No product will be replaced or returned after the period granted for exchange or return. \n
+
+Who are we\n
+Amour de Paris We were inspired by this name from the capital of beauty and fashion, Paris, the French capital, and we added to it the word Amour, which means in French love, so that the name became Love in Paris. At Amour de Paris, we strive to put all the international products in one place to make it easy for you to get everything you require easily, which we guarantee to be 100% original and from its approved sources. We in Amoure de Paris put all our experience in providing the best and most famous brands in the world and put in our interest to provide the best and most famous niche perfumes in the world because they are in great demand in Bahrain in particular and the Arab Gulf in general. \n
+Payment Options\n
+We at Amour de Paris have put together multiple payment options to simplify the buying process.
+\nInformation about the company \n
+Commercial Registration 68276/2
+ \n
+Tax registration number: 200010746200002
+
+Limited liability company</string>
 
 
 </resources>

@@ -65,7 +65,7 @@
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/home_icon" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tab1Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/category_icon" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tab2Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
 
             </LinearLayout>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/BadgeTxt"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
@@ -138,7 +138,7 @@
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/cart_icon_before" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tab3Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                     android:textColor="@color/font_gray"
                     android:textSize="@dimen/bottom_nav_text" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/cartCountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/offer_icon" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tab4Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
                     android:paddingEnd="@dimen/_6sdp"
                     android:src="@drawable/myaccount_icon" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tab5Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -28,7 +28,7 @@
                 android:orientation="horizontal"
                 android:background="@color/white">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/deleteBut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/holder_image"
                         app:riv_corner_radius="@dimen/_2sdp" />
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:id="@+id/productName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                                 app:srcCompat="@drawable/plus"
                                 app:tint="@color/white" />
 
-                            <com.ramez.shopp.SpichalViews.STextView
+                            <com.amour.shop.SpichalViews.STextView
                                 android:id="@+id/productCartQTY"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
                                 app:tint="@color/white" />
                         </LinearLayout>
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/productPriceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

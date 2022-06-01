@@ -34,7 +34,7 @@
                 android:orientation="vertical">
 
 
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:id="@+id/tvProductDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:src="@drawable/add_photo_support" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:id="@+id/addImageTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 </LinearLayout>
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -92,7 +92,7 @@
                     android:text="@string/know_price" />
 
 
-                <com.ramez.shopp.SpichalViews.SButton
+                <com.amour.shop.SpichalViews.SButton
                     android:id="@+id/scanBarcode"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_32sdp"
@@ -105,7 +105,7 @@
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/barcodeTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                         android:orientation="horizontal"
                         android:padding="@dimen/_10sdp">
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/plusCartBtn"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
@@ -152,7 +152,7 @@
                             android:textColor="@color/white"
                             app:tint="@color/white" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:id="@+id/productCartQTY"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                             android:visibility="visible" />
 
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:id="@+id/minusCartBtn"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
@@ -194,7 +194,7 @@
                     </LinearLayout>
 
 
-                    <com.ramez.shopp.SpichalViews.SButton
+                    <com.amour.shop.SpichalViews.SButton
                         android:id="@+id/addToCartBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_32sdp"
@@ -206,7 +206,7 @@
                         android:textColor="@color/white"
                         android:textStyle="bold">
 
-                    </com.ramez.shopp.SpichalViews.SButton>
+                    </com.amour.shop.SpichalViews.SButton>
                 </LinearLayout>
 
 

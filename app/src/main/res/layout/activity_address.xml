@@ -41,7 +41,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/addNewAddressBut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     tools:itemCount="8"
                     tools:listitem="@layout/row_address_item" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/acceptBtu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

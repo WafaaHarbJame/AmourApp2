@@ -26,7 +26,7 @@
             android:visibility="visible"
             tools:targetApi="m" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/mainTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"
@@ -86,7 +86,7 @@
                         android:src="@drawable/ic_credit_card"
                         app:tint="@color/colorPrimary" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/txtCardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/btnDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
-                    <com.ramez.shopp.SpichalViews.SEditText
+                    <com.amour.shop.SpichalViews.SEditText
                         android:id="@+id/sprmonth"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/edt_txtsize" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -189,7 +189,7 @@
                         android:text=" / "
                         android:textColor="@color/black" />
 
-                    <com.ramez.shopp.SpichalViews.SEditText
+                    <com.amour.shop.SpichalViews.SEditText
                         android:id="@+id/spryear"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
 
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
@@ -230,7 +230,7 @@
                     android:textSize="@dimen/label_textsize"
                     app:textAllCaps="true" />
 
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:id="@+id/edtCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -244,7 +244,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/edt_txtsize" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -253,7 +253,7 @@
                     android:textSize="@dimen/label_textsize"
                     app:textAllCaps="true" />
 
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.amour.shop.SpichalViews.SEditText
                     android:id="@+id/edtCvvNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

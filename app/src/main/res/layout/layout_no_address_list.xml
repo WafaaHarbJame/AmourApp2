@@ -26,7 +26,7 @@
                 app:srcCompat="@drawable/ic_no_address"
                 />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_2sdp"
@@ -37,7 +37,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <com.ramez.shopp.SpichalViews.SButton
+            <com.amour.shop.SpichalViews.SButton
                 android:id="@+id/addAddressBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

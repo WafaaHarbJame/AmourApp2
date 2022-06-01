@@ -27,7 +27,7 @@
             android:layout_marginBottom="@dimen/_16sdp"
             android:src="@drawable/ic_success" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_8sdp"
@@ -36,7 +36,7 @@
             android:textColor="@color/colorLoginText"
             android:textSize="@dimen/_14ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/orderTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,9 +45,9 @@
             android:text="CF3148"
             android:textSize="@dimen/_12ssp">
 
-        </com.ramez.shopp.SpichalViews.STextView>
+        </com.amour.shop.SpichalViews.STextView>
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/backHomeBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

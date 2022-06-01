@@ -42,7 +42,7 @@
                     android:contentDescription="@string/app_name" />
             </FrameLayout>
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/userNameTv"
                 android:layout_height="wrap_content"
@@ -61,13 +61,14 @@
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_12ssp" />
 
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.amour.shop.SpichalViews.SEditText
                 android:id="@+id/edtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="@string/name"
                 android:inputType="text"
+                android:importantForAutofill="noExcludeDescendants"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#d8d8d8" />
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.amour.shop.SpichalViews.SEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,6 +90,7 @@
                 android:hint="@string/text_registration_email_id"
                 android:inputType="textEmailAddress"
                 android:paddingStart="@dimen/_8sdp"
+                android:importantForAutofill="noExcludeDescendants"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
@@ -103,7 +105,7 @@
                 android:layout_height="1dp"
                 android:background="#d8d8d8" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/edtPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,6 +113,7 @@
                 android:hint="@string/text_profile_phone_number"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_8sdp"
+                android:importantForAutofill="noExcludeDescendants"
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_16sdp"
@@ -125,7 +128,7 @@
                 android:background="#d8d8d8" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/saveBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

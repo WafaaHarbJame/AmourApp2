@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="wrap_content"
             android:text="@string/next"
             android:textColor="@color/white"
@@ -82,7 +82,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/skipBtn"
             android:layout_width="wrap_content"
             android:text="@string/skip"

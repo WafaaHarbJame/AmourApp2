@@ -12,7 +12,7 @@
         android:layout_gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.ramez.shopp.SpichalViews.SRadioButton
+        <com.amour.shop.SpichalViews.SRadioButton
             android:id="@+id/rbSelectAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textAlignment="viewStart"
             android:theme="@style/MyRadioButton" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/tvaAddressTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:orientation="horizontal">
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/tvAddressNote"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:src="@drawable/delete_icon" />
     </LinearLayout>
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/tvAddressMark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -38,7 +38,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/free_delivery" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/tvFreeDelivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,14 +89,14 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_2sdp">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/your_save"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/saveText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 android:paddingBottom="@dimen/_6sdp">
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/payTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                     tools:ignore="NestedWeights" />
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/totalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

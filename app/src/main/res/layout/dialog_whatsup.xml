@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@id/loginHeader">
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/titleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:textSize="@dimen/_14ssp" />
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/messageTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/whats_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

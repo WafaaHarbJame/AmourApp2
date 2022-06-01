@@ -48,7 +48,7 @@
             app:barcode_format="code_128"
             app:barcode_text="10000000000009" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/textCouponCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
 
     </LinearLayout>
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/textCouponPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -23,7 +23,7 @@
             android:orientation="horizontal"
             android:paddingStart="@dimen/_8sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -32,7 +32,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:indicatorColor="@color/colorPrimaryDark"
             app:indicatorName="LineSpinFadeLoaderIndicator" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/applyBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

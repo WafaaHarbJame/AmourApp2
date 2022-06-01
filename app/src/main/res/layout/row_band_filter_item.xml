@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/_2sdp"
         android:orientation="horizontal">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/brandNameTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textSize="@dimen/_12ssp"
             android:layout_weight="1"
             android:visibility="visible" />
-        <com.ramez.shopp.SpichalViews.STextViewIcon2
+        <com.amour.shop.SpichalViews.STextViewIcon2
             android:id="@+id/chBrandName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:textColor="@color/green5"
             android:text="@string/fa_check" />
-<!--        <com.ramez.shopp.SpichalViews.SCheckBox-->
+<!--        <com.amour.shop.SpichalViews.SCheckBox-->
 <!--            android:id="@+id/chBrandName"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->

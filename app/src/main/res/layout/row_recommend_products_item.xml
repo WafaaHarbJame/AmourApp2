@@ -11,7 +11,7 @@
         android:background="@drawable/cart_back_style"
         android:orientation="vertical">
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/discountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/holder_image" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/productPriceTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

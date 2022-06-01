@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="@id/kitchenImg"
             app:layout_constraintTop_toTopOf="@id/kitchenImg" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.amour.shop.SpichalViews.STextView
             android:id="@+id/titleTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

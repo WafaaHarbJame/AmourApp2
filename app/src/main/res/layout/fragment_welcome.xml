@@ -13,7 +13,7 @@
     android:paddingBottom="@dimen/_5sdp"
     android:orientation="vertical">
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:layout_width="match_parent"
         android:id="@+id/infoTitle"
         android:layout_marginTop="@dimen/_16ssp"
@@ -49,7 +49,7 @@
         android:paddingBottom="@dimen/_6sdp"
         />
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/infoTv2"
         android:layout_width="match_parent"
         android:gravity="center"

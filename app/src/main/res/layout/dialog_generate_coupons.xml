@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/titleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:textSize="@dimen/_14ssp" />
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/totalPointTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:textColor="@color/colorAppRed"
             android:textSize="@dimen/_20ssp" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -81,7 +81,7 @@
             android:textSize="@dimen/_12ssp"
             tools:ignore="RtlCompat" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -112,7 +112,7 @@
                 android:src="@drawable/ic_minus"
                 android:visibility="visible" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/countTV"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
@@ -146,7 +146,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -156,7 +156,7 @@
                 android:textColor="@color/colorAppRed"
                 android:textSize="@dimen/_12ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/minPointTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
         </LinearLayout>
 
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.amour.shop.SpichalViews.STextViewBold
             android:id="@+id/generateBut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

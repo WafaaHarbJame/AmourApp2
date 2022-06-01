@@ -32,7 +32,7 @@
                 android:visibility="visible"
                 tools:targetApi="m" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/mainTitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
@@ -71,7 +71,7 @@
                     app:srcCompat="@drawable/cart_icon_bottom"
                     app:tint="@color/white" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tVCartSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.amour.shop.SpichalViews.STextViewBold
                         android:id="@+id/productNameTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                 </LinearLayout>
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/serve_number"
@@ -220,14 +220,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/cooking_time"
                             android:textAlignment="viewStart"
                             android:textColor="@color/gray3" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="30 MIN"
@@ -247,14 +247,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.ramez.shopp.SpichalViews.STextView
+                        <com.amour.shop.SpichalViews.STextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/calories"
                             android:textAlignment="viewStart"
                             android:textColor="@color/gray3" />
 
-                        <com.ramez.shopp.SpichalViews.STextViewBold
+                        <com.amour.shop.SpichalViews.STextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="300 KCAL"
@@ -264,7 +264,7 @@
 
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/receipe"
@@ -295,7 +295,7 @@
                     android:textStyle="bold"
                     app:animation_duration="750" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/showAllBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -310,7 +310,7 @@
                     android:textSize="@dimen/_10ssp" />
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ingredients"
@@ -335,7 +335,7 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/row_recipe" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:id="@+id/no_offers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -380,7 +380,7 @@
         layout="@layout/layout_no_data" />
 
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/processCartBut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

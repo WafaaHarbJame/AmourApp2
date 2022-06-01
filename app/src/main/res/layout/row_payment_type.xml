@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"/>
 
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/paymentTv"
         android:layout_width="0dp"
         android:layout_weight="1"

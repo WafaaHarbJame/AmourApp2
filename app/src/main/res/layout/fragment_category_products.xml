@@ -32,7 +32,7 @@
                 android:visibility="visible">
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/searchBut"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -103,6 +103,30 @@
         <include
             android:id="@+id/noDataLY"
             layout="@layout/layout_no_data" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:shimmer_auto_start="true"
+            app:shimmer_repeat_mode="restart"
+            app:shimmer_shape="linear">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_layout_grid_product" />
+
+                <include layout="@layout/shimmer_layout_grid_product" />
+
+                <include layout="@layout/shimmer_layout_grid_product" />
+
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productsRv"

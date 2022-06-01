@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:layout_width="31dp"
                 android:layout_height="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -34,7 +34,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -47,7 +47,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:id="@+id/closeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,13 +70,13 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp">
 
-            <com.ramez.shopp.SpichalViews.STextViewIcon
+            <com.amour.shop.SpichalViews.STextViewIcon
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fal_search"
                 android:textColor="@color/header3" />
 
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.amour.shop.SpichalViews.SEditText
                 android:id="@+id/searchTxt"
                 style="@style/editTextStyle"
                 android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             tools:listitem="@layout/row_country_code"
             android:layout_marginBottom="@dimen/_20sdp" />
 
-        <com.ramez.shopp.SpichalViews.SButton
+        <com.amour.shop.SpichalViews.SButton
             android:id="@+id/okBtn"
             style="@style/primaryBtnStyle"
             android:layout_width="match_parent"

@@ -42,7 +42,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.amour.shop.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -89,7 +89,7 @@
             </LinearLayout>
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/saveBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

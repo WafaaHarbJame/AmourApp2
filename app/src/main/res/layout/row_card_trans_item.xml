@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.amour.shop.SpichalViews.STextViewBold
                 android:id="@+id/dateTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_12sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="130"
@@ -71,7 +71,7 @@
                     android:textColor="@color/colorAppRed"
                    />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:id="@+id/currencyTv"
                     android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_12sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.amour.shop.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="130"
@@ -127,7 +127,7 @@
                     android:textColor="@color/colorAppRed"
                     />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

@@ -20,7 +20,7 @@
         app:riv_border_width="@dimen/_1sdp"
         app:riv_corner_radius="@dimen/_10sdp" />
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.amour.shop.SpichalViews.STextView
         android:id="@+id/categoryNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

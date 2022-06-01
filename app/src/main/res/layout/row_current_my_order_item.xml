@@ -31,20 +31,20 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/_8sdp">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="@dimen/_4sdp"
                     android:text="@string/request_no" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tvInvID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="@dimen/_4sdp"
                     android:text=" # NMI888 " />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_11ssp" />
@@ -54,13 +54,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ordered"
                     android:textSize="@dimen/_11ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tvOrderDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:layout_marginStart="@dimen/_4sdp"
                     android:textSize="@dimen/_11ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tvOrderTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 android:layout_height="1dp"
                 android:background="@color/gray_view" />
 
-           <com.ramez.shopp.SpichalViews.STextView
+           <com.amour.shop.SpichalViews.STextView
                 android:id="@+id/tvShopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,13 +97,13 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/DeliveryTime1"
                     android:textSize="@dimen/_11ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/TvDeliveryDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     android:textSize="@dimen/_11ssp" />
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/TvDeliveryTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/noteCurrentTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.SButton
+                <com.amour.shop.SpichalViews.SButton
                     android:id="@+id/orderDetailsBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
                 android:padding="4dp"
                 android:visibility="gone">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/noteCTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.shopp.SpichalViews.SButton
+                <com.amour.shop.SpichalViews.SButton
                     android:id="@+id/rateOrderBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
@@ -218,7 +218,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tv_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tv_processing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tv_deliveryOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -319,7 +319,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-               <com.ramez.shopp.SpichalViews.STextView
+               <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/tv_delivery_done"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

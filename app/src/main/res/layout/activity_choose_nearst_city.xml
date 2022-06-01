@@ -13,11 +13,11 @@
         layout="@layout/tool_bar" />
 
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.amour.shop.SpichalViews.STextViewBold
         android:id="@+id/branchTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red5"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical"
         android:padding="@dimen/_6sdp"
         android:text="@string/branch_note"
