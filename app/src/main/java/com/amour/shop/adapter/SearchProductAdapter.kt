@@ -280,14 +280,14 @@ class SearchProductAdapter(
         println("Log LoadAllData  page $nextPage")
         DataFeacher(false, object :DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as FavouriteResultModel
+                val result = obj as FavouriteResultModel?
                 val message = context.getString(R.string.fail_to_get_data)
                 if (productModels!!.size > 0) {
                     productModels.removeAt(productModels.size - 1)
                     notifyItemRemoved(productModels.size)
                 }
                 if (IsSuccess) {
-                    if (result.data != null && result.data.size > 0) {
+                    if (result?.data != null && result.data.size > 0) {
                         val products = result.data
                         val pos = productModels.size
                         if (products != null && products.size > 0) {
@@ -347,8 +347,8 @@ class SearchProductAdapter(
             if (quantity > 0) {
                 DataFeacher(false, object :DataFetcherCallBack {
                     override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                        val result = obj as CartProcessModel
-                        if (IsSuccess) {
+                        val result = obj as CartProcessModel?
+                        if (IsSuccess && result != null) {
                             val cartId = result.id
                             if (productModels != null && productModels[position]!!
                                         .productBarcodes != null

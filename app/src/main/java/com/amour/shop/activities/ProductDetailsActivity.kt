@@ -914,8 +914,8 @@ class ProductDetailsActivity : ActivityBase(), SuggestedProductAdapter.OnItemCli
             DataFeacher(false, object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (IsSuccess) {
-                        val result = obj as CartProcessModel
-                        val cartId = result.id
+                        val result = obj as CartProcessModel?
+                        val cartId = result?.id?:0
                         selectedProductBarcode!!.cartId = cartId
                         selectedProductBarcode!!.cartQuantity = quantity
                         productModel!!.productBarcodes[selectedProductPos] = selectedProductBarcode

@@ -104,6 +104,11 @@ public class AddressCheckAdapter extends RecyclerView.Adapter<AddressCheckAdapte
 
             });
 
+            binding.rbSelectAddress.setOnClickListener(view1 -> {
+                AddressModel addressModel=addressModelList.get(getBindingAdapterPosition());
+                onRadioAddressSelect.onAddressSelected(addressModel);
+
+            });
         }
 
 

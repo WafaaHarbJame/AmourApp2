@@ -302,9 +302,9 @@ class OfferProductAdapter(
                 productModels.removeAt(productModels.size - 1)
                 notifyItemRemoved(productModels.size)
                 if (IsSuccess) {
-                    val result = obj as FavouriteResultModel
+                    val result = obj as FavouriteResultModel?
 //                if (result.getData() != null && result.getData().size() > 0) {
-                    val products = result.data
+                    val products = result?.data
                     val pos = productModels.size
                     if (products != null && products.size > 0) {
                         productModels.addAll(products)
@@ -362,8 +362,8 @@ class OfferProductAdapter(
                 DataFeacher(false, object : DataFetcherCallBack {
                     override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                         if (IsSuccess) {
-                            val result = obj as CartProcessModel
-                            val cartId = result.id
+                            val result = obj as CartProcessModel?
+                            val cartId = result?.id?:0
                             productModels[position]!!.firstProductBarcodes.cartQuantity = quantity
                             productModels[position]!!.firstProductBarcodes.cartId = cartId
                             notifyItemChanged(position)

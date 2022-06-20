@@ -106,7 +106,7 @@ public class ActivityHandler {
             body += title;
         }
         if (url != null && !url.isEmpty()) {
-            body += "\n\n" + context.getString(R.string.android) + " \n" + url + "\n" + context.getString(R.string.ios) + "\n" + IphoneUrl;
+            body += "\n\n" + context.getString(R.string.android) + " \n" + url + "\n";
         }
         share.putExtra(Intent.EXTRA_TEXT, body /*+ "\n\n" + appStr*/);
 

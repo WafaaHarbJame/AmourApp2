@@ -240,7 +240,7 @@ class ProductAdapter(
             View.OnClickListener {
         override fun onClick(v: View) {
             if (onItemClick != null) {
-                if (productModels?.size ?: 0 > 0) {
+                if ((productModels?.size ?: 0) > 0) {
                     val position = bindingAdapterPosition
                     val productModel = productModels?.get(position)
                     onItemClick.onItemClicked(position, productModels?.get(position))
@@ -263,8 +263,8 @@ class ProductAdapter(
             if (quantity > 0) {
                 DataFeacher(false, object : DataFetcherCallBack {
                     override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                        val result = obj as CartProcessModel
-                        if (IsSuccess) {
+                        val result = obj as CartProcessModel?
+                        if (IsSuccess && result != null) {
                             val cartId = result.id
                             Log.i("tag", "Log " + UtilityApp.getCartCount())
                             Log.i("tag", "Log Status " + result.status)

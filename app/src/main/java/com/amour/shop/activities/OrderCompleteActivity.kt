@@ -41,20 +41,20 @@ class OrderCompleteActivity : ActivityBase() {
                 orderModel = bundle.getSerializable(Constants.ORDER_MODEL) as OrderModel?
                 orderId = orderModel?.orderCode?:""
                 binding.orderIDTv.text = orderId
-                val dayName: String
-                val today = DateHandler.GetDateNowString()
-                dayName = if (today == orderModel?.deliveryDate) {
-                    getString(R.string.today)
-                } else {
-                    if (UtilityApp.getLanguage() == Constants.Arabic)
-                    {
-                        DateHandler.FormatDate4(orderModel?.deliveryDate?:"", "yyyy-MM-dd", "EEEE")
-                    }
-                    else{
-                        DateHandler.FormatDate4(orderModel?.deliveryDate?:"", "yyyy-MM-dd", "EEE")
-
-                    }
-                }
+//                val dayName: String
+//                val today = DateHandler.GetDateNowString()
+//                dayName = if (today == orderModel?.deliveryDate) {
+//                    getString(R.string.today)
+//                } else {
+//                    if (UtilityApp.getLanguage() == Constants.Arabic)
+//                    {
+//                        DateHandler.FormatDate4(orderModel?.deliveryDate?:"", "yyyy-MM-dd", "EEEE")
+//                    }
+//                    else{
+//                        DateHandler.FormatDate4(orderModel?.deliveryDate?:"", "yyyy-MM-dd", "EEE")
+//
+//                    }
+//                }
 //                binding.deliveryDayTv.text = dayName.plus(" ")
 //                binding.deliveryTimeTv.text = orderModel?.deliveryTime.plus(" ")
             }

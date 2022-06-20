@@ -333,13 +333,13 @@ class ProductCategoryAdapter(
                     if (isCanceled) {
                         return
                     }
-                    val result = obj as FavouriteResultModel
+                    val result = obj as FavouriteResultModel?
                     if (productModels.size > 0) {
                         productModels.removeAt(productModels.size - 1)
                         notifyItemRemoved(productModels.size)
                     }
                     if (IsSuccess) {
-                        if (result.data != null && result.data.size > 0) {
+                        if (result?.data != null && result.data.isNotEmpty()) {
                             val products = result.data
                             val pos = productModels.size
                             if (products != null && products.size > 0) {
@@ -424,8 +424,8 @@ class ProductCategoryAdapter(
                 DataFeacher(false, object : DataFetcherCallBack {
                     override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                         if (IsSuccess) {
-                            val result = obj as CartProcessModel
-                            val cartId = result.id
+                            val result = obj as CartProcessModel?
+                            val cartId = result?.id?:0
                             val productBarcode =
                                 productModels[position]!!.firstProductBarcodes
                             productBarcode.cartQuantity = quantity

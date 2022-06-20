@@ -112,7 +112,7 @@ class BrandsActivity : ActivityBase(), BrandsFilterAdapter.OnBrandClick {
                         if (IsSuccess) {
                             val result = obj as ResultAPIModel<ArrayList<BrandModel>?>?
                             if (result?.status == 200) {
-                                if (result.data != null && result.data?.size ?: 0 > 0) {
+                                if (result.data != null && result.data?.isNotEmpty()==true) {
                                     Log.i(ContentValues.TAG, "Log getBrands" + result.data?.size)
                                     brandsList = result.data
                                     UtilityApp.setBrandsData(brandsList)

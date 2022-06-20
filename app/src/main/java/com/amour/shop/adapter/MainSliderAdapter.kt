@@ -1,6 +1,7 @@
 package com.amour.shop.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import com.amour.shop.R
 import com.amour.shop.classes.Constants
 import com.amour.shop.classes.GlobalData.GlideImgWeb
 import com.amour.shop.classes.UtilityApp
-import java.util.ArrayList
 
 
 class MainSliderAdapter(
@@ -36,6 +36,9 @@ class MainSliderAdapter(
             } else {
                 slider?.image2 ?: ""
             }
+
+            Log.i("tag", "Log slider url $imageUrl")
+
             try {
                 GlideImgWeb(context, imageUrl, R.drawable.holder_image, productImg)
             } catch (e: Exception) {

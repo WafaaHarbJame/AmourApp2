@@ -58,8 +58,8 @@ class HandleApiCache {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 if (IsSuccess) {
-                    val result = obj as ResultAPIModel<SoicalLink>
-                    val socialLink = result.data
+                    val result = obj as ResultAPIModel<SoicalLink>?
+                    val socialLink = result?.data
                     UtilityApp.SetLinks(socialLink)
                 }
             }

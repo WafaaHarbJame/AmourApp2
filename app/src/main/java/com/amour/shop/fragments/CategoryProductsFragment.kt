@@ -478,9 +478,9 @@ class CategoryProductsFragment : FragmentBase(), ProductCategoryAdapter.OnItemCl
     fun getCategories(storeId: Int) {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as CategoryResultModel
+                val result = obj as CategoryResultModel?
                 if (IsSuccess) {
-                    if (result.data != null && result.data.size > 0) {
+                    if (result?.data != null && result.data?.isNotEmpty() == true) {
                         mainCategoryDMS = result.data
                         Log.i(ContentValues.TAG, "Log productBestList" + mainCategoryDMS?.size)
                         UtilityApp.setCategoriesData(mainCategoryDMS)

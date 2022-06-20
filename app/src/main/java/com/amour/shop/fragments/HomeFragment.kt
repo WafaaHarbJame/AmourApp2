@@ -456,8 +456,8 @@ class HomeFragment : FragmentBase(), ProductAdapter.OnItemClick, CategoryAdapter
 
                     } else {
                         if (IsSuccess) {
-                            val result = obj as ResultAPIModel<ArrayList<Slider>?>
-                            if (result.status == 200) {
+                            val result = obj as ResultAPIModel<ArrayList<Slider>?>?
+                            if (result?.status == 200) {
                                 println("Log initSliderData")
                                 sliderList = mutableListOf()
                                 bannersList = mutableListOf()

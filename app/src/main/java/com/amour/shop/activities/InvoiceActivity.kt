@@ -266,6 +266,7 @@ class InvoiceActivity : ActivityBase(), AddressCheckAdapter.OnRadioAddressSelect
                 val bundle = result.data?.extras
                 addressId = bundle?.getInt(Constants.ADDRESS_ID, 0)
                 Log.i("ta", "Log addressId $addressId")
+                getUserAddress(userId)
                 initAddressData(result.resultCode, result.data)
             }
 //            else {
@@ -751,6 +752,10 @@ class InvoiceActivity : ActivityBase(), AddressCheckAdapter.OnRadioAddressSelect
 
     override fun onAddressSelected(addressesDM: AddressModel) {
         addressId = addressesDM.id
+        Log.i(
+            javaClass.simpleName,
+            "Log  CheckOrderResponse AddressId  " + addressId
+        )
     }
 
     private fun initDaysAdapter() {

@@ -79,14 +79,14 @@ class ConfirmActivity : ActivityBase() {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                 hideProgressDialog()
                 var message = getString(R.string.fail_to_get_data)
-                val result = obj as GeneralModel
+                val result = obj as GeneralModel?
                 if (func == Constants.ERROR) {
-                    if (result.message != null) {
+                    if (result?.message != null) {
                         message = result.message
                     }
                     errorDialog(activity, R.string.confirm_code, message)
                 } else if (func == Constants.FAIL) {
-                    if (result.message != null
+                    if (result?.message != null
                     ) {
                         message = result.message
                     }
@@ -95,7 +95,7 @@ class ConfirmActivity : ActivityBase() {
                     GlobalData.Toast(activity, R.string.no_internet_connection)
                 } else {
                     if (IsSuccess) {
-                        if (result.status == 200) {
+                        if (result?.status == 200) {
                             if (verify_account) {
                                 loginUser()
                             } else if (reset_account) {
@@ -104,15 +104,15 @@ class ConfirmActivity : ActivityBase() {
                                 intent.putExtra(Constants.reset_account, true)
                                 startActivity(intent)
                             } else {
-                                Log.i("TAG", "Log otp verify " + obj.message)
-                                if (obj.status == 200) {
+                                Log.i("TAG", "Log otp verify " + obj?.message)
+                                if (obj?.status == 200) {
                                     if (UtilityApp.getUserData() != null) {
                                         startLogin()
 
                                         // updateToken()
                                     }
                                 } else {
-                                    message = obj.message
+                                    message = obj?.message?:""
                                     errorDialog(activity, R.string.confirm_code, message)
                                 }
                             }

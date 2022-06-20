@@ -246,17 +246,17 @@ class SuggestedProductAdapter(
             if (quantity > 0) {
                 DataFeacher(false, object : DataFetcherCallBack {
                     override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                        val result = obj as CartProcessModel
+                        val result = obj as CartProcessModel?
                         if (IsSuccess) {
-                            val cartId = result.id
+                            val cartId = result?.id?:0
                             productModels?.get(position)?.firstProductBarcodes?.cartQuantity = quantity
                             productModels?.get(position)?.firstProductBarcodes?.cartId = cartId
                             notifyItemChanged(position)
-                            println("Log suggest addToCart" + result.total)
-                            if (productModels?.size ?: 0 > 0) {
+                            println("Log suggest addToCart" + result?.total)
+                            if ((productModels?.size ?: 0) > 0) {
                                 UtilityApp.updateCart(1, productModels?.size ?: 0)
                             }
-                            AnalyticsHandler.AddToCart(result.id, currency, quantity.toDouble())
+                            AnalyticsHandler.AddToCart(cartId, currency, quantity.toDouble())
                             EventBus.getDefault()
                                 .post(MessageEvent(MessageEvent.TYPE_READ_CART))
                         } else {

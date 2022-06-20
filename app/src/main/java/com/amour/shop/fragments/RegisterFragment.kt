@@ -147,7 +147,7 @@ class RegisterFragment : FragmentBase() {
                                 }
                                 UtilityApp.setUserData(user)
 
-                                startMain()
+                                startLogin()
 
                             } else {
                                 var message: String? = getString(R.string.fail_register)
@@ -178,7 +178,7 @@ class RegisterFragment : FragmentBase() {
                     binding.edtConfirmPassword,
                     NonEmptyRule(getString(R.string.enter_confirm_password)),
                     EqualRule(
-                        java.lang.String.valueOf(binding.edtPassword.getText()),
+                        java.lang.String.valueOf(binding.edtPassword.text),
                         R.string.password_confirm_not_match
                     )
                 ).validate()

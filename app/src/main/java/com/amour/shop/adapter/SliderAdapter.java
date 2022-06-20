@@ -2,6 +2,7 @@ package com.amour.shop.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.amour.shop.Models.Slider;
 import com.amour.shop.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SliderAdapter extends PagerAdapter {
     public ArrayList<Slider> sliderList;
@@ -50,7 +52,7 @@ public class SliderAdapter extends PagerAdapter {
             ImageView productImg = view.findViewById(R.id.slideImg);
             Slider slider=sliderList.get(position);
 
-            if (UtilityApp.INSTANCE.getLanguage().equals(Constants.English)) {
+            if (Objects.equals(UtilityApp.INSTANCE.getLanguage(), Constants.English)) {
                 imageUrl=slider.getImage();
 
             }
@@ -59,6 +61,7 @@ public class SliderAdapter extends PagerAdapter {
 
             }
 
+            Log.i("tag","Log slider url "+imageUrl);
 
             try {
 

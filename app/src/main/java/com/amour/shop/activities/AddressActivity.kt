@@ -139,9 +139,9 @@ class AddressActivity : ActivityBase(), AddressAdapter.OnContainerSelect,
                     binding.dataLY.visibility = View.GONE
                 } else {
                     if (IsSuccess) {
-                        val result = obj as AddressResultModel
+                        val result = obj as AddressResultModel?
                         binding.dataLY.visibility = View.VISIBLE
-                        if (result.data != null && result.data.size > 0) {
+                        if (result?.data != null && result.data?.isNotEmpty()==true) {
                             addressList = result.data
                             initAdapter()
                         } else {

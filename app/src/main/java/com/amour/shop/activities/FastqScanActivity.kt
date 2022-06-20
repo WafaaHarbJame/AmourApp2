@@ -243,8 +243,8 @@ class FastqScanActivity : ActivityBase() {
             object : DataFetcherCallBack {
                 override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
                     if (IsSuccess) {
-                        val result = obj as CityModelResult
-                        if (result.data != null && result.data.size > 0) {
+                        val result = obj as CityModelResult?
+                        if (result?.data != null && result.data.isNotEmpty()) {
                             cityModelArrayList = ArrayList(result.data)
                             searchSelectedCity()
                             setBranchData()

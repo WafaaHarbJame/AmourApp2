@@ -126,7 +126,8 @@
                             android:layout_gravity="center"
                             android:layout_marginBottom="@dimen/_6sdp"
                             android:gravity="center"
-                            android:src="@drawable/my_order_menu" />
+                            android:src="@drawable/my_order_menu"
+                            app:tint="@color/colorPrimaryDark" />
 
                         <com.amour.shop.SpichalViews.STextView
                             android:layout_width="match_parent"
@@ -160,7 +161,8 @@
                             android:layout_marginBottom="@dimen/_6sdp"
                             android:gravity="center"
                             android:src="@drawable/favorite_menu_icon"
-                            android:textSize="@dimen/_15ssp" />
+                            android:textSize="@dimen/_15ssp"
+                            app:tint="@color/colorPrimaryDark" />
 
                         <com.amour.shop.SpichalViews.STextView
                             android:id="@+id/item_title_user"
@@ -353,7 +355,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/change_pass_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/item_title3"
@@ -399,7 +402,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/choose_lang_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -447,7 +451,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/change_city"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -493,7 +498,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/my_address_menu"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -541,7 +547,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/terms_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -587,7 +594,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/condition_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -633,11 +641,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/about_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:tint="@color/colorPrimaryDark"
                     android:text="@string/text_title_about_us"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10ssp" />
@@ -679,7 +689,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/share_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -725,7 +736,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/rate_app"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:layout_width="wrap_content"
@@ -771,7 +783,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/exit_icon"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    app:tint="@color/colorPrimaryDark" />
 
                 <com.amour.shop.SpichalViews.STextView
                     android:id="@+id/logoutText"

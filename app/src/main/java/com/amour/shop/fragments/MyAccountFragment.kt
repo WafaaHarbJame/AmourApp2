@@ -280,10 +280,10 @@ class MyAccountFragment : FragmentBase() {
     private fun getLinks(store_id: Int) {
         DataFeacher(false, object : DataFetcherCallBack {
             override fun Result(obj: Any?, func: String?, IsSuccess: Boolean) {
-                val result = obj as ResultAPIModel<SoicalLink?>
+                val result = obj as ResultAPIModel<SoicalLink?>?
                 if (isVisible) {
                     if (IsSuccess) {
-                        if (result.data != null) {
+                        if (result?.data != null) {
                             stoicalLink = result.data
                             UtilityApp.SetLinks(stoicalLink)
                             if (stoicalLink?.twitterLink != null) {
