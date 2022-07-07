@@ -177,7 +177,7 @@ object Constants {
     const val DB_COUPON_SETTINGS = "db_coupon_settings"
     const val DB_FAST_SETTINGS = "db_fast_settings"
     const val default_storeId = "7263"
-    const val default_country_id = 17
+    const val default_country_id = 230
     const val default_amour_country_id = 230
 //    const val default_country_id = 230
     const val default_country_code = 973

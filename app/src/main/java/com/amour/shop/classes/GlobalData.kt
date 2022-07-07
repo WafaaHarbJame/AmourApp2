@@ -27,8 +27,8 @@ object GlobalData {
     const val BetaBaseRamezURL2 = "https://ramezbahrain.com/"
     const val grocery = "/GroceryStoreApi/"
 
-//        const val amour = "/EcomApi/"
-        const val amour = "/TESTECOMAPI/"
+      const val amour = "/EcomApi/"
+//        const val amour = "/TESTECOMAPI/"
     const val successPayUrl = "payment-status/success"
     const val failPayURl = "payment-status/failed"
 

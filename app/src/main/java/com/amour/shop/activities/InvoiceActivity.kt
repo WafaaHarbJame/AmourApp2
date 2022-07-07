@@ -1252,6 +1252,7 @@ class InvoiceActivity : ActivityBase(), AddressCheckAdapter.OnRadioAddressSelect
                             for (addressModel in addressList ?: mutableListOf()) {
                                 val user = UtilityApp.getUserData()
                                 if (addressModel.default && addressModel.id != user?.getLastSelectedAddress()) {
+                                    addressId=addressModel.id
                                     user?.setLastSelectedAddress(addressModel.id)
                                     user?.setSelectedAddressStr(addressModel.fullAddress)
                                     UtilityApp.setUserData(user)
@@ -1272,9 +1273,12 @@ class InvoiceActivity : ActivityBase(), AddressCheckAdapter.OnRadioAddressSelect
     }
 
     override fun onContainerSelectSelected(addressesDM: AddressModel?, makeDefault: Boolean) {
+        addressId = addressesDM?.id
+
     }
 
     override fun onDeleteClicked(addressModel: AddressModel?, isChecked: Boolean, position: Int) {
+
     }
 
 

@@ -39,6 +39,7 @@
             <LinearLayout
                 android:id="@+id/countryLY"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_style"
                 android:orientation="vertical">

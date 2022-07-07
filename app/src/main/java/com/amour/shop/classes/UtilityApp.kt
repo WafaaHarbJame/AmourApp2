@@ -253,7 +253,7 @@ object UtilityApp {
         instance!!.sharedPManger!!.SetData(Constants.KEY_MEMBER, userData)
     }
 
-    fun getLinks(): SoicalLink {
+    fun getLinks(): SoicalLink? {
         val JsonData =
             instance!!.sharedPManger!!.getDataString(Constants.KEY_SOCIAL)
         return Gson().fromJson(JsonData, SoicalLink::class.java)
